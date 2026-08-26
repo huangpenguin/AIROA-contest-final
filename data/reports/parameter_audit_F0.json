@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "scope": "F0",
+  "source": "runtime_nnx_model_structure_plus_axis_metadata",
+  "trainable_paths": [
+    "PaliGemma/llm/layers/attn/attn_vec_einsum/lora_a/value",
+    "PaliGemma/llm/layers/attn/attn_vec_einsum/lora_b/value",
+    "PaliGemma/llm/layers/attn/attn_vec_einsum_1/lora_a/value",
+    "PaliGemma/llm/layers/attn/attn_vec_einsum_1/lora_b/value",
+    "PaliGemma/llm/layers/attn/kv_einsum/lora_a/value",
+    "PaliGemma/llm/layers/attn/kv_einsum/lora_b/value",
+    "PaliGemma/llm/layers/attn/kv_einsum_1/lora_a/value",
+    "PaliGemma/llm/layers/attn/kv_einsum_1/lora_b/value",
+    "PaliGemma/llm/layers/attn/q_einsum/lora_a/value",
+    "PaliGemma/llm/layers/attn/q_einsum/lora_b/value",
+    "PaliGemma/llm/layers/attn/q_einsum_1/lora_a/value",
+    "PaliGemma/llm/layers/attn/q_einsum_1/lora_b/value",
+    "PaliGemma/llm/layers/mlp/gating_einsum_lora_a/value",
+    "PaliGemma/llm/layers/mlp/gating_einsum_lora_b/value",
+    "PaliGemma/llm/layers/mlp/linear_lora_a/value",
+    "PaliGemma/llm/layers/mlp/linear_lora_b/value",
+    "PaliGemma/llm/layers/mlp_1/gating_einsum_lora_a/value",
+    "PaliGemma/llm/layers/mlp_1/gating_einsum_lora_b/value",
+    "PaliGemma/llm/layers/mlp_1/linear_lora_a/value",
+    "PaliGemma/llm/layers/mlp_1/linear_lora_b/value"
+  ],
+  "trainable_parameter_count": 49987584,
+  "all_parameter_count": 3403421456,
+  "trainable_set_sha256": "6f8d695f2c46e772283d48b46a4944e39f8da006fbef2210e8aea73a6591f6d5",
+  "frozen_policy": "all non-LoRA parameters frozen; action and time projections frozen"
+}

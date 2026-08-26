@@ -1,0 +1,21 @@
+diff --git a/scripts/train.py b/scripts/train.py
+index 9f96c84..b7f2a41 100644
+--- a/scripts/train.py
++++ b/scripts/train.py
+@@ -1,5 +1,6 @@
+ import dataclasses
+ import functools
+ import logging
++import os
+ import platform
+ from typing import Any
+@@ -255,5 +256,9 @@ def main(config: _config.TrainConfig):
+         dynamic_ncols=True,
+     )
+ 
++    keep_steps = {
++        int(value.strip()) for value in os.environ.get("OPENPI_KEEP_STEPS", "500,1000,3000").split(",") if value.strip()
++    }
++
+     infos = []
+     for step in pbar:

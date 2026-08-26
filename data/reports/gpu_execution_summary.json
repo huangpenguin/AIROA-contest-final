@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "date": "2026-08-26",
+  "status": "partial_blocked",
+  "gpu": {
+    "host": "current_gpu_server_ssh",
+    "hardware": "4x Tesla V100-PCIE-32GB",
+    "visible_devices_used": "1,2,3",
+    "gpu0_policy": "untouched_external_process",
+    "training_environment": ".venv_axis_pi05"
+  },
+  "data_and_assets": {
+    "catalog_sha256": "09bc2a6b29409c8c0aa0bda8cb7391566ff9ad619bb0c1ed8315f109e790edce",
+    "lock_sha256": "a423822ab6c7638dddb135244807bdd5eb5c4f058738eed0b760fca6922acaf3",
+    "norms": {
+      "M0": "validated_openpi_format",
+      "M1": "validated_openpi_format",
+      "M2": "validated_openpi_format"
+    },
+    "axis_norm_policy": "record_hash_only_never_load"
+  },
+  "valid_runs": [
+    {
+      "run_id": "t0_retry3_f0_m1",
+      "stage": "T0",
+      "scope": "F0/M1",
+      "internal_steps": 10,
+      "status": "completed"
+    },
+    {
+      "run_id": "t1_f0_m1_lr1e5",
+      "stage": "T1",
+      "scope": "F0/M1",
+      "internal_steps": 500,
+      "status": "completed_finite",
+      "checkpoint_manifest": "outputs/axis_pi05/t1_f0_m1_lr1e5/axis_pi05_libero_mix/t1_f0_m1_lr1e5/500/checkpoint_manifest.json",
+      "restore_smoke": true,
+      "optimizer_state": "present"
+    }
+  ],
+  "invalid_or_diagnostic_runs": [
+    {
+      "run_id": "t1_f0_m1",
+      "reason": "peak_lr=5e-5 became NaN from the 200-step report; excluded"
+    },
+    {
+      "run_id": "t1_f1_m1_lr1e5_bf16_v3",
+      "reason": "F1 became non-finite at loop step 20; excluded"
+    },
+    {
+      "run_id": "t1_f1_m1_probe30_lr1e6_clip01_bf16_v2",
+      "reason": "lower LR and tighter clipping still became non-finite at loop step 20; diagnostic only"
+    },
+    {
+      "run_id": "t1_f1_m1_probe25_lr1e6_clip01_bf16_fp32opt",
+      "reason": "experimental FP32 optimizer-state path reached grad_norm=inf at loop step 10; reverted and excluded"
+    }
+  ],
+  "pending": [
+    "T1 F1/F2 valid 500-step checkpoints",
+    "T2 M0/M1/M2 1000-step ablation",
+    "T3 3000-step final run",
+    "official local evaluator and failure review package"
+  ],
+  "verification": {
+    "static_gates": "pass",
+    "training_tests": "56 passed, 7 skipped",
+    "evaluator_task_filter_tests": "3 blocked: training env has no libero package"
+  }
+}

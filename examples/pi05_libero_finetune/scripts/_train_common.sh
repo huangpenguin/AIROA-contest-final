@@ -36,14 +36,31 @@ _activate_venv() {
     source "$PI05_VENV/bin/activate"
 }
 
-# W&B は既定で無効。WANDB_API_KEY があるときだけ有効化する。
-# プロジェクト名は WANDB_PROJECT で変更できる。
+# W&B の mode は runner/config から明示する。秘密情報は環境変数だけから読む。
+# 何も指定しなければ従来どおり disabled とし、モデル artifact は送らない。
 _wandb_args() {
-    if [[ -n "${WANDB_API_KEY:-}" ]]; then
-        WANDB_ARGS=(--wandb.enable=true --wandb.project="${WANDB_PROJECT:-pi05-libero-ft}")
-    else
-        WANDB_ARGS=(--wandb.enable=false)
-    fi
+    local mode="${WANDB_MODE:-disabled}"
+    case "$mode" in
+        online)
+            [[ -n "${WANDB_API_KEY:-}" ]] || {
+                echo "WANDB_MODE=online ですが WANDB_API_KEY が未設定です" >&2
+                exit 1
+            }
+            WANDB_ARGS=(--wandb.enable=true --wandb.mode=online)
+            ;;
+        offline)
+            WANDB_ARGS=(--wandb.enable=true --wandb.mode=offline)
+            ;;
+        disabled)
+            WANDB_ARGS=(--wandb.enable=false)
+            ;;
+        *)
+            echo "WANDB_MODE は online/offline/disabled のいずれかです: $mode" >&2
+            exit 1
+            ;;
+    esac
+    WANDB_ARGS+=(--wandb.project="${WANDB_PROJECT:-pi05-libero-ft}"
+                 --wandb.disable_artifact=true)
 }
 
 # pi0.5 のトークナイザ/重みは gated repo（google/paligemma-3b-pt-224）を引く。

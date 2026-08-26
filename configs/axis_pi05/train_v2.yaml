@@ -1,0 +1,59 @@
+schema_version: 2
+data_version: 2
+model:
+  name: pi05
+  pi05: true
+  action_horizon: 10
+  discrete_state_input: false
+  paligemma_variant: gemma_2b_lora
+  action_expert_variant: gemma_300m_lora
+  extra_delta_transform: false
+  ema_decay: null
+  axis_params_root: data/models/axisrobotics/Pi0.5-Axis/c342608c489515efa9ba8281400dc648bf3970e1/params
+  axis_norm_stats: data/models/axisrobotics/Pi0.5-Axis/c342608c489515efa9ba8281400dc648bf3970e1/norm_stats.json
+  axis_norm_stats_policy: record_hash_only_never_load
+training:
+  optimizer: AdamW
+  gradient_clip_norm: 1.0
+  peak_lr: 1.0e-5
+  warmup_steps: 300
+  final_lr: 1.0e-6
+  max_steps: 3000
+  seed: 1000
+  precision: float32_trainable
+  global_batch: 3
+  dataloader_workers: 0
+  wandb_mode: disabled
+  wandb_upload: scalar_table_small_image_only
+checkpoint:
+  keep_steps: [500, 1000, 3000]
+  max_to_keep: 4
+  directory_semantics: internal_train_state_step
+arms:
+  F0:
+    description: lora_only
+    trainable_regex:
+      - '(?i)(paligemma|action_expert).*(lora_[ab]|lora_down|lora_up)'
+    frozen_regex:
+      - '(?i)(vision|visual|backbone)'
+      - '(?i)(action_in_proj|action_out_proj|time_mlp_in|time_mlp_out)'
+  F1:
+    description: lora_plus_action_projections
+    trainable_regex:
+      - '(?i)(paligemma|action_expert).*(lora_[ab]|lora_down|lora_up)'
+      - '(?i)action_(in|out)_proj'
+    frozen_regex:
+      - '(?i)(vision|visual|backbone)'
+      - '(?i)time_mlp_(in|out)'
+  F2:
+    description: lora_plus_action_time_adapters
+    trainable_regex:
+      - '(?i)(paligemma|action_expert).*(lora_[ab]|lora_down|lora_up)'
+      - '(?i)(action_in_proj|action_out_proj|time_mlp_in|time_mlp_out)'
+    frozen_regex:
+      - '(?i)(vision|visual|backbone)'
+stages:
+  T0: {arms: [F0/M1], steps: 10}
+  T1: {arms: [F0/M1, F1/M1, F2/M1], steps: 500}
+  T2: {arms: [F0/M0, F0/M1, F0/M2], steps: 1000}
+  T3: {arms: [F0/M1], steps: 3000}

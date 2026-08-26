@@ -1,0 +1,256 @@
+--- a/scripts/train.py
++++ b/scripts/train.py
+@@ -55,6 +55,31 @@
+     return str(value)
+ 
+ 
++def _path_text(path: tuple[Any, ...]) -> str:
++    return "/".join(str(getattr(part, "key", getattr(part, "idx", part))) for part in path)
++
++
++def _group_norm(tree: Any, needle: str) -> jax.Array:
++    leaves = [
++        value
++        for path, value in jax.tree_util.tree_flatten_with_path(tree)[0]
++        if needle in _path_text(path).lower()
++    ]
++    return optax.global_norm(leaves) if leaves else jnp.asarray(0.0, dtype=jnp.float32)
++
++
++def _nonfinite_leaf_count(tree: Any) -> jax.Array:
++    leaves = [value for value in jax.tree_util.tree_leaves(tree) if hasattr(value, "dtype")]
++    return jnp.asarray(sum(jnp.any(~jnp.isfinite(value)) for value in leaves), dtype=jnp.int32)
++
++
++def _first_nonfinite_path(tree: Any) -> str | None:
++    for path, value in jax.tree_util.tree_flatten_with_path(tree)[0]:
++        if hasattr(value, "dtype") and not np.all(np.isfinite(np.asarray(value))):
++            return _path_text(path)
++    return None
++
++
+ def init_wandb(config: _config.TrainConfig, *, resuming: bool, log_code: bool = False, enabled: bool = True):
+     if not enabled:
+         wandb.init(mode="disabled")
+@@ -199,6 +224,18 @@
+         "loss": loss,
+         "grad_norm": optax.global_norm(grads),
+         "param_norm": optax.global_norm(kernel_params),
++        "pre_optimizer_param_norm": optax.global_norm(params),
++        "update_norm": optax.global_norm(updates),
++        "post_optimizer_param_norm": optax.global_norm(new_params),
++        "lora_grad_norm": _group_norm(grads, "lora"),
++        "action_proj_grad_norm": _group_norm(grads, "action_in_proj") + _group_norm(grads, "action_out_proj"),
++        "time_mlp_grad_norm": _group_norm(grads, "time_mlp"),
++        "lora_update_norm": _group_norm(updates, "lora"),
++        "action_proj_update_norm": _group_norm(updates, "action_in_proj") + _group_norm(updates, "action_out_proj"),
++        "time_mlp_update_norm": _group_norm(updates, "time_mlp"),
++        "nonfinite_grad_leaf_count": _nonfinite_leaf_count(grads),
++        "nonfinite_update_leaf_count": _nonfinite_leaf_count(updates),
++        "nonfinite_param_leaf_count": _nonfinite_leaf_count(new_params),
+     }
+     return new_state, info
+ 
+@@ -276,14 +313,17 @@
+         with sharding.set_mesh(mesh):
+             train_state, info = ptrain_step(train_rng, train_state, batch)
+         infos.append(info)
++        if os.environ.get("AXIS_PI05_FAIL_ON_NONFINITE", "0") == "1":
++            if not all(np.all(np.isfinite(np.asarray(value))) for value in info.values()):
++                first_path = _first_nonfinite_path(train_state.params)
++                raise FloatingPointError(
++                    f"non-finite training metrics at loop step {step}; first_param_path={first_path}; info={info}"
++                )
+         if step % config.log_interval == 0:
+             stacked_infos = common_utils.stack_forest(infos)
+             reduced_info = jax.device_get(jax.tree.map(jnp.mean, stacked_infos))
+-            info_str = ", ".join(f"{k}={v:.4f}" for k, v in reduced_info.items())
++            info_str = ", ".join(f"{k}={_metric_text(v)}" for k, v in reduced_info.items())
+             pbar.write(f"Step {step}: {info_str}")
+             wandb.log(reduced_info, step=step)
+-            if os.environ.get("AXIS_PI05_FAIL_ON_NONFINITE", "0") == "1":
+-                if not all(np.all(np.isfinite(np.asarray(value))) for value in reduced_info.values()):
+-                    raise FloatingPointError(f"non-finite training metrics at loop step {step}: {reduced_info}")
+             infos = []
+         batch = next(data_iter)
+--- a/src/openpi/training/config.py
++++ b/src/openpi/training/config.py
+@@ -114,6 +114,7 @@
+     local_repo_ids: Sequence[str] = ()
+     local_repo_roots: Sequence[str] = ()
+     local_sampling_weights: Sequence[float] = ()
++    local_sampling_manifest: str | None = None
+     # Action space for DROID dataset.
+     action_space: droid_rlds_dataset.DroidActionSpace | None = None
+     # List of datasets to sample from: name, version, weight, and optionally filter_dict_path
+@@ -313,6 +314,7 @@
+     local_repo_ids: Sequence[str] = ()
+     local_repo_roots: Sequence[str] = ()
+     local_sampling_weights: Sequence[float] = ()
++    local_sampling_manifest: str | None = None
+ 
+     @override
+     def create(self, assets_dirs: pathlib.Path, model_config: _model.BaseModelConfig) -> DataConfig:
+@@ -391,6 +393,7 @@
+             local_repo_ids=self.local_repo_ids,
+             local_repo_roots=self.local_repo_roots,
+             local_sampling_weights=self.local_sampling_weights,
++            local_sampling_manifest=self.local_sampling_manifest,
+         )
+ 
+ 
+@@ -827,6 +830,7 @@
+             local_sampling_weights=tuple(
+                 float(value) for value in _axis_pi05_env_tuple("AXIS_PI05_SOURCE_WEIGHTS")
+             ),
++            local_sampling_manifest=os.environ.get("AXIS_PI05_SAMPLING_MANIFEST"),
+         ),
+         weight_loader=weight_loaders.CheckpointWeightLoader(
+             os.environ.get("AXIS_PI05_AXIS_PARAMS", "data/models/axisrobotics/Pi0.5-Axis/params")
+--- a/src/openpi/training/data_loader.py
++++ b/src/openpi/training/data_loader.py
+@@ -59,6 +59,8 @@
+         self._transform = _transforms.compose(transforms)
+         if hasattr(dataset, "sample_weights"):
+             self.sample_weights = dataset.sample_weights
++        if hasattr(dataset, "frame_weights"):
++            self.frame_weights = dataset.frame_weights
+ 
+     def __getitem__(self, index: SupportsIndex) -> T_co:
+         return self._transform(self._dataset[index])
+@@ -104,17 +106,36 @@
+ class WeightedConcatDataset(torch.utils.data.ConcatDataset):
+     """Concatenate local LeRobot sources while retaining source sampling mass."""
+ 
+-    def __init__(self, datasets: Sequence[torch.utils.data.Dataset], source_weights: Sequence[float]):
++    def __init__(
++        self,
++        datasets: Sequence[torch.utils.data.Dataset],
++        source_weights: Sequence[float],
++        frame_weights: Sequence[Sequence[float]] | None = None,
++    ):
+         super().__init__(list(datasets))
+         if len(source_weights) != len(datasets):
+             raise ValueError("local_sampling_weights must match local_repo_roots")
+         if any(weight <= 0 for weight in source_weights):
+             raise ValueError("local_sampling_weights must be positive")
+         total = float(sum(source_weights))
+-        per_item = []
+-        for dataset, weight in zip(datasets, source_weights, strict=True):
+-            per_item.extend([float(weight) / max(1, len(dataset))] * len(dataset))
++        if frame_weights is None:
++            per_item = []
++            for dataset, weight in zip(datasets, source_weights, strict=True):
++                per_item.extend([float(weight) / max(1, len(dataset))] * len(dataset))
++        else:
++            if len(frame_weights) != len(datasets):
++                raise ValueError("frame_weights must match datasets")
++            per_item = []
++            for dataset, weights in zip(datasets, frame_weights, strict=True):
++                if len(weights) != len(dataset):
++                    raise ValueError("manifest frame weights must match dataset frame count")
++                if any(float(weight) <= 0 for weight in weights):
++                    raise ValueError("manifest frame weights must be positive")
++                per_item.extend(float(weight) for weight in weights)
++            if not np.isclose(sum(per_item), 1.0, rtol=1e-9, atol=1e-9):
++                raise ValueError(f"manifest frame weights must sum to one, got {sum(per_item)}")
+         self.sample_weights = torch.as_tensor(per_item, dtype=torch.double)
++        self.frame_weights = self.sample_weights
+         self.source_weights = tuple(float(weight) / total for weight in source_weights)
+ 
+ 
+@@ -303,18 +324,31 @@
+         roots = tuple(data_config.local_repo_roots)
+         if len(repo_ids) != len(roots):
+             raise ValueError("local_repo_ids and local_repo_roots must have equal length")
+-        weights = tuple(data_config.local_sampling_weights) or tuple(1.0 for _ in roots)
+-        if len(weights) != len(roots):
++        source_weights = tuple(data_config.local_sampling_weights) or tuple(1.0 for _ in roots)
++        if len(source_weights) != len(roots):
+             raise ValueError("local_sampling_weights and local_repo_roots must have equal length")
+         episode_selection: dict[str, list[int]] = {}
++        episode_weights: dict[tuple[str, int], float] = {}
++        episode_frame_counts: dict[tuple[str, int], int] = {}
+         train_manifest = os.environ.get("AXIS_PI05_TRAIN_MANIFEST")
+-        if train_manifest:
+-            manifest = pd.read_parquet(train_manifest, columns=["source_repo", "source_episode_index"])
++        sampling_manifest = data_config.local_sampling_manifest or os.environ.get("AXIS_PI05_SAMPLING_MANIFEST")
++        if train_manifest or sampling_manifest:
++            manifest_path = sampling_manifest or train_manifest
++            columns = ["source_repo", "source_episode_index"]
++            if sampling_manifest:
++                columns.extend(["episode_sampling_probability", "observed_frame_count", "frame_weight"])
++            manifest = pd.read_parquet(manifest_path, columns=columns)
+             for source_repo, rows in manifest.groupby("source_repo", sort=False):
+                 episode_selection[str(source_repo)] = sorted(
+                     {int(value) for value in rows["source_episode_index"].tolist()}
+                 )
++                if sampling_manifest:
++                    for row in rows.itertuples(index=False):
++                        key = (str(source_repo), int(row.source_episode_index))
++                        episode_weights[key] = float(row.frame_weight)
++                        episode_frame_counts[key] = int(row.observed_frame_count)
+         datasets = []
++        dataset_frame_weights = []
+         for local_repo_id, local_root in zip(repo_ids, roots, strict=True):
+             episodes = episode_selection.get(local_repo_id)
+             if train_manifest and not episodes:
+@@ -334,10 +368,40 @@
+                     },
+                 )
+                 dataset_tasks = dataset_meta.tasks
++            if sampling_manifest:
++                if local_repo_id == "lerobot/libero_plus":
++                    weights = [
++                        episode_weights[(local_repo_id, int(episode))]
++                        for episode, _ in dataset._index
++                    ]
++                    observed = {
++                        int(episode): count
++                        for (source, episode), count in episode_frame_counts.items()
++                        if source == local_repo_id
++                    }
++                    actual = {int(episode): 0 for episode, _ in dataset._index}
++                    for episode, _ in dataset._index:
++                        actual[int(episode)] += 1
++                    for episode, count in actual.items():
++                        if count != observed[episode]:
++                            raise ValueError(f"manifest frame count mismatch for {local_repo_id}:{episode}: {count} != {observed[episode]}")
++                else:
++                    if dataset.episodes is None:
++                        raise ValueError("manifest-aware standard dataset requires explicit episode selection")
++                    weights = []
++                    for position, episode in enumerate(dataset.episodes):
++                        start = int(dataset.episode_data_index["from"][position].item())
++                        end = int(dataset.episode_data_index["to"][position].item())
++                        key = (local_repo_id, int(episode))
++                        expected = episode_frame_counts[key]
++                        if end - start != expected:
++                            raise ValueError(f"manifest frame count mismatch for {local_repo_id}:{episode}: {end - start} != {expected}")
++                        weights.extend([episode_weights[key]] * (end - start))
++                dataset_frame_weights.append(weights)
+             if data_config.prompt_from_task:
+                 dataset = TransformedDataset(dataset, [_transforms.PromptFromLeRobotTask(dataset_tasks)])
+             datasets.append(dataset)
+-        return WeightedConcatDataset(datasets, weights)
++        return WeightedConcatDataset(datasets, source_weights, dataset_frame_weights if sampling_manifest else None)
+ 
+     dataset_meta = lerobot_dataset.LeRobotDatasetMetadata(repo_id)
+     dataset = lerobot_dataset.LeRobotDataset(
+@@ -509,11 +573,15 @@
+     # For JAX, divide by process count
+     sampler = None
+     if shuffle and hasattr(dataset, "sample_weights"):
++        sampler_generator = torch.Generator()
++        sampler_generator.manual_seed(int(seed))
+         sampler = torch.utils.data.WeightedRandomSampler(
+-            dataset.sample_weights, num_samples=len(dataset), replacement=True
++            dataset.sample_weights, num_samples=len(dataset), replacement=True, generator=sampler_generator
+         )
+     if framework == "pytorch":
+         if torch.distributed.is_initialized():
++            if sampler is not None:
++                raise RuntimeError("manifest WeightedRandomSampler cannot be silently replaced by DistributedSampler")
+             sampler = torch.utils.data.distributed.DistributedSampler(
+                 dataset,
+                 num_replicas=torch.distributed.get_world_size(),

@@ -1,0 +1,13 @@
+schema_version: 2
+required:
+  - manifest_sha256
+  - episode_probability_sum
+  - frame_probability_mass_sum
+  - seed
+  - explicit_generator
+  - sample_index_preview_sha256
+invariants:
+  episode_probability_sum: 1.0 +/- 1e-9
+  frame_probability_mass_sum: 1.0 +/- 1e-9
+  replacement: true
+  explicit_generator: true

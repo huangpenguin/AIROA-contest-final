@@ -1,0 +1,16 @@
+schema_version: 1
+required:
+  - internal_step
+  - params_sha256
+  - norm_sha256
+  - mix_sha256
+  - trainable_set_sha256
+  - optimizer_state
+  - axis_params_sha256
+  - restore_smoke
+rules:
+  internal_step: positive_integer
+  restore_smoke: true
+  norm_sha256: sha256
+  mix_sha256: sha256
+  params_sha256: sha256

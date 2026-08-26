@@ -1,0 +1,52 @@
+version: 1
+source:
+  repository: matsuolab/PARC2026_final
+  repository_head: 2059989571d8a7da3526b994756eb77b748d37af
+  evidence:
+    - README.md:135-144
+    - submission_template/policy_server.py:25-135
+    - pipeline/remote_policy.py:11-106
+
+server:
+  endpoints:
+    health: {method: GET, path: /health, success_status: 200}
+    reset: {method: POST, path: /reset, content_type: application/json}
+    act: {method: POST, path: /act, content_type: application/x-msgpack}
+  timeout_seconds: 10
+  startup_timeout_seconds:
+    local: 120
+    official: 1200
+  codec:
+    observation: msgpack
+    action: msgpack
+
+observation:
+  camera_resolution: [128, 128]
+  fields:
+    agentview_image: {shape: [128, 128, 3], dtype: uint8, range: [0, 255]}
+    robot0_eye_in_hand_image: {shape: [128, 128, 3], dtype: uint8, range: [0, 255]}
+    robot0_joint_pos: {shape: [7], dtype: float32}
+    robot0_eef_pos: {shape: [3], dtype: float32}
+    robot0_eef_quat: {shape: [4], dtype: float32}
+    robot0_gripper_qpos: {shape: [2], dtype: float32}
+
+action:
+  shape: [7]
+  dtype: float32
+  finite: true
+  semantics: delta_control
+  order: [dx, dy, dz, droll, dpitch, dyaw, gripper]
+
+evaluation:
+  tracks: [track1, track2, track3]
+  local_tasks_are_examples_only: true
+  collision_threshold_m: 0.001
+  leaderboard_normalization: undisclosed
+  leaderboard_weights: undisclosed
+
+runtime:
+  python: '3.10'
+  cuda: '13.0'
+  torch: '2.11.0+cu130'
+  gpu: 'NVIDIA L4 24GB'
+  rendering: 'MUJOCO_GL=EGL'

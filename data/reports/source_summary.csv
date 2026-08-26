@@ -1,0 +1,10 @@
+source,suite,episodes,frames,review_flags
+libero_plus,libero_10,2791,738120,0
+libero_plus,libero_goal,3721,435551,0
+libero_plus,libero_object,4085,602960,0
+libero_plus,libero_spatial,3750,461405,0
+libero_standard,libero_10,379,101469,0
+libero_standard,libero_90,3921,569249,0
+libero_standard,libero_goal,428,52042,0
+libero_standard,libero_object,454,66984,0
+libero_standard,libero_spatial,432,52970,0

@@ -2,9 +2,22 @@ __pycache__/
 *.pyc
 results/
 venv/
+.venv_axis_pi05/
 env.sh
 LIBERO-plus/
 LIBERO/
 assets.zip
 env_train.sh
 requirements-train.lock.txt
+
+# Pi0.5-Axis post-training artifacts. Keep source code, locks, manifests and
+# small reports tracked; never commit raw media, weights or checkpoints.
+/data/raw/
+/data/models/
+/data/processed/
+/third_party/axis_openpi/
+/outputs/axis_pi05/
+/outputs/axis_pi05_v2/
+/reviews/axis_pi05/
+/data/reports/contact_sheets/
+/data/reports/sampled_frames/

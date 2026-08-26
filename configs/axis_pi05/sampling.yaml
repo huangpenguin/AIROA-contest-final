@@ -1,0 +1,13 @@
+schema_version: 1
+catalog_path: data/processed/libero_axis_mix_v1/catalog.jsonl
+output_root: data/manifests
+split_seed: 1000
+validation_fraction: 0.10
+public_t3_validation_path: data/manifests/public_t3_holdout.jsonl
+mixes:
+  M0:
+    name: source_suite_balanced
+  M1:
+    name: competition_prior
+  M2:
+    name: natural_capped

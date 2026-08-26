@@ -1,0 +1,15 @@
+diff --git a/scripts/train.py b/scripts/train.py
+--- a/scripts/train.py
++++ b/scripts/train.py
+@@ -102,6 +102,10 @@ def init_train_state(
+             model = nnx.merge(graphdef, state)
+ 
+         params = nnx.state(model)
+         # Convert frozen params to bfloat16.
+         params = nnx_utils.state_map(params, config.freeze_filter, lambda p: p.replace(p.value.astype(jnp.bfloat16)))
++        if os.environ.get("AXIS_PI05_CAST_TRAINABLE_BF16", "0") == "1":
++            params = nnx_utils.state_map(
++                params, config.trainable_filter, lambda p: p.replace(p.value.astype(jnp.bfloat16))
++            )
+ 
+         return training_utils.TrainState(

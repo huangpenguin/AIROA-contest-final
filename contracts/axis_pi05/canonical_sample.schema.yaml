@@ -1,0 +1,24 @@
+schema_version: 1
+name: axis_pi05_canonical_sample
+record_granularity: frame
+fields:
+  observation.images.front: {dtype: uint8, shape: [H, W, 3], range: [0, 255]}
+  observation.images.wrist: {dtype: uint8, shape: [H, W, 3], range: [0, 255]}
+  observation.state: {dtype: float32, shape: [8], finite: true}
+  action: {dtype: float32, shape: [7], finite: true}
+  timestamp: {dtype: float32, finite: true}
+  source_fps: {dtype: int, exact: 20}
+  source: {enum: [libero_standard, libero_plus]}
+  source_repo: {dtype: string}
+  revision: {dtype: string, pattern: '^[0-9a-f]{40}$'}
+  source_episode_index: {dtype: int, min: 0}
+  suite: {dtype: string}
+  task: {dtype: string}
+  task_index: {dtype: int, min: 0}
+  instruction: {dtype: string}
+  perturb_category: {enum: [base, env, lighting, language, camera_pose, sensor_noise]}
+  perturb_label_quality: {enum: [exact-source, recovered-coarse, unavailable]}
+invariants:
+  - no_interpolation
+  - no_action_repetition
+  - no_observation_from_official_evaluation

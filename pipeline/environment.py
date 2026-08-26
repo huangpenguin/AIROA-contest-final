@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import logging
 import re
 from dataclasses import dataclass
@@ -6,9 +8,6 @@ from typing import Any
 
 import numpy as np
 import torch
-
-from libero.libero import benchmark as libero_benchmark
-from libero.libero.envs import OffScreenRenderEnv
 
 from .config import EvalConfig, PerturbationConfig, Track, TRACK_PERTURBATIONS
 
@@ -63,6 +62,8 @@ class TaskInfo:
 class EnvironmentManager:
 
     def __init__(self, eval_config: EvalConfig):
+        from libero.libero import benchmark as libero_benchmark
+
         self.config = eval_config
         _ensure_t12_registered()
         _ensure_libero_t3_registered()
@@ -110,6 +111,7 @@ class EnvironmentManager:
 
     def create_env(self, task_info: TaskInfo) -> OffScreenRenderEnv:
         import os
+        from libero.libero.envs import OffScreenRenderEnv
 
         env_args = {
             "bddl_file_name": task_info.bddl_file,

@@ -1,0 +1,15 @@
+schema_version: 2
+catalog_path: data/processed/libero_axis_mix_v1/catalog.jsonl
+output_root: data/manifests_v2
+split_seed: 1000
+validation_fraction: 0.10
+grouping_policy:
+  libero_plus: episode_only
+  libero_standard: episode_only
+mixes:
+  M0:
+    name: source_suite_balanced
+  M1:
+    name: competition_prior
+  M2:
+    name: natural_capped

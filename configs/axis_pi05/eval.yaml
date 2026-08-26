@@ -1,0 +1,20 @@
+schema_version: 1
+official_pipeline_root: .
+validation_manifest: data/manifests/M1/validation_episodes.parquet
+public_t3_manifest: data/manifests/public_t3_holdout.jsonl
+fixed_eval_seed: 1000
+steps: [500, 1000, 3000]
+save_success_reference_per_stratum: 1
+video:
+  fps: 20
+  codec: libx264
+  pixel_format: yuv420p
+  faststart: true
+selection_priority:
+  - validation_task_perturbation_macro_success
+  - worst_source_macro_success
+  - compositional_t3_success
+  - collision_rate
+  - goal_reached_but_collision
+  - timeout_stall
+  - jerk_sparc_trajectory

@@ -1,0 +1,21 @@
+diff --git a/src/openpi/training/checkpoints.py b/src/openpi/training/checkpoints.py
+index 3dbd7b8..d6b5ee1 100644
+--- a/src/openpi/training/checkpoints.py
++++ b/src/openpi/training/checkpoints.py
+@@ -1,7 +1,8 @@
+ from __future__ import annotations
+ 
+ import asyncio
+ import concurrent.futures as futures
+ import dataclasses
+ import logging
++import os
+ from typing import Protocol
+@@ -47,3 +48,6 @@ def initialize_checkpoint_dir(
+         options=ocp.CheckpointManagerOptions(
+-            max_to_keep=1,
++            # Short post-training runs must retain internal steps 500/1000/3000.
++            # The runner sets the explicit keep set and writes a manifest for each
++            # checkpoint; do not rely on the upstream five-thousand-step policy.
++            max_to_keep=int(os.environ.get("OPENPI_MAX_TO_KEEP", "4")),
+             keep_period=keep_period,

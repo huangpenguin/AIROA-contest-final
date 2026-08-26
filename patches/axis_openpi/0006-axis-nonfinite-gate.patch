@@ -1,0 +1,11 @@
+diff --git a/scripts/train.py b/scripts/train.py
+--- a/scripts/train.py
++++ b/scripts/train.py
+@@ -271,4 +271,7 @@ def main(config: _config.TrainConfig):
+             info_str = ", ".join(f"{k}={v:.4f}" for k, v in reduced_info.items())
+             pbar.write(f"Step {step}: {info_str}")
+             wandb.log(reduced_info, step=step)
++            if os.environ.get("AXIS_PI05_FAIL_ON_NONFINITE", "0") == "1":
++                if not all(np.all(np.isfinite(np.asarray(value))) for value in reduced_info.values()):
++                    raise FloatingPointError(f"non-finite training metrics at loop step {step}: {reduced_info}")
+             infos = []

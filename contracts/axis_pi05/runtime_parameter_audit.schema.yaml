@@ -1,0 +1,14 @@
+schema_version: 2
+required:
+  - scope
+  - axis_restore_executed
+  - trainable_parameter_count
+  - trainable_dtypes
+  - optimizer_state_present
+  - optimizer_state_dtypes
+  - runtime_sequence
+invariants:
+  axis_restore_executed: true
+  dtype_cast_trainable_bf16: false
+  optimizer_state_present: true
+  runtime_sequence: [model_create, axis_partial_restore, frozen_dtype_cast, trainable_filter, optimizer_init]

@@ -1,0 +1,415 @@
+diff --git a/src/openpi/training/config.py b/src/openpi/training/config.py
+index 4ca47e1..f87d46a 100644
+--- a/src/openpi/training/config.py
++++ b/src/openpi/training/config.py
+@@ -5,6 +5,7 @@ from collections.abc import Sequence
+ import dataclasses
+ import difflib
+ import logging
++import os
+ import pathlib
+ from typing import Any, Literal, Protocol, TypeAlias
+ 
+@@ -34,6 +35,23 @@ ModelType: TypeAlias = _model.ModelType
+ Filter: TypeAlias = nnx.filterlib.Filter
+ 
+ 
++def _axis_pi05_env_tuple(name: str, *, separator: str = ",") -> tuple[str, ...]:
++    return tuple(value.strip() for value in os.environ.get(name, "").split(separator) if value.strip())
++
++
++def _freeze_axis_pi05_lora(path: nnx.filterlib.PathParts, _param: Any) -> bool:
++    """Freeze AXIS Pi0.5 except the arm selected by AXIS_PI05_SCOPE."""
++    param_path = "/".join(str(part) for part in path)
++    scope = os.environ.get("AXIS_PI05_SCOPE", "F0").upper()
++    if "lora" in param_path.lower():
++        return False
++    if scope in {"F1", "F2"} and "action_" in param_path and "_proj" in param_path:
++        return False
++    if scope == "F2" and "time_mlp_" in param_path:
++        return False
++    return True
++
++
+ @dataclasses.dataclass(frozen=True)
+ class AssetsConfig:
+     """Determines the location of assets (e.g., norm stats) that will be used to set up the data pipeline.
+@@ -92,6 +110,10 @@ class DataConfig:
+ 
+     # Only used for RLDS data loader (ie currently only used for DROID).
+     rlds_data_dir: str | None = None
++    # Local LeRobot roots used by the locked Axis mixture.
++    local_repo_ids: Sequence[str] = ()
++    local_repo_roots: Sequence[str] = ()
++    local_sampling_weights: Sequence[float] = ()
+     # Action space for DROID dataset.
+     action_space: droid_rlds_dataset.DroidActionSpace | None = None
+     # List of datasets to sample from: name, version, weight, and optionally filter_dict_path
+@@ -287,6 +309,10 @@ class LeRobotLiberoDataConfig(DataConfigFactory):
+     """
+ 
+     extra_delta_transform: bool = False
++    v3_keys: bool = False
++    local_repo_ids: Sequence[str] = ()
++    local_repo_roots: Sequence[str] = ()
++    local_sampling_weights: Sequence[float] = ()
+ 
+     @override
+     def create(self, assets_dirs: pathlib.Path, model_config: _model.BaseModelConfig) -> DataConfig:
+@@ -298,16 +324,25 @@ class LeRobotLiberoDataConfig(DataConfigFactory):
+         # For your own dataset, first figure out what keys your environment passes to the policy server
+         # and then modify the mappings below so your dataset's keys get matched to those target keys.
+         # The repack transform simply remaps key names here.
++        repack_mapping = (
++            {
++                "observation/image": "observation.images.image",
++                "observation/wrist_image": "observation.images.wrist_image",
++                "observation/state": "observation.state",
++                "actions": "action",
++            }
++            if self.v3_keys
++            else {
++                "observation/image": "image",
++                "observation/wrist_image": "wrist_image",
++                "observation/state": "state",
++                "actions": "actions",
++            }
++        )
+         repack_transform = _transforms.Group(
+             inputs=[
+                 _transforms.RepackTransform(
+-                    {
+-                        "observation/image": "image",
+-                        "observation/wrist_image": "wrist_image",
+-                        "observation/state": "state",
+-                        "actions": "actions",
+-                        "prompt": "prompt",
+-                    }
++                    {**repack_mapping, "prompt": "prompt"}
+                 )
+             ]
+         )
+@@ -352,6 +387,10 @@ class LeRobotLiberoDataConfig(DataConfigFactory):
+             repack_transforms=repack_transform,
+             data_transforms=data_transforms,
+             model_transforms=model_transforms,
++            action_sequence_keys=("action",) if self.v3_keys else ("actions",),
++            local_repo_ids=self.local_repo_ids,
++            local_repo_roots=self.local_repo_roots,
++            local_sampling_weights=self.local_sampling_weights,
+         )
+ 
+ 
+@@ -761,6 +800,59 @@ _CONFIGS = [
+         pytorch_weight_path="/path/to/your/pytorch_weight_path",
+         num_train_steps=30_000,
+     ),
++    TrainConfig(
++        name="axis_pi05_libero_mix",
++        model=pi0_config.Pi0Config(
++            pi05=True,
++            # The canonical LIBERO contract has state_dim=8/action_dim=7, but
++            # this Axis Pi0.5 checkpoint has a 32-wide action head.  The model
++            # pad preserves the raw state/action contract and LiberoOutputs
++            # removes the padded action coordinates on export.
++            action_dim=32,
++            action_horizon=10,
++            discrete_state_input=False,
++            paligemma_variant="gemma_2b_lora",
++            action_expert_variant="gemma_300m_lora",
++        ),
++        data=LeRobotLiberoDataConfig(
++            repo_id=os.environ.get("AXIS_PI05_LOCAL_REPO_ID", "local/axis_pi05_mix"),
++            assets=AssetsConfig(
++                assets_dir=os.environ.get("AXIS_PI05_ASSETS_ROOT", "data/manifests"),
++                asset_id=os.environ.get("AXIS_PI05_MIX", "M1"),
++            ),
++            base_config=DataConfig(prompt_from_task=True),
++            v3_keys=True,
++            local_repo_ids=_axis_pi05_env_tuple("AXIS_PI05_LOCAL_REPO_IDS"),
++            local_repo_roots=_axis_pi05_env_tuple("AXIS_PI05_LOCAL_REPO_ROOTS", separator=os.pathsep),
++            local_sampling_weights=tuple(
++                float(value) for value in _axis_pi05_env_tuple("AXIS_PI05_SOURCE_WEIGHTS")
++            ),
++        ),
++        weight_loader=weight_loaders.CheckpointWeightLoader(
++            os.environ.get("AXIS_PI05_AXIS_PARAMS", "data/models/axisrobotics/Pi0.5-Axis/params")
++        ),
++        lr_schedule=_optimizer.CosineDecaySchedule(
++            warmup_steps=int(os.environ.get("AXIS_PI05_WARMUP_STEPS", "300")),
++            peak_lr=float(os.environ.get("AXIS_PI05_PEAK_LR", "5e-5")),
++            decay_steps=int(os.environ.get("AXIS_PI05_STEPS", "3000")),
++            decay_lr=float(os.environ.get("AXIS_PI05_DECAY_LR", "5e-6")),
++        ),
++        optimizer=_optimizer.AdamW(
++            clip_gradient_norm=float(os.environ.get("AXIS_PI05_CLIP_GRAD_NORM", "1.0"))
++        ),
++        num_train_steps=int(os.environ.get("AXIS_PI05_STEPS", "3000")),
++        batch_size=int(os.environ.get("AXIS_PI05_GLOBAL_BATCH", "3")),
++        num_workers=int(os.environ.get("AXIS_PI05_DATALOADER_WORKERS", "0")),
++        log_interval=int(os.environ.get("AXIS_PI05_LOG_INTERVAL", "100")),
++        save_interval=500,
++        keep_period=None,
++        freeze_filter=_freeze_axis_pi05_lora,
++        ema_decay=None,
++        wandb_enabled=os.environ.get("AXIS_PI05_WANDB_MODE", "disabled") == "online",
++        fsdp_devices=int(os.environ.get("AXIS_PI05_FSDP_DEVICES", "1")),
++        exp_name=os.environ.get("AXIS_PI05_RUN_ID", "axis_pi05"),
++        checkpoint_base_dir=os.environ.get("AXIS_PI05_OUTPUT_DIR", "outputs/axis_pi05"),
++    ),
+     #
+     # Fine-tuning Aloha configs.
+     #
+diff --git a/src/openpi/training/data_loader.py b/src/openpi/training/data_loader.py
+index e2ee7dd..bc2e7d8 100644
+--- a/src/openpi/training/data_loader.py
++++ b/src/openpi/training/data_loader.py
+@@ -2,13 +2,16 @@ from collections.abc import Iterator, Sequence
+ import logging
+ import multiprocessing
+ import os
++import pathlib
++import re
+ import typing
+-from typing import Literal, Protocol, SupportsIndex, TypeVar
++from typing import Any, Literal, Protocol, SupportsIndex, TypeVar
+ 
+ import jax
+ import jax.numpy as jnp
+ import lerobot.common.datasets.lerobot_dataset as lerobot_dataset
+ import numpy as np
++import pandas as pd
+ import torch
+ 
+ import openpi.models.model as _model
+@@ -54,6 +57,8 @@ class TransformedDataset(Dataset[T_co]):
+     def __init__(self, dataset: Dataset, transforms: Sequence[_transforms.DataTransformFn]):
+         self._dataset = dataset
+         self._transform = _transforms.compose(transforms)
++        if hasattr(dataset, "sample_weights"):
++            self.sample_weights = dataset.sample_weights
+ 
+     def __getitem__(self, index: SupportsIndex) -> T_co:
+         return self._transform(self._dataset[index])
+@@ -96,6 +101,163 @@ class IterableTransformedDataset(IterableDataset[T_co]):
+         return len(self._dataset)
+ 
+ 
++class WeightedConcatDataset(torch.utils.data.ConcatDataset):
++    """Concatenate local LeRobot sources while retaining source sampling mass."""
++
++    def __init__(self, datasets: Sequence[torch.utils.data.Dataset], source_weights: Sequence[float]):
++        super().__init__(list(datasets))
++        if len(source_weights) != len(datasets):
++            raise ValueError("local_sampling_weights must match local_repo_roots")
++        if any(weight <= 0 for weight in source_weights):
++            raise ValueError("local_sampling_weights must be positive")
++        total = float(sum(source_weights))
++        per_item = []
++        for dataset, weight in zip(datasets, source_weights, strict=True):
++            per_item.extend([float(weight) / max(1, len(dataset))] * len(dataset))
++        self.sample_weights = torch.as_tensor(per_item, dtype=torch.double)
++        self.source_weights = tuple(float(weight) / total for weight in source_weights)
++
++
++class AxisPlusV3Dataset(torch.utils.data.Dataset):
++    """Read the locked LeRobot-v3 Plus snapshot without converting its files.
++
++    The pinned OpenPI dependency contains the v2.1 reader for the five IPEC
++    sources.  Plus is v3.0 and stores several episodes per Parquet/video file,
++    so it is read directly here while preserving the same LeRobot sample keys.
++    """
++
++    def __init__(self, root: str, episodes: list[int], action_horizon: int):
++        import pyarrow.parquet as pq
++
++        self.root = pathlib.Path(root)
++        self.action_horizon = int(action_horizon)
++        tasks = pq.read_table(self.root / "meta/tasks.parquet").to_pydict()
++        self.tasks = {
++            int(task_index): str(task)
++            for task_index, task in zip(tasks["task_index"], tasks["task"], strict=True)
++        }
++        selected = {int(episode) for episode in episodes}
++        if not selected:
++            raise ValueError("Plus train manifest selected no episodes")
++        self._episodes: dict[int, dict[str, Any]] = {}
++        for data_file in sorted((self.root / "data").glob("chunk-*/file-*.parquet")):
++            file_match = re.match(r"chunk-(\d+)/file-(\d+)\.parquet$", str(data_file.relative_to(self.root / "data")))
++            if not file_match:
++                continue
++            chunk_index, file_index = (int(value) for value in file_match.groups())
++            table = pq.read_table(
++                data_file,
++                columns=["episode_index", "frame_index", "observation.state", "action", "task_index"],
++            )
++            episode_values = table["episode_index"].to_numpy(zero_copy_only=False)
++            present = selected.intersection(int(value) for value in np.unique(episode_values))
++            if not present:
++                continue
++            frame_values = table["frame_index"].to_numpy(zero_copy_only=False)
++            task_values = table["task_index"].to_numpy(zero_copy_only=False)
++            states = np.asarray(table["observation.state"].to_pylist(), dtype=np.float32)
++            actions = np.asarray(table["action"].to_pylist(), dtype=np.float32)
++            for episode in sorted(present):
++                indices = np.flatnonzero(episode_values == episode)
++                indices = indices[np.argsort(frame_values[indices], kind="stable")]
++                if episode in self._episodes:
++                    raise ValueError(f"Plus episode {episode} appears in multiple data files")
++                self._episodes[episode] = {
++                    "states": states[indices],
++                    "actions": actions[indices],
++                    "frames": frame_values[indices].astype(np.int64, copy=False),
++                    "task_index": int(task_values[indices[0]]),
++                    "chunk_index": chunk_index,
++                    "file_index": file_index,
++                }
++        missing = sorted(selected - set(self._episodes))
++        if missing:
++            raise ValueError(f"Plus train manifest episodes missing from v3 data: {missing[:5]}")
++        self._index = [
++            (episode, frame_offset)
++            for episode in sorted(self._episodes)
++            for frame_offset in range(len(self._episodes[episode]["states"]))
++        ]
++        self._video_containers: dict[str, Any] = {}
++
++    def __getstate__(self):
++        state = self.__dict__.copy()
++        state["_video_containers"] = {}
++        return state
++
++    def __len__(self) -> int:
++        return len(self._index)
++
++    def _decode(self, key: str, item: dict[str, Any], frame_index: int) -> np.ndarray:
++        import av
++
++        path = self.root / "videos" / key / f"chunk-{item['chunk_index']:03d}" / f"file-{item['file_index']:03d}.mp4"
++        container = self._video_containers.get(str(path))
++        if container is None:
++            container = av.open(str(path))
++            self._video_containers[str(path)] = container
++        stream = container.streams.video[0]
++        timestamp = frame_index / 20.0
++        seek_pts = int(timestamp / float(stream.time_base)) if stream.time_base else frame_index
++        container.seek(max(0, seek_pts), stream=stream, backward=True)
++        candidate = None
++        for frame in container.decode(video=0):
++            if frame.pts is None:
++                continue
++            candidate = frame
++            if frame.time >= timestamp - 1e-4:
++                break
++        if candidate is None:
++            raise RuntimeError(f"failed to decode {path} at frame {frame_index}")
++        return candidate.to_ndarray(format="rgb24")
++
++    def __getitem__(self, index: SupportsIndex) -> dict[str, Any]:
++        episode, frame_offset = self._index[index.__index__()]
++        item = self._episodes[episode]
++        frame_index = int(item["frames"][frame_offset])
++        action_indices = [min(frame_offset + offset, len(item["actions"]) - 1) for offset in range(self.action_horizon)]
++        return {
++            # Match the pinned IPEC LeRobot key names; the logical contract
++            # still calls these front and wrist cameras in the catalog.
++            "observation.images.image": self._decode("observation.images.front", item, frame_index),
++            "observation.images.wrist_image": self._decode("observation.images.wrist", item, frame_index),
++            "observation.state": item["states"][frame_offset],
++            "action": item["actions"][action_indices],
++            "task_index": item["task_index"],
++            "episode_index": episode,
++            "frame_index": frame_index,
++            "timestamp": frame_index / 20.0,
++        }
++
++    def close(self) -> None:
++        for container in self._video_containers.values():
++            container.close()
++        self._video_containers.clear()
++
++
++class AxisSelectedLeRobotDataset(lerobot_dataset.LeRobotDataset):
++    """Fix the pinned v2.1 reader's sparse-episode delta-index lookup."""
++
++    def _get_query_indices(self, idx: int, ep_idx: int):
++        if self.episodes is None:
++            position = ep_idx
++        else:
++            position = self.episodes.index(ep_idx)
++        ep_start = self.episode_data_index["from"][position]
++        ep_end = self.episode_data_index["to"][position]
++        query_indices = {
++            key: [max(ep_start.item(), min(ep_end.item() - 1, idx + delta)) for delta in delta_idx]
++            for key, delta_idx in self.delta_indices.items()
++        }
++        padding = {
++            f"{key}_is_pad": torch.BoolTensor(
++                [(idx + delta < ep_start.item()) | (idx + delta >= ep_end.item()) for delta in delta_idx]
++            )
++            for key, delta_idx in self.delta_indices.items()
++        }
++        return query_indices, padding
++
++
+ class FakeDataset(Dataset):
+     def __init__(self, model_config: _model.BaseModelConfig, num_samples: int):
+         self._num_samples = num_samples
+@@ -136,6 +298,46 @@ def create_torch_dataset(
+         raise ValueError("Repo ID is not set. Cannot create dataset.")
+     if repo_id == "fake":
+         return FakeDataset(model_config, num_samples=1024)
++    if data_config.local_repo_roots:
++        repo_ids = tuple(data_config.local_repo_ids) or (repo_id,)
++        roots = tuple(data_config.local_repo_roots)
++        if len(repo_ids) != len(roots):
++            raise ValueError("local_repo_ids and local_repo_roots must have equal length")
++        weights = tuple(data_config.local_sampling_weights) or tuple(1.0 for _ in roots)
++        if len(weights) != len(roots):
++            raise ValueError("local_sampling_weights and local_repo_roots must have equal length")
++        episode_selection: dict[str, list[int]] = {}
++        train_manifest = os.environ.get("AXIS_PI05_TRAIN_MANIFEST")
++        if train_manifest:
++            manifest = pd.read_parquet(train_manifest, columns=["source_repo", "source_episode_index"])
++            for source_repo, rows in manifest.groupby("source_repo", sort=False):
++                episode_selection[str(source_repo)] = sorted(
++                    {int(value) for value in rows["source_episode_index"].tolist()}
++                )
++        datasets = []
++        for local_repo_id, local_root in zip(repo_ids, roots, strict=True):
++            episodes = episode_selection.get(local_repo_id)
++            if train_manifest and not episodes:
++                raise ValueError(f"train manifest has no episodes for local source {local_repo_id}")
++            if local_repo_id == "lerobot/libero_plus":
++                dataset = AxisPlusV3Dataset(local_root, episodes, action_horizon)
++                dataset_tasks = dataset.tasks
++            else:
++                dataset_meta = lerobot_dataset.LeRobotDatasetMetadata(local_repo_id, root=local_root)
++                dataset = AxisSelectedLeRobotDataset(
++                    local_repo_id,
++                    root=local_root,
++                    episodes=episodes,
++                    delta_timestamps={
++                        key: [t / dataset_meta.fps for t in range(action_horizon)]
++                        for key in data_config.action_sequence_keys
++                    },
++                )
++                dataset_tasks = dataset_meta.tasks
++            if data_config.prompt_from_task:
++                dataset = TransformedDataset(dataset, [_transforms.PromptFromLeRobotTask(dataset_tasks)])
++            datasets.append(dataset)
++        return WeightedConcatDataset(datasets, weights)
+ 
+     dataset_meta = lerobot_dataset.LeRobotDatasetMetadata(repo_id)
+     dataset = lerobot_dataset.LeRobotDataset(
+@@ -306,6 +508,10 @@ def create_torch_data_loader(
+     # For PyTorch DDP, create DistributedSampler and divide batch size by world size
+     # For JAX, divide by process count
+     sampler = None
++    if shuffle and hasattr(dataset, "sample_weights"):
++        sampler = torch.utils.data.WeightedRandomSampler(
++            dataset.sample_weights, num_samples=len(dataset), replacement=True
++        )
+     if framework == "pytorch":
+         if torch.distributed.is_initialized():
+             sampler = torch.utils.data.distributed.DistributedSampler(

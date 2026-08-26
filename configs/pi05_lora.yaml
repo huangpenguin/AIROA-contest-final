@@ -1,0 +1,63 @@
+# 可复现的 pi0.5 LoRA 实验描述。路径支持 ${VAR} 与 ~ 展开；不要在此文件写 token。
+run:
+  tag: parc2026_pi05_lora
+  output_dir: ${HOME}/data/pi05-ft-outputs/parc2026_pi05_lora
+  seed: 1000
+  allow_dirty: false
+  smoke_allow_dirty: false
+
+model:
+  name: pi05
+  base: lerobot/pi05_libero_base
+  revision: lerobot-v0.4.4
+  weights_sha256: ''
+
+dataset:
+  repo_id: local/libero_combined_20hz
+  root: ${HOME}/.cache/huggingface/lerobot/libero_combined_20hz
+  schema: lerobot-20hz
+  revision: provided-by-Omnicampus
+  manifest_sha256: ''
+
+mix:
+  path: ''
+  sha256: ''
+
+train:
+  entry: examples/pi05_libero_finetune/scripts/full_pi05_lora.sh
+  smoke_entry: examples/pi05_libero_finetune/scripts/smoke_pi05.sh
+  steps: 20000
+  smoke_steps: 10
+  batch_size: 16
+  gradient_accumulation: 8
+  save_steps: 1000
+  lora_rank: 16
+  learning_rate: 5.0e-5
+  num_workers: 8
+  video_backend: torchcodec
+  action_chunk: 10
+  inference_steps: 10
+  precision: bfloat16
+
+wandb:
+  mode: online
+  project: parc2026-pi05
+  disable_artifact: true
+
+hardware:
+  gpu_ids: '0'
+
+eval:
+  tracks: [track1]
+  n_episodes: 2
+  max_steps: 300
+  timeout_seconds: 10
+  output_dir: results/local
+
+submission:
+  directory: submission_candidate
+  zip: artifacts/parc2026_submission.zip
+  assignment_ids:
+    track1: 1007
+    track2: 1008
+    track3: 1009

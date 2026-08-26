@@ -1,0 +1,53 @@
+diff --git a/src/openpi/training/axis_pi05_contract.py b/src/openpi/training/axis_pi05_contract.py
+new file mode 100644
+index 0000000..bdfc10a
+--- /dev/null
++++ b/src/openpi/training/axis_pi05_contract.py
+@@ -0,0 +1,47 @@
++"""Small, dependency-light contract helpers injected into a pinned OpenPI tree.
++
++The repository-local runner owns data locks and provenance.  This module keeps
++the model-side invariants close to OpenPI without importing the old experiment
++loader or any developer-specific path.
++"""
++from __future__ import annotations
++
++import re
++from typing import Any, Iterable
++
++
++KEEP_STEPS = frozenset({500, 1000, 3000})
++
++
++def trainable_path(path: str, scope: str) -> bool:
++    """Return the expected trainable status for one flattened parameter path."""
++    lowered = path.lower()
++    if re.search(r"vision|visual|backbone", lowered):
++        return False
++    if scope == "F0" and re.search(r"action_(in|out)_proj|time_mlp_(in|out)", lowered):
++        return False
++    if scope == "F1" and re.search(r"time_mlp_(in|out)", lowered):
++        return False
++    if scope not in {"F0", "F1", "F2"}:
++        raise ValueError(f"unknown Axis Pi0.5 trainable scope: {scope}")
++    return bool(re.search(r"(paligemma|action_expert).*lora|action_(in|out)_proj|time_mlp_(in|out)", lowered))
++
++
++def audit_paths(paths: Iterable[str], scope: str) -> dict[str, Any]:
++    all_paths = sorted(str(path) for path in paths)
++    if len(all_paths) != len(set(all_paths)):
++        raise ValueError("duplicate parameter path")
++    trainable = [path for path in all_paths if trainable_path(path, scope)]
++    if not trainable:
++        raise ValueError(f"no parameters matched scope {scope}")
++    return {
++        "scope": scope,
++        "trainable_paths": trainable,
++        "frozen_paths": [path for path in all_paths if path not in set(trainable)],
++    }
++
++
++def assert_checkpoint_step(step: int) -> None:
++    if int(step) <= 0:
++        raise ValueError(f"internal checkpoint step must be positive: {step}")
++

@@ -1,0 +1,15 @@
+diff --git a/scripts/train.py b/scripts/train.py
+index 9f96c84..b7f2a41 100644
+--- a/scripts/train.py
++++ b/scripts/train.py
+@@ -270,5 +270,7 @@ def main(config: _config.TrainConfig):
+         batch = next(data_iter)
+ 
+-        if (step % config.save_interval == 0 and step > start_step) or step == config.num_train_steps - 1:
+-            _checkpoints.save_state(checkpoint_manager, train_state, data_loader, step)
++        internal_step = int(train_state.step)
++        if internal_step in keep_steps or internal_step == config.num_train_steps:
++            # Directory names are the post-update train_state.step, not the zero-based loop variable.
++            _checkpoints.save_state(checkpoint_manager, train_state, data_loader, internal_step)
+ 
+     logging.info("Waiting for checkpoint manager to finish")

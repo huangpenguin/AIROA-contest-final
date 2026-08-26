@@ -1,0 +1,16 @@
+--- a/scripts/train.py
++++ b/scripts/train.py
+@@ -48,6 +48,13 @@
+     logger.handlers[0].setFormatter(formatter)
+ 
+ 
++def _metric_text(value: Any) -> str:
++    array = np.asarray(value)
++    if array.dtype.kind in "biufc" and array.ndim == 0:
++        return f"{float(array):.4f}"
++    return str(value)
++
++
+ def init_wandb(config: _config.TrainConfig, *, resuming: bool, log_code: bool = False, enabled: bool = True):
+     if not enabled:
+         wandb.init(mode="disabled")

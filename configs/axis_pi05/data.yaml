@@ -1,0 +1,14 @@
+schema_version: 1
+root: .
+lock: configs/axis_pi05/data_sources.lock.yaml
+raw_root: data/raw/hf
+processed_root: data/processed/libero_axis_mix_v1
+reports_root: data/reports
+catalog_path: data/processed/libero_axis_mix_v1/catalog.jsonl
+plus_category_csv: data/raw/hf/katsukiono/libero-plus-episode-categories/episode_categories.csv
+expected:
+  source_fps: 20
+  state_dim: 8
+  action_dim: 7
+  cameras: [front, wrist]
+  categories: [base, env, lighting, language, camera_pose, sensor_noise]

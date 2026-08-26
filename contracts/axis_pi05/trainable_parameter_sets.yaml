@@ -1,0 +1,14 @@
+schema_version: 1
+parameter_sets:
+  F0:
+    description: LoRA only
+    trainable: [paligemma_lora, action_expert_lora]
+    frozen: [vision_backbone, base_language, base_action_expert, action_in_proj, action_out_proj, time_mlp_in, time_mlp_out]
+  F1:
+    description: LoRA + action projections
+    trainable: [paligemma_lora, action_expert_lora, action_in_proj, action_out_proj]
+    frozen: [vision_backbone, base_language, base_action_expert, time_mlp_in, time_mlp_out]
+  F2:
+    description: LoRA + action/time adapters
+    trainable: [paligemma_lora, action_expert_lora, action_in_proj, action_out_proj, time_mlp_in, time_mlp_out]
+    frozen: [vision_backbone, base_language, base_action_expert]

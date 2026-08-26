@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "checkpoint": "outputs/axis_pi05_v2/v2_t1_f0_m1_500_clean/axis_pi05_libero_mix/v2_t1_f0_m1_500_clean/500",
+  "checkpoint_internal_step": 500,
+  "checkpoint_validator": "passed",
+  "stable_checkpoint_tree_sha256": "3a7ba83ca54b3339ea4e27fa0827a0ff594ffdbe1f2d6d708812508983326bd0",
+  "adapter": "tools/axis_pi05/checkpoint_http_server.py",
+  "openpi_config": "axis_pi05_libero_mix",
+  "real_libero_smoke": {
+    "evaluator_environment": "PARC2026_pre/venv",
+    "benchmark": "libero_spatial",
+    "tasks": 1,
+    "episodes": 1,
+    "max_steps": 1,
+    "returncode": 0,
+    "score": 0.0,
+    "score_status": "diagnostic_only_single_step_smoke",
+    "action_shape": [7],
+    "action_dtype": "float32",
+    "action_finite": true,
+    "video_frames": 2
+  },
+  "media_ffprobe": {
+    "codec_name": "h264",
+    "pixel_format": "yuv420p",
+    "frame_rate": "20/1",
+    "frame_count": 2
+  },
+  "recorded_at": "2026-08-26T13:53:02+09:00"
+}

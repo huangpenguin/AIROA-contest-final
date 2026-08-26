@@ -1,6 +1,6 @@
-schema_version: 1
+schema_version: 2
 official_pipeline_root: .
-validation_manifest: data/manifests/M1/validation_episodes.parquet
+validation_manifest: data/manifests_v2/M1/validation_episodes.parquet
 public_t3_manifest: data/manifests/public_t3_holdout.jsonl
 fixed_eval_seed: 1000
 steps: [500, 1000, 3000]

@@ -1,6 +1,6 @@
 # Axis Pi0.5 审计整改、重跑与验收计划
 
-状态：**执行中：R0–R8 已完成，R9 F0 core 正在执行，R10 等待 evaluator**  
+状态：**执行中：R0–R8 已完成，R9 clean formal runs 已排队执行，R10 已完成环境/media smoke，正式 checkpoint evaluator 仍待接入**
 日期：2026-08-26（Asia/Tokyo）  
 执行者：Codex  
 基线计划：`docs/AXIS_PI05_POSTTRAIN_EXECUTION_PLAN.md`  
@@ -11,16 +11,16 @@
 | 阶段 | 状态 | 证据 |
 |---|---|---|
 | R0 | completed | `data/reports/axis_pi05_v2/pre_remediation_inventory.json` |
-| R1 | completed | v2 provenance、clean worktree patch replay、`git diff --check` |
+| R1 | completed | v2 provenance、clean worktree patch replay、`git diff --check`；formal v2 clean gate 已提交 |
 | R2–R4 | completed | `data/manifests_v2/{M0,M1,M2}/`、sampler audit、loader audit、norm provenance |
 | R5 | completed | `data/reports/axis_pi05_v2/runtime_parameter_audit_F{0,1,2}.json` |
 | R6 | completed for D3 | `data/reports/axis_pi05_v2/f1_diagnostic_D3.json`：50/50 finite |
 | R7 | completed | T0 step=10 checkpoint 的 `checkpoint_manifest_v2.json` 与 `restore_validation.json` |
-| R8 | completed in training environment | `59 passed, 7 skipped`；task-filter 已改为运行时导入仿真依赖并通过 |
-| R9 | in progress | `outputs/axis_pi05_v2/v2_t1_f0_m1_500/` |
-| R10 | gated | 需 evaluator 通过后才执行 media/failure gate |
+| R8 | completed in training/evaluator environments | 训练环境 `59 passed, 7 skipped`；独立 evaluator venv 的 task-filter `3 passed` |
+| R9 | in progress | pre-commit dirty runs 保留作诊断；clean T0/T1/T2/F1/F2 已建立持久 GPU 队列 |
+| R10 | partial smoke | 真实 LIBERO 1-task smoke 通过；H.264/yuv420p/20 FPS/2 frames ffprobe gate 通过；正式 checkpoint evaluator 仍 gated |
 
-旧 v1 产物均保持不变；所有整改训练输出写入 `outputs/axis_pi05_v2/`，不将诊断 run 晋升为正式证据。
+旧 v1 产物均保持不变；所有整改训练输出写入 `outputs/axis_pi05_v2/`，不将 pre-commit dirty 诊断 run 晋升为正式证据。当前 clean queue 从最新 clean commit 启动，且 `run.py` 已在创建 v2 run 前拒绝 dirty worktree。
 
 ## 1. 目标
 

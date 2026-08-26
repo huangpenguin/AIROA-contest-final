@@ -118,6 +118,9 @@ def execute(root: Path, train_config: dict[str, Any], stage: str, scope: str, mi
         raise RuntimeError(f"训练输入缺失: {check['missing']}")
     if not check["gpu_available"]:
         raise RuntimeError("没有可用 NVIDIA GPU；A12 不能在当前机器上冒充完成")
+    git = git_info(root)
+    if data_version == 2 and git["dirty"]:
+        raise RuntimeError("v2 formal run 必须从 clean Git worktree 启动；请先提交变更或恢复 worktree")
     resolved = resolved_config(root, train_config, scope, mix, steps, run_id)
     if resolved["resolved"]["global_batch"] in (None, "", "null"):
         raise RuntimeError("global batch 未锁定；先执行统一显存 probe 并设置 AXIS_PI05_GLOBAL_BATCH")
@@ -142,7 +145,7 @@ def execute(root: Path, train_config: dict[str, Any], stage: str, scope: str, mi
         "mix": mix,
         "run_id": run_id,
         "command": command_text,
-        "git": git_info(root),
+        "git": git,
         "lock_sha256": sha256_file(root / "configs/axis_pi05/data_sources.lock.yaml"),
         "catalog_sha256": sha256_file(resolved_paths["catalog"]),
         "mix_manifest_sha256": sha256_file(resolved_paths["mix_manifest"]),

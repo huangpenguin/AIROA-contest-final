@@ -8,7 +8,7 @@
 - v2 formal run 现在在启动前强制要求 clean Git worktree；启动前已产生的 dirty T1/T2 运行仅保留为诊断参考，不进入正式验收。
 - R8 训练环境回归为 `61 passed, 7 skipped`；独立 evaluator venv 的 task-filter 为 `3 passed`。
 - 独立 evaluator venv 已完成真实 LIBERO 单 task/单 episode/单 step smoke；clean T0 checkpoint 通过新增 OpenPI→HTTP adapter 的 `/health`、`/reset`、`/act` 及真实 rollout；视频链路已改为显式 ffmpeg H.264、yuv420p、20 FPS、faststart，并由 ffprobe 校验通过。
-- clean T0/T1/T2/F1/F2 已在 GPU1–3 建立持久队列；GPU0 上已有外部进程，未触碰。checkpoint adapter 已固定；正式全量 model-selection evaluator 仍需 clean T1/T2/F1/F2 checkpoint、固定评测 manifest 和 public T3 holdout 后才能执行。
+- clean T0/T1/T2/F1/F2 已在 GPU1–3 建立持久队列；clean T1 F0/M1 500 已通过独立 checkpoint validator；GPU0 上已有外部进程，未触碰。checkpoint adapter 已固定；正式全量 model-selection evaluator 仍需 clean T2/F1/F2 checkpoint、固定评测 manifest 和 public T3 holdout 后才能执行。
 
 本轮已把计划中可在 Git 仓库内审计和重建的部分实现为 `tools/axis_pi05`，并在 GPU 服务器完成真实数据、Axis restore、训练与 checkpoint smoke。原始数据、Axis Orbax 参数、OpenPI clone、checkpoint、视频仍由 `.gitignore` 排除。
 

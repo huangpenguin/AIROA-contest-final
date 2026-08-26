@@ -4,7 +4,7 @@
 
 ## 整改续执行状态
 
-- 当前分支：`codex/axis-pi05-audit-remediation`；整改提交已推进至当前 clean commit `a08e76b`，worktree clean。
+- 当前分支：`codex/axis-pi05-audit-remediation`；checkpoint adapter、smoke 报告和测试计数已提交，worktree clean。
 - v2 formal run 现在在启动前强制要求 clean Git worktree；启动前已产生的 dirty T1/T2 运行仅保留为诊断参考，不进入正式验收。
 - R8 训练环境回归为 `61 passed, 7 skipped`；独立 evaluator venv 的 task-filter 为 `3 passed`。
 - 独立 evaluator venv 已完成真实 LIBERO 单 task/单 episode/单 step smoke；clean T0 checkpoint 通过新增 OpenPI→HTTP adapter 的 `/health`、`/reset`、`/act` 及真实 rollout；视频链路已改为显式 ffmpeg H.264、yuv420p、20 FPS、faststart，并由 ffprobe 校验通过。

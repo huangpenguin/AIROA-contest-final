@@ -4,11 +4,11 @@
 
 ## 整改续执行状态
 
-- 当前分支：`codex/axis-pi05-audit-remediation`；整改提交已推进至 `1a75a37`，随后补充的 clean-run/media 门禁提交仍保持 clean worktree。
+- 当前分支：`codex/axis-pi05-audit-remediation`；整改提交已推进至当前 clean commit `20bafd0`，worktree clean。
 - v2 formal run 现在在启动前强制要求 clean Git worktree；启动前已产生的 dirty T1/T2 运行仅保留为诊断参考，不进入正式验收。
 - R8 训练环境回归为 `59 passed, 7 skipped`；独立 evaluator venv 的 task-filter 为 `3 passed`。
-- 独立 evaluator venv 已完成真实 LIBERO 单 task/单 episode/单 step smoke；视频链路已改为显式 ffmpeg H.264、yuv420p、20 FPS、faststart，并由 ffprobe 校验通过。
-- clean T0/T1/T2/F1/F2 已在 GPU1–3 建立持久队列；GPU0 上已有外部进程，未触碰。正式 checkpoint evaluator 仍需固定 checkpoint policy adapter 和 public T3 holdout 后才能执行。
+- 独立 evaluator venv 已完成真实 LIBERO 单 task/单 episode/单 step smoke；clean T0 checkpoint 通过新增 OpenPI→HTTP adapter 的 `/health`、`/reset`、`/act` 及真实 rollout；视频链路已改为显式 ffmpeg H.264、yuv420p、20 FPS、faststart，并由 ffprobe 校验通过。
+- clean T0/T1/T2/F1/F2 已在 GPU1–3 建立持久队列；GPU0 上已有外部进程，未触碰。checkpoint adapter 已固定；正式全量 model-selection evaluator 仍需 clean T1/T2/F1/F2 checkpoint、固定评测 manifest 和 public T3 holdout 后才能执行。
 
 本轮已把计划中可在 Git 仓库内审计和重建的部分实现为 `tools/axis_pi05`，并在 GPU 服务器完成真实数据、Axis restore、训练与 checkpoint smoke。原始数据、Axis Orbax 参数、OpenPI clone、checkpoint、视频仍由 `.gitignore` 排除。
 
@@ -29,9 +29,9 @@
 - 六个锁定数据源、Plus v3 reader、catalog、M0/M1/M2 manifest 和三套 mixture norm stats 已完成并通过数据门禁。
 - T0/F0/M1 10 steps 已通过；初始 T1/F0/M1 在 peak lr=5e-5 时从 step 200 起 NaN，未计入有效结果。
 - 已加入非有限值门禁；以 `peak_lr=1e-5`、`decay_lr=1e-6` 重跑的 T1/F0/M1 500 steps 全程 finite。
-- 有效 checkpoint：internal step 500，params/train_state Orbax restore smoke 通过，`optimizer_state=present`，manifest 已写入输出目录。
+- clean T0 checkpoint：internal step 10，params/train_state Orbax restore smoke 通过，`optimizer_state=present`，norm canonical equality 通过，stable tree SHA 为 `a2fdd3a3f6b35dea7dce4565d57d3c33ed4716ff3bd03f3b74559b764702573c`。此前 dirty T1/F0/M1 step 500 仅作诊断，不计入有效 formal checkpoint；clean T1 正在排队执行。
 - F1/M1 在 V100 上仍出现可复现的数值不稳定：bfloat16 兼容路径在 step 20 变为 NaN；降低 LR、收紧 clip 仍在 step 20 失败；实验性 FP32 optimizer-state 路径在 step 10 出现 `grad_norm=inf`，已回退且不计入正式结果。
-- 因此没有伪造 F1/F2 checkpoint；上述是整改前状态。整改后的 F0 clean T1/T2、F1/F2 轨道已排队，正式 checkpoint evaluator 仍保持 gated。
+- 因此没有伪造 F1/F2 checkpoint；上述历史记录是整改前状态。整改后的 F0 clean T1/T2、F1/F2 轨道已排队，正式 checkpoint evaluator 仍保持 gated。
 - 最终门禁：`tools.axis_pi05.check` 通过；训练环境测试 `59 passed, 7 skipped`，独立 evaluator venv 的 3 个 task-filter 测试通过。训练环境不安装 evaluator 专用依赖，避免改变环境边界。
 
 GPU 运行使用以下入口；不在没有实际输入或 evaluator 输出时伪造 checkpoint、评分或视频：

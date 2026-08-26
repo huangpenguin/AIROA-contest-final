@@ -32,9 +32,9 @@ def test_observation_roundtrip_and_openpi_mapping():
     }
     decoded = deserialize_observation(_observation_envelope(source))
     mapped = build_openpi_observation(decoded, "pick up the block")
-    assert mapped["observation.images.image"].shape == (224, 224, 3)
-    assert mapped["observation.images.wrist_image"].shape == (224, 224, 3)
-    np.testing.assert_allclose(mapped["observation.state"], [1, 2, 3, 0, 0, 0, 4, 5])
+    assert mapped["observation/image"].shape == (224, 224, 3)
+    assert mapped["observation/wrist_image"].shape == (224, 224, 3)
+    np.testing.assert_allclose(mapped["observation/state"], [1, 2, 3, 0, 0, 0, 4, 5])
     assert mapped["prompt"] == "pick up the block"
 
 

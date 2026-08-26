@@ -116,15 +116,17 @@ def build_openpi_observation(
     if state.shape != (8,) or not np.all(np.isfinite(state)):
         raise ValueError(f"invalid LIBERO state: shape={state.shape}")
 
-    # ``v3_keys=True`` in the locked Axis training config expects these names.
+    # ``create_trained_policy`` applies model/data transforms at inference time,
+    # but dataset repacking is a loader concern and is not applied there.  The
+    # LIBERO policy transform therefore consumes the canonical inference names.
     return {
-        "observation.images.image": _resize_for_openpi(
+        "observation/image": _resize_for_openpi(
             observation["agentview_image"]
         ),
-        "observation.images.wrist_image": _resize_for_openpi(
+        "observation/wrist_image": _resize_for_openpi(
             observation["robot0_eye_in_hand_image"]
         ),
-        "observation.state": state,
+        "observation/state": state,
         "prompt": str(instruction),
     }
 

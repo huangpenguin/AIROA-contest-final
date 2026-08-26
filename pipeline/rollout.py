@@ -1,5 +1,8 @@
+import json
 import logging
 import os
+import shutil
+import subprocess
 import time
 from dataclasses import dataclass, field
 from typing import Any, Protocol
@@ -271,16 +274,58 @@ class RolloutExecutor:
         if not frames:
             return
         out_dir = os.environ.get("T3_VIDEO_DIR", "")
+        path: str | None = None
         try:
+            if shutil.which("ffmpeg") is None or shutil.which("ffprobe") is None:
+                raise RuntimeError("缺少 ffmpeg/ffprobe")
             os.makedirs(out_dir, exist_ok=True)
             fps = int(os.environ.get("T3_VIDEO_FPS", "20"))
             tag = "SUCCESS" if success else "FAIL"
             path = os.path.join(out_dir, f"{task_name}__{tag}.mp4")
-            import imageio.v2 as imageio
-
-            imageio.mimwrite(path, frames, fps=fps, macro_block_size=1)
+            first = np.asarray(frames[0])
+            if first.ndim != 3 or first.shape[2] != 3:
+                raise ValueError(f"视频帧必须是 HxWx3，实际 {first.shape}")
+            height, width, _ = first.shape
+            if any(np.asarray(frame).shape != first.shape for frame in frames):
+                raise ValueError("视频帧尺寸不一致")
+            payload = b"".join(np.ascontiguousarray(frame, dtype=np.uint8).tobytes() for frame in frames)
+            command = [
+                "ffmpeg", "-y", "-loglevel", "error",
+                "-f", "rawvideo", "-vcodec", "rawvideo", "-pix_fmt", "rgb24",
+                "-s", f"{width}x{height}", "-r", str(fps), "-i", "-",
+                "-an", "-c:v", "libx264", "-pix_fmt", "yuv420p",
+                "-movflags", "+faststart", path,
+            ]
+            result = subprocess.run(command, input=payload, capture_output=True, check=False)
+            if result.returncode != 0:
+                detail = result.stderr.decode("utf-8", errors="replace")[-1000:]
+                raise RuntimeError(f"ffmpeg returncode={result.returncode}: {detail}")
+            probe = subprocess.run(
+                [
+                    "ffprobe", "-v", "error", "-select_streams", "v:0",
+                    "-show_entries", "stream=codec_name,pix_fmt,r_frame_rate,nb_frames",
+                    "-of", "json", path,
+                ],
+                capture_output=True,
+                text=True,
+                check=True,
+            )
+            streams = json.loads(probe.stdout).get("streams", [])
+            stream = streams[0] if streams else {}
+            if (
+                stream.get("codec_name") != "h264"
+                or stream.get("pix_fmt") != "yuv420p"
+                or stream.get("r_frame_rate") != f"{fps}/1"
+                or int(stream.get("nb_frames", 0)) != len(frames)
+            ):
+                raise RuntimeError(f"视频 ffprobe gate 失败: {stream}")
             logger.info("動画を保存: %s (%d frames)", path, len(frames))
         except Exception as e:
+            if path:
+                try:
+                    os.unlink(path)
+                except FileNotFoundError:
+                    pass
             logger.warning("動画保存に失敗: %s", e)
 
     def evaluate_tasks(

@@ -16,7 +16,7 @@
 | R5 | completed | `data/reports/axis_pi05_v2/runtime_parameter_audit_F{0,1,2}.json` |
 | R6 | completed for D3 | `data/reports/axis_pi05_v2/f1_diagnostic_D3.json`：50/50 finite |
 | R7 | completed | clean T0 step=10 checkpoint 的 `checkpoint_manifest_v2.json` 与 `restore_validation.json`；独立 validator restore/forward/norm gate 通过 |
-| R8 | completed in training/evaluator environments | 训练环境 `59 passed, 7 skipped`；独立 evaluator venv 的 task-filter `3 passed` |
+| R8 | completed in training/evaluator environments | 训练环境 `61 passed, 7 skipped`；独立 evaluator venv 的 task-filter `3 passed` |
 | R9 | in progress | pre-commit dirty runs 保留作诊断；clean T0/T1/T2/F1/F2 已建立持久 GPU 队列 |
 | R10 | partial smoke | clean T0 checkpoint 经 OpenPI→HTTP adapter 接入真实 LIBERO 1-task/1-step smoke；H.264/yuv420p/20 FPS/2 frames ffprobe gate 通过；正式全量 evaluator 仍 gated |
 

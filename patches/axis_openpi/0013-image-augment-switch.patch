@@ -1,0 +1,23 @@
+diff --git a/src/openpi/models/pi0.py b/src/openpi/models/pi0.py
+index 93b68fa..e0ecb56 100644
+--- a/src/openpi/models/pi0.py
++++ b/src/openpi/models/pi0.py
+@@ -1,4 +1,5 @@
+ import logging
++import os
+ 
+ import einops
+ import flax.nnx as nnx
+@@ -216,7 +217,11 @@ class Pi0(_model.BaseModel):
+         averaged as zeros.
+         """
+         preprocess_rng, noise_rng, time_rng = jax.random.split(rng, 3)
+-        observation = _model.preprocess_observation(preprocess_rng, observation, train=train)
++        observation = _model.preprocess_observation(
++            preprocess_rng,
++            observation,
++            train=train and os.environ.get("AXIS_PI05_DISABLE_IMAGE_AUGMENT", "0") != "1",
++        )
+ 
+         batch_shape = actions.shape[:-2]
+         noise = jax.random.normal(noise_rng, actions.shape) if noise_override is None else noise_override

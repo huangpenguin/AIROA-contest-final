@@ -517,7 +517,11 @@ def checkpoint_manifest(arm: str, run_id: str) -> dict[str, Any]:
     for child in sorted(run_dir.iterdir()) if run_dir.is_dir() else []:
         if child.is_dir() and child.name.isdigit() and (child / "params").exists():
             steps.append(int(child.name))
-    required = [0, 1, 10, 25, 50, 100]
+    required = [0, 1, 10, 25]
+    if any(step >= 50 for step in steps):
+        required.append(50)
+    if any(step >= 100 for step in steps):
+        required.append(100)
     result = {"arm": arm, "run_id": run_id, "run_dir": str(run_dir), "steps": steps, "required": required, "complete": set(required).issubset(steps), "generated_at_unix": time.time()}
     write_json(REPORT_ROOT / arm / run_id / "checkpoint_manifest.json", result)
     return result

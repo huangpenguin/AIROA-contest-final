@@ -1,0 +1,20 @@
+diff --git a/scripts/train.py b/scripts/train.py
+index c12351e..c34884c 100644
+--- a/scripts/train.py
++++ b/scripts/train.py
+@@ -979,7 +979,14 @@ def main(config: _config.TrainConfig):
+                 for item in microbatch_metadata
+             ]
+             audit["rng_overrides"] = [
+-                item.get("__rng_overrides__") if isinstance(item, dict) else None
++                (
++                    {
++                        key: jax.make_array_from_process_local_data(data_sharding, np.asarray(value))
++                        for key, value in item["__rng_overrides__"].items()
++                    }
++                    if isinstance(item, dict) and item.get("__rng_overrides__") is not None
++                    else None
++                )
+                 for item in microbatch_metadata
+             ]
+             visible_ids = [

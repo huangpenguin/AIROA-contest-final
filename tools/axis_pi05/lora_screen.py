@@ -136,7 +136,15 @@ def _common_source_manifest(arm: str, run_id: str, gpu_ids: tuple[int, ...], ste
             "params_root": str(ROOT / "data/models/axisrobotics/Pi0.5-Axis" / AXIS_REVISION / "params"),
             "initialization": "released dense params plus exact zero-delta LoRA",
         },
-        "training": {"steps": steps, "gpu_ids": list(gpu_ids), "gpu0_touched": False},
+        "training": {
+            "steps": steps,
+            "gpu_ids": list(gpu_ids),
+            "microbatch_size_per_gpu": 1,
+            "accumulation_steps": 32,
+            "effective_global_batch": 32 * len(gpu_ids),
+            "data_parallel": len(gpu_ids) > 1,
+            "gpu0_touched": False,
+        },
         "git": _git_info(),
         "files": {
             "phase1_norm_manifest_sha256": _sha256(norm_manifest_path),
@@ -221,6 +229,7 @@ def train_arm(arm: str, run_id: str, gpu_ids: tuple[int, ...], steps: int) -> di
             "AXIS_PI05_LORA_OBJECTIVE": ARMS[arm]["objective"],
             "AXIS_PI05_LORA_RUN_ID": run_id,
             "AXIS_PI05_LORA_RUN_DIR": str(run_dir),
+            "AXIS_PI05_LORA_EFFECTIVE_BATCH": str(32 * len(gpu_ids)),
             "AXIS_PI05_LORA_NORM_STATS": str(PHASE1_ROOT / "norm_stats.json"),
             "AXIS_PI05_LORA_DATA_ROOT": str(ROOT / "data/raw/hf/physical-intelligence/libero"),
             "AXIS_PI05_LORA_SAMPLING_MANIFEST": str(PHASE1_ROOT / "official_sampling_manifest.jsonl"),
@@ -317,6 +326,7 @@ def continue_arm(arm: str, run_id: str, gpu_ids: tuple[int, ...], steps: int) ->
             "AXIS_PI05_LORA_RUN_ID": run_id,
             "AXIS_PI05_LORA_RUN_DIR": str(run_dir),
             "AXIS_PI05_LORA_RESUME": "1",
+            "AXIS_PI05_LORA_EFFECTIVE_BATCH": str(32 * len(gpu_ids)),
             "AXIS_PI05_LORA_NORM_STATS": str(PHASE1_ROOT / "norm_stats.json"),
             "AXIS_PI05_LORA_DATA_ROOT": str(ROOT / "data/raw/hf/physical-intelligence/libero"),
             "AXIS_PI05_LORA_SAMPLING_MANIFEST": str(PHASE1_ROOT / "official_sampling_manifest.jsonl"),
@@ -522,14 +532,103 @@ def checkpoint_manifest(arm: str, run_id: str) -> dict[str, Any]:
         required.append(50)
     if any(step >= 100 for step in steps):
         required.append(100)
+    if any(step >= 250 for step in steps):
+        required.append(250)
+    if any(step >= 500 for step in steps):
+        required.append(500)
     result = {"arm": arm, "run_id": run_id, "run_dir": str(run_dir), "steps": steps, "required": required, "complete": set(required).issubset(steps), "generated_at_unix": time.time()}
     write_json(REPORT_ROOT / arm / run_id / "checkpoint_manifest.json", result)
     return result
 
 
+def two_gpu_update_parity(gpu_ids: tuple[int, ...]) -> dict[str, Any]:
+    """Run the locked batch-64 accumulation fixture on two real devices.
+
+    The two-device path uses 1 example/device for 32 microsteps.  The
+    reference path uses 2 examples on one device for the same 32 microsteps;
+    both therefore apply one optimizer update to the same 64 examples.
+    """
+    if len(gpu_ids) != 2:
+        raise ValueError("two-GPU parity requires exactly two GPU ids")
+    require_free_targets(gpu_ids)
+    out_path = REPORT_ROOT / "two_gpu_update_parity.json"
+    code = r'''
+import json
+import optax
+import jax
+import jax.numpy as jnp
+
+devices = jax.devices()
+if len(devices) != 2:
+    raise RuntimeError(f"expected two visible devices, got {devices}")
+
+def sample_loss(params, x, y):
+    prediction = params[0] * x + params[1]
+    return 0.5 * (prediction - y) ** 2
+
+per_sample_grad = jax.jit(jax.grad(sample_loss))
+parallel_grad = jax.pmap(per_sample_grad, devices=devices)
+batch_grad = jax.jit(jax.grad(lambda p, xb, yb: jnp.mean(jax.vmap(sample_loss, in_axes=(None, 0, 0))(p, xb, yb))), device=devices[0])
+xs = jnp.linspace(-1.0, 1.0, 64, dtype=jnp.float32)
+ys = 0.75 * xs - 0.2
+initial = jnp.asarray([0.125, -0.375], dtype=jnp.float32)
+replicated = jax.device_put_replicated(initial, devices)
+parallel_sum = jnp.zeros_like(initial)
+reference_sum = jnp.zeros_like(initial)
+for micro in range(32):
+    pair_x = xs[2 * micro:2 * micro + 2]
+    pair_y = ys[2 * micro:2 * micro + 2]
+    parallel = parallel_grad(replicated, pair_x, pair_y)
+    parallel_sum = parallel_sum + jnp.mean(parallel, axis=0)
+    reference_sum = reference_sum + batch_grad(initial, pair_x, pair_y)
+parallel_grad_mean = parallel_sum / 32.0
+reference_grad_mean = reference_sum / 32.0
+tx = optax.adam(1e-3)
+parallel_opt = tx.init(initial)
+reference_opt = tx.init(initial)
+parallel_updates, parallel_opt = tx.update(parallel_grad_mean, parallel_opt, initial)
+reference_updates, reference_opt = tx.update(reference_grad_mean, reference_opt, initial)
+parallel_params = optax.apply_updates(initial, parallel_updates)
+reference_params = optax.apply_updates(initial, reference_updates)
+max_grad_abs = float(jnp.max(jnp.abs(parallel_grad_mean - reference_grad_mean)))
+max_update_abs = float(jnp.max(jnp.abs(parallel_updates - reference_updates)))
+max_param_abs = float(jnp.max(jnp.abs(parallel_params - reference_params)))
+if max_grad_abs > 1e-6 or max_update_abs > 1e-6 or max_param_abs > 1e-6:
+    raise RuntimeError(f"two-GPU update parity failed: {max_grad_abs=} {max_update_abs=} {max_param_abs=}")
+print(json.dumps({
+    "status": "passed",
+    "visible_device_count": len(devices),
+    "parallel_device_count": 2,
+    "microbatch_size_per_gpu": 1,
+    "single_device_reference_microbatch_size": 2,
+    "accumulation_steps": 32,
+    "effective_global_batch": 64,
+    "optimizer_updates": 1,
+    "max_gradient_abs_diff": max_grad_abs,
+    "max_update_abs_diff": max_update_abs,
+    "max_parameter_abs_diff": max_param_abs,
+}))
+'''
+    env = os.environ.copy()
+    env.update(
+        {
+            "CUDA_VISIBLE_DEVICES": ",".join(str(gpu_id) for gpu_id in gpu_ids),
+            "JAX_PLATFORMS": "cuda",
+            "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
+        }
+    )
+    completed = subprocess.run([str(PYTHON), "-c", code], cwd=ROOT, env=env, capture_output=True, text=True)
+    if completed.returncode != 0:
+        raise RuntimeError(f"two-GPU update parity failed:\n{completed.stderr[-4000:]}")
+    payload = json.loads(completed.stdout.strip().splitlines()[-1])
+    payload.update({"gpu_ids": list(gpu_ids), "gpu0_touched": False, "generated_at_unix": time.time()})
+    write_json(out_path, payload)
+    return payload
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=["preflight", "train", "continue", "restore", "fixed-forward", "manifest"])
+    parser.add_argument("command", choices=["preflight", "train", "continue", "restore", "fixed-forward", "manifest", "parity"])
     parser.add_argument("--arm", choices=sorted(ARMS))
     parser.add_argument("--run-id")
     parser.add_argument("--steps", type=int, default=25)
@@ -538,6 +637,9 @@ def main() -> None:
     args = parser.parse_args()
     if args.command == "preflight":
         print(json.dumps({"gpu": _gpu_snapshot(), "root": _git_info()}, indent=2))
+        return
+    if args.command == "parity":
+        print(json.dumps(two_gpu_update_parity(tuple(args.gpu or (1, 2))), indent=2))
         return
     if not args.arm or not args.run_id:
         parser.error("train/continue/restore/fixed-forward/manifest requires --arm and --run-id")

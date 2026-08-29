@@ -155,7 +155,6 @@ def prepare_arm(arm: str, run_id: str, gpu_ids: tuple[int, ...], steps: int) -> 
     if report_dir.exists() or run_dir.exists():
         raise FileExistsError(f"refusing to overwrite existing LoRA run: {report_dir} or {run_dir}")
     report_dir.mkdir(parents=True)
-    run_dir.mkdir(parents=True)
     spec = ARMS[arm]
     resolved = {
         "schema_version": 1,

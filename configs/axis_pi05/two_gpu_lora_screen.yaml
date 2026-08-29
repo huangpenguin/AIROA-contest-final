@@ -1,0 +1,86 @@
+schema_version: 1
+plan: docs/AXIS_PI05_TWO_GPU_LORA_TODAY_PLAN.md
+status: lora_runtime_and_two_gpu_screen_only
+dense_canonical_line: DEFERRED_WAITING_FOR_4GPU_OR_96GB
+
+data:
+  repo_id: physical-intelligence/libero
+  revision: a4336d589d589045d1c56423ffdf3b88a0e19b1f
+  local_root: data/raw/hf/physical-intelligence/libero
+  sampling_manifest: data/reports/axis_libero_30k/phase1/official_sampling_manifest.jsonl
+  sampling_manifest_sha256: 41715b29010fc7067c8fff8fd6fb0939735966bdc9afcf35ee1b3a0fc11b45b1
+  payload_manifest_sha256: 8ede620026a9196a9d453508dfe2d4820e684d98cda1a5bc706cef68d1583cc3
+  fps: 10
+  resampling: none
+  episodes: 1693
+  tasks: 40
+  frames: 273465
+  action_horizon: 10
+  state_dim: 8
+  external_action_dim: 7
+  internal_action_dim: 32
+
+norm:
+  path: data/reports/axis_libero_30k/phase1/norm_stats.json
+  sha256: 4c803bf59c52677c36b6b420c614d8a7742e0847708443863e13e67cb80b18f5
+  policy: phase1_fresh_only
+  axis_released_norm_allowed: false
+
+model:
+  axis_repo: axisrobotics/Pi0.5-Axis
+  axis_revision: c342608c489515efa9ba8281400dc648bf3970e1
+  init: released_dense_params_plus_zero_delta_lora
+  paligemma_variant: gemma_2b_or_gemma_2b_lora_by_arm
+  action_expert_variant: gemma_300m_lora
+
+training:
+  optimizer: AdamW
+  beta1: 0.9
+  beta2: 0.95
+  epsilon: 1.0e-8
+  weight_decay: 1.0e-10
+  gradient_clip_norm: 0.1
+  microbatch_size_per_gpu: 1
+  accumulation_steps: 32
+  effective_global_batch_single_gpu: 32
+  effective_global_batch_two_gpu: 64
+  warmup_optimizer_steps: 100
+  ema: false
+  precision_primary: float32
+  v100_bfloat16: forbidden
+
+protocol:
+  primary: execute8
+  diagnostic: full_chunk
+  paired_comparison_required: true
+
+arms:
+  L1_action_lora:
+    trainable: action_expert_attention_ffn_lora
+    rank: 32
+    objective: valid7_temporal
+    peak_lr: 1.0e-6
+  L2_action_lora_heads:
+    trainable: action_expert_attention_ffn_lora_action_heads_time_mlp
+    rank: 32
+    objective: valid7_temporal
+    peak_lr: 1.0e-6
+  L3_dual_lora_heads:
+    trainable: action_expert_rank32_pali_gemma_rank16_heads_time_mlp
+    rank: 32
+    paligemma_rank: 16
+    objective: valid7_temporal
+    peak_lr: 3.0e-7
+  L4_dual_lora_heads_32d:
+    trainable: action_expert_rank32_pali_gemma_rank16_heads_time_mlp
+    rank: 32
+    paligemma_rank: 16
+    objective: padded32_temporal
+    peak_lr: 3.0e-7
+
+schedule:
+  wave1: {gpu1: L1_action_lora, gpu2: L2_action_lora}
+  wave2: {gpu1: L3_dual_lora_heads, gpu2: L4_dual_lora_heads_32d}
+  max_screen_step: 100
+  max_candidate_step: 500
+  stop_after: lora_candidate_500_pending_review

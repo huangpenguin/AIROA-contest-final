@@ -473,6 +473,7 @@ def main() -> None:
     formal_run_blockers = []
     if root_git["dirty"]:
         formal_run_blockers.append("git_dirty: formal 30k run requires a clean implementation commit")
+    formal_run_blockers.append("phase1_required_before_any_training: Phase 0 never directly authorizes training")
     next_action = (
         "Execute Phase 1 fresh-data loader, new norm stats, step-0 loss and precision audits; require a clean commit before formal 30k training."
         if phase0_ready
@@ -486,7 +487,7 @@ def main() -> None:
         "gates": {"source_provenance": remote_revision_verified or alternative_equivalent, "recipe_audit": recipe["ok"], "dataset_source": data_source_ready, "dataset_equivalence": alternative_equivalent, "resource_preflight": resources["checkpoint_estimate"]["fits_current_free_disk"], "official_snapshot_complete": canonical_snapshot_complete, "canonical_revision_correct": canonical_revision_correct, "clean_git": not root_git["dirty"]},
         "blockers": blockers,
         "formal_run_blockers": formal_run_blockers,
-        "formal_run_ready": phase0_ready and not formal_run_blockers,
+        "formal_run_ready": False,
         "next_action": next_action,
     }
     write_json(report_root / "phase0_summary.json", summary)

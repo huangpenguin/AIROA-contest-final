@@ -60,11 +60,19 @@ def main() -> None:
         result_path = checkpoint / "evaluation_result.json"
         if command_text:
             env = os.environ.copy()
-            env.update({"AXIS_PI05_CHECKPOINT": str(checkpoint), "AXIS_PI05_EVAL_RUN": str(run_root), "AXIS_PI05_EVAL_STEP": str(step)})
+            env.update({"AXIS_PI05_CHECKPOINT": str(checkpoint), "AXIS_PI05_EVAL_RUN": str(run_root), "AXIS_PI05_EVAL_STEP": str(step), "AXIS_PI05_EVAL_MODE": "legacy_external"})
             subprocess.run(shlex.split(command_text), cwd=root, env=env, check=True)
         if not result_path.is_file():
             raise SystemExit(f"evaluator 未写出 {result_path}；不会生成虚假的 0 分报告")
         result = json.loads(result_path.read_text(encoding="utf-8"))
+        if command_text:
+            # The external-command compatibility path is diagnostic-only and
+            # cannot produce a formal model-selection result.
+            result["official_result"] = False
+            result["diagnostic_only"] = True
+            result["result_scope"] = "local_diagnostic"
+            result["evaluation_mode"] = "legacy_external"
+            write_json(result_path, result)
         summaries.append(summarize(result, run_id=run_root.name, step=step))
         review = root / "reviews" / "axis_pi05" / run_root.name / str(step)
         review.mkdir(parents=True, exist_ok=True)

@@ -184,6 +184,7 @@ def _run(unit: str, repeat: int, root_commit: str, openpi_commit: str) -> dict[s
             "AXIS_PI05_SAVE_STEP0": "1" if spec["save_step0"] else "0",
             "AXIS_PI05_CHECKPOINT_ASYNC": "1" if spec["async"] else "0",
             "AXIS_PI05_WAIT_FOR_STEP0_SAVE": "1" if spec["wait"] else "0",
+            "AXIS_PI05_SAVE_FINAL_CHECKPOINT": "0",
             "OPENPI_KEEP_STEPS": "",
             "OPENPI_MAX_TO_KEEP": "2",
             "AXIS_PI05_FAIL_ON_NONFINITE": "1",

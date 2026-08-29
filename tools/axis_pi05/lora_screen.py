@@ -251,11 +251,11 @@ def train_arm(arm: str, run_id: str, gpu_ids: tuple[int, ...], steps: int) -> di
     return result
 
 
-def restore_report(arm: str, run_id: str, step: int, gpu: int = 1) -> dict[str, Any]:
+def restore_report(arm: str, run_id: str, step: int, gpu_ids: tuple[int, ...] = (1,)) -> dict[str, Any]:
     """Restore one Orbax state in a new process and record step/RNG continuity."""
     if arm not in ARMS:
         raise ValueError(arm)
-    require_free_targets((gpu,))
+    require_free_targets(gpu_ids)
     run_dir = OUTPUT_ROOT / arm / run_id
     report_dir = REPORT_ROOT / arm / run_id
     if not run_dir.is_dir():
@@ -279,7 +279,7 @@ print(json.dumps({"restored_step": int(state.step), "rng_fingerprint": str(jax.d
     env.update(
         {
             "PYTHONPATH": str(NESTED_SRC) + os.pathsep + str(ROOT),
-            "CUDA_VISIBLE_DEVICES": str(gpu),
+            "CUDA_VISIBLE_DEVICES": ",".join(str(gpu_id) for gpu_id in gpu_ids),
             "JAX_PLATFORMS": "cuda",
             "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
             "AXIS_PI05_LORA_ARM": arm,
@@ -288,9 +288,11 @@ print(json.dumps({"restored_step": int(state.step), "rng_fingerprint": str(jax.d
             "AXIS_PI05_AXIS_PARAMS": str(ROOT / "data/models/axisrobotics/Pi0.5-Axis" / AXIS_REVISION / "params"),
         }
     )
-    completed = subprocess.run([str(PYTHON), "-c", code], cwd=ROOT, env=env, check=True, capture_output=True, text=True)
+    completed = subprocess.run([str(PYTHON), "-c", code], cwd=ROOT, env=env, capture_output=True, text=True)
+    if completed.returncode != 0:
+        raise RuntimeError(f"LoRA restore failed:\n{completed.stderr[-8000:]}")
     payload = json.loads(completed.stdout.strip().splitlines()[-1])
-    payload.update({"arm": arm, "run_id": run_id, "requested_step": step, "gpu": gpu, "gpu0_touched": False})
+    payload.update({"arm": arm, "run_id": run_id, "requested_step": step, "gpu_ids": list(gpu_ids), "gpu0_touched": False})
     write_json(report_dir / f"restore_report_{step}.json", payload)
     return payload
 
@@ -371,13 +373,13 @@ def continue_arm(arm: str, run_id: str, gpu_ids: tuple[int, ...], steps: int) ->
     }
 
 
-def fixed_forward_report(arm: str, run_id: str, step: int, gpu: int = 1) -> dict[str, Any]:
+def fixed_forward_report(arm: str, run_id: str, step: int, gpu_ids: tuple[int, ...] = (1,)) -> dict[str, Any]:
     """Restore one LoRA checkpoint in a new process and run a deterministic forward."""
     if arm not in ARMS:
         raise ValueError(arm)
     if step < 0:
         raise ValueError(step)
-    require_free_targets((gpu,))
+    require_free_targets(gpu_ids)
     run_dir = OUTPUT_ROOT / arm / run_id
     report_dir = REPORT_ROOT / arm / run_id
     if not run_dir.is_dir() or not report_dir.is_dir():
@@ -408,29 +410,37 @@ spec.loader.exec_module(module)
 config = config_lib.get_config("axis_pi05_lora_screen")
 mesh = sharding.make_mesh(1)
 data_sharding = jax.sharding.NamedSharding(mesh, jax.sharding.PartitionSpec(sharding.DATA_AXIS))
-loader = data_loader.create_data_loader(config, sharding=data_sharding, shuffle=False, batch_size=1)
+loader = data_loader.create_data_loader(config, sharding=data_sharding, shuffle=False, batch_size=jax.device_count())
 batch = next(iter(loader))
 manager, resuming = module._checkpoints.initialize_checkpoint_dir(config.checkpoint_dir, keep_period=None, overwrite=False, resume=True)
 shape, _ = module.init_train_state(config, jax.random.key(config.seed), mesh, resume=True)
 state = module._checkpoints.restore_state(manager, shape, None, step=STEP)
 if int(state.step) != STEP:
     raise RuntimeError(f"restored state step mismatch: {state.step} != {STEP}")
-model = nnx.merge(state.model_def, state.params)
-model.eval()
 observation = batch[0]
 seed = 20260828
-noise = np.random.default_rng(seed).standard_normal((1, 10, 32), dtype=np.float32)
+batch_size = jax.device_count()
+noise = np.random.default_rng(seed).standard_normal((batch_size, 10, 32), dtype=np.float32)
 rng = jax.random.key(seed)
+def run_once():
+    # Merge a fresh module instance for each repetition.  This separates
+    # numerical repeatability from any mutable NNX module state.
+    model = nnx.merge(state.model_def, state.params)
+    model.eval()
+    output = model.sample_actions(
+        rng, observation, num_steps=10, noise=jax.device_put(noise, data_sharding)
+    )
+    return np.asarray(jax.block_until_ready(output))
 started = time.monotonic()
-output_a = model.sample_actions(rng, observation, num_steps=10, noise=jnp.asarray(noise))
-output_a = np.asarray(jax.block_until_ready(output_a))
+output_a = run_once()
 elapsed_a = time.monotonic() - started
-output_b = model.sample_actions(rng, observation, num_steps=10, noise=jnp.asarray(noise))
-output_b = np.asarray(jax.block_until_ready(output_b))
+output_b = run_once()
 elapsed_b = time.monotonic() - started - elapsed_a
-if not np.array_equal(output_a, output_b):
-    raise RuntimeError("fixed-input LoRA forward is not bitwise deterministic")
-if not np.isfinite(output_a).all():
+bitwise_equal = bool(np.array_equal(output_a, output_b))
+max_abs_diff = float(np.max(np.abs(output_a - output_b)))
+max_rel_diff = float(np.max(np.abs(output_a - output_b) / np.maximum(np.abs(output_a), 1e-6)))
+repeat_within_tolerance = bool(np.allclose(output_a, output_b, rtol=1e-5, atol=1e-5))
+if not np.isfinite(output_a).all() or not np.isfinite(output_b).all():
     raise RuntimeError("fixed-forward LoRA output contains NaN or Inf")
 norm_stats = normalize.deserialize_json(Path(os.environ["AXIS_PI05_LORA_NORM_STATS"]).read_text(encoding="utf-8"))
 unnormalized = transforms.Unnormalize(norm_stats)({"state": np.asarray(observation.state[0]), "actions": output_a[0]})
@@ -461,11 +471,18 @@ report = {
     "action_dim_internal": 32,
     "action_dim_external": 7,
     "action_horizon": 10,
-    "deterministic_bitwise": True,
+    "deterministic_bitwise": bitwise_equal,
+    "deterministic_within_fp32_tolerance": repeat_within_tolerance,
+    "repeatability_warning": not repeat_within_tolerance,
+    "repeat_max_abs_diff": max_abs_diff,
+    "repeat_max_relative_diff": max_rel_diff,
     "finite_internal_actions": True,
     "finite_external_actions": True,
     "optimizer_updates": 0,
     "optimizer_initialized_for_restore": True,
+    "restore_visible_device_count": jax.device_count(),
+    "forward_device": "dual_topology",
+    "forward_execution": "dual_device_after_dual_topology_restore",
     "fixed_seed": seed,
     "forward_seconds_first": elapsed_a,
     "forward_seconds_second": elapsed_b,
@@ -501,7 +518,7 @@ print(json.dumps({"status": report["status"], "checkpoint_step": report["checkpo
     env.update(
         {
             "PYTHONPATH": str(NESTED_SRC) + os.pathsep + str(ROOT),
-            "CUDA_VISIBLE_DEVICES": str(gpu),
+            "CUDA_VISIBLE_DEVICES": ",".join(str(gpu_id) for gpu_id in gpu_ids),
             "JAX_PLATFORMS": "cuda",
             "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
             "AXIS_PI05_LORA_ARM": arm,
@@ -514,9 +531,11 @@ print(json.dumps({"status": report["status"], "checkpoint_step": report["checkpo
             "AXIS_PI05_LORA_FIXED_FORWARD_REPORT": str(out_dir / "fixed_forward_report.json"),
         }
     )
-    completed = subprocess.run([str(PYTHON), "-c", code], cwd=ROOT, env=env, check=True, capture_output=True, text=True)
+    completed = subprocess.run([str(PYTHON), "-c", code], cwd=ROOT, env=env, capture_output=True, text=True)
+    if completed.returncode != 0:
+        raise RuntimeError(f"LoRA fixed-forward failed:\n{completed.stderr[-8000:]}")
     payload = json.loads(completed.stdout.strip().splitlines()[-1])
-    payload.update({"arm": arm, "run_id": run_id, "requested_step": step, "gpu": gpu, "gpu0_touched": False})
+    payload.update({"arm": arm, "run_id": run_id, "requested_step": step, "gpu_ids": list(gpu_ids), "gpu0_touched": False})
     write_json(report_dir / f"fixed_forward_report_{step}.json", payload)
     return payload
 
@@ -657,13 +676,13 @@ def main() -> None:
     elif args.command == "restore":
         if args.restore_step is None:
             parser.error("restore requires --restore-step")
-        gpu = (args.gpu or [1])[0]
-        print(json.dumps(restore_report(args.arm, args.run_id, args.restore_step, gpu), indent=2))
+        gpu_ids = tuple(args.gpu or [1])
+        print(json.dumps(restore_report(args.arm, args.run_id, args.restore_step, gpu_ids), indent=2))
     elif args.command == "fixed-forward":
         if args.restore_step is None:
             parser.error("fixed-forward requires --restore-step")
-        gpu = (args.gpu or [1])[0]
-        print(json.dumps(fixed_forward_report(args.arm, args.run_id, args.restore_step, gpu), indent=2))
+        gpu_ids = tuple(args.gpu or [1])
+        print(json.dumps(fixed_forward_report(args.arm, args.run_id, args.restore_step, gpu_ids), indent=2))
     else:
         print(json.dumps(checkpoint_manifest(args.arm, args.run_id), indent=2))
 

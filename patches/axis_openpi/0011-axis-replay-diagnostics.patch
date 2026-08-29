@@ -1,0 +1,61 @@
+diff --git a/scripts/train.py b/scripts/train.py
+index ea729af..c12351e 100644
+--- a/scripts/train.py
++++ b/scripts/train.py
+@@ -75,12 +75,14 @@ def _group_norm(tree: Any, needle: str) -> jax.Array:
+ 
+ 
+ def _nonfinite_leaf_count(tree: Any) -> jax.Array:
+-    leaves = [value for value in jax.tree_util.tree_leaves(tree) if hasattr(value, "dtype")]
++    leaves = [value.value if hasattr(value, "value") else value for value in jax.tree_util.tree_leaves(tree)]
++    leaves = [value for value in leaves if hasattr(value, "dtype")]
+     return jnp.asarray(sum(jnp.any(~jnp.isfinite(value)) for value in leaves), dtype=jnp.int32)
+ 
+ 
+ def _first_nonfinite_path(tree: Any) -> str | None:
+     for path, value in jax.tree_util.tree_flatten_with_path(tree)[0]:
++        value = value.value if hasattr(value, "value") else value
+         if hasattr(value, "dtype") and not np.all(np.isfinite(np.asarray(value))):
+             return _path_text(path)
+     return None
+@@ -205,14 +207,15 @@ class _FixedReplayDataLoader:
+         self._sample_count = int(self._manifest["sample_count"])
+         if self._sample_count != 64:
+             raise ValueError(f"fixed replay must contain exactly 64 samples, got {self._sample_count}")
+-        if self._sample_count % jax.device_count() != 0:
+-            raise ValueError("fixed replay sample count must be divisible by the visible device count")
++        self._batch_size = int(os.environ.get("AXIS_PI05_FIXED_REPLAY_BATCH_SIZE", str(jax.device_count())))
++        if self._batch_size <= 0 or self._sample_count % self._batch_size != 0:
++            raise ValueError("fixed replay sample count must be divisible by the fixed replay batch size")
+ 
+     def data_config(self):
+         return self._data_config
+ 
+     def __iter__(self):
+-        batch_size = jax.device_count()
++        batch_size = self._batch_size
+         while True:
+             for start in range(0, self._sample_count, batch_size):
+                 end = start + batch_size
+diff --git a/src/openpi/training/nan_replay.py b/src/openpi/training/nan_replay.py
+index 96f1190..e954b47 100644
+--- a/src/openpi/training/nan_replay.py
++++ b/src/openpi/training/nan_replay.py
+@@ -17,6 +17,8 @@ import numpy as np
+ 
+ 
+ def array_fingerprint(value: Any) -> dict[str, Any]:
++    if hasattr(value, "value"):
++        value = value.value
+     array = np.ascontiguousarray(np.asarray(value))
+     result: dict[str, Any] = {
+         "dtype": str(array.dtype),
+@@ -51,6 +53,8 @@ def tree_fingerprints(tree: Any, prefix: str = "") -> dict[str, dict[str, Any]]:
+             path = f"{prefix}/{index}" if prefix else str(index)
+             result.update(tree_fingerprints(value, path))
+         return result
++    if hasattr(tree, "value"):
++        return {prefix or "value": array_fingerprint(tree.value)}
+     try:
+         return {prefix or "value": array_fingerprint(tree)}
+     except (TypeError, ValueError):

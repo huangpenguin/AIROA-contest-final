@@ -32,6 +32,13 @@ class TestAxisPi05Tools(unittest.TestCase):
     def test_lock_has_full_revisions(self):
         load_and_validate(ROOT / "configs/axis_pi05/data_sources.lock.yaml")
 
+    def test_lock_records_effective_openpi_implementation(self):
+        openpi = load_yaml(ROOT / "configs/axis_pi05/data_sources.lock.yaml")["openpi"]
+        self.assertEqual(openpi["upstream_base_revision"], openpi["revision"])
+        self.assertRegex(openpi["implementation_commit"], r"^[0-9a-f]{40}$")
+        self.assertRegex(openpi["implementation_git_tree"], r"^[0-9a-f]{40}$")
+        self.assertRegex(openpi["implementation_patch_sha256"], r"^[0-9a-f]{64}$")
+
 
     def test_canonical_source_supersedes_non_equivalent_ipec(self):
         self.assertTrue(data_source_gate(canonical_ready=True, alternative_equivalent=False))

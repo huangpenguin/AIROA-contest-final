@@ -30,6 +30,16 @@ def validate_lock(lock: dict[str, Any]) -> None:
     if not isinstance(openpi, dict):
         raise LockError("缺少 openpi lock")
     _full_sha(openpi.get("revision"), "openpi.revision")
+    if "upstream_base_revision" in openpi:
+        _full_sha(openpi.get("upstream_base_revision"), "openpi.upstream_base_revision")
+    if "implementation_commit" in openpi:
+        _full_sha(openpi.get("implementation_commit"), "openpi.implementation_commit")
+    if "implementation_git_tree" in openpi:
+        _full_sha(openpi.get("implementation_git_tree"), "openpi.implementation_git_tree")
+    if "implementation_patch_sha256" in openpi and not re.fullmatch(
+        r"^[0-9a-f]{64}$", str(openpi["implementation_patch_sha256"])
+    ):
+        raise LockError("openpi.implementation_patch_sha256 必须是完整 64 位小写 SHA-256")
     if not openpi.get("url") or not openpi.get("patch_dir"):
         raise LockError("openpi.url 与 openpi.patch_dir 必须存在")
     datasets = lock.get("datasets")
@@ -80,13 +90,36 @@ def _run(command: list[str], cwd: Path | None = None) -> None:
     subprocess.run(command, cwd=cwd, check=True)
 
 
-def verify_openpi_checkout(root: Path, revision: str) -> dict[str, Any]:
+def verify_openpi_checkout(root: Path, openpi: dict[str, Any]) -> dict[str, Any]:
     if not (root / ".git").is_dir():
         raise LockError(f"OpenPI checkout 不存在: {root}")
     actual = subprocess.check_output(["git", "-C", str(root), "rev-parse", "HEAD"], text=True).strip()
-    if actual != revision:
-        raise LockError(f"OpenPI revision 不一致: expected={revision}, actual={actual}")
-    return {"revision": actual, "tree_sha256": sha256_tree(root, exclude={".git"})}
+    expected = str(openpi.get("implementation_commit", openpi["revision"]))
+    if actual != expected:
+        raise LockError(f"OpenPI implementation commit 不一致: expected={expected}, actual={actual}")
+    base = str(openpi.get("upstream_base_revision", openpi["revision"]))
+    if subprocess.run(
+        ["git", "-C", str(root), "cat-file", "-e", f"{base}^{{commit}}"], check=False
+    ).returncode != 0:
+        raise LockError(f"OpenPI upstream base revision 不存在于 checkout: {base}")
+    if subprocess.run(
+        ["git", "-C", str(root), "merge-base", "--is-ancestor", base, actual], check=False
+    ).returncode != 0:
+        raise LockError(f"OpenPI implementation commit 不是 upstream base 的后代: base={base}, actual={actual}")
+    status = subprocess.check_output(["git", "-C", str(root), "status", "--porcelain"], text=True).splitlines()
+    if status:
+        raise LockError(f"OpenPI checkout 必须 clean: {status[:5]}")
+    git_tree = subprocess.check_output(["git", "-C", str(root), "rev-parse", "HEAD^{tree}"], text=True).strip()
+    expected_tree = openpi.get("implementation_git_tree")
+    if expected_tree is not None and git_tree != expected_tree:
+        raise LockError(f"OpenPI Git tree 不一致: expected={expected_tree}, actual={git_tree}")
+    return {
+        "upstream_base_revision": base,
+        "implementation_commit": actual,
+        "implementation_git_tree": git_tree,
+        "worktree_clean": True,
+        "tree_sha256": sha256_tree(root, exclude={".git", "__pycache__"}),
+    }
 
 
 def verify_snapshot(root: Path, *, expected_files: list[str] | None = None) -> dict[str, Any]:
@@ -124,7 +157,7 @@ def main() -> None:
     lock = load_and_validate(lock_path)
     report: dict[str, Any] = {"lock": str(lock_path), "revisions": revision_map(lock)}
     if args.openpi_root.exists():
-        report["openpi"] = verify_openpi_checkout(args.openpi_root, lock["openpi"]["revision"])
+        report["openpi"] = verify_openpi_checkout(args.openpi_root, lock["openpi"])
     else:
         report["openpi"] = {"status": "not_downloaded"}
     if args.json:

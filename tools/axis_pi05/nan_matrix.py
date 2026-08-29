@@ -180,6 +180,10 @@ def _run(unit: str, repeat: int, root_commit: str, openpi_commit: str) -> dict[s
             "AXIS_PI05_AUDIT_SOURCE_MANIFEST": str(report_dir / "source_manifest.json"),
             "AXIS_PI05_AUDIT_RESOLVED_CONFIG": str(report_dir / "resolved_config.yaml"),
             "AXIS_PI05_FIXED_REPLAY": str(FIXTURE),
+            # The fixed replay gate isolates model/sharding numerics from
+            # augmax's stochastic image kernels.  Fresh-loader R4 runs keep
+            # the normal augmentation contract.
+            "AXIS_PI05_DISABLE_IMAGE_AUGMENT": "1",
             "AXIS_PI05_SKIP_OPTIMIZER_UPDATE": "1" if spec["skip_update"] else "0",
             "AXIS_PI05_SAVE_STEP0": "1" if spec["save_step0"] else "0",
             "AXIS_PI05_CHECKPOINT_ASYNC": "1" if spec["async"] else "0",

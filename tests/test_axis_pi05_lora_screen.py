@@ -6,6 +6,7 @@ from pathlib import Path
 import flax.linen as nn
 import jax
 import jax.numpy as jnp
+import numpy as np
 import optax
 import pytest
 
@@ -14,6 +15,7 @@ sys.path.insert(0, str(ROOT / "third_party/axis_openpi/src"))
 
 from openpi.models import lora  # noqa: E402
 from openpi.training import axis_lora  # noqa: E402
+from openpi.training import nan_replay  # noqa: E402
 
 
 def _einsum_params():
@@ -139,3 +141,12 @@ def test_rng_restore_formula_and_v100_bfloat16_rejection():
     assert jnp.array_equal(jax.random.fold_in(jax.random.fold_in(key, 7), 3), jax.random.fold_in(jax.random.fold_in(key, 7), 3))
     with pytest.raises(ValueError, match="BF16"):
         axis_lora.assert_no_bfloat16({"x": jnp.ones((2,), dtype=jnp.bfloat16)})
+
+
+def test_nan_replay_fingerprints_capture_nonfinite_inputs():
+    value = np.asarray([1.0, np.nan, np.inf], dtype=np.float32)
+    fingerprint = nan_replay.array_fingerprint(value)
+    assert fingerprint["shape"] == [3]
+    assert fingerprint["finite"] is False
+    assert fingerprint["nonfinite_count"] == 2
+    assert nan_replay.tree_fingerprints({"actions": value})["actions"]["sha256"] == fingerprint["sha256"]

@@ -1,0 +1,1095 @@
+diff --git a/scripts/train.py b/scripts/train.py
+index 995cd35..ea729af 100644
+--- a/scripts/train.py
++++ b/scripts/train.py
+@@ -1,9 +1,12 @@
+ import dataclasses
+ import functools
++import hashlib
+ import json
+ import logging
+ import os
+ import platform
++from pathlib import Path
++import shutil
+ from typing import Any
+ 
+ import etils.epath as epath
+@@ -25,6 +28,7 @@ import openpi.training.checkpoints as _checkpoints
+ import openpi.training.config as _config
+ import openpi.training.data_loader as _data_loader
+ import openpi.training.axis_lora as _axis_lora
++import openpi.training.nan_replay as _nan_replay
+ import openpi.training.optimizer as _optimizer
+ import openpi.training.sharding as sharding
+ import openpi.training.utils as training_utils
+@@ -82,6 +86,171 @@ def _first_nonfinite_path(tree: Any) -> str | None:
+     return None
+ 
+ 
++def _jsonable(value: Any) -> Any:
++    if isinstance(value, dict):
++        return {str(key): _jsonable(item) for key, item in value.items()}
++    if isinstance(value, (tuple, list)):
++        return [_jsonable(item) for item in value]
++    if isinstance(value, np.ndarray):
++        return value.tolist()
++    if isinstance(value, np.generic):
++        return value.item()
++    return value
++
++
++def _key_fingerprint(key: at.KeyArrayLike) -> dict[str, Any]:
++    data = np.ascontiguousarray(np.asarray(jax.device_get(jax.random.key_data(key))))
++    return {
++        "dtype": str(data.dtype),
++        "shape": list(data.shape),
++        "sha256": hashlib.sha256(data.tobytes()).hexdigest(),
++        "values": data.tolist(),
++    }
++
++
++def _audit_rng_fixture(micro_rng: at.KeyArrayLike, action_shape: tuple[int, ...]) -> tuple[dict[str, Any], dict[str, Any]]:
++    """Reconstruct the model's time/noise draws for audit/replay only."""
++    preprocess_rng, noise_rng, time_rng = jax.random.split(micro_rng, 3)
++    del preprocess_rng
++    noise = jax.random.normal(noise_rng, action_shape)
++    time = jax.random.beta(time_rng, 1.5, 1, action_shape[:-2]) * 0.999 + 0.001
++    return (
++        {
++            "base": _key_fingerprint(micro_rng),
++            "noise": _key_fingerprint(noise_rng),
++            "time": _key_fingerprint(time_rng),
++            "noise_stats": _nan_replay.array_fingerprint(noise),
++            "time_stats": _nan_replay.array_fingerprint(time),
++        },
++        {"noise": np.asarray(noise), "time": np.asarray(time)},
++    )
++
++
++def _audit_metadata_rows(metadata: Any) -> list[dict[str, Any]]:
++    if metadata is None:
++        return []
++    if not isinstance(metadata, dict):
++        return [{"value": _jsonable(metadata)}]
++    sample_count = next(
++        (
++            int(np.asarray(value).shape[0])
++            for value in metadata.values()
++            if hasattr(value, "shape") and np.asarray(value).ndim > 0
++        ),
++        1,
++    )
++    rows = []
++    for index in range(sample_count):
++        row = {}
++        for key, value in metadata.items():
++            array = np.asarray(value)
++            row[str(key)] = _jsonable(array[index] if array.ndim > 0 and array.shape[0] == sample_count else value)
++        rows.append(row)
++    return rows
++
++
++def _append_audit_trace(path: Path, row: dict[str, Any]) -> None:
++    path.parent.mkdir(parents=True, exist_ok=True)
++    with path.open("a", encoding="utf-8") as handle:
++        handle.write(json.dumps(_jsonable(row), sort_keys=True) + "\n")
++
++
++def _save_audit_failure(
++    audit: dict[str, Any] | None,
++    *,
++    microbatches: tuple[tuple[_model.Observation, _model.Actions], ...],
++    metadata_rows: list[list[dict[str, Any]]],
++    rng_fixtures: list[dict[str, Any]],
++    failure: dict[str, Any],
++) -> None:
++    if not audit or audit.get("failure_saved"):
++        return
++    audit["failure_saved"] = True
++    _nan_replay.save_replay_bundle(
++        audit["replay_dir"],
++        microbatches=list(microbatches),
++        metadata=metadata_rows,
++        rng_fixtures=rng_fixtures,
++        failure=failure,
++        runtime=audit["runtime"],
++        tensor_output_dir=audit.get("tensor_output_dir"),
++    )
++
++
++def _split_loaded_batch(loaded: Any) -> tuple[tuple[_model.Observation, _model.Actions], Any]:
++    if isinstance(loaded, tuple) and len(loaded) == 4 and isinstance(loaded[0], _model.Observation):
++        return (loaded[0], loaded[1]), {
++            "__rows__": loaded[2],
++            "__rng_overrides__": loaded[3],
++        }
++    if isinstance(loaded, tuple) and len(loaded) == 3 and isinstance(loaded[0], _model.Observation):
++        return (loaded[0], loaded[1]), loaded[2]
++    return loaded, None
++
++
++class _FixedReplayDataLoader:
++    """Cycle a host-written, transformed sample fixture for NaN matrix runs."""
++
++    def __init__(self, data_config, replay_path: str | Path, sharding: jax.sharding.Sharding):
++        self._data_config = data_config
++        self._sharding = sharding
++        self._replay_path = Path(replay_path)
++        self._archive = np.load(self._replay_path, allow_pickle=False)
++        self._manifest = json.loads((self._replay_path.parent / "fixed_replay_manifest.json").read_text())
++        replay_sha256 = hashlib.sha256(self._replay_path.read_bytes()).hexdigest()
++        if replay_sha256 != self._manifest.get("replay_sha256"):
++            raise ValueError(
++                f"fixed replay sha256 mismatch: {replay_sha256} != {self._manifest.get('replay_sha256')}"
++            )
++        self._sample_count = int(self._manifest["sample_count"])
++        if self._sample_count != 64:
++            raise ValueError(f"fixed replay must contain exactly 64 samples, got {self._sample_count}")
++        if self._sample_count % jax.device_count() != 0:
++            raise ValueError("fixed replay sample count must be divisible by the visible device count")
++
++    def data_config(self):
++        return self._data_config
++
++    def __iter__(self):
++        batch_size = jax.device_count()
++        while True:
++            for start in range(0, self._sample_count, batch_size):
++                end = start + batch_size
++                def take(name: str):
++                    return np.asarray(self._archive[name][start:end])
++
++                batch_dict = {
++                    "image": {
++                        key: take(f"observation__image__{key}")
++                        for key in ("base_0_rgb", "left_wrist_0_rgb", "right_wrist_0_rgb")
++                    },
++                    "image_mask": {
++                        key: take(f"observation__image_mask__{key}")
++                        for key in ("base_0_rgb", "left_wrist_0_rgb", "right_wrist_0_rgb")
++                    },
++                    "state": take("observation__state"),
++                    "action_is_pad": take("observation__action_is_pad"),
++                    "tokenized_prompt": take("observation__tokenized_prompt"),
++                    "tokenized_prompt_mask": take("observation__tokenized_prompt_mask"),
++                }
++                observation = _model.Observation.from_dict(batch_dict)
++                actions = take("actions")
++                model_batch = jax.tree.map(
++                    lambda value: jax.make_array_from_process_local_data(self._sharding, value),
++                    (observation, actions),
++                )
++                rows = self._manifest["metadata"][start:end]
++                metadata = {
++                    key: np.asarray([row[key] for row in rows])
++                    for key in rows[0]
++                }
++                overrides = {
++                    "noise": take("rng__noise"),
++                    "time": take("rng__time"),
++                }
++                yield (*model_batch, metadata, overrides)
++
++
+ def init_wandb(config: _config.TrainConfig, *, resuming: bool, log_code: bool = False, enabled: bool = True):
+     if not enabled:
+         wandb.init(mode="disabled")
+@@ -197,16 +366,22 @@ def _loss_sum_and_aux(
+     rng: at.KeyArrayLike,
+     observation: _model.Observation,
+     actions: _model.Actions,
++    rng_fixture: dict[str, Any] | None = None,
+ ):
+     """Return an unnormalized loss sum and audit quantities for one microbatch."""
+     if hasattr(model, "compute_loss_components"):
+-        components = model.compute_loss_components(
+-            rng,
+-            observation,
+-            actions,
+-            objective=config.loss_objective,
+-            train=True,
+-        )
++        kwargs = {
++            "objective": config.loss_objective,
++            "train": True,
++        }
++        if rng_fixture is not None:
++            kwargs.update(
++                {
++                    "noise_override": rng_fixture["noise"],
++                    "time_override": rng_fixture["time"],
++                }
++            )
++        components = model.compute_loss_components(rng, observation, actions, **kwargs)
+         return components["loss_sum"], components
+ 
+     # Keep non-Pi0 models compatible with the upstream trainer.  These models
+@@ -230,18 +405,19 @@ def _compute_microbatch_grad(
+     rng: at.KeyArrayLike,
+     state: training_utils.TrainState,
+     batch: tuple[_model.Observation, _model.Actions],
++    rng_fixture: dict[str, Any] | None = None,
+ ):
+     model = nnx.merge(state.model_def, state.params)
+     model.train()
+     diff_state = nnx.DiffState(0, config.trainable_filter)
+     observation, actions = batch
+ 
+-    def loss_fn(model, rng, observation, actions):
+-        return _loss_sum_and_aux(model, config, rng, observation, actions)
++    def loss_fn(model, rng, observation, actions, rng_fixture):
++        return _loss_sum_and_aux(model, config, rng, observation, actions, rng_fixture)
+ 
+     (loss_sum, components), grads = nnx.value_and_grad(
+         loss_fn, argnums=diff_state, has_aux=True
+-    )(model, rng, observation, actions)
++    )(model, rng, observation, actions, rng_fixture)
+     return loss_sum, grads, components
+ 
+ 
+@@ -383,6 +559,7 @@ def train_step_accumulated_host(
+     microbatches: tuple[tuple[_model.Observation, _model.Actions], ...],
+     microbatch_grad_fn,
+     apply_update_fn,
++    audit: dict[str, Any] | None = None,
+ ) -> tuple[training_utils.TrainState, dict[str, at.Array]]:
+     """Accumulate compiled microbatch gradients without unrolling 32 models.
+ 
+@@ -409,11 +586,68 @@ def train_step_accumulated_host(
+     total_seven = jnp.asarray(0.0, dtype=jnp.float32)
+     total_padded25 = jnp.asarray(0.0, dtype=jnp.float32)
+     total_temporal_pad = jnp.asarray(0.0, dtype=jnp.float32)
++    metadata_rows = audit.get("metadata_rows", []) if audit else []
++    trace_rows: list[dict[str, Any]] = []
++    rng_fixtures: list[dict[str, Any]] = []
++    override_fixtures = audit.get("rng_overrides", []) if audit else []
+     for micro_index, batch in enumerate(microbatches):
+         micro_rng = jax.random.fold_in(jax.random.fold_in(step_rng, state.step), micro_index)
+-        loss_sum, grads, components = microbatch_grad_fn(micro_rng, state, batch)
++        rng_fixture_override = (
++            override_fixtures[micro_index]
++            if micro_index < len(override_fixtures) and override_fixtures[micro_index] is not None
++            else None
++        )
++        if audit and rng_fixture_override is not None:
++            rng_fixture = {
++                "noise": jnp.asarray(rng_fixture_override["noise"]),
++                "time": jnp.asarray(rng_fixture_override["time"]),
++            }
++            rng_record, _ = _audit_rng_fixture(micro_rng, tuple(batch[1].shape))
++            rng_record.update(
++                {
++                    "source": "fixed_replay_override",
++                    "noise_stats": _nan_replay.array_fingerprint(rng_fixture["noise"]),
++                    "time_stats": _nan_replay.array_fingerprint(rng_fixture["time"]),
++                }
++            )
++        else:
++            rng_record, rng_fixture = _audit_rng_fixture(micro_rng, tuple(batch[1].shape)) if audit else ({}, None)
++        if audit:
++            rng_fixtures.append(rng_fixture or {})
++            trace_row = {
++                "optimizer_step_before": int(state.step),
++                "micro_index": micro_index,
++                "metadata": metadata_rows[micro_index] if micro_index < len(metadata_rows) else [],
++                "rng": {
++                    "state": _key_fingerprint(base_rng),
++                    "step": _key_fingerprint(step_rng),
++                    "micro": rng_record,
++                },
++                "input": _nan_replay.tree_fingerprints(
++                    {"observation": batch[0].to_dict(), "actions": batch[1]}
++                ),
++            }
++            trace_rows.append(trace_row)
++            _append_audit_trace(audit["trace_path"], trace_row)
++        try:
++            loss_sum, grads, components = microbatch_grad_fn(micro_rng, state, batch, rng_fixture)
++        except Exception as exc:
++            _save_audit_failure(
++                audit,
++                microbatches=microbatches[: micro_index + 1],
++                metadata_rows=metadata_rows[: micro_index + 1],
++                rng_fixtures=rng_fixtures,
++                failure={
++                    "schema_version": 1,
++                    "optimizer_step_before": int(state.step),
++                    "micro_index": micro_index,
++                    "name": "compute_exception",
++                    "exception": f"{type(exc).__name__}: {exc}",
++                },
++            )
++            raise
+         audit_steps = int(os.environ.get("AXIS_PI05_AUDIT_MICRO_NONFINITE_STEPS", "0"))
+-        audit_micro = os.environ.get("AXIS_PI05_AUDIT_MICRO_NONFINITE", "0") == "1" and (
++        audit_micro = (audit is not None or os.environ.get("AXIS_PI05_AUDIT_MICRO_NONFINITE", "0") == "1") and (
+             audit_steps <= 0 or int(state.step) < audit_steps
+         )
+         if audit_micro:
+@@ -426,6 +660,28 @@ def train_step_accumulated_host(
+             )
+             for name, value in values.items():
+                 if hasattr(value, "dtype") and not np.all(np.isfinite(np.asarray(value))):
++                    _save_audit_failure(
++                        audit,
++                        microbatches=microbatches[: micro_index + 1],
++                        metadata_rows=metadata_rows[: micro_index + 1],
++                        rng_fixtures=rng_fixtures,
++                        failure={
++                            "schema_version": 1,
++                            "optimizer_step_before": int(state.step),
++                            "micro_index": micro_index,
++                            "name": name,
++                            "first_nonfinite_path": (
++                                _first_nonfinite_path(grads) if name.startswith("grad:") else None
++                            ),
++                            "loss_stats": _nan_replay.array_fingerprint(loss_sum),
++                            "component_stats": {
++                                key: _nan_replay.array_fingerprint(value)
++                                for key, value in components.items()
++                            },
++                            "gradient_stats": _nan_replay.tree_fingerprints(grads),
++                            "rng": rng_record,
++                        },
++                    )
+                     raise FloatingPointError(
+                         f"non-finite microbatch value at micro_index={micro_index}; name={name}"
+                     )
+@@ -439,9 +695,44 @@ def train_step_accumulated_host(
+     assert grad_sum is not None
+     denominator = jnp.maximum(total_valid, 1).astype(jnp.float32)
+     grads = jax.tree.map(lambda value: value / denominator, grad_sum)
+-    new_state, info = apply_update_fn(state, grads, next_rng)
+-    info = {
+-        **info,
++    if audit:
++        aggregate_values = {
++            "total_loss_sum": total_loss_sum,
++            "total_valid": total_valid,
++            "denominator": denominator,
++            "gradient_sum": grad_sum,
++            "gradient_mean": grads,
++        }
++        aggregate_bad = next(
++            (
++                name
++                for name, value in aggregate_values.items()
++                if hasattr(value, "dtype") and not np.all(np.isfinite(np.asarray(value)))
++            ),
++            None,
++        )
++        if aggregate_bad is not None:
++            _save_audit_failure(
++                audit,
++                microbatches=microbatches,
++                metadata_rows=metadata_rows,
++                rng_fixtures=rng_fixtures,
++                failure={
++                    "schema_version": 1,
++                    "optimizer_step_before": int(state.step),
++                    "micro_index": len(microbatches),
++                    "name": aggregate_bad,
++                    "first_nonfinite_path": (
++                        _first_nonfinite_path(grad_sum)
++                        if aggregate_bad in {"gradient_sum", "gradient_mean"}
++                        else None
++                    ),
++                    "loss_stats": _nan_replay.array_fingerprint(total_loss_sum),
++                    "gradient_stats": _nan_replay.tree_fingerprints(grads),
++                },
++            )
++            raise FloatingPointError(f"non-finite aggregate value: {aggregate_bad}")
++    common_info = {
+         "loss": total_loss_sum / denominator,
+         "loss_sum": total_loss_sum,
+         "seven_d_loss_mass": total_seven,
+@@ -450,6 +741,24 @@ def train_step_accumulated_host(
+         "valid_action_elements": total_valid,
+         "examples_seen": total_examples,
+         "micro_steps": jnp.asarray(len(microbatches), dtype=jnp.int32),
++    }
++    if os.environ.get("AXIS_PI05_SKIP_OPTIMIZER_UPDATE", "0") == "1":
++        grad_norm = optax.global_norm(grads)
++        clip_limit = getattr(config.optimizer, "clip_gradient_norm", None)
++        return state, {
++            **common_info,
++            "grad_norm": grad_norm,
++            "pre_clip_grad_norm": grad_norm,
++            "post_clip_grad_norm": jnp.minimum(grad_norm, clip_limit) if clip_limit is not None else grad_norm,
++            "update_norm": jnp.asarray(0.0, dtype=jnp.float32),
++            "nonfinite_grad_leaf_count": _nonfinite_leaf_count(grads),
++            "optimizer_step": state.step,
++        }
++
++    new_state, info = apply_update_fn(state, grads, next_rng)
++    info = {
++        **info,
++        **common_info,
+         "optimizer_step": new_state.step,
+     }
+     return new_state, info
+@@ -459,6 +768,69 @@ def main(config: _config.TrainConfig):
+     init_logging()
+     logging.info(f"Running on: {platform.node()}")
+ 
++    audit_dir_text = os.environ.get("AXIS_PI05_AUDIT_REPLAY_DIR")
++    audit_enabled = os.environ.get("AXIS_PI05_AUDIT_METADATA", "0") == "1" and bool(audit_dir_text)
++    fixed_replay_text = os.environ.get("AXIS_PI05_FIXED_REPLAY")
++    if fixed_replay_text and not audit_enabled:
++        raise ValueError("AXIS_PI05_FIXED_REPLAY requires AXIS_PI05_AUDIT_METADATA=1 and an audit replay directory")
++    audit: dict[str, Any] | None = None
++    if audit_enabled:
++        audit_dir = Path(audit_dir_text)
++        audit_dir.mkdir(parents=True, exist_ok=True)
++        runtime = {
++            "schema_version": 1,
++            "hostname": platform.node(),
++            "python": platform.python_version(),
++            "jax": getattr(jax, "__version__", "unknown"),
++            "jaxlib": getattr(jax.lib, "__version__", "unknown"),
++            "jax_process_index": jax.process_index(),
++            "jax_process_count": jax.process_count(),
++            "jax_device_count": jax.device_count(),
++            "local_device_count": jax.local_device_count(),
++            "devices": [str(device) for device in jax.devices()],
++            "local_devices": [str(device) for device in jax.local_devices()],
++            "cuda_visible_devices": os.environ.get("CUDA_VISIBLE_DEVICES", ""),
++            "checkpoint_async": os.environ.get("AXIS_PI05_CHECKPOINT_ASYNC", "0") == "1",
++            "save_step0": os.environ.get("AXIS_PI05_SAVE_STEP0", "0") == "1",
++            "wait_for_step0_save": os.environ.get("AXIS_PI05_WAIT_FOR_STEP0_SAVE", "1") == "1",
++            "fixed_replay": fixed_replay_text or "",
++            "run_id": os.environ.get("AXIS_PI05_LORA_RUN_ID", ""),
++            "root_commit": os.environ.get("AXIS_PI05_AUDIT_ROOT_COMMIT", ""),
++            "openpi_commit": os.environ.get("AXIS_PI05_AUDIT_OPENPI_COMMIT", ""),
++            "config_hash": hashlib.sha256(
++                json.dumps(dataclasses.asdict(config), sort_keys=True, default=str).encode()
++            ).hexdigest(),
++            "source_manifest": os.environ.get("AXIS_PI05_AUDIT_SOURCE_MANIFEST", ""),
++            "resolved_config": os.environ.get("AXIS_PI05_AUDIT_RESOLVED_CONFIG", ""),
++            "fixed_replay_manifest": (
++                str(Path(fixed_replay_text).with_name("fixed_replay_manifest.json"))
++                if fixed_replay_text
++                else ""
++            ),
++        }
++        audit = {
++            "replay_dir": str(audit_dir),
++            "tensor_output_dir": os.environ.get("AXIS_PI05_AUDIT_TENSOR_OUTPUT_DIR") or None,
++            "trace_path": audit_dir / "microbatch_trace.jsonl",
++            "runtime": runtime,
++            "failure_saved": False,
++        }
++        (audit_dir / "environment.json").write_text(
++            json.dumps(runtime, indent=2, sort_keys=True) + "\n", encoding="utf-8"
++        )
++        for environment_key, artifact_name in (
++            ("AXIS_PI05_AUDIT_SOURCE_MANIFEST", "source_manifest.json"),
++            ("AXIS_PI05_AUDIT_RESOLVED_CONFIG", "resolved_config.yaml"),
++        ):
++            source_path = os.environ.get(environment_key)
++            if source_path:
++                source = Path(source_path)
++                if not source.is_file():
++                    raise FileNotFoundError(f"audit provenance artifact not found: {source}")
++                destination = audit_dir / artifact_name
++                if source.resolve() != destination.resolve():
++                    shutil.copy2(source, destination)
++
+     if config.microbatch_size is None:
+         if config.batch_size % jax.device_count() != 0:
+             raise ValueError(
+@@ -488,17 +860,23 @@ def main(config: _config.TrainConfig):
+         keep_period=config.keep_period,
+         overwrite=config.overwrite,
+         resume=config.resume,
++        enable_async_checkpointing=os.environ.get("AXIS_PI05_CHECKPOINT_ASYNC", "0") == "1",
+     )
+     init_wandb(config, resuming=resuming, enabled=config.wandb_enabled)
+ 
+-    data_loader = _data_loader.create_data_loader(
++    source_data_loader = _data_loader.create_data_loader(
+         config,
+         sharding=data_sharding,
+-        shuffle=True,
++        shuffle=not bool(fixed_replay_text),
+         batch_size=loader_batch_size,
+     )
++    data_loader = (
++        _FixedReplayDataLoader(source_data_loader.data_config(), fixed_replay_text, data_sharding)
++        if fixed_replay_text
++        else source_data_loader
++    )
+     data_iter = iter(data_loader)
+-    batch = next(data_iter)
++    batch, batch_metadata = _split_loaded_batch(next(data_iter))
+     logging.info(f"Initialized data loader:\n{training_utils.array_tree_to_info(batch)}")
+ 
+     # Log images from first batch to sanity check.
+@@ -546,7 +924,7 @@ def main(config: _config.TrainConfig):
+     if config.gradient_accumulation_steps > 1:
+         pcompute_microbatch_grad = jax.jit(
+             functools.partial(_compute_microbatch_grad, config),
+-            in_shardings=(replicated_sharding, train_state_sharding, None),
++            in_shardings=(replicated_sharding, train_state_sharding, None, None),
+         )
+         papply_optimizer_update = jax.jit(
+             functools.partial(_apply_optimizer_update, config),
+@@ -566,8 +944,11 @@ def main(config: _config.TrainConfig):
+     keep_steps = {
+         int(value.strip()) for value in os.environ.get("OPENPI_KEEP_STEPS", "500,1000,3000").split(",") if value.strip()
+     }
+-    if not resuming and 0 in keep_steps:
++    save_step0 = os.environ.get("AXIS_PI05_SAVE_STEP0", "0") == "1" or 0 in keep_steps
++    if not resuming and save_step0:
+         _checkpoints.save_state(checkpoint_manager, train_state, data_loader, 0)
++        if os.environ.get("AXIS_PI05_WAIT_FOR_STEP0_SAVE", "1") == "1":
++            checkpoint_manager.wait_until_finished()
+ 
+     metrics_path = config.checkpoint_dir / "training_metrics.jsonl"
+     if not resuming:
+@@ -584,8 +965,30 @@ def main(config: _config.TrainConfig):
+     infos = []
+     for step in pbar:
+         microbatches = [batch]
++        microbatch_metadata = [batch_metadata]
+         for _ in range(config.gradient_accumulation_steps - 1):
+-            microbatches.append(next(data_iter))
++            next_batch, next_metadata = _split_loaded_batch(next(data_iter))
++            microbatches.append(next_batch)
++            microbatch_metadata.append(next_metadata)
++        if audit is not None:
++            audit["metadata_rows"] = [
++                _audit_metadata_rows(item.get("__rows__", item) if isinstance(item, dict) else item)
++                for item in microbatch_metadata
++            ]
++            audit["rng_overrides"] = [
++                item.get("__rng_overrides__") if isinstance(item, dict) else None
++                for item in microbatch_metadata
++            ]
++            visible_ids = [
++                int(value.strip())
++                for value in os.environ.get("CUDA_VISIBLE_DEVICES", "").split(",")
++                if value.strip().isdigit()
++            ]
++            local_ids = visible_ids or list(range(jax.local_device_count()))
++            for micro_index, rows in enumerate(audit["metadata_rows"]):
++                for row_index, row in enumerate(rows):
++                    row["transform_config_hash"] = audit["runtime"]["config_hash"]
++                    row["device_assignment"] = local_ids[row_index % len(local_ids)]
+         with sharding.set_mesh(mesh):
+             if ptrain_step is None:
+                 train_state, info = train_step_accumulated_host(
+@@ -595,6 +998,7 @@ def main(config: _config.TrainConfig):
+                     tuple(microbatches),
+                     pcompute_microbatch_grad,
+                     papply_optimizer_update,
++                    audit=audit,
+                 )
+             else:
+                 train_state, info = ptrain_step(train_rng, train_state, tuple(microbatches))
+@@ -616,7 +1020,7 @@ def main(config: _config.TrainConfig):
+             pbar.write(f"Step {step}: {info_str}")
+             wandb.log(reduced_info, step=step)
+             infos = []
+-        batch = next(data_iter)
++        batch, batch_metadata = _split_loaded_batch(next(data_iter))
+ 
+         internal_step = int(train_state.step)
+         if internal_step in keep_steps or internal_step == config.num_train_steps:
+diff --git a/src/openpi/models/pi0.py b/src/openpi/models/pi0.py
+index c13c6af..93b68fa 100644
+--- a/src/openpi/models/pi0.py
++++ b/src/openpi/models/pi0.py
+@@ -199,7 +199,14 @@ class Pi0(_model.BaseModel):
+         return loss
+ 
+     def _compute_loss_squared_error(
+-        self, rng: at.KeyArrayLike, observation: _model.Observation, actions: _model.Actions, *, train: bool = False
++        self,
++        rng: at.KeyArrayLike,
++        observation: _model.Observation,
++        actions: _model.Actions,
++        *,
++        train: bool = False,
++        noise_override: _model.Actions | None = None,
++        time_override: at.Float[at.Array, "*b"] | None = None,
+     ) -> at.Float[at.Array, "*b ah ad"]:
+         """Return per-action-dimension flow-matching squared error.
+ 
+@@ -212,8 +219,12 @@ class Pi0(_model.BaseModel):
+         observation = _model.preprocess_observation(preprocess_rng, observation, train=train)
+ 
+         batch_shape = actions.shape[:-2]
+-        noise = jax.random.normal(noise_rng, actions.shape)
+-        time = jax.random.beta(time_rng, 1.5, 1, batch_shape) * 0.999 + 0.001
++        noise = jax.random.normal(noise_rng, actions.shape) if noise_override is None else noise_override
++        time = (
++            jax.random.beta(time_rng, 1.5, 1, batch_shape) * 0.999 + 0.001
++            if time_override is None
++            else time_override
++        )
+         time_expanded = time[..., None, None]
+         x_t = time_expanded * noise + (1 - time_expanded) * actions
+         u_t = noise - actions
+@@ -239,6 +250,8 @@ class Pi0(_model.BaseModel):
+         *,
+         objective: str = "padded32_temporal",
+         train: bool = False,
++        noise_override: _model.Actions | None = None,
++        time_override: at.Float[at.Array, "*b"] | None = None,
+     ) -> dict[str, at.Float[at.Array, ""] | at.Int[at.Array, ""]]:
+         """Compute auditable masked loss components for the Axis LoRA runs.
+ 
+@@ -249,7 +262,14 @@ class Pi0(_model.BaseModel):
+         if objective not in {"valid7_temporal", "padded32_temporal"}:
+             raise ValueError(f"unknown loss objective: {objective}")
+ 
+-        squared_error = self._compute_loss_squared_error(rng, observation, actions, train=train)
++        squared_error = self._compute_loss_squared_error(
++            rng,
++            observation,
++            actions,
++            train=train,
++            noise_override=noise_override,
++            time_override=time_override,
++        )
+         return _lora.masked_loss_components(
+             squared_error,
+             observation.action_is_pad,
+diff --git a/src/openpi/policies/libero_policy.py b/src/openpi/policies/libero_policy.py
+index 5028bbb..27a6b6c 100644
+--- a/src/openpi/policies/libero_policy.py
++++ b/src/openpi/policies/libero_policy.py
+@@ -75,6 +75,10 @@ class LiberoInputs(transforms.DataTransformFn):
+             inputs["actions"] = data["actions"]
+         if "action_is_pad" in data:
+             inputs["action_is_pad"] = data["action_is_pad"]
++        if "__axis_audit__" in data:
++            # Host-only tracing metadata.  DataLoaderImpl removes this before
++            # calling Observation.from_dict().
++            inputs["__axis_audit__"] = data["__axis_audit__"]
+ 
+         # Pass the prompt (aka language instruction) to the model.
+         # Keep this for your own dataset (but modify the key if the instruction is not
+diff --git a/src/openpi/training/checkpoints.py b/src/openpi/training/checkpoints.py
+index f97393b..aa524f9 100644
+--- a/src/openpi/training/checkpoints.py
++++ b/src/openpi/training/checkpoints.py
+@@ -19,7 +19,12 @@ import openpi.training.utils as training_utils
+ 
+ 
+ def initialize_checkpoint_dir(
+-    checkpoint_dir: epath.Path | str, *, keep_period: int | None, overwrite: bool, resume: bool
++    checkpoint_dir: epath.Path | str,
++    *,
++    keep_period: int | None,
++    overwrite: bool,
++    resume: bool,
++    enable_async_checkpointing: bool | None = None,
+ ) -> tuple[ocp.CheckpointManager, bool]:
+     checkpoint_dir = epath.Path(checkpoint_dir).resolve()
+     resuming = False
+@@ -38,6 +43,9 @@ def initialize_checkpoint_dir(
+ 
+     checkpoint_dir.mkdir(parents=True, exist_ok=True)
+ 
++    if enable_async_checkpointing is None:
++        enable_async_checkpointing = os.environ.get("AXIS_PI05_CHECKPOINT_ASYNC", "1") == "1"
++
+     mngr = ocp.CheckpointManager(
+         checkpoint_dir,
+         item_handlers={
+@@ -52,6 +60,7 @@ def initialize_checkpoint_dir(
+             max_to_keep=int(os.environ.get("OPENPI_MAX_TO_KEEP", "4")),
+             keep_period=keep_period,
+             create=False,
++            enable_async_checkpointing=enable_async_checkpointing,
+             async_options=ocp.AsyncOptions(timeout_secs=7200),
+         ),
+     )
+diff --git a/src/openpi/training/config.py b/src/openpi/training/config.py
+index 8ace53b..95e4886 100644
+--- a/src/openpi/training/config.py
++++ b/src/openpi/training/config.py
+@@ -361,6 +361,28 @@ class LeRobotLiberoDataConfig(DataConfigFactory):
+                 "action_is_pad": "actions_is_pad",
+             }
+         )
++        if os.environ.get("AXIS_PI05_AUDIT_METADATA", "0") == "1":
++            # Preserve the audit side-channel through repacking.  The loader
++            # removes it before constructing Observation, so it cannot reach
++            # the model or optimizer.
++            audit_fields = (
++                "source_repo",
++                "source_revision",
++                "episode_index",
++                "frame_offset",
++                "frame_index",
++                "global_index",
++                "task_index",
++                "action_window_start_offset",
++                "action_window_end_offset",
++                "action_window_start_frame",
++                "temporal_padding",
++                "sampling_manifest_row",
++                "sampling_manifest_weight",
++            )
++            repack_mapping["__axis_audit__"] = {
++                field: f"__axis_audit__/{field}" for field in audit_fields
++            }
+         repack_transform = _transforms.Group(
+             inputs=[
+                 _transforms.RepackTransform(
+diff --git a/src/openpi/training/data_loader.py b/src/openpi/training/data_loader.py
+index a4e83b0..77ffd71 100644
+--- a/src/openpi/training/data_loader.py
++++ b/src/openpi/training/data_loader.py
+@@ -22,6 +22,47 @@ import openpi.transforms as _transforms
+ T_co = TypeVar("T_co", covariant=True)
+ 
+ 
++# This key is deliberately removed before Observation.from_dict().  It is a
++# host-side audit side-channel and must never become a model input.
++AUDIT_METADATA_KEY = "__axis_audit__"
++
++
++def _audit_metadata_enabled() -> bool:
++    return os.environ.get("AXIS_PI05_AUDIT_METADATA", "0") == "1"
++
++
++def _canonical_audit_metadata(
++    *,
++    episode: int,
++    frame_offset: int,
++    frame_index: int,
++    global_index: int,
++    task_index: int,
++    episode_length: int,
++    action_horizon: int,
++) -> dict[str, Any]:
++    targets = np.arange(frame_offset, frame_offset + action_horizon, dtype=np.int64)
++    return {
++        "source_repo": os.environ.get("AXIS_PI05_AUDIT_SOURCE_REPO", "physical-intelligence/libero"),
++        "source_revision": os.environ.get(
++            "AXIS_PI05_AUDIT_SOURCE_REVISION", "a4336d589d589045d1c56423ffdf3b88a0e19b1f"
++        ),
++        "episode_index": int(episode),
++        "frame_offset": int(frame_offset),
++        "frame_index": int(frame_index),
++        "global_index": int(global_index),
++        "task_index": int(task_index),
++        "action_window_start_offset": int(frame_offset),
++        "action_window_end_offset": int(min(frame_offset + action_horizon - 1, episode_length - 1)),
++        "action_window_start_frame": int(frame_index),
++        "temporal_padding": (targets >= episode_length).astype(bool),
++        "sampling_manifest_row": int(global_index),
++        "sampling_manifest_weight": float(
++            1.0 / int(os.environ.get("AXIS_PI05_AUDIT_FRAME_COUNT", "273465"))
++        ),
++    }
++
++
+ class Dataset(Protocol[T_co]):
+     """Interface for a dataset with random access."""
+ 
+@@ -237,7 +278,7 @@ class AxisPlusV3Dataset(torch.utils.data.Dataset):
+         item = self._episodes[episode]
+         frame_index = int(item["frames"][frame_offset])
+         action_indices = [min(frame_offset + offset, len(item["actions"]) - 1) for offset in range(self.action_horizon)]
+-        return {
++        result = {
+             # Match the pinned IPEC LeRobot key names; the logical contract
+             # still calls these front and wrist cameras in the catalog.
+             "observation.images.image": self._decode("observation.images.front", item, frame_index),
+@@ -249,6 +290,17 @@ class AxisPlusV3Dataset(torch.utils.data.Dataset):
+             "frame_index": frame_index,
+             "timestamp": frame_index / 20.0,
+         }
++        if _audit_metadata_enabled():
++            result[AUDIT_METADATA_KEY] = _canonical_audit_metadata(
++                episode=episode,
++                frame_offset=frame_offset,
++                frame_index=frame_index,
++                global_index=int(index),
++                task_index=item["task_index"],
++                episode_length=len(item["states"]),
++                action_horizon=self.action_horizon,
++            )
++        return result
+ 
+     def close(self) -> None:
+         for container in self._video_containers.values():
+@@ -398,7 +450,7 @@ class AxisOfficialLiberoDataset(torch.utils.data.Dataset):
+                 "actions": item["actions"][action_indices],
+                 "actions_is_pad": is_pad,
+             }
+-        return {
++        result = {
+             **values,
+             "task_index": task_index,
+             "episode_index": int(episode),
+@@ -407,6 +459,17 @@ class AxisOfficialLiberoDataset(torch.utils.data.Dataset):
+             "timestamp": float(item["timestamps"][offset]),
+             "task": self.tasks[task_index],
+         }
++        if _audit_metadata_enabled():
++            result[AUDIT_METADATA_KEY] = _canonical_audit_metadata(
++                episode=episode,
++                frame_offset=offset,
++                frame_index=int(item["frames"][offset]),
++                global_index=int(item["indices"][offset]),
++                task_index=task_index,
++                episode_length=len(item["states"]),
++                action_horizon=self.action_horizon,
++            )
++        return result
+ 
+ 
+ def _validate_official_sampling_jsonl(
+@@ -923,6 +986,8 @@ class TorchDataLoader:
+ 
+     def __iter__(self):
+         num_items = 0
++        loader_epoch = 0
++        global_draw_index = 0
+         while True:
+             data_iter = iter(self._data_loader)
+             while True:
+@@ -933,18 +998,52 @@ class TorchDataLoader:
+                 except StopIteration:
+                     break  # We've exhausted the dataset. Create a new iterator and start over.
+                 num_items += 1
++                audit_metadata = None
++                if isinstance(batch, dict):
++                    audit_metadata = batch.pop(AUDIT_METADATA_KEY, None)
++                if audit_metadata is not None:
++                    batch_size = next(
++                        int(value.shape[0])
++                        for value in jax.tree.leaves(batch)
++                        if hasattr(value, "shape") and getattr(value, "ndim", 0) > 0
++                    )
++                    audit_metadata.update(
++                        {
++                            "loader_epoch": np.full(batch_size, loader_epoch, dtype=np.int64),
++                            "global_draw_index": np.arange(
++                                global_draw_index, global_draw_index + batch_size, dtype=np.int64
++                            ),
++                            "rank": np.full(batch_size, jax.process_index(), dtype=np.int64),
++                            "process_count": np.full(batch_size, jax.process_count(), dtype=np.int64),
++                            "visible_device_count": np.full(
++                                batch_size, jax.local_device_count(), dtype=np.int64
++                            ),
++                        }
++                    )
++                    global_draw_index += batch_size
+                 # For JAX, convert to sharded arrays; for PyTorch, return torch tensors
+                 if self._sharding is not None:
+-                    yield jax.tree.map(lambda x: jax.make_array_from_process_local_data(self._sharding, x), batch)
++                    model_batch = jax.tree.map(
++                        lambda x: jax.make_array_from_process_local_data(self._sharding, x), batch
++                    )
+                 else:
+-                    yield jax.tree.map(torch.as_tensor, batch)
++                    model_batch = jax.tree.map(torch.as_tensor, batch)
++                yield (model_batch, audit_metadata) if audit_metadata is not None else model_batch
++            loader_epoch += 1
+ 
+ 
+ def _collate_fn(items):
+     """Collate the batch elements into batched numpy arrays."""
+     # Make sure to convert to numpy arrays before stacking since some of the incoming elements
+     # may be JAX arrays.
+-    return jax.tree.map(lambda *xs: np.stack([np.asarray(x) for x in xs], axis=0), *items)
++    batch = jax.tree.map(lambda *xs: np.stack([np.asarray(x) for x in xs], axis=0), *items)
++    if isinstance(batch, dict) and AUDIT_METADATA_KEY in batch:
++        metadata = batch[AUDIT_METADATA_KEY]
++        sample_count = int(np.asarray(metadata["episode_index"]).shape[0])
++        worker = torch.utils.data.get_worker_info()
++        worker_id = 0 if worker is None else int(worker.id)
++        metadata["worker_id"] = np.full(sample_count, worker_id, dtype=np.int64)
++    return batch
+ 
+ 
+ def _worker_init_fn(worker_id: int) -> None:
+@@ -1008,5 +1107,15 @@ class DataLoaderImpl(DataLoader):
+         return self._data_config
+ 
+     def __iter__(self):
+-        for batch in self._data_loader:
+-            yield _model.Observation.from_dict(batch), batch["actions"]
++        for loaded in self._data_loader:
++            if isinstance(loaded, tuple) and len(loaded) == 2 and isinstance(loaded[0], dict):
++                batch, audit_metadata = loaded
++            else:
++                batch, audit_metadata = loaded, None
++            # The audit metadata is deliberately not part of the model-side
++            # batch.  It remains a third return value for the host trainer.
++            model_batch = (_model.Observation.from_dict(batch), batch["actions"])
++            if audit_metadata is not None:
++                yield (*model_batch, audit_metadata)
++            else:
++                yield model_batch
+diff --git a/src/openpi/training/nan_replay.py b/src/openpi/training/nan_replay.py
+new file mode 100644
+index 0000000..96f1190
+--- /dev/null
++++ b/src/openpi/training/nan_replay.py
+@@ -0,0 +1,157 @@
++"""Small, dependency-light artifacts for reproducible NaN localization.
++
++The functions in this module operate on host-side copies of already transformed
++microbatches.  They intentionally do not alter the training pytree or the
++random-number implementation.
++"""
++
++from __future__ import annotations
++
++import hashlib
++import json
++from collections.abc import Mapping
++from pathlib import Path
++from typing import Any
++
++import numpy as np
++
++
++def array_fingerprint(value: Any) -> dict[str, Any]:
++    array = np.ascontiguousarray(np.asarray(value))
++    result: dict[str, Any] = {
++        "dtype": str(array.dtype),
++        "shape": list(array.shape),
++        "sha256": hashlib.sha256(array.tobytes()).hexdigest(),
++    }
++    if array.dtype.kind in "biufc" and array.size:
++        finite = np.isfinite(array)
++        result.update(
++            {
++                "finite": bool(finite.all()),
++                "finite_count": int(finite.sum()),
++                "nonfinite_count": int((~finite).sum()),
++                "min": float(np.min(array[finite])) if finite.any() else None,
++                "max": float(np.max(array[finite])) if finite.any() else None,
++                "mean": float(np.mean(array[finite])) if finite.any() else None,
++            }
++        )
++    return result
++
++
++def tree_fingerprints(tree: Any, prefix: str = "") -> dict[str, dict[str, Any]]:
++    if isinstance(tree, Mapping):
++        result: dict[str, dict[str, Any]] = {}
++        for key, value in tree.items():
++            path = f"{prefix}/{key}" if prefix else str(key)
++            result.update(tree_fingerprints(value, path))
++        return result
++    if isinstance(tree, (tuple, list)):
++        result = {}
++        for index, value in enumerate(tree):
++            path = f"{prefix}/{index}" if prefix else str(index)
++            result.update(tree_fingerprints(value, path))
++        return result
++    try:
++        return {prefix or "value": array_fingerprint(tree)}
++    except (TypeError, ValueError):
++        return {prefix or "value": {"repr": repr(tree)}}
++
++
++def _observation_tree(observation: Any) -> dict[str, Any]:
++    if hasattr(observation, "to_dict"):
++        return observation.to_dict()
++    if hasattr(observation, "__dict__"):
++        return dict(observation.__dict__)
++    return {"value": observation}
++
++
++def save_replay_bundle(
++    output_dir: str | Path,
++    *,
++    microbatches: list[tuple[Any, Any]],
++    metadata: list[Any],
++    rng_fixtures: list[dict[str, Any]] | None = None,
++    failure: dict[str, Any],
++    runtime: dict[str, Any],
++    tensor_output_dir: str | Path | None = None,
++) -> dict[str, Any]:
++    """Write a complete host-side replay bundle and return its manifest."""
++    output = Path(output_dir)
++    output.mkdir(parents=True, exist_ok=True)
++    tensor_output = Path(tensor_output_dir) if tensor_output_dir is not None else output
++    tensor_output.mkdir(parents=True, exist_ok=True)
++    tensors: dict[str, np.ndarray] = {}
++    arrays: dict[str, dict[str, Any]] = {}
++    for micro_index, (observation, actions) in enumerate(microbatches):
++        tree = {
++            "observation": _observation_tree(observation),
++            "actions": actions,
++        }
++
++        def collect(node: Any, path: str) -> None:
++            if isinstance(node, Mapping):
++                for key, value in node.items():
++                    collect(value, f"{path}/{key}" if path else str(key))
++                return
++            if isinstance(node, (tuple, list)):
++                for index, value in enumerate(node):
++                    collect(value, f"{path}/{index}" if path else str(index))
++                return
++            try:
++                array = np.asarray(node)
++            except (TypeError, ValueError):
++                return
++            if array.dtype.kind not in "biufcSU":
++                return
++            key = f"micro_{micro_index:03d}/{path}".replace("/", "__")
++            tensors[key] = np.ascontiguousarray(array)
++            arrays[key] = array_fingerprint(array)
++
++        collect(tree, "")
++        if rng_fixtures is not None and micro_index < len(rng_fixtures):
++            fixture = rng_fixtures[micro_index]
++            for fixture_name in ("noise", "time"):
++                if fixture_name not in fixture:
++                    continue
++                array = np.ascontiguousarray(np.asarray(fixture[fixture_name]))
++                key = f"micro_{micro_index:03d}/rng/{fixture_name}".replace("/", "__")
++                tensors[key] = array
++                arrays[key] = array_fingerprint(array)
++
++    replay_path = tensor_output / "replay_batch.npz"
++    np.savez_compressed(replay_path, **tensors)
++    manifest = {
++        "schema_version": 1,
++        "replay_batch": str(replay_path),
++        "replay_batch_sha256": hashlib.sha256(replay_path.read_bytes()).hexdigest(),
++        "arrays": arrays,
++        "microbatch_count": len(microbatches),
++        "metadata": metadata,
++        "failure": failure,
++        "runtime": runtime,
++    }
++    (output / "replay_manifest.json").write_text(
++        json.dumps(manifest, indent=2, sort_keys=True, default=_json_default) + "\n",
++        encoding="utf-8",
++    )
++    (output / "input_stats.json").write_text(
++        json.dumps({"schema_version": 1, "arrays": arrays}, indent=2, sort_keys=True) + "\n",
++        encoding="utf-8",
++    )
++    (output / "failure.json").write_text(
++        json.dumps(failure, indent=2, sort_keys=True, default=_json_default) + "\n",
++        encoding="utf-8",
++    )
++    (output / "environment.json").write_text(
++        json.dumps(runtime, indent=2, sort_keys=True, default=_json_default) + "\n",
++        encoding="utf-8",
++    )
++    return manifest
++
++
++def _json_default(value: Any) -> Any:
++    if isinstance(value, np.ndarray):
++        return value.tolist()
++    if isinstance(value, np.generic):
++        return value.item()
++    return str(value)

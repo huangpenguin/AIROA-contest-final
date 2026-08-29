@@ -10,6 +10,11 @@ openpi:
   kind: git
   url: https://github.com/Physical-Intelligence/openpi.git
   revision: c23745b5ad24e98f66967ea795a07b2588ed6c79
+  upstream_base_revision: c23745b5ad24e98f66967ea795a07b2588ed6c79
+  implementation_commit: 2ee95777a3675aedb16c7501a3533f75ce67aa04
+  implementation_git_tree: 8509af1bde2a40bfd7a1736061cf03d7657db879
+  implementation_patch_sha256: 429289ec4f397b1f0f3e13b4055cc556ff822cd689f17ddca526f458472ad878
+  implementation_tree_scope: git_commit_tree_excludes_worktree_cache
   license: Apache-2.0
   patch_dir: patches/axis_openpi
   historical_source_diff_sha256: 8031fa51a1dd2276b2309bb04947254a75e2d6ed838a9dd7f3a56d0b7a3c8412
@@ -74,3 +79,21 @@ model:
   expected_files: [norm_stats.json, params/_METADATA]
   norm_stats_policy: record_hash_only_never_load
   license: Apache-2.0
+
+# Canonical source for the separate AXIS -> standard LIBERO 30k study.  The
+# historical IPEC no-noops snapshots above remain locked for audit/ablation;
+# they are not silently substituted for this official release.
+canonical_dataset:
+  id: libero_canonical
+  experiment_line: axis_libero_30k_reproduction
+  repo_id: physical-intelligence/libero
+  repo_type: dataset
+  revision: a4336d589d589045d1c56423ffdf3b88a0e19b1f
+  expected_files: [README.md, .gitattributes, meta/episodes.jsonl, meta/info.json, meta/stats.json, meta/tasks.jsonl]
+  expected_payload_files: 1699
+  expected_episodes: 1693
+  expected_tasks: 40
+  expected_fps: 10
+  source: libero_standard
+  suite: libero_all_standard
+  license: CC-BY-4.0

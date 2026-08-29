@@ -1,0 +1,31 @@
+schema_version: 1
+data_version: 2
+stage: T3
+winner_decision: reviews/axis_pi05/model_selection_v1/winner_decision.json
+initialization: axis_base_params_only
+resume_from_t2_checkpoint: false
+model:
+  name: pi05
+  pi05: true
+  action_horizon: 10
+  discrete_state_input: false
+  paligemma_variant: gemma_2b_lora
+  action_expert_variant: gemma_300m_lora
+  axis_params_root: data/models/axisrobotics/Pi0.5-Axis/c342608c489515efa9ba8281400dc648bf3970e1/params
+  axis_norm_stats_policy: record_hash_only_never_load
+training:
+  optimizer: AdamW
+  gradient_clip_norm: 1.0
+  peak_lr: 1.0e-5
+  warmup_steps: 300
+  final_lr: 1.0e-6
+  max_steps: 3000
+  seed: 1000
+  precision: float32_trainable
+  global_batch: 3
+  dataloader_workers: 0
+  wandb_mode: disabled
+checkpoint:
+  keep_steps: [500, 1000, 3000]
+  max_to_keep: 4
+  directory_semantics: internal_train_state_step

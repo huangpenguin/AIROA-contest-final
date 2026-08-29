@@ -4,13 +4,26 @@ import argparse
 import hashlib
 import json
 import os
+import math
 from pathlib import Path
 from typing import Any
 
 from .common import ROOT, read_table, resolve_path, sha256_file, sha256_tree, write_json
 
 
-def audit_loader(mix: str, *, manifest: Path, norm: Path, axis_params: Path, seed: int = 1000) -> dict[str, Any]:
+def _binomial_99_half_width(probability: float, draws: int) -> float:
+    return 2.576 * math.sqrt(max(0.0, probability * (1.0 - probability)) / max(1, draws))
+
+
+def audit_loader(
+    mix: str,
+    *,
+    manifest: Path,
+    norm: Path,
+    axis_params: Path,
+    seed: int = 1000,
+    draws: int = 100_000,
+) -> dict[str, Any]:
     rows = read_table(manifest)
     sources = sorted({str(row["source_repo"]) for row in rows})
     mass = {
@@ -56,7 +69,7 @@ def audit_loader(mix: str, *, manifest: Path, norm: Path, axis_params: Path, see
         start += length
     generator_a = torch.Generator().manual_seed(seed)
     generator_b = torch.Generator().manual_seed(seed)
-    sampler_kwargs = {"num_samples": 128, "replacement": True}
+    sampler_kwargs = {"num_samples": int(draws), "replacement": True}
     sample_a = list(torch.utils.data.WeightedRandomSampler(dataset.sample_weights, generator=generator_a, **sampler_kwargs))
     sample_b = list(torch.utils.data.WeightedRandomSampler(dataset.sample_weights, generator=generator_b, **sampler_kwargs))
     if sample_a != sample_b:
@@ -68,9 +81,37 @@ def audit_loader(mix: str, *, manifest: Path, norm: Path, axis_params: Path, see
     missing = sorted(required_keys - set(first))
     if missing:
         raise ValueError(f"loader sample missing contract keys: {missing}")
-    preview_sha = hashlib.sha256(json.dumps(sample_a, separators=(",", ":")).encode()).hexdigest()
+    # ConcatDataset preserves source order.  Use child lengths to map actual
+    # frame indices back to source ids and audit the same frame-level sampler
+    # used by training, rather than an episode-level approximation.
+    source_by_frame: list[str] = []
+    for source, length in zip(sources, child_lengths, strict=True):
+        source_by_frame.extend([source] * length)
+    sampled_counts: dict[str, int] = {source: 0 for source in sources}
+    for index in sample_a:
+        sampled_counts[source_by_frame[int(index)]] += 1
+    empirical_mass = {
+        source: sampled_counts[source] / max(1, draws) for source in sources
+    }
+    empirical_error = {
+        source: empirical_mass[source] - mass[source] for source in sources
+    }
+    empirical_gate = {
+        source: {
+            "pass": (
+                abs(empirical_error[source]) <= _binomial_99_half_width(mass[source], draws)
+                and abs(empirical_error[source]) <= 0.005
+            ),
+            "absolute_error": abs(empirical_error[source]),
+            "99pct_half_width": _binomial_99_half_width(mass[source], draws),
+            "max_absolute_error": 0.005,
+        }
+        for source in sources
+    }
+    preview_sha = hashlib.sha256(json.dumps(sample_a[:128], separators=(",", ":")).encode()).hexdigest()
     return {
-        "schema_version": 2,
+        "schema_version": 3,
+        "audit_type": "actual_loader_frame_level",
         "mix": mix,
         "manifest_sha256": sha256_file(manifest),
         "norm_sha256": sha256_file(norm),
@@ -80,6 +121,11 @@ def audit_loader(mix: str, *, manifest: Path, norm: Path, axis_params: Path, see
         "sample_weight_sum": actual_sum,
         "source_expected_mass": mass,
         "source_loader_mass": child_mass,
+        "source_empirical_mass": empirical_mass,
+        "source_empirical_error": empirical_error,
+        "source_empirical_gate": empirical_gate,
+        "empirical_gate_pass": all(item["pass"] for item in empirical_gate.values()),
+        "analytic_loader_gate_pass": all(abs(child_mass[source] - mass[source]) <= 1e-8 for source in sources),
         "seed": seed,
         "sampler_replay_deterministic": True,
         "sample_index_preview_sha256": preview_sha,
@@ -98,10 +144,11 @@ def main() -> None:
     ap.add_argument("--axis-params", type=Path, required=True)
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--seed", type=int, default=1000)
+    ap.add_argument("--draws", type=int, default=100_000)
     args = ap.parse_args()
     manifest = resolve_path(args.manifest or ROOT / "data/manifests_v2" / args.mix / "sampling_weights.parquet")
     norm = resolve_path(args.norm or ROOT / "data/manifests_v2" / args.mix / "norm_stats.json")
-    report = audit_loader(args.mix, manifest=manifest, norm=norm, axis_params=resolve_path(args.axis_params), seed=args.seed)
+    report = audit_loader(args.mix, manifest=manifest, norm=norm, axis_params=resolve_path(args.axis_params), seed=args.seed, draws=args.draws)
     write_json(resolve_path(args.out), report)
     print(json.dumps(report, ensure_ascii=False, indent=2))
 

@@ -1,0 +1,57 @@
+schema_version: 1
+manifest_version: axis_pi05_eval_v1
+output_root: data/eval_manifests/axis_pi05_eval_v1
+task_order_index: 0
+default_max_steps: 300
+selection_env_seed: 1000
+selection_policy_seed: 2000
+standard_env_seeds: [1000, 1001, 1002]
+standard_policy_seeds: [2000, 2001, 2002]
+panels:
+  smoke:
+    selection_eligible: false
+    optional: false
+    suites: [libero_t1, libero_t2, libero_t3]
+    tasks_per_suite: 1
+    init_states_per_task: 1
+    env_seeds: [1000]
+    policy_seeds: [2000]
+  select_core:
+    selection_eligible: true
+    optional: false
+    suites: [libero_t1, libero_t2, libero_t3]
+    init_states_per_task: 10
+    env_seeds: [1000]
+    policy_seeds: [2000]
+  generalization_standard:
+    selection_eligible: false
+    optional: false
+    suites: [libero_spatial, libero_object, libero_goal, libero_10]
+    tasks_per_suite: 10
+    init_states_per_task: 5
+    env_seeds: [1000, 1001, 1002]
+    policy_seeds: [2000, 2001, 2002]
+  generalization_long_tail:
+    selection_eligible: false
+    optional: false
+    suites: [libero_90]
+    tasks_per_suite: 20
+    task_selection: sha256_name
+    init_states_per_task: 3
+    env_seeds: [1000, 1001, 1002]
+    policy_seeds: [2000, 2001, 2002]
+  stress_perturbation:
+    selection_eligible: false
+    optional: false
+    suites: [libero_t1, libero_t2, libero_t3]
+    init_states_per_task: 0
+    env_seeds: []
+    policy_seeds: []
+    perturbations: []
+  public_t3_holdout:
+    selection_eligible: false
+    optional: true
+    suites: [libero_t3]
+    init_states_per_task: 10
+    env_seeds: [1000]
+    policy_seeds: [2000]

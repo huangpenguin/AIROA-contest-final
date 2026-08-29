@@ -1,0 +1,51 @@
+schema_version: 1
+experiment_line: competition_adaptation_20hz
+purpose: adapt_from_completed_axis_libero_30k_checkpoint
+plan: docs/TRACK3_REVERSE_DATA_SYNTHESIS_PLAN.md
+parent_config: configs/axis_pi05/standard_libero_30k.yaml
+
+data:
+  source_fps: 20
+  resampling: none
+  frame_semantics: verified_native_20hz_only
+  sources:
+    libero_plus:
+      repo_id: lerobot/libero_plus
+      repo_type: dataset
+      revision: f3f49f426d75030177b18778374005bc12ccd588
+      role: adaptation_data
+      require_verified_fps: 20
+    track3:
+      role: optional_competition_or_private_bundle
+      revision: required_locked_revision
+      require_verified_fps: 20
+      public_hidden_tasks_are_not_inferred: true
+
+normalization:
+  mode: compute_fresh_from_adaptation_manifest
+  reuse_axis_norm_stats: false
+  reuse_canonical_10hz_norm_stats: false
+  require_state_action_finite_report: true
+
+continuation:
+  source_run: axis_libero_30k
+  parent_checkpoint: outputs/axis_pi05/axis_libero_30k/step_30000/params_ema
+  require_completed_30000_checkpoint: true
+  reset_optimizer_scheduler_step: true
+  preserve_model_parameters: true
+
+training:
+  optimizer: AdamW
+  global_batch: 64
+  peak_lr: 5.0e-6
+  warmup_steps: 1000
+  max_steps: 5000
+  precision: float32_or_fp16_v100
+  bf16_forbidden: true
+  gradient_clip_norm: 1.0
+
+gates:
+  require_fresh_norm_manifest: true
+  require_step0_loss_and_precision_audit: true
+  require_standard_libero_retention_eval: true
+  require_clean_commit: true

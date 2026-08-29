@@ -57,6 +57,17 @@ def validate_lock(lock: dict[str, Any]) -> None:
     _full_sha(model.get("revision"), "model.revision")
     if model.get("norm_stats_policy") != "record_hash_only_never_load":
         raise LockError("Axis norm_stats policy 必须是 record_hash_only_never_load")
+    canonical = lock.get("canonical_dataset")
+    if canonical is not None:
+        if not isinstance(canonical, dict):
+            raise LockError("canonical_dataset 必须是 mapping")
+        _full_sha(canonical.get("revision"), "canonical_dataset.revision")
+        if not canonical.get("repo_id") or canonical.get("repo_type") != "dataset":
+            raise LockError("canonical_dataset 缺少 repo_id/repo_type")
+        if not isinstance(canonical.get("expected_payload_files"), int) or canonical["expected_payload_files"] <= 0:
+            raise LockError("canonical_dataset.expected_payload_files 必须是正整数")
+        if not isinstance(canonical.get("expected_fps"), int) or canonical["expected_fps"] <= 0:
+            raise LockError("canonical_dataset.expected_fps 必须是正整数")
 
 
 def load_and_validate(path: Path) -> dict[str, Any]:
@@ -96,7 +107,11 @@ def verify_snapshot(root: Path, *, expected_files: list[str] | None = None) -> d
 
 
 def revision_map(lock: dict[str, Any]) -> dict[str, str]:
-    return {item["repo_id"]: item["revision"] for item in lock["datasets"] + lock["labels"] + [lock["model"]]}
+    specs = lock["datasets"] + lock["labels"] + [lock["model"]]
+    canonical = lock.get("canonical_dataset")
+    if isinstance(canonical, dict):
+        specs.append(canonical)
+    return {item["repo_id"]: item["revision"] for item in specs}
 
 
 def main() -> None:

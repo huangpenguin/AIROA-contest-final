@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import shlex
 import subprocess
 import time
@@ -43,6 +44,22 @@ def stage_arms(stage: str, requested: str | None) -> list[tuple[str, str, int]]:
         scope, mix = parse_arm(winner)
         return [(scope, mix, next((steps for f, m, steps in STAGE_ARMS[stage] if f == scope and m == mix), STAGE_ARMS[stage][0][2]))]
     return STAGE_ARMS[stage]
+
+
+def load_automatic_winner(root: Path) -> tuple[str, dict[str, Any]]:
+    decision_path = resolve_path(
+        os.environ.get(
+            "AXIS_PI05_WINNER_DECISION",
+            root / "reviews/axis_pi05/model_selection_v1/winner_decision.json",
+        ),
+        root,
+    )
+    if not decision_path.is_file():
+        raise RuntimeError(f"T3 需要自动 winner 决策文件: {decision_path}")
+    decision = json.loads(decision_path.read_text(encoding="utf-8"))
+    if decision.get("decision") != "automatic" or not decision.get("winner"):
+        raise RuntimeError("T3 只接受 decision=automatic 且包含 winner 的决策文件")
+    return str(decision["winner"]), decision
 
 
 def paths(root: Path, mix: str, *, data_version: int = 1) -> dict[str, Path]:
@@ -119,11 +136,17 @@ def execute(root: Path, train_config: dict[str, Any], stage: str, scope: str, mi
     if not check["gpu_available"]:
         raise RuntimeError("没有可用 NVIDIA GPU；A12 不能在当前机器上冒充完成")
     git = git_info(root)
-    if data_version == 2 and git["dirty"]:
+    allow_dirty_diagnostic = os.environ.get("AXIS_PI05_ALLOW_DIRTY_DIAGNOSTIC", "0") == "1"
+    if data_version == 2 and git["dirty"] and not allow_dirty_diagnostic:
         raise RuntimeError("v2 formal run 必须从 clean Git worktree 启动；请先提交变更或恢复 worktree")
     resolved = resolved_config(root, train_config, scope, mix, steps, run_id)
     if resolved["resolved"]["global_batch"] in (None, "", "null"):
         raise RuntimeError("global batch 未锁定；先执行统一显存 probe 并设置 AXIS_PI05_GLOBAL_BATCH")
+    winner_decision = None
+    if stage == "T3":
+        winner_id, winner_decision = load_automatic_winner(root)
+        if not winner_id.lower().startswith(f"{scope.lower()}_{mix.lower()}"):
+            raise RuntimeError(f"T3 arm {scope}/{mix} 与 automatic winner {winner_id} 不一致")
     wandb_mode = os.environ.get("AXIS_PI05_WANDB_MODE", train_config["training"].get("wandb_mode", "online"))
     if wandb_mode == "online" and not os.environ.get("WANDB_API_KEY"):
         raise RuntimeError("wandb online 需要 WANDB_API_KEY（只从环境变量读取）")
@@ -137,6 +160,22 @@ def execute(root: Path, train_config: dict[str, Any], stage: str, scope: str, mi
     resolved_paths = paths(root, mix, data_version=data_version)
     resolved["resolved"]["paths"] = {key: str(value) for key, value in resolved_paths.items()}
     resolved["resolved"]["command"] = command_text
+    resolved["resolved"]["diagnostic_only"] = bool(git["dirty"] and allow_dirty_diagnostic)
+    if stage == "T3" and winner_decision is not None:
+        winner_path = resolve_path(
+            os.environ.get(
+                "AXIS_PI05_WINNER_DECISION",
+                root / "reviews/axis_pi05/model_selection_v1/winner_decision.json",
+            ),
+            root,
+        )
+        resolved["resolved"].update({
+            "winner": winner_decision["winner"],
+            "winner_decision_sha256": sha256_file(winner_path),
+            "initialization": "axis_base_params_only",
+            "resume_from_t2_checkpoint": False,
+            "mixture_norm_policy": "winner_mix_norm",
+        })
     write_json(out / "resolved_config.json", resolved)
     provenance = {
         "schema_version": 1,
@@ -154,6 +193,8 @@ def execute(root: Path, train_config: dict[str, Any], stage: str, scope: str, mi
         "seed": resolved["resolved"]["seed"],
         "keep_steps": [500, 1000, 3000],
         "created_at_unix": time.time(),
+        "diagnostic_only": bool(git["dirty"] and allow_dirty_diagnostic),
+        "official_result": False,
     }
     write_json(out / "provenance.json", provenance)
     env = os.environ.copy()
@@ -179,6 +220,9 @@ def execute(root: Path, train_config: dict[str, Any], stage: str, scope: str, mi
         "AXIS_PI05_FAIL_ON_NONFINITE": os.environ.get("AXIS_PI05_FAIL_ON_NONFINITE", "0"),
         "AXIS_PI05_CAST_TRAINABLE_BF16": os.environ.get("AXIS_PI05_CAST_TRAINABLE_BF16", "0"),
         "AXIS_PI05_WARMUP_STEPS": str(resolved["resolved"]["warmup_steps"]),
+        "AXIS_PI05_INITIALIZATION": "axis_base_params_only" if stage == "T3" else "axis_base_params",
+        "AXIS_PI05_RESUME_FROM_CHECKPOINT": "0" if stage == "T3" else os.environ.get("AXIS_PI05_RESUME_FROM_CHECKPOINT", "0"),
+        "AXIS_PI05_DIAGNOSTIC_ONLY": "1" if allow_dirty_diagnostic else "0",
     })
     command = shlex.split(command_text)
     with (out / "train.log").open("w", encoding="utf-8") as log:
@@ -203,7 +247,14 @@ def main() -> None:
     config = load_yaml(config_path)
     root = config_path.parents[2]
     load_and_validate(root / "configs/axis_pi05/data_sources.lock.yaml")
-    selections = stage_arms(args.stage, args.arm)
+    if args.stage == "T3" and not args.arm:
+        winner_id, _ = load_automatic_winner(root)
+        winner_match = re.search(r"f([012])[_/-]?m([012])", winner_id.lower())
+        if not winner_match:
+            raise RuntimeError(f"winner id 无法解析为 F/M arm: {winner_id}")
+        selections = [(f"F{winner_match.group(1)}", f"M{winner_match.group(2)}", 3000)]
+    else:
+        selections = stage_arms(args.stage, args.arm)
     plans = []
     for scope, mix, steps in selections:
         if args.steps is not None:

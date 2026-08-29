@@ -109,7 +109,7 @@ class EnvironmentManager:
             bddl_path = bddl_path.with_name(f"{base_stem}.bddl")
         return parse_obj_of_interest(bddl_path)
 
-    def create_env(self, task_info: TaskInfo) -> OffScreenRenderEnv:
+    def create_env(self, task_info: TaskInfo, env_seed: int | None = None) -> OffScreenRenderEnv:
         import os
         from libero.libero.envs import OffScreenRenderEnv
 
@@ -121,9 +121,24 @@ class EnvironmentManager:
         }
 
         env = OffScreenRenderEnv(**env_args)
-        env.seed(self.config.seed)
+        env.seed(self.config.seed if env_seed is None else int(env_seed))
         logger.info("環境を作成: %s", task_info.name)
         return env
+
+    @staticmethod
+    def get_init_state(task_info: TaskInfo, init_state_index: int) -> np.ndarray:
+        """Return exactly the manifest-selected simulator init state."""
+
+        if isinstance(task_info.init_states, torch.Tensor):
+            init_states = task_info.init_states.detach().cpu().numpy()
+        else:
+            init_states = np.asarray(task_info.init_states)
+        index = int(init_state_index)
+        if index < 0 or index >= len(init_states):
+            raise IndexError(
+                f"init_state_index={index} outside {task_info.name} init-state count {len(init_states)}"
+            )
+        return np.asarray(init_states[index]).copy()
 
     def get_perturbed_init_states(
         self,

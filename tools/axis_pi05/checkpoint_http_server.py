@@ -146,12 +146,16 @@ class CheckpointPolicy:
         # These imports initialize JAX/model state and are intentionally startup-only.
         from openpi.policies import policy_config
         from openpi.training import config as training_config
+        from openpi.shared import normalize
 
         config = training_config.get_config(config_name)
+        norm_path = os.environ.get("AXIS_PI05_NORM_STATS")
+        norm_stats = normalize.deserialize_json(Path(norm_path).read_text(encoding="utf-8")) if norm_path else None
         self._policy = policy_config.create_trained_policy(
             config,
             checkpoint,
             default_prompt=default_prompt,
+            norm_stats=norm_stats,
         )
         self._actions: collections.deque[np.ndarray] = collections.deque()
         self._instruction = default_prompt or ""

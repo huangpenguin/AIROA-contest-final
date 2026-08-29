@@ -39,6 +39,12 @@ class EpisodeResult:
     actions: list[np.ndarray] = field(default_factory=list)
     rewards: list[float] = field(default_factory=list)
     collided: bool = False
+    goal_reached: bool = False
+    timeout: bool = False
+    failure_reason: str | None = None
+    failure_class: str | None = None
+    error_summary: str | None = None
+    video_path: str | None = None
 
     @property
     def trajectory(self) -> list[np.ndarray]:
@@ -137,6 +143,42 @@ class RolloutExecutor:
         )
         return task_result
 
+    def evaluate_case(
+        self,
+        policy: PolicyInterface,
+        task_info: TaskInfo,
+        *,
+        init_state: np.ndarray,
+        env_seed: int,
+        policy_seed: int,
+        max_steps: int,
+        case_id: str | None = None,
+        perturbation: PerturbationConfig | None = None,
+    ) -> EpisodeResult:
+        """Run one explicit manifest case with no implicit state cycling."""
+
+        original_steps = self.config.max_steps_per_episode
+        self.config.max_steps_per_episode = int(max_steps)
+        perturbation = perturbation or PerturbationConfig()
+        env = self.env_manager.create_env(task_info, env_seed=env_seed)
+        try:
+            collision_enabled = bool(self.scoring_config.get("collision", {}).get("enabled", True))
+            obj_of_interest = self.env_manager.get_obj_of_interest(task_info) if collision_enabled else set()
+            return self._run_episode(
+                env=env,
+                policy=policy,
+                task_info=task_info,
+                init_state=np.asarray(init_state).copy(),
+                episode_id=0,
+                perturbation=perturbation,
+                obj_of_interest=obj_of_interest,
+                policy_seed=int(policy_seed),
+                case_id=case_id,
+            )
+        finally:
+            env.close()
+            self.config.max_steps_per_episode = original_steps
+
     def _run_episode(
         self,
         env: Any,
@@ -146,6 +188,8 @@ class RolloutExecutor:
         episode_id: int,
         perturbation: PerturbationConfig,
         obj_of_interest: set[str],
+        policy_seed: int | None = None,
+        case_id: str | None = None,
     ) -> EpisodeResult:
         start_time = time.time()
         joint_positions: list[np.ndarray] = []
@@ -154,6 +198,7 @@ class RolloutExecutor:
         gripper_qpos_log: list[np.ndarray] = []
         actions_log: list[np.ndarray] = []
         rewards_log: list[float] = []
+        last_info: dict[str, Any] = {}
 
         cc = self.scoring_config.get("collision", {})
         collision_enabled = bool(cc.get("enabled", True))
@@ -183,7 +228,7 @@ class RolloutExecutor:
             }
         object_max_disp: dict[str, float] = {}
 
-        episode_seed = self.config.seed + episode_id
+        episode_seed = int(policy_seed) if policy_seed is not None else self.config.seed + episode_id
         policy.reset(instruction=task_info.language, seed=episode_seed)
         done = False
         total_steps = 0
@@ -196,11 +241,21 @@ class RolloutExecutor:
                 obs, perturbation
             )
 
-            action = policy.get_action(obs_for_policy)
+            action = np.asarray(policy.get_action(obs_for_policy), dtype=np.float32)
+            if action.shape != (action_dim,):
+                raise ValueError(f"policy action shape must be {(action_dim,)}, got {action.shape}")
+            if not np.all(np.isfinite(action)):
+                raise FloatingPointError("policy action contains NaN or Inf")
 
             action = self.env_manager.apply_action_noise(action, perturbation)
+            action = np.asarray(action, dtype=np.float32)
+            if action.shape != (action_dim,):
+                raise ValueError(f"perturbed action shape must be {(action_dim,)}, got {action.shape}")
+            if not np.all(np.isfinite(action)):
+                raise FloatingPointError("perturbed action contains NaN or Inf")
 
             obs, reward, done, info = env.step(action)
+            last_info = info if isinstance(info, dict) else {}
 
             joint_positions.append(obs.get("robot0_joint_pos", np.zeros(7)).copy())
             ee_positions.append(obs.get("robot0_eef_pos", np.zeros(3)).copy())
@@ -234,10 +289,16 @@ class RolloutExecutor:
         elapsed = time.time() - start_time
 
         collided = any(d > collision_threshold for d in object_max_disp.values())
-        success = bool(done) and not collided
+        goal_reached = bool(last_info.get("success", last_info.get("task_success", done)))
+        timeout = not goal_reached and total_steps >= self.config.max_steps_per_episode
+        success = goal_reached and not collided
+        failure_reason = None
+        if not success:
+            failure_reason = "collision" if collided else "timeout" if timeout else "goal_not_reached"
 
+        video_path = None
         if record_video:
-            self._write_video(task_info.name, video_frames, success)
+            video_path = self._write_video(case_id or task_info.name, video_frames, success, failure_reason=failure_reason)
 
         return EpisodeResult(
             task_name=task_info.name,
@@ -252,6 +313,10 @@ class RolloutExecutor:
             actions=actions_log,
             rewards=rewards_log,
             collided=collided,
+            goal_reached=goal_reached,
+            timeout=timeout,
+            failure_reason=failure_reason,
+            video_path=video_path,
         )
 
     @staticmethod
@@ -270,9 +335,9 @@ class RolloutExecutor:
         except Exception:
             pass
 
-    def _write_video(self, task_name: str, frames: list[np.ndarray], success: bool) -> None:
+    def _write_video(self, task_name: str, frames: list[np.ndarray], success: bool, failure_reason: str | None = None) -> str | None:
         if not frames:
-            return
+            return None
         out_dir = os.environ.get("T3_VIDEO_DIR", "")
         path: str | None = None
         try:
@@ -280,8 +345,9 @@ class RolloutExecutor:
                 raise RuntimeError("缺少 ffmpeg/ffprobe")
             os.makedirs(out_dir, exist_ok=True)
             fps = int(os.environ.get("T3_VIDEO_FPS", "20"))
-            tag = "SUCCESS" if success else "FAIL"
-            path = os.path.join(out_dir, f"{task_name}__{tag}.mp4")
+            tag = "SUCCESS" if success else f"FAIL__{failure_reason or 'unknown'}"
+            safe_name = str(task_name).replace("/", "_").replace(":", "_")
+            path = os.path.join(out_dir, f"{safe_name}__{tag}.h264.mp4")
             first = np.asarray(frames[0])
             if first.ndim != 3 or first.shape[2] != 3:
                 raise ValueError(f"视频帧必须是 HxWx3，实际 {first.shape}")
@@ -320,6 +386,7 @@ class RolloutExecutor:
             ):
                 raise RuntimeError(f"视频 ffprobe gate 失败: {stream}")
             logger.info("動画を保存: %s (%d frames)", path, len(frames))
+            return path
         except Exception as e:
             if path:
                 try:
@@ -327,6 +394,7 @@ class RolloutExecutor:
                 except FileNotFoundError:
                     pass
             logger.warning("動画保存に失敗: %s", e)
+        return None
 
     def evaluate_tasks(
         self,

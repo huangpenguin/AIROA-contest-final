@@ -1,0 +1,31 @@
+diff --git a/scripts/train.py b/scripts/train.py
+index c34884c..a398d5a 100644
+--- a/scripts/train.py
++++ b/scripts/train.py
+@@ -771,6 +771,14 @@ def main(config: _config.TrainConfig):
+     init_logging()
+     logging.info(f"Running on: {platform.node()}")
+ 
++    # On the V100 two-device data-parallel path, the upstream activation
++    # constraints can produce non-finite values even when the same fixed
++    # batch is finite on either single device.  Keep the workaround explicit
++    # and limited to the Axis LoRA arm; callers can force the old path with
++    # AXIS_PI05_DISABLE_ACTIVATION_SHARDING_CONSTRAINT=0 for diagnosis.
++    if os.environ.get("AXIS_PI05_LORA_ARM") and "AXIS_PI05_DISABLE_ACTIVATION_SHARDING_CONSTRAINT" not in os.environ:
++        os.environ["AXIS_PI05_DISABLE_ACTIVATION_SHARDING_CONSTRAINT"] = "1"
++
+     audit_dir_text = os.environ.get("AXIS_PI05_AUDIT_REPLAY_DIR")
+     audit_enabled = os.environ.get("AXIS_PI05_AUDIT_METADATA", "0") == "1" and bool(audit_dir_text)
+     fixed_replay_text = os.environ.get("AXIS_PI05_FIXED_REPLAY")
+@@ -797,6 +805,11 @@ def main(config: _config.TrainConfig):
+             "save_step0": os.environ.get("AXIS_PI05_SAVE_STEP0", "0") == "1",
+             "wait_for_step0_save": os.environ.get("AXIS_PI05_WAIT_FOR_STEP0_SAVE", "1") == "1",
+             "fixed_replay": fixed_replay_text or "",
++            "activation_sharding_constraints": (
++                "disabled" if os.environ.get("AXIS_PI05_DISABLE_ACTIVATION_SHARDING_CONSTRAINT") == "1" else "enabled"
++            ),
++            "image_augmentation": "disabled" if os.environ.get("AXIS_PI05_DISABLE_IMAGE_AUGMENT") == "1" else "enabled",
++            "optimizer_update": os.environ.get("AXIS_PI05_SKIP_OPTIMIZER_UPDATE", "0") != "1",
+             "run_id": os.environ.get("AXIS_PI05_LORA_RUN_ID", ""),
+             "root_commit": os.environ.get("AXIS_PI05_AUDIT_ROOT_COMMIT", ""),
+             "openpi_commit": os.environ.get("AXIS_PI05_AUDIT_OPENPI_COMMIT", ""),

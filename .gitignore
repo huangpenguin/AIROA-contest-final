@@ -8,6 +8,7 @@ LIBERO-plus/
 LIBERO/
 assets.zip
 env_train.sh
+.eval_libero/
 requirements-train.lock.txt
 
 # Pi0.5-Axis post-training artifacts. Keep source code, locks, manifests and
@@ -16,6 +17,12 @@ requirements-train.lock.txt
 /data/models/
 /data/processed/
 /third_party/axis_openpi/
+/artifacts/
+/outputs/
+/data/eval_manifests/
+/data/reports/axis_libero_30k/
+/data/reports/axis_fast_recovery/
+/data/reports/axis_pi05_v2/
 /outputs/axis_pi05/
 /outputs/axis_pi05_v2/
 /reviews/axis_pi05/

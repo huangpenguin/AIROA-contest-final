@@ -1,6 +1,6 @@
 # Pi0.5-Axis × LIBERO/LIBERO-plus 后训练执行与审核计划
 
-状态：**GPU 执行已暂停；A11 与数据门禁完成，F0/M1 500-step checkpoint 已验收，A12 在 F1 数值稳定性门禁处阻塞**  
+状态：**GPU v2 阶段执行部分完成；A11 与数据门禁完成，clean T0/T1/T2 checkpoint 和本地固定 model-selection 已验收，A12 尚待 T3 3000-step 收口**
 日期：2026-08-26（Asia/Tokyo）  
 目标仓库：`PARC2026_final`  
 旧仓库：`/home/huang/code/AIROA-contest-libero-plus`，只作为迁移来源和历史证据，不作为正式训练事实源。
@@ -539,7 +539,7 @@ Review 时发现任一红线即阻止正式训练或候选激活：
 11. `A11`：全新目录/server bootstrap rehearsal 与审核报告。
 12. `A12`：自有 GPU 正式消融和 3000-step 训练；由操作者逐阶段确认 winner。
 
-当前执行结论：`A11` 已完成。`A12` 已完成 T0、F0/M1 的有效 T1 500-step run 和 checkpoint restore smoke；F1 的正式 500-step checkpoint、F2、T2、T3、官方 evaluator 与审阅包仍未完成，因为 F1 在 V100 上通过多组有限值门禁探针后仍发生可复现数值发散。详见 `data/reports/gpu_execution_summary.json`。
+当前执行结论：`A11` 已完成。`A12` 已完成 clean T0、T1 的 F0/F1/F2 500-step、T2 的 F0/M0/M1/M2 1000-step，以及 Axis-init/T2 的固定 82-case 本地 model-selection；自动 winner 为 F0/M1，public T3 已完成 40-case manifest 枚举但尚未 rollout。clean checkpoint 的 restore/forward/norm 验证已通过，Axis F2/M1 还完成了 LeRobot 提交候选转换与本地 GPU server smoke。T3 3000-step 与定点评测仍未完成。详见 `data/reports/gpu_execution_summary.json`。
 
 整个计划完成的定义：
 

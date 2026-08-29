@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import sys
 import math
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -11,8 +12,10 @@ sys.path.insert(0, str(ROOT))
 from tools.axis_pi05.build_mix import make_weights, split_rows  # noqa: E402
 from tools.axis_pi05.check import run as static_check  # noqa: E402
 from tools.axis_pi05.contract import validate_catalog, validate_sample  # noqa: E402
+from tools.axis_pi05.common import load_yaml  # noqa: E402
 from tools.axis_pi05.lock import load_and_validate  # noqa: E402
 from tools.axis_pi05.param_audit import audit  # noqa: E402
+from tools.axis_pi05.phase0_audit import canonical_payload_manifest, data_source_gate  # noqa: E402
 
 
 def _row(i: int, source: str = "libero_standard", category: str = "base") -> dict:
@@ -28,6 +31,36 @@ def _row(i: int, source: str = "libero_standard", category: str = "base") -> dic
 class TestAxisPi05Tools(unittest.TestCase):
     def test_lock_has_full_revisions(self):
         load_and_validate(ROOT / "configs/axis_pi05/data_sources.lock.yaml")
+
+
+    def test_canonical_source_supersedes_non_equivalent_ipec(self):
+        self.assertTrue(data_source_gate(canonical_ready=True, alternative_equivalent=False))
+        self.assertTrue(data_source_gate(canonical_ready=False, alternative_equivalent=True))
+        self.assertFalse(data_source_gate(canonical_ready=False, alternative_equivalent=False))
+
+
+    def test_payload_manifest_excludes_unlisted_cache_files(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            (root / "meta").mkdir()
+            (root / "README.md").write_bytes(b"readme")
+            (root / "meta/info.json").write_bytes(b"info")
+            (root / ".axis_pi05_revision").write_bytes(b"revision")
+            (root / ".cache/huggingface").mkdir(parents=True)
+            (root / ".cache/huggingface/cache.bin").write_bytes(b"cache")
+            manifest = canonical_payload_manifest(root, ["README.md", "meta/info.json"], expected_count=2)
+            self.assertTrue(manifest["complete"])
+            self.assertEqual(manifest["file_count"], 2)
+            self.assertEqual([entry["path"] for entry in manifest["entries"]], ["README.md", "meta/info.json"])
+
+
+    def test_reproduction_and_competition_lines_have_separate_fps(self):
+        reproduction = load_yaml(ROOT / "configs/axis_pi05/standard_libero_30k.yaml")
+        competition = load_yaml(ROOT / "configs/axis_pi05/libero_plus_track3_20hz.yaml")
+        self.assertEqual(reproduction["canonical_dataset"]["authoritative_fps"], 10)
+        self.assertNotIn("plan_declared_fps", reproduction["canonical_dataset"])
+        self.assertEqual(competition["data"]["source_fps"], 20)
+        self.assertFalse(competition["normalization"]["reuse_axis_norm_stats"])
 
 
     def test_sample_contract_and_catalog(self):

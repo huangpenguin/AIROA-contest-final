@@ -29,12 +29,29 @@ PARC 2026 のための配布環境である。
 
 ## 動作要件
 
-本配布環境は、本番の採点環境と同一の **GPU 構成**である。CPU のみの環境はサポートしない。
+本リポジトリは提出前チェックとローカル評価のための配布環境である。2026-08-26 更新の
+本選参加者向け資料 v1.1 では、運営が提供する本選開発 GPU は
+**NVIDIA RTX PRO 6000 Blackwell**（本選1の利用上限 60 時間）と案内されている。
+これは、下記の提出・採点コンテナの GPU と同一とは限らないため、両者を分けて確認すること。
 
-- NVIDIA GPU（本番採点は NVIDIA L4）
+- NVIDIA GPU（本選配布の開発 GPU は RTX PRO 6000 Blackwell）
 - NVIDIA ドライバ **R580 系以降**（CUDA 13 対応）
 - Docker + nvidia-container-toolkit（Docker で使う場合）
 - Python 3.10、git、unzip（setup.sh でホストに直接構築する場合）
+
+### 本選配布 GPU 環境の注意（資料 v1.1）
+
+- 配布 GPU 上でサポートされる Docker は、運営配布の Omnicampus 提出事前チェック用 Docker に限る。
+  参加者が独自に用意した custom Docker はサポート対象外である。
+- 配布 GPU のストレージは `$HOME` 40GiB、`~/data` 100GiB、読み出し専用の `~/dataset`、
+  非永続の `/opt/dlami/nvme` 約1.7TB である。重要な成果物は `parc-home-sync data-push` で保存する。
+- ブラウザの Notebook タブを閉じても Notebook は停止しない。使用後は必ず自分で shutdown する。
+- 完全 idle が 1 時間続くと自動停止し、idle でなくても起動から 12 時間で自動停止する。
+- 本選1では「延長」ボタンを使用できない。配布 GPU の利用上限は本選1/2/3で 60/75/120 時間で、
+  ステージ移行時にリセットされ、余り時間は繰り越されない。
+- 配布 GPU の具体的な起動・接続手順は、資料 v1.1 の p.35–42 を参照する。
+
+詳細な中国語归总见 [docs/COMPETITION_GPU_GUIDE_SUMMARY_ZH.md](docs/COMPETITION_GPU_GUIDE_SUMMARY_ZH.md)。
 
 ## 1. セットアップ
 

@@ -1,7 +1,7 @@
 # Axis Pi0.5 审计整改、重跑与验收计划
 
-状态：**执行中：R0–R8 已完成，R9 clean formal runs 已排队执行，R10 已完成 checkpoint adapter/media smoke，正式全量 model-selection evaluator 仍待完成**
-日期：2026-08-26（Asia/Tokyo）  
+状态：**执行中：R0–R10 已完成；本地固定 manifest 的 Axis-init/T2 model-selection 已完成，T3 训练与定点评测仍待完成**
+日期：2026-08-27（Asia/Tokyo）
 执行者：Codex  
 基线计划：`docs/AXIS_PI05_POSTTRAIN_EXECUTION_PLAN.md`  
 审计基线：2026-08-26 对当前实现、数据产物、日志和 checkpoint 的只读审计
@@ -16,9 +16,9 @@
 | R5 | completed | `data/reports/axis_pi05_v2/runtime_parameter_audit_F{0,1,2}.json` |
 | R6 | completed for D3 | `data/reports/axis_pi05_v2/f1_diagnostic_D3.json`：50/50 finite |
 | R7 | completed | clean T0 step=10 checkpoint 的 `checkpoint_manifest_v2.json` 与 `restore_validation.json`；独立 validator restore/forward/norm gate 通过 |
-| R8 | completed in training/evaluator environments | 训练环境 `61 passed, 7 skipped`；独立 evaluator venv 的 task-filter `3 passed` |
-| R9 | in progress | pre-commit dirty runs 保留作诊断；clean T0 已验证，clean T1 F0/M1 500 已完成并通过独立 validator；clean T2/F1/F2 仍在持久 GPU 队列 |
-| R10 | partial smoke | clean T0/T1 checkpoint 经 OpenPI→HTTP adapter 接入真实 LIBERO 1-task/1-step smoke；H.264/yuv420p/20 FPS/2 frames ffprobe gate 通过；正式全量 evaluator 仍 gated |
+| R8 | completed in training/evaluator environments | 训练环境 `64 passed, 7 skipped`；独立 evaluator venv 的 task-filter `3 passed` |
+| R9 | completed for T0/T1/T2 | pre-commit dirty runs 保留作诊断；clean T0、T1 F0/F1/F2 500 和 T2 F0/M0/M1/M2 1000 已完成并保留 checkpoint；T3 3000 仍未执行 |
+| R10 | completed for local panels | clean checkpoint 的 OpenPI→HTTP adapter 与 Axis→LeRobot 候选均完成启动/单步 smoke；提交候选静态 validator 通过；Axis-init 与三个 T2 候选完成固定 `select_core` 82-case rollout、paired baseline、H.264/yuv420p/20 FPS ffprobe 和 failure gallery；官方 E2E 仍 deferred |
 
 旧 v1 产物均保持不变；所有整改训练输出写入 `outputs/axis_pi05_v2/`，不将 pre-commit dirty 诊断 run 晋升为正式证据。当前 clean queue 从最新 clean commit 启动，且 `run.py` 已在创建 v2 run 前拒绝 dirty worktree。
 
@@ -48,7 +48,7 @@ axisrobotics/Pi0.5-Axis params
 5. F1 数值失败缺少逐 step、逐参数组诊断和完整 provenance。
 6. checkpoint 整体 hash、restore smoke 和 norm asset 还不能独立复核。
 7. 实现大部分未进入 Git，现有 checkpoint 无法由 commit 精确重建。
-8. evaluator 的 3 个 task-filter 测试仍然失败，失败媒体链路尚未实跑。
+8. 初审时 evaluator 的 3 个 task-filter 测试曾失败；当前 task-filter 测试、固定 82-case evaluator、失败媒体链路和本地 failure review package 均已通过，public T3 仅完成可枚举 manifest。
 
 ## 2. 已锁定前提
 

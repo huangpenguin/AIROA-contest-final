@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "date": "2026-08-26",
-  "status": "partial_blocked",
+  "date": "2026-08-27",
+  "status": "local_t3_diagnostic_complete",
   "gpu": {
     "host": "current_gpu_server_ssh",
     "hardware": "4x Tesla V100-PCIE-32GB",
@@ -19,22 +19,111 @@
     },
     "axis_norm_policy": "record_hash_only_never_load"
   },
+  "local_evaluation": {
+    "official_result": false,
+    "manifest_version": "axis_pi05_eval_v1",
+    "select_core": {
+      "case_count": 82,
+      "manifest_sha256": "0083c46a45f653299f8a8ff8157dc2f4e483bc27958f005e704377418452d91c",
+      "protocol_sha256": "3892af7fee26156f1eeb71a87d4585a29aba4952e9750bc55187c4447ee11e83",
+      "coverage": "4/4 results complete"
+    },
+    "candidates": {
+      "axis_init_f0_m1": {"micro_success": 0.4634146341463415, "task_perturbation_macro_success": 0.47, "collision_rate": 0.45121951219512196, "timeout_stall_rate": 0.5},
+      "f0_m0_step1000": {"micro_success": 0.036585365853658534, "task_perturbation_macro_success": 0.03, "collision_rate": 0.5487804878048781, "timeout_stall_rate": 0.9634146341463414, "paired_delta_to_axis_init": -0.4268292682926829},
+      "f0_m1_step1000": {"micro_success": 0.036585365853658534, "task_perturbation_macro_success": 0.03, "collision_rate": 0.45121951219512196, "timeout_stall_rate": 0.9512195121951219, "paired_delta_to_axis_init": -0.4268292682926829},
+      "f0_m2_step1000": {"micro_success": 0.012195121951219513, "task_perturbation_macro_success": 0.01, "collision_rate": 0.5609756097560976, "timeout_stall_rate": 0.9634146341463414, "paired_delta_to_axis_init": -0.45121951219512196}
+    },
+    "automatic_winner": "f0_m1_step1000",
+    "winner_decision": "reviews/axis_pi05/model_selection_v1/winner_decision.json",
+    "failure_gallery": "artifacts/axis_pi05_v2/model_selection_v1/select_core/gallery/index.html",
+    "t3_preflight_report": "data/reports/axis_pi05_v2/t3_preflight.json",
+    "generalization_standard_manifest_cases": 1800,
+    "public_t3_holdout_manifest_cases": 40,
+    "generalization_long_tail_status": "unavailable",
+    "stress_perturbation_status": "unsupported"
+  },
+  "active_diagnostic_run": {
+    "run_id": "t3_diag_f0_m1_3000_20260827",
+    "stage": "T3",
+    "scope": "F0/M1",
+    "starting_point": "Axis base params; not T2 resume",
+    "target_internal_steps": 3000,
+    "observed_internal_steps": 3000,
+    "validated_checkpoints": [500, 1000, 3000],
+    "checkpoint_restore_validation": "passed at 500, 1000, and 3000",
+    "final_checkpoint": "outputs/axis_pi05_v2/t3_diag_f0_m1_3000_20260827/axis_pi05_libero_mix/t3_diag_f0_m1_3000_20260827/3000",
+    "final_checkpoint_stable_tree_sha256": "9bff5879eb67a7ad7ec8f719ec04640ba9bbdbece5786c47d4071419307caf3d",
+    "final_fixed_sample_loss_mean": 0.019101740792393684,
+    "converted_lerobot_artifacts": [
+      "outputs/axis_pi05_v2/converted_t3_diag_f0_m1_500_lerobot",
+      "outputs/axis_pi05_v2/converted_t3_diag_f0_m1_1000_lerobot",
+      "outputs/axis_pi05_v2/converted_t3_diag_f0_m1_3000_lerobot"
+    ],
+    "official_result": false,
+    "diagnostic_only": true
+  },
   "valid_runs": [
     {
-      "run_id": "t0_retry3_f0_m1",
+      "run_id": "v2_t0_f0_m1_10_clean",
       "stage": "T0",
       "scope": "F0/M1",
       "internal_steps": 10,
-      "status": "completed"
+      "status": "completed",
+      "restore_validation": "passed"
     },
     {
-      "run_id": "t1_f0_m1_lr1e5",
+      "run_id": "v2_t1_f0_m1_500_clean",
       "stage": "T1",
       "scope": "F0/M1",
       "internal_steps": 500,
       "status": "completed_finite",
-      "checkpoint_manifest": "outputs/axis_pi05/t1_f0_m1_lr1e5/axis_pi05_libero_mix/t1_f0_m1_lr1e5/500/checkpoint_manifest.json",
-      "restore_smoke": true,
+      "restore_validation": "passed",
+      "optimizer_state": "present"
+    },
+    {
+      "run_id": "v2_t1_f1_m1_500_clean_retry",
+      "stage": "T1",
+      "scope": "F1/M1",
+      "internal_steps": 500,
+      "status": "completed_finite",
+      "restore_validation": "passed",
+      "optimizer_state": "present"
+    },
+    {
+      "run_id": "v2_t1_f2_m1_500_clean",
+      "stage": "T1",
+      "scope": "F2/M1",
+      "internal_steps": 500,
+      "status": "completed_finite",
+      "restore_validation": "passed",
+      "optimizer_state": "present"
+    },
+    {
+      "run_id": "v2_t2_f0_m0_1000_clean",
+      "stage": "T2",
+      "scope": "F0/M0",
+      "internal_steps": 1000,
+      "status": "completed_finite",
+      "restore_validation": "passed",
+      "optimizer_state": "present"
+    },
+    {
+      "run_id": "v2_t2_f0_m1_1000_clean",
+      "stage": "T2",
+      "scope": "F0/M1",
+      "internal_steps": 1000,
+      "status": "completed_finite",
+      "restore_validation": "passed",
+      "optimizer_state": "present"
+    },
+    {
+      "run_id": "v2_t2_f0_m2_1000_clean",
+      "stage": "T2",
+      "scope": "F0/M2",
+      "internal_steps": 1000,
+      "status": "completed_finite",
+      "restore_validation": "passed",
       "optimizer_state": "present"
     }
   ],
@@ -57,14 +146,16 @@
     }
   ],
   "pending": [
-    "T1 F1/F2 valid 500-step checkpoints",
-    "T2 M0/M1/M2 1000-step ablation",
-    "T3 3000-step final run",
-    "official local evaluator and failure review package"
+    "T3 checkpoint select_core/generalization evaluation and final comparison",
+    "T3 formal clean-worktree run and official submission/score validation",
+    "official RTX PRO 6000 Blackwell Docker E2E (deferred)"
   ],
   "verification": {
     "static_gates": "pass",
-    "training_tests": "56 passed, 7 skipped",
-    "evaluator_task_filter_tests": "3 blocked: training env has no libero package"
+    "training_tests": "64 passed, 7 skipped",
+    "evaluator_task_filter_tests": "3 passed",
+    "clean_checkpoint_restore_validations": "8 passed",
+    "axis_lerobot_submission_static": "pass",
+    "axis_lerobot_submission_gpu_smoke": "pass on local V100 GPU2; not official score"
   }
 }

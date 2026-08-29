@@ -285,7 +285,73 @@ print(json.dumps({"restored_step": int(state.step), "rng_fingerprint": str(jax.d
     return payload
 
 
-def _array_fingerprint(value: Any) -> dict[str, Any]:
+def continue_arm(arm: str, run_id: str, gpu_ids: tuple[int, ...], steps: int) -> dict[str, Any]:
+    """Continue an existing LoRA run from its latest Orbax state."""
+    if arm not in ARMS:
+        raise ValueError(arm)
+    if steps <= 25:
+        raise ValueError("continuation target must be greater than the 25-step screen")
+    require_free_targets(gpu_ids)
+    report_dir = REPORT_ROOT / arm / run_id
+    run_dir = OUTPUT_ROOT / arm / run_id
+    if not report_dir.is_dir() or not run_dir.is_dir():
+        raise FileNotFoundError(run_dir)
+    if not (run_dir / "25").is_dir():
+        raise RuntimeError(f"continuation requires completed step-25 checkpoint: {run_dir / '25'}")
+    source = _common_source_manifest(arm, run_id, gpu_ids, steps)
+    write_json(report_dir / f"resume_source_manifest_{steps}.json", source)
+    env = os.environ.copy()
+    env.update(
+        {
+            "PYTHONPATH": str(NESTED_SRC) + os.pathsep + str(ROOT),
+            "CUDA_VISIBLE_DEVICES": ",".join(str(gpu_id) for gpu_id in gpu_ids),
+            "JAX_PLATFORMS": "cuda",
+            "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
+            "XLA_PYTHON_CLIENT_MEM_FRACTION": ".90",
+            "HF_HUB_OFFLINE": "1",
+            "AXIS_PI05_LORA_ARM": arm,
+            "AXIS_PI05_LORA_STEPS": str(steps),
+            "AXIS_PI05_LORA_PEAK_LR": str(ARMS[arm]["peak_lr"]),
+            "AXIS_PI05_LORA_OBJECTIVE": ARMS[arm]["objective"],
+            "AXIS_PI05_LORA_RUN_ID": run_id,
+            "AXIS_PI05_LORA_RUN_DIR": str(run_dir),
+            "AXIS_PI05_LORA_RESUME": "1",
+            "AXIS_PI05_LORA_NORM_STATS": str(PHASE1_ROOT / "norm_stats.json"),
+            "AXIS_PI05_LORA_DATA_ROOT": str(ROOT / "data/raw/hf/physical-intelligence/libero"),
+            "AXIS_PI05_LORA_SAMPLING_MANIFEST": str(PHASE1_ROOT / "official_sampling_manifest.jsonl"),
+            "AXIS_PI05_AXIS_PARAMS": str(ROOT / "data/models/axisrobotics/Pi0.5-Axis" / AXIS_REVISION / "params"),
+            "OPENPI_KEEP_STEPS": "0,1,10,25,50,100,250,500",
+            "OPENPI_MAX_TO_KEEP": "8",
+            "AXIS_PI05_FAIL_ON_NONFINITE": "1",
+        }
+    )
+    log_path = report_dir / f"train_resume_{steps}.log"
+    with log_path.open("w", encoding="utf-8") as log:
+        process = subprocess.run(
+            [str(PYTHON), str(ROOT / "third_party/axis_openpi/scripts/train.py"), "axis_pi05_lora_screen"],
+            cwd=ROOT,
+            env=env,
+            stdout=log,
+            stderr=subprocess.STDOUT,
+            text=True,
+        )
+    result = {
+        "arm": arm,
+        "run_id": run_id,
+        "returncode": process.returncode,
+        "steps": steps,
+        "gpu_ids": list(gpu_ids),
+        "gpu0_touched": False,
+        "run_dir": str(run_dir),
+        "report_dir": str(report_dir),
+        "log": str(log_path),
+        "resumed_from": 25,
+    }
+    write_json(report_dir / f"process_result_resume_{steps}.json", result)
+    if process.returncode != 0:
+        raise RuntimeError(f"LoRA continuation failed; see {log_path}")
+    return result
+
     array = np.ascontiguousarray(np.asarray(value))
     return {
         "dtype": str(array.dtype),
@@ -457,7 +523,7 @@ def checkpoint_manifest(arm: str, run_id: str) -> dict[str, Any]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=["preflight", "train", "restore", "fixed-forward", "manifest"])
+    parser.add_argument("command", choices=["preflight", "train", "continue", "restore", "fixed-forward", "manifest"])
     parser.add_argument("--arm", choices=sorted(ARMS))
     parser.add_argument("--run-id")
     parser.add_argument("--steps", type=int, default=25)
@@ -468,10 +534,13 @@ def main() -> None:
         print(json.dumps({"gpu": _gpu_snapshot(), "root": _git_info()}, indent=2))
         return
     if not args.arm or not args.run_id:
-        parser.error("train/restore/manifest requires --arm and --run-id")
+        parser.error("train/continue/restore/fixed-forward/manifest requires --arm and --run-id")
     if args.command == "train":
         gpu_ids = tuple(args.gpu or (1,))
         print(json.dumps(train_arm(args.arm, args.run_id, gpu_ids, args.steps), indent=2))
+    elif args.command == "continue":
+        gpu_ids = tuple(args.gpu or (1,))
+        print(json.dumps(continue_arm(args.arm, args.run_id, gpu_ids, args.steps), indent=2))
     elif args.command == "restore":
         if args.restore_step is None:
             parser.error("restore requires --restore-step")

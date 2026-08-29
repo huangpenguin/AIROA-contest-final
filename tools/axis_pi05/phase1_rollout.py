@@ -11,6 +11,7 @@ import argparse
 import contextlib
 import csv
 import hashlib
+import html
 import io
 import json
 import os
@@ -255,6 +256,40 @@ def _write_result_tables(run_root: Path, episode_rows: list[dict[str, Any]]) -> 
         writer.writerows(task_rows)
 
 
+def _write_failure_gallery(run_root: Path, episode_rows: list[dict[str, Any]]) -> Path:
+    """Write a self-contained review index for failed H.264 episodes."""
+    gallery_root = run_root / "failure_gallery"
+    gallery_root.mkdir(parents=True, exist_ok=True)
+    cards = []
+    for row in episode_rows:
+        if bool(row.get("success")):
+            continue
+        video = Path(str(row.get("video_path") or ""))
+        if not video.is_absolute():
+            video = run_root / video
+        if not video.is_file():
+            continue
+        source = html.escape(os.path.relpath(video, gallery_root))
+        metadata = html.escape(json.dumps(row, ensure_ascii=False, indent=2, sort_keys=True))
+        title = html.escape(str(row.get("case_id", "unknown")))
+        cards.append(
+            f'<article><h3>{title}</h3><video controls preload="metadata" src="{source}"></video>'
+            f'<details><summary>episode metadata</summary><pre>{metadata}</pre></details></article>'
+        )
+    page = (
+        '<!doctype html><meta charset="utf-8"><title>Axis LoRA failure gallery</title>'
+        '<style>body{font:14px sans-serif;margin:2rem;background:#f5f5f5}'
+        'main{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:1rem}'
+        'article{background:#fff;padding:1rem;border-radius:8px}video{width:100%}'
+        'pre{white-space:pre-wrap}</style><main>'
+        + "\n".join(cards)
+        + '</main>'
+    )
+    index = gallery_root / "index.html"
+    index.write_text(page, encoding="utf-8")
+    return index
+
+
 def run_panel(
     panel: str,
     mode: str,
@@ -265,6 +300,12 @@ def run_panel(
     start_index: int = 0,
     end_index: int | None = None,
     run_id: str | None = None,
+    manifest_root: Path | None = None,
+    checkpoint: Path = CHECKPOINT,
+    config_name: str = "axis_pi05_libero_phase1",
+    norm_stats_path: Path = PHASE1_ROOT / "norm_stats.json",
+    arm: str | None = None,
+    checkpoint_step: int | None = None,
 ) -> dict[str, Any]:
     from pipeline.config import EvalConfig, PerturbationConfig
     from pipeline.environment import EnvironmentManager
@@ -273,7 +314,10 @@ def run_panel(
 
     if panel not in {"C20", "B80"} or mode not in {"execute8", "full_chunk"}:
         raise ValueError(f"invalid panel/mode: {panel}/{mode}")
-    manifest_path = out_root / f"{panel}.jsonl"
+    manifest_root = manifest_root or out_root
+    manifest_path = manifest_root / f"{panel}.jsonl"
+    checkpoint = resolve_path(checkpoint)
+    norm_stats_path = resolve_path(norm_stats_path)
     all_rows = [json.loads(line) for line in manifest_path.read_text(encoding="utf-8").splitlines() if line.strip()]
     if start_index < 0 or start_index > len(all_rows):
         raise ValueError(f"invalid start index: {start_index}")
@@ -296,18 +340,27 @@ def run_panel(
     env.update({
         "CUDA_VISIBLE_DEVICES": str(gpu_id),
         "HF_HUB_OFFLINE": "1",
-        "AXIS_PI05_NORM_STATS": str(PHASE1_ROOT / "norm_stats.json"),
+        "AXIS_PI05_NORM_STATS": str(norm_stats_path),
         "AXIS_PI05_PHASE1_ASSETS": str(PHASE1_ROOT),
         "JAX_PLATFORMS": "cuda",
         "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
         "XLA_PYTHON_CLIENT_MEM_FRACTION": ".90",
     })
+    if arm is not None:
+        env.update({
+            "AXIS_PI05_LORA_ARM": arm,
+            "AXIS_PI05_LORA_RUN_DIR": str(checkpoint.parent),
+            "AXIS_PI05_LORA_NORM_STATS": str(norm_stats_path),
+            "AXIS_PI05_LORA_DATA_ROOT": str(ROOT / "data/raw/hf/physical-intelligence/libero"),
+            "AXIS_PI05_LORA_SAMPLING_MANIFEST": str(PHASE1_ROOT / "official_sampling_manifest.jsonl"),
+            "AXIS_PI05_LORA_AXIS_PARAMS": str(ROOT / "data/models/axisrobotics/Pi0.5-Axis" / "c342608c489515efa9ba8281400dc648bf3970e1" / "params"),
+        })
     log_path = run_root / "policy_server.log"
     log = log_path.open("w", encoding="utf-8")
     partial_path = run_root / "episodes.partial.jsonl"
     partial_path.write_text("", encoding="utf-8")
     process = subprocess.Popen(
-        [server_python, "-m", "tools.axis_pi05.checkpoint_http_server", "--checkpoint", str(CHECKPOINT), "--port", str(port), "--config", "axis_pi05_libero_phase1"],
+        [server_python, "-m", "tools.axis_pi05.checkpoint_http_server", "--checkpoint", str(checkpoint), "--port", str(port), "--config", config_name],
         cwd=ROOT,
         env=env,
         stdout=log,
@@ -361,6 +414,7 @@ def run_panel(
         success_count = sum(bool(row["success"]) for row in episode_rows)
         stall_count = sum((not row["success"]) and float(row["action_norm_mean"]) < 1e-3 for row in episode_rows)
         _write_result_tables(run_root, episode_rows)
+        failure_gallery = _write_failure_gallery(run_root, episode_rows)
         videos = sorted(str(path.relative_to(run_root)) for path in video_dir.glob("*.mp4")) if video_dir.is_dir() else []
         summary = {
             "schema_version": 1,
@@ -377,9 +431,12 @@ def run_panel(
             "source_repo": "physical-intelligence/libero",
             "source_revision": OFFICIAL_REVISION,
             "source_fps": 10,
-            "norm_stats_sha256": sha256_file(PHASE1_ROOT / "norm_stats.json"),
+            "norm_stats_sha256": sha256_file(norm_stats_path),
             "panel_manifest_sha256": sha256_file(manifest_path),
-            "checkpoint_identity": "axis_base_params:c342608c489515efa9ba8281400dc648bf3970e1:43f256c74ff1d234fda3defbbf2da24aeae826b04734a21727156d770ee02c81",
+            "checkpoint_identity": f"{config_name}:{checkpoint}",
+            "checkpoint_path": str(checkpoint),
+            "checkpoint_step": checkpoint_step,
+            "config_name": config_name,
             "case_count": len(episode_rows),
             "case_range": [start_index, end_index],
             "success_count": success_count,
@@ -396,7 +453,7 @@ def run_panel(
             "finished_at_unix": time.time(),
             "gpu_id": str(gpu_id),
             "gpu0_touched": False,
-            "artifacts": {"episodes_csv": str(run_root / "episodes.csv"), "tasks_csv": str(run_root / "tasks.csv"), "videos_dir": str(video_dir)},
+            "artifacts": {"episodes_csv": str(run_root / "episodes.csv"), "tasks_csv": str(run_root / "tasks.csv"), "videos_dir": str(video_dir), "failure_gallery": str(failure_gallery)},
         }
         write_json(run_root / "summary.json", summary)
         return summary
@@ -525,6 +582,12 @@ def main() -> None:
     parser.add_argument("--start-index", type=int, default=0)
     parser.add_argument("--end-index", type=int)
     parser.add_argument("--run-id")
+    parser.add_argument("--manifest-root", type=Path)
+    parser.add_argument("--checkpoint", type=Path, default=CHECKPOINT)
+    parser.add_argument("--config", default="axis_pi05_libero_phase1")
+    parser.add_argument("--norm-stats", type=Path, default=PHASE1_ROOT / "norm_stats.json")
+    parser.add_argument("--arm", choices=["L1_action_lora", "L2_action_lora_heads", "L3_dual_lora_heads", "L4_dual_lora_heads_32d"])
+    parser.add_argument("--checkpoint-step", type=int)
     parser.add_argument("--shard", type=Path, action="append", default=[])
     args = parser.parse_args()
     out = resolve_path(args.out)
@@ -550,6 +613,12 @@ def main() -> None:
         start_index=args.start_index,
         end_index=args.end_index,
         run_id=args.run_id,
+        manifest_root=resolve_path(args.manifest_root) if args.manifest_root else None,
+        checkpoint=resolve_path(args.checkpoint),
+        config_name=args.config,
+        norm_stats_path=resolve_path(args.norm_stats),
+        arm=args.arm,
+        checkpoint_step=args.checkpoint_step,
     )
     print(json.dumps(result, ensure_ascii=False, indent=2))
     if result["status"] != "passed":

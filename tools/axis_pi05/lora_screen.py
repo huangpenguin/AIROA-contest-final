@@ -242,10 +242,11 @@ def train_arm(arm: str, run_id: str, gpu_ids: tuple[int, ...], steps: int) -> di
     return result
 
 
-def restore_report(arm: str, run_id: str, step: int) -> dict[str, Any]:
+def restore_report(arm: str, run_id: str, step: int, gpu: int = 1) -> dict[str, Any]:
     """Restore one Orbax state in a new process and record step/RNG continuity."""
     if arm not in ARMS:
         raise ValueError(arm)
+    require_free_targets((gpu,))
     run_dir = OUTPUT_ROOT / arm / run_id
     report_dir = REPORT_ROOT / arm / run_id
     if not run_dir.is_dir():
@@ -269,7 +270,7 @@ print(json.dumps({"restored_step": int(state.step), "rng_fingerprint": str(jax.d
     env.update(
         {
             "PYTHONPATH": str(NESTED_SRC) + os.pathsep + str(ROOT),
-            "CUDA_VISIBLE_DEVICES": "1",
+            "CUDA_VISIBLE_DEVICES": str(gpu),
             "JAX_PLATFORMS": "cuda",
             "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
             "AXIS_PI05_LORA_ARM": arm,
@@ -280,7 +281,7 @@ print(json.dumps({"restored_step": int(state.step), "rng_fingerprint": str(jax.d
     )
     completed = subprocess.run([str(PYTHON), "-c", code], cwd=ROOT, env=env, check=True, capture_output=True, text=True)
     payload = json.loads(completed.stdout.strip().splitlines()[-1])
-    payload.update({"arm": arm, "run_id": run_id, "requested_step": step, "gpu0_touched": False})
+    payload.update({"arm": arm, "run_id": run_id, "requested_step": step, "gpu": gpu, "gpu0_touched": False})
     write_json(report_dir / f"restore_report_{step}.json", payload)
     return payload
 
@@ -516,7 +517,8 @@ def checkpoint_manifest(arm: str, run_id: str) -> dict[str, Any]:
     for child in sorted(run_dir.iterdir()) if run_dir.is_dir() else []:
         if child.is_dir() and child.name.isdigit() and (child / "params").exists():
             steps.append(int(child.name))
-    result = {"arm": arm, "run_id": run_id, "run_dir": str(run_dir), "steps": steps, "required": [0, 1, 10, 25], "complete": set([0, 1, 10, 25]).issubset(steps), "generated_at_unix": time.time()}
+    required = [0, 1, 10, 25, 50, 100]
+    result = {"arm": arm, "run_id": run_id, "run_dir": str(run_dir), "steps": steps, "required": required, "complete": set(required).issubset(steps), "generated_at_unix": time.time()}
     write_json(REPORT_ROOT / arm / run_id / "checkpoint_manifest.json", result)
     return result
 
@@ -544,7 +546,8 @@ def main() -> None:
     elif args.command == "restore":
         if args.restore_step is None:
             parser.error("restore requires --restore-step")
-        print(json.dumps(restore_report(args.arm, args.run_id, args.restore_step), indent=2))
+        gpu = (args.gpu or [1])[0]
+        print(json.dumps(restore_report(args.arm, args.run_id, args.restore_step, gpu), indent=2))
     elif args.command == "fixed-forward":
         if args.restore_step is None:
             parser.error("fixed-forward requires --restore-step")

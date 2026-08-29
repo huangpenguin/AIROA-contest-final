@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import dataclasses
+import hashlib
 import json
 import os
 import subprocess
@@ -16,6 +17,8 @@ import sys
 import time
 from pathlib import Path
 from typing import Any
+
+import numpy as np
 
 from .common import ROOT, canonical_json, load_yaml, sha256_file, write_json
 
@@ -282,6 +285,165 @@ print(json.dumps({"restored_step": int(state.step), "rng_fingerprint": str(jax.d
     return payload
 
 
+def _array_fingerprint(value: Any) -> dict[str, Any]:
+    array = np.ascontiguousarray(np.asarray(value))
+    return {
+        "dtype": str(array.dtype),
+        "shape": list(array.shape),
+        "sha256": hashlib.sha256(array.tobytes()).hexdigest(),
+    }
+
+
+def fixed_forward_report(arm: str, run_id: str, step: int, gpu: int = 1) -> dict[str, Any]:
+    """Restore one LoRA checkpoint in a new process and run a deterministic forward."""
+    if arm not in ARMS:
+        raise ValueError(arm)
+    if step < 0:
+        raise ValueError(step)
+    require_free_targets((gpu,))
+    run_dir = OUTPUT_ROOT / arm / run_id
+    report_dir = REPORT_ROOT / arm / run_id
+    if not run_dir.is_dir() or not report_dir.is_dir():
+        raise FileNotFoundError(run_dir)
+    out_dir = report_dir / f"fixed_forward_step_{step:03d}"
+    if out_dir.exists():
+        raise FileExistsError(out_dir)
+    out_dir.mkdir(parents=True)
+    code = r'''
+import hashlib, importlib.util, json, os, sys, time
+from pathlib import Path
+import numpy as np
+import jax
+import jax.numpy as jnp
+import flax.nnx as nnx
+from openpi import transforms
+from openpi.shared import normalize
+from openpi.training import config as config_lib, data_loader, sharding
+
+def _fp(value):
+    array = np.ascontiguousarray(np.asarray(value))
+    return {"dtype": str(array.dtype), "shape": list(array.shape), "sha256": hashlib.sha256(array.tobytes()).hexdigest()}
+
+spec = importlib.util.spec_from_file_location("axis_train_fixed_forward", "third_party/axis_openpi/scripts/train.py")
+module = importlib.util.module_from_spec(spec)
+sys.modules[spec.name] = module
+spec.loader.exec_module(module)
+config = config_lib.get_config("axis_pi05_lora_screen")
+mesh = sharding.make_mesh(1)
+data_sharding = jax.sharding.NamedSharding(mesh, jax.sharding.PartitionSpec(sharding.DATA_AXIS))
+loader = data_loader.create_data_loader(config, sharding=data_sharding, shuffle=False, batch_size=1)
+batch = next(iter(loader))
+manager, resuming = module._checkpoints.initialize_checkpoint_dir(config.checkpoint_dir, keep_period=None, overwrite=False, resume=True)
+shape, _ = module.init_train_state(config, jax.random.key(config.seed), mesh, resume=True)
+state = module._checkpoints.restore_state(manager, shape, None, step=STEP)
+if int(state.step) != STEP:
+    raise RuntimeError(f"restored state step mismatch: {state.step} != {STEP}")
+model = nnx.merge(state.model_def, state.params)
+model.eval()
+observation = batch[0]
+seed = 20260828
+noise = np.random.default_rng(seed).standard_normal((1, 10, 32), dtype=np.float32)
+rng = jax.random.key(seed)
+started = time.monotonic()
+output_a = model.sample_actions(rng, observation, num_steps=10, noise=jnp.asarray(noise))
+output_a = np.asarray(jax.block_until_ready(output_a))
+elapsed_a = time.monotonic() - started
+output_b = model.sample_actions(rng, observation, num_steps=10, noise=jnp.asarray(noise))
+output_b = np.asarray(jax.block_until_ready(output_b))
+elapsed_b = time.monotonic() - started - elapsed_a
+if not np.array_equal(output_a, output_b):
+    raise RuntimeError("fixed-input LoRA forward is not bitwise deterministic")
+if not np.isfinite(output_a).all():
+    raise RuntimeError("fixed-forward LoRA output contains NaN or Inf")
+norm_stats = normalize.deserialize_json(Path(os.environ["AXIS_PI05_LORA_NORM_STATS"]).read_text(encoding="utf-8"))
+unnormalized = transforms.Unnormalize(norm_stats)({"state": np.asarray(observation.state[0]), "actions": output_a[0]})
+external = np.asarray(unnormalized["actions"][:, :7], dtype=np.float32)
+if external.shape != (10, 7) or not np.isfinite(external).all():
+    raise RuntimeError(f"invalid external LoRA actions: {external.shape}")
+out_dir = Path(os.environ["AXIS_PI05_LORA_FIXED_FORWARD_OUT"])
+out_dir.mkdir(parents=True, exist_ok=True)
+np.savez_compressed(
+    out_dir / "fixed_input.npz",
+    base_0_rgb=np.asarray(observation.images["base_0_rgb"]),
+    left_wrist_0_rgb=np.asarray(observation.images["left_wrist_0_rgb"]),
+    right_wrist_0_rgb=np.asarray(observation.images["right_wrist_0_rgb"]),
+    state=np.asarray(observation.state),
+    tokenized_prompt=np.asarray(observation.tokenized_prompt),
+    tokenized_prompt_mask=np.asarray(observation.tokenized_prompt_mask),
+    action_is_pad=np.asarray(observation.action_is_pad),
+    noise=noise,
+)
+np.savez_compressed(out_dir / "fixed_output.npz", internal_actions=output_a, external_actions=external)
+report = {
+    "schema_version": 1,
+    "status": "passed",
+    "arm": os.environ["AXIS_PI05_LORA_ARM"],
+    "checkpoint_step": int(state.step),
+    "checkpoint_dir": str(config.checkpoint_dir),
+    "model_dtype": "float32",
+    "action_dim_internal": 32,
+    "action_dim_external": 7,
+    "action_horizon": 10,
+    "deterministic_bitwise": True,
+    "finite_internal_actions": True,
+    "finite_external_actions": True,
+    "optimizer_updates": 0,
+    "optimizer_initialized_for_restore": True,
+    "fixed_seed": seed,
+    "forward_seconds_first": elapsed_a,
+    "forward_seconds_second": elapsed_b,
+    "fingerprints": {
+        "input": {
+            "state": _fp(observation.state),
+            "tokenized_prompt": _fp(observation.tokenized_prompt),
+            "tokenized_prompt_mask": _fp(observation.tokenized_prompt_mask),
+            "action_is_pad": _fp(observation.action_is_pad),
+            "noise": _fp(noise),
+            "images": {key: _fp(value) for key, value in observation.images.items()},
+        },
+        "output": {"internal_actions": _fp(output_a), "external_actions": _fp(external)},
+    },
+    "norm_stats_sha256": hashlib.sha256(Path(os.environ["AXIS_PI05_LORA_NORM_STATS"]).read_bytes()).hexdigest(),
+    "transform_fingerprint": hashlib.sha256(json.dumps({
+        "normalize": "fresh canonical norm z-score",
+        "resize": "224x224",
+        "tokenizer": "PaligemmaTokenizer",
+        "pad": "state/action external dims 8/7 -> internal 32",
+        "unnormalize": "internal 32 -> external first 7 action dims",
+    }, sort_keys=True).encode()).hexdigest(),
+    "artifacts": {
+        "fixed_input": str(out_dir / "fixed_input.npz"),
+        "fixed_output": str(out_dir / "fixed_output.npz"),
+    },
+}
+Path(os.environ["AXIS_PI05_LORA_FIXED_FORWARD_REPORT"]).write_text(json.dumps(report, indent=2, sort_keys=True), encoding="utf-8")
+print(json.dumps({"status": report["status"], "checkpoint_step": report["checkpoint_step"], "output": report["fingerprints"]["output"]}, sort_keys=True))
+'''
+    code = code.replace("STEP", str(step))
+    env = os.environ.copy()
+    env.update(
+        {
+            "PYTHONPATH": str(NESTED_SRC) + os.pathsep + str(ROOT),
+            "CUDA_VISIBLE_DEVICES": str(gpu),
+            "JAX_PLATFORMS": "cuda",
+            "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
+            "AXIS_PI05_LORA_ARM": arm,
+            "AXIS_PI05_LORA_RUN_DIR": str(run_dir),
+            "AXIS_PI05_LORA_NORM_STATS": str(PHASE1_ROOT / "norm_stats.json"),
+            "AXIS_PI05_LORA_DATA_ROOT": str(ROOT / "data/raw/hf/physical-intelligence/libero"),
+            "AXIS_PI05_LORA_SAMPLING_MANIFEST": str(PHASE1_ROOT / "official_sampling_manifest.jsonl"),
+            "AXIS_PI05_AXIS_PARAMS": str(ROOT / "data/models/axisrobotics/Pi0.5-Axis" / AXIS_REVISION / "params"),
+            "AXIS_PI05_LORA_FIXED_FORWARD_OUT": str(out_dir),
+            "AXIS_PI05_LORA_FIXED_FORWARD_REPORT": str(out_dir / "fixed_forward_report.json"),
+        }
+    )
+    completed = subprocess.run([str(PYTHON), "-c", code], cwd=ROOT, env=env, check=True, capture_output=True, text=True)
+    payload = json.loads(completed.stdout.strip().splitlines()[-1])
+    payload.update({"arm": arm, "run_id": run_id, "requested_step": step, "gpu": gpu, "gpu0_touched": False})
+    write_json(report_dir / f"fixed_forward_report_{step}.json", payload)
+    return payload
+
+
 def checkpoint_manifest(arm: str, run_id: str) -> dict[str, Any]:
     run_dir = OUTPUT_ROOT / arm / run_id
     steps = []
@@ -295,7 +457,7 @@ def checkpoint_manifest(arm: str, run_id: str) -> dict[str, Any]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=["preflight", "train", "restore", "manifest"])
+    parser.add_argument("command", choices=["preflight", "train", "restore", "fixed-forward", "manifest"])
     parser.add_argument("--arm", choices=sorted(ARMS))
     parser.add_argument("--run-id")
     parser.add_argument("--steps", type=int, default=25)
@@ -314,6 +476,11 @@ def main() -> None:
         if args.restore_step is None:
             parser.error("restore requires --restore-step")
         print(json.dumps(restore_report(args.arm, args.run_id, args.restore_step), indent=2))
+    elif args.command == "fixed-forward":
+        if args.restore_step is None:
+            parser.error("fixed-forward requires --restore-step")
+        gpu = (args.gpu or [1])[0]
+        print(json.dumps(fixed_forward_report(args.arm, args.run_id, args.restore_step, gpu), indent=2))
     else:
         print(json.dumps(checkpoint_manifest(args.arm, args.run_id), indent=2))
 

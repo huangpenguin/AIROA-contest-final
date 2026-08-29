@@ -106,7 +106,6 @@ def _run(unit: str, repeat: int, root_commit: str, openpi_commit: str) -> dict[s
     if report_dir.exists() or output_dir.exists():
         raise FileExistsError(f"refusing to overwrite existing R3 run: {report_dir} or {output_dir}")
     report_dir.mkdir(parents=True)
-    output_dir.mkdir(parents=True)
     tensor_dir = output_dir / "replay_tensors"
     resolved = {
         "schema_version": 1,

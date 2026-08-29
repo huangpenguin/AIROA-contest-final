@@ -523,21 +523,26 @@ print(json.dumps({"status": report["status"], "checkpoint_step": report["checkpo
 
 def checkpoint_manifest(arm: str, run_id: str) -> dict[str, Any]:
     run_dir = OUTPUT_ROOT / arm / run_id
+    report_dir = REPORT_ROOT / arm / run_id
     steps = []
     for child in sorted(run_dir.iterdir()) if run_dir.is_dir() else []:
         if child.is_dir() and child.name.isdigit() and (child / "params").exists():
             steps.append(int(child.name))
+    target_steps = 0
+    resolved_path = report_dir / "resolved_config.yaml"
+    if resolved_path.is_file():
+        target_steps = int(load_yaml(resolved_path).get("steps", 0))
     required = [0, 1, 10, 25]
-    if any(step >= 50 for step in steps):
+    if target_steps >= 50 or any(step >= 50 for step in steps):
         required.append(50)
-    if any(step >= 100 for step in steps):
+    if target_steps >= 100 or any(step >= 100 for step in steps):
         required.append(100)
-    if any(step >= 250 for step in steps):
+    if target_steps >= 250 or any(step >= 250 for step in steps):
         required.append(250)
-    if any(step >= 500 for step in steps):
+    if target_steps >= 500 or any(step >= 500 for step in steps):
         required.append(500)
-    result = {"arm": arm, "run_id": run_id, "run_dir": str(run_dir), "steps": steps, "required": required, "complete": set(required).issubset(steps), "generated_at_unix": time.time()}
-    write_json(REPORT_ROOT / arm / run_id / "checkpoint_manifest.json", result)
+    result = {"arm": arm, "run_id": run_id, "run_dir": str(run_dir), "target_steps": target_steps, "steps": steps, "required": required, "complete": set(required).issubset(steps), "generated_at_unix": time.time()}
+    write_json(report_dir / "checkpoint_manifest.json", result)
     return result
 
 

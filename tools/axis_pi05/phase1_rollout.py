@@ -332,7 +332,7 @@ def run_panel(
     os.environ["T3_VIDEO_DIR"] = str(video_dir)
     os.environ["T3_VIDEO_FPS"] = "10"
     os.environ["LIBERO_CONTROL_FREQ"] = "10"
-    if (ROOT / ".eval_libero").is_dir():
+    if "LIBERO_CONFIG_PATH" not in os.environ and (ROOT / ".eval_libero").is_dir():
         os.environ["LIBERO_CONFIG_PATH"] = str(ROOT / ".eval_libero")
     server_python = server_python or str(ROOT / ".venv_axis_pi05" / "bin" / "python")
     port = _free_port()

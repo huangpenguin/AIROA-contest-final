@@ -1,0 +1,20 @@
+diff --git a/src/openpi/training/sharding.py b/src/openpi/training/sharding.py
+index 344c550..4e7208c 100644
+--- a/src/openpi/training/sharding.py
++++ b/src/openpi/training/sharding.py
+@@ -1,5 +1,6 @@
+ import contextlib
+ import logging
++import os
+ 
+ import jax
+ import numpy as np
+@@ -40,6 +41,8 @@ def set_mesh(mesh: jax.sharding.Mesh):
+ def activation_sharding_constraint(pytree):
+     if _MeshState.active_mesh is None:
+         return pytree
++    if os.environ.get("AXIS_PI05_DISABLE_ACTIVATION_SHARDING_CONSTRAINT", "0") == "1":
++        return pytree
+     return jax.lax.with_sharding_constraint(
+         pytree, jax.sharding.NamedSharding(_MeshState.active_mesh, jax.sharding.PartitionSpec(DATA_AXIS))
+     )

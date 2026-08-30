@@ -231,10 +231,53 @@ def _descriptor_signature(value: Any) -> Any:
     if isinstance(value, dict):
         if {"dtype", "shape", "data_sha256"}.issubset(value):
             return {key: value.get(key) for key in ("dtype", "shape", "data_sha256")}
-        return {key: _descriptor_signature(item) for key, item in sorted(value.items()) if key not in {"path", "file_sha256", "runtime"}}
+        return {key: _descriptor_signature(item) for key, item in sorted(value.items()) if key not in {"path", "file_sha256", "runtime", "label", "replica"}}
     if isinstance(value, list):
         return [_descriptor_signature(item) for item in value]
     return value
+
+
+def _first_snapshot_difference(left: list[dict[str, Any]], right: list[dict[str, Any]]) -> dict[str, Any] | None:
+    for index, (left_snapshot, right_snapshot) in enumerate(zip(left, right)):
+        for section in ("model", "controller", "simulator", "observation", "policy_state"):
+            left_value = left_snapshot.get(section)
+            right_value = right_snapshot.get(section)
+            if _descriptor_signature(left_value) == _descriptor_signature(right_value):
+                continue
+            if section in {"simulator", "observation"} and isinstance(left_value, dict) and isinstance(right_value, dict):
+                keys = sorted(set(left_value) | set(right_value))
+                field = next((key for key in keys if _descriptor_signature(left_value.get(key)) != _descriptor_signature(right_value.get(key))), None)
+                return {
+                    "stage": left_snapshot.get("stage"),
+                    "step": left_snapshot.get("step"),
+                    "warmup_step": left_snapshot.get("warmup_step"),
+                    "section": section,
+                    "field": field,
+                    "first": _descriptor_signature(left_value.get(field)) if field else _descriptor_signature(left_value),
+                    "second": _descriptor_signature(right_value.get(field)) if field else _descriptor_signature(right_value),
+                }
+            return {
+                "stage": left_snapshot.get("stage"),
+                "step": left_snapshot.get("step"),
+                "warmup_step": left_snapshot.get("warmup_step"),
+                "section": section,
+                "field": None,
+                "first": _descriptor_signature(left_value),
+                "second": _descriptor_signature(right_value),
+            }
+    if len(left) != len(right):
+        return {"section": "snapshots", "field": "length", "first": len(left), "second": len(right)}
+    return None
+
+
+def _first_trajectory_difference(left: dict[str, Any], right: dict[str, Any]) -> dict[str, Any] | None:
+    for trajectory_name in sorted(set(left) | set(right)):
+        left_arrays = left.get(trajectory_name, {}).get("arrays", {})
+        right_arrays = right.get(trajectory_name, {}).get("arrays", {})
+        for array_name in sorted(set(left_arrays) | set(right_arrays)):
+            if _descriptor_signature(left_arrays.get(array_name)) != _descriptor_signature(right_arrays.get(array_name)):
+                return {"trajectory": trajectory_name, "array": array_name, "first": _descriptor_signature(left_arrays.get(array_name)), "second": _descriptor_signature(right_arrays.get(array_name))}
+    return None
 
 
 def compare_probe_summaries(first_path: Path, second_path: Path, output: Path, *, first_replica: int = 0, second_replica: int = 0) -> dict[str, Any]:
@@ -262,7 +305,8 @@ def compare_probe_summaries(first_path: Path, second_path: Path, output: Path, *
         }
         for section, (left_value, right_value) in sections.items():
             if _descriptor_signature(left_value) != _descriptor_signature(right_value):
-                mismatches.append({"case_id": case_id, "section": section, "first": _descriptor_signature(left_value), "second": _descriptor_signature(right_value)})
+                detail = _first_snapshot_difference(left_value, right_value) if section == "snapshots" else _first_trajectory_difference(left_value, right_value) if section == "trajectories" else None
+                mismatches.append({"case_id": case_id, "section": section, "first_difference": detail, "first": _descriptor_signature(left_value), "second": _descriptor_signature(right_value)})
                 break
     result = {
         "schema_version": 1,

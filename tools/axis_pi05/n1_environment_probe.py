@@ -12,7 +12,7 @@ from typing import Any
 
 import numpy as np
 
-from .common import ROOT, sha256_file
+from .common import ROOT, git_info, sha256_file
 from .n1_snapshot import (
     gpu_boundary_evidence,
     gpu_snapshot,
@@ -208,6 +208,10 @@ def run_probe(*, manifest: Path, output: Path, gpu_id: int, mode: str, init_mode
         "init_mode": init_mode,
         "manifest": str(manifest),
         "manifest_sha256": sha256_file(manifest),
+        "git": {
+            "root": git_info(ROOT),
+            "nested_openpi": git_info(ROOT / "third_party/axis_openpi"),
+        },
         "case_ids": list(case_ids),
         "replica_count": replica_count,
         "gpu_id_physical": int(gpu_id),
@@ -233,7 +237,7 @@ def _descriptor_signature(value: Any) -> Any:
     return value
 
 
-def compare_probe_summaries(first_path: Path, second_path: Path, output: Path) -> dict[str, Any]:
+def compare_probe_summaries(first_path: Path, second_path: Path, output: Path, *, first_replica: int = 0, second_replica: int = 0) -> dict[str, Any]:
     first = json.loads(first_path.read_text(encoding="utf-8"))
     second = json.loads(second_path.read_text(encoding="utf-8"))
     if first.get("probe") != "environment_only" or second.get("probe") != "environment_only":
@@ -242,8 +246,11 @@ def compare_probe_summaries(first_path: Path, second_path: Path, output: Path) -
         raise ValueError("D1 manifest/case mismatch")
     if first.get("gpu0_touched") is not False or second.get("gpu0_touched") is not False:
         raise ValueError("D1 comparison lacks verified GPU0 boundary")
-    left = {record["case_id"]: record for record in first["records"][0]["cases"]}
-    right = {record["case_id"]: record for record in second["records"][0]["cases"]}
+    try:
+        left = {record["case_id"]: record for record in first["records"][int(first_replica)]["cases"]}
+        right = {record["case_id"]: record for record in second["records"][int(second_replica)]["cases"]}
+    except (IndexError, KeyError) as exc:
+        raise ValueError("D1 replica index is not present in the summary") from exc
     mismatches: list[dict[str, Any]] = []
     for case_id in first["case_ids"]:
         lrecord, rrecord = left[case_id], right[case_id]
@@ -265,6 +272,8 @@ def compare_probe_summaries(first_path: Path, second_path: Path, output: Path) -
         "second_summary": str(second_path),
         "first_summary_sha256": sha256_file(first_path),
         "second_summary_sha256": sha256_file(second_path),
+        "first_replica": int(first_replica),
+        "second_replica": int(second_replica),
         "case_count": len(first["case_ids"]),
         "mismatch_count": len(mismatches),
         "status": "passed" if not mismatches else "failed",
@@ -291,12 +300,14 @@ def main() -> None:
     compare.add_argument("--first", type=Path, required=True)
     compare.add_argument("--second", type=Path, required=True)
     compare.add_argument("--output", type=Path, required=True)
+    compare.add_argument("--first-replica", type=int, default=0)
+    compare.add_argument("--second-replica", type=int, default=0)
     args = parser.parse_args()
     if args.command == "run":
         case_ids = tuple(args.case_ids or DEFAULT_CASES)
         result = run_probe(manifest=args.manifest, output=args.output, gpu_id=args.gpu_id, mode=args.mode, init_mode=args.init_mode, replica_count=args.replica_count, case_ids=case_ids)
     else:
-        result = compare_probe_summaries(args.first, args.second, args.output)
+        result = compare_probe_summaries(args.first, args.second, args.output, first_replica=args.first_replica, second_replica=args.second_replica)
     print(json.dumps({key: result.get(key) for key in ("status", "mismatch_count", "technical_state") if key in result}, ensure_ascii=False, indent=2))
     if result.get("status") == "failed" and args.command == "compare":
         raise SystemExit(2)

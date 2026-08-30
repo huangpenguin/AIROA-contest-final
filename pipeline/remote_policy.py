@@ -93,9 +93,22 @@ class RemotePolicyClient:
             )
         return action
 
-    def reset(self, instruction: str = "", seed: int | None = None) -> None:
+    def reset(
+        self,
+        instruction: str = "",
+        seed: int | None = None,
+        *,
+        reset_kind: str = "episode_reset",
+        chunk_index: int = 0,
+    ) -> None:
+        if reset_kind not in {"episode_reset", "chunk_discard"}:
+            raise ValueError(f"unknown policy reset kind: {reset_kind}")
         try:
-            body = {"instruction": instruction}
+            body = {
+                "instruction": instruction,
+                "reset_kind": reset_kind,
+                "chunk_index": int(chunk_index),
+            }
             if seed is not None:
                 body["seed"] = seed
             resp = self._session.post(

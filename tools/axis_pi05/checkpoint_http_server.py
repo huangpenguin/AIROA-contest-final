@@ -165,7 +165,20 @@ class CheckpointPolicy:
         self._lock = threading.Lock()
         LOGGER.info("loaded checkpoint %s with config %s", checkpoint, config_name)
 
-    def reset(self, instruction: str = "", seed: int | None = None) -> None:
+    def reset(
+        self,
+        instruction: str = "",
+        seed: int | None = None,
+        *,
+        reset_kind: str = "episode_reset",
+        chunk_index: int = 0,
+    ) -> None:
+        if reset_kind not in {"episode_reset", "chunk_discard"}:
+            raise ValueError(f"unknown policy reset kind: {reset_kind}")
+        if reset_kind == "episode_reset" and seed is None:
+            raise ValueError("episode_reset requires an integer policy_seed")
+        if reset_kind == "chunk_discard" and seed is not None:
+            raise ValueError("chunk_discard must not reseed the policy")
         with self._lock:
             self._actions.clear()
             self._instruction = instruction
@@ -176,10 +189,17 @@ class CheckpointPolicy:
             # used only when execute8 starts the next action chunk; preserving
             # the current stream makes that continuation deterministic within
             # the same episode.
-            if seed is not None:
+            if reset_kind == "episode_reset":
                 self._policy._rng = self._jax.random.key(int(seed))  # noqa: SLF001
                 self._policy_seed = int(seed)
-            LOGGER.info("policy reset instruction=%r seed=%s", instruction, self._policy_seed)
+            LOGGER.info(
+                "policy reset reset_kind=%s episode_seed=%s chunk_index=%d reseed=%s instruction=%r",
+                reset_kind,
+                self._policy_seed,
+                int(chunk_index),
+                reset_kind == "episode_reset",
+                instruction,
+            )
 
     def get_action(self, observation: dict[str, np.ndarray]) -> np.ndarray:
         with self._lock:
@@ -228,6 +248,8 @@ def make_handler(policy: CheckpointPolicy) -> type[BaseHTTPRequestHandler]:
                     policy.reset(
                         instruction=str(body.get("instruction", "")),
                         seed=body.get("seed"),
+                        reset_kind=str(body.get("reset_kind", "episode_reset")),
+                        chunk_index=int(body.get("chunk_index", 0)),
                     )
                     self._send(200, "application/json", b'{"status":"ok"}')
                     return

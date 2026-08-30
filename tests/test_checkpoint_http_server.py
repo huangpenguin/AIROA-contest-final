@@ -45,6 +45,12 @@ def test_checkpoint_policy_reset_uses_episode_policy_seed():
     assert policy._policy._rng == ("jax-key", 54000)
     assert policy._policy_seed == 54000
 
+    policy.reset(instruction="new", reset_kind="chunk_discard", chunk_index=1)
+
+    assert policy._policy.reset_count == 2
+    assert policy._policy._rng == ("jax-key", 54000)
+    assert policy._policy_seed == 54000
+
 
 def _observation_envelope(observation):
     return msgpack.packb(

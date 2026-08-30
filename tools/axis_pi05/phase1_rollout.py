@@ -35,6 +35,15 @@ SIM_ROOT = ROOT / "LIBERO-plus"
 OFFICIAL_REVISION = "a4336d589d589045d1c56423ffdf3b88a0e19b1f"
 
 
+def is_stall_episode(row: dict[str, Any]) -> bool:
+    """Use one stall definition for run summaries, merges, and comparisons."""
+
+    success = row["success"]
+    if isinstance(success, str):
+        success = success.strip().lower() in {"1", "true", "yes", "y"}
+    return (not bool(success)) and float(row["action_norm_mean"]) < 1e-3
+
+
 def _sha256_array(value: Any) -> str:
     array = np.ascontiguousarray(np.asarray(value))
     return hashlib.sha256(array.tobytes()).hexdigest()
@@ -254,16 +263,28 @@ class ChunkPolicy:
         self.instruction = instruction
         self.needs_chunk_reset = False
         self.actions_seen = 0
+        self.chunk_index = 0
 
     def reset(self, instruction: str = "", seed: int | None = None) -> None:
         self.instruction = str(instruction)
         self.needs_chunk_reset = False
         self.actions_seen = 0
-        self.client.reset(instruction=self.instruction, seed=seed)
+        self.chunk_index = 0
+        self.client.reset(
+            instruction=self.instruction,
+            seed=seed,
+            reset_kind="episode_reset",
+            chunk_index=self.chunk_index,
+        )
 
     def get_action(self, obs: dict[str, np.ndarray]) -> np.ndarray:
         if self.needs_chunk_reset:
-            self.client.reset(instruction=self.instruction)
+            self.chunk_index += 1
+            self.client.reset(
+                instruction=self.instruction,
+                reset_kind="chunk_discard",
+                chunk_index=self.chunk_index,
+            )
             self.needs_chunk_reset = False
             self.actions_seen = 0
         action = np.asarray(self.client.get_action(obs), dtype=np.float32)
@@ -316,7 +337,7 @@ def _write_result_tables(run_root: Path, episode_rows: list[dict[str, Any]]) -> 
             "success_rate": sum(bool(row["success"]) for row in task_episodes) / len(task_episodes),
             "collision_count": sum(bool(row["collision"]) for row in task_episodes),
             "timeout_count": sum(bool(row["timeout"]) for row in task_episodes),
-            "stall_count": sum((not row["success"]) and float(row["action_norm_mean"]) < 1e-3 for row in task_episodes),
+            "stall_count": sum(is_stall_episode(row) for row in task_episodes),
         })
     task_fields = sorted({key for row in task_rows for key in row})
     with (run_root / "tasks.csv").open("w", encoding="utf-8", newline="") as handle:
@@ -488,7 +509,7 @@ def run_panel(
                 handle.write(json.dumps(episode_rows[-1], ensure_ascii=False, sort_keys=True) + "\n")
             print(f"{panel}/{mode} {number + 1}/{len(rows)} {row['case_id']}", flush=True)
         success_count = sum(bool(row["success"]) for row in episode_rows)
-        stall_count = sum((not row["success"]) and float(row["action_norm_mean"]) < 1e-3 for row in episode_rows)
+        stall_count = sum(is_stall_episode(row) for row in episode_rows)
         _write_result_tables(run_root, episode_rows)
         failure_gallery = _write_failure_gallery(run_root, episode_rows)
         videos = sorted(str(path.relative_to(run_root)) for path in video_dir.glob("*.mp4")) if video_dir.is_dir() else []
@@ -645,7 +666,7 @@ def merge_panel_runs(
     _write_result_tables(run_root, episode_rows)
 
     success_count = sum(bool(row["success"]) for row in episode_rows)
-    stall_count = sum((not row["success"]) and float(row["action_norm_mean"]) < 1e-3 for row in episode_rows)
+    stall_count = sum(is_stall_episode(row) for row in episode_rows)
     summary = {
         "schema_version": 1,
         "status": "passed" if success_count > 0 and stall_count <= 0.9 * len(episode_rows) else "failed",

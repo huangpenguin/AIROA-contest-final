@@ -6,6 +6,8 @@
 > 作用范围：只定位并修复 N1.2；不得启动 parity grid、V160/H160、训练、fold/export 或官方评分。  
 > 本计划结束时必须再次停止，由人工决定是否恢复主计划 N1.3。
 
+> 后续审核说明（2026-08-30）：D1 的 fresh-process task11 差异在 E1 为 9 个 uint8 元素、最大差 1，但到 warm-up step 10 的首次 policy boundary 已恢复 exact；原 comparator 将任意中间 renderer mismatch 直接等同于整例失败，无法区分 dynamics、policy boundary 与 EGL jitter。后续执行以 `AXIS_PI05_N1_POLICY_BOUNDARY_AND_DIAGNOSTIC_ZIP_PLAN.md` 为准；本文件及原始报告保留为历史证据，不覆盖。
+
 ## 执行结果（2026-08-30）
 
 D0 已完成并通过无 GPU 测试；D1 已按“baseline → seeded constructor → fresh process”顺序执行到首个硬失败。seed-before-constructor 修复使 3 个 probe case 的同进程比较达到 exact，但 fresh process 仍在 environment observation 层失败：`C20-task11-init0` 的 E1 `agentview_image` 有 9 个像素、最大绝对差 1；simulator state、wrist image 和其他 case exact。baseline fresh process 则在 `C20-task00-init0` 的 E0 simulator state 已分叉。

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import random
 import time
 from pathlib import Path
@@ -142,9 +143,10 @@ def _fixed_script(case_id: str, root: Path, length: int = 64) -> np.ndarray:
     return np.repeat(base[None, :], length, axis=0)
 
 
-def _probe_case(row: dict[str, Any], root: Path, *, replica: int, seed_before_constructor: bool, init_mode: str) -> dict[str, Any]:
+def _probe_case(row: dict[str, Any], root: Path, *, replica: int, seed_before_constructor: bool, init_mode: str, monitor_samples: list[dict[str, Any]]) -> dict[str, Any]:
     case_id = str(row["case_id"])
     env = _env_factory(row, seed_before_constructor=seed_before_constructor)
+    monitor_samples.append(gpu_snapshot())
     snapshots: list[dict[str, Any]] = []
     try:
         snapshots.append({"stage": "E0", **snapshot_record(env=env, obs={}, root=root, case_id=case_id, label=f"replica{replica}_E0", step=0, manifest_row=row)})
@@ -184,19 +186,19 @@ def run_probe(*, manifest: Path, output: Path, gpu_id: int, mode: str, init_mode
         raise ValueError(init_mode)
     rows = _load_cases(manifest, case_ids)
     before = gpu_snapshot()
+    monitor_samples = [before]
     started = time.time()
     records = []
     for replica in range(replica_count):
         records.append({
             "replica": replica,
             "cases": [
-                _probe_case(row, output, replica=replica, seed_before_constructor=mode == "seeded_constructor", init_mode=init_mode)
+                _probe_case(row, output, replica=replica, seed_before_constructor=mode == "seeded_constructor", init_mode=init_mode, monitor_samples=monitor_samples)
                 for row in rows
             ],
         })
-    during = gpu_snapshot()
-    after = gpu_snapshot()
-    evidence = gpu_boundary_evidence([before, during, after], target_pids={__import__("os").getpid()}, allowed_gpu_ids={int(gpu_id)})
+    monitor_samples.append(gpu_snapshot())
+    evidence = gpu_boundary_evidence(monitor_samples, target_pids={os.getpid()}, allowed_gpu_ids={int(gpu_id)})
     summary = {
         "schema_version": 1,
         "phase": "D1",
@@ -212,7 +214,7 @@ def run_probe(*, manifest: Path, output: Path, gpu_id: int, mode: str, init_mode
         "gpu_id_visible": 0,
         "gpu0_touched": evidence["gpu0_touched"],
         "gpu_monitor_evidence": evidence,
-        "runtime_environment": {key: __import__("os").environ.get(key) for key in ("CUDA_VISIBLE_DEVICES", "MUJOCO_GL", "MUJOCO_EGL_DEVICE_ID", "JAX_PLATFORMS", "XLA_FLAGS", "CUBLAS_WORKSPACE_CONFIG", "PYTHONHASHSEED", "OMP_NUM_THREADS", "MKL_NUM_THREADS")},
+        "runtime_environment": {key: os.environ.get(key) for key in ("LIBERO_CONFIG_PATH", "CUDA_VISIBLE_DEVICES", "MUJOCO_GL", "MUJOCO_EGL_DEVICE_ID", "JAX_PLATFORMS", "XLA_FLAGS", "CUBLAS_WORKSPACE_CONFIG", "PYTHONHASHSEED", "OMP_NUM_THREADS", "MKL_NUM_THREADS")},
         "started_at_unix": started,
         "finished_at_unix": time.time(),
         "records": records,

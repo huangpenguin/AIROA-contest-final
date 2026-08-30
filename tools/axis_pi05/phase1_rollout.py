@@ -25,7 +25,7 @@ from typing import Any
 
 import numpy as np
 
-from .common import ROOT, canonical_json, resolve_path, sha256_file, write_json, write_jsonl
+from .common import ROOT, canonical_json, git_info, resolve_path, sha256_file, write_json, write_jsonl
 
 
 PANEL_ROOT = ROOT / "data" / "reports" / "axis_libero_30k" / "phase1" / "rollout"
@@ -346,6 +346,31 @@ def _write_result_tables(run_root: Path, episode_rows: list[dict[str, Any]]) -> 
         writer.writerows(task_rows)
 
 
+def _write_action_trace(run_root: Path, case_id: str, actions: Any) -> dict[str, Any]:
+    """Persist an exact float32 action trace and its content metadata."""
+
+    trace_dir = run_root / "action_traces"
+    trace_dir.mkdir(parents=True, exist_ok=True)
+    array = np.asarray(actions, dtype=np.float32)
+    if array.ndim != 2 or array.shape[1] != 7:
+        raise ValueError(f"action trace must have shape [N,7], got {array.shape}")
+    path = trace_dir / f"{case_id}.npy"
+    np.save(path, array, allow_pickle=False)
+    return {
+        "action_trace_path": str(path),
+        "action_trace_sha256": sha256_file(path),
+        "action_shape": list(array.shape),
+        "action_finite": bool(np.isfinite(array).all()),
+    }
+
+
+def _git_provenance() -> dict[str, Any]:
+    return {
+        "root": git_info(ROOT),
+        "nested_openpi": git_info(ROOT / "third_party" / "axis_openpi"),
+    }
+
+
 def _write_failure_gallery(run_root: Path, episode_rows: list[dict[str, Any]]) -> Path:
     """Write a self-contained review index for failed H.264 episodes."""
     gallery_root = run_root / "failure_gallery"
@@ -503,8 +528,10 @@ def run_panel(
                     "action_norm_max": float(np.linalg.norm(actions, axis=1).max()) if actions.size else 0.0,
                     "video_path": episode.video_path,
                 })
+                episode_rows[-1].update(_write_action_trace(run_root, row["case_id"], actions))
             except Exception as exc:
                 episode_rows.append({**row, "success": False, "collision": False, "goal_reached": False, "timeout": False, "failure_reason": "exception", "steps": 0, "elapsed_sec": 0.0, "action_norm_mean": 0.0, "action_norm_max": 0.0, "video_path": None, "error_summary": f"{type(exc).__name__}: {exc}"})
+                episode_rows[-1].update(_write_action_trace(run_root, row["case_id"], np.empty((0, 7), dtype=np.float32)))
             with partial_path.open("a", encoding="utf-8") as handle:
                 handle.write(json.dumps(episode_rows[-1], ensure_ascii=False, sort_keys=True) + "\n")
             print(f"{panel}/{mode} {number + 1}/{len(rows)} {row['case_id']}", flush=True)
@@ -528,6 +555,7 @@ def run_panel(
             "source_repo": "physical-intelligence/libero",
             "source_revision": OFFICIAL_REVISION,
             "source_fps": 10,
+            "git": _git_provenance(),
             "norm_stats_sha256": checkpoint_provenance["norm_stats_sha256"],
             "panel_manifest_sha256": sha256_file(manifest_path),
             **checkpoint_provenance,
@@ -548,7 +576,7 @@ def run_panel(
             "finished_at_unix": time.time(),
             "gpu_id": str(gpu_id),
             "gpu0_touched": False,
-            "artifacts": {"episodes_csv": str(run_root / "episodes.csv"), "tasks_csv": str(run_root / "tasks.csv"), "videos_dir": str(video_dir), "failure_gallery": str(failure_gallery)},
+            "artifacts": {"episodes_csv": str(run_root / "episodes.csv"), "tasks_csv": str(run_root / "tasks.csv"), "videos_dir": str(video_dir), "failure_gallery": str(failure_gallery), "action_traces_dir": str(run_root / "action_traces")},
         }
         write_json(run_root / "summary.json", summary)
         return summary
@@ -647,6 +675,8 @@ def merge_panel_runs(
     run_root.mkdir(parents=True, exist_ok=True)
     complete_video_dir = run_root / "videos_complete"
     complete_video_dir.mkdir(parents=True, exist_ok=True)
+    complete_trace_dir = run_root / "action_traces"
+    complete_trace_dir.mkdir(parents=True, exist_ok=True)
     shard_started_at = min((shard_root / "episodes.csv").stat().st_mtime for shard_root in shard_roots)
     shard_gpu_ids = []
     for shard_root in shard_roots:
@@ -663,6 +693,14 @@ def merge_panel_runs(
         destination.symlink_to(source.resolve())
         row["video_path"] = str(destination)
         videos.append(str(destination.relative_to(run_root)))
+        source_trace = Path(row["action_trace_path"])
+        if not source_trace.is_file():
+            raise FileNotFoundError(source_trace)
+        destination_trace = complete_trace_dir / source_trace.name
+        if destination_trace.exists() or destination_trace.is_symlink():
+            destination_trace.unlink()
+        destination_trace.symlink_to(source_trace.resolve())
+        row["action_trace_path"] = str(destination_trace)
     _write_result_tables(run_root, episode_rows)
 
     success_count = sum(bool(row["success"]) for row in episode_rows)
@@ -679,6 +717,7 @@ def merge_panel_runs(
         "source_repo": "physical-intelligence/libero",
         "source_revision": OFFICIAL_REVISION,
         "source_fps": 10,
+        "git": _git_provenance(),
         "norm_stats_sha256": first_provenance["norm_stats_sha256"],
         "panel_manifest_sha256": sha256_file(manifest_path),
         **first_provenance,
@@ -698,7 +737,7 @@ def merge_panel_runs(
         "finished_at_unix": time.time(),
         "gpu_id": "sharded:" + ",".join(shard_gpu_ids),
         "gpu0_touched": False,
-        "artifacts": {"episodes_csv": str(run_root / "episodes.csv"), "tasks_csv": str(run_root / "tasks.csv"), "videos_dir": str(complete_video_dir)},
+        "artifacts": {"episodes_csv": str(run_root / "episodes.csv"), "tasks_csv": str(run_root / "tasks.csv"), "videos_dir": str(complete_video_dir), "action_traces_dir": str(complete_trace_dir)},
     }
     write_json(run_root / "summary.json", summary)
     return summary

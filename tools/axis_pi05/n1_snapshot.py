@@ -216,6 +216,24 @@ def observation_descriptor(obs: dict[str, Any], root: Path, prefix: str) -> dict
     }
 
 
+def _policy_state(obs: dict[str, Any]) -> np.ndarray | None:
+    required = ("robot0_eef_pos", "robot0_eef_quat", "robot0_gripper_qpos")
+    if any(key not in obs for key in required):
+        return None
+    pos = np.asarray(obs["robot0_eef_pos"], dtype=np.float32).reshape(3)
+    quat = np.asarray(obs["robot0_eef_quat"], dtype=np.float32).reshape(4)
+    scalar = float(np.clip(quat[3], -1.0, 1.0))
+    denominator = float(np.sqrt(max(0.0, 1.0 - scalar * scalar)))
+    axisangle = np.zeros(3, dtype=np.float32) if np.isclose(denominator, 0.0) else (
+        quat[:3] * (2.0 * np.arccos(scalar)) / denominator
+    ).astype(np.float32)
+    gripper = np.asarray(obs["robot0_gripper_qpos"], dtype=np.float32).reshape(2)
+    state = np.concatenate((pos, axisangle, gripper)).astype(np.float32)
+    if state.shape != (8,) or not np.isfinite(state).all():
+        raise ValueError(f"invalid derived 8D policy state: {state.shape}")
+    return state
+
+
 def snapshot_record(
     *,
     env: Any,
@@ -228,7 +246,7 @@ def snapshot_record(
     policy_seed: int | None = None,
 ) -> dict[str, Any]:
     prefix = f"snapshots/{case_id}/{label}_{step:04d}"
-    return {
+    record = {
         "schema_version": SNAPSHOT_SCHEMA_VERSION,
         "case_id": case_id,
         "label": label,
@@ -243,6 +261,10 @@ def snapshot_record(
         "simulator": simulator_state_descriptor(env, root, prefix),
         "observation": observation_descriptor(obs, root, prefix),
     }
+    policy_state = _policy_state(obs)
+    if policy_state is not None:
+        record["policy_state"] = save_array(root, f"{prefix}/policy_state.npy", policy_state)
+    return record
 
 
 def write_probe_summary(path: Path, payload: dict[str, Any]) -> None:

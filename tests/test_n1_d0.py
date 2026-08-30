@@ -5,7 +5,7 @@ import numpy as np
 import pytest
 
 from tools.axis_pi05.evaluator_reproducibility import _trace_diagnostics, _validate_gpu_evidence
-from tools.axis_pi05.n1_snapshot import gpu_boundary_evidence, save_array, validate_gpu_namespace
+from tools.axis_pi05.n1_snapshot import _policy_state, gpu_boundary_evidence, save_array, validate_gpu_namespace
 
 
 def test_first_nonzero_and_case_max_are_separate():
@@ -57,6 +57,17 @@ def test_snapshot_array_round_trip(tmp_path: Path):
     assert descriptor["shape"] == [2, 3]
     assert descriptor["data_sha256"]
     assert descriptor["file_sha256"]
+
+
+def test_snapshot_policy_state_is_explicit_float32():
+    state = _policy_state({
+        "robot0_eef_pos": np.array([1, 2, 3], dtype=np.float64),
+        "robot0_eef_quat": np.array([0, 0, 0, 1], dtype=np.float64),
+        "robot0_gripper_qpos": np.array([4, 5], dtype=np.float64),
+    })
+    assert state is not None
+    assert state.dtype == np.float32
+    np.testing.assert_array_equal(state, np.array([1, 2, 3, 0, 0, 0, 4, 5], dtype=np.float32))
 
 
 def test_gpu_boundary_detects_target_gpu0():

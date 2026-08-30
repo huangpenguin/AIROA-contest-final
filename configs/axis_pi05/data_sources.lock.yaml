@@ -11,9 +11,9 @@ openpi:
   url: https://github.com/Physical-Intelligence/openpi.git
   revision: c23745b5ad24e98f66967ea795a07b2588ed6c79
   upstream_base_revision: c23745b5ad24e98f66967ea795a07b2588ed6c79
-  implementation_commit: dafa5a226ff29dcb14442162d9518345d230ce87
+  implementation_commit: dafa5a27266996eecf28920cacc32f3629776d91
   implementation_git_tree: 887fa06db36a72288c2db6756c684f85946e3386
-  implementation_patch_sha256: 6c86c1cb3fe8012892bd5cde573e8fd47714bb67769e4345cfe8387e38322ca8
+  implementation_patch_sha256: c1ab0656b9b3895408c156e51b93d952153fe13cc9b14cf698cbad0cdc30580b
   implementation_tree_scope: git_commit_tree_excludes_worktree_cache
   license: Apache-2.0
   patch_dir: patches/axis_openpi

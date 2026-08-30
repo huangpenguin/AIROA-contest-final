@@ -1,9 +1,9 @@
 # AXIS Pi0.5 LoRA 两卡 NaN 定位、单卡兜底与 500-Step 恢复执行计划
 
-> 状态：待执行计划；本文只定义后续任务，不代表已修复 NaN、已启动新训练或已获得 500-step checkpoint。  
+> 状态：已执行至 R6，已获得 fresh 500-step checkpoint；最终状态为 `lora_candidate_500_pending_review`，详见专项目录报告。
 > 日期基线：2026-08-29（Asia/Tokyo）。  
 > 上游计划：`docs/AXIS_PI05_TWO_GPU_LORA_TODAY_PLAN.md`。  
-> 当前事实状态：`lora_two_gpu_blocked_nonfinite_before_first_update`。旧状态名 `lora_screen_stopped_at_500_regression` 仅作为历史记录保留，不再作为技术结论。  
+> 当前事实状态：历史失败保留为 `lora_two_gpu_blocked_nonfinite_before_first_update`；修复后 R6 数值与 B80 主行为门禁通过，当前候选为 `lora_candidate_500_pending_review`。旧状态名 `lora_screen_stopped_at_500_regression` 仅作为历史记录保留，不再作为技术结论。
 > GPU 边界：只允许使用明确空闲且获准使用的 GPU1/GPU2；不得绑定、终止、重置或影响 GPU0 的外部进程。  
 > 数据边界：只使用 canonical `physical-intelligence/libero` 原生 10 Hz 数据和 Phase 1 fresh norm；本计划不训练 LIBERO-plus、20 Hz、Track 3 或合成数据。  
 > 执行边界：先定位并修复运行时问题，再恢复 500-step；禁止用反复盲跑代替诊断。
@@ -496,6 +496,26 @@ lora_candidate_500_runtime_nonfinite
 ```
 
 完成后必须停止，等待人工审核；不得自动进入 1K、5K、30K、Plus、Track 3 或 FAST export。
+
+## 9.4 本次执行结果
+
+本次已完成 R0-R6 的数值主线与 R6 主行为门禁：
+
+- R3 fixed replay `9/9` finite；U1 矩阵 `16/16` finite；sync/async checkpoint 变体均 finalized。
+- R4 三个独立 fresh-10 与一个独立 fresh-100 双卡 run 全部通过。
+- R6 `r6_dual_l2_fresh500_r1` 完成 `500/500` optimizer updates，metrics `500`、microbatch trace `16000`，checkpoint `0,1,10,25,50,100,250,500` 完整；restore `1,10,100,250,500` 通过。
+- B80 `execute8` 完成 `80/80`，step-500 成功 `48/80`，step-0 基线 `50/80`；paired wins/losses `9/11`，delta `-0.025`，满足 `46/80` 与 `-0.05` 门禁。
+- dual V100 fixed-forward 保留 repeatability warning：finite，但重复输出未达到 bitwise/记录的 FP32 tolerance；该项交由人工 review，不静默改成 deterministic pass。
+- B80 `full_chunk` 500 未执行（diagnostic-only）；不得将其写成已通过。
+
+机器可读与中文最终报告：
+
+```text
+data/reports/axis_libero_30k/lora_nan_replay/summary.json
+data/reports/axis_libero_30k/lora_nan_replay/NAN_LOCALIZATION_REPORT_ZH.md
+```
+
+因此执行状态为 `lora_candidate_500_pending_review`，到此停止，不自动进入后续训练、导出或提交。
 
 ## 10. 产物目录
 

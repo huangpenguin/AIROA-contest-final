@@ -1,0 +1,103 @@
+{
+  "schema_version": 2,
+  "status": "lora_candidate_500_pending_review",
+  "gpu0_touched": false,
+  "action_scale_finding": {
+    "conclusion": "The raw 7D LIBERO action fields use controller command units with heterogeneous per-dimension ranges; this is not by itself a data defect.",
+    "action_order": ["x", "y", "z", "roll", "pitch", "yaw", "gripper"],
+    "physical_state_vs_action": "A physical EEF displacement around +/-0.1 must not be compared directly with the raw action field.",
+    "phase1_fresh_raw_q01": [-0.7044642568, -0.8008928299, -0.9375, -0.1146428585, -0.1639285684, -0.2239285707, -1.0],
+    "phase1_fresh_raw_q99": [0.9375, 0.8678571582, 0.9375, 0.1317857206, 0.1928571463, 0.3353571296, 1.0],
+    "phase1_fresh_raw_std": [0.3355237157, 0.3784469914, 0.4447285992, 0.0392435408, 0.0633929647, 0.077970278, 0.9987671394],
+    "normalization_in_current_pi05_path": "Pi05 uses per-dimension q01/q99 normalization to approximately [-1,1], then applies the matching inverse transform at deployment.",
+    "risk_to_check_in_other_export_paths": "Any MEAN_STD exporter or deployment path must not be mixed with the q01/q99 checkpoint contract."
+  },
+  "historical_failure": {
+    "status": "lora_two_gpu_blocked_nonfinite_before_first_update",
+    "optimizer_updates_completed": 0,
+    "failure_stage": "first_accumulated_step_before_valid_optimizer_update",
+    "failed_micro_index": 1,
+    "same_runtime_reproduction_established": false,
+    "interpretation": "The old evidence was a pre-update runtime failure, not a 500-step behavior regression."
+  },
+  "controlled_recovery": {
+    "replay_rng_bug": "The old D12 fixed replay exposed mutation of an RNG/noise buffer; copying the host np.load view alone was insufficient.",
+    "fix": "Materialize private per-microbatch sharded time/noise fixtures before each replay computation.",
+    "diagnostic_controls": ["activation-sharding constraint disabled in the Axis LoRA path", "image augmentation switch", "sync/async checkpoint controls"],
+    "causal_claim": "The evidence supports a runtime/replay-path defect being fixed; it does not isolate a single XLA, sharding, hardware, or Orbax root cause."
+  },
+  "r3": {
+    "fixed_replay_gate": "passed",
+    "fixed_replay_runs": "9/9 finite",
+    "u1_matrix": "16/16 finite",
+    "sync_and_async_checkpoint_variants": "finite and finalized",
+    "note": "The latest fixed-replay gate used image augmentation disabled as an explicit diagnostic gate; the U1 matrix also passed with normal augmentation."
+  },
+  "r4": {
+    "fresh_10_runs": "3/3 passed",
+    "fresh_100_run": "1/1 passed",
+    "optimizer_updates": "10 updates in each fresh-10 run; 100 updates in fresh-100",
+    "dual_restore_and_fixed_forward": "passed for the required checkpoints",
+    "gpu0_touched": false
+  },
+  "r6": {
+    "run_id": "r6_dual_l2_fresh500_r1",
+    "path": "GPU1+GPU2; microbatch 1/GPU; accumulation 32; effective global batch 64; FP32",
+    "runtime_status": "passed",
+    "optimizer_steps": 500,
+    "metrics_count": 500,
+    "bad_metrics": 0,
+    "microbatch_trace_count": 16000,
+    "checkpoints": [0, 1, 10, 25, 50, 100, 250, 500],
+    "restore_checks": [1, 10, 100, 250, 500],
+    "fixed_forward": {
+      "status": "passed_finite",
+      "external_shape": [10, 7],
+      "internal_shape": [2, 10, 32],
+      "deterministic_bitwise": false,
+      "deterministic_within_fp32_tolerance": false,
+      "repeatability_warning": true,
+      "repeat_max_abs_diff": 0.2837314904,
+      "note": "Dual V100 repeated forward is finite but not bitwise/repeatable within the recorded tolerance; this is retained for human review."
+    },
+    "behavior": {
+      "panel": "B80",
+      "protocol": "execute8",
+      "case_count": 80,
+      "success_count": 48,
+      "success_rate": 0.6,
+      "baseline_step0_success_count": 50,
+      "minimum_accepted_success_count": 46,
+      "paired_wins": 9,
+      "paired_losses": 11,
+      "paired_both_success": 39,
+      "paired_both_fail": 21,
+      "paired_delta": -0.025,
+      "paired_delta_lower_bound": -0.05,
+      "collision_count": 20,
+      "timeout_count": 19,
+      "stall_count": 0,
+      "error_count": 0,
+      "video_count": 80,
+      "csv_complete": true,
+      "gate": "passed",
+      "merged_summary": "data/reports/axis_libero_30k/phase1/rollout/r6_dual_l2_fresh500_r1_behavior_merge/B80_execute8/summary.json",
+      "full_chunk_500": "not_run; diagnostic only"
+    },
+    "candidate_status": "lora_candidate_500_pending_review"
+  },
+  "provenance": {
+    "root_commit_training": "14161dea8b1bf801d57c97b9af2530ec4af52898",
+    "root_commit_behavior_runner": "befff6dc2ce6a165e59e0838ee1da35e0a10d982",
+    "openpi_commit": "dafa5a27266996eecf28920cacc32f3629776d91",
+    "openpi_tree": "887fa06db36a72288c2db6756c684f85946e3388",
+    "model_revision": "axisrobotics/Pi0.5-Axis@c342608c489515efa9ba8281400dc648bf3970e1",
+    "data_repo": "physical-intelligence/libero@a4336d589d589045d1c56423ffdf3b88a0e19b1f",
+    "payload_manifest_sha256": "8ede620026a9196a9d453508dfe2d4820e684d98cda1a5bc706cef68d1583cc3",
+    "sampling_manifest_sha256": "41715b29010fc7067c8fff8fd6fb0939735966bdc9afcf35ee1b3a0fc11b45b1",
+    "norm_stats_sha256": "4c803bf59c52677c36b6b420c614d8a7742e0847708443863e13e67cb80b18f5",
+    "gpu_ids": [1, 2],
+    "gpu0_touched": false
+  },
+  "next_step": "Stop here and await human review; do not start 1K, 5K, 30K, Plus, Track 3, FAST export, or official submission."
+}

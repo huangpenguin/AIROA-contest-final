@@ -6,6 +6,8 @@
 > 本计划修订 `AXIS_PI05_N1_EVALUATOR_NONDETERMINISM_RECOVERY_PLAN.md` 在 D1 的过严判定，但不覆盖或改写原始报告。  
 > 作用范围：完成 N1 的 environment/policy/integration 定位，随后最多生成一个 **R6 step-500 诊断 ZIP**；不得自动提交比赛，不得启动 V160/H160 或任何训练。
 
+> 后续任务说明（2026-08-30）：Q2 已按原 hard gate 在 raw-LoRA fresh-process `1.0728836e-6 > 1e-6` 停止。该失败继续保留；若要验证实际提交运行时，后续以 `AXIS_PI05_R6_FOLDED_DEPLOYMENT_AND_DIAGNOSTIC_SUBMISSION_PLAN.md` 为准，单独验证 on-disk LeRobot folded PyTorch、FAST、server 与 ZIP，不得把 deployment 分支通过回写成 raw-LoRA Q2 通过。
+
 ## 0. 审核结论与重新分级
 
 ### 0.1 已通过复核的事实

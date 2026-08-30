@@ -3,6 +3,7 @@
   "phase": "D4",
   "status": "failed_stop",
   "technical_state": "n1_nondeterminism_root_cause_unresolved",
+  "reporting_root_commit": "7f2a9ac",
   "input_commit": "ca4a514000abb9226f811dd0b43184d3b4705893",
   "d0_commits": ["1f05e87", "03b9e48"],
   "d1_probe_commits": ["ef3fa2e", "5107899", "6b1b3ee", "97397ef"],

@@ -14,7 +14,7 @@ n1_nondeterminism_root_cause_unresolved
 
 Comparator v2 已将 first nonzero diff 与 case max diff 分离，并输出 chunk 起点、common prefix、success flip、termination tuple、steps、failure reason、shape 和 byte mismatch。旧 N1 traces 已生成 legacy reanalysis，未覆盖原证据。GPU0 的 `false` 只有在 monitor evidence 完整时才有效；旧 summary 缺少证据时被标记为 legacy missing。
 
-D0 测试结果为 `89 passed, 7 skipped, 21 warnings`，`py_compile` 和 `git diff --check` 通过。
+D0/D1 工具的最终测试结果为 `90 passed, 7 skipped, 21 warnings`，`py_compile` 和 `git diff --check` 通过。
 
 ## D1
 

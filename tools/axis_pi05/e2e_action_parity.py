@@ -46,6 +46,20 @@ def _max_abs(left: Any, right: Any) -> float:
     return float(np.max(np.abs(np.asarray(left) - np.asarray(right))))
 
 
+def _diff_summary(left: Any, right: Any) -> dict[str, Any]:
+    a = np.asarray(left)
+    b = np.asarray(right)
+    difference = np.abs(a.astype(np.float64) - b.astype(np.float64))
+    return {
+        "shape_match": a.shape == b.shape,
+        "dtype_match": a.dtype == b.dtype,
+        "max_abs_diff": float(np.max(difference)),
+        "p99_abs_diff": float(np.percentile(difference, 99)),
+        "finite": bool(np.isfinite(a).all() and np.isfinite(b).all()),
+        "exact": bool(a.shape == b.shape and a.dtype == b.dtype and np.array_equal(a, b)),
+    }
+
+
 def run(
     model_dir: Path,
     fixed_input: Path,

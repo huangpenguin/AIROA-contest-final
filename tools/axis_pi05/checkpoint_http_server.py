@@ -182,16 +182,16 @@ class CheckpointPolicy:
         with self._lock:
             self._actions.clear()
             self._instruction = instruction
-            self._policy.reset()
-            # The evaluator supplies a frozen policy_seed for every episode.
-            # OpenPI's Policy.reset() is intentionally a no-op, so explicitly
-            # reset the JAX sampling stream here.  A reset without a seed is
-            # used only when execute8 starts the next action chunk; preserving
-            # the current stream makes that continuation deterministic within
-            # the same episode.
             if reset_kind == "episode_reset":
+                # The evaluator supplies a frozen policy_seed for every
+                # episode.  Reset the policy object and JAX sampling stream
+                # only at the episode boundary.
+                self._policy.reset()
                 self._policy._rng = self._jax.random.key(int(seed))  # noqa: SLF001
                 self._policy_seed = int(seed)
+            # A chunk discard intentionally only clears the unexecuted action
+            # buffer.  It must not call Policy.reset() or reseed JAX, so the
+            # next inference continues the same episode RNG stream.
             LOGGER.info(
                 "policy reset reset_kind=%s episode_seed=%s chunk_index=%d reseed=%s instruction=%r",
                 reset_kind,

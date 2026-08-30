@@ -1,4 +1,4 @@
-"""Compare two same-GPU phase-1 rollout runs byte-for-byte."""
+"""Compare same-GPU phase-1 rollout runs with auditable diff diagnostics."""
 
 from __future__ import annotations
 
@@ -12,6 +12,7 @@ from typing import Any
 import numpy as np
 
 COMPARE_FIELDS = ("success", "collision", "goal_reached", "timeout", "failure_reason", "steps")
+TRACE_THRESHOLDS = (1e-7, 1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1.0)
 
 
 def _sha256(path: Path) -> str:
@@ -31,7 +32,7 @@ def _load(path: Path) -> tuple[dict[str, Any], dict[str, dict[str, Any]]]:
     episodes_path = Path(summary["artifacts"]["episodes_csv"])
     with episodes_path.open(newline="", encoding="utf-8") as handle:
         rows = list(csv.DictReader(handle))
-    result = {}
+    result: dict[str, dict[str, Any]] = {}
     for row in rows:
         case_id = str(row["case_id"])
         if case_id in result:
@@ -47,47 +48,151 @@ def _load(path: Path) -> tuple[dict[str, Any], dict[str, dict[str, Any]]]:
             raise ValueError(f"invalid action trace shape/dtype for {case_id}: {trace.shape}/{trace.dtype}")
         if not _bool(row.get("action_finite")) or not np.isfinite(trace).all():
             raise ValueError(f"non-finite action trace for {case_id}")
-        result[case_id] = {**row, "_action_trace_sha256": trace_hash, "_action_trace": trace, "_action_shape": list(trace.shape)}
+        result[case_id] = {
+            **row,
+            "_action_trace_sha256": trace_hash,
+            "_action_trace": trace,
+            "_action_shape": list(trace.shape),
+        }
     return summary, result
+
+
+def _trace_diagnostics(left: np.ndarray, right: np.ndarray) -> dict[str, Any]:
+    common_steps = min(left.shape[0], right.shape[0])
+    common_dims = min(left.shape[1], right.shape[1]) if left.ndim == right.ndim == 2 else 0
+    if common_steps == 0 or common_dims == 0:
+        return {
+            "common_prefix_len": 0,
+            "first_action_max_abs_diff": None,
+            "chunk_start_max_abs_diff": [],
+            "first_nonzero_index": None,
+            "abs_diff_at_first_nonzero": None,
+            "case_max_abs_diff": None,
+            "case_max_abs_diff_index": None,
+            "first_step_exceeding": {str(threshold): None for threshold in TRACE_THRESHOLDS},
+        }
+    difference = np.abs(left[:common_steps, :common_dims] - right[:common_steps, :common_dims])
+    nonzero = np.argwhere(difference != 0)
+    first_nonzero = None
+    if len(nonzero):
+        index = tuple(int(value) for value in nonzero[0])
+        first_nonzero = {
+            "index": list(index),
+            "abs_diff": float(difference[index]),
+        }
+    row_max = np.max(difference, axis=1)
+    case_max_index = tuple(int(value) for value in np.unravel_index(np.argmax(difference), difference.shape))
+    chunk_size = 10
+    chunk_starts = []
+    for start in range(0, common_steps, chunk_size):
+        chunk_starts.append({
+            "chunk_index": start // chunk_size,
+            "step": start,
+            "max_abs_diff": float(row_max[start]),
+        })
+    return {
+        "common_prefix_len": common_steps,
+        "first_action_max_abs_diff": float(row_max[0]),
+        "chunk_start_max_abs_diff": chunk_starts,
+        "first_nonzero_index": first_nonzero["index"] if first_nonzero else None,
+        "abs_diff_at_first_nonzero": first_nonzero["abs_diff"] if first_nonzero else None,
+        "case_max_abs_diff": float(np.max(difference)),
+        "case_max_abs_diff_index": list(case_max_index),
+        "first_step_exceeding": {
+            str(threshold): next(
+                (int(index) for index, value in enumerate(row_max) if value > threshold),
+                None,
+            )
+            for threshold in TRACE_THRESHOLDS
+        },
+    }
+
+
+def _same_contract(first: dict[str, Any], second: dict[str, Any]) -> None:
+    fields = (
+        "panel",
+        "execution_protocol",
+        "checkpoint_identity",
+        "checkpoint_step",
+        "norm_stats_sha256",
+        "normalization_mode",
+        "policy_seed_source",
+        "source_revision",
+        "panel_manifest_sha256",
+        "executed_actions_per_chunk",
+        "chunk_size",
+    )
+    mismatches = [field for field in fields if first.get(field) != second.get(field)]
+    if mismatches:
+        raise ValueError(f"same-GPU replay contract mismatch: {mismatches}")
+    if first.get("gpu_id") != second.get("gpu_id") or str(first.get("gpu_id")) == "0":
+        raise ValueError("same-GPU replay was not performed on the same non-GPU0 device")
+    if first.get("gpu0_touched") is not False or second.get("gpu0_touched") is not False:
+        raise ValueError("GPU0 was touched or monitoring evidence is missing")
+    if first.get("git") != second.get("git"):
+        raise ValueError("same-GPU replay git provenance differs")
 
 
 def compare(first_path: Path, second_path: Path) -> dict[str, Any]:
     first, first_rows = _load(first_path)
     second, second_rows = _load(second_path)
-    if first.get("panel") != second.get("panel") or first.get("execution_protocol") != second.get("execution_protocol"):
-        raise ValueError("same-GPU replay panel/protocol mismatch")
-    if first.get("gpu_id") != second.get("gpu_id") or str(first.get("gpu_id")) == "0":
-        raise ValueError("same-GPU replay was not performed on the same non-GPU0 device")
-    if first.get("gpu0_touched") or second.get("gpu0_touched"):
-        raise ValueError("GPU0 was marked touched")
-    if first.get("git") != second.get("git"):
-        raise ValueError("same-GPU replay git provenance differs")
+    _same_contract(first, second)
     if set(first_rows) != set(second_rows):
         raise ValueError("same-GPU replay case_id sets differ")
 
     mismatches: list[dict[str, Any]] = []
-    max_numeric_diff = 0.0
-    first_numeric_mismatch = None
+    success_flip_count = 0
+    termination_tuple_mismatch_count = 0
+    steps_mismatch_count = 0
+    failure_reason_mismatch_count = 0
+    trace_shape_mismatch_count = 0
+    trace_byte_mismatch_count = 0
     for case_id in sorted(first_rows):
         left = first_rows[case_id]
         right = second_rows[case_id]
         fields = [field for field in COMPARE_FIELDS if left.get(field) != right.get(field)]
-        if left["_action_trace_sha256"] != right["_action_trace_sha256"]:
-            fields.append("action_trace_bytes")
-            if left["_action_shape"] == right["_action_shape"]:
-                difference = np.abs(left["_action_trace"] - right["_action_trace"])
-                case_max = float(np.max(difference))
-                max_numeric_diff = max(max_numeric_diff, case_max)
-                if first_numeric_mismatch is None and case_max != 0.0:
-                    first_index = tuple(int(index) for index in np.argwhere(difference != 0)[0])
-                    first_numeric_mismatch = {"case_id": case_id, "index": list(first_index), "max_abs_diff": case_max}
-        if left["_action_shape"] != right["_action_shape"]:
+        success_flip = left.get("success") != right.get("success")
+        termination_left = (left.get("goal_reached"), left.get("timeout"), left.get("failure_reason"))
+        termination_right = (right.get("goal_reached"), right.get("timeout"), right.get("failure_reason"))
+        termination_mismatch = termination_left != termination_right
+        steps_mismatch = left.get("steps") != right.get("steps")
+        failure_reason_mismatch = left.get("failure_reason") != right.get("failure_reason")
+        shape_mismatch = left["_action_shape"] != right["_action_shape"]
+        bytes_mismatch = left["_action_trace_sha256"] != right["_action_trace_sha256"]
+        diagnostics = _trace_diagnostics(left["_action_trace"], right["_action_trace"])
+        if success_flip:
+            success_flip_count += 1
+        if termination_mismatch:
+            termination_tuple_mismatch_count += 1
+        if steps_mismatch:
+            steps_mismatch_count += 1
+        if failure_reason_mismatch:
+            failure_reason_mismatch_count += 1
+        if shape_mismatch:
+            trace_shape_mismatch_count += 1
             fields.append("action_shape")
+        if bytes_mismatch:
+            trace_byte_mismatch_count += 1
+            fields.append("action_trace_bytes")
         if fields:
-            mismatches.append({"case_id": case_id, "fields": fields})
+            mismatches.append({
+                "case_id": case_id,
+                "fields": sorted(set(fields)),
+                "success_flip": success_flip,
+                "termination_tuple_mismatch": termination_mismatch,
+                "steps_mismatch": steps_mismatch,
+                "failure_reason_mismatch": failure_reason_mismatch,
+                "trace_shape_mismatch": shape_mismatch,
+                "trace_byte_mismatch": bytes_mismatch,
+                "trace_diagnostics": diagnostics,
+            })
+
+    def aggregate(rows: dict[str, dict[str, Any]], field: str) -> dict[str, Any]:
+        values = [int(_bool(row.get(field))) for row in rows.values()]
+        return {"count": int(sum(values)), "rate": float(sum(values) / len(values)) if values else None}
 
     result = {
-        "schema_version": 1,
+        "schema_version": 2,
         "status": "passed" if not mismatches else "failed",
         "comparison": "same_gpu_byte_exact_replay",
         "first_summary": str(first_path),
@@ -100,13 +205,26 @@ def compare(first_path: Path, second_path: Path) -> dict[str, Any]:
         "gpu0_touched": False,
         "case_count": len(first_rows),
         "action_trace_count": len(first_rows),
-        "outcome_mismatch_count": sum(
+        "success_flip_count": success_flip_count,
+        "termination_tuple_mismatch_count": termination_tuple_mismatch_count,
+        "steps_mismatch_count": steps_mismatch_count,
+        "failure_reason_mismatch_count": failure_reason_mismatch_count,
+        "trace_shape_mismatch_count": trace_shape_mismatch_count,
+        "trace_byte_mismatch_count": trace_byte_mismatch_count,
+        "outcome_mismatch_count_legacy": sum(
             any(field in item["fields"] for field in COMPARE_FIELDS) for item in mismatches
         ),
-        "action_trace_byte_mismatch_count": sum("action_trace_bytes" in item["fields"] for item in mismatches),
-        "action_trace_numeric_max_abs_diff": max_numeric_diff,
-        "first_action_trace_numeric_mismatch": first_numeric_mismatch,
         "mismatch_count": len(mismatches),
+        "aggregate_first": {
+            field: aggregate(first_rows, field) for field in ("success", "collision", "timeout")
+        },
+        "aggregate_second": {
+            field: aggregate(second_rows, field) for field in ("success", "collision", "timeout")
+        },
+        "aggregate_delta_second_minus_first": {
+            field: aggregate(second_rows, field)["count"] - aggregate(first_rows, field)["count"]
+            for field in ("success", "collision", "timeout")
+        },
         "mismatches": mismatches,
         "provenance": {
             "first": {key: first.get(key) for key in ("checkpoint_identity", "checkpoint_path", "checkpoint_step", "checkpoint_kind", "lora_arm", "norm_stats_path", "norm_stats_sha256", "normalization_mode", "policy_seed_source", "git")},
@@ -115,8 +233,8 @@ def compare(first_path: Path, second_path: Path) -> dict[str, Any]:
         "protocol_checks": {
             "episode_seed_reset_once": first.get("policy_seed_source") == "frozen manifest policy_seed -> reset(seed) per episode",
             "chunk_discard_no_reseed": True,
-            "action_bytes_exact": not any("action_trace_bytes" in item["fields"] for item in mismatches),
-            "outcome_steps_failure_reason_exact": not any(any(field in item["fields"] for field in COMPARE_FIELDS) for item in mismatches),
+            "action_bytes_exact": trace_byte_mismatch_count == 0,
+            "outcome_steps_failure_reason_exact": termination_tuple_mismatch_count == 0 and steps_mismatch_count == 0,
         },
         "technical_state": "r6_evaluator_and_fold_reproducibility_locked" if not mismatches else "r6_evaluator_and_fold_reproducibility_failed",
     }

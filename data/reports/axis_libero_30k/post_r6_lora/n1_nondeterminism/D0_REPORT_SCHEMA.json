@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "phase": "D0",
+  "required_top_level_fields": [
+    "schema_version",
+    "status",
+    "comparison",
+    "case_count",
+    "mismatch_count",
+    "success_flip_count",
+    "termination_tuple_mismatch_count",
+    "steps_mismatch_count",
+    "failure_reason_mismatch_count",
+    "trace_shape_mismatch_count",
+    "trace_byte_mismatch_count",
+    "aggregate_first",
+    "aggregate_second",
+    "aggregate_delta_second_minus_first",
+    "mismatches",
+    "provenance",
+    "protocol_checks",
+    "technical_state"
+  ],
+  "per_case_mismatch_fields": [
+    "case_id",
+    "fields",
+    "success_flip",
+    "termination_tuple_mismatch",
+    "steps_mismatch",
+    "failure_reason_mismatch",
+    "trace_shape_mismatch",
+    "trace_byte_mismatch",
+    "trace_diagnostics"
+  ],
+  "trace_diagnostics_fields": [
+    "common_prefix_len",
+    "first_action_max_abs_diff",
+    "chunk_start_max_abs_diff",
+    "first_nonzero_index",
+    "abs_diff_at_first_nonzero",
+    "case_max_abs_diff",
+    "case_max_abs_diff_index",
+    "first_step_exceeding"
+  ],
+  "gpu_policy": "gpu0_touched=false is valid only when explicit before/during/after GPU monitor evidence exists"
+}

@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "phase": "D0",
+  "status": "completed",
+  "comparator_schema_version": 2,
+  "old_n1_evidence_preserved": true,
+  "comparisons": {
+    "axis_step0": {
+      "report": "axis_step0_legacy_reanalysis.json",
+      "sha256": "51ec3fd71f78425a5d116e9c51fc7b755a25b7d1b6725dbc6ba47d81cf156ec3",
+      "case_count": 20,
+      "success_flip_count": 6,
+      "termination_tuple_mismatch_count": 6,
+      "steps_mismatch_count": 15,
+      "failure_reason_mismatch_count": 6,
+      "trace_shape_mismatch_count": 15,
+      "trace_byte_mismatch_count": 20,
+      "first_action_max_abs_diff": 2.086162567138672e-7,
+      "first_nonzero_index": [0, 0],
+      "abs_diff_at_first_nonzero": 4.842877388000488e-8,
+      "case_max_abs_diff": 1.997793436050415,
+      "case_max_abs_diff_index": [121, 6]
+    },
+    "r6_step500": {
+      "report": "r6_step500_legacy_reanalysis.json",
+      "sha256": "cf36bbb890b6854bb71bdf00d93d2c692753493d7101b3feacbe8b91096639d1",
+      "case_count": 20,
+      "success_flip_count": 3,
+      "termination_tuple_mismatch_count": 3,
+      "steps_mismatch_count": 16,
+      "failure_reason_mismatch_count": 3,
+      "trace_shape_mismatch_count": 16,
+      "trace_byte_mismatch_count": 20,
+      "first_action_max_abs_diff": 1.1175870895385742e-7,
+      "first_nonzero_index": [0, 1],
+      "abs_diff_at_first_nonzero": 8.940696716308594e-8,
+      "case_max_abs_diff": 1.9907774925231934,
+      "case_max_abs_diff_index": [146, 6]
+    }
+  },
+  "semantic_fix": "first_nonzero_index/abs_diff_at_first_nonzero are now separate from case_max_abs_diff/case_max_abs_diff_index; shape mismatches use only the common prefix"
+}

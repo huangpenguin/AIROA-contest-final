@@ -39,6 +39,20 @@ N0 已通过；N1.1 已完成 action trace 落盘；N1.2 同 GPU deterministic r
 - 四次 C20 replay 的 summary、CSV、action trace、视频和日志均在同目录下。
 - 汇总：`evaluator_reproducibility/summary.json`
 
+## N1 nondeterminism recovery
+
+已执行恢复计划的 D0 和 D1。D0 comparator v2 已拆分 first-nonzero、case-max、success flip、termination、steps、failure reason、shape 和 byte mismatch，并要求 GPU monitor evidence；旧 N1 traces 已用 legacy 模式重分析且未覆盖。
+
+D1 结果：seeded constructor 的 3-case 同进程 probe 为 exact；fresh-process 仍失败。唯一 seeded fresh 差异是 `C20-task11-init0` 的 E1 `agentview_image`，9 个像素、最大差 1；simulator state、wrist image 和其他 case exact。baseline fresh 在 task00/task11 的 E0 simulator state 分叉。osmesa 对照因本机 OpenGL binding 不可用而未能启动。
+
+当前状态更新为：
+
+```text
+n1_nondeterminism_root_cause_unresolved
+```
+
+D2、D3、D4 及主计划下游阶段均未启动。canonical D1 summary 和停止报告位于 `n1_nondeterminism/environment_probe/` 与 `n1_nondeterminism/final/`。
+
 ## 停止与恢复条件
 
 不得放宽 action trace 阈值，也不得直接重跑训练或扩大评价面板。下一步只能是独立定位 evaluator/environment/JAX/runtime 的 nondeterminism；修复后以相同 C20、相同 GPU、相同 seed contract 重新通过 N1.2，才可考虑进入 N1.3。

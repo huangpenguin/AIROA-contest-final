@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "phase": "D1",
+  "probe": "environment_only",
+  "mode": "seeded_constructor",
+  "init_mode": "direct",
+  "status": "failed_stop",
+  "git": {
+    "root": "97397ef79049172d787128d2d525d3154516ad04",
+    "nested_openpi": "dafa5a27266996eecf28920cacc32f3629776d91"
+  },
+  "source_revision": "a4336d589d589045d1c56423ffdf3b88a0e19b1f",
+  "manifest_sha256": "1dad183301e255e4287348470d962b9016420c2365f0ac8a8c2eef7ed0052231",
+  "norm_stats_sha256": "4c803bf59c52677c36b6b420c614d8a7742e0847708443863e13e67cb80b18f5",
+  "norm_used": false,
+  "case_ids": ["C20-task00-init0", "C20-task02-init0", "C20-task11-init0"],
+  "seed_contract": "random/numpy/torch seeded before constructor and before reset; env.seed(env_seed) retained",
+  "same_process": {
+    "summary": "seeded_same_process/summary.json",
+    "summary_sha256": "4a725d4ab0c34c98fcd754c442d4c82c642b426e937d6a02b13573263d443b11",
+    "comparison": "seeded_same_process_comparison.json",
+    "comparison_sha256": "987b5fde45b745c0ac46f4f7d9b16d3e69f60b45dab1f564a0bad4d8398a812a",
+    "mismatch_count": 0,
+    "technical_state": "evaluator_environment_determinism_locked"
+  },
+  "fresh_process": {
+    "first_summary": "seeded_fresh_process_0/summary.json",
+    "first_summary_sha256": "836ea8c625012124eb094abbdab964b851df6c376c4408da436f027e2f70a0bb",
+    "second_summary": "seeded_fresh_process_1/summary.json",
+    "second_summary_sha256": "15135e9c210670605a0a684695675ba271a124f114d15c5da1f1cfc40ad71280",
+    "comparison": "seeded_fresh_process_comparison.json",
+    "comparison_sha256": "5fc284abb604fd94cad45bbcaba4ca15d828e84ce844f386defe813ec5858fd2",
+    "mismatch_count": 1,
+    "first_difference": {
+      "case_id": "C20-task11-init0",
+      "stage": "E1",
+      "section": "observation",
+      "field": "agentview_image",
+      "changed_pixels": 9,
+      "max_abs_diff": 1
+    },
+    "simulator_and_wrist_image_exact_for_first_difference_case": true
+  },
+  "gpu0_touched": false,
+  "gpu_monitor_evidence": "recorded in each referenced run summary",
+  "technical_state": "n1_nondeterminism_root_cause_unresolved"
+}

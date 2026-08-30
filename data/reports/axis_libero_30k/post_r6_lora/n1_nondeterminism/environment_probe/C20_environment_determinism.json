@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "phase": "D1",
+  "probe": "environment_only",
+  "status": "failed_stop_before_full_c20",
+  "git": {
+    "root": "97397ef79049172d787128d2d525d3154516ad04",
+    "nested_openpi": "dafa5a27266996eecf28920cacc32f3629776d91"
+  },
+  "source_revision": "a4336d589d589045d1c56423ffdf3b88a0e19b1f",
+  "manifest_sha256": "1dad183301e255e4287348470d962b9016420c2365f0ac8a8c2eef7ed0052231",
+  "norm_stats_sha256": "4c803bf59c52677c36b6b420c614d8a7742e0847708443863e13e67cb80b18f5",
+  "attempted_cases": ["C20-task00-init0", "C20-task02-init0", "C20-task11-init0"],
+  "full_c20_not_run": true,
+  "baseline_same_process": "failed: 2/3 mismatched; first divergence C20-task00-init0 E0 simulator.flattened",
+  "baseline_fresh_process": "failed: 2/3 mismatched; first divergence C20-task00-init0 E0 simulator.flattened",
+  "seeded_constructor_same_process": "passed: 0/3 mismatched",
+  "seeded_constructor_fresh_process": "failed: 1/3 mismatched; C20-task11-init0 E1 agentview_image, 9 pixels, max abs 1",
+  "osmesa_probe": {
+    "status": "unavailable",
+    "error": "PyOpenGL GL binding returned None during mujoco.osmesa import"
+  },
+  "gpu0_touched": false,
+  "gpu_monitor_evidence": "recorded in every D1 probe summary",
+  "technical_state": "n1_nondeterminism_root_cause_unresolved",
+  "next_allowed_action": "renderer/runtime root-cause isolation and human-reviewed recovery decision; do not start D2/D3 or main-plan stages"
+}

@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "phase": "D1",
+  "probe": "environment_only",
+  "mode": "baseline",
+  "init_mode": "direct",
+  "status": "failed_stop",
+  "git": {
+    "root": "97397ef79049172d787128d2d525d3154516ad04",
+    "nested_openpi": "dafa5a27266996eecf28920cacc32f3629776d91"
+  },
+  "source_revision": "a4336d589d589045d1c56423ffdf3b88a0e19b1f",
+  "manifest_sha256": "1dad183301e255e4287348470d962b9016420c2365f0ac8a8c2eef7ed0052231",
+  "norm_stats_sha256": "4c803bf59c52677c36b6b420c614d8a7742e0847708443863e13e67cb80b18f5",
+  "norm_used": false,
+  "case_ids": ["C20-task00-init0", "C20-task02-init0", "C20-task11-init0"],
+  "runtime_environment": {
+    "LIBERO_IMPORT": "LIBERO first on PYTHONPATH",
+    "LIBERO_CONFIG_PATH": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/phase1/rollout/r6_dual_l2_fresh500_r1/libero_eval_config",
+    "CUDA_VISIBLE_DEVICES": "1",
+    "MUJOCO_GL": "egl",
+    "MUJOCO_EGL_DEVICE_ID": "1",
+    "JAX_PLATFORMS": "cpu",
+    "PYTHONHASHSEED": "0",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "same_process": {
+    "summary": "baseline_same_process/summary.json",
+    "summary_sha256": "1ad38104391ee6d0b36d032a956188adf1dcdc4fc469665d5e638c5bc5f24778",
+    "comparison": "baseline_same_process_comparison.json",
+    "comparison_sha256": "6447a842d072eb92dd817c6d1c4e50730037be38fe41f0d45379b5623e41b8c5",
+    "mismatch_count": 2,
+    "first_difference": {"case_id": "C20-task00-init0", "stage": "E0", "section": "simulator", "field": "flattened"}
+  },
+  "fresh_process": {
+    "first_summary": "baseline_fresh_process_0/summary.json",
+    "first_summary_sha256": "8bc8d821b2ddc43d26263872270fced86b38f003935627a928c4c9f7864c6cd4",
+    "second_summary": "baseline_fresh_process_1/summary.json",
+    "second_summary_sha256": "efb45236a0770965c06f87692a139261b155594a00ea780d09c4cddb485a295f",
+    "comparison": "baseline_fresh_process_comparison.json",
+    "comparison_sha256": "163586dd874382e799c484021932aed74a1b291f9b8585480edd603f44df3258",
+    "mismatch_count": 2,
+    "first_difference": {"case_id": "C20-task00-init0", "stage": "E0", "section": "simulator", "field": "flattened"}
+  },
+  "gpu0_touched": false,
+  "gpu_monitor_evidence": "recorded in each referenced run summary",
+  "technical_state": "n1_nondeterminism_root_cause_unresolved"
+}

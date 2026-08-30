@@ -6,6 +6,18 @@
 > 作用范围：只定位并修复 N1.2；不得启动 parity grid、V160/H160、训练、fold/export 或官方评分。  
 > 本计划结束时必须再次停止，由人工决定是否恢复主计划 N1.3。
 
+## 执行结果（2026-08-30）
+
+D0 已完成并通过无 GPU 测试；D1 已按“baseline → seeded constructor → fresh process”顺序执行到首个硬失败。seed-before-constructor 修复使 3 个 probe case 的同进程比较达到 exact，但 fresh process 仍在 environment observation 层失败：`C20-task11-init0` 的 E1 `agentview_image` 有 9 个像素、最大绝对差 1；simulator state、wrist image 和其他 case exact。baseline fresh process 则在 `C20-task00-init0` 的 E0 simulator state 已分叉。
+
+因此当前状态锁定为：
+
+```text
+n1_nondeterminism_root_cause_unresolved
+```
+
+按第 5.3、5.5 和第 8 节，D2 policy-only、D3 integration、D4 N1 恢复均未启动；不得进入主计划 N1.3 或任何 parity/V160/H160/训练阶段。完整产物见 `data/reports/axis_libero_30k/post_r6_lora/n1_nondeterminism/final/summary.json` 和 `N1_NONDETERMINISM_REPORT_ZH.md`。
+
 ## 1. 审核结论
 
 ### 1.1 已确认

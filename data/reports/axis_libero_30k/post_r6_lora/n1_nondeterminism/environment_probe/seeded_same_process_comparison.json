@@ -1,0 +1,17 @@
+{
+  "case_count": 3,
+  "comparison": "environment_only_exact_replay",
+  "first_difference": null,
+  "first_replica": 0,
+  "first_summary": "data/reports/axis_libero_30k/post_r6_lora/n1_nondeterminism/environment_probe/seeded_same_process/summary.json",
+  "first_summary_sha256": "4a725d4ab0c34c98fcd754c442d4c82c642b426e937d6a02b13573263d443b11",
+  "mismatch_count": 0,
+  "mismatches": [],
+  "phase": "D1",
+  "schema_version": 1,
+  "second_replica": 1,
+  "second_summary": "data/reports/axis_libero_30k/post_r6_lora/n1_nondeterminism/environment_probe/seeded_same_process/summary.json",
+  "second_summary_sha256": "4a725d4ab0c34c98fcd754c442d4c82c642b426e937d6a02b13573263d443b11",
+  "status": "passed",
+  "technical_state": "evaluator_environment_determinism_locked"
+}

@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "phase": "D4",
+  "status": "failed_stop",
+  "technical_state": "n1_nondeterminism_root_cause_unresolved",
+  "input_commit": "ca4a514000abb9226f811dd0b43184d3b4705893",
+  "d0_commits": ["1f05e87", "03b9e48"],
+  "d1_probe_commits": ["ef3fa2e", "5107899", "6b1b3ee", "97397ef"],
+  "nested_openpi_commit": "dafa5a27266996eecf28920cacc32f3629776d91",
+  "dataset_revision": "a4336d589d589045d1c56423ffdf3b88a0e19b1f",
+  "manifest_sha256": "1dad183301e255e4287348470d962b9016420c2365f0ac8a8c2eef7ed0052231",
+  "norm_stats_sha256": "4c803bf59c52677c36b6b420c614d8a7742e0847708443863e13e67cb80b18f5",
+  "environment": {
+    "status": "failed",
+    "summary": "environment_probe/C20_environment_determinism.json",
+    "baseline_same_process_mismatch_count": 2,
+    "baseline_fresh_process_mismatch_count": 2,
+    "seeded_same_process_mismatch_count": 0,
+    "seeded_fresh_process_mismatch_count": 1,
+    "first_seeded_fresh_difference": {
+      "case_id": "C20-task11-init0",
+      "stage": "E1",
+      "field": "agentview_image",
+      "changed_pixels": 9,
+      "max_abs_diff": 1
+    }
+  },
+  "policy_only": {"status": "not_started", "reason": "D1 environment fresh-process exact gate failed"},
+  "integration": {"status": "not_started", "reason": "D1 environment fresh-process exact gate failed"},
+  "strict_n1_recovery": {"status": "not_started", "reason": "D1 environment fresh-process exact gate failed"},
+  "main_plan_downstream": "not_started",
+  "gpu_boundary": {
+    "gpu0_touched": false,
+    "allowed_gpu_ids": [1],
+    "gpu0_external_pid": 237527
+  },
+  "stop_reason": "D1 requires fresh-process bitwise-exact simulator state and raw uint8 observations. Seeded same-process passed, but seeded fresh-process differed in agentview_image at E1 for one case; no tolerance, rounding, clipping, caching, or policy-stage workaround was applied."
+}

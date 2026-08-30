@@ -48,6 +48,12 @@ n1_seeded_constructor_effective_renderer_jitter_pending_full_c20
 - 不能用 tolerance、图像 rounding、action rounding、缓存观测或复用 action trace 来伪造 exact。
 - 不能把 R6 在 B80 的 `49/80`、相对 step-0 的 `+1/80` 当成已证明的性能提升。
 
+### 0.4 本次执行结果（2026-08-30）
+
+- Q0 已完成 comparator/snapshot 重算；Q1 已完成 full-C20 三副本 environment envelope，数值动力学为 20/20 exact，renderer jitter 已量化。
+- Q2.1 在 R6 raw-LoRA fresh-process frozen replay 停止：external action 最大差 `1.0728836059570312e-6`，超过 `1e-6` hard gate；失败位置为 `C20-task04-init0-s0` 的 chunk step 8、gripper 维。
+- 因此没有继续 Q2.2、Q3 或 Q4，没有修改 production seed 路径，没有训练，也没有生成或上传 ZIP。详细证据见 [Q2 policy sensitivity report](../data/reports/axis_libero_30k/post_r6_lora/n1_policy_boundary/Q2_POLICY_SENSITIVITY_REPORT_ZH.md)。
+
 ## 1. 两种“离 ZIP 还有多远”
 
 ### 1.1 R6 step-500 诊断 ZIP

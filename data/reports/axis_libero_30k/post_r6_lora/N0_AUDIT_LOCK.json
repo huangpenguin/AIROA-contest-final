@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "phase": "N0",
+  "status": "passed",
+  "plan": "docs/AXIS_PI05_POST_R6_LORA_SCALING_AND_SELECTION_PLAN.md",
+  "plan_base_commit": "f2056847d9c08e05e8d01808339ce7d9bf28b80d",
+  "plan_commit": "f9c3123df6b9d57580b7dba824dc0cad8943248c",
+  "root_commit": "8ca78616664a638d1aaafc879c97dd7f398085ec",
+  "root_clean": true,
+  "nested_openpi_commit": "dafa5a27266996eecf28920cacc32f3629776d91",
+  "nested_openpi_clean": true,
+  "data": {
+    "repo_id": "physical-intelligence/libero",
+    "revision": "a4336d589d589045d1c56423ffdf3b88a0e19b1f",
+    "payload_manifest_sha256": "8ede620026a9196a9d453508dfe2d4820e684d98cda1a5bc706cef68d1583cc3",
+    "payload_manifest_file_sha256": "500f32459d676f062e4b73a81e6a9c20f2d66ef33afc1876cf10b77aa14aa7aa",
+    "sampling_manifest_sha256": "41715b29010fc7067c8fff8fd6fb0939735966bdc9afcf35ee1b3a0fc11b45b1",
+    "episodes": 1693,
+    "frames": 273465,
+    "tasks": 40,
+    "fps": 10,
+    "resampling": "none"
+  },
+  "norm": {
+    "path": "data/reports/axis_libero_30k/phase1/norm_stats.json",
+    "sha256": "4c803bf59c52677c36b6b420c614d8a7742e0847708443863e13e67cb80b18f5",
+    "mode": "ACTION=QUANTILES, STATE=QUANTILES"
+  },
+  "model_contract": {
+    "axis_init_revision": "c342608c489515efa9ba8281400dc648bf3970e1",
+    "external_action_dim": 7,
+    "internal_action_dim": 32,
+    "action_horizon": 10,
+    "precision": "float32",
+    "effective_global_batch": 64,
+    "objective": "valid7_temporal"
+  },
+  "artifacts": {
+    "paired_report": {
+      "path": "tools/axis_pi05/phase1_paired_report.py",
+      "sha256": "ba8773210f34cfeb39dda57c5c9aaa8f150f1903419dcb6f8727bf1027a065ae"
+    },
+    "checkpoint_http_server": {
+      "path": "tools/axis_pi05/checkpoint_http_server.py",
+      "sha256": "95b794a88213f8e3816cbee06506982bdf05514e6bb314d43e49b753017a26a3"
+    },
+    "remote_policy": {
+      "path": "pipeline/remote_policy.py",
+      "sha256": "c66f4a3044378c2ecfbb8f4f4ab4c36ec9c89be9e08fd7346e8eb3a8ab0a206e"
+    },
+    "B80_manifest_sha256": "6209fa920dd5e7c6f225069592c08f4ee6fb14c31427414d61d2c98c04f1b581"
+  },
+  "seed_contract": {
+    "episode_reset": "integer policy_seed is required and resets the JAX RNG",
+    "chunk_discard": "clears unexecuted action only; no reseed",
+    "logging_fields": ["reset_kind", "episode_seed", "chunk_index", "reseed"]
+  },
+  "tests": {
+    "command": ".venv_axis_pi05/bin/python -m pytest -q tests",
+    "passed": 82,
+    "skipped": 7,
+    "warnings": 21,
+    "py_compile": true,
+    "git_diff_check": true
+  },
+  "resource_snapshot": {
+    "available_bytes_approx": 958025544000,
+    "gpu0_external_pid": 237527,
+    "gpu0_touched": false,
+    "allowed_gpu_ids": [1, 2],
+    "gpu1_used_mib": 5,
+    "gpu2_used_mib": 5,
+    "gpu3_used_mib": 5
+  },
+  "gpu_run_started": false
+}

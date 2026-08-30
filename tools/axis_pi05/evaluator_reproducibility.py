@@ -47,7 +47,7 @@ def _load(path: Path) -> tuple[dict[str, Any], dict[str, dict[str, Any]]]:
             raise ValueError(f"invalid action trace shape/dtype for {case_id}: {trace.shape}/{trace.dtype}")
         if not _bool(row.get("action_finite")) or not np.isfinite(trace).all():
             raise ValueError(f"non-finite action trace for {case_id}")
-        result[case_id] = {**row, "_action_trace_sha256": trace_hash, "_action_shape": list(trace.shape)}
+        result[case_id] = {**row, "_action_trace_sha256": trace_hash, "_action_trace": trace, "_action_shape": list(trace.shape)}
     return summary, result
 
 
@@ -66,12 +66,21 @@ def compare(first_path: Path, second_path: Path) -> dict[str, Any]:
         raise ValueError("same-GPU replay case_id sets differ")
 
     mismatches: list[dict[str, Any]] = []
+    max_numeric_diff = 0.0
+    first_numeric_mismatch = None
     for case_id in sorted(first_rows):
         left = first_rows[case_id]
         right = second_rows[case_id]
         fields = [field for field in COMPARE_FIELDS if left.get(field) != right.get(field)]
         if left["_action_trace_sha256"] != right["_action_trace_sha256"]:
             fields.append("action_trace_bytes")
+            if left["_action_shape"] == right["_action_shape"]:
+                difference = np.abs(left["_action_trace"] - right["_action_trace"])
+                case_max = float(np.max(difference))
+                max_numeric_diff = max(max_numeric_diff, case_max)
+                if first_numeric_mismatch is None and case_max != 0.0:
+                    first_index = tuple(int(index) for index in np.argwhere(difference != 0)[0])
+                    first_numeric_mismatch = {"case_id": case_id, "index": list(first_index), "max_abs_diff": case_max}
         if left["_action_shape"] != right["_action_shape"]:
             fields.append("action_shape")
         if fields:
@@ -95,6 +104,8 @@ def compare(first_path: Path, second_path: Path) -> dict[str, Any]:
             any(field in item["fields"] for field in COMPARE_FIELDS) for item in mismatches
         ),
         "action_trace_byte_mismatch_count": sum("action_trace_bytes" in item["fields"] for item in mismatches),
+        "action_trace_numeric_max_abs_diff": max_numeric_diff,
+        "first_action_trace_numeric_mismatch": first_numeric_mismatch,
         "mismatch_count": len(mismatches),
         "mismatches": mismatches,
         "provenance": {

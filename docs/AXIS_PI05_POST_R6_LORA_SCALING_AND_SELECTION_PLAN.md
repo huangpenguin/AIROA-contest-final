@@ -18,6 +18,16 @@
 本计划是资源受限下的 LoRA 工程路线，不取代
 `docs/AXIS_PI05_STANDARD_LIBERO_30K_RESEARCH_PLAN.md` 中的 canonical full-FT 复现。full-FT 仍等待合适的 4×V100 或单卡 96 GB 资源。
 
+## 执行状态（2026-08-30）
+
+N0 审计固化已通过；N1.1 action trace 已落盘，但 N1.2 同 GPU deterministic replay 未通过。因此当前机器状态为：
+
+```text
+r6_evaluator_and_fold_reproducibility_failed
+```
+
+按本计划第 5.2 节和第 15 节，当前执行在 N1 停止。不得启动 N1.3 parity grid、N2 V160/H160、N3 长程训练及其后续阶段，直到 evaluator 的 action/outcome 可重复性问题被单独修复并重新通过 N1.2。详细结果见 `data/reports/axis_libero_30k/post_r6_lora/evaluator_reproducibility/summary.json` 和 `THREAD_REPORT_ZH.md`。
+
 ## 2. 本次审核结论
 
 ### 2.1 已接受的事实

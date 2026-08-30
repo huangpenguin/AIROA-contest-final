@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "phase": "N1",
+  "status": "failed_stop",
+  "technical_state": "r6_evaluator_and_fold_reproducibility_failed",
+  "plan": "docs/AXIS_PI05_POST_R6_LORA_SCALING_AND_SELECTION_PLAN.md",
+  "run_root_commit": "da29c6903e683aeb15eff91a6c0ffb026331259c",
+  "nested_openpi_commit": "dafa5a27266996eecf28920cacc32f3629776d91",
+  "dataset": {
+    "repo_id": "physical-intelligence/libero",
+    "revision": "a4336d589d589045d1c56423ffdf3b88a0e19b1f",
+    "panel": "C20",
+    "execution_protocol": "execute8",
+    "norm_stats_sha256": "4c803bf59c52677c36b6b420c614d8a7742e0847708443863e13e67cb80b18f5",
+    "normalization_mode": "ACTION=QUANTILES, STATE=QUANTILES",
+    "policy_seed_source": "frozen manifest policy_seed -> reset(seed) per episode"
+  },
+  "checks": {
+    "episode_seed_reset_once": true,
+    "chunk_discard_no_reseed": true,
+    "gpu0_touched": false,
+    "stall_zero_in_all_runs": true,
+    "case_coverage": "20/20 in every replay"
+  },
+  "comparisons": {
+    "axis_step0": {
+      "gpu_id": "1",
+      "replay_first": "evaluator_reproducibility/axis_step0_c20_replay1_gpu1_v2/summary.json",
+      "replay_second": "evaluator_reproducibility/axis_step0_c20_replay2_gpu1/summary.json",
+      "comparison_report": "evaluator_reproducibility/axis_step0_same_gpu_summary.json",
+      "comparison_report_sha256": "a24054ca7af43213a76edc0a2a32a66b46e124e97098a05adfc8c547ed75818a",
+      "case_count": 20,
+      "mismatch_count": 20,
+      "outcome_mismatch_count": 15,
+      "action_trace_byte_mismatch_count": 20,
+      "action_trace_numeric_max_abs_diff": 2.0025522708892822,
+      "first_action_trace_numeric_mismatch": {
+        "case_id": "C20-task02-init0",
+        "index": [0, 0],
+        "max_abs_diff": 2.0025522708892822
+      },
+      "technical_state": "r6_evaluator_and_fold_reproducibility_failed"
+    },
+    "r6_step500": {
+      "gpu_id": "2",
+      "replay_first": "evaluator_reproducibility/r6_step500_c20_replay1_gpu2/summary.json",
+      "replay_second": "evaluator_reproducibility/r6_step500_c20_replay2_gpu2/summary.json",
+      "comparison_report": "evaluator_reproducibility/r6_step500_same_gpu_summary.json",
+      "comparison_report_sha256": "c87a7c4f0ce881e06295218fd475c520813c4391f5ed8874dbce49d05b74ff29",
+      "case_count": 20,
+      "mismatch_count": 20,
+      "outcome_mismatch_count": 16,
+      "action_trace_byte_mismatch_count": 20,
+      "action_trace_numeric_max_abs_diff": 2.0012078285217285,
+      "first_action_trace_numeric_mismatch": {
+        "case_id": "C20-task02-init0",
+        "index": [0, 3],
+        "max_abs_diff": 1.9916963577270508
+      },
+      "technical_state": "r6_evaluator_and_fold_reproducibility_failed"
+    }
+  },
+  "downstream_gates": {
+    "N1.3_parity_grid": "not_started",
+    "N2_V160_H160": "not_started",
+    "N3_long_horizon_training": "not_started",
+    "N4_to_N8": "not_started"
+  },
+  "stop_reason": "Same-GPU C20 exact replay failed for both Axis step-0 and R6 step-500. The plan requires byte-exact action traces and identical outcome/steps/failure_reason before any downstream evaluation or training. No threshold was widened and no automatic rerun was started."
+}

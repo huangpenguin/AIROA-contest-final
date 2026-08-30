@@ -13,6 +13,7 @@ This is an offline conversion tool.  It never modifies the source checkpoint.
 from __future__ import annotations
 
 import argparse
+import importlib.util
 import json
 from pathlib import Path
 from typing import Any
@@ -28,64 +29,16 @@ import openpi.models.pi0_config
 import openpi.models_pytorch.pi0_pytorch
 from openpi.training import config as training_config
 
-from examples import convert_jax_model_to_pytorch as upstream
+from .lora_folding import assert_no_lora as _assert_no_lora
+from .lora_folding import fold_lora_in_mapping as _fold_lora_in_mapping
 
 
-def _fold_last_two_axes(base: np.ndarray, left: np.ndarray, right: np.ndarray) -> np.ndarray:
-    """Return base + left@right for a batched matrix-shaped JAX weight."""
-
-    if base.ndim < 2 or left.ndim != base.ndim or right.ndim != base.ndim:
-        raise ValueError(
-            f"unsupported LoRA shapes: base={base.shape} left={left.shape} right={right.shape}"
-        )
-    if left.shape[:-1] != base.shape[:-1] or right.shape[:-2] != base.shape[:-2]:
-        raise ValueError(
-            f"LoRA leading dimensions do not match: base={base.shape} left={left.shape} right={right.shape}"
-        )
-    if left.shape[-2] != base.shape[-2] or right.shape[-1] != base.shape[-1]:
-        raise ValueError(
-            f"LoRA output dimensions do not match: base={base.shape} left={left.shape} right={right.shape}"
-        )
-    if left.shape[-1] != right.shape[-2]:
-        raise ValueError(f"LoRA rank mismatch: left={left.shape} right={right.shape}")
-    delta = np.einsum("...ir,...rj->...ij", left, right, optimize=True)
-    return np.asarray(base, dtype=np.float32) + np.asarray(delta, dtype=np.float32)
-
-
-def _fold_lora_in_mapping(node: Any) -> int:
-    """Recursively fold all Axis Flax LoRA leaves in-place and return a count."""
-
-    if not isinstance(node, dict):
-        return 0
-
-    folded = 0
-    # lora.Einsum stores {w, lora_a, lora_b} below the parameter name.
-    if all(key in node for key in ("w", "lora_a", "lora_b")):
-        node["w"] = _fold_last_two_axes(node["w"], node["lora_a"], node["lora_b"])
-        del node["lora_a"], node["lora_b"]
-        folded += 1
-
-    # lora.FeedForward stores the two factors beside the dense parameter:
-    # {gating_einsum, gating_einsum_lora_a, gating_einsum_lora_b, ...}.
-    for base_name in ("gating_einsum", "linear"):
-        left_name = f"{base_name}_lora_a"
-        right_name = f"{base_name}_lora_b"
-        if base_name in node and left_name in node and right_name in node:
-            node[base_name] = _fold_last_two_axes(node[base_name], node[left_name], node[right_name])
-            del node[left_name], node[right_name]
-            folded += 1
-
-    for value in node.values():
-        folded += _fold_lora_in_mapping(value)
-    return folded
-
-
-def _assert_no_lora(node: Any, path: str = "params") -> None:
-    if isinstance(node, dict):
-        for key, value in node.items():
-            if "lora" in str(key).lower():
-                raise ValueError(f"unfolded LoRA parameter at {path}/{key}")
-            _assert_no_lora(value, f"{path}/{key}")
+_UPSTREAM_CONVERTER = Path(__file__).resolve().parents[2] / "third_party" / "axis_openpi" / "examples" / "convert_jax_model_to_pytorch.py"
+_UPSTREAM_SPEC = importlib.util.spec_from_file_location("axis_openpi_upstream_converter", _UPSTREAM_CONVERTER)
+if _UPSTREAM_SPEC is None or _UPSTREAM_SPEC.loader is None:
+    raise ImportError(f"cannot load upstream converter: {_UPSTREAM_CONVERTER}")
+upstream = importlib.util.module_from_spec(_UPSTREAM_SPEC)
+_UPSTREAM_SPEC.loader.exec_module(upstream)
 
 
 def convert(checkpoint_dir: Path, output_dir: Path, *, precision: str = "float32") -> dict[str, Any]:
@@ -189,6 +142,7 @@ def convert(checkpoint_dir: Path, output_dir: Path, *, precision: str = "float32
         "type": "pi05",
         "paligemma_variant": "gemma_2b",
         "action_expert_variant": "gemma_300m",
+        "discrete_state_input": False,
         "dtype": "float32",
         "chunk_size": 10,
         "n_action_steps": 8,
@@ -197,7 +151,7 @@ def convert(checkpoint_dir: Path, output_dir: Path, *, precision: str = "float32
         "num_inference_steps": 10,
         "image_resolution": [224, 224],
         "empty_cameras": 1,
-        "normalization_mapping": {"ACTION": "MEAN_STD", "STATE": "MEAN_STD", "VISUAL": "IDENTITY"},
+        "normalization_mapping": {"ACTION": "QUANTILES", "STATE": "QUANTILES", "VISUAL": "IDENTITY"},
         "compile_model": False,
         "gradient_checkpointing": False,
         "axis_source_checkpoint": str(checkpoint_dir),

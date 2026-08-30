@@ -176,6 +176,75 @@ def _free_port() -> int:
         return int(sock.getsockname()[1])
 
 
+def _checkpoint_provenance(
+    checkpoint: Path,
+    *,
+    config_name: str,
+    arm: str | None,
+    checkpoint_step: int | None,
+    norm_stats_path: Path,
+) -> dict[str, Any]:
+    """Build a stable identity for the exact policy artifact used by a shard."""
+
+    step = checkpoint_step
+    if step is None and checkpoint.name.isdigit():
+        step = int(checkpoint.name)
+    axis_base_manifest = checkpoint / "axis_base_manifest.json"
+    if axis_base_manifest.is_file():
+        manifest_sha256 = sha256_file(axis_base_manifest)
+        identity = ":".join(
+            (
+                config_name,
+                arm or "dense_base",
+                f"step-{step if step is not None else 0}",
+                manifest_sha256,
+            )
+        )
+        return {
+            "checkpoint_identity": identity,
+            "checkpoint_path": str(checkpoint),
+            "checkpoint_step": step if step is not None else 0,
+            "checkpoint_params_manifest_sha256": manifest_sha256,
+            "checkpoint_metadata_sha256": manifest_sha256,
+            "checkpoint_kind": "axis_base_params",
+            "lora_arm": arm,
+            "normalization_mode": "QUANTILES",
+            "norm_stats_path": str(norm_stats_path),
+            "norm_stats_sha256": sha256_file(norm_stats_path),
+            "policy_seed_source": "frozen manifest policy_seed -> reset(seed) per episode",
+        }
+    params_manifest = checkpoint / "params" / "manifest.ocdbt"
+    checkpoint_metadata = checkpoint / "_CHECKPOINT_METADATA"
+    if not params_manifest.is_file() or not checkpoint_metadata.is_file():
+        raise FileNotFoundError(
+            f"checkpoint provenance requires Orbax metadata and params manifest: {checkpoint}"
+        )
+    params_manifest_sha256 = sha256_file(params_manifest)
+    metadata_sha256 = sha256_file(checkpoint_metadata)
+    identity = ":".join(
+        (
+            config_name,
+            arm or "unspecified_arm",
+            f"step-{step if step is not None else 'unknown'}",
+            params_manifest_sha256,
+            metadata_sha256,
+        )
+    )
+    return {
+        "checkpoint_identity": identity,
+        "checkpoint_path": str(checkpoint),
+        "checkpoint_step": step,
+        "checkpoint_params_manifest_sha256": params_manifest_sha256,
+        "checkpoint_metadata_sha256": metadata_sha256,
+        "checkpoint_kind": "raw_lora_orbax",
+        "lora_arm": arm,
+        "normalization_mode": "QUANTILES",
+        "norm_stats_path": str(norm_stats_path),
+        "norm_stats_sha256": sha256_file(norm_stats_path),
+        "policy_seed_source": "frozen manifest policy_seed -> reset(seed) per episode",
+    }
+
+
 class ChunkPolicy:
     def __init__(self, client: Any, *, mode: str, instruction: str = ""):
         if mode not in {"execute8", "full_chunk"}:
@@ -355,6 +424,13 @@ def run_panel(
             "AXIS_PI05_LORA_SAMPLING_MANIFEST": str(PHASE1_ROOT / "official_sampling_manifest.jsonl"),
             "AXIS_PI05_LORA_AXIS_PARAMS": str(ROOT / "data/models/axisrobotics/Pi0.5-Axis" / "c342608c489515efa9ba8281400dc648bf3970e1" / "params"),
         })
+    checkpoint_provenance = _checkpoint_provenance(
+        checkpoint,
+        config_name=config_name,
+        arm=arm,
+        checkpoint_step=checkpoint_step,
+        norm_stats_path=norm_stats_path,
+    )
     log_path = run_root / "policy_server.log"
     log = log_path.open("w", encoding="utf-8")
     partial_path = run_root / "episodes.partial.jsonl"
@@ -431,11 +507,9 @@ def run_panel(
             "source_repo": "physical-intelligence/libero",
             "source_revision": OFFICIAL_REVISION,
             "source_fps": 10,
-            "norm_stats_sha256": sha256_file(norm_stats_path),
+            "norm_stats_sha256": checkpoint_provenance["norm_stats_sha256"],
             "panel_manifest_sha256": sha256_file(manifest_path),
-            "checkpoint_identity": f"{config_name}:{checkpoint}",
-            "checkpoint_path": str(checkpoint),
-            "checkpoint_step": checkpoint_step,
+            **checkpoint_provenance,
             "config_name": config_name,
             "case_count": len(episode_rows),
             "case_range": [start_index, end_index],
@@ -475,6 +549,7 @@ def merge_panel_runs(
     shard_roots: list[Path],
     *,
     out_root: Path = PANEL_ROOT,
+    run_id: str | None = None,
 ) -> dict[str, Any]:
     """Merge complete independent shards without deleting interrupted output."""
     if panel not in {"C20", "B80"} or mode not in {"execute8", "full_chunk"}:
@@ -484,10 +559,18 @@ def merge_panel_runs(
     manifest_order = {row["case_id"]: index for index, row in enumerate(manifest_rows)}
     episode_rows: list[dict[str, Any]] = []
     seen: set[str] = set()
+    shard_summaries: list[dict[str, Any]] = []
     for shard_root in shard_roots:
         path = shard_root / "episodes.csv"
         if not path.is_file():
             raise FileNotFoundError(path)
+        summary_path = shard_root / "summary.json"
+        if not summary_path.is_file():
+            raise FileNotFoundError(summary_path)
+        shard_summary = json.loads(summary_path.read_text(encoding="utf-8"))
+        if not isinstance(shard_summary, dict):
+            raise ValueError(f"shard summary must be an object: {summary_path}")
+        shard_summaries.append(shard_summary)
         with path.open(encoding="utf-8", newline="") as handle:
             for row in csv.DictReader(handle):
                 case_id = row["case_id"]
@@ -510,7 +593,36 @@ def merge_panel_runs(
         raise ValueError(f"shards do not cover frozen manifest: missing={sorted(expected_ids - seen)[:5]}")
     episode_rows.sort(key=lambda row: manifest_order[row["case_id"]])
 
-    run_root = out_root / f"{panel}_{mode}"
+    provenance_keys = (
+        "checkpoint_identity",
+        "checkpoint_path",
+        "checkpoint_step",
+        "checkpoint_params_manifest_sha256",
+        "checkpoint_metadata_sha256",
+        "checkpoint_kind",
+        "lora_arm",
+        "normalization_mode",
+        "norm_stats_path",
+        "norm_stats_sha256",
+        "policy_seed_source",
+    )
+    first_provenance = {
+        key: shard_summaries[0].get(key) for key in provenance_keys
+    }
+    if any(
+        {key: summary.get(key) for key in provenance_keys} != first_provenance
+        for summary in shard_summaries[1:]
+    ):
+        raise ValueError("shard summaries disagree on checkpoint or evaluator provenance")
+    # A dense step-0 base has no LoRA arm by design; null is meaningful there,
+    # while every identity/norm/seed field must still be present.
+    missing_provenance = [
+        key for key, value in first_provenance.items() if value is None and key != "lora_arm"
+    ]
+    if missing_provenance:
+        raise ValueError(f"shard summary missing required provenance: {missing_provenance}")
+
+    run_root = out_root / (run_id or f"{panel}_{mode}")
     run_root.mkdir(parents=True, exist_ok=True)
     complete_video_dir = run_root / "videos_complete"
     complete_video_dir.mkdir(parents=True, exist_ok=True)
@@ -546,9 +658,9 @@ def merge_panel_runs(
         "source_repo": "physical-intelligence/libero",
         "source_revision": OFFICIAL_REVISION,
         "source_fps": 10,
-        "norm_stats_sha256": sha256_file(PHASE1_ROOT / "norm_stats.json"),
+        "norm_stats_sha256": first_provenance["norm_stats_sha256"],
         "panel_manifest_sha256": sha256_file(manifest_path),
-        "checkpoint_identity": "axis_base_params:c342608c489515efa9ba8281400dc648bf3970e1:43f256c74ff1d234fda3defbbf2da24aeae826b04734a21727156d770ee02c81",
+        **first_provenance,
         "case_count": len(episode_rows),
         "case_range": [0, len(episode_rows)],
         "success_count": success_count,
@@ -599,7 +711,7 @@ def main() -> None:
     if args.command == "merge":
         if not args.shard:
             parser.error("merge requires one or more --shard paths")
-        result = merge_panel_runs(args.panel, args.mode, args.shard, out_root=out)
+        result = merge_panel_runs(args.panel, args.mode, args.shard, out_root=out, run_id=args.run_id)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         if result["status"] != "passed":
             raise SystemExit(2)

@@ -1,11 +1,49 @@
+import collections
+import threading
+
 import msgpack
 import numpy as np
 
 from tools.axis_pi05.checkpoint_http_server import (
+    CheckpointPolicy,
     build_openpi_observation,
     deserialize_observation,
     serialize_action,
 )
+
+
+def test_checkpoint_policy_reset_uses_episode_policy_seed():
+    class FakeRandom:
+        @staticmethod
+        def key(seed):
+            return ("jax-key", int(seed))
+
+    class FakeJax:
+        random = FakeRandom()
+
+    class FakePolicy:
+        def __init__(self):
+            self.reset_count = 0
+            self._rng = None
+
+        def reset(self):
+            self.reset_count += 1
+
+    policy = CheckpointPolicy.__new__(CheckpointPolicy)
+    policy._jax = FakeJax()
+    policy._policy = FakePolicy()
+    policy._actions = collections.deque([np.ones(7, dtype=np.float32)])
+    policy._instruction = "old"
+    policy._policy_seed = None
+    policy._lock = threading.Lock()
+
+    policy.reset(instruction="new", seed=54000)
+
+    assert policy._actions == collections.deque()
+    assert policy._instruction == "new"
+    assert policy._policy.reset_count == 1
+    assert policy._policy._rng == ("jax-key", 54000)
+    assert policy._policy_seed == 54000
 
 
 def _observation_envelope(observation):

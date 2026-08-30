@@ -443,7 +443,7 @@ repeat_within_tolerance = bool(np.allclose(output_a, output_b, rtol=1e-5, atol=1
 if not np.isfinite(output_a).all() or not np.isfinite(output_b).all():
     raise RuntimeError("fixed-forward LoRA output contains NaN or Inf")
 norm_stats = normalize.deserialize_json(Path(os.environ["AXIS_PI05_LORA_NORM_STATS"]).read_text(encoding="utf-8"))
-unnormalized = transforms.Unnormalize(norm_stats)({"state": np.asarray(observation.state[0]), "actions": output_a[0]})
+unnormalized = transforms.Unnormalize(norm_stats, use_quantiles=True)({"state": np.asarray(observation.state[0]), "actions": output_a[0]})
 external = np.asarray(unnormalized["actions"][:, :7], dtype=np.float32)
 if external.shape != (10, 7) or not np.isfinite(external).all():
     raise RuntimeError(f"invalid external LoRA actions: {external.shape}")
@@ -499,11 +499,11 @@ report = {
     },
     "norm_stats_sha256": hashlib.sha256(Path(os.environ["AXIS_PI05_LORA_NORM_STATS"]).read_bytes()).hexdigest(),
     "transform_fingerprint": hashlib.sha256(json.dumps({
-        "normalize": "fresh canonical norm z-score",
+        "normalize": "fresh canonical norm quantiles q01/q99",
         "resize": "224x224",
         "tokenizer": "PaligemmaTokenizer",
         "pad": "state/action external dims 8/7 -> internal 32",
-        "unnormalize": "internal 32 -> external first 7 action dims",
+        "unnormalize": "fresh canonical norm quantiles q01/q99; internal 32 -> external first 7 action dims",
     }, sort_keys=True).encode()).hexdigest(),
     "artifacts": {
         "fixed_input": str(out_dir / "fixed_input.npz"),

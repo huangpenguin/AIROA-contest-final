@@ -1,7 +1,7 @@
 # AXIS Pi0.5 LoRA 两卡 NaN 定位、单卡兜底与 500-Step 恢复执行计划
 
 > 状态：已执行至 R6，已获得 fresh 500-step checkpoint；最终状态为 `lora_candidate_500_pending_review`，详见专项目录报告。
-> 日期基线：2026-08-29（Asia/Tokyo）。  
+> 日期基线：2026-08-30（Asia/Tokyo）。
 > 上游计划：`docs/AXIS_PI05_TWO_GPU_LORA_TODAY_PLAN.md`。  
 > 当前事实状态：历史失败保留为 `lora_two_gpu_blocked_nonfinite_before_first_update`；修复后 R6 数值与 B80 主行为门禁通过，当前候选为 `lora_candidate_500_pending_review`。旧状态名 `lora_screen_stopped_at_500_regression` 仅作为历史记录保留，不再作为技术结论。
 > GPU 边界：只允许使用明确空闲且获准使用的 GPU1/GPU2；不得绑定、终止、重置或影响 GPU0 的外部进程。  
@@ -13,7 +13,7 @@
 当前结果应拆成两个互不混淆的结论：
 
 1. `L2_action_lora_heads@100` 是有效的单卡初筛候选：C20 `execute8` 为 15/20，相对 Axis step-0 的 10/20 为 paired `+0.25`；该 checkpoint 继续保留。
-2. 两卡正式候选没有完成任何有效 optimizer update。retry2 在第一个累计 step 的 `micro_index=1`、optimizer update 前出现 non-finite `loss_sum`；这不是“500-step 行为回归”。
+2. 历史两卡正式候选没有完成任何有效 optimizer update。retry2 在第一个累计 step 的 `micro_index=1`、optimizer update 前出现 non-finite `loss_sum`；这不是“500-step 行为回归”。随后按本计划完成的 R6 fresh run 已独立完成 500 个有效 updates。
 
 三次相关运行的代码快照不同：
 
@@ -504,9 +504,49 @@ lora_candidate_500_runtime_nonfinite
 - R3 fixed replay `9/9` finite；U1 矩阵 `16/16` finite；sync/async checkpoint 变体均 finalized。
 - R4 三个独立 fresh-10 与一个独立 fresh-100 双卡 run 全部通过。
 - R6 `r6_dual_l2_fresh500_r1` 完成 `500/500` optimizer updates，metrics `500`、microbatch trace `16000`，checkpoint `0,1,10,25,50,100,250,500` 完整；restore `1,10,100,250,500` 通过。
-- B80 `execute8` 完成 `80/80`，step-500 成功 `48/80`，step-0 基线 `50/80`；paired wins/losses `9/11`，delta `-0.025`，满足 `46/80` 与 `-0.05` 门禁。
+- 上述 B80 数字是早期 evaluator 未将每个 episode 的 frozen-manifest `policy_seed` 传给 `policy.reset()` 时产生的历史结果，不能作为最终候选判定依据。
 - dual V100 fixed-forward 保留 repeatability warning：finite，但重复输出未达到 bitwise/记录的 FP32 tolerance；该项交由人工 review，不静默改成 deterministic pass。
 - B80 `full_chunk` 500 未执行（diagnostic-only）；不得将其写成已通过。
+
+### 9.5 修复后的最终执行结果（2026-08-30）
+
+按本计划继续完成了恢复、转换、processor 与 seeded evaluator 修复：
+
+- 直接从 R6 Orbax `step-500` 恢复完整 LoRA 拓扑；500 个 optimizer updates、全部 checkpoint/restore 和 finite 门禁保持通过。
+- 以相同 fixed input、noise、RNG 做 raw-LoRA/folded-dense 单卡 fixed parity：5 个 LoRA 模块折叠，internal/external 最大绝对误差 `9.4676e-4`，`rtol=atol=1e-3` 门禁通过；任务进程只使用 physical GPU1。
+- evaluator 现在对每个 episode 执行 `policy.reset(instruction=..., seed=policy_seed)`；seed smoke `1/1` 通过，reset 日志确认使用 manifest seed。
+- 重新执行 seeded B80 `execute8`：step-0 `48/80`，step-500 `49/80`；同 case 配对为 wins/losses/ties `9/8/63`，success delta `+0.0125`，candidate collision `20`、timeout `15`、stall `0`。
+- LeRobot config、preprocessor、postprocessor 和 R6 fresh norm 均固定为 `QUANTILES`；`discrete_state_input=false`，避免把连续 state 错当作离散 prompt token。
+- OpenPI/JAX → folded PyTorch → LeRobot processor 端到端 parity 通过：processor state 最大误差 `1.19e-7`、token/mask mismatch `0`，folded PyTorch 对 JAX 最大误差 `5.66e-7`，postprocessor 对直接 QUANTILES inverse 最大误差 `0`。
+- 两个 shard 的合并 summary 都带有一致且可追溯的 checkpoint、params/metadata、norm、policy-seed、GPU 边界 provenance；两个正式执行均 `gpu0_touched=false`。
+
+机器可读产物：
+
+```text
+data/reports/axis_libero_30k/phase1/rollout/r6_dual_l2_fresh500_r1_B80_execute8_seeded_merge/summary.json
+data/reports/axis_libero_30k/phase1/rollout/step0_B80_execute8_seeded_merge/summary.json
+data/reports/axis_libero_30k/phase1/rollout/r6_dual_l2_fresh500_r1_B80_seeded_paired_comparison/summary.json
+data/reports/axis_libero_30k/lora_screen/L2_action_lora_heads/r6_dual_l2_fresh500_r1/raw_vs_folded_dense_step500_gpu1/parity_report.json
+data/reports/axis_libero_30k/lora_screen/L2_action_lora_heads/r6_dual_l2_fresh500_r1/e2e_folded_pytorch_lerobot_gpu1/e2e_action_parity_report.json
+```
+
+结论：候选通过本地恢复、数值、fixed parity、processor E2E、seeded B80 和 provenance 门禁，满足 `46/80` 与 `-0.05` 的行为门槛，状态为 `lora_candidate_500_pending_review`。这不是自动批准：paired delta 很小，且最终候选批准仍需人工 review；在人工批准前不得进入后续训练、导出、比赛 GPU 或提交。
+
+### 9.6 action range 检查
+
+用户提出的“LIBERO 生 action 各维度 range 不同”是事实，但需要区分物理直觉与当前 canonical 文件中的实际数值。R6 使用的 fresh norm 是对 canonical `physical-intelligence/libero@a4336d...`、10 Hz、`1693` episodes/`273465` frames 重新统计的 7D action；其 `min/max` 为：
+
+```text
+dim             0          1          2          3          4          5          6
+semantic       pos-x      pos-y      pos-z      rot-x      rot-y      rot-z      gripper
+min          -0.9375    -0.9375    -0.9375   -0.2582    -0.3750    -0.3675       -1
+max           0.9375     0.9375     0.9375    0.3557     0.3750     0.3750        1
+q01          -0.7045    -0.8009    -0.9375   -0.1146    -0.1639    -0.2239       -1
+q99           0.9375     0.8679     0.9375    0.1318     0.1929     0.3354        1
+std           0.3355     0.3784     0.4447    0.0392     0.0634     0.0780     0.9988
+```
+
+因此，“gripper 为 `{-1,+1}`”在这份统计中得到直接支持；旋转维度确实小于平移/夹爪；但当前 persisted canonical action 的前三维并不是简单的 `±0.1` 物理单位，而是 loader/数据约定下约 `[-0.94,0.94]` 的 action 表示。这个 scale 差异本身不是 NaN 根因，也不能通过统一 scalar normalization 处理；真正的风险是把 7 个维度用同一个 range、错误的 mean/std 或 `IDENTITY` 传给模型。当前修复使用同一份 R6 fresh `q01/q99`，并将 config、preprocessor、postprocessor 的 ACTION/STATE 全部固定为 `QUANTILES`；因此该数据问题已被显式建模并通过 E2E parity 验证。
 
 机器可读与中文最终报告：
 
@@ -536,6 +576,12 @@ outputs/axis_pi05/axis_libero_lora_nan_replay/
 ```text
 outputs/axis_pi05/axis_libero_lora_screen/L2_action_lora_heads/<new_run_id>/
 data/reports/axis_libero_30k/lora_screen/L2_action_lora_heads/<new_run_id>/
+```
+
+本次恢复的 folded processor artifact：
+
+```text
+outputs/axis_pi05/axis_libero_lora_folded/r6_dual_l2_fresh500_r1_step500/
 ```
 
 全局汇总需要更新：

@@ -118,7 +118,7 @@ def run(axis_params: Path, norm_path: Path, out_root: Path, *, gpu_label: str = 
 
     # Verify the exact 32D -> 7D external action conversion used by the
     # inference output path with the fresh canonical stats.
-    unnormalized = transforms.Unnormalize(norm_stats)({
+    unnormalized = transforms.Unnormalize(norm_stats, use_quantiles=True)({
         "state": np.asarray(observation.state[0]),
         "actions": output_a[0],
     })
@@ -153,11 +153,11 @@ def run(axis_params: Path, norm_path: Path, out_root: Path, *, gpu_label: str = 
     }
     transform_fingerprint = hashlib.sha256(canonical_json({
         "repack": "official v2.0 image/wrist_image/state/actions -> OpenPI LIBERO names",
-        "normalize": "fresh canonical norm z-score",
+        "normalize": "fresh canonical norm quantiles q01/q99",
         "resize": "224x224",
         "tokenizer": "PaligemmaTokenizer",
         "pad": "state/action external dims 8/7 -> internal 32",
-        "unnormalize": "internal 32 -> external first 7 action dims",
+        "unnormalize": "fresh canonical norm quantiles q01/q99; internal 32 -> external first 7 action dims",
         "norm_sha256": sha256_file(norm_path),
     })).hexdigest()
     report = {

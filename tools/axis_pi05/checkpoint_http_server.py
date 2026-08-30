@@ -147,7 +147,9 @@ class CheckpointPolicy:
         from openpi.policies import policy_config
         from openpi.training import config as training_config
         from openpi.shared import normalize
+        import jax
 
+        self._jax = jax
         config = training_config.get_config(config_name)
         norm_path = os.environ.get("AXIS_PI05_NORM_STATS")
         norm_stats = normalize.deserialize_json(Path(norm_path).read_text(encoding="utf-8")) if norm_path else None
@@ -159,15 +161,25 @@ class CheckpointPolicy:
         )
         self._actions: collections.deque[np.ndarray] = collections.deque()
         self._instruction = default_prompt or ""
+        self._policy_seed: int | None = None
         self._lock = threading.Lock()
         LOGGER.info("loaded checkpoint %s with config %s", checkpoint, config_name)
 
     def reset(self, instruction: str = "", seed: int | None = None) -> None:
-        del seed  # OpenPI's JAX policy is intentionally deterministic per request stream.
         with self._lock:
             self._actions.clear()
             self._instruction = instruction
             self._policy.reset()
+            # The evaluator supplies a frozen policy_seed for every episode.
+            # OpenPI's Policy.reset() is intentionally a no-op, so explicitly
+            # reset the JAX sampling stream here.  A reset without a seed is
+            # used only when execute8 starts the next action chunk; preserving
+            # the current stream makes that continuation deterministic within
+            # the same episode.
+            if seed is not None:
+                self._policy._rng = self._jax.random.key(int(seed))  # noqa: SLF001
+                self._policy_seed = int(seed)
+            LOGGER.info("policy reset instruction=%r seed=%s", instruction, self._policy_seed)
 
     def get_action(self, observation: dict[str, np.ndarray]) -> np.ndarray:
         with self._lock:

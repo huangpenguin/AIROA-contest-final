@@ -7,6 +7,8 @@
 > 目标：不重新训练，在保留 raw-LoRA Q2 失败的前提下，验证真正的 `LeRobot folded PyTorch → model_fast → policy server → ZIP` 部署链。  
 > 最终边界：只生成 R6 step-500 **诊断提交候选**；不得自动上传比赛、不得声称正式 winner、不得启动 V160/H160 或长程训练。
 
+> 后续说明（2026-08-31）：本计划已按 hard gate 停止在 S1.3。旧 failure 不变；后续不得直接恢复 S2，而应执行 `AXIS_PI05_R6_EGL_STATISTICAL_RELEASE_PLAN.md`，先修正 S1.3 reference/pair/trajectory 证据，再在新 rollout 前锁定统计协议。
+
 ## 0. 给执行 Agent 的任务摘要
 
 从 clean commit `12761d3` 开始，完成下列串行阶段；每阶段满足门禁并形成 clean commit 后才能继续：

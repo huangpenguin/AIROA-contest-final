@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "generated_date": "2026-08-31",
+  "status": "r6_egl_statistical_protocol_pending",
+  "audited_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
+  "branch": "codex/axis-pi05-audit-remediation",
+  "branch_has_upstream": false,
+  "nested_openpi_commit": "dafa5a27266996eecf28920cacc32f3629776d91",
+  "dataset": {
+    "path": "data/raw/hf/physical-intelligence/libero",
+    "source_fps": 10,
+    "size_approx": "33G",
+    "episode_parquet_count": 1693,
+    "incomplete_count": 0,
+    "payload_file_count": 1699,
+    "payload_manifest_sha256": "8ede620026a9196a9d453508dfe2d4820e684d98cda1a5bc706cef68d1583cc3",
+    "meta_info_sha256": "77c0da93c67960bac803a8ea25dabf380d752c26c1d91c54151121dd10e7d82f"
+  },
+  "candidate": {
+    "run_id": "r6_dual_l2_fresh500_r1",
+    "topology": "L2_action_lora_heads",
+    "optimizer_steps": 500,
+    "raw_checkpoint": "outputs/axis_pi05/axis_libero_lora_screen/L2_action_lora_heads/r6_dual_l2_fresh500_r1/500",
+    "raw_checkpoint_tree_sha256": "d203635f1eb0b006ec27841db6ce5171f74a37035eca4291c8107c05838c276f",
+    "folded_model": "outputs/axis_pi05/axis_libero_lora_folded/r6_dual_l2_fresh500_r1_step500/model.safetensors",
+    "folded_model_sha256": "5c73e1e8217dbb75a934c2b0165208e851f69e66cfe2ea0430590a29901e6d5b",
+    "norm_stats": "data/reports/axis_libero_30k/phase1/norm_stats.json",
+    "norm_stats_sha256": "4c803bf59c52677c36b6b420c614d8a7742e0847708443863e13e67cb80b18f5",
+    "normalization": "QUANTILES"
+  },
+  "local_b80": {
+    "axis_success": 48,
+    "candidate_success": 49,
+    "case_count": 80,
+    "paired_wins_losses_ties": [9, 8, 63],
+    "success_delta": 0.0125,
+    "episode_bootstrap_95_ci": [-0.0875, 0.1125],
+    "candidate_collision_timeout_stall": [20, 15, 0],
+    "axis_collision_timeout_stall": [23, 19, 0],
+    "interpretation": "review_required_not_significant"
+  },
+  "environment_q1": {
+    "status": "n1_environment_dynamics_locked_renderer_jitter_measured",
+    "case_count": 20,
+    "replica_count": 3,
+    "numeric_dynamics_exact": true,
+    "comparison_count": 1680,
+    "non_exact_renderer_comparison_count": 87,
+    "raw_uint8_max_abs_diff": 2.0,
+    "transformed_float32_max_abs_diff": 0.0156862735748291
+  },
+  "preserved_failures": {
+    "raw_lora_q2": {
+      "status": "n1_q2_policy_sensitivity_failed_raw_lora_fresh_replay",
+      "max_abs_diff": 0.0000010728836059570312,
+      "gripper_sign_flip": 0
+    },
+    "lerobot_folded_s1_3": {
+      "status": "s1_real_egl_pairs_failed",
+      "old_threshold": 0.000001,
+      "max_abs_diff": 0.00005125999450683594,
+      "gripper_sign_flip": 0
+    }
+  },
+  "s1_2": {
+    "coverage": 32,
+    "same_process_exact": true,
+    "fresh_process_exact": true,
+    "jax_vs_pytorch_external_max_abs_diff": 0.000001043081283569336,
+    "jax_vs_pytorch_internal_max_abs_diff": 0.0000014007091522216797
+  },
+  "s1_3_audit_corrections_required": [
+    "axis_reference_jax_is_actually_r6_folded_jax",
+    "agentview_worst_and_representative_are_content_duplicate",
+    "zero64_and_fixed64_trajectory_pairs_not_covered"
+  ],
+  "tests": {
+    "command": ".venv_axis_pi05/bin/pytest -q tests",
+    "passed": 99,
+    "skipped": 7,
+    "warnings": 21,
+    "pynvml_is_collection_blocker": false
+  },
+  "resources": {
+    "local_gpu": "4x Tesla V100-PCIE-32GB",
+    "gpu0_external_pid": 237527,
+    "allowed_local_gpu_ids": [1, 2, 3],
+    "disk_available_approx": "913G",
+    "official_development_gpu": "RTX PRO 6000 Blackwell",
+    "official_stage1_budget_hours": 60,
+    "scorer_gpu": "NVIDIA L4 24GB",
+    "request_timeout_seconds": 10
+  },
+  "not_available": [
+    "r6_model_fast",
+    "r6_fast_server",
+    "r6_submission_zip",
+    "official_precheck",
+    "official_score",
+    "v160_h160",
+    "long_horizon_lora_1k_to_30k",
+    "track3_20hz_checkpoint"
+  ],
+  "next_plan": "docs/AXIS_PI05_R6_EGL_STATISTICAL_RELEASE_PLAN.md",
+  "next_phase_only": "E0",
+  "auto_upload_authorized": false,
+  "auto_submit_authorized": false,
+  "formal_winner": false
+}

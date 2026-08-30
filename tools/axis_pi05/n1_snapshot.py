@@ -141,6 +141,15 @@ def gpu_boundary_evidence(samples: list[dict[str, Any]], *, target_pids: set[int
     }
 
 
+def validate_gpu_namespace(outer_env: dict[str, str | None], child_env: dict[str, str | None]) -> None:
+    """Reject evaluator/server processes that do not share the same GPU view."""
+
+    keys = ("CUDA_VISIBLE_DEVICES", "MUJOCO_GL", "MUJOCO_EGL_DEVICE_ID", "JAX_PLATFORMS")
+    mismatches = [key for key in keys if outer_env.get(key) != child_env.get(key)]
+    if mismatches:
+        raise ValueError(f"outer/child GPU namespace mismatch: {mismatches}")
+
+
 def array_descriptor(array: Any, *, path: str | None = None) -> dict[str, Any]:
     value = np.ascontiguousarray(np.asarray(array))
     descriptor = {

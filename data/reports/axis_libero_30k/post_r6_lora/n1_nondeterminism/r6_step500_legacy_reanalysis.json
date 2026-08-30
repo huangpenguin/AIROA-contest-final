@@ -39,8 +39,13 @@
   "failure_reason_mismatch_count": 3,
   "first_summary": "data/reports/axis_libero_30k/post_r6_lora/evaluator_reproducibility/r6_step500_c20_replay1_gpu2/summary.json",
   "first_summary_sha256": "21619c19979da992b5ba7a5bc74ce4c54de0ca6100ef32c951644c51fb1e7557",
-  "gpu0_touched": false,
+  "gpu0_touched": null,
   "gpu_id": "2",
+  "gpu_monitor_evidence": {
+    "first": null,
+    "second": null,
+    "status": "legacy_missing"
+  },
   "mismatch_count": 20,
   "mismatches": [
     {

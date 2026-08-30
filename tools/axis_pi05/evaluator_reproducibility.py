@@ -108,7 +108,20 @@ def _trace_diagnostics(left: np.ndarray, right: np.ndarray) -> dict[str, Any]:
     }
 
 
-def _same_contract(first: dict[str, Any], second: dict[str, Any]) -> None:
+def _validate_gpu_evidence(summary: dict[str, Any], *, allow_legacy: bool) -> dict[str, Any] | None:
+    evidence = summary.get("gpu_monitor_evidence")
+    if evidence is None:
+        if allow_legacy:
+            return None
+        raise ValueError("gpu0_touched cannot be trusted without gpu_monitor_evidence")
+    if evidence.get("evidence_complete") is not True:
+        raise ValueError("gpu0_touched cannot be trusted without complete GPU monitor evidence")
+    if evidence.get("gpu0_touched") is not False:
+        raise ValueError("GPU0 was touched or monitor evidence marks it unsafe")
+    return evidence
+
+
+def _same_contract(first: dict[str, Any], second: dict[str, Any], *, allow_legacy: bool = False) -> tuple[dict[str, Any] | None, dict[str, Any] | None]:
     fields = (
         "panel",
         "execution_protocol",
@@ -127,16 +140,17 @@ def _same_contract(first: dict[str, Any], second: dict[str, Any]) -> None:
         raise ValueError(f"same-GPU replay contract mismatch: {mismatches}")
     if first.get("gpu_id") != second.get("gpu_id") or str(first.get("gpu_id")) == "0":
         raise ValueError("same-GPU replay was not performed on the same non-GPU0 device")
-    if first.get("gpu0_touched") is not False or second.get("gpu0_touched") is not False:
-        raise ValueError("GPU0 was touched or monitoring evidence is missing")
+    first_gpu_evidence = _validate_gpu_evidence(first, allow_legacy=allow_legacy)
+    second_gpu_evidence = _validate_gpu_evidence(second, allow_legacy=allow_legacy)
     if first.get("git") != second.get("git"):
         raise ValueError("same-GPU replay git provenance differs")
+    return first_gpu_evidence, second_gpu_evidence
 
 
-def compare(first_path: Path, second_path: Path) -> dict[str, Any]:
+def compare(first_path: Path, second_path: Path, *, allow_legacy: bool = False) -> dict[str, Any]:
     first, first_rows = _load(first_path)
     second, second_rows = _load(second_path)
-    _same_contract(first, second)
+    first_gpu_evidence, second_gpu_evidence = _same_contract(first, second, allow_legacy=allow_legacy)
     if set(first_rows) != set(second_rows):
         raise ValueError("same-GPU replay case_id sets differ")
 
@@ -202,7 +216,12 @@ def compare(first_path: Path, second_path: Path) -> dict[str, Any]:
         "panel": first.get("panel"),
         "execution_protocol": first.get("execution_protocol"),
         "gpu_id": first.get("gpu_id"),
-        "gpu0_touched": False,
+        "gpu0_touched": False if first_gpu_evidence is not None and second_gpu_evidence is not None else None,
+        "gpu_monitor_evidence": {
+            "first": first_gpu_evidence,
+            "second": second_gpu_evidence,
+            "status": "verified" if first_gpu_evidence is not None and second_gpu_evidence is not None else "legacy_missing",
+        },
         "case_count": len(first_rows),
         "action_trace_count": len(first_rows),
         "success_flip_count": success_flip_count,
@@ -246,8 +265,9 @@ def main() -> None:
     parser.add_argument("--first", type=Path, required=True)
     parser.add_argument("--second", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--legacy", action="store_true", help="allow old summaries without GPU monitor evidence")
     args = parser.parse_args()
-    result = compare(args.first, args.second)
+    result = compare(args.first, args.second, allow_legacy=args.legacy)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps({key: result[key] for key in ("status", "case_count", "mismatch_count", "technical_state")}, indent=2))

@@ -7,7 +7,7 @@
   "comparisons": {
     "axis_step0": {
       "report": "axis_step0_legacy_reanalysis.json",
-      "sha256": "51ec3fd71f78425a5d116e9c51fc7b755a25b7d1b6725dbc6ba47d81cf156ec3",
+      "sha256": "bf56337957e7279403b6bf16d9ff3387c3ca02849ff46295608da3eac5f76ed8",
       "case_count": 20,
       "success_flip_count": 6,
       "termination_tuple_mismatch_count": 6,
@@ -23,7 +23,7 @@
     },
     "r6_step500": {
       "report": "r6_step500_legacy_reanalysis.json",
-      "sha256": "cf36bbb890b6854bb71bdf00d93d2c692753493d7101b3feacbe8b91096639d1",
+      "sha256": "8354dfc72210f842b460e7f229983adc0d0f31ed52eceb6434718562e3e5953a",
       "case_count": 20,
       "success_flip_count": 3,
       "termination_tuple_mismatch_count": 3,

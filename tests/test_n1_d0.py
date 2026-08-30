@@ -4,8 +4,8 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from tools.axis_pi05.evaluator_reproducibility import _trace_diagnostics
-from tools.axis_pi05.n1_snapshot import gpu_boundary_evidence, save_array
+from tools.axis_pi05.evaluator_reproducibility import _trace_diagnostics, _validate_gpu_evidence
+from tools.axis_pi05.n1_snapshot import gpu_boundary_evidence, save_array, validate_gpu_namespace
 
 
 def test_first_nonzero_and_case_max_are_separate():
@@ -34,6 +34,18 @@ def test_trace_shape_mismatch_uses_common_prefix():
 def test_gpu0_false_requires_monitor_evidence():
     with pytest.raises(ValueError, match="monitor samples"):
         gpu_boundary_evidence([], target_pids={123}, allowed_gpu_ids={1})
+
+
+def test_comparator_cannot_mark_missing_gpu_evidence_false():
+    with pytest.raises(ValueError, match="gpu_monitor_evidence"):
+        _validate_gpu_evidence({"gpu0_touched": False}, allow_legacy=False)
+
+
+def test_outer_child_gpu_namespace_must_match():
+    outer = {"CUDA_VISIBLE_DEVICES": "1", "MUJOCO_GL": "egl", "MUJOCO_EGL_DEVICE_ID": "0", "JAX_PLATFORMS": "cuda"}
+    child = {**outer, "CUDA_VISIBLE_DEVICES": "0,1"}
+    with pytest.raises(ValueError, match="namespace mismatch"):
+        validate_gpu_namespace(outer, child)
 
 
 def test_snapshot_array_round_trip(tmp_path: Path):

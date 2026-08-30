@@ -137,6 +137,46 @@ def build_fixtures(output: Path = ROOT / "data/reports/axis_libero_30k/post_r6_l
     return report
 
 
+def build_snapshot_fixture(case_id: str, warmup_step: int, output: Path, *, seed_index: int = 0) -> dict[str, Any]:
+    """Materialize a policy-boundary fixture for a selected real Q1 snapshot."""
+    import json as _json
+    from openpi.shared import normalize
+
+    manifest = [
+        _json.loads(line)
+        for line in (ROOT / "data/reports/axis_libero_30k/phase1/rollout/C20.jsonl").read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+    row = next(item for item in manifest if item["case_id"] == case_id)
+    summary = json.loads((Q1_ROOT / "replica0/summary.json").read_text(encoding="utf-8"))
+    case = next(item for item in summary["records"][0]["cases"] if item["case_id"] == case_id)
+    snapshot = next(item for item in case["snapshots"] if item.get("stage") == "E3" and item.get("warmup_step") == warmup_step)
+    raw = {
+        "agentview_image": _array_from_descriptor(snapshot["observation"]["agentview_image"]),
+        "robot0_eye_in_hand_image": _array_from_descriptor(snapshot["observation"]["robot0_eye_in_hand_image"]),
+        "policy_state": _array_from_descriptor(snapshot["policy_state"]),
+    }
+    policy_seed, noise_seed = SEEDS[seed_index]
+    values = _fixture_observation(raw, normalize.deserialize_json(NORM_PATH.read_text(encoding="utf-8")), str(row["language"]), policy_seed, noise_seed)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    np.savez_compressed(output, **values)
+    report = {
+        "schema_version": 1,
+        "phase": "Q2",
+        "fixture_type": "selected_real_q1_snapshot",
+        "case_id": case_id,
+        "warmup_step": warmup_step,
+        "policy_seed": policy_seed,
+        "noise_seed": noise_seed,
+        "source_snapshot": f"{Q1_ROOT}/replica0/summary.json::{case_id}::E3-{warmup_step}",
+        "fixture": str(output),
+        "fixture_sha256": sha256_file(output),
+        "norm_stats_sha256": sha256_file(NORM_PATH),
+    }
+    write_json(output.with_suffix(".json"), report)
+    return report
+
+
 def _load_model(kind: str):
     if str(NESTED_SRC) not in sys.path:
         sys.path.insert(0, str(NESTED_SRC))
@@ -370,6 +410,11 @@ def main() -> None:
     sub = parser.add_subparsers(dest="command", required=True)
     build = sub.add_parser("build-fixtures")
     build.add_argument("--output", type=Path, default=ROOT / "data/reports/axis_libero_30k/post_r6_lora/n1_policy_boundary/q2_fixtures")
+    snapshot = sub.add_parser("build-snapshot-fixture")
+    snapshot.add_argument("--case-id", required=True)
+    snapshot.add_argument("--warmup-step", type=int, required=True)
+    snapshot.add_argument("--seed-index", type=int, default=0)
+    snapshot.add_argument("--output", type=Path, required=True)
     run = sub.add_parser("run-model")
     run.add_argument("--kind", choices=("axis", "raw_lora", "folded_dense"), required=True)
     run.add_argument("--fixtures", type=Path, required=True)
@@ -392,6 +437,8 @@ def main() -> None:
     args = parser.parse_args()
     if args.command == "build-fixtures":
         print(json.dumps(build_fixtures(args.output), ensure_ascii=False, indent=2))
+    elif args.command == "build-snapshot-fixture":
+        print(json.dumps(build_snapshot_fixture(args.case_id, args.warmup_step, args.output, seed_index=args.seed_index), ensure_ascii=False, indent=2))
     elif args.command == "run-model":
         print(json.dumps(run_model(args.kind, args.fixtures, args.output, same_process_replay=args.same_process_replay), ensure_ascii=False, indent=2))
     elif args.command == "compare":

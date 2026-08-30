@@ -178,3 +178,11 @@ def test_image_metrics_reports_trajectory_first_frame_and_max():
     assert result["total_frame_count"] == 3
     assert result["first_affected_frame"] == 1
     assert result["max_abs_diff"] == 7
+
+
+def test_image_metrics_does_not_truncate_normalized_float_difference():
+    left = np.zeros((1, 1, 1), dtype=np.float32)
+    right = np.array([[[2.0 / 255.0]]], dtype=np.float32)
+    result = _image_diff_metrics(left, right)
+    assert result["changed_element_count"] == 1
+    assert result["max_abs_diff"] == pytest.approx(2.0 / 255.0, rel=1e-6)

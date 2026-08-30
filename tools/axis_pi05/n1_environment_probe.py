@@ -289,9 +289,10 @@ def _image_diff_metrics(left: np.ndarray | None, right: np.ndarray | None) -> di
             "total_frame_count": None,
             "first_affected_frame": None,
         }
-    # Images in the probe are uint8.  Use a signed wide type so subtraction
-    # cannot wrap around; the same code remains valid for transformed floats.
-    difference = np.abs(left.astype(np.int64, copy=False) - right.astype(np.int64, copy=False))
+    # Use float64 for the subtraction so uint8 cannot wrap and normalized
+    # float32 differences (for example 2/255 after OpenPI scaling) are not
+    # truncated away.
+    difference = np.abs(left.astype(np.float64, copy=False) - right.astype(np.float64, copy=False))
     changed = difference != 0
     if difference.ndim >= 3:
         # [H,W,C] and [T,H,W,C] are both supported.  A 2-D image has one
@@ -322,7 +323,7 @@ def _image_diff_metrics(left: np.ndarray | None, right: np.ndarray | None) -> di
         "dtype_match": dtype_match,
         "changed_element_count": int(np.count_nonzero(changed)),
         "changed_pixel_count": changed_pixel_count,
-        "max_abs_diff": int(np.max(flat)) if flat.size else 0,
+        "max_abs_diff": float(np.max(flat)) if flat.size else 0.0,
         "mean_abs_diff": float(np.mean(flat)) if flat.size else 0.0,
         "p99_abs_diff": float(np.percentile(flat, 99)) if flat.size else 0.0,
         "affected_frame_count": affected_frame_count,

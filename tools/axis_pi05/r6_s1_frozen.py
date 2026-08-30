@@ -20,6 +20,7 @@ from .common import ROOT, sha256_file, write_json
 
 Q2_FIXTURES = ROOT / "data/reports/axis_libero_30k/post_r6_lora/n1_policy_boundary/q2_fixtures"
 DEFAULT_OUTPUT = ROOT / "data/reports/axis_libero_30k/post_r6_lora/r6_folded_submission/s1_lerobot_frozen_grid"
+TOKENIZER_MODEL = ROOT / "outputs/axis_fast_recovery/f2_m1_500_fast/staging/vendor/paligemma_tokenizer/tokenizer.model"
 EXPECTED_CASES = {
     "C20-task00-init0",
     "C20-task02-init0",
@@ -87,6 +88,28 @@ def build_frozen_input(
     """Materialize a deployment-facing batch without modifying Q2 fixtures."""
 
     rows = _fixture_rows(fixtures_dir)
+    if not TOKENIZER_MODEL.is_file():
+        raise FileNotFoundError(TOKENIZER_MODEL)
+    # The Q2 policy fixture intentionally used the JAX Pi05 discrete-state
+    # tokenizer.  R6's persisted LeRobot config declares discrete_state_input
+    # false, so the deployment fixture must use prompt + newline only.  The
+    # SentencePiece model is the tokenizer implementation/vendor asset; the
+    # R6 processors and normalization files remain the only deployment data.
+    import sentencepiece
+
+    sentencepiece_tokenizer = sentencepiece.SentencePieceProcessor(model_file=str(TOKENIZER_MODEL))
+
+    def deployment_tokens(prompt: str) -> tuple[np.ndarray, np.ndarray]:
+        cleaned = prompt.strip().replace("_", " ").replace("\n", " ")
+        tokens = sentencepiece_tokenizer.encode(cleaned, add_bos=True) + sentencepiece_tokenizer.encode("\n")
+        if len(tokens) > 200:
+            tokens = tokens[:200]
+        mask = np.zeros((200,), dtype=np.bool_)
+        mask[: len(tokens)] = True
+        padded = np.zeros((200,), dtype=np.int32)
+        padded[: len(tokens)] = np.asarray(tokens, dtype=np.int32)
+        return padded, mask
+
     values: dict[str, list[np.ndarray]] = {
         "base_0_rgb": [],
         "left_wrist_0_rgb": [],
@@ -111,6 +134,7 @@ def build_frozen_input(
         missing = sorted(REQUIRED_FIELDS.difference(loaded.files))
         if missing:
             raise ValueError(f"{fixture_path} missing fields: {missing}")
+        deployment_prompt_tokens, deployment_prompt_mask = deployment_tokens(str(row["prompt"]))
         for key in values:
             value = np.asarray(loaded[key])
             if key.endswith("_rgb"):
@@ -130,6 +154,10 @@ def build_frozen_input(
                 raise ValueError(f"unexpected token mask fixture: {value.shape}/{value.dtype}")
             elif key == "noise" and (value.shape != (10, 32) or value.dtype != np.float32):
                 raise ValueError(f"unexpected noise fixture: {value.shape}/{value.dtype}")
+            if key == "tokenized_prompt":
+                value = deployment_prompt_tokens
+            elif key == "tokenized_prompt_mask":
+                value = deployment_prompt_mask
             values[key].append(value)
         fixture_ids.append(str(row["fixture_id"]))
         tasks.append(str(row["prompt"]))
@@ -165,6 +193,12 @@ def build_frozen_input(
         "source_fixture_manifest": str((fixtures_dir / "fixture_manifest.json").resolve()),
         "source_fixture_manifest_sha256": sha256_file(fixtures_dir / "fixture_manifest.json"),
         "source_fixtures": source_records,
+        "tokenization": {
+            "source_q2_contract": "discrete_state_input=true (retained read-only; not used as R6 deployment token input)",
+            "deployment_contract": "discrete_state_input=false; cleaned prompt + newline",
+            "tokenizer_model": str(TOKENIZER_MODEL.resolve()),
+            "tokenizer_model_sha256": sha256_file(TOKENIZER_MODEL),
+        },
         "deployment_image_convention": "float32 [-1, 1], R6 VISUAL=IDENTITY",
         "input": str(input_path.resolve()),
         "input_sha256": sha256_file(input_path),

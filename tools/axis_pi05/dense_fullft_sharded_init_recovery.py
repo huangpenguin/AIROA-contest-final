@@ -341,6 +341,7 @@ def run_train_10(timeout_seconds: int = 7200) -> dict[str, Any]:
             "AXIS_PI05_SAVE_FINAL_CHECKPOINT": "1",
             "AXIS_PI05_FAIL_ON_NONFINITE": "1",
             "AXIS_PI05_CHECKPOINT_ASYNC": "0",
+            "AXIS_PI05_FULLFT_OVERWRITE": "1",
             "AXIS_PI05_RECOVERY_REPORT": str(REPORT_ROOT / "r4_r5_train_10.json"),
         }
     )

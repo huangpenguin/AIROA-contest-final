@@ -18,6 +18,8 @@ import threading
 import time
 from typing import Any
 
+import numpy as np
+
 from .common import ROOT, canonical_json, git_info, load_yaml, sha256_file, sha256_tree, write_json
 
 
@@ -500,17 +502,143 @@ def run_two_gpu_canary(timeout_seconds: int = 3600) -> dict[str, Any]:
     return report
 
 
+def run_four_gpu_preflight(timeout_seconds: int = 7200) -> dict[str, Any]:
+    """Run the single continuous 0..100-step four-GPU preflight if GPU0 is idle."""
+    lock_path = REPORT_ROOT / "input_lock.json"
+    if not lock_path.is_file():
+        raise FileNotFoundError("run --phase lock before four-gpu preflight")
+    before = _gpu_snapshot()
+    by_index = {row["index"]: row for row in before}
+    if any(index not in by_index or by_index[index]["memory_used_mib"] > 256 for index in range(4)):
+        raise RuntimeError(f"waiting_for_4gpu_or_official_sprint: GPUs are not idle: {before}")
+    preflight_dir = ROOT / "outputs/axis_pi05/dense_fullft_preflight/four_gpu_preflight"
+    if preflight_dir.exists():
+        raise FileExistsError(f"refusing to overwrite prior four-GPU preflight: {preflight_dir}")
+    preflight_dir.mkdir(parents=True)
+    log_path = REPORT_ROOT / "four_gpu_preflight.log"
+    monitor_path = REPORT_ROOT / "four_gpu_preflight_gpu.jsonl"
+    python = ROOT / ".venv_axis_pi05/bin/python"
+    command = [str(python), "third_party/axis_openpi/scripts/train.py", "axis_pi05_libero_fullft"]
+    env = os.environ.copy()
+    env.update(
+        {
+            "CUDA_VISIBLE_DEVICES": "0,1,2,3",
+            "JAX_PLATFORMS": "cuda",
+            "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
+            "PYTHONPATH": str(ROOT / "third_party/axis_openpi/src") + os.pathsep + env.get("PYTHONPATH", ""),
+            "AXIS_PI05_FULLFT_FSDP_DEVICES": "4",
+            "AXIS_PI05_FULLFT_MICROBATCH": "1",
+            "AXIS_PI05_FULLFT_ACCUMULATION": "16",
+            "AXIS_PI05_FULLFT_EFFECTIVE_BATCH": "64",
+            "AXIS_PI05_FULLFT_GLOBAL_BATCH": "64",
+            "AXIS_PI05_FULLFT_STEPS": "100",
+            "AXIS_PI05_FULLFT_LR_DECAY_STEPS": "30000",
+            "AXIS_PI05_FULLFT_RUN_ID": "four_gpu_preflight",
+            "AXIS_PI05_FULLFT_RUN_DIR": str(preflight_dir),
+            "AXIS_PI05_FULLFT_OVERWRITE": "1",
+            "AXIS_PI05_FULLFT_SAVE_INTERVAL": "1000",
+            "AXIS_PI05_FULLFT_LOG_INTERVAL": "1",
+            "OPENPI_KEEP_STEPS": "0,1,10,50,100",
+            "AXIS_PI05_SAVE_STEP0": "1",
+            "AXIS_PI05_WAIT_FOR_STEP0_SAVE": "1",
+            "AXIS_PI05_SAVE_FINAL_CHECKPOINT": "1",
+            "AXIS_PI05_FAIL_ON_NONFINITE": "1",
+            "WANDB_MODE": "disabled",
+            "JAX_TRACEBACK_FILTERING": "off",
+        }
+    )
+    started = time.time()
+    with log_path.open("w", encoding="utf-8") as log:
+        process = subprocess.Popen(command, cwd=ROOT, env=env, stdout=log, stderr=subprocess.STDOUT, text=True)
+    stop = threading.Event()
+    monitor_thread = threading.Thread(target=_monitor, args=(process.pid, monitor_path, stop), daemon=True)
+    monitor_thread.start()
+    timed_out = False
+    try:
+        return_code = process.wait(timeout=timeout_seconds)
+    except subprocess.TimeoutExpired:
+        timed_out = True
+        process.terminate()
+        try:
+            return_code = process.wait(timeout=30)
+        except subprocess.TimeoutExpired:
+            process.kill()
+            return_code = process.wait(timeout=30)
+    finally:
+        stop.set()
+        monitor_thread.join(timeout=5)
+    after = _gpu_snapshot()
+    metrics_path = preflight_dir / "training_metrics.jsonl"
+    metrics = []
+    if metrics_path.is_file():
+        metrics = [json.loads(line) for line in metrics_path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    checkpoint_steps = []
+    if preflight_dir.is_dir():
+        checkpoint_steps = sorted(int(path.name) for path in preflight_dir.iterdir() if path.is_dir() and path.name.isdigit())
+    expected_steps = [0, 1, 10, 50, 100]
+    observed_metric_steps = sorted({int(row["optimizer_step"]) for row in metrics if "optimizer_step" in row})
+    finite_metrics = all(
+        all(np.isfinite(float(value)) for key, value in row.items() if key not in {"optimizer_step"})
+        for row in metrics
+    )
+    passed = (
+        return_code == 0
+        and not timed_out
+        and set(expected_steps).issubset(set(checkpoint_steps))
+        and 100 in observed_metric_steps
+        and finite_metrics
+    )
+    report = {
+        "schema_version": 1,
+        "phase": "F2.2_F3_four_gpu_preflight",
+        "status": "four_gpu_preflight_passed_pending_restore_c20" if passed else "dense_fullft_four_gpu_preflight_failed",
+        "command": command,
+        "visible_devices": [0, 1, 2, 3],
+        "fsdp_devices": 4,
+        "microbatch_per_device": 1,
+        "accumulation_steps": 16,
+        "effective_global_batch": 64,
+        "precision": "float32",
+        "ema_decay": 0.999,
+        "continuous_steps": [0, 1, 10, 50, 100],
+        "timeout_seconds": timeout_seconds,
+        "started_at_unix": started,
+        "duration_seconds": time.time() - started,
+        "return_code": return_code,
+        "timed_out": timed_out,
+        "before_gpus": before,
+        "after_gpus": after,
+        "log_path": str(log_path),
+        "gpu_monitor_path": str(monitor_path),
+        "checkpoint_dir": str(preflight_dir),
+        "checkpoint_steps_expected": expected_steps,
+        "checkpoint_steps_observed": checkpoint_steps,
+        "metric_steps_observed": observed_metric_steps,
+        "finite_metrics": finite_metrics,
+        "metrics": metrics,
+        "gpu0_policy": "naturally idle before launch; no external process killed",
+        "recipe_changed_to_fit": False,
+        "c20_status": "pending",
+        "restore_status": "pending",
+    }
+    write_json(REPORT_ROOT / "four_gpu_preflight.json", report)
+    return report
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--phase", choices=("lock", "canary"), required=True)
+    parser.add_argument("--phase", choices=("lock", "canary", "four-gpu"), required=True)
     parser.add_argument("--timeout-seconds", type=int, default=3600)
     args = parser.parse_args()
     if args.phase == "lock":
         result = write_cpu_locks()
         print(json.dumps({"status": result["input_lock"]["status"], "memory": result["memory"]["topologies"], "disk": result["disk"]}, indent=2))
-    else:
+    elif args.phase == "canary":
         result = run_two_gpu_canary(args.timeout_seconds)
         print(json.dumps({key: result[key] for key in ("status", "return_code", "timed_out", "duration_seconds", "checkpoint_steps_observed")}, indent=2))
+    else:
+        result = run_four_gpu_preflight(args.timeout_seconds)
+        print(json.dumps({key: result[key] for key in ("status", "return_code", "timed_out", "duration_seconds", "checkpoint_steps_observed", "metric_steps_observed")}, indent=2))
 
 
 if __name__ == "__main__":

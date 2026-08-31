@@ -150,3 +150,8 @@ def test_allocator_observability_is_host_side_and_does_not_change_train_math():
     assert '"checkpoint_restore"' in source
     assert "memory_analysis" in source
     assert "donate_argnums=(1,)" not in source[source.index("def init_train_state"):source.index("def _loss_sum_and_aux")]
+
+
+def test_step_zero_resume_requires_explicit_recovery_opt_in():
+    source = (ROOT / "third_party/axis_openpi/src/openpi/training/checkpoints.py").read_text(encoding="utf-8")
+    assert 'os.environ.get("AXIS_PI05_ALLOW_STEP0_RESUME") != "1"' in source

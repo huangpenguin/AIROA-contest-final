@@ -496,6 +496,7 @@ def _run_train_process(
             "AXIS_PI05_FULLFT_LOG_INTERVAL": "1",
             "AXIS_PI05_FULLFT_OVERWRITE": "0",
             "AXIS_PI05_FULLFT_RESUME": "1",
+            "AXIS_PI05_ALLOW_STEP0_RESUME": "1",
             "OPENPI_KEEP_STEPS": "0,1,10",
             "AXIS_PI05_SAVE_STEP0": "0",
             "AXIS_PI05_SAVE_FINAL_CHECKPOINT": "1",
@@ -649,6 +650,7 @@ def _run_restore_only(*, fraction: str, run_dir: Path, label: str, timeout_secon
             "AXIS_PI05_FULLFT_RESUME": "1",
             "AXIS_PI05_FULLFT_OVERWRITE": "0",
             "AXIS_PI05_FULLFT_RUN_ID": f"allocator_fraction_{fraction}_{label}",
+            "AXIS_PI05_ALLOW_STEP0_RESUME": "1",
             "AXIS_PI05_EXPECTED_PARAMS_SENTINELS": "[]",
             "AXIS_PI05_RESTORE_VALIDATION_PATH": str(validation_path),
             "AXIS_PI05_RECOVERY_CHILD_PHASE": "restore_only",
@@ -729,12 +731,33 @@ def run_recovery(timeout_seconds: int = 7200) -> dict[str, Any]:
     OUTPUT_ROOT.mkdir(parents=True, exist_ok=True)
     step0_tree = lock["step0_tree_sha256"]
     expected_small = lock["root_cause_lock"]["step0"]["small_restore_sentinels"]
-    run090 = OUTPUT_ROOT / "fraction_090"
+    aborted_attempt: dict[str, Any] | None = None
+    stale090 = OUTPUT_ROOT / "fraction_090"
+    if stale090.exists():
+        temporary = sorted(
+            str(path.relative_to(stale090))
+            for path in stale090.rglob("*")
+            if path.name.endswith(".orbax-checkpoint-tmp-0")
+        )
+        if not temporary:
+            raise FileExistsError(f"existing 0.90 output is not a recognized aborted attempt: {stale090}")
+        aborted_attempt = {
+            "status": "aborted_invalid_runner_resume",
+            "reason": "legacy checkpoint helper treated a sole step-0 directory as non-resume",
+            "output_dir": str(stale090),
+            "temporary_paths": temporary,
+            "log_path": str(REPORT_ROOT / "a2_fraction_090_canary.log"),
+            "nvml_trace_path": str(REPORT_ROOT / "a2_fraction_090_canary_nvml.jsonl"),
+            "allocator_stats_path": str(REPORT_ROOT / "a2_fraction_090_canary_allocator.jsonl"),
+            "training_result_accepted": False,
+        }
+        write_json(REPORT_ROOT / "a2_fraction_090_aborted_invalid_runner.json", aborted_attempt)
+    run090 = OUTPUT_ROOT / "fraction_090_retry" if aborted_attempt else stale090
     copy090 = _copy_step0(run090, step0_tree)
     report090 = _run_train_process(
         fraction="0.90",
         run_dir=run090,
-        label="a2_fraction_090_canary",
+        label="a2_fraction_090_canary_retry" if aborted_attempt else "a2_fraction_090_canary",
         steps=1,
         expected_sentinels=expected_small,
         timeout_seconds=timeout_seconds,
@@ -800,6 +823,7 @@ def run_recovery(timeout_seconds: int = 7200) -> dict[str, Any]:
         "cpu_lock": str(REPORT_ROOT / "cpu_lock.json"),
         "source_step0_tree_sha256": step0_tree,
         "copy_090": copy090,
+        "aborted_invalid_090_attempt": aborted_attempt,
         "a2_fraction_090": report090,
         "copy_095": copy095,
         "a3_fraction_095": report095,

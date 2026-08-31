@@ -1,0 +1,44 @@
+{
+  "act_count": 12,
+  "act_errors": [],
+  "act_seconds": {
+    "max": 1.4911881730076857,
+    "p50": 0.04828362399712205,
+    "p95": 1.0130596446542761
+  },
+  "fixture": "fixture_00.npz",
+  "fixture_manifest": "/home/huang/code/PARC2026_final/outputs/axis_pi05/r6_positive_score_fast/fixtures/fixtures.json",
+  "forbidden_log_markers": {
+    "SLOW": false,
+    "missing key": false,
+    "missing-key": false,
+    "remap": false,
+    "vision key": false
+  },
+  "gates": {
+    "actions_nonzero_finite_shape7": true,
+    "all_act_requests_completed": true,
+    "each_act_under_10s": true,
+    "forbidden_log_markers_absent": true,
+    "health": true,
+    "required_log_markers": true,
+    "reset": true
+  },
+  "gpu": "1",
+  "health_error": "URLError: <urlopen error [Errno 111] Connection refused>",
+  "log_markers": {
+    "FAST_REQUIRED_AND_VERIFIED": true,
+    "action_ema=0.0": true,
+    "chunk=10": true,
+    "fast=True": true,
+    "n_action_steps=8": true,
+    "rtc=False": true
+  },
+  "process_log": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/post_r6_lora/r6_positive_score_fast/server_latency_process.log",
+  "process_start_to_health_seconds": 362.48416656901827,
+  "reset_error": null,
+  "reset_ok": true,
+  "schema_version": 1,
+  "server": "staged policy_server.py via FastAPI/uvicorn",
+  "status": "passed"
+}

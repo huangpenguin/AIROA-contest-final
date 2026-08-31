@@ -233,15 +233,13 @@ upstream             当前 branch 未设置 upstream
 
 官方边界：配布开发 GPU 是 RTX PRO 6000 Blackwell，启动 Notebook 即计入本选1的 60 小时；正式 scorer 是单张 L4 24GB、CUDA13/PyTorch2.11，`/act` 与 `/reset` 每请求必须 `<10s`。Blackwell 能运行不能替代 L4 显存/延迟门禁。
 
-## 8. 当前没有什么
+## 8. 当前仍没有什么
 
-- 没有 R6 `model_fast.safetensors`；
-- 没有 R6 FAST server/closed-loop；
-- 没有 R6 submission ZIP；
 - 没有官方 pre-check/hidden score；
+- 没有人工提交或官方分数；
 - 没有 V160/H160；
 - 没有 1K/3K/10K/30K 长程 LoRA；
-- 没有正式 Track 3 20 Hz checkpoint。
+- 没有正式 Track 3 20 Hz checkpoint；ZIP 只存在本地 artifacts，未上传。
 
 旧 `submission_axis_f2_m1_500_fast_*.zip` readiness 为 `NOT_READY`，行为 parity 明显失败，禁止作为 R6 fallback。旧 base ZIP 没有 `model_fast.safetensors`，存在 SLOW 路径风险。
 
@@ -259,3 +257,21 @@ upstream             当前 branch 未设置 upstream
 6. 不得重新训练、使用 SLOW/旧 F2 FAST、启动比赛 GPU、push、上传或比赛提交。
 
 当前路径是：old failures（保留/deferred）→ R6 FAST最短路径 → Track 1 ZIP → 人工决定提交 → 官方分数 → 后续 standard LIBERO full-FT 1K/3K/10K/30K。
+
+## 11. 今晚正分路径执行结果：ZIP 等待人工决定
+
+本轮只执行了今晚计划允许的 R6 step-500 FAST 路径，最终状态为
+`r6_positive_score_zip_ready_for_human_decision`。真实 folded-PyTorch source、FAST
+导出、视觉 key/weight/bias、strict reload、16-case parity、12 次 server `/act`、
+锁定 C5 和 ZIP 静态/离线门禁均已通过。
+
+- R6 release lock：`data/reports/axis_libero_30k/post_r6_lora/r6_positive_score_fast/R6_FOLDED_RELEASE_LOCK.json`；candidate 为 `r6_dual_l2_fresh500_r1`，500 steps，`L2_action_lora_heads`，QUANTILES。
+- 8 个冻结 T1 fixture 及 manifest：`outputs/axis_pi05/r6_positive_score_fast/fixtures/`；8 cases × 2 policy seeds 形成 16 个 parity comparison。
+- parity：finite `1.0`、gripper sign `1.0`、median abs `0.002796`、p95 abs `0.036217`、mean cosine `0.999170`，status `passed`。
+- server latency：`12/12` 请求完成，最大 `1.491s`、p95 `1.013s`，全部低于 10s；FAST/chunk/execute/EMA/RTC markers 正确，SLOW/remap/missing-key/vision-key markers 均不存在。
+- C5：5/5 coverage，3/3 source-success regression 复现；两个 diagnostic case 均无 HTTP、nonfinite 或 stall，`task07` 保留 collision 诊断。
+- 证据报告目录：`data/reports/axis_libero_30k/post_r6_lora/r6_positive_score_fast/`，包括 `source_inventory.json`、`export_report.json`、`fast_submission_audit.json`、`key_mapping.json`、`fixed_input_parity.json`、`server_latency.json`、`track1_calibration/summary.json`、`official_docker_e2e.json` 和 `package_validation.json`。
+- Track 1 ZIP：[submission_axis_r6_step500_fast_positive_score_20260831.zip](/home/huang/code/PARC2026_final/artifacts/submission_axis_r6_step500_fast_positive_score_20260831.zip)，大小 `9383571677` bytes，SHA-256 `95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a`；sidecars 为同名 `.sha256` 与 `.manifest.json`。
+- ZIP manifest 明确为 `NOT_SUBMITTED`，`official_result=false`，`auto_submit=false`；本地离线等价报告也明确 `official_result=false`，不能当作官方分数。
+
+本轮未执行 JAX 340、完整统计 envelope、comparator、E2、C20、FAST 之外的 SLOW fallback、训练、比赛 GPU、push、上传或提交。运行时只使用物理 GPU1；GPU0 仅存在外部 PID `237527`，本轮未触碰。下一步仅等待人工审核/提交决定。

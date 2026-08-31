@@ -2,7 +2,7 @@
 
 > 更新日期：2026-08-31（Asia/Tokyo）
 > 当前唯一活动计划：`docs/AXIS_PI05_POSITIVE_SCORE_TONIGHT_PLAN.md`
-> 当前状态：`r6_positive_score_fast_path_ready`
+> 当前状态：`r6_positive_score_zip_ready_for_human_decision`
 > 最新决策：`docs/reviews/axis_pi05/POSITIVE_SCORE_PIVOT_20260831.md`
 
 ## 1. 唯一活动计划
@@ -12,6 +12,7 @@
   - 最短 critical path：R6 identity → FAST key/vision/strict reload → 16-case source↔FAST parity → 12-request server → locked C5 → ZIP；
   - locked C5 专门包含 3 个既有 R6 source-success regression cases，要求 FAST 至少复现 2 个，优先排除上一版 0/6 灾难回归；
   - 只生成供用户人工决定的 Track 1 ZIP，不自动使用比赛 GPU、push、上传或提交。
+  - E1.0–E1.6 本地门禁已完成；Track 1 ZIP 已生成并等待人工决定，未产生官方分数。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 

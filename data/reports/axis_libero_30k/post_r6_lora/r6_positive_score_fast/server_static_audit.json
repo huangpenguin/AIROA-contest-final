@@ -1,0 +1,17 @@
+{
+  "fast_only_model_load": true,
+  "forbidden_literals": [],
+  "has_exact_observation_gate": true,
+  "has_finite_action_gate": true,
+  "has_reset_seed": true,
+  "missing_literals": [],
+  "passed": true,
+  "required_literals": {
+    "/act": true,
+    "/health": true,
+    "/reset": true,
+    "FAST_REQUIRED_AND_VERIFIED": true
+  },
+  "strict_false_load_state_dict_lines": [],
+  "syntax": true
+}

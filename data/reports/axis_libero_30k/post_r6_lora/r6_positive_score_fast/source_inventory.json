@@ -1,0 +1,200 @@
+{
+  "candidate": "r6_dual_l2_fresh500_r1",
+  "members": [
+    {
+      "compressed_bytes": 14467165872,
+      "crc32": null,
+      "directory": false,
+      "path": "model_weights/model.safetensors",
+      "sha256": "5c73e1e8217dbb75a934c2b0165208e851f69e66cfe2ea0430590a29901e6d5b",
+      "uncompressed_bytes": 14467165872
+    },
+    {
+      "compressed_bytes": 1830,
+      "crc32": null,
+      "directory": false,
+      "path": "model_weights/config.json",
+      "sha256": "52a690fc1c01d259303321e7f36515738d79480a381d5388e9c0c8a2c0880c92",
+      "uncompressed_bytes": 1830
+    },
+    {
+      "compressed_bytes": 1889,
+      "crc32": null,
+      "directory": false,
+      "path": "model_weights/policy_preprocessor.json",
+      "sha256": "1d05decf37445ed3f5d2b48c2e7d61bc0299a1c200a5159517fa18f05b8430ef",
+      "uncompressed_bytes": 1889
+    },
+    {
+      "compressed_bytes": 663,
+      "crc32": null,
+      "directory": false,
+      "path": "model_weights/policy_postprocessor.json",
+      "sha256": "9c09f2006d9035ee657dc954c4a687ec93acacbd286a25bbd489cdbf6f5340da",
+      "uncompressed_bytes": 663
+    },
+    {
+      "compressed_bytes": 7756,
+      "crc32": null,
+      "directory": false,
+      "path": "model_weights/policy_preprocessor_step_2_normalizer_processor.safetensors",
+      "sha256": "d80c2ea8a253fc1b3b8d3ae4fb564d111ce125678abb36a1e0f63a8c02b05b3d",
+      "uncompressed_bytes": 7756
+    },
+    {
+      "compressed_bytes": 7756,
+      "crc32": null,
+      "directory": false,
+      "path": "model_weights/policy_postprocessor_step_0_unnormalizer_processor.safetensors",
+      "sha256": "15fe7b1f1692b7046fa18c6857e8fff6d8eefc07597d235c6331b8945dd55402",
+      "uncompressed_bytes": 7756
+    }
+  ],
+  "normalization": "QUANTILES",
+  "safety": {
+    "historical_fast_asset_not_used": true,
+    "source_is_current_r6_on_disk_model": true,
+    "source_model_hardlinked_read_only": true,
+    "training_performed": false
+  },
+  "schema_version": 1,
+  "server_template": "/home/huang/code/PARC2026_final/outputs/axis_fast_recovery/f2_m1_500_fast/staging/policy_server.py",
+  "source_config": {
+    "action_expert_variant": "gemma_300m",
+    "chunk_size": 10,
+    "compile_mode": "max-autotune",
+    "compile_model": false,
+    "device": "cpu",
+    "dtype": "float32",
+    "empty_cameras": 1,
+    "gradient_checkpointing": false,
+    "image_resolution": [
+      224,
+      224
+    ],
+    "input_features": {
+      "observation.images.empty_camera_0": {
+        "shape": [
+          3,
+          224,
+          224
+        ],
+        "type": "VISUAL"
+      },
+      "observation.images.image": {
+        "shape": [
+          3,
+          256,
+          256
+        ],
+        "type": "VISUAL"
+      },
+      "observation.images.image2": {
+        "shape": [
+          3,
+          256,
+          256
+        ],
+        "type": "VISUAL"
+      },
+      "observation.state": {
+        "shape": [
+          8
+        ],
+        "type": "STATE"
+      }
+    },
+    "license": null,
+    "max_action_dim": 32,
+    "max_period": 4.0,
+    "max_state_dim": 32,
+    "min_period": 0.004,
+    "n_action_steps": 8,
+    "n_obs_steps": 1,
+    "normalization_mapping": {
+      "ACTION": "QUANTILES",
+      "STATE": "QUANTILES",
+      "VISUAL": "IDENTITY"
+    },
+    "num_inference_steps": 10,
+    "optimizer_betas": [
+      0.9,
+      0.95
+    ],
+    "optimizer_eps": 1e-08,
+    "optimizer_grad_clip_norm": 1.0,
+    "optimizer_lr": 2.5e-05,
+    "optimizer_weight_decay": 0.01,
+    "output_features": {
+      "action": {
+        "shape": [
+          7
+        ],
+        "type": "ACTION"
+      }
+    },
+    "paligemma_variant": "gemma_2b",
+    "pretrained_path": "axisrobotics/Pi0.5-Axis",
+    "private": null,
+    "push_to_hub": false,
+    "repo_id": "axisrobotics/Pi0.5-Axis",
+    "scheduler_decay_lr": 2.5e-06,
+    "scheduler_decay_steps": 6000,
+    "scheduler_warmup_steps": 1000,
+    "tags": null,
+    "time_sampling_beta_alpha": 1.5,
+    "time_sampling_beta_beta": 1.0,
+    "time_sampling_offset": 0.001,
+    "time_sampling_scale": 0.999,
+    "tokenizer_max_length": 200,
+    "type": "pi05",
+    "use_amp": false
+  },
+  "source_config_sha256": "52a690fc1c01d259303321e7f36515738d79480a381d5388e9c0c8a2c0880c92",
+  "source_files": {
+    "config.json": {
+      "bytes": 1830,
+      "path": "/home/huang/code/PARC2026_final/outputs/axis_pi05/axis_libero_lora_folded/r6_dual_l2_fresh500_r1_step500/config.json",
+      "sha256": "52a690fc1c01d259303321e7f36515738d79480a381d5388e9c0c8a2c0880c92"
+    },
+    "model.safetensors": {
+      "bytes": 14467165872,
+      "path": "/home/huang/code/PARC2026_final/outputs/axis_pi05/axis_libero_lora_folded/r6_dual_l2_fresh500_r1_step500/model.safetensors",
+      "sha256": "5c73e1e8217dbb75a934c2b0165208e851f69e66cfe2ea0430590a29901e6d5b"
+    },
+    "policy_postprocessor.json": {
+      "bytes": 663,
+      "path": "/home/huang/code/PARC2026_final/outputs/axis_pi05/axis_libero_lora_folded/r6_dual_l2_fresh500_r1_step500/policy_postprocessor.json",
+      "sha256": "9c09f2006d9035ee657dc954c4a687ec93acacbd286a25bbd489cdbf6f5340da"
+    },
+    "policy_postprocessor_step_0_unnormalizer_processor.safetensors": {
+      "bytes": 7756,
+      "path": "/home/huang/code/PARC2026_final/outputs/axis_pi05/axis_libero_lora_folded/r6_dual_l2_fresh500_r1_step500/policy_postprocessor_step_0_unnormalizer_processor.safetensors",
+      "sha256": "15fe7b1f1692b7046fa18c6857e8fff6d8eefc07597d235c6331b8945dd55402"
+    },
+    "policy_preprocessor.json": {
+      "bytes": 1889,
+      "path": "/home/huang/code/PARC2026_final/outputs/axis_pi05/axis_libero_lora_folded/r6_dual_l2_fresh500_r1_step500/policy_preprocessor.json",
+      "sha256": "1d05decf37445ed3f5d2b48c2e7d61bc0299a1c200a5159517fa18f05b8430ef"
+    },
+    "policy_preprocessor_step_2_normalizer_processor.safetensors": {
+      "bytes": 7756,
+      "path": "/home/huang/code/PARC2026_final/outputs/axis_pi05/axis_libero_lora_folded/r6_dual_l2_fresh500_r1_step500/policy_preprocessor_step_2_normalizer_processor.safetensors",
+      "sha256": "d80c2ea8a253fc1b3b8d3ae4fb564d111ce125678abb36a1e0f63a8c02b05b3d"
+    }
+  },
+  "source_has_model_fast": false,
+  "source_kind": "on_disk_r6_folded_pytorch",
+  "source_model_bytes": 14467165872,
+  "source_model_path": "/home/huang/code/PARC2026_final/outputs/axis_pi05/axis_libero_lora_folded/r6_dual_l2_fresh500_r1_step500/model.safetensors",
+  "source_model_sha256": "5c73e1e8217dbb75a934c2b0165208e851f69e66cfe2ea0430590a29901e6d5b",
+  "source_postprocessor_sha256": "9c09f2006d9035ee657dc954c4a687ec93acacbd286a25bbd489cdbf6f5340da",
+  "source_preprocessor_sha256": "1d05decf37445ed3f5d2b48c2e7d61bc0299a1c200a5159517fa18f05b8430ef",
+  "source_submission_zip": null,
+  "source_submission_zip_bytes": null,
+  "source_submission_zip_sha256": null,
+  "staging": "/home/huang/code/PARC2026_final/outputs/axis_pi05/r6_positive_score_fast/staging",
+  "topology": "L2_action_lora_heads",
+  "training_steps": 500,
+  "vendor_source": "/home/huang/code/PARC2026_final/outputs/axis_fast_recovery/f2_m1_500_fast/staging/vendor"
+}

@@ -1,0 +1,14 @@
+{
+  "bytes": 9383571677,
+  "contains_model_fast": true,
+  "contains_model_safetensors": false,
+  "entry_count": 3401,
+  "errors": [],
+  "package": "/home/huang/code/PARC2026_final/artifacts/submission_axis_r6_step500_fast_positive_score_20260831.zip",
+  "root_level": true,
+  "schema_version": 1,
+  "sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a",
+  "size_limit_bytes": 20000000000,
+  "status": "passed",
+  "zip_test": true
+}

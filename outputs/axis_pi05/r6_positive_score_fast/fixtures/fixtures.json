@@ -1,0 +1,353 @@
+{
+  "bootstrap_dummy_steps": 10,
+  "cases": [
+    {
+      "case_id": "sha256:0db6a4b130c6b7ad85509a05de3472abbdae2289623c5697cc8d7b84b7a4f5f4",
+      "file": "fixture_00.npz",
+      "image_sha256": {
+        "agentview_image": "9e2ca891f4ccb64c02602365e9d74bf603d9a01503e808e890aefb9b803658ec",
+        "robot0_eye_in_hand_image": "c020ba382832333cc68f28f86de9999645fa9edcf9d417c65110a20fcee84ba8"
+      },
+      "index": 0,
+      "row": {
+        "bddl_path": "LIBERO-plus/libero/libero/bddl_files/libero_object/pick_up_the_tomato_sauce_and_place_it_in_the_basket_table_27.bddl",
+        "bddl_sha256": "9727c6aafc957c565aaac2d9fcc8d0e0e4bab7865ee213bc1b391887e976ec1a",
+        "benchmark": "libero_t1",
+        "case_id": "sha256:0db6a4b130c6b7ad85509a05de3472abbdae2289623c5697cc8d7b84b7a4f5f4",
+        "env_seed": 1000,
+        "init_state_index": 8,
+        "init_state_sha256": "e0b3219bae2aa1d6b02601eb2beb17b80aaaf90bb127b9c35f65b35044e52927",
+        "language": "Pick the tomato sauce and place it in the basket",
+        "max_steps": 300,
+        "panel": "select_core",
+        "perturbation_family": "clean",
+        "perturbation_id": "clean",
+        "perturbation_params": {},
+        "policy_seed": 2000,
+        "repeat_id": 0,
+        "schema_version": 1,
+        "selection_eligible": true,
+        "suite": "libero_t1",
+        "task_id": 1,
+        "task_name": "pick_up_the_tomato_sauce_and_place_it_in_the_basket_table_27"
+      },
+      "sha256": "6ec980bca71f40f0681eeb0c8da971b39a2a9c54ee8207918871921c374eb3f2",
+      "state8": [
+        -0.15158595144748688,
+        0.0025501239579170942,
+        0.2536841034889221,
+        3.1404833793640137,
+        -0.0012305553536862135,
+        -0.09127069264650345,
+        0.02054179646074772,
+        -0.020541924983263016
+      ]
+    },
+    {
+      "case_id": "sha256:12fe34c4498c06af983c80e31f69c6e3d89b08912321ff04592464602ba35c0b",
+      "file": "fixture_01.npz",
+      "image_sha256": {
+        "agentview_image": "c0cbe18125d9b225c579794cc20dce2742f563385e3c155492a7b6916cd453c5",
+        "robot0_eye_in_hand_image": "90ca93bff1fcdbe0afe20f2a7cd5f6613f24d1218d1db39c5ce7795aa20aafb3"
+      },
+      "index": 1,
+      "row": {
+        "bddl_path": "LIBERO-plus/libero/libero/bddl_files/libero_object/pick_up_the_milk_and_place_it_in_the_basket_light_15.bddl",
+        "bddl_sha256": "21cd0eeefe853b9a4d6530bfc33a0c64f843c0e670ff2e39e83b60884ce218d1",
+        "benchmark": "libero_t1",
+        "case_id": "sha256:12fe34c4498c06af983c80e31f69c6e3d89b08912321ff04592464602ba35c0b",
+        "env_seed": 1000,
+        "init_state_index": 9,
+        "init_state_sha256": "6162cfc68b574c7b1633e11b163539217c401991f62ea77b4e9e88ff14e5b8cc",
+        "language": "Pick the milk and place it in the basket",
+        "max_steps": 300,
+        "panel": "select_core",
+        "perturbation_family": "clean",
+        "perturbation_id": "clean",
+        "perturbation_params": {},
+        "policy_seed": 2000,
+        "repeat_id": 0,
+        "schema_version": 1,
+        "selection_eligible": true,
+        "suite": "libero_t1",
+        "task_id": 2,
+        "task_name": "pick_up_the_milk_and_place_it_in_the_basket_light_15"
+      },
+      "sha256": "306d71f744d7dac097114b9ebdb8472f868469481034d62135f11d6662d9f14b",
+      "state8": [
+        -0.14245034754276276,
+        0.00018915954569820315,
+        0.2582990229129791,
+        3.1401288509368896,
+        -0.0008982791914604604,
+        -0.08734465390443802,
+        0.02054007351398468,
+        -0.02054365910589695
+      ]
+    },
+    {
+      "case_id": "sha256:155f412ba8f3c3aeca6cad8f2b322f78f68630d3fc519015a724ddc37b0b5a90",
+      "file": "fixture_02.npz",
+      "image_sha256": {
+        "agentview_image": "2d0b9446fc7913eab98b20c78c9320c5bc3c63d92c16155e894bd447c19c11d2",
+        "robot0_eye_in_hand_image": "94e5ab58a6eff7ab173261bf3d659c0f7354ba523318c6af0c47ead36e721533"
+      },
+      "index": 2,
+      "row": {
+        "bddl_path": "LIBERO-plus/libero/libero/bddl_files/libero_spatial/pick_up_the_black_bowl_in_the_top_drawer_of_the_wooden_cabinet_and_place_it_on_the_plate_table_2.bddl",
+        "bddl_sha256": "a179e2de2f656f27ade68fe9e4892bafd49b6f354dc78de8a4bfae1f142cc5e4",
+        "benchmark": "libero_t1",
+        "case_id": "sha256:155f412ba8f3c3aeca6cad8f2b322f78f68630d3fc519015a724ddc37b0b5a90",
+        "env_seed": 1000,
+        "init_state_index": 5,
+        "init_state_sha256": "2f751fc47d6039a5ea73662125edea410cfea8f79c13169567edc765a939092e",
+        "language": "Pick the akita black bowl in the top layer of the wooden cabinet and place it on the plate",
+        "max_steps": 300,
+        "panel": "select_core",
+        "perturbation_family": "clean",
+        "perturbation_id": "clean",
+        "perturbation_params": {},
+        "policy_seed": 2000,
+        "repeat_id": 0,
+        "schema_version": 1,
+        "selection_eligible": true,
+        "suite": "libero_t1",
+        "task_id": 0,
+        "task_name": "pick_up_the_black_bowl_in_the_top_drawer_of_the_wooden_cabinet_and_place_it_on_the_plate_table_2"
+      },
+      "sha256": "196190317c244281885cca360c1d251c02b59f434a81c100a0b969edf7edd751",
+      "state8": [
+        -0.21528708934783936,
+        0.0017755493754521012,
+        1.1749763488769531,
+        3.141000509262085,
+        -0.0025931051932275295,
+        -0.09183087944984436,
+        0.02054460719227791,
+        -0.020539136603474617
+      ]
+    },
+    {
+      "case_id": "sha256:1a61bfd1425f4b1b578adcb0a7a22ba412651e997586cbf19f0dae688abd98b8",
+      "file": "fixture_03.npz",
+      "image_sha256": {
+        "agentview_image": "68d885f46ec2ecf0c9b575436620e5a915096609590c6145c69c619226f9aeef",
+        "robot0_eye_in_hand_image": "1d0f95fc0c514e68e2ebe8d33b65d52fafff4d643f96b7c58ad263f3c71c0650"
+      },
+      "index": 3,
+      "row": {
+        "bddl_path": "LIBERO-plus/libero/libero/bddl_files/libero_object/pick_up_the_milk_and_place_it_in_the_basket_light_15.bddl",
+        "bddl_sha256": "21cd0eeefe853b9a4d6530bfc33a0c64f843c0e670ff2e39e83b60884ce218d1",
+        "benchmark": "libero_t1",
+        "case_id": "sha256:1a61bfd1425f4b1b578adcb0a7a22ba412651e997586cbf19f0dae688abd98b8",
+        "env_seed": 1000,
+        "init_state_index": 2,
+        "init_state_sha256": "cae2facc6a52fc23296607ee1208cf742c4cc29149a6f0af27fff78bfa877f9c",
+        "language": "Pick the milk and place it in the basket",
+        "max_steps": 300,
+        "panel": "select_core",
+        "perturbation_family": "clean",
+        "perturbation_id": "clean",
+        "perturbation_params": {},
+        "policy_seed": 2000,
+        "repeat_id": 0,
+        "schema_version": 1,
+        "selection_eligible": true,
+        "suite": "libero_t1",
+        "task_id": 2,
+        "task_name": "pick_up_the_milk_and_place_it_in_the_basket_light_15"
+      },
+      "sha256": "f20c8b93339d4b80416f1c5aeee902a07cb2b26a9394b585656ef0bee516fe36",
+      "state8": [
+        -0.1548222452402115,
+        0.029559092596173286,
+        0.2675143778324127,
+        3.1401751041412354,
+        0.005512887611985207,
+        -0.08798805624246597,
+        0.020501306280493736,
+        -0.020539112389087677
+      ]
+    },
+    {
+      "case_id": "sha256:319907680302f9fd61e4763660f2c9e3d56860535f092ec1f5de698590a37628",
+      "file": "fixture_04.npz",
+      "image_sha256": {
+        "agentview_image": "0336b928d0ff41a15e09015958e60fbf8734ca7c497c845cc3e900df2184256c",
+        "robot0_eye_in_hand_image": "8e22650438c424f56753a9bc229a8c5df59b9e262dc8844c1f5ec85252e232d5"
+      },
+      "index": 4,
+      "row": {
+        "bddl_path": "LIBERO-plus/libero/libero/bddl_files/libero_goal/put_the_bowl_on_the_stove_light_11.bddl",
+        "bddl_sha256": "fc44642dc279e08e881e6bdc05e81cd4bfd40d7638639166dfeea30855517c19",
+        "benchmark": "libero_t1",
+        "case_id": "sha256:319907680302f9fd61e4763660f2c9e3d56860535f092ec1f5de698590a37628",
+        "env_seed": 1000,
+        "init_state_index": 0,
+        "init_state_sha256": "53b05c539b1121048b5189622e5ba89cfdbbcec532f47091f1a169d65c376ffa",
+        "language": "Put the bowl on the stove",
+        "max_steps": 300,
+        "panel": "select_core",
+        "perturbation_family": "clean",
+        "perturbation_id": "clean",
+        "perturbation_params": {},
+        "policy_seed": 2000,
+        "repeat_id": 0,
+        "schema_version": 1,
+        "selection_eligible": true,
+        "suite": "libero_t1",
+        "task_id": 3,
+        "task_name": "put_the_bowl_on_the_stove_light_11"
+      },
+      "sha256": "cd9e07a7c3c26661d39996fc83e2d5b07b231456225d750266441849ece4fc0f",
+      "state8": [
+        -0.2171183079481125,
+        -0.013451375998556614,
+        1.1605780124664307,
+        3.1406173706054688,
+        -0.0023176884278655052,
+        -0.09207028895616531,
+        0.020543722435832024,
+        -0.02053852006793022
+      ]
+    },
+    {
+      "case_id": "sha256:31ef3ce7309230fd9a977cd58860fedfc155c2c822f376f6862957206c21ee25",
+      "file": "fixture_05.npz",
+      "image_sha256": {
+        "agentview_image": "829f6a53da0cc3214dbac4abc3698b074a7e01e652784391969b153be494ebcd",
+        "robot0_eye_in_hand_image": "e19bdfde79765b585df8fb11c79f75cb1053159356f350bf005d3cd02531ec65"
+      },
+      "index": 5,
+      "row": {
+        "bddl_path": "LIBERO-plus/libero/libero/bddl_files/libero_goal/put_the_bowl_on_the_stove_light_11.bddl",
+        "bddl_sha256": "fc44642dc279e08e881e6bdc05e81cd4bfd40d7638639166dfeea30855517c19",
+        "benchmark": "libero_t1",
+        "case_id": "sha256:31ef3ce7309230fd9a977cd58860fedfc155c2c822f376f6862957206c21ee25",
+        "env_seed": 1000,
+        "init_state_index": 6,
+        "init_state_sha256": "8af551ef064cfe917d50188c746b6076c36322b888eb04438d8d105274bbc373",
+        "language": "Put the bowl on the stove",
+        "max_steps": 300,
+        "panel": "select_core",
+        "perturbation_family": "clean",
+        "perturbation_id": "clean",
+        "perturbation_params": {},
+        "policy_seed": 2000,
+        "repeat_id": 0,
+        "schema_version": 1,
+        "selection_eligible": true,
+        "suite": "libero_t1",
+        "task_id": 3,
+        "task_name": "put_the_bowl_on_the_stove_light_11"
+      },
+      "sha256": "4e08579ec84a2b7dab4dedb4354bd98655e3c0f2ab0edf33baa56a1808837456",
+      "state8": [
+        -0.20083285868167877,
+        -0.006581327877938747,
+        1.1820056438446045,
+        3.1399664878845215,
+        0.0024953403044492006,
+        -0.08615116029977798,
+        0.020541001111268997,
+        -0.020542727783322334
+      ]
+    },
+    {
+      "case_id": "sha256:3b5ae1fb1cab01408bb549e81620cc5a4a51c5ad00b1e910aba68b18f36b03da",
+      "file": "fixture_06.npz",
+      "image_sha256": {
+        "agentview_image": "486e6c0f581481a7fbe23b3319f7b4475a81f2dc37cf654fc27b4daa2fc56b1f",
+        "robot0_eye_in_hand_image": "db3d00563c382517a5a1e1fa555fdcf4f77984888ab04005a7624fd62a583769"
+      },
+      "index": 6,
+      "row": {
+        "bddl_path": "LIBERO-plus/libero/libero/bddl_files/libero_object/pick_up_the_milk_and_place_it_in_the_basket_light_15.bddl",
+        "bddl_sha256": "21cd0eeefe853b9a4d6530bfc33a0c64f843c0e670ff2e39e83b60884ce218d1",
+        "benchmark": "libero_t1",
+        "case_id": "sha256:3b5ae1fb1cab01408bb549e81620cc5a4a51c5ad00b1e910aba68b18f36b03da",
+        "env_seed": 1000,
+        "init_state_index": 0,
+        "init_state_sha256": "d6533723bab62a9e671b78da5d5ad25313a9d16d7f71a97dafcb847fd1fe3177",
+        "language": "Pick the milk and place it in the basket",
+        "max_steps": 300,
+        "panel": "select_core",
+        "perturbation_family": "clean",
+        "perturbation_id": "clean",
+        "perturbation_params": {},
+        "policy_seed": 2000,
+        "repeat_id": 0,
+        "schema_version": 1,
+        "selection_eligible": true,
+        "suite": "libero_t1",
+        "task_id": 2,
+        "task_name": "pick_up_the_milk_and_place_it_in_the_basket_light_15"
+      },
+      "sha256": "9cd0d786eb547a77bb444d2b627a19068347130d9ecf53a00cdb7230ed0d0269",
+      "state8": [
+        -0.15291592478752136,
+        -0.008820702321827412,
+        0.2565186023712158,
+        3.1410021781921387,
+        0.0005372106097638607,
+        -0.09146030247211456,
+        0.02054467611014843,
+        -0.020539063960313797
+      ]
+    },
+    {
+      "case_id": "sha256:40a67edff96195a703232f645d592bccfe4b7c02c32a9eaf89f76278e085df8b",
+      "file": "fixture_07.npz",
+      "image_sha256": {
+        "agentview_image": "ad2b32c10865be6feb90b92a0ae845af60a9b2e12abbf64ad98ebaeccef8717c",
+        "robot0_eye_in_hand_image": "1041b511fac1c1721bbb6c39e1bb81c276affe0c4c7e497b9ef8c1724a754025"
+      },
+      "index": 7,
+      "row": {
+        "bddl_path": "LIBERO-plus/libero/libero/bddl_files/libero_goal/put_the_bowl_on_the_stove_light_11.bddl",
+        "bddl_sha256": "fc44642dc279e08e881e6bdc05e81cd4bfd40d7638639166dfeea30855517c19",
+        "benchmark": "libero_t1",
+        "case_id": "sha256:40a67edff96195a703232f645d592bccfe4b7c02c32a9eaf89f76278e085df8b",
+        "env_seed": 1000,
+        "init_state_index": 9,
+        "init_state_sha256": "984064aec612a2cf27e599b6f04d1075f82cb4de12ed5717c8a44e35e69344ab",
+        "language": "Put the bowl on the stove",
+        "max_steps": 300,
+        "panel": "select_core",
+        "perturbation_family": "clean",
+        "perturbation_id": "clean",
+        "perturbation_params": {},
+        "policy_seed": 2000,
+        "repeat_id": 0,
+        "schema_version": 1,
+        "selection_eligible": true,
+        "suite": "libero_t1",
+        "task_id": 3,
+        "task_name": "put_the_bowl_on_the_stove_light_11"
+      },
+      "sha256": "808949a229943a3b3867b806c3c043a4a3b5366f866efe157a0143dfacf9c189",
+      "state8": [
+        -0.21171075105667114,
+        -0.008890853263437748,
+        1.1750619411468506,
+        3.140594482421875,
+        -0.0015336996875703335,
+        -0.08799416571855545,
+        0.02054268680512905,
+        -0.020541053265333176
+      ]
+    }
+  ],
+  "fixture_count": 8,
+  "required_keys": [
+    "agentview_image",
+    "robot0_eye_in_hand_image",
+    "robot0_joint_pos",
+    "robot0_eef_pos",
+    "robot0_eef_quat",
+    "robot0_gripper_qpos"
+  ],
+  "schema_version": 1,
+  "source_manifest": "/home/huang/code/PARC2026_final/data/eval_manifests/axis_pi05_eval_v1/select_core.jsonl",
+  "source_manifest_sha256": "0083c46a45f653299f8a8ff8157dc2f4e483bc27958f005e704377418452d91c"
+}

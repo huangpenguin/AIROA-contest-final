@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "generated_date": "2026-08-31",
-  "status": "r6_positive_score_fast_path_ready",
+  "status": "r6_positive_score_zip_ready_for_human_decision",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
@@ -216,9 +216,6 @@
     "request_timeout_seconds": 10
   },
   "not_available": [
-    "r6_model_fast",
-    "r6_fast_server",
-    "r6_submission_zip",
     "official_precheck",
     "official_score",
     "v160_h160",
@@ -415,7 +412,7 @@
     "maximum_status_without_full_envelope_c20_official_precheck": "r6_diagnostic_zip_local_ready_not_submission_ready"
   },
   "positive_score_tonight": {
-    "status": "r6_positive_score_fast_path_ready",
+    "status": "r6_positive_score_zip_ready_for_human_decision",
     "candidate": "r6_dual_l2_fresh500_r1",
     "candidate_count": 1,
     "objective": "produce_a_fast_only_track1_zip_for_human_submission_decision",
@@ -443,7 +440,37 @@
     "maximum_success_status": "r6_positive_score_zip_ready_for_human_decision",
     "score_guaranteed": false,
     "plan": "docs/AXIS_PI05_POSITIVE_SCORE_TONIGHT_PLAN.md",
-    "decision_record": "docs/reviews/axis_pi05/POSITIVE_SCORE_PIVOT_20260831.md"
+    "decision_record": "docs/reviews/axis_pi05/POSITIVE_SCORE_PIVOT_20260831.md",
+    "result": {
+      "source_kind": "on_disk_r6_folded_pytorch",
+      "fixture_count": 8,
+      "parity_comparisons": 16,
+      "parity_status": "passed",
+      "server_latency_status": "passed",
+      "server_latency_requests": 12,
+      "c5_status": "passed",
+      "c5_coverage": "5/5",
+      "c5_source_success_reproduced": "3/3",
+      "offline_e2e_status": "passed",
+      "package_validation_status": "passed",
+      "package": "artifacts/submission_axis_r6_step500_fast_positive_score_20260831.zip",
+      "package_sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a",
+      "package_bytes": 9383571677,
+      "package_contains_slow_model": false,
+      "submission_status": "NOT_SUBMITTED",
+      "official_result": false,
+      "auto_upload_submit": false,
+      "gpu_used": 1,
+      "gpu0_touched": false,
+      "fixture_manifest": "outputs/axis_pi05/r6_positive_score_fast/fixtures/fixtures.json",
+      "parity_report": "data/reports/axis_libero_30k/post_r6_lora/r6_positive_score_fast/fixed_input_parity.json",
+      "latency_report": "data/reports/axis_libero_30k/post_r6_lora/r6_positive_score_fast/server_latency.json",
+      "c5_report": "data/reports/axis_libero_30k/post_r6_lora/r6_positive_score_fast/track1_calibration/summary.json",
+      "offline_report": "data/reports/axis_libero_30k/post_r6_lora/r6_positive_score_fast/official_docker_e2e.json",
+      "package_validation_report": "data/reports/axis_libero_30k/post_r6_lora/r6_positive_score_fast/package_validation.json",
+      "zip_sha256_sidecar": "artifacts/submission_axis_r6_step500_fast_positive_score_20260831.zip.sha256",
+      "zip_manifest_sidecar": "artifacts/submission_axis_r6_step500_fast_positive_score_20260831.zip.manifest.json"
+    }
   },
   "auto_upload_authorized": false,
   "auto_submit_authorized": false,

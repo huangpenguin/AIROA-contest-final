@@ -1,5 +1,5 @@
 diff --git a/scripts/train.py b/scripts/train.py
-index 5a69f47..a733798 100644
+index 5a69f47..c1a90e3 100644
 --- a/scripts/train.py
 +++ b/scripts/train.py
 @@ -7,6 +7,7 @@ import os
@@ -224,7 +224,11 @@ index 5a69f47..a733798 100644
 @@ -944,10 +1135,15 @@ def main(config: _config.TrainConfig):
      train_state, train_state_sharding = init_train_state(config, init_rng, mesh, resume=resuming)
      jax.block_until_ready(train_state)
-+    _record_allocator_stats("train_state_init", resumed=resuming, train_state_step=int(train_state.step))
++    _record_allocator_stats(
++        "train_state_init",
++        resumed=resuming,
++        train_state_step=None if resuming else int(train_state.step),
++    )
      logging.info(f"Initialized train state:\n{training_utils.array_tree_to_info(train_state.params)}")
  
      if resuming:

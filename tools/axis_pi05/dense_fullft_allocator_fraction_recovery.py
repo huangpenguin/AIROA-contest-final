@@ -763,11 +763,12 @@ def run_recovery(timeout_seconds: int = 7200) -> dict[str, Any]:
     while run090.exists():
         retry_index += 1
         run090 = OUTPUT_ROOT / f"fraction_090_retry{retry_index}"
+    canary_label = "a2_fraction_090_canary" + (f"_retry{retry_index}" if aborted_attempts else "")
     copy090 = _copy_step0(run090, step0_tree)
     report090 = _run_train_process(
         fraction="0.90",
         run_dir=run090,
-        label="a2_fraction_090_canary_retry" if aborted_attempts else "a2_fraction_090_canary",
+        label=canary_label,
         steps=1,
         expected_sentinels=expected_small,
         timeout_seconds=timeout_seconds,

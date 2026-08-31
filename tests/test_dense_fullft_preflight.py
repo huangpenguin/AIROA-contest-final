@@ -155,3 +155,9 @@ def test_allocator_observability_is_host_side_and_does_not_change_train_math():
 def test_step_zero_resume_requires_explicit_recovery_opt_in():
     source = (ROOT / "third_party/axis_openpi/src/openpi/training/checkpoints.py").read_text(encoding="utf-8")
     assert 'os.environ.get("AXIS_PI05_ALLOW_STEP0_RESUME") != "1"' in source
+
+
+def test_restored_rng_is_replaced_on_replicated_mesh_before_fold_in():
+    source = (ROOT / "third_party/axis_openpi/scripts/train.py").read_text(encoding="utf-8")
+    assert "jax.device_put(train_state.rng, replicated_sharding)" in source
+    assert "this changes placement, not math" in source

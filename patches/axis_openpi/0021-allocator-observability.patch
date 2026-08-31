@@ -1,5 +1,5 @@
 diff --git a/scripts/train.py b/scripts/train.py
-index 5a69f47..c1a90e3 100644
+index 5a69f47..b85be30 100644
 --- a/scripts/train.py
 +++ b/scripts/train.py
 @@ -7,6 +7,7 @@ import os
@@ -234,6 +234,12 @@ index 5a69f47..c1a90e3 100644
      if resuming:
          train_state = _checkpoints.restore_state(checkpoint_manager, train_state, data_loader)
 +        jax.block_until_ready(train_state)
++        if train_state.rng is not None:
++            # Older step-0 checkpoints can restore the scalar key on one
++            # device while the replicated train-state step is on the full
++            # mesh.  Re-place the same key value on the declared replicated
++            # sharding before fold_in; this changes placement, not math.
++            train_state = dataclasses.replace(train_state, rng=jax.device_put(train_state.rng, replicated_sharding))
 +        _record_allocator_stats("checkpoint_restore", train_state_step=int(train_state.step))
 +        _write_restore_validation(train_state)
 @@ -1020,6 +1216,7 @@ def main(config: _config.TrainConfig):

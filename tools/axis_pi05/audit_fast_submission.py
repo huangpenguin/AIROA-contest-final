@@ -1276,6 +1276,7 @@ def _add_local_asgi_runtime(env: dict[str, str]) -> None:
 
 def _local_fast_server_command(staging: Path, port: int) -> list[str]:
     wrapper = Path(__file__).resolve().parent / "run_local_fast_server.py"
+    staging = staging.resolve()
     return [
         sys.executable,
         str(wrapper),

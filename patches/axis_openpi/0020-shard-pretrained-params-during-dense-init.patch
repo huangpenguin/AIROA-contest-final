@@ -1,0 +1,36 @@
+diff --git a/scripts/train.py b/scripts/train.py
+index 626e4fc..5a69f47 100644
+--- a/scripts/train.py
++++ b/scripts/train.py
+@@ -294,0 +295,19 @@ def _load_weights_and_validate(loader: _weight_loaders.WeightLoader, params_shap
++def _partial_params_sharding(state_sharding: Any, partial_params: at.Params) -> at.Params:
++    """Return the train-state parameter sharding for host-loaded partial params.
++
++    Released checkpoints are restored as host NumPy arrays.  Passing that tree
++    with a single replicated sharding creates a complete copy on every device
++    before FSDP can produce the output state.  The parameter subtree already
++    contains the canonical FSDP sharding decisions, so reuse it leaf-for-leaf
++    for the loader input as well.  A loader may return a strict subset (for
++    example when a legacy checkpoint leaves optional LoRA leaves at model
++    initialization), so construct the matching subset by flattened key.
++    """
++    full = traverse_util.flatten_dict(state_sharding.params.to_pure_dict(), sep="/")
++    partial = traverse_util.flatten_dict(partial_params, sep="/")
++    missing = sorted(set(partial) - set(full))
++    if missing:
++        raise ValueError(f"partial params are outside train-state sharding tree: {missing[:3]}")
++    return traverse_util.unflatten_dict({key: full[key] for key in partial}, sep="/")
++
++
+@@ -357 +376,6 @@ def init_train_state(
+-    replicated_sharding = jax.sharding.NamedSharding(mesh, jax.sharding.PartitionSpec())
++    partial_params_sharding = _partial_params_sharding(state_sharding, partial_params)
++
++    # Place every restored leaf directly into its target FSDP sharding before
++    # entering the jitted initializer.  This avoids materializing the full
++    # released parameter tree on every device during init.
++    partial_params = jax.device_put(partial_params, partial_params_sharding)
+@@ -362,2 +386,1 @@ def init_train_state(
+-        donate_argnums=(1,),  # donate the partial params buffer.
+-        in_shardings=replicated_sharding,
++        in_shardings=(jax.sharding.NamedSharding(mesh, jax.sharding.PartitionSpec()), partial_params_sharding),

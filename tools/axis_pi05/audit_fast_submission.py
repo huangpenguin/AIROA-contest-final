@@ -571,9 +571,13 @@ class _OnDiskR6Pi05Policy:
         os.environ.setdefault("TORCH_COMPILE_DISABLE", "1")
         os.environ.setdefault("TORCHINDUCTOR_DISABLE", "1")
         vendor = staging / "vendor"
+        host_vendor = Path("/tmp/axis_host_vendor")
+        if host_vendor.is_dir() and str(host_vendor) not in sys.path:
+            sys.path.insert(0, str(host_vendor))
+        import torch
+        import torchvision  # noqa: F401
         if str(vendor) not in sys.path:
             sys.path.insert(0, str(vendor))
-        import torch
         torch._dynamo.config.disable = True
         from lerobot.processor import PolicyProcessorPipeline
         from lerobot.processor.converters import batch_to_transition, policy_action_to_transition, transition_to_batch, transition_to_policy_action

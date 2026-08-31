@@ -493,14 +493,23 @@ def export_fast(staging: Path, report_root: Path) -> dict[str, Any]:
     inventory_path = report_root / "source_inventory.json"
     inventory = json.loads(inventory_path.read_text(encoding="utf-8")) if inventory_path.is_file() else {}
 
-    sys.path.insert(0, str(staging / "vendor"))
     os.environ.setdefault("HF_HUB_OFFLINE", "1")
     os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
     os.environ.setdefault("TORCHDYNAMO_DISABLE", "1")
     os.environ.setdefault("TORCH_COMPILE_DISABLE", "1")
     os.environ.setdefault("TORCHINDUCTOR_DISABLE", "1")
 
+    # The audit venv has a torch/torchvision pair that is known-good for host
+    # CPU conversion.  The package vendor contains the official image's
+    # torchvision wheel, which must remain in the ZIP but cannot be imported
+    # by this host torch build.
+    host_vendor = Path("/tmp/axis_host_vendor")
+    if host_vendor.is_dir() and str(host_vendor) not in sys.path:
+        sys.path.insert(0, str(host_vendor))
     import torch
+    import torchvision  # noqa: F401
+    if str(staging / "vendor") not in sys.path:
+        sys.path.insert(0, str(staging / "vendor"))
     from safetensors.torch import load_file, save_file
 
     # Register Pi0.5 processor steps before the policy/processor imports.

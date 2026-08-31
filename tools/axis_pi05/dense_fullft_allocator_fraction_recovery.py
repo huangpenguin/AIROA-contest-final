@@ -469,7 +469,7 @@ def _classify_failure(log_path: Path, stats: list[dict[str, Any]], timed_out: bo
     oom_markers = ("resource_exhausted", "out of memory", "allocator", "bfc")
     oom = any(marker in lowered for marker in oom_markers)
     compute_phases = {row.get("phase") for row in stats if row.get("phase") in {"microbatch_exception", "microbatch_complete"}}
-    if oom and "microbatch_exception" in compute_phases:
+    if oom and compute_phases.intersection({"microbatch_exception", "microbatch_complete"}):
         return "allocator_bfc_oom_during_compute"
     if oom:
         return "oom_without_complete_compute_phase_evidence"
@@ -725,6 +725,41 @@ def _source_still_locked(lock: dict[str, Any]) -> bool:
     return sha256_tree(SOURCE_STEP0) == lock["step0_tree_sha256"]
 
 
+def _find_reusable_a2(step0_tree: str) -> tuple[Path, dict[str, Any], dict[str, Any]] | None:
+    """Find the already-run 0.90 canary when only its classifier was wrong."""
+    candidates = sorted(REPORT_ROOT.glob("a2_fraction_090_canary*.json"), key=lambda path: path.stat().st_mtime, reverse=True)
+    for report_path in candidates:
+        report = _load_json(report_path)
+        run_dir_text = report.get("checkpoint_dir")
+        if not run_dir_text or report.get("return_code") != 1 or report.get("external_pids"):
+            continue
+        run_dir = Path(run_dir_text)
+        if _checkpoint_steps(run_dir) != [0] or not report.get("restore_validation", {}).get("status") == "passed":
+            continue
+        if not (run_dir / "0").is_dir() or sha256_tree(run_dir / "0") != step0_tree:
+            continue
+        log_path = Path(report.get("log_path", ""))
+        stats_path = Path(report.get("allocator_stats_path", ""))
+        stats = _read_jsonl(stats_path)
+        classification = _classify_failure(log_path, stats, bool(report.get("timed_out")))
+        if classification != "allocator_bfc_oom_during_compute":
+            continue
+        reclassified = dict(report)
+        reclassified.update(
+            {
+                "status": "default_75pct_allocator_pool_oom_requires_fraction_retest",
+                "failure_classification": classification,
+                "reclassified_from": report.get("failure_classification"),
+                "original_report": str(report_path),
+                "reclassification_reason": "microbatch_complete plus XLA RESOURCE_EXHAUSTED proves compute-side allocator OOM",
+            }
+        )
+        output = REPORT_ROOT / "a2_fraction_090_reclassified.json"
+        write_json(output, reclassified)
+        return run_dir, {"reused_existing_a2_report": str(output), "tree_sha256": step0_tree}, reclassified
+    return None
+
+
 def run_recovery(timeout_seconds: int = 7200) -> dict[str, Any]:
     lock = _load_json(REPORT_ROOT / "cpu_lock.json")
     if lock.get("status") != "dense_fullft_allocator_fraction_cpu_locked":
@@ -732,11 +767,14 @@ def run_recovery(timeout_seconds: int = 7200) -> dict[str, Any]:
     OUTPUT_ROOT.mkdir(parents=True, exist_ok=True)
     step0_tree = lock["step0_tree_sha256"]
     expected_small = lock["root_cause_lock"]["step0"]["small_restore_sentinels"]
+    reusable_a2 = _find_reusable_a2(step0_tree)
     aborted_attempts: list[dict[str, Any]] = []
     stale090 = OUTPUT_ROOT / "fraction_090"
     existing090 = sorted(OUTPUT_ROOT.glob("fraction_090*"))
     for existing in existing090:
         if not existing.is_dir():
+            continue
+        if reusable_a2 is not None and existing == reusable_a2[0]:
             continue
         steps = _checkpoint_steps(existing)
         if 1 in steps or 10 in steps:
@@ -758,21 +796,24 @@ def run_recovery(timeout_seconds: int = 7200) -> dict[str, Any]:
         aborted_attempts.append(attempt)
     if aborted_attempts:
         write_json(REPORT_ROOT / "a2_fraction_090_aborted_invalid_runner.json", {"attempts": aborted_attempts})
-    retry_index = 0
-    run090 = stale090
-    while run090.exists():
-        retry_index += 1
-        run090 = OUTPUT_ROOT / f"fraction_090_retry{retry_index}"
-    canary_label = "a2_fraction_090_canary" + (f"_retry{retry_index}" if aborted_attempts else "")
-    copy090 = _copy_step0(run090, step0_tree)
-    report090 = _run_train_process(
-        fraction="0.90",
-        run_dir=run090,
-        label=canary_label,
-        steps=1,
-        expected_sentinels=expected_small,
-        timeout_seconds=timeout_seconds,
-    )
+    if reusable_a2 is not None:
+        run090, copy090, report090 = reusable_a2
+    else:
+        retry_index = 0
+        run090 = stale090
+        while run090.exists():
+            retry_index += 1
+            run090 = OUTPUT_ROOT / f"fraction_090_retry{retry_index}"
+        canary_label = "a2_fraction_090_canary" + (f"_retry{retry_index}" if aborted_attempts else "")
+        copy090 = _copy_step0(run090, step0_tree)
+        report090 = _run_train_process(
+            fraction="0.90",
+            run_dir=run090,
+            label=canary_label,
+            steps=1,
+            expected_sentinels=expected_small,
+            timeout_seconds=timeout_seconds,
+        )
     selected_fraction = None
     report095: dict[str, Any] | None = None
     copy095: dict[str, Any] | None = None

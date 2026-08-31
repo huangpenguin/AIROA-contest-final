@@ -1,0 +1,97 @@
+diff --git a/src/openpi/training/config.py b/src/openpi/training/config.py
+index 95e4886..dd867fd 100644
+--- a/src/openpi/training/config.py
++++ b/src/openpi/training/config.py
+@@ -948,6 +948,92 @@ _CONFIGS = [
+         wandb_enabled=False,
+         policy_metadata={"phase": "phase1_fixed_forward_and_rollout", "direct_orbax": True},
+     ),
++    TrainConfig(
++        name="axis_pi05_libero_fullft",
++        model=pi0_config.Pi0Config(
++            pi05=True,
++            dtype="float32",
++            action_dim=32,
++            action_horizon=10,
++            discrete_state_input=False,
++            paligemma_variant="gemma_2b",
++            action_expert_variant="gemma_300m",
++        ),
++        data=LeRobotLiberoDataConfig(
++            repo_id="physical-intelligence/libero",
++            assets=AssetsConfig(
++                # This is the fresh canonical 10 Hz QUANTILES file.  The Axis
++                # released norm is provenance-only and is never loaded here.
++                assets_dir=os.environ.get(
++                    "AXIS_PI05_FULLFT_NORM_STATS",
++                    "data/reports/axis_libero_30k/phase1/norm_stats.json",
++                ),
++                asset_id="canonical_10hz",
++            ),
++            base_config=DataConfig(prompt_from_task=True),
++            v3_keys=False,
++            local_repo_ids=("physical-intelligence/libero",),
++            local_repo_roots=(
++                os.environ.get(
++                    "AXIS_PI05_FULLFT_DATA_ROOT",
++                    "data/raw/hf/physical-intelligence/libero",
++                ),
++            ),
++            local_sampling_manifest=os.environ.get(
++                "AXIS_PI05_FULLFT_SAMPLING_MANIFEST",
++                "data/reports/axis_libero_30k/phase1/official_sampling_manifest.jsonl",
++            ),
++        ),
++        weight_loader=weight_loaders.CheckpointWeightLoader(
++            os.environ.get(
++                "AXIS_PI05_FULLFT_AXIS_PARAMS",
++                "data/models/axisrobotics/Pi0.5-Axis/c342608c489515efa9ba8281400dc648bf3970e1/params",
++            )
++        ),
++        lr_schedule=_optimizer.CosineDecaySchedule(
++            warmup_steps=int(os.environ.get("AXIS_PI05_FULLFT_WARMUP_STEPS", "10000")),
++            peak_lr=float(os.environ.get("AXIS_PI05_FULLFT_PEAK_LR", "5e-5")),
++            # Equal end/peak values give the required constant post-warmup LR.
++            decay_steps=int(os.environ.get("AXIS_PI05_FULLFT_LR_DECAY_STEPS", "30000")),
++            decay_lr=float(os.environ.get("AXIS_PI05_FULLFT_POST_WARMUP_LR", "5e-5")),
++        ),
++        optimizer=_optimizer.AdamW(
++            b1=0.9,
++            b2=0.95,
++            eps=1e-8,
++            weight_decay=1e-10,
++            clip_gradient_norm=1.0,
++        ),
++        ema_decay=0.999,
++        freeze_filter=nnx.Nothing,
++        precision="float32",
++        forbid_bfloat16=True,
++        batch_size=int(os.environ.get("AXIS_PI05_FULLFT_GLOBAL_BATCH", "64")),
++        microbatch_size=int(os.environ.get("AXIS_PI05_FULLFT_MICROBATCH", "1")),
++        gradient_accumulation_steps=int(os.environ.get("AXIS_PI05_FULLFT_ACCUMULATION", "32")),
++        effective_global_batch=int(os.environ.get("AXIS_PI05_FULLFT_EFFECTIVE_BATCH", "64")),
++        loss_objective="padded32_temporal",
++        num_workers=int(os.environ.get("AXIS_PI05_FULLFT_DATALOADER_WORKERS", "0")),
++        num_train_steps=int(os.environ.get("AXIS_PI05_FULLFT_STEPS", "30000")),
++        log_interval=int(os.environ.get("AXIS_PI05_FULLFT_LOG_INTERVAL", "1")),
++        save_interval=int(os.environ.get("AXIS_PI05_FULLFT_SAVE_INTERVAL", "1000")),
++        keep_period=None,
++        overwrite=os.environ.get("AXIS_PI05_FULLFT_OVERWRITE", "0") == "1",
++        resume=os.environ.get("AXIS_PI05_FULLFT_RESUME", "0") == "1",
++        wandb_enabled=False,
++        exp_name=os.environ.get("AXIS_PI05_FULLFT_RUN_ID", "dense_fullft_preflight"),
++        checkpoint_base_dir=os.environ.get(
++            "AXIS_PI05_FULLFT_OUTPUT_DIR", "outputs/axis_pi05/dense_fullft"
++        ),
++        checkpoint_dir_override=os.environ.get("AXIS_PI05_FULLFT_RUN_DIR"),
++        fsdp_devices=int(os.environ.get("AXIS_PI05_FULLFT_FSDP_DEVICES", "2")),
++        policy_metadata={
++            "phase": "dense_fullft_preflight",
++            "source": "axis_released_dense_params",
++            "norm": "fresh_canonical_libero_10hz_quantiles",
++            "protocol_primary": "execute8",
++        },
++    ),
+     TrainConfig(
+         name="axis_pi05_lora_screen",
+         model=pi0_config.Pi0Config(

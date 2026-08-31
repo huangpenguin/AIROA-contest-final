@@ -2,8 +2,8 @@
 
 > 更新日期：2026-09-01（Asia/Tokyo）
 > 当前唯一活动计划：`docs/AXIS_PI05_DENSE_FULLFT_ALLOCATOR_FRACTION_RECOVERY_PLAN.md`
-> 当前状态：`dense_fullft_allocator_fraction_recovery_ready`
-> 最新审核：`docs/reviews/axis_pi05/DENSE_FULLFT_R4_ALLOCATOR_REVIEW_20260901.md`
+> 当前状态：`dense_fullft_local_95pct_pool_true_capacity_oom_pending_official_gpu_review`
+> 最新审核：`docs/reviews/axis_pi05/DENSE_FULLFT_ALLOCATOR_FRACTION_EXECUTION_REVIEW_20260901.md`
 
 ## 1. 唯一活动计划
 
@@ -11,7 +11,7 @@
   - R3 sharded init 已通过；R4 进入首个 microbatch 后在 BFC 申请 `136.69 MiB` 时 OOM；
   - R4 allocator env 全部 unset，NVML 峰值 `24897/32768 MiB = 75.98%`，与 JAX 默认 75% preallocated pool 一致；
   - 当前 OOM 重分类为 `default_75pct_allocator_pool_oom_requires_fraction_retest`，不足以证明 32GB 物理显存耗尽；
-  - 本轮只修改 `XLA_CLIENT_MEM_FRACTION`：先 `0.90`，仅 allocator OOM 时再唯一 `0.95`；其他数学配方不变，最多10 steps，不授权比赛 GPU/C20/100-step。
+  - 本轮只修改 `XLA_CLIENT_MEM_FRACTION`：`0.90` 与条件授权的唯一 `0.95` 均已完成；两次均在真实首个 microbatch 计算阶段 allocator OOM，其他数学配方不变，A4/10-step 未启动，不授权比赛 GPU/C20/100-step。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 
@@ -38,6 +38,8 @@
 15. `AXIS_PI05_DENSE_FULLFT_SHARDED_INIT_RECOVERY_PLAN.md`：R3 direct-sharded init通过；R4在默认75% JAX allocator pool内的首个microbatch OOM，未完成update/10-step；转入allocator-fraction最小复测。
 
 归档不表示旧计划所有尾部阶段都完成；只表示该文件不再是活动授权入口。旧 failure、阈值、hash 和未执行阶段必须继续保留。
+
+当前活动计划已完成其授权范围并在 `0.95` hard gate 停止；在人工审核是否转向 Blackwell 前，不得创建或执行新的训练阶段。
 
 ## 3. 保留但非活动的研究线
 

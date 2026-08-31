@@ -2,7 +2,7 @@
 
 > 制定日期：2026-09-01（Asia/Tokyo）
 > 审核输入：root `6239704752dc2966d23b0f6c9d49744efdb152ef`，nested OpenPI `92604d6d07d5bbf636827ee903f758538c8ba015`
-> 当前状态：`dense_fullft_allocator_fraction_recovery_ready`
+> 当前状态：`dense_fullft_local_95pct_pool_true_capacity_oom_pending_official_gpu_review`
 > 唯一目标：保持训练数学配方完全不变，先排除 JAX 默认 75% BFC pool 对 4×V100 first update 的人为容量限制，最多验证到连续 10 optimizer steps。
 
 ## 0. 不可变合同
@@ -91,6 +91,8 @@ XLA_PYTHON_CLIENT_PREALLOCATE=true
 重新从 immutable step-0 restore，只执行一次 global64 update，门禁与 A2 相同。不授权 `>0.95`、preallocate false 或第三种 allocator。
 
 `0.95` 仍 OOM 则状态为 `dense_fullft_local_95pct_pool_true_capacity_oom_pending_official_gpu_review`，hard stop；该证据才可用于下一轮是否启动 Blackwell 的人工决策。
+
+本计划已执行至 A3 并按该 hard gate 停止。A4 不执行，等待人工审核；本页不授予任何比赛 GPU 或后续训练权限。
 
 ## A4. 通过 fraction 的连续 10-step 验证
 

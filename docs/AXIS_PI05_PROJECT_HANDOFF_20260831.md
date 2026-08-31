@@ -2,9 +2,10 @@
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
 > 最新已审核执行 HEAD：`6239704752dc2966d23b0f6c9d49744efdb152ef`
+> allocator recovery execution HEAD：`ff382e7f6f959c900569978349bd3b5eaf015bea`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`92604d6d07d5bbf636827ee903f758538c8ba015`
-> 当前总状态：`dense_fullft_allocator_fraction_recovery_ready`
+> 当前总状态：`dense_fullft_local_95pct_pool_true_capacity_oom_pending_official_gpu_review`
 > 唯一活动计划：`docs/AXIS_PI05_DENSE_FULLFT_ALLOCATOR_FRACTION_RECOVERY_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
@@ -13,7 +14,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO10Hz、R6 LoRA500-step、folded PyTorch与FAST-only Track1 ZIP均已完成；用户报告其正式Track1得分为`0.47`。Axis-init dense full-FT 的 direct-sharded init 已通过；首个 microbatch 在 BFC 申请 `136.69 MiB` 时 OOM，但 NVML 峰值 `24897/32768 MiB=75.98%`恰好对应 JAX 默认 75% preallocated pool 加 context 开销，不足以证明 32GB 物理容量用尽。当前唯一任务是保持 FP32/dense/EMA/global64 不变，仅用 `XLA_CLIENT_MEM_FRACTION=0.90`（条件 `0.95`）完成本地 first-update/10-step 复测，不启动官方 Blackwell。
+canonical LIBERO10Hz、R6 LoRA500-step、folded PyTorch与FAST-only Track1 ZIP均已完成；用户报告其正式Track1得分为`0.47`。Axis-init dense full-FT 的 direct-sharded init 已通过；allocator recovery 在保持 FP32/dense/EMA/global64 不变的前提下完成了 `0.90` 与条件授权的唯一 `0.95` 复测，两次均在真实首个 microbatch 计算阶段 OOM，均未完成 optimizer update。当前状态等待人工审核是否转向 Blackwell；不自动启动官方 GPU，也不执行 A4/长程训练。
 
 ## 2. 数据与复现基础
 
@@ -252,10 +253,21 @@ upstream             当前 branch 未设置 upstream
 2. 阅读并只执行 `docs/AXIS_PI05_DENSE_FULLFT_ALLOCATOR_FRACTION_RECOVERY_PLAN.md`。
 3. 将Track1=`0.47`、ZIP `95415a…c5f5a`锁为baseline；submission ID/log未知字段保持null。
 4. CPU 先锁定旧 R4 OOM 与 step-0 checkpoint，增加 allocator internal stats/XLA memory analysis 可观测性；不改 train-step math。
-5. 四卡自然空闲时从 step0 fresh restore，先用 `XLA_CLIENT_MEM_FRACTION=0.90`完成一次update；仅 allocator OOM 才允许唯一`0.95`，最低passing fraction续跑到10 steps。
-6. 不得启动官方GPU、preallocate false/其他allocator、C20、50/100/1K、FAST/ZIP/提交。只有`0.95`在独占四卡上仍OOM，才作为下一轮Blackwell人工审核依据。
+5. allocator recovery 已从 step0 fresh restore 完成 `0.90`，确认 allocator/BFC OOM 后完成唯一 `0.95`；两次均在首个 microbatch 失败，step1/10 未生成。
+6. 不得启动官方GPU、preallocate false/其他allocator、C20、50/100/1K、FAST/ZIP/提交。只有人工审核明确授权，才可把 `0.95` 证据用于下一轮 Blackwell 决策。
 
 当前路径是：R6 FAST ZIP Track1=`0.47`（冻结）→ sharded-init已通过 → allocator 90%/95% 本地4卡1/10-step → 人工审核显存/restore/吞吐 → 100-step+C20 → 标准LIBERO同run里程碑长训 → paired选模 → 复用R6 FAST部署链 → 目标正式分数`>0.47`。
+
+## 19. Dense full-FT allocator fraction recovery 执行结果
+
+本轮按唯一活动计划执行 A0–A3。CPU lock、step-0 checkpoint tree/hash、fixed recipe 与 allocator contract 均通过；step-0 source tree 为 `9380fd770ced87368c82a05a4dbb8c00fd0f0e82c4e569879aacd127a01038f5`，源 checkpoint 未被修改。全量测试为 `.venv_axis_pi05/bin/pytest -q tests`：`132 passed, 7 skipped, 21 warnings`。
+
+- `0.90`：`allocator_bfc_oom_during_compute`；restore step `0` 通过，allocator `6` samples、NVML `212` samples，首个 microbatch 后申请 `1207959552 bytes` 失败，checkpoint/metric steps 仅 `[0]`/`[]`。
+- `0.95`：在 A2 allocator OOM 后按条件执行；restore step `0` 通过，allocator `6` samples、NVML `208` samples，首个 microbatch 后申请 `75497472 bytes` 失败，checkpoint/metric steps 仅 `[0]`/`[]`。
+- 两次均为 FP32 dense、AdamW、EMA `0.999`、microbatch `1`、global batch `64`；无 optimizer update，A4/10-step、C20、长训均未执行。
+- 4×V100 运行前后均无外部 PID，GPU0 未被外部进程触碰；四卡退出后均约 `5 MiB`。比赛 GPU、官方 Blackwell、FAST、ZIP、上传、push、提交均未启动。
+
+证据目录为 `data/reports/axis_libero_30k/dense_fullft_allocator_fraction_recovery/`；执行审核为 `docs/reviews/axis_pi05/DENSE_FULLFT_ALLOCATOR_FRACTION_EXECUTION_REVIEW_20260901.md`。当前 hard stop：等待人工审核，不自动创建下一训练计划。
 
 ## 11. ZIP 生成阶段执行结果（历史快照）
 

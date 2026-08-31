@@ -886,6 +886,71 @@
       "dense_fullft_local_10step_allocator_passed_pending_review"
     ]
   },
+  "dense_fullft_allocator_fraction_recovery_execution": {
+    "status": "dense_fullft_local_95pct_pool_true_capacity_oom_pending_official_gpu_review",
+    "plan": "docs/AXIS_PI05_DENSE_FULLFT_ALLOCATOR_FRACTION_RECOVERY_PLAN.md",
+    "execution_root_commit": "ff382e7f6f959c900569978349bd3b5eaf015bea",
+    "execution_nested_openpi_commit": "81d82200cb9b31916eaacb05184c77d1bdce9f83",
+    "cpu_lock": "data/reports/axis_libero_30k/dense_fullft_allocator_fraction_recovery/cpu_lock.json",
+    "root_cause_lock": "data/reports/axis_libero_30k/dense_fullft_allocator_fraction_recovery/root_cause_lock.json",
+    "step0_lock": "data/reports/axis_libero_30k/dense_fullft_allocator_fraction_recovery/step0_lock.json",
+    "allocator_contract": "data/reports/axis_libero_30k/dense_fullft_allocator_fraction_recovery/allocator_contract.json",
+    "summary": "data/reports/axis_libero_30k/dense_fullft_allocator_fraction_recovery/summary.json",
+    "report": "data/reports/axis_libero_30k/dense_fullft_allocator_fraction_recovery/RECOVERY_REPORT_ZH.md",
+    "review": "docs/reviews/axis_pi05/DENSE_FULLFT_ALLOCATOR_FRACTION_EXECUTION_REVIEW_20260901.md",
+    "source_step0_tree_sha256": "9380fd770ced87368c82a05a4dbb8c00fd0f0e82c4e569879aacd127a01038f5",
+    "source_step0_unchanged_at_end": true,
+    "fixed_recipe": {
+      "precision": "float32",
+      "topology": "dense_full_model_nnx_Nothing",
+      "optimizer": "AdamW",
+      "ema_decay": 0.999,
+      "microbatch_per_device": 1,
+      "accumulation_steps": 16,
+      "effective_global_batch": 64
+    },
+    "a2_fraction_090": {
+      "fraction": "0.90",
+      "classification": "allocator_bfc_oom_during_compute",
+      "oom_allocation_bytes_per_card": 1207959552,
+      "checkpoint_steps_observed": [0],
+      "metric_steps_observed": [],
+      "optimizer_updates": 0,
+      "restore_step": 0,
+      "restore_status": "passed",
+      "allocator_stats_samples": 6,
+      "nvml_samples": 212,
+      "external_pids": [],
+      "gpu0_external_process_touched": false
+    },
+    "a3_fraction_095": {
+      "fraction": "0.95",
+      "classification": "allocator_bfc_oom_during_compute",
+      "oom_allocation_bytes_per_card": 75497472,
+      "checkpoint_steps_observed": [0],
+      "metric_steps_observed": [],
+      "optimizer_updates": 0,
+      "restore_step": 0,
+      "restore_status": "passed",
+      "allocator_stats_samples": 6,
+      "nvml_samples": 208,
+      "external_pids": [],
+      "gpu0_external_process_touched": false
+    },
+    "a4_continue_10": "not_run_due_to_0_95_hard_gate",
+    "tests": {
+      "command": ".venv_axis_pi05/bin/pytest -q tests",
+      "passed": 132,
+      "skipped": 7,
+      "warnings": 21
+    },
+    "official_gpu_started": false,
+    "competition_gpu_started": false,
+    "c20_started": false,
+    "long_training_started": false,
+    "fast_zip_upload_submission": false,
+    "next_phase_only": "manual_review_before_any_Blackwell_or_new_training_plan"
+  },
   "official_gpu_policy": {
     "use_for_current_submission_precheck": false,
     "reserve_for_final_training_sprint": true,

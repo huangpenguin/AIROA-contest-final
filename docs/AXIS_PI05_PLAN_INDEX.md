@@ -2,7 +2,7 @@
 
 > 更新日期：2026-08-31（Asia/Tokyo）
 > 当前唯一活动计划：`docs/AXIS_PI05_POST_SCORE_DENSE_FULLFT_PREFLIGHT_PLAN.md`
-> 当前状态：`r6_score_047_locked_dense_fullft_preflight_ready`
+> 当前状态：`dense_fullft_preflight_failed`
 > 最新审核：`docs/reviews/axis_pi05/R6_TRACK1_SCORE_047_REVIEW_20260831.md`
 
 ## 1. 唯一活动计划
@@ -11,6 +11,7 @@
   - 用户报告R6 FAST包Track1正式得分`0.47`；它被锁为首个official deployment baseline，本地Docker E2E不再需要；
   - 主线从Axis released params重新开始canonical标准LIBERO dense full-FT，不从R6 LoRA续训；
   - 本轮只完成输入/磁盘锁、dense配置、2卡有时限canary、条件4卡路径、1/10/50/100-step数值/restore/C20和60小时预算；
+  - 实际执行至两卡及四卡显存硬门禁；四卡首个计算初始化 OOM，未产生 checkpoint，F3/F4 未执行；
   - 不启动官方Blackwell、1K/5K/30K、FAST/ZIP或再次提交。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。

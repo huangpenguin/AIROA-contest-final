@@ -2,7 +2,7 @@
 
 > 制定日期：2026-08-31（Asia/Tokyo）
 > 输入 commit：`97f3a35`
-> 当前状态：`r6_score_047_locked_dense_fullft_preflight_ready`
+> 当前状态：`dense_fullft_preflight_failed`
 > 本轮唯一目标：把AXIS标准LIBERO dense full-FT实现、显存、数值、checkpoint/restore和训练时长预算验证到可安全进入长训练冲刺；本轮不启动配布GPU、不跑1K/5K/30K、不生成新ZIP。
 
 ## 0. 最终优化目标与基线
@@ -183,6 +183,17 @@ official_sprint_budget.json
 - 其余最多52小时用于optimizer updates。
 
 若30K预测超过预算，不能把较短checkpoint叫“30K复现”；锁定预算内最高里程碑，优先保证完整可恢复的1K/5K/10K，而不是在截止时留下不可恢复的半run。
+
+## 6.1 本次执行结果（2026-08-31）
+
+F0/F1 已完成并锁定；F2.1 两卡 canary 与条件满足后执行的 F2.2 四卡路径均在首个计算初始化阶段因显存失败。四卡连续预飞行没有执行任何 optimizer update，`checkpoint_steps_observed=[]`、`metric_steps_observed=[]`，因此 F3 的 restore/C20 和 F4 的实测吞吐/60小时预算没有被执行。
+
+- 两卡：`CUDA_VISIBLE_DEVICES=1,2`、FP32、microbatch `1`、accumulation `32`、global batch `64`；申请约 `1.12 GiB` 时 OOM。
+- 四卡：GPU0 已自然空闲后才启动，`CUDA_VISIBLE_DEVICES=0,1,2,3`、FP32、microbatch `1`、accumulation `16`、global batch `64`；XLA 只能将计算降到约 `25.00 GiB`，随后每卡申请 `54 MiB` 时 OOM。
+- 两次运行均未修改 EMA、精度、冻结范围或 global batch；GPU0 外部进程没有被终止。运行结束后四卡均回到约 `5 MiB` 使用量。
+- 证据：`data/reports/axis_libero_30k/dense_fullft_preflight/two_gpu_canary.json`、`two_gpu_canary.log`、`four_gpu_preflight.json`、`four_gpu_preflight.log`。
+
+该结果属于本计划定义的硬门禁失败：当前 4×V100 不足以验证这套 FP32 dense full-FT 配方。执行在此停止，不得以改 batch、关 EMA、冻结参数或降低精度继续尝试。
 
 ## 7. 下一阶段路线图（本轮不授权）
 

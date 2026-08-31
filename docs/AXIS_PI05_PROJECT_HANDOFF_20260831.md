@@ -4,7 +4,7 @@
 > 最新已审核执行 HEAD：`8938bcada74df00341ba020bf7c94f40eebd5178`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`dafa5a27266996eecf28920cacc32f3629776d91`
-> 当前总状态：`r6_score_047_locked_dense_fullft_preflight_ready`
+> 当前总状态：`dense_fullft_preflight_failed`
 > 唯一活动计划：`docs/AXIS_PI05_POST_SCORE_DENSE_FULLFT_PREFLIGHT_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
@@ -299,3 +299,11 @@ R6正式Track1=`0.47`确认FAST-only、vision/key映射与server链在真实scor
 新主线从Axis params、canonical LIBERO10Hz、fresh QUANTILES norm开始dense full-FT。约3.353B模型的FP32 params+Adam+EMA+grads下限约67GB；2×V100每卡下限约33.5GB且未含activation，预计只适合一次allocation canary。3卡不能精确构成uniform global64；首选GPU0自然释放后的4卡，或未来同一次Blackwell长训开头完成preflight。
 
 审核记录：`docs/reviews/axis_pi05/R6_TRACK1_SCORE_047_REVIEW_20260831.md`。活动计划：`docs/AXIS_PI05_POST_SCORE_DENSE_FULLFT_PREFLIGHT_PLAN.md`。
+
+## 15. Dense full-FT preflight 执行结果
+
+本次从 root `3bbee76`、nested OpenPI `d7e41eb` 的 clean lock 开始，完成了 CPU-only F0/F1、一次 GPU1+GPU2 first-update canary，以及 GPU0 自然释放后的唯一一次 4×V100 条件预飞行。两卡在申请约 `1.12 GiB` 时 OOM；四卡在 XLA 将计算降到约 `25.00 GiB` 后，每卡申请 `54 MiB` 时 OOM。两次均为初始化/首个计算失败，没有 optimizer update、checkpoint 或 metric step。
+
+因此当前总状态为 `dense_fullft_preflight_failed`。由于 F2 没有可用拓扑，checkpoint restore、C20、吞吐报告和 60 小时预算均未执行；不能据此判定模型能力失败，也不能修改 recipe 继续硬跑。GPU0 外部进程未触碰，四卡在进程退出后均约 `5 MiB`，没有启动官方 GPU、1K以上训练、FAST、ZIP、push 或上传。
+
+完整证据位于 `data/reports/axis_libero_30k/dense_fullft_preflight/`，尤其是 `input_lock.json`、`memory_budget.json`、`two_gpu_canary.json`、`four_gpu_preflight.json` 及对应日志。

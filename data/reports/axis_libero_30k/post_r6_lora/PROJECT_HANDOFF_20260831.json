@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "generated_date": "2026-08-31",
-  "status": "r6_score_047_locked_dense_fullft_preflight_ready",
+    "status": "dense_fullft_preflight_failed",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
@@ -654,6 +654,72 @@
       "waiting_for_4gpu_or_official_sprint",
       "dense_fullft_preflight_failed"
     ]
+  },
+  "dense_fullft_preflight_execution": {
+    "status": "dense_fullft_preflight_failed",
+    "execution_root_commit": "3bbee76032e68f1151eb3ca52fe6c8dc85d75cc9",
+    "nested_openpi_commit": "d7e41eb86cb04b91d79aa1f716a94f0361677855",
+    "input_lock": "data/reports/axis_libero_30k/dense_fullft_preflight/input_lock.json",
+    "input_lock_root_clean_at_launch": true,
+    "config_contract": "passed",
+    "disk_budget": "passed",
+    "memory_budget": {
+      "parameter_numel": 3353433872,
+      "fp32_state_lower_bound_total_gb": 67.069,
+      "two_gpu_lower_bound_gb_per_card": 33.534,
+      "four_gpu_lower_bound_gb_per_card": 16.767,
+      "activation_and_replication_included": false
+    },
+    "two_gpu_canary": {
+      "status": "dense_fullft_two_gpu_canary_failed",
+      "gpu_ids": [1, 2],
+      "microbatch_per_device": 1,
+      "accumulation_steps": 32,
+      "effective_global_batch": 64,
+      "oom_allocation": "1.12 GiB",
+      "optimizer_updates": 0,
+      "checkpoint_steps_observed": []
+    },
+    "four_gpu_preflight": {
+      "status": "dense_fullft_four_gpu_preflight_failed",
+      "gpu_ids": [0, 1, 2, 3],
+      "gpu0_natural_release_verified": true,
+      "microbatch_per_device": 1,
+      "accumulation_steps": 16,
+      "effective_global_batch": 64,
+      "xla_rematerialized_floor": "25.00 GiB",
+      "oom_allocation": "54 MiB per card",
+      "optimizer_updates": 0,
+      "checkpoint_steps_expected": [0, 1, 10, 50, 100],
+      "checkpoint_steps_observed": [],
+      "metric_steps_observed": []
+    },
+    "gpu0_external_process_touched": false,
+    "restore_status": "not_run_f2_hard_gate",
+    "c20_status": "not_run_f2_hard_gate",
+    "throughput_status": "not_run_f2_hard_gate",
+    "official_sprint_budget_status": "not_run_f2_hard_gate",
+    "forbidden_stages_started": [
+      "official_gpu",
+      "optimizer_steps_over_100",
+      "fast_export",
+      "zip",
+      "push",
+      "upload",
+      "submission"
+    ],
+    "reports": {
+      "two_gpu": "data/reports/axis_libero_30k/dense_fullft_preflight/two_gpu_canary.json",
+      "four_gpu": "data/reports/axis_libero_30k/dense_fullft_preflight/four_gpu_preflight.json",
+      "thread": "data/reports/axis_libero_30k/dense_fullft_preflight/THREAD_REPORT_ZH.md"
+    },
+    "tests": {
+      "command": ".venv_axis_pi05/bin/pytest -q tests",
+      "passed": 125,
+      "skipped": 7,
+      "warnings": 21
+    },
+    "next_phase_only": "manual_review_or_new_minimal_remediation"
   },
   "official_gpu_policy": {
     "use_for_current_submission_precheck": false,

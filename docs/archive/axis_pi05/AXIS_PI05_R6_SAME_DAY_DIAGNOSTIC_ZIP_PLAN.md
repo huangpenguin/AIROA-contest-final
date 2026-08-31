@@ -1,5 +1,10 @@
 # AXIS Pi0.5 R6：当日 FAST 诊断 ZIP 并行执行计划
 
+> 归档日期：2026-08-31（Asia/Tokyo）
+> 归档状态：`superseded_before_execution_by_positive_score_fast_path`
+> 原因：用户将当晚目标收缩为优先获得可能 `>0` 的包；JAX 340、完整 envelope 与 C20 不再处于今晚 critical path。
+> 本文件未获执行，不再提供授权。
+
 > 制定时间：2026-08-31 17:40（Asia/Tokyo）
 > 审核输入 commit：`222e5942d8274a10322ebf4679aaeb6d4f989420`
 > 当前状态：`r6_same_day_diagnostic_zip_ready_to_execute`

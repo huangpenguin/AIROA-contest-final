@@ -4,8 +4,8 @@
 > 最新已审核执行 HEAD：`222e5942d8274a10322ebf4679aaeb6d4f989420`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`dafa5a27266996eecf28920cacc32f3629776d91`
-> 当前总状态：`r6_same_day_diagnostic_zip_ready_to_execute`
-> 唯一活动计划：`docs/AXIS_PI05_R6_SAME_DAY_DIAGNOSTIC_ZIP_PLAN.md`
+> 当前总状态：`r6_positive_score_fast_path_ready`
+> 唯一活动计划：`docs/AXIS_PI05_POSITIVE_SCORE_TONIGHT_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -13,7 +13,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO 10 Hz 数据、R6 两卡 LoRA 500-step、fold、LeRobot/PyTorch frozen parity 和 full-C20 environment dynamics 都已完成；R6 本地 B80 只比 Axis init 多 `1/80`，统计不明确。E1 mb1 canary 的 bitwise gate失败，但 max drift 仅 `1.1920928955078125e-7`，无 action/gripper sign flip 或 provenance drift。为争取当日 ZIP，当前授权 GPU1 JAX numeric evidence 与 R6 FAST export/parity/server/diagnostic-ZIP critical path 并行；只有 critical gates 全通过才生成 ZIP，且在完整 envelope/C20/official pre-check 前仍标 `submission_ready=false`。
+canonical LIBERO 10 Hz 数据、R6 两卡 LoRA 500-step、fold、LeRobot/PyTorch frozen parity 和 full-C20 environment dynamics 都已完成；R6 direct-policy 本地 B80 为 `49/80`，Axis init 为 `48/80`，说明已有非零任务能力。当前不是训练阶段，而是 R6 folded PyTorch 尚未转换为可靠 FAST server/ZIP 的部署阶段。今晚暂停 JAX 340、完整 envelope/C20 与所有训练，只执行 R6 FAST → 16-case parity → 12-request server → locked C5 → ZIP，优先避免上一版 SLOW/vision warning 导致的 0/6。
 
 ## 2. 数据与复现基础
 
@@ -200,9 +200,11 @@ sentinel 实际按单 observation 推理，峰值约 `24717 MiB / 32768 MiB`；f
 
 独立审核进一步核对：internal/external `>1e-6` 元素均为 0，全 action sign mismatch 与 external gripper sign mismatch 均为 0；全量测试为 `121 passed, 7 skipped`。旧 `e1_jax_mb1_canary_failed` 保留。新 future-run replay 门禁预注册为 internal/external max `<=2.384185791015625e-7`、sign mismatch `0`、finite/provenance exact；它不替代旧 EGL `1e-6` failure，也不代表模型性能通过。
 
-为争取当日诊断 ZIP，下一计划允许两 lane 并行：GPU1 从 observation 0 fresh 完成 JAX numeric 340/340；同时 CPU/GPU2 执行 R6-only FAST staging、真实 folded-PyTorch↔FAST parity、FAST server/C5 与 ZIP 静态门禁。任一 FAST critical gate 失败则不生成 ZIP；即使生成，也先标 `diagnostic_only_not_submission_ready`。
+此前的并行 JAX+FAST 方案已在执行前被更短的正分优先路径取代。今晚不再跑 JAX 340：唯一候选为 R6 step-500，唯一 critical path 为 R6-only FAST staging、真实 folded-PyTorch↔FAST 16-case parity、12-request FAST server、locked C5 和 ZIP 静态/离线门禁。locked C5 在看到 FAST rollout 前从既有 B80 锁定 3 个 source-success + 2 个 diagnostic cases，FAST 至少复现 `2/3` source successes才允许打包。
 
-最新审核记录：`docs/reviews/axis_pi05/E1_MB1_CANARY_REVIEW_20260831.md`。
+Axis init/原团队式 standard LIBERO full-FT 是后续正确研究方向，但不是今晚正分路径。短 full-FT 仍需重新 fold/FAST/server/ZIP，并可能引入 optimizer、NaN、norm 或灾难回归；今晚 R6 已有 `49/80` direct-policy 证据，先修部署链更快。ZIP 后另建 `1K→3K→10K→30K` full-FT 计划。
+
+正分优先决策：`docs/reviews/axis_pi05/POSITIVE_SCORE_PIVOT_20260831.md`。
 
 ## 7. 测试、Git 与资源状态
 
@@ -250,10 +252,10 @@ upstream             当前 branch 未设置 upstream
 ## 10. 新 section 的接手顺序
 
 1. 阅读本文件与 `docs/AXIS_PI05_PLAN_INDEX.md`。
-2. 阅读并只执行 `docs/AXIS_PI05_R6_SAME_DAY_DIAGNOSTIC_ZIP_PLAN.md`。
+2. 阅读并只执行 `docs/AXIS_PI05_POSITIVE_SCORE_TONIGHT_PLAN.md`。
 3. 不得修改 R6 folded source、norm、E1 lock/noise、旧 sentinel 或两个旧 failure summary。
-4. 先 CPU-only 去除 FAST 工具的 F2/M1 硬编码并锁定 R6 identity；之后按计划并行 JAX evidence 与 FAST critical lane。
-5. 只有 source identity、key/vision/strict reload、真实 PyTorch↔FAST parity、server latency/C5 与 ZIP static/offline 全通过才能生成诊断 ZIP。
+4. 先 CPU-only 去除 FAST 工具的 F2/M1 硬编码并锁定 R6 identity；不运行 JAX 340 或训练。
+5. 只有 source identity、key/vision/strict reload、16-case真实 PyTorch↔FAST parity、12-request latency、locked C5 与 ZIP static/offline 全通过才能生成 ZIP。
 6. 不得重新训练、使用 SLOW/旧 F2 FAST、启动比赛 GPU、push、上传或比赛提交。
 
-当前路径是：old bitwise failure（保留）→ JAX numeric evidence（并行）+ R6 FAST critical path → diagnostic ZIP → 人工审核 → 完整 envelope/C20 → official pre-check → 人工提交。
+当前路径是：old failures（保留/deferred）→ R6 FAST最短路径 → Track 1 ZIP → 人工决定提交 → 官方分数 → 后续 standard LIBERO full-FT 1K/3K/10K/30K。

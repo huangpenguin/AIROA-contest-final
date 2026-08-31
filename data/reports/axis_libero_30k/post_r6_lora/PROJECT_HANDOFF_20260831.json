@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "generated_date": "2026-08-31",
-  "status": "r6_same_day_diagnostic_zip_ready_to_execute",
+  "status": "r6_positive_score_fast_path_ready",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
@@ -226,9 +226,10 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_R6_SAME_DAY_DIAGNOSTIC_ZIP_PLAN.md",
-  "next_phase_only": "R6_same_day_fast_diagnostic_zip",
+  "next_plan": "docs/AXIS_PI05_POSITIVE_SCORE_TONIGHT_PLAN.md",
+  "next_phase_only": "R6_positive_score_fast_path",
   "e1_authorization": {
+    "current_execution_deferred": true,
     "input_pair_count": 170,
     "input_observation_count": 340,
     "input_lock_sha256": "b96acf22e01f81d89c0bebf8adfd3dfd729e485cdc29a1b87c6fc748f67534c4",
@@ -252,7 +253,7 @@
       "finite_and_provenance_exact": true
     },
     "pytorch_authorized": true,
-    "comparator_authorized": true,
+    "comparator_authorized": false,
     "closed_loop_authorized": true,
     "closed_loop_scope": "C5_FAST_smoke_then_optional_C20_only_if_all_prior_gates_pass",
     "e2_authorized": false,
@@ -392,6 +393,8 @@
     "review_record": "docs/reviews/axis_pi05/E1_MB1_CANARY_REVIEW_20260831.md"
   },
   "same_day_zip_authorization": {
+    "superseded_before_execution": true,
+    "superseded_by": "docs/AXIS_PI05_POSITIVE_SCORE_TONIGHT_PLAN.md",
     "diagnostic_zip_authorized_conditionally": true,
     "diagnostic_zip_critical_gates": [
       "r6_source_identity",
@@ -401,7 +404,7 @@
       "c5_catastrophic_regression_smoke",
       "zip_crc_static_and_offline_import"
     ],
-    "jax_numeric_full_parallel_lane": true,
+    "jax_numeric_full_parallel_lane": false,
     "gpu0_allowed": false,
     "allowed_local_gpu_ids": [1, 2, 3],
     "training_authorized": false,
@@ -410,6 +413,37 @@
     "upload_authorized": false,
     "submit_authorized": false,
     "maximum_status_without_full_envelope_c20_official_precheck": "r6_diagnostic_zip_local_ready_not_submission_ready"
+  },
+  "positive_score_tonight": {
+    "status": "r6_positive_score_fast_path_ready",
+    "candidate": "r6_dual_l2_fresh500_r1",
+    "candidate_count": 1,
+    "objective": "produce_a_fast_only_track1_zip_for_human_submission_decision",
+    "critical_path": [
+      "r6_release_identity_and_remove_f2_m1_hardcoding",
+      "r6_folded_pytorch_to_atomic_model_fast",
+      "source_to_fast_8_fixtures_x_2_seeds",
+      "fast_only_server_12_requests_under_10_seconds",
+      "locked_c5_reproduce_at_least_2_of_3_source_successes",
+      "zip_crc_static_offline_and_unpacked_smoke"
+    ],
+    "deferred_tonight": [
+      "jax_340",
+      "full_e1_envelope",
+      "c20_v160_h160",
+      "all_training",
+      "official_gpu"
+    ],
+    "local_gpus_allowed": [1, 2],
+    "gpu0_allowed": false,
+    "training_authorized": false,
+    "old_f2_fast_authorized": false,
+    "slow_fallback_authorized": false,
+    "automatic_push_upload_submit": false,
+    "maximum_success_status": "r6_positive_score_zip_ready_for_human_decision",
+    "score_guaranteed": false,
+    "plan": "docs/AXIS_PI05_POSITIVE_SCORE_TONIGHT_PLAN.md",
+    "decision_record": "docs/reviews/axis_pi05/POSITIVE_SCORE_PIVOT_20260831.md"
   },
   "auto_upload_authorized": false,
   "auto_submit_authorized": false,

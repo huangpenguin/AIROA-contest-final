@@ -629,6 +629,7 @@ class _OnDiskR6Pi05Policy:
             sys.path.insert(0, str(host_vendor))
         import torch
         import torchvision  # noqa: F401
+        import sentencepiece  # noqa: F401
         if str(vendor) not in sys.path:
             sys.path.insert(0, str(vendor))
         torch._dynamo.config.disable = True

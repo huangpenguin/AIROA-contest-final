@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
   "generated_date": "2026-08-31",
-  "status": "r6_positive_score_zip_ready_for_human_decision",
+  "status": "r6_track1_official_precheck_ready",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
-  "latest_audited_execution_commit": "222e5942d8274a10322ebf4679aaeb6d4f989420",
+  "latest_audited_execution_commit": "8938bcada74df00341ba020bf7c94f40eebd5178",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
   "branch_has_upstream": false,
@@ -200,7 +200,7 @@
   },
   "tests": {
     "command": ".venv_axis_pi05/bin/pytest -q tests",
-    "passed": 121,
+    "passed": 122,
     "skipped": 7,
     "warnings": 21,
     "pynvml_is_collection_blocker": false
@@ -223,8 +223,8 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_POSITIVE_SCORE_TONIGHT_PLAN.md",
-  "next_phase_only": "R6_positive_score_fast_path",
+  "next_plan": "docs/AXIS_PI05_TRACK1_OFFICIAL_PRECHECK_AND_SUBMISSION_PLAN.md",
+  "next_phase_only": "R6_track1_official_precheck",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -391,7 +391,7 @@
   },
   "same_day_zip_authorization": {
     "superseded_before_execution": true,
-    "superseded_by": "docs/AXIS_PI05_POSITIVE_SCORE_TONIGHT_PLAN.md",
+    "superseded_by": "docs/archive/axis_pi05/AXIS_PI05_POSITIVE_SCORE_TONIGHT_PLAN.md",
     "diagnostic_zip_authorized_conditionally": true,
     "diagnostic_zip_critical_gates": [
       "r6_source_identity",
@@ -439,7 +439,7 @@
     "automatic_push_upload_submit": false,
     "maximum_success_status": "r6_positive_score_zip_ready_for_human_decision",
     "score_guaranteed": false,
-    "plan": "docs/AXIS_PI05_POSITIVE_SCORE_TONIGHT_PLAN.md",
+    "plan": "docs/archive/axis_pi05/AXIS_PI05_POSITIVE_SCORE_TONIGHT_PLAN.md",
     "decision_record": "docs/reviews/axis_pi05/POSITIVE_SCORE_PIVOT_20260831.md",
     "result": {
       "source_kind": "on_disk_r6_folded_pytorch",
@@ -471,6 +471,76 @@
       "zip_sha256_sidecar": "artifacts/submission_axis_r6_step500_fast_positive_score_20260831.zip.sha256",
       "zip_manifest_sidecar": "artifacts/submission_axis_r6_step500_fast_positive_score_20260831.zip.manifest.json"
     }
+  },
+  "r6_positive_score_zip_review": {
+    "reviewed_commit": "8938bcada74df00341ba020bf7c94f40eebd5178",
+    "result": "approved_for_official_precheck_and_human_track1_submission_decision",
+    "package": "artifacts/submission_axis_r6_step500_fast_positive_score_20260831.zip",
+    "package_sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a",
+    "package_bytes": 9383571677,
+    "zip_entry_count": 3401,
+    "zip_crc_passed": true,
+    "official_static_validator_passed": true,
+    "fast_only": true,
+    "fast_key_count": 813,
+    "fast_strict_reload_passed": true,
+    "vision_patch_embedding_weight_and_bias_verified": true,
+    "source_fast_parity": {
+      "comparison_count": 16,
+      "median_abs_diff": 0.0027961134910583496,
+      "p95_abs_diff": 0.03621692657470703,
+      "max_abs_diff": 0.12352925539016724,
+      "gripper_sign_agreement": 1.0,
+      "result": "passed"
+    },
+    "server": {
+      "act_requests": 12,
+      "max_seconds": 1.491,
+      "all_under_10_seconds": true,
+      "fast_markers_present": true,
+      "slow_remap_or_vision_warnings": false,
+      "local_cold_start_seconds": 362.48
+    },
+    "c5": {
+      "coverage": "5/5",
+      "source_success_reproduced": "3/3",
+      "result": "passed"
+    },
+    "tests_reproduced": {
+      "passed": 122,
+      "skipped": 7,
+      "warnings": 21
+    },
+    "remaining_risks": [
+      "official_docker_e2e_report_is_local_offline_staged_server_equivalent_not_an_official_run",
+      "local_cold_start_exceeds_local_120_second_probe_but_is_below_official_1200_second_contract",
+      "server_latency_health_error_is_a_stale_failed_startup_poll_field",
+      "l4_24gb_peak_vram_not_measured",
+      "positive_official_score_not_guaranteed"
+    ],
+    "review_record": "docs/reviews/axis_pi05/R6_POSITIVE_SCORE_ZIP_REVIEW_20260831.md",
+    "official_result": false,
+    "submission_status": "NOT_SUBMITTED"
+  },
+  "track1_official_precheck_authorization": {
+    "status": "pending_explicit_user_authorization",
+    "assignment_id": 1007,
+    "artifact_immutable": true,
+    "package": "artifacts/submission_axis_r6_step500_fast_positive_score_20260831.zip",
+    "package_sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a",
+    "package_bytes": 9383571677,
+    "official_gpu_time_authorized": false,
+    "external_private_transfer_authorized": false,
+    "allowed_after_authorization": [
+      "O0_release_and_attempt_confirmation",
+      "O1_official_environment_and_artifact_integrity",
+      "O2_official_blackwell_precheck",
+      "O3_evidence_sync_and_notebook_shutdown"
+    ],
+    "manual_submission_decision_required_after_precheck": true,
+    "automatic_upload_authorized": false,
+    "automatic_submit_authorized": false,
+    "track2_or_track3_submission_authorized": false
   },
   "auto_upload_authorized": false,
   "auto_submit_authorized": false,

@@ -1,11 +1,11 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新已审核执行 HEAD：`222e5942d8274a10322ebf4679aaeb6d4f989420`
+> 最新已审核执行 HEAD：`8938bcada74df00341ba020bf7c94f40eebd5178`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`dafa5a27266996eecf28920cacc32f3629776d91`
-> 当前总状态：`r6_positive_score_fast_path_ready`
-> 唯一活动计划：`docs/AXIS_PI05_POSITIVE_SCORE_TONIGHT_PLAN.md`
+> 当前总状态：`r6_track1_official_precheck_ready`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK1_OFFICIAL_PRECHECK_AND_SUBMISSION_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -13,7 +13,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO 10 Hz 数据、R6 两卡 LoRA 500-step、fold、LeRobot/PyTorch frozen parity 和 full-C20 environment dynamics 都已完成；R6 direct-policy 本地 B80 为 `49/80`，Axis init 为 `48/80`，说明已有非零任务能力。当前不是训练阶段，而是 R6 folded PyTorch 尚未转换为可靠 FAST server/ZIP 的部署阶段。今晚暂停 JAX 340、完整 envelope/C20 与所有训练，只执行 R6 FAST → 16-case parity → 12-request server → locked C5 → ZIP，优先避免上一版 SLOW/vision warning 导致的 0/6。
+canonical LIBERO 10 Hz、R6 LoRA 500-step、folded PyTorch、本地 B80 `49/80` 与 FAST-only Track 1 ZIP 都已完成。唯一冻结 ZIP 为 `9383571677` bytes、SHA-256 `95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a`；本地独立审核已批准进入官方 pre-check。当前不再训练或改包，下一步是用户授权后在配布 Blackwell 官方 Docker 验证 hash/offline startup/FAST markers/`/act <10s`，随后停在 assignment `1007` 的人工提交确认点。
 
 ## 2. 数据与复现基础
 
@@ -212,18 +212,18 @@ Axis init/原团队式 standard LIBERO full-FT 是后续正确研究方向，但
 
 ```text
 .venv_axis_pi05/bin/pytest -q tests
-121 passed, 7 skipped, 21 warnings（包含 E1 recovery shard/resume tests）。
+122 passed, 7 skipped, 21 warnings（包含 R6 FAST release tests）。
 ```
 
-此前“缺少 pynvml 导致 collection 中断”不是仓库指定 venv 的真实 blocker；正确 venv 当前可以收集 119 tests。交接时不要为此随意安装依赖。
+此前“缺少 pynvml 导致 collection 中断”不是仓库指定 venv 的真实 blocker；正确 venv 当前可以收集 129 tests（122 passed + 7 skipped）。交接时不要为此随意安装依赖。
 
 Git：
 
 ```text
 branch               codex/axis-pi05-audit-remediation
-latest audited HEAD   222e5942d8274a10322ebf4679aaeb6d4f989420
+latest audited HEAD   8938bcada74df00341ba020bf7c94f40eebd5178
 nested OpenPI        dafa5a27266996eecf28920cacc32f3629776d91
-root/nested          clean（审核 222e594 开始时）
+root/nested          clean（审核 8938bca 开始时）
 upstream             当前 branch 未设置 upstream
 ```
 
@@ -250,13 +250,13 @@ upstream             当前 branch 未设置 upstream
 ## 10. 新 section 的接手顺序
 
 1. 阅读本文件与 `docs/AXIS_PI05_PLAN_INDEX.md`。
-2. 阅读并只执行 `docs/AXIS_PI05_POSITIVE_SCORE_TONIGHT_PLAN.md`。
-3. 不得修改 R6 folded source、norm、E1 lock/noise、旧 sentinel 或两个旧 failure summary。
-4. 先 CPU-only 去除 FAST 工具的 F2/M1 硬编码并锁定 R6 identity；不运行 JAX 340 或训练。
-5. 只有 source identity、key/vision/strict reload、16-case真实 PyTorch↔FAST parity、12-request latency、locked C5 与 ZIP static/offline 全通过才能生成 ZIP。
-6. 不得重新训练、使用 SLOW/旧 F2 FAST、启动比赛 GPU、push、上传或比赛提交。
+2. 阅读并只执行 `docs/AXIS_PI05_TRACK1_OFFICIAL_PRECHECK_AND_SUBMISSION_PLAN.md`。
+3. 唯一允许进入 pre-check 的 ZIP hash 为 `95415a…c5f5a`；不得修改、重建、重新压缩或换旧包。
+4. 启动配布 Notebook/私有传输前必须由用户确认消耗计时与当天 Track 1 次数；执行者不得自动上传。
+5. 官方 pre-check 通过后先回传报告、关闭 Notebook，再停在 assignment `1007` 的人工提交确认点。
+6. 不得重新训练、运行JAX/C20、使用 SLOW/旧 F2 FAST、自动 push/upload/submit或处理Track 2/3。
 
-当前路径是：old failures（保留/deferred）→ R6 FAST最短路径 → Track 1 ZIP → 人工决定提交 → 官方分数 → 后续 standard LIBERO full-FT 1K/3K/10K/30K。
+当前路径是：R6 FAST ZIP（本地审核 approved）→ 官方 pre-check → 人工 Track 1 提交 → 官方分数归档 → 后续 standard LIBERO full-FT 1K/3K/10K/30K。
 
 ## 11. 今晚正分路径执行结果：ZIP 等待人工决定
 
@@ -275,3 +275,11 @@ upstream             当前 branch 未设置 upstream
 - ZIP manifest 明确为 `NOT_SUBMITTED`，`official_result=false`，`auto_submit=false`；本地离线等价报告也明确 `official_result=false`，不能当作官方分数。
 
 本轮未执行 JAX 340、完整统计 envelope、comparator、E2、C20、FAST 之外的 SLOW fallback、训练、比赛 GPU、push、上传或提交。运行时只使用物理 GPU1；GPU0 仅存在外部 PID `237527`，本轮未触碰。下一步仅等待人工审核/提交决定。
+
+## 12. R6 FAST ZIP 独立审核
+
+commit `8938bca` 已独立审核为 `approved`，批准范围为官方 pre-check与人工提交决策。复核包括：ZIP SHA/bytes、全量 `unzip -t`、仓库官方 `validate_submission.py --static --json`、source/FAST/processor identity、813-key/vision/strict reload、16-case parity、server latency、C5与全量测试。
+
+保留风险：`official_docker_e2e.json` 实际是本地离线等价检查；本地 cold startup约 `362s`，须使用 official `1200s` timeout重验；没有L4 24GB正式 peak-memory证据。`server_latency.json.health_error` 是 health成功前最后一次轮询错误，最终 health/reset/12 acts均成功，不需要重建ZIP。
+
+审核记录：`docs/reviews/axis_pi05/R6_POSITIVE_SCORE_ZIP_REVIEW_20260831.md`。

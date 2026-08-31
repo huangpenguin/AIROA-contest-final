@@ -1,22 +1,21 @@
 # AXIS Pi0.5 计划索引与审核生命周期
 
 > 更新日期：2026-08-31（Asia/Tokyo）
-> 当前唯一活动计划：`docs/AXIS_PI05_POSITIVE_SCORE_TONIGHT_PLAN.md`
-> 当前状态：`r6_positive_score_zip_ready_for_human_decision`
-> 最新决策：`docs/reviews/axis_pi05/POSITIVE_SCORE_PIVOT_20260831.md`
+> 当前唯一活动计划：`docs/AXIS_PI05_TRACK1_OFFICIAL_PRECHECK_AND_SUBMISSION_PLAN.md`
+> 当前状态：`r6_track1_official_precheck_ready`
+> 最新审核：`docs/reviews/axis_pi05/R6_POSITIVE_SCORE_ZIP_REVIEW_20260831.md`
 
 ## 1. 唯一活动计划
 
-- `AXIS_PI05_POSITIVE_SCORE_TONIGHT_PLAN.md`
-  - 今晚暂停 JAX 340、完整 envelope、C20 与所有训练，只做唯一 R6 step-500 候选；
-  - 最短 critical path：R6 identity → FAST key/vision/strict reload → 16-case source↔FAST parity → 12-request server → locked C5 → ZIP；
-  - locked C5 专门包含 3 个既有 R6 source-success regression cases，要求 FAST 至少复现 2 个，优先排除上一版 0/6 灾难回归；
-  - 只生成供用户人工决定的 Track 1 ZIP，不自动使用比赛 GPU、push、上传或提交。
-  - E1.0–E1.6 本地门禁已完成；Track 1 ZIP 已生成并等待人工决定，未产生官方分数。
+- `AXIS_PI05_TRACK1_OFFICIAL_PRECHECK_AND_SUBMISSION_PLAN.md`
+  - 唯一冻结 artifact 为 SHA-256 `95415a…c5f5a`、9383571677 bytes 的 R6 Track 1 FAST ZIP；不得修改或重建；
+  - 先经用户授权消耗配布 GPU/私有传输，再在官方 pre-check Docker 中复核 hash、static validator、offline startup、FAST markers 与 `/act <10s`；
+  - pre-check 通过后回传证据、关闭 Notebook，并停在 Track 1 assignment `1007` 的人工提交确认点；
+  - 不授权自动上传/提交、训练、JAX、C20或 Track 2/3。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 
-E1 microbatch-1 canary 的旧 bitwise failure与审核结论继续保留，但不再处于今晚 critical path。当前 direct-policy R6 已有 `49/80`，官方 0/6 的已知直接风险是 SLOW/vision/server deployment。用户要求优先争取当晚正分，因此当前只授权最短 R6 FAST/ZIP 路径；完整统计证据与 full-FT 均 deferred。
+R6 FAST-only ZIP 的本地 release 审核已 `approved`：source/FAST identity、813 keys、vision weight+bias、strict reload、16-case parity、12-request latency、locked C5、CRC与官方 static validator均通过。批准范围仅为官方 pre-check和人工提交决策；本地 `official_docker_e2e.json` 不是官方 Docker，L4显存与官方分数仍未知。
 
 ## 2. 已归档的 R6 执行链
 
@@ -32,6 +31,7 @@ E1 microbatch-1 canary 的旧 bitwise failure与审核结论继续保留，但�
 8. `AXIS_PI05_E1_EGL_ACTION_ENVELOPE_PLAN.md`：完成 lock 与 JAX sentinel；E1.3 `microbatch=4` OOM 后按 hard gate 停止，E1.4/E1.5 未执行。
 9. `AXIS_PI05_E1_JAX_MB1_RECOVERY_PLAN.md`：完成 atomic shard/resume 与 16/16 canary；旧 bitwise gate失败，340/340未启动。
 10. `AXIS_PI05_R6_SAME_DAY_DIAGNOSTIC_ZIP_PLAN.md`：在执行前被更短的当晚正分路径取代；其中 JAX 340、完整 envelope/C20 不进入今晚任务。
+11. `AXIS_PI05_POSITIVE_SCORE_TONIGHT_PLAN.md`：P0–P4完成，生成唯一获批进入官方 pre-check 的 R6 Track 1 FAST ZIP；未上传/提交。
 
 归档不表示旧计划所有尾部阶段都完成；只表示该文件不再是活动授权入口。旧 failure、阈值、hash 和未执行阶段必须继续保留。
 

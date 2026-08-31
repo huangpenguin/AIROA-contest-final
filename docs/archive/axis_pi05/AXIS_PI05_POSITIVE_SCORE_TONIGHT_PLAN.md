@@ -1,5 +1,11 @@
 # AXIS Pi0.5：今晚正分优先 FAST/ZIP 最短执行计划
 
+> 归档日期：2026-08-31（Asia/Tokyo）
+> 归档状态：`completed_r6_positive_score_zip_ready_for_human_decision`
+> 已完成：P0–P4 全部门禁，生成并验证 Track 1 FAST-only ZIP。
+> 未执行：官方 Blackwell pre-check、上传、提交与官方计分。
+> 本文件不再提供执行授权。
+
 > 制定时间：2026-08-31 18:11（Asia/Tokyo）
 > 输入 commit：`58d3fcc46cfa1eaffd5d057be59edf97b03f02eb`
 > 当前状态：`r6_positive_score_fast_path_ready`

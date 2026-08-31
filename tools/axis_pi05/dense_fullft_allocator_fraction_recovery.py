@@ -190,8 +190,6 @@ def _allocator_contract() -> dict[str, Any]:
 
 
 def cpu_phase() -> dict[str, Any]:
-    if (REPORT_ROOT / "cpu_lock.json").exists():
-        raise FileExistsError(f"refusing to overwrite CPU lock: {REPORT_ROOT / 'cpu_lock.json'}")
     config = validate_config_contract()
     if config["status"] != "passed":
         raise ValueError(json.dumps(config, ensure_ascii=False))
@@ -241,7 +239,8 @@ def cpu_phase() -> dict[str, Any]:
             "jax_default_pool_mib_per_card": pool_mib,
             "nvml_peak_mib_per_card": OLD_NVML_PEAK_MIB,
             "nvml_peak_fraction": observed_ratio,
-            "pool_external_mib_per_card": PHYSICAL_VRAM_MIB - pool_mib,
+            "default_pool_capacity_outside_mib_per_card": PHYSICAL_VRAM_MIB - pool_mib,
+            "physical_unused_after_observed_peak_mib_per_card": PHYSICAL_VRAM_MIB - OLD_NVML_PEAK_MIB,
             "observed_peak_minus_pool_mib": OLD_NVML_PEAK_MIB - pool_mib,
             "estimated_context_driver_nccl_mib": OLD_NVML_PEAK_MIB - pool_mib,
         },
@@ -287,7 +286,7 @@ def cpu_phase() -> dict[str, Any]:
                 "# Dense full-FT allocator fraction CPU 锁",
                 "",
                 "- 状态：`dense_fullft_allocator_fraction_cpu_locked`。",
-                f"- 旧 R4 NVML 峰值：`{OLD_NVML_PEAK_MIB}/{PHYSICAL_VRAM_MIB} MiB`；默认 75% pool：`{pool_mib} MiB`。",
+                f"- 旧 R4 NVML 峰值：`{OLD_NVML_PEAK_MIB}/{PHYSICAL_VRAM_MIB} MiB`；默认 75% pool：`{pool_mib} MiB`；峰值后物理剩余：`{PHYSICAL_VRAM_MIB - OLD_NVML_PEAK_MIB} MiB`。",
                 f"- 旧单次 OOM allocation：`{OLD_OOM_REQUEST_BYTES} bytes/card`；旧证据 hash 见 `root_cause_lock.json`。",
                 f"- step-0 source tree：`{checkpoint['checkpoint']['tree_sha256']}`，internal step `0`；源目录只读锁定，不会 fresh-init 绕过。",
                 "- 固定 FP32、dense、AdamW、EMA `0.999`、microbatch `1`、4 卡 accumulation `16`、global batch `64`。",

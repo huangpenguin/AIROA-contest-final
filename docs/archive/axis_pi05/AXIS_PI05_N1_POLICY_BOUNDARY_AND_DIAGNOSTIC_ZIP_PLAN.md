@@ -1,5 +1,7 @@
 # AXIS Pi0.5 N1：策略边界确定性恢复与诊断 ZIP 就绪计划
 
+> 归档状态（2026-08-31）：Q0–Q2 已执行并在 raw-LoRA `1e-6` 门禁停止，后续由 folded deployment 专项取代。
+
 > 制定日期：2026-08-30  
 > 输入提交：`a202d6b8eaf865b173f0b279686549549656ac59`  
 > 输入状态：`n1_nondeterminism_root_cause_unresolved`  

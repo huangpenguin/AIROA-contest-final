@@ -1,15 +1,16 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 审计输入 HEAD：`be56e8edca77377b57a2941d0483564ce4112f79`
+> 最新审核输入 HEAD：`78109647e95d79690511c922845141ff492a395f`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`dafa5a27266996eecf28920cacc32f3629776d91`
-> 当前总状态：`r6_egl_statistical_protocol_pending`
-> 下一计划：`docs/AXIS_PI05_R6_EGL_STATISTICAL_RELEASE_PLAN.md`
+> 当前总状态：`e0_results_numerically_verified_formal_closure_required`
+> 唯一活动计划：`docs/AXIS_PI05_E0_CLOSURE_BEFORE_E1_PLAN.md`
+> 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 
 ## 1. 一句话结论
 
-canonical LIBERO 10 Hz 数据、R6 两卡 LoRA 500-step、fold、LeRobot/PyTorch frozen parity 和 full-C20 environment dynamics 都已完成；R6 本地 B80 只比 Axis init 多 `1/80`，统计不明确。当前 blocker 不是训练 NaN 或模型加载，而是 EGL 的稀疏像素抖动会造成约 `1e-5～5e-5` action drift，使旧 strict `1e-6` sensitivity gate 失败。现在没有 R6 FAST、server、ZIP 或官方结果；下一 section 先修正 S1.3 报告，再预注册统计 closed-loop 协议。
+canonical LIBERO 10 Hz 数据、R6 两卡 LoRA 500-step、fold、LeRobot/PyTorch frozen parity 和 full-C20 environment dynamics 都已完成；R6 本地 B80 只比 Axis init 多 `1/80`，统计不明确。E0 已完成标签修正、content 去重和 trajectory 只读重分析，当前 170 个 pair 的数值结果可信；但工具仍存在 missing 数据可被判 exact、coverage complete 写死、immutability 测试缺失以及 E0 小型报告未入 Git 的 formal-closure 问题。因此下一 section 只执行 CPU-only E0 closure，不进入 E1。
 
 ## 2. 数据与复现基础
 
@@ -121,15 +122,32 @@ wrist representative   5.1259995e-5
 
 全部 finite、token/mask/state contract 正常、gripper sign flip 0；R6 folded JAX 同量级。因此不像 PyTorch load/norm 错误，但 strict `1e-6` sensitivity gate failed。
 
-## 6. S1.3 审计修正（新 section 必须先处理）
+## 6. E0 完成情况与审核结论
 
-当前 S1.3 报告有三项语义/coverage 缺陷，不推翻 failure：
+commit `7810964` 已完成第一次 E0，只读结果为：
 
-1. `axis_reference_jax` 实际是 R6 folded JAX，不是 Axis step-0；
-2. agentview worst/representative 的内容 SHA 相同，实质重复 pair；
-3. selector 只遍历 E1/E2/E3 snapshot，没有覆盖计划中的 zero64/fixed64 trajectory。
+```text
+comparison groups                         1680
+non-exact groups                            87
+snapshot / trajectory groups              23 / 64
+trajectory affected-frame occurrences       302
+snapshot / trajectory content-unique      13 / 157
+content-unique total                         170
+content duplicates                           155
+dynamics mismatch                              0
+```
 
-旧产物不得覆盖。新 section 按新计划 E0 生成 reanalysis，然后停止审核。
+旧四 pair 只有 3 个 content-unique；误标的 Axis reference 已确认实际为 R6 folded JAX；旧 S1.3 failure/hash 保持不变。
+
+审核状态不是 E1 approved，而是 `e0_results_numerically_verified_formal_closure_required`。剩余问题：
+
+1. `(None, None)` 仍可能被判 exact；
+2. snapshot/trajectory 缺失或 shape mismatch 会被静默跳过；
+3. `trajectory_coverage_complete` 仍为常量；
+4. 缺少旧 S1.3 status/hash immutability 回归测试；
+5. E0 reanalysis/audit/thread report 仍在 ignore 目录，未包含于 `7810964`。
+
+下一 section 只能按活动计划完成 closure，生成新 namespace，不覆盖初次 E0 或旧 S1.3。
 
 ## 7. 测试、Git 与资源状态
 
@@ -137,18 +155,18 @@ wrist representative   5.1259995e-5
 
 ```text
 .venv_axis_pi05/bin/pytest -q tests
-99 passed, 7 skipped, 21 warnings
+103 passed, 7 skipped, 21 warnings
 ```
 
-此前“缺少 pynvml 导致 collection 中断”不是仓库指定 venv 的真实 blocker；正确 venv 可以收集 106 tests。交接时不要为此随意安装依赖。
+此前“缺少 pynvml 导致 collection 中断”不是仓库指定 venv 的真实 blocker；正确 venv 当前可以收集 110 tests。交接时不要为此随意安装依赖。
 
 Git：
 
 ```text
 branch               codex/axis-pi05-audit-remediation
-audited input HEAD   be56e8edca77377b57a2941d0483564ce4112f79
+latest audited HEAD  78109647e95d79690511c922845141ff492a395f
 nested OpenPI        dafa5a27266996eecf28920cacc32f3629776d91
-root/nested          clean（生成本交接文档前）
+root/nested          clean（审核 7810964 时）
 upstream             当前 branch 未设置 upstream
 ```
 
@@ -177,10 +195,10 @@ upstream             当前 branch 未设置 upstream
 ## 10. 新 section 的接手顺序
 
 1. 阅读本文件。
-2. 阅读 `docs/AXIS_PI05_R6_EGL_STATISTICAL_RELEASE_PLAN.md`。
-3. 只执行 Phase E0。
+2. 阅读 `docs/AXIS_PI05_PLAN_INDEX.md`。
+3. 阅读并只执行 `docs/AXIS_PI05_E0_CLOSURE_BEFORE_E1_PLAN.md` 的 C0–C5。
 4. 运行正确 venv 的全量测试。
-5. 更新 `PROJECT_HANDOFF_20260831.json` 与当前线程报告，clean commit 后停止审核。
-6. 未经人工授权，不启动 E1 GPU run、closed-loop、FAST、官方 Notebook、HF upload 或比赛提交。
+5. 更新 machine handoff 与 closure thread report，小型报告显式纳入 Git，clean commit 后停止审核。
+6. 即使 closure 通过，也不得在同一 section 启动 E1 GPU run、closed-loop、FAST、官方 Notebook、HF upload 或比赛提交。
 
-不要重新训练 R6，也不要恢复旧 F2 FAST 包。当前最短可信路径是：修正 S1.3 证据 → 锁定统计协议 → source closed-loop → FAST → ZIP。
+不要重新训练 R6，也不要恢复旧 F2 FAST 包。当前最短可信路径是：E0 fail-closed closure → 人工审核 → E1 envelope → 统计协议 → source closed-loop → FAST → ZIP。

@@ -1,5 +1,7 @@
 # AXIS Pi0.5 R6：Folded 部署链恢复与诊断提交执行任务
 
+> 归档状态（2026-08-31）：S0–S1.3 已执行并按 EGL sensitivity 门禁停止，旧 failure 保持不变。
+
 > 制定日期：2026-08-30（Asia/Tokyo）  
 > 输入提交：`12761d3e6652df8c4c4f59b137282e44a821d085`  
 > 输入状态：`n1_q2_policy_sensitivity_failed_raw_lora_fresh_replay`  

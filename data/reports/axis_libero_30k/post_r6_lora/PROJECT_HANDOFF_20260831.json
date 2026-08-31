@@ -1,8 +1,9 @@
 {
   "schema_version": 1,
   "generated_date": "2026-08-31",
-  "status": "s1_original_failure_preserved_reporting_corrected",
-  "audited_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
+  "status": "e0_results_numerically_verified_formal_closure_required",
+  "audited_input_commit": "78109647e95d79690511c922845141ff492a395f",
+  "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
   "branch_has_upstream": false,
   "nested_openpi_commit": "dafa5a27266996eecf28920cacc32f3629776d91",
@@ -69,7 +70,7 @@
     "jax_vs_pytorch_external_max_abs_diff": 0.000001043081283569336,
     "jax_vs_pytorch_internal_max_abs_diff": 0.0000014007091522216797
   },
-  "s1_3_audit_corrections_required": [
+  "s1_3_audit_corrections_identified": [
     "axis_reference_jax_is_actually_r6_folded_jax",
     "agentview_worst_and_representative_are_content_duplicate",
     "zero64_and_fixed64_trajectory_pairs_not_covered"
@@ -96,7 +97,9 @@
       "non_exact_comparison_group_count": 87,
       "snapshot_pair_count": 23,
       "trajectory_pair_count": 64,
-      "trajectory_affected_frame_count": 302,
+      "trajectory_affected_frame_occurrence_count": 302,
+      "snapshot_content_unique_pair_count": 13,
+      "trajectory_content_unique_pair_count": 157,
       "content_unique_pair_count": 170,
       "content_duplicate_count": 155,
       "dynamics_mismatch_count": 0,
@@ -108,7 +111,29 @@
       "skipped": 7,
       "warnings": 21
     },
-    "next_phase_only": "E1_pending_manual_review"
+    "review_status": "numerically_verified_formal_closure_required",
+    "next_phase_only": "E0_closure"
+  },
+  "e0_review": {
+    "reviewed_commit": "78109647e95d79690511c922845141ff492a395f",
+    "result": "remediation_required",
+    "current_artifact_values_verified": true,
+    "old_s1_3_hashes_verified_unchanged": true,
+    "root_and_nested_clean_at_review": true,
+    "tests_reproduced": {
+      "passed": 103,
+      "skipped": 7,
+      "warnings": 21
+    },
+    "formal_closure_findings": [
+      "missing_both_arrays_can_be_reported_exact",
+      "missing_or_shape_mismatched_inputs_can_be_silently_skipped",
+      "trajectory_coverage_complete_is_constant",
+      "old_s1_3_status_and_hash_immutability_test_missing",
+      "e0_small_reports_not_tracked_by_git",
+      "302_is_trajectory_frame_occurrences_not_content_unique_pairs"
+    ],
+    "e1_approved": false
   },
   "tests": {
     "command": ".venv_axis_pi05/bin/pytest -q tests",
@@ -137,8 +162,9 @@
     "long_horizon_lora_1k_to_30k",
     "track3_20hz_checkpoint"
   ],
-  "next_plan": "docs/AXIS_PI05_R6_EGL_STATISTICAL_RELEASE_PLAN.md",
-  "next_phase_only": "E1_pending_manual_review",
+  "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
+  "next_plan": "docs/AXIS_PI05_E0_CLOSURE_BEFORE_E1_PLAN.md",
+  "next_phase_only": "E0_closure",
   "auto_upload_authorized": false,
   "auto_submit_authorized": false,
   "formal_winner": false

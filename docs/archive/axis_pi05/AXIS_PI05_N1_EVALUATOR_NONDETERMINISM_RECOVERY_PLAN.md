@@ -1,5 +1,7 @@
 # AXIS Pi0.5 N1：Evaluator / Runtime 非确定性定位与恢复执行计划
 
+> 归档状态（2026-08-31）：D1 已完成并按门禁停止，后续由 policy-boundary 专项取代。
+
 > 制定日期：2026-08-30  
 > 输入提交：`ca4a514000abb9226f811dd0b43184d3b4705893`  
 > 输入状态：`r6_evaluator_and_fold_reproducibility_failed`  

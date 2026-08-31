@@ -1,5 +1,7 @@
 # AXIS Pi0.5 LoRA 两卡 NaN 定位、单卡兜底与 500-Step 恢复执行计划
 
+> 归档状态（2026-08-31）：已完成 R0–R6，并由后续 R6 审核链取代；仅保留为历史证据，不再作为活动计划。
+
 > 状态：已执行至 R6，已获得 fresh 500-step checkpoint；最终状态为 `lora_candidate_500_pending_review`，详见专项目录报告。
 > 日期基线：2026-08-30（Asia/Tokyo）。
 > 上游计划：`docs/AXIS_PI05_TWO_GPU_LORA_TODAY_PLAN.md`。  
@@ -628,7 +630,7 @@ data/reports/axis_libero_30k/THREAD_REPORT_ZH.md
 
 ```text
 请完整执行：
-/home/huang/code/PARC2026_final/docs/AXIS_PI05_LORA_NAN_LOCALIZATION_AND_RECOVERY_PLAN.md
+/home/huang/code/PARC2026_final/docs/archive/axis_pi05/AXIS_PI05_LORA_NAN_LOCALIZATION_AND_RECOVERY_PLAN.md
 
 你不是仓库中唯一的工作者。不得 reset、stash、checkout、删除、覆盖或回退其他人的修改；不得使用 git add -A。只允许使用明确空闲且获准的 GPU1/GPU2，不得触碰 GPU0 的外部进程。不得向官方 upstream remote push。
 

@@ -1,5 +1,7 @@
 # AXIS Pi0.5：R6 后 LoRA 长程训练、分层验证与候选选择执行计划
 
+> 归档状态（2026-08-31）：已执行至 N1 并按门禁停止，后续由 evaluator/runtime 与 deployment 专项计划取代。
+
 > 制定日期：2026-08-30  
 > 基线提交：`f2056847d9c08e05e8d01808339ce7d9bf28b80d`  
 > 当前输入状态：`lora_candidate_500_pending_review`  
@@ -28,7 +30,7 @@ r6_evaluator_and_fold_reproducibility_failed
 
 按本计划第 5.2 节和第 15 节，当前执行在 N1 停止。不得启动 N1.3 parity grid、N2 V160/H160、N3 长程训练及其后续阶段，直到 evaluator 的 action/outcome 可重复性问题被单独修复并重新通过 N1.2。详细结果见 `data/reports/axis_libero_30k/post_r6_lora/evaluator_reproducibility/summary.json` 和 `THREAD_REPORT_ZH.md`。
 
-下一步只执行专门的定位计划 `docs/AXIS_PI05_N1_EVALUATOR_NONDETERMINISM_RECOVERY_PLAN.md`。该计划必须先验证 environment-only init/warm-up，再验证 frozen-observation policy runtime；不得直接放宽闭环 byte-exact 门禁。若最终只能得到有界 FP32 jitter，则必须停在统计评价协议的人工审核点，不能自动恢复 N1.3。
+下一步只执行专门的定位计划 `docs/archive/axis_pi05/AXIS_PI05_N1_EVALUATOR_NONDETERMINISM_RECOVERY_PLAN.md`。该计划必须先验证 environment-only init/warm-up，再验证 frozen-observation policy runtime；不得直接放宽闭环 byte-exact 门禁。若最终只能得到有界 FP32 jitter，则必须停在统计评价协议的人工审核点，不能自动恢复 N1.3。
 
 ## 2. 本次审核结论
 

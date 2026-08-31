@@ -1,6 +1,6 @@
 # AXIS Pi0.5 两卡 LoRA 当日筛选与 500-Step 验证计划
 
-> 状态：待执行计划；本文不代表 LoRA 代码已经修复、训练已经启动或已获得新 checkpoint。  
+> 状态：历史计划，已执行并由 R6 recovery 链取代；因配置/工具 provenance 仍引用本路径而保留原位置，不再作为活动授权。
 > 日期基线：2026-08-29（Asia/Tokyo）。  
 > 主线边界：canonical dense full fine-tuning 暂停为 `DEFERRED_WAITING_FOR_4GPU_OR_96GB`；不得修改、覆盖或伪装完成 `AXIS_PI05_STANDARD_LIBERO_30K_RESEARCH_PLAN.md`。  
 > GPU 边界：仅使用两张明确空闲且获准使用的 GPU，默认 GPU1、GPU2；不得绑定、终止或影响 GPU0 的外部进程。  
@@ -411,4 +411,3 @@ data/reports/axis_libero_30k/lora_screen/LORA_SCREEN_REPORT_ZH.md
 
 随后按 L1-L4 四臂矩阵运行 25-step probes，最多两个进入 100-step C20 execute8 paired gate。只有非劣 arm 才能从 Axis step-0 重新初始化，并用两卡 effective global batch 64 运行到 500；step 500 完成 B80 execute8/full_chunk、restore、fold parity、CSV、H.264 和 failure gallery 后必须停止，输出 lora_candidate_500_pending_review 或明确的 stopped 状态。不得自动进入 1K、Plus、Track 3、FAST export 或官方提交。
 ```
-

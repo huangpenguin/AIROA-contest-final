@@ -1,21 +1,21 @@
 # AXIS Pi0.5 计划索引与审核生命周期
 
 > 更新日期：2026-08-31（Asia/Tokyo）
-> 当前唯一活动计划：`docs/AXIS_PI05_TRACK1_OFFICIAL_PRECHECK_AND_SUBMISSION_PLAN.md`
-> 当前状态：`r6_track1_official_precheck_ready`
-> 最新审核：`docs/reviews/axis_pi05/R6_POSITIVE_SCORE_ZIP_REVIEW_20260831.md`
+> 当前唯一活动计划：`docs/AXIS_PI05_TRACK1_SUBMITTED_SCORE_AND_LOCAL_DOCKER_PLAN.md`
+> 当前状态：`r6_track1_user_submitted_score_pending`
+> 最新审核：`docs/reviews/axis_pi05/R6_LOCAL_SCORER_AND_SUBMISSION_DECISION_REVIEW_20260831.md`
 
 ## 1. 唯一活动计划
 
-- `AXIS_PI05_TRACK1_OFFICIAL_PRECHECK_AND_SUBMISSION_PLAN.md`
-  - 唯一冻结 artifact 为 SHA-256 `95415a…c5f5a`、9383571677 bytes 的 R6 Track 1 FAST ZIP；不得修改或重建；
-  - 先经用户授权消耗配布 GPU/私有传输，再在官方 pre-check Docker 中复核 hash、static validator、offline startup、FAST markers 与 `/act <10s`；
-  - pre-check 通过后回传证据、关闭 Notebook，并停在 Track 1 assignment `1007` 的人工提交确认点；
-  - 不授权自动上传/提交、训练、JAX、C20或 Track 2/3。
+- `AXIS_PI05_TRACK1_SUBMITTED_SCORE_AND_LOCAL_DOCKER_PLAN.md`
+  - 用户已人工提交唯一冻结 R6 Track 1 FAST ZIP；当前只记录为 `user_reported_submitted_score_pending`，不猜 submission ID或分数；
+  - 不使用配布 Blackwell，不重复提交；在自有 GPU1 与现有 `parc2026:latest` 上补真实 `evaluate.py` Docker E2E；
+  - Dockerfile/setup/evaluator/validator 与 host hash exact，因此不为 README说明变化重建40.8GB image；
+  - 官方结果到达后区分 deployment failure 与 policy capability，再决定 full-FT或最小部署修复。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 
-R6 FAST-only ZIP 的本地 release 审核已 `approved`：source/FAST identity、813 keys、vision weight+bias、strict reload、16-case parity、12-request latency、locked C5、CRC与官方 static validator均通过。批准范围仅为官方 pre-check和人工提交决策；本地 `official_docker_e2e.json` 不是官方 Docker，L4显存与官方分数仍未知。
+README确认 Dockerfile/评测流程/依赖与正式 scorer同构，但隐藏任务、leaderboard score和L4硬件不在本地复现范围。本机已有匹配核心 hash 的CUDA13/PyTorch2.11 image；用户已提交后，官方Blackwell pre-check计划被取代，60小时额度保留给最终训练冲刺。
 
 ## 2. 已归档的 R6 执行链
 
@@ -32,6 +32,7 @@ R6 FAST-only ZIP 的本地 release 审核已 `approved`：source/FAST identity�
 9. `AXIS_PI05_E1_JAX_MB1_RECOVERY_PLAN.md`：完成 atomic shard/resume 与 16/16 canary；旧 bitwise gate失败，340/340未启动。
 10. `AXIS_PI05_R6_SAME_DAY_DIAGNOSTIC_ZIP_PLAN.md`：在执行前被更短的当晚正分路径取代；其中 JAX 340、完整 envelope/C20 不进入今晚任务。
 11. `AXIS_PI05_POSITIVE_SCORE_TONIGHT_PLAN.md`：P0–P4完成，生成唯一获批进入官方 pre-check 的 R6 Track 1 FAST ZIP；未上传/提交。
+12. `AXIS_PI05_TRACK1_OFFICIAL_PRECHECK_AND_SUBMISSION_PLAN.md`：因用户已人工提交并决定保留配布GPU给训练而在执行前取代；O0–O3均未执行。
 
 归档不表示旧计划所有尾部阶段都完成；只表示该文件不再是活动授权入口。旧 failure、阈值、hash 和未执行阶段必须继续保留。
 

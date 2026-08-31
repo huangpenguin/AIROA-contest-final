@@ -1,5 +1,10 @@
 # AXIS Pi0.5 R6：Track 1 官方 Pre-check 与人工提交计划
 
+> 归档日期：2026-08-31（Asia/Tokyo）
+> 归档状态：`superseded_after_user_manual_submission`
+> 用户已人工提交冻结 ZIP，并决定把配布 Blackwell 额度保留给最后训练冲刺；O0–O3 均未执行。
+> 本文件不再提供启动官方 Notebook、传输或 pre-check 的授权。
+
 > 制定日期：2026-08-31（Asia/Tokyo）
 > 审核输入 commit：`8938bcada74df00341ba020bf7c94f40eebd5178`
 > 当前状态：`r6_track1_official_precheck_ready`

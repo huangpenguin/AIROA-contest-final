@@ -1,11 +1,12 @@
 {
   "schema_version": 1,
   "generated_date": "2026-08-31",
-  "status": "r6_track1_official_precheck_ready",
+  "status": "r6_track1_user_submitted_score_pending",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
   "latest_audited_execution_commit": "8938bcada74df00341ba020bf7c94f40eebd5178",
+  "latest_audit_input_commit": "43aef3010030160925f7ba967e990a9668bf5b62",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
   "branch_has_upstream": false,
@@ -223,8 +224,8 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_TRACK1_OFFICIAL_PRECHECK_AND_SUBMISSION_PLAN.md",
-  "next_phase_only": "R6_track1_official_precheck",
+  "next_plan": "docs/AXIS_PI05_TRACK1_SUBMITTED_SCORE_AND_LOCAL_DOCKER_PLAN.md",
+  "next_phase_only": "R6_track1_local_docker_e2e_and_score_ingestion",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -458,6 +459,8 @@
       "package_bytes": 9383571677,
       "package_contains_slow_model": false,
       "submission_status": "NOT_SUBMITTED",
+      "submission_status_scope": "package_generation_manifest_only",
+      "current_external_submission_status": "user_reported_submitted_score_pending",
       "official_result": false,
       "auto_upload_submit": false,
       "gpu_used": 1,
@@ -520,10 +523,11 @@
     ],
     "review_record": "docs/reviews/axis_pi05/R6_POSITIVE_SCORE_ZIP_REVIEW_20260831.md",
     "official_result": false,
-    "submission_status": "NOT_SUBMITTED"
+    "submission_status": "NOT_SUBMITTED",
+    "submission_status_scope": "review_time_package_manifest_only"
   },
   "track1_official_precheck_authorization": {
-    "status": "pending_explicit_user_authorization",
+    "status": "superseded_after_user_manual_submission",
     "assignment_id": 1007,
     "artifact_immutable": true,
     "package": "artifacts/submission_axis_r6_step500_fast_positive_score_20260831.zip",
@@ -531,16 +535,78 @@
     "package_bytes": 9383571677,
     "official_gpu_time_authorized": false,
     "external_private_transfer_authorized": false,
-    "allowed_after_authorization": [
+    "official_precheck_executed": false,
+    "superseded_by": "docs/AXIS_PI05_TRACK1_SUBMITTED_SCORE_AND_LOCAL_DOCKER_PLAN.md",
+    "official_gpu_reserved_for_final_training_sprint": true,
+    "historical_allowed_after_authorization": [
       "O0_release_and_attempt_confirmation",
       "O1_official_environment_and_artifact_integrity",
       "O2_official_blackwell_precheck",
       "O3_evidence_sync_and_notebook_shutdown"
     ],
-    "manual_submission_decision_required_after_precheck": true,
+    "manual_submission_decision_required_after_precheck": false,
+    "manual_submission_already_reported": true,
     "automatic_upload_authorized": false,
     "automatic_submit_authorized": false,
     "track2_or_track3_submission_authorized": false
+  },
+  "track1_manual_submission": {
+    "status": "user_reported_submitted_score_pending",
+    "user_reported": true,
+    "repository_verified": false,
+    "assignment_id": 1007,
+    "track": "track1",
+    "package": "artifacts/submission_axis_r6_step500_fast_positive_score_20260831.zip",
+    "package_sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a",
+    "package_bytes": 9383571677,
+    "submission_id": null,
+    "submitted_at": null,
+    "completed_at": null,
+    "score": null,
+    "official_log": null,
+    "official_result": false,
+    "repeat_submission_authorized": false
+  },
+  "local_scorer_dependency_environment": {
+    "readme_claim": "same_dependency_configuration_and_evaluation_procedure_not_hidden_tasks_score_or_gpu_hardware",
+    "host_driver": "580.159.03",
+    "host_reported_cuda": "13.0",
+    "host_gpu": "Tesla V100-PCIE-32GB",
+    "docker_version": "28.1.1",
+    "nvidia_runtime_available": true,
+    "image": "parc2026:latest",
+    "image_id": "sha256:2481fd635a465c6b9dd38b6101c8307ce97d0bf7a3c2ffb57e487103cec9ccec",
+    "image_created": "2026-08-24T23:22:22.322942931+09:00",
+    "image_size_bytes": 40823788898,
+    "container_cuda": "13.0.3",
+    "container_python": "3.10.12",
+    "container_pytorch": "2.11.0+cu130",
+    "container_torch_cuda": "13.0",
+    "core_input_hashes_exact": true,
+    "hashes": {
+      "Dockerfile": "152e62a0c3a03ceec5830c449ea13f78a6a952393ebc2de2122bdce93dcb945c",
+      "setup.sh": "28161d18f846a7486f7e9fb49e4033ec48c942ad88ad6f92f6adf5e54e6e4057",
+      "evaluate.py": "5c8248db309ab578d1dcecfc44306d565b91ae10e809503ff456fd9c9832d5ca",
+      "validate_submission.py": "6dd746afa4747d6d21f117ad0c830d3c8f16a705545dbb86ee8d893c51fc47c4"
+    },
+    "image_rebuild_required": false,
+    "r6_real_docker_e2e_executed": false,
+    "next_gpu": 1,
+    "gpu0_allowed": false,
+    "official_blackwell_precheck_planned": false,
+    "review_record": "docs/reviews/axis_pi05/R6_LOCAL_SCORER_AND_SUBMISSION_DECISION_REVIEW_20260831.md"
+  },
+  "official_gpu_policy": {
+    "use_for_current_submission_precheck": false,
+    "reserve_for_final_training_sprint": true,
+    "current_training_authorized": false,
+    "prerequisites": [
+      "local_full_ft_1_10_50_100_step_finite_and_restore_pass",
+      "recipe_data_norm_precision_and_checkpoint_cadence_locked",
+      "12_hour_resume_and_persistent_sync_proven",
+      "60_hour_step_budget_and_recovery_margin_estimated",
+      "explicit_user_authorization"
+    ]
   },
   "auto_upload_authorized": false,
   "auto_submit_authorized": false,

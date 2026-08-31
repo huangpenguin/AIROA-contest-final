@@ -4,8 +4,8 @@
 > 最新已审核执行 HEAD：`8938bcada74df00341ba020bf7c94f40eebd5178`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`dafa5a27266996eecf28920cacc32f3629776d91`
-> 当前总状态：`r6_track1_official_precheck_ready`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK1_OFFICIAL_PRECHECK_AND_SUBMISSION_PLAN.md`
+> 当前总状态：`r6_track1_user_submitted_score_pending`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK1_SUBMITTED_SCORE_AND_LOCAL_DOCKER_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -13,7 +13,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO 10 Hz、R6 LoRA 500-step、folded PyTorch、本地 B80 `49/80` 与 FAST-only Track 1 ZIP 都已完成。唯一冻结 ZIP 为 `9383571677` bytes、SHA-256 `95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a`；本地独立审核已批准进入官方 pre-check。当前不再训练或改包，下一步是用户授权后在配布 Blackwell 官方 Docker 验证 hash/offline startup/FAST markers/`/act <10s`，随后停在 assignment `1007` 的人工提交确认点。
+canonical LIBERO 10 Hz、R6 LoRA 500-step、folded PyTorch、本地 B80 `49/80` 与 FAST-only Track 1 ZIP 都已完成。用户已报告将唯一冻结 ZIP 人工提交到 Track 1 assignment `1007`，当前为 `score_pending`；仓库尚无 submission ID、官方日志或分数。README和本机审计确认本地可运行同依赖/同流程 Docker，所以下一步只在自有GPU1补真实Docker E2E并等待官方结果；配布Blackwell不用于本次pre-check，额度保留给recipe锁定后的训练冲刺。
 
 ## 2. 数据与复现基础
 
@@ -250,15 +250,15 @@ upstream             当前 branch 未设置 upstream
 ## 10. 新 section 的接手顺序
 
 1. 阅读本文件与 `docs/AXIS_PI05_PLAN_INDEX.md`。
-2. 阅读并只执行 `docs/AXIS_PI05_TRACK1_OFFICIAL_PRECHECK_AND_SUBMISSION_PLAN.md`。
-3. 唯一允许进入 pre-check 的 ZIP hash 为 `95415a…c5f5a`；不得修改、重建、重新压缩或换旧包。
-4. 启动配布 Notebook/私有传输前必须由用户确认消耗计时与当天 Track 1 次数；执行者不得自动上传。
-5. 官方 pre-check 通过后先回传报告、关闭 Notebook，再停在 assignment `1007` 的人工提交确认点。
-6. 不得重新训练、运行JAX/C20、使用 SLOW/旧 F2 FAST、自动 push/upload/submit或处理Track 2/3。
+2. 阅读并只执行 `docs/AXIS_PI05_TRACK1_SUBMITTED_SCORE_AND_LOCAL_DOCKER_PLAN.md`。
+3. 唯一已提交 ZIP hash 为 `95415a…c5f5a`；不得修改、重建、重新压缩、换旧包或重复提交。
+4. 只在自有GPU1运行现有 `parc2026:latest` 的真实 `evaluate.py` E2E；GPU0和官方Blackwell均禁止。
+5. 等待用户提供submission ID、官方score/log；没有证据时保持 `score_pending`。
+6. 官方结果到达后按部署失败/行为不足分支重新审核；本轮不得训练、自动上传或处理Track 2/3。
 
-当前路径是：R6 FAST ZIP（本地审核 approved）→ 官方 pre-check → 人工 Track 1 提交 → 官方分数归档 → 后续 standard LIBERO full-FT 1K/3K/10K/30K。
+当前路径是：R6 FAST ZIP（已由用户人工提交）→ 自有GPU scorer-dependency Docker E2E + 官方分数归档 → 部署/能力归因 → standard LIBERO full-FT；配布GPU只在最终recipe锁定后进入长训练冲刺。
 
-## 11. 今晚正分路径执行结果：ZIP 等待人工决定
+## 11. ZIP 生成阶段执行结果（历史快照）
 
 本轮只执行了今晚计划允许的 R6 step-500 FAST 路径，最终状态为
 `r6_positive_score_zip_ready_for_human_decision`。真实 folded-PyTorch source、FAST
@@ -272,9 +272,9 @@ upstream             当前 branch 未设置 upstream
 - C5：5/5 coverage，3/3 source-success regression 复现；两个 diagnostic case 均无 HTTP、nonfinite 或 stall，`task07` 保留 collision 诊断。
 - 证据报告目录：`data/reports/axis_libero_30k/post_r6_lora/r6_positive_score_fast/`，包括 `source_inventory.json`、`export_report.json`、`fast_submission_audit.json`、`key_mapping.json`、`fixed_input_parity.json`、`server_latency.json`、`track1_calibration/summary.json`、`official_docker_e2e.json` 和 `package_validation.json`。
 - Track 1 ZIP：[submission_axis_r6_step500_fast_positive_score_20260831.zip](/home/huang/code/PARC2026_final/artifacts/submission_axis_r6_step500_fast_positive_score_20260831.zip)，大小 `9383571677` bytes，SHA-256 `95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a`；sidecars 为同名 `.sha256` 与 `.manifest.json`。
-- ZIP manifest 明确为 `NOT_SUBMITTED`，`official_result=false`，`auto_submit=false`；本地离线等价报告也明确 `official_result=false`，不能当作官方分数。
+- ZIP manifest 在生成时明确为 `NOT_SUBMITTED`，`official_result=false`，`auto_submit=false`；这些字段描述 package-generation 时点，不覆盖第13节所记用户后续人工提交。本地离线等价报告仍不能当作官方分数。
 
-本轮未执行 JAX 340、完整统计 envelope、comparator、E2、C20、FAST 之外的 SLOW fallback、训练、比赛 GPU、push、上传或提交。运行时只使用物理 GPU1；GPU0 仅存在外部 PID `237527`，本轮未触碰。下一步仅等待人工审核/提交决定。
+截至执行 commit `8938bca`，未执行 JAX 340、完整统计 envelope、comparator、E2、C20、FAST 之外的 SLOW fallback、训练、比赛 GPU、push、上传或提交；运行时只使用物理 GPU1，GPU0未触碰。之后的用户人工提交是仓库外动作，当前只按第13节记录为 `score_pending`。
 
 ## 12. R6 FAST ZIP 独立审核
 
@@ -283,3 +283,11 @@ commit `8938bca` 已独立审核为 `approved`，批准范围为官方 pre-check
 保留风险：`official_docker_e2e.json` 实际是本地离线等价检查；本地 cold startup约 `362s`，须使用 official `1200s` timeout重验；没有L4 24GB正式 peak-memory证据。`server_latency.json.health_error` 是 health成功前最后一次轮询错误，最终 health/reset/12 acts均成功，不需要重建ZIP。
 
 审核记录：`docs/reviews/axis_pi05/R6_POSITIVE_SCORE_ZIP_REVIEW_20260831.md`。
+
+## 13. 人工提交与本地 scorer 环境决策
+
+用户已报告完成 Track 1 人工提交，但仓库没有 submission ID、提交时间、完成状态、score或官方日志，因此正式状态只能是 `user_reported_submitted_score_pending`；不得写成官方结果已验证。
+
+README的“同一环境”是依赖与评测流程同构：本地不包含隐藏任务/leaderboard score，V100也不是正式L4。本机已有 `parc2026:latest`（image `2481fd…ccec`），容器为CUDA13.0.3、Python3.10.12、PyTorch2.11.0+cu130，且Dockerfile/setup/evaluator/validator与host hash exact。无需消耗配布Blackwell pre-check，也无需重建image；下一步在自有GPU1跑真实Docker E2E。
+
+新审核记录：`docs/reviews/axis_pi05/R6_LOCAL_SCORER_AND_SUBMISSION_DECISION_REVIEW_20260831.md`。

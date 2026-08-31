@@ -1261,6 +1261,7 @@ def _add_local_asgi_runtime(env: dict[str, str]) -> None:
 
     cached_asgi_dirs = [
         Path(__file__).resolve().parent,  # sitecustomize.py for host extensions
+        Path("/tmp/axis_host_vendor"),  # host regex extension matching vendored transformers
         Path("/home/huang/.cache/uv/archive-v0/2bJx66UeLSVpVgqyrY7gJ"),  # fastapi 0.103.2
         Path("/home/huang/.cache/uv/archive-v0/1H2ycJ1cbw9RSfBTh8CXW"),  # starlette 0.27.0
         Path("/home/huang/.cache/uv/archive-v0/LUIuAUXcJCSDLFtk5wjmQ"),  # anyio 3.7.1

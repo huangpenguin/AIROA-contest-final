@@ -1,11 +1,11 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新已审核执行 HEAD：`dbd4f497af4a8fcc4d7f4957ac03dc004b508487`
+> 最新已审核执行 HEAD：`6239704752dc2966d23b0f6c9d49744efdb152ef`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
-> nested OpenPI：`d7e41eb86cb04b91d79aa1f716a94f0361677855`
-> 当前总状态：`dense_fullft_sharded_init_recovery_ready`
-> 唯一活动计划：`docs/AXIS_PI05_DENSE_FULLFT_SHARDED_INIT_RECOVERY_PLAN.md`
+> nested OpenPI：`92604d6d07d5bbf636827ee903f758538c8ba015`
+> 当前总状态：`dense_fullft_allocator_fraction_recovery_ready`
+> 唯一活动计划：`docs/AXIS_PI05_DENSE_FULLFT_ALLOCATOR_FRACTION_RECOVERY_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -13,7 +13,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO10Hz、R6 LoRA500-step、folded PyTorch与FAST-only Track1 ZIP均已完成；用户报告其正式Track1得分为`0.47`，显著优于此前纯Pi0.5。该结果把R6锁为首个official deployment baseline。Axis-init dense full-FT 的2卡/4卡预飞行均在 `init_train_state` OOM，还没有进入 batch/forward/backward/update；审核定位到约12.5GiB partial params先被整树replicated的无效峰值。当前唯一任务是保持FP32/dense/EMA/global64的sharded-init无损修复，先用本地4×V100验证至最多10 steps，不启动官方Blackwell。
+canonical LIBERO10Hz、R6 LoRA500-step、folded PyTorch与FAST-only Track1 ZIP均已完成；用户报告其正式Track1得分为`0.47`。Axis-init dense full-FT 的 direct-sharded init 已通过；首个 microbatch 在 BFC 申请 `136.69 MiB` 时 OOM，但 NVML 峰值 `24897/32768 MiB=75.98%`恰好对应 JAX 默认 75% preallocated pool 加 context 开销，不足以证明 32GB 物理容量用尽。当前唯一任务是保持 FP32/dense/EMA/global64 不变，仅用 `XLA_CLIENT_MEM_FRACTION=0.90`（条件 `0.95`）完成本地 first-update/10-step 复测，不启动官方 Blackwell。
 
 ## 2. 数据与复现基础
 
@@ -212,18 +212,18 @@ Axis init/原团队式 standard LIBERO full-FT 是后续正确研究方向，但
 
 ```text
 .venv_axis_pi05/bin/pytest -q tests
-125 passed, 7 skipped, 21 warnings（dense full-FT preflight 执行 commit 记录）。
+127 passed, 7 skipped, 21 warnings（sharded-init recovery 执行 commit 记录）。
 ```
 
-此前“缺少 pynvml 导致 collection 中断”不是仓库指定 venv 的真实 blocker；最新执行记录为 132 tests（125 passed + 7 skipped）。交接时不要为此随意安装依赖。
+此前“缺少 pynvml 导致 collection 中断”不是仓库指定 venv 的真实 blocker；最新执行记录为 134 tests（127 passed + 7 skipped）。交接时不要为此随意安装依赖。
 
 Git：
 
 ```text
 branch               codex/axis-pi05-audit-remediation
-latest audited HEAD   dbd4f497af4a8fcc4d7f4957ac03dc004b508487
-nested OpenPI        d7e41eb86cb04b91d79aa1f716a94f0361677855
-root/nested          clean（审核 dbd4f49 开始时）
+latest audited HEAD   6239704752dc2966d23b0f6c9d49744efdb152ef
+nested OpenPI        92604d6d07d5bbf636827ee903f758538c8ba015
+root/nested          clean（审核 6239704 开始时）
 upstream             当前 branch 未设置 upstream
 ```
 
@@ -249,13 +249,13 @@ upstream             当前 branch 未设置 upstream
 ## 10. 新 section 的接手顺序
 
 1. 阅读本文件与 `docs/AXIS_PI05_PLAN_INDEX.md`。
-2. 阅读并只执行 `docs/AXIS_PI05_DENSE_FULLFT_SHARDED_INIT_RECOVERY_PLAN.md`。
+2. 阅读并只执行 `docs/AXIS_PI05_DENSE_FULLFT_ALLOCATOR_FRACTION_RECOVERY_PLAN.md`。
 3. 将Track1=`0.47`、ZIP `95415a…c5f5a`锁为baseline；submission ID/log未知字段保持null。
-4. CPU先锁定旧 OOM 证据，将 Axis partial params 从恢复开始就按 params 目标 FSDP sharding 放置；不得复用LoRA config或从R6 resume。
-5. 不重跑2卡；四卡自然空闲时先做 init-only，通过后才做唯一first update，再条件续跑到10 steps。
-6. 不得启动官方GPU、50/100/1K、C20、FAST/ZIP/提交。只有sharded-init通过而真实first update仍OOM，才作为下一轮Blackwell人工审核依据。
+4. CPU 先锁定旧 R4 OOM 与 step-0 checkpoint，增加 allocator internal stats/XLA memory analysis 可观测性；不改 train-step math。
+5. 四卡自然空闲时从 step0 fresh restore，先用 `XLA_CLIENT_MEM_FRACTION=0.90`完成一次update；仅 allocator OOM 才允许唯一`0.95`，最低passing fraction续跑到10 steps。
+6. 不得启动官方GPU、preallocate false/其他allocator、C20、50/100/1K、FAST/ZIP/提交。只有`0.95`在独占四卡上仍OOM，才作为下一轮Blackwell人工审核依据。
 
-当前路径是：R6 FAST ZIP Track1=`0.47`（冻结）→ sharded-init无损修复 → 本地4卡1/10-step → 人工审核显存/restore/吞吐 → 100-step+C20 → 标准LIBERO同run里程碑长训 → paired选模 → 复用R6 FAST部署链 → 目标正式分数`>0.47`。
+当前路径是：R6 FAST ZIP Track1=`0.47`（冻结）→ sharded-init已通过 → allocator 90%/95% 本地4卡1/10-step → 人工审核显存/restore/吞吐 → 100-step+C20 → 标准LIBERO同run里程碑长训 → paired选模 → 复用R6 FAST部署链 → 目标正式分数`>0.47`。
 
 ## 11. ZIP 生成阶段执行结果（历史快照）
 
@@ -315,12 +315,20 @@ microbatch 是每卡每个 microstep 的样本数，当前 `1` 已是最小；gl
 
 新活动计划只修复 sharded parameter initialization，保持 FP32、dense、AdamW、EMA `0.999`、global64。四卡先 init-only，然后唯一 first update，最多连续10 steps。本轮不启动比赛Blackwell；只有init修复通过而真实first update仍OOM，才建议把下次preflight与长训练合并进同一个60小时session。
 
-审核记录：`docs/reviews/axis_pi05/DENSE_FULLFT_INIT_OOM_REVIEW_20260831.md`。唯一活动计划：`docs/AXIS_PI05_DENSE_FULLFT_SHARDED_INIT_RECOVERY_PLAN.md`。
+审核记录：`docs/reviews/axis_pi05/DENSE_FULLFT_INIT_OOM_REVIEW_20260831.md`。当时的活动计划已归档为 `docs/archive/axis_pi05/AXIS_PI05_DENSE_FULLFT_SHARDED_INIT_RECOVERY_PLAN.md`。
 
 ## 17. Sharded init recovery 执行结果
 
 CPU lock 从 root `28f4779`、nested OpenPI `92604d6` 的 clean 状态开始，旧 preflight OOM 证据 hash 保持 immutable；CPU 静态/toy sharding 门禁通过，全量项目测试为 `127 passed, 7 skipped, 21 warnings`。R3 四卡 init-only 通过：51 leaves、3,353,433,872 FP32 params、large replicated leaf `0`、sentinel exact、params/optimizer/EMA finite，且没有 data loader/forward/backward。
 
-同一 fresh run 随后完成 step-0 atomic checkpoint，进入真实 first microbatch 计算；`train_step_accumulated_host` 在每卡申请 `136.69 MiB` 时 OOM，optimizer step 仍为 `0`，step1/10 未生成。GPU 监控峰值约 `24,897 MiB/card`，进程退出后四卡均约 `5 MiB`。这属于真实训练计算容量门禁，不是初始化复制失败；当前状态为 `dense_fullft_first_update_true_compute_oom_pending_official_gpu_review`。
+同一 fresh run 随后完成 step-0 atomic checkpoint，进入真实 first microbatch 计算；`train_step_accumulated_host` 在每卡申请 `136.69 MiB` 时 OOM，optimizer step 仍为 `0`，step1/10 未生成。GPU 监控峰值约 `24,897 MiB/card`，进程退出后四卡均约 `5 MiB`。该 OOM 的阶段确实是真实训练计算，但后续审核发现它只耗尽了 JAX 默认 75% BFC pool，不足以证明 32GB 物理容量用尽。历史状态 `dense_fullft_first_update_true_compute_oom_pending_official_gpu_review` 保留在原 summary，但不再是当前资源决策。
 
 R5、restore、C20、60 小时预算、比赛 GPU、50/100/1K、FAST、ZIP、push、上传和提交均未执行。证据目录：`data/reports/axis_libero_30k/dense_fullft_sharded_init_recovery/`，主报告为 `summary.json` 和 `ROOT_CAUSE_REPORT_ZH.md`。
+
+## 18. R4 allocator 独立审核
+
+R4 的 allocator 环境变量全部 unset；JAX/JAXLIB 为 `0.5.3`。官方 JAX 文档说明默认在首次 GPU 操作时预分配 75% 显存。本地四卡峰值均为 `24897/32768 MiB=75.98%`；其中纯 75% pool 为 `24576 MiB`，约 `321 MiB` 差值可由 CUDA context/libraries/NCCL/allocator 外开销解释。因此 NVML 中看起来剩余的 `7871 MiB/card` 不在当前 BFC pool 的可用连续块内；这就是“才显示24.9GB也OOM”的原因。
+
+审核结论为 `remediation_required`：先保持 preallocation，只设 `XLA_CLIENT_MEM_FRACTION=0.90`复测；仅 allocator OOM 才允许唯一 `0.95`。这不改 FP32、dense、loss、batch64、AdamW 或 EMA。不使用 preallocate false/其他 allocator，不启动比赛 GPU。
+
+审核记录：`docs/reviews/axis_pi05/DENSE_FULLFT_R4_ALLOCATOR_REVIEW_20260901.md`。唯一活动计划：`docs/AXIS_PI05_DENSE_FULLFT_ALLOCATOR_FRACTION_RECOVERY_PLAN.md`。

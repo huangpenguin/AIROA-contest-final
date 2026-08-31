@@ -3,6 +3,7 @@
 > 制定日期：2026-08-31（Asia/Tokyo）
 > 审核输入 commit：`dbd4f497af4a8fcc4d7f4957ac03dc004b508487`
 > 当前状态：`dense_fullft_first_update_true_compute_oom_pending_official_gpu_review`
+> 生命周期：`archived_after_execution_and_allocator_review`；R3 通过，R4 在默认 75% JAX allocator pool 内 OOM，不足以证明 32GB 物理容量超限。
 > 本轮唯一目标：在不改 FP32、dense 全参数、EMA、optimizer、global batch 64 和数据/norm 的前提下，消除 Axis params 初始化时的 replicated 峰值，并将本地 4×V100 验证到最多 10 optimizer steps。
 
 ## 0. 冻结基线与执行边界

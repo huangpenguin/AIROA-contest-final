@@ -1,21 +1,21 @@
 # AXIS Pi0.5 计划索引与审核生命周期
 
-> 更新日期：2026-08-31（Asia/Tokyo）
-> 当前唯一活动计划：`docs/AXIS_PI05_DENSE_FULLFT_SHARDED_INIT_RECOVERY_PLAN.md`
-> 当前状态：`dense_fullft_first_update_true_compute_oom_pending_official_gpu_review`
-> 最新审核：`docs/reviews/axis_pi05/DENSE_FULLFT_INIT_OOM_REVIEW_20260831.md`
+> 更新日期：2026-09-01（Asia/Tokyo）
+> 当前唯一活动计划：`docs/AXIS_PI05_DENSE_FULLFT_ALLOCATOR_FRACTION_RECOVERY_PLAN.md`
+> 当前状态：`dense_fullft_allocator_fraction_recovery_ready`
+> 最新审核：`docs/reviews/axis_pi05/DENSE_FULLFT_R4_ALLOCATOR_REVIEW_20260901.md`
 
 ## 1. 唯一活动计划
 
-- `AXIS_PI05_DENSE_FULLFT_SHARDED_INIT_RECOVERY_PLAN.md`
-  - 已审核确认两卡/四卡 OOM 都在 `init_train_state`，没有进入 batch/forward/backward/update；
-  - 根因候选是约 `12.5 GiB` `partial_params` 被 `PartitionSpec()` 整树 replicated，然后才生成 FSDP-sharded train state；
-  - 本轮只修复 sharded init，保持 FP32、dense、EMA `0.999`、AdamW、per-device microbatch `1`、accumulation `16`、global batch `64`；
-  - CPU 定位和 4 卡 sharded init-only 已通过；唯一 first update 在真实计算阶段 OOM，未进入 10-step；不授权比赛 GPU、50/100/1K、C20、FAST/ZIP。
+- `AXIS_PI05_DENSE_FULLFT_ALLOCATOR_FRACTION_RECOVERY_PLAN.md`
+  - R3 sharded init 已通过；R4 进入首个 microbatch 后在 BFC 申请 `136.69 MiB` 时 OOM；
+  - R4 allocator env 全部 unset，NVML 峰值 `24897/32768 MiB = 75.98%`，与 JAX 默认 75% preallocated pool 一致；
+  - 当前 OOM 重分类为 `default_75pct_allocator_pool_oom_requires_fraction_retest`，不足以证明 32GB 物理显存耗尽；
+  - 本轮只修改 `XLA_CLIENT_MEM_FRACTION`：先 `0.90`，仅 allocator OOM 时再唯一 `0.95`；其他数学配方不变，最多10 steps，不授权比赛 GPU/C20/100-step。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 
-正式`0.47`已经比本地Docker E2E更直接地证明R6 FAST部署链有效。下一问题不再是“包能否运行”，而是“如何用AXIS原团队式标准LIBERO dense full-FT提高策略能力”。两/四卡失败首先暴露的是 replicated initialization transient，而不是真实训练 batch 峰值。修复前不消耗比赛GPU，也不通过改精度、关EMA、改batch或冻结层偷换配方。
+正式`0.47`已经比本地Docker E2E更直接地证明R6 FAST部署链有效。下一问题是如何用AXIS原团队式标准LIBERO dense full-FT提高策略能力。replicated init 已解决；当前需先排除 JAX 默认 75% 显存池限制，不能把 NVML 显示的池预留量误当作物理卡全部容量。修复前不消耗比赛GPU，也不改精度、EMA、batch、optimizer或模型。
 
 ## 2. 已归档的 R6 执行链
 
@@ -35,12 +35,13 @@
 12. `AXIS_PI05_TRACK1_OFFICIAL_PRECHECK_AND_SUBMISSION_PLAN.md`：因用户已人工提交并决定保留配布GPU给训练而在执行前取代；O0–O3均未执行。
 13. `AXIS_PI05_TRACK1_SUBMITTED_SCORE_AND_LOCAL_DOCKER_PLAN.md`：用户随后报告正式Track1=`0.47`，真实scorer证据取代本地Docker任务；T0–T2未执行。
 14. `AXIS_PI05_POST_SCORE_DENSE_FULLFT_PREFLIGHT_PLAN.md`：F0/F1完成；2卡和4卡均在`init_train_state` OOM，未进入optimizer update；原计划已按hard gate结束并转入sharded-init修复。
+15. `AXIS_PI05_DENSE_FULLFT_SHARDED_INIT_RECOVERY_PLAN.md`：R3 direct-sharded init通过；R4在默认75% JAX allocator pool内的首个microbatch OOM，未完成update/10-step；转入allocator-fraction最小复测。
 
 归档不表示旧计划所有尾部阶段都完成；只表示该文件不再是活动授权入口。旧 failure、阈值、hash 和未执行阶段必须继续保留。
 
 ## 3. 保留但非活动的研究线
 
-- `AXIS_PI05_STANDARD_LIBERO_30K_RESEARCH_PLAN.md`：长期标准LIBERO 30K/full-FT研究的事实与路线来源；当前执行授权由sharded-init修复计划收窄到最多10 steps。
+- `AXIS_PI05_STANDARD_LIBERO_30K_RESEARCH_PLAN.md`：长期标准LIBERO 30K/full-FT研究的事实与路线来源；当前执行授权由allocator-fraction复测计划收窄到最多10 steps。
 - `TRACK3_REVERSE_DATA_SYNTHESIS_PLAN.md`：Track 3 逆向任务研究，当前不授权生成或训练。
 - `AXIS_PI05_TWO_GPU_LORA_TODAY_PLAN.md`：历史 provenance 路径被配置/工具引用，因此保留原位置；不再是活动计划。
 - 其余早期 post-training、低分恢复、urgent FAST、比赛 GPU 计划均不能覆盖本索引的当前活动计划。

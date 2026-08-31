@@ -1,21 +1,21 @@
 # AXIS Pi0.5 计划索引与审核生命周期
 
 > 更新日期：2026-08-31（Asia/Tokyo）
-> 当前唯一活动计划：`docs/AXIS_PI05_TRACK1_SUBMITTED_SCORE_AND_LOCAL_DOCKER_PLAN.md`
-> 当前状态：`r6_track1_user_submitted_score_pending`
-> 最新审核：`docs/reviews/axis_pi05/R6_LOCAL_SCORER_AND_SUBMISSION_DECISION_REVIEW_20260831.md`
+> 当前唯一活动计划：`docs/AXIS_PI05_POST_SCORE_DENSE_FULLFT_PREFLIGHT_PLAN.md`
+> 当前状态：`r6_score_047_locked_dense_fullft_preflight_ready`
+> 最新审核：`docs/reviews/axis_pi05/R6_TRACK1_SCORE_047_REVIEW_20260831.md`
 
 ## 1. 唯一活动计划
 
-- `AXIS_PI05_TRACK1_SUBMITTED_SCORE_AND_LOCAL_DOCKER_PLAN.md`
-  - 用户已人工提交唯一冻结 R6 Track 1 FAST ZIP；当前只记录为 `user_reported_submitted_score_pending`，不猜 submission ID或分数；
-  - 不使用配布 Blackwell，不重复提交；在自有 GPU1 与现有 `parc2026:latest` 上补真实 `evaluate.py` Docker E2E；
-  - Dockerfile/setup/evaluator/validator 与 host hash exact，因此不为 README说明变化重建40.8GB image；
-  - 官方结果到达后区分 deployment failure 与 policy capability，再决定 full-FT或最小部署修复。
+- `AXIS_PI05_POST_SCORE_DENSE_FULLFT_PREFLIGHT_PLAN.md`
+  - 用户报告R6 FAST包Track1正式得分`0.47`；它被锁为首个official deployment baseline，本地Docker E2E不再需要；
+  - 主线从Axis released params重新开始canonical标准LIBERO dense full-FT，不从R6 LoRA续训；
+  - 本轮只完成输入/磁盘锁、dense配置、2卡有时限canary、条件4卡路径、1/10/50/100-step数值/restore/C20和60小时预算；
+  - 不启动官方Blackwell、1K/5K/30K、FAST/ZIP或再次提交。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 
-README确认 Dockerfile/评测流程/依赖与正式 scorer同构，但隐藏任务、leaderboard score和L4硬件不在本地复现范围。本机已有匹配核心 hash 的CUDA13/PyTorch2.11 image；用户已提交后，官方Blackwell pre-check计划被取代，60小时额度保留给最终训练冲刺。
+正式`0.47`已经比本地Docker E2E更直接地证明R6 FAST部署链有效。下一问题不再是“包能否运行”，而是“如何用AXIS原团队式标准LIBERO dense full-FT提高策略能力”。两卡完整dense内存下限已接近/超过32GB；本轮必须实测但不得通过关EMA、改batch或冻结层偷换配方。
 
 ## 2. 已归档的 R6 执行链
 
@@ -33,12 +33,13 @@ README确认 Dockerfile/评测流程/依赖与正式 scorer同构，但隐藏任
 10. `AXIS_PI05_R6_SAME_DAY_DIAGNOSTIC_ZIP_PLAN.md`：在执行前被更短的当晚正分路径取代；其中 JAX 340、完整 envelope/C20 不进入今晚任务。
 11. `AXIS_PI05_POSITIVE_SCORE_TONIGHT_PLAN.md`：P0–P4完成，生成唯一获批进入官方 pre-check 的 R6 Track 1 FAST ZIP；未上传/提交。
 12. `AXIS_PI05_TRACK1_OFFICIAL_PRECHECK_AND_SUBMISSION_PLAN.md`：因用户已人工提交并决定保留配布GPU给训练而在执行前取代；O0–O3均未执行。
+13. `AXIS_PI05_TRACK1_SUBMITTED_SCORE_AND_LOCAL_DOCKER_PLAN.md`：用户随后报告正式Track1=`0.47`，真实scorer证据取代本地Docker任务；T0–T2未执行。
 
 归档不表示旧计划所有尾部阶段都完成；只表示该文件不再是活动授权入口。旧 failure、阈值、hash 和未执行阶段必须继续保留。
 
 ## 3. 保留但非活动的研究线
 
-- `AXIS_PI05_STANDARD_LIBERO_30K_RESEARCH_PLAN.md`：长期标准 LIBERO 30K/full-FT 研究，当前 deferred。
+- `AXIS_PI05_STANDARD_LIBERO_30K_RESEARCH_PLAN.md`：长期标准LIBERO 30K/full-FT研究的事实与路线来源；当前执行授权由新的post-score preflight计划收窄到100 steps。
 - `TRACK3_REVERSE_DATA_SYNTHESIS_PLAN.md`：Track 3 逆向任务研究，当前不授权生成或训练。
 - `AXIS_PI05_TWO_GPU_LORA_TODAY_PLAN.md`：历史 provenance 路径被配置/工具引用，因此保留原位置；不再是活动计划。
 - 其余早期 post-training、低分恢复、urgent FAST、比赛 GPU 计划均不能覆盖本索引的当前活动计划。

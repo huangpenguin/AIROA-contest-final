@@ -1,5 +1,10 @@
 # AXIS Pi0.5 R6：Track 1 已提交后的本地 Docker 与计分归档计划
 
+> 归档日期：2026-08-31（Asia/Tokyo）
+> 归档状态：`superseded_by_official_score_0_47`
+> 用户已报告 Track 1 正式得分 `0.47`；真实 scorer 结果已经提供比本地 Docker E2E 更强的部署证据。
+> T0–T2 未执行，本文件不再提供 Docker、GPU或结果归档任务授权。
+
 > 制定日期：2026-08-31（Asia/Tokyo）
 > 输入 commit：`43aef30`
 > 当前状态：`r6_track1_user_submitted_score_pending`

@@ -4,8 +4,8 @@
 > 最新已审核执行 HEAD：`8938bcada74df00341ba020bf7c94f40eebd5178`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`dafa5a27266996eecf28920cacc32f3629776d91`
-> 当前总状态：`r6_track1_user_submitted_score_pending`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK1_SUBMITTED_SCORE_AND_LOCAL_DOCKER_PLAN.md`
+> 当前总状态：`r6_score_047_locked_dense_fullft_preflight_ready`
+> 唯一活动计划：`docs/AXIS_PI05_POST_SCORE_DENSE_FULLFT_PREFLIGHT_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -13,7 +13,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO 10 Hz、R6 LoRA 500-step、folded PyTorch、本地 B80 `49/80` 与 FAST-only Track 1 ZIP 都已完成。用户已报告将唯一冻结 ZIP 人工提交到 Track 1 assignment `1007`，当前为 `score_pending`；仓库尚无 submission ID、官方日志或分数。README和本机审计确认本地可运行同依赖/同流程 Docker，所以下一步只在自有GPU1补真实Docker E2E并等待官方结果；配布Blackwell不用于本次pre-check，额度保留给recipe锁定后的训练冲刺。
+canonical LIBERO10Hz、R6 LoRA500-step、folded PyTorch与FAST-only Track1 ZIP均已完成；用户报告其正式Track1得分为`0.47`，显著优于此前纯Pi0.5。该结果把R6锁为首个official deployment baseline，历史本地Docker任务取消。下一主线从Axis released params重新执行标准LIBERO dense full-FT；本轮只做到配置/显存与1/10/50/100-step preflight，不启动官方Blackwell或1K以上长训。
 
 ## 2. 数据与复现基础
 
@@ -250,13 +250,13 @@ upstream             当前 branch 未设置 upstream
 ## 10. 新 section 的接手顺序
 
 1. 阅读本文件与 `docs/AXIS_PI05_PLAN_INDEX.md`。
-2. 阅读并只执行 `docs/AXIS_PI05_TRACK1_SUBMITTED_SCORE_AND_LOCAL_DOCKER_PLAN.md`。
-3. 唯一已提交 ZIP hash 为 `95415a…c5f5a`；不得修改、重建、重新压缩、换旧包或重复提交。
-4. 只在自有GPU1运行现有 `parc2026:latest` 的真实 `evaluate.py` E2E；GPU0和官方Blackwell均禁止。
-5. 等待用户提供submission ID、官方score/log；没有证据时保持 `score_pending`。
-6. 官方结果到达后按部署失败/行为不足分支重新审核；本轮不得训练、自动上传或处理Track 2/3。
+2. 阅读并只执行 `docs/AXIS_PI05_POST_SCORE_DENSE_FULLFT_PREFLIGHT_PLAN.md`。
+3. 将Track1=`0.47`、ZIP `95415a…c5f5a`锁为baseline；submission ID/log未知字段保持null。
+4. CPU先实现独立dense config与memory/disk lock；不得复用LoRA config或从R6 resume。
+5. GPU1+2只做一次有时限allocation/first-update canary；两卡OOM时不得降语义。只有GPU0自然释放才走4×V100，否则停在等待official sprint。
+6. 最多完成同一run 1/10/50/100 steps、restore、C20与60小时预算；不得启动1K/官方GPU/FAST/ZIP/提交。
 
-当前路径是：R6 FAST ZIP（已由用户人工提交）→ 自有GPU scorer-dependency Docker E2E + 官方分数归档 → 部署/能力归因 → standard LIBERO full-FT；配布GPU只在最终recipe锁定后进入长训练冲刺。
+当前路径是：R6 FAST ZIP Track1=`0.47`（冻结）→ dense full-FT preflight≤100 → 人工审核吞吐/显存/restore → 标准LIBERO同run里程碑长训 → paired选模 → 复用R6 FAST部署链 → 目标正式分数`>0.47`。
 
 ## 11. ZIP 生成阶段执行结果（历史快照）
 
@@ -274,7 +274,7 @@ upstream             当前 branch 未设置 upstream
 - Track 1 ZIP：[submission_axis_r6_step500_fast_positive_score_20260831.zip](/home/huang/code/PARC2026_final/artifacts/submission_axis_r6_step500_fast_positive_score_20260831.zip)，大小 `9383571677` bytes，SHA-256 `95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a`；sidecars 为同名 `.sha256` 与 `.manifest.json`。
 - ZIP manifest 在生成时明确为 `NOT_SUBMITTED`，`official_result=false`，`auto_submit=false`；这些字段描述 package-generation 时点，不覆盖第13节所记用户后续人工提交。本地离线等价报告仍不能当作官方分数。
 
-截至执行 commit `8938bca`，未执行 JAX 340、完整统计 envelope、comparator、E2、C20、FAST 之外的 SLOW fallback、训练、比赛 GPU、push、上传或提交；运行时只使用物理 GPU1，GPU0未触碰。之后的用户人工提交是仓库外动作，当前只按第13节记录为 `score_pending`。
+截至执行 commit `8938bca`，未执行 JAX 340、完整统计 envelope、comparator、E2、C20、FAST 之外的 SLOW fallback、训练、比赛 GPU、push、上传或提交；运行时只使用物理 GPU1，GPU0未触碰。之后的用户人工提交是仓库外动作，当前按第13/14节记录为正式Track1 score=`0.47`、provenance=`user_reported`。
 
 ## 12. R6 FAST ZIP 独立审核
 
@@ -286,8 +286,16 @@ commit `8938bca` 已独立审核为 `approved`，批准范围为官方 pre-check
 
 ## 13. 人工提交与本地 scorer 环境决策
 
-用户已报告完成 Track 1 人工提交，但仓库没有 submission ID、提交时间、完成状态、score或官方日志，因此正式状态只能是 `user_reported_submitted_score_pending`；不得写成官方结果已验证。
+用户已报告完成Track1人工提交并取得正式score=`0.47`；仓库仍没有submission ID、提交时间、截图或完整官方日志，所以provenance为`user_reported`，不得补造episode或隐藏任务细节。
 
-README的“同一环境”是依赖与评测流程同构：本地不包含隐藏任务/leaderboard score，V100也不是正式L4。本机已有 `parc2026:latest`（image `2481fd…ccec`），容器为CUDA13.0.3、Python3.10.12、PyTorch2.11.0+cu130，且Dockerfile/setup/evaluator/validator与host hash exact。无需消耗配布Blackwell pre-check，也无需重建image；下一步在自有GPU1跑真实Docker E2E。
+README的“同一环境”仍指依赖与评测流程同构；但真实`0.47`已经取代补跑本地Docker的必要性。无需消耗配布Blackwell pre-check，也无需重建image。
 
 新审核记录：`docs/reviews/axis_pi05/R6_LOCAL_SCORER_AND_SUBMISSION_DECISION_REVIEW_20260831.md`。
+
+## 14. `0.47` 基线与 dense full-FT 决策
+
+R6正式Track1=`0.47`确认FAST-only、vision/key映射与server链在真实scorer有效。冻结该ZIP与部署参数，不再从R6 raw LoRA续训：其500-step schedule已到horizon、无EMA、valid7 objective和LoRA topology均不是AXIS论文dense 30K配方。
+
+新主线从Axis params、canonical LIBERO10Hz、fresh QUANTILES norm开始dense full-FT。约3.353B模型的FP32 params+Adam+EMA+grads下限约67GB；2×V100每卡下限约33.5GB且未含activation，预计只适合一次allocation canary。3卡不能精确构成uniform global64；首选GPU0自然释放后的4卡，或未来同一次Blackwell长训开头完成preflight。
+
+审核记录：`docs/reviews/axis_pi05/R6_TRACK1_SCORE_047_REVIEW_20260831.md`。活动计划：`docs/AXIS_PI05_POST_SCORE_DENSE_FULLFT_PREFLIGHT_PLAN.md`。

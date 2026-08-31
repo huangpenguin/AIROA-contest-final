@@ -404,9 +404,10 @@ def _copy_step0(target: Path, locked_tree_sha256: str) -> dict[str, Any]:
     if temporary.exists():
         raise FileExistsError(f"refusing to reuse incomplete checkpoint copy: {temporary}")
     started = time.time()
-    shutil.copytree(SOURCE_STEP0, temporary)
-    if sha256_tree(temporary) != locked_tree_sha256:
-        raise RuntimeError(f"copied step-0 tree hash mismatch: {temporary}")
+    temporary.mkdir(parents=True)
+    shutil.copytree(SOURCE_STEP0, temporary / "0")
+    if sha256_tree(temporary / "0") != locked_tree_sha256:
+        raise RuntimeError(f"copied step-0 tree hash mismatch: {temporary / '0'}")
     temporary.rename(target)
     return {
         "source": str(SOURCE_STEP0),

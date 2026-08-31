@@ -1,5 +1,11 @@
 # AXIS Pi0.5：E1 全量 EGL Action-Response Envelope 执行计划
 
+> 归档日期：2026-08-31（Asia/Tokyo）
+> 归档状态：`stopped_at_e1_3_jax_full_microbatch4_oom`
+> 已完成：E1.0 input lock、E1.1 frozen inputs/noise、E1.2 JAX 4-observation sentinel。
+> 未完成：E1.3 JAX 340-observation full、E1.4 PyTorch、E1.5 comparator。
+> 本文件不再提供执行授权；后续仅以计划索引中的唯一活动计划为准。
+
 > 制定日期：2026-08-31（Asia/Tokyo）
 > 审核输入 commit：`327316f2ffdca0df3375748bcdd65b5ce263f8f8`
 > 输入状态：`e0_closure_complete_pending_review`

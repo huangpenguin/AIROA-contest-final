@@ -1,11 +1,11 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新执行输入 HEAD：`bdadd679684d5308bd04f4a9fe4a95d44bc4fe89`
+> 最新已审核执行 HEAD：`48206a708439b4a08af0ea9f8809eab9950572a5`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`dafa5a27266996eecf28920cacc32f3629776d91`
-> 当前总状态：`e1_jax_full_inference_failed`
-> 唯一活动计划：`docs/AXIS_PI05_E1_EGL_ACTION_ENVELOPE_PLAN.md`
+> 当前总状态：`e1_jax_mb4_oom_remediation_ready`
+> 唯一活动计划：`docs/AXIS_PI05_E1_JAX_MB1_RECOVERY_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -13,7 +13,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO 10 Hz 数据、R6 两卡 LoRA 500-step、fold、LeRobot/PyTorch frozen parity 和 full-C20 environment dynamics 都已完成；R6 本地 B80 只比 Axis init 多 `1/80`，统计不明确。E0 closure 已通过独立重生成、hash、coverage 和全量测试审核，正式状态为 `e0_closure_approved_e1_ready`。下一步只在冻结的 170 个 EGL pair / 340 个 observations 上测 R6 folded JAX 与真实 on-disk LeRobot PyTorch 的 action-response envelope；不运行 closed-loop。
+canonical LIBERO 10 Hz 数据、R6 两卡 LoRA 500-step、fold、LeRobot/PyTorch frozen parity 和 full-C20 environment dynamics 都已完成；R6 本地 B80 只比 Axis init 多 `1/80`，统计不明确。E0 closure 已批准，E1 的 170-pair/340-observation input lock 与 JAX 4-observation sentinel 也经审核可保留。JAX full 因把 microbatch 从已验证的 `1` 提至 `4` 而 OOM，当前只允许以 immutable inputs、固定 `microbatch=1` 和可恢复分片完成 JAX 340/340；尚不授权 PyTorch、comparator 或 closed-loop。
 
 ## 2. 数据与复现基础
 
@@ -192,11 +192,15 @@ JAX sentinel 在物理 GPU1 fresh process 通过 `4 observations`，model/norm/r
 
 E1 状态：`e1_jax_full_inference_failed`。完整失败记录：`data/reports/axis_libero_30k/post_r6_lora/r6_egl_statistical_release/e1_action_envelope/summary.json`。已执行/未执行细节、GPU evidence 与 sentinel provenance 见该 namespace 的 `E1_ACTION_ENVELOPE_REPORT_ZH.md`、`THREAD_REPORT_ZH.md` 和 `jax_source/sentinel/report.json`。
 
-本轮没有生成 170-pair action-response envelope；不得把 4-pair sentinel 当成全量结果。等待人工审核后决定最小 remediation；不得自行进入 E1.4、E1.5、closed-loop 或 E2。
+本轮没有生成 170-pair action-response envelope；不得把 4-observation sentinel 当成全量结果。独立审核结论为 `remediation_required`：lock 与 sentinel 通过，JAX full 失败只证明 `microbatch=4` 不适合当前 V100 显存边界，不证明模型或输入损坏，也不批准 E1。
+
+sentinel 实际按单 observation 推理，峰值约 `24717 MiB / 32768 MiB`；full run 在 `microbatch=4` 额外申请 `216 MiB` 时失败。下一活动计划固定使用 `microbatch=1`，先做 16-observation canary（前 4 actions 必须与旧 sentinel bitwise exact），再以原子分片/resume 完成 340/340。成功后仍须 hard stop，另行审核后才可能授权 PyTorch source。
+
+审核记录：`docs/reviews/axis_pi05/E1_JAX_OOM_REVIEW_20260831.md`。
 
 ## 7. 测试、Git 与资源状态
 
-正确测试入口的最新复核（lock/failure-record focused tests）：
+正确测试入口的最新独立复核：
 
 ```text
 .venv_axis_pi05/bin/pytest -q tests
@@ -209,9 +213,9 @@ Git：
 
 ```text
 branch               codex/axis-pi05-audit-remediation
-latest execution HEAD bdadd679684d5308bd04f4a9fe4a95d44bc4fe89
+latest audited HEAD   48206a708439b4a08af0ea9f8809eab9950572a5
 nested OpenPI        dafa5a27266996eecf28920cacc32f3629776d91
-root/nested          clean（审核 327316f 时）
+root/nested          clean（审核 48206a7 开始时）
 upstream             当前 branch 未设置 upstream
 ```
 
@@ -240,10 +244,10 @@ upstream             当前 branch 未设置 upstream
 ## 10. 新 section 的接手顺序
 
 1. 阅读本文件与 `docs/AXIS_PI05_PLAN_INDEX.md`。
-2. 阅读并只执行 `docs/AXIS_PI05_E1_EGL_ACTION_ENVELOPE_PLAN.md`。
-3. 先 CPU-only 冻结 runnable inputs/noise 并形成 lock commit；此时不得读取 action。
-4. 本轮已在 JAX full OOM 后 hard stop；LeRobot/PyTorch 尚未授权重试，等待新审核计划。
-5. 当前只允许 CPU-only 复核失败记录和 clean commit 后停止等待审核。
-6. 不得启动 environment/closed-loop、E2、FAST、ZIP、训练、比赛 GPU 或外部上传。
+2. 阅读并只执行 `docs/AXIS_PI05_E1_JAX_MB1_RECOVERY_PLAN.md`。
+3. 不得修改或重建 E1 lock、pair manifest、inputs/noise、旧 sentinel 或旧 OOM summary。
+4. 先 CPU-only 实现/测试 fail-closed atomic shard + resume；再运行 16-observation canary。
+5. canary 通过才允许在一张空闲本地 GPU 上以 `microbatch=1` 完成 folded JAX 340/340；完成后停止审核。
+6. 不得启动 LeRobot/PyTorch、comparator、environment/closed-loop、E2、FAST、ZIP、训练、比赛 GPU 或外部上传。
 
-不要重新训练 R6，也不要恢复旧 F2 FAST 包。当前路径是：E0 closure（已批准）→ E1 envelope → 人工审核 → E2 统计协议 → source closed-loop → FAST → ZIP。
+不要重新训练 R6，也不要恢复旧 F2 FAST 包。当前路径是：E0 closure（已批准）→ E1 JAX mb1 recovery → 人工审核 → PyTorch source（需新计划）→ envelope 审核 → E2 统计协议 → source closed-loop → FAST → ZIP。

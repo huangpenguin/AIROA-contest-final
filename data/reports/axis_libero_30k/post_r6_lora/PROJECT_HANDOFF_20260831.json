@@ -1,10 +1,11 @@
 {
   "schema_version": 1,
   "generated_date": "2026-08-31",
-  "status": "e1_jax_full_inference_failed",
+  "status": "e1_jax_mb4_oom_remediation_ready",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
+  "latest_audited_execution_commit": "48206a708439b4a08af0ea9f8809eab9950572a5",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
   "branch_has_upstream": false,
@@ -199,7 +200,7 @@
   },
   "tests": {
     "command": ".venv_axis_pi05/bin/pytest -q tests",
-    "passed": 112,
+    "passed": 116,
     "skipped": 7,
     "warnings": 21,
     "pynvml_is_collection_blocker": false
@@ -225,18 +226,24 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_E1_EGL_ACTION_ENVELOPE_PLAN.md",
-  "next_phase_only": "E1_minimal_remediation_pending_review",
+  "next_plan": "docs/AXIS_PI05_E1_JAX_MB1_RECOVERY_PLAN.md",
+  "next_phase_only": "E1_jax_microbatch1_recovery",
   "e1_authorization": {
     "input_pair_count": 170,
     "input_observation_count": 340,
-    "input_manifest_sha256": "b4ea8d3bed7f9cfc60f2f7f53613471e222d9857a8d6857f39b854720905c7bf",
+    "input_lock_sha256": "b96acf22e01f81d89c0bebf8adfd3dfd729e485cdc29a1b87c6fc748f67534c4",
+    "input_manifest_sha256": "09c9e000135c192b6a3154b82c06f754a047d8006122a888f6c933852887f66e",
+    "frozen_inputs_and_noise_sha256": "263a7723d1f866eb73eee9423eda7480d96e1678b4a401bd4d86460b7c37c7fe",
     "allowed_backends": [
-      "r6_folded_jax_source",
-      "r6_on_disk_lerobot_folded_pytorch_source"
+      "r6_folded_jax_source"
     ],
     "allowed_gpu_count": 1,
-    "same_physical_gpu_sequential_fresh_processes": true,
+    "inference_microbatch_size": 1,
+    "resumable_atomic_shards_required": true,
+    "canary_observation_count": 16,
+    "full_observation_count": 340,
+    "pytorch_authorized": false,
+    "comparator_authorized": false,
     "closed_loop_authorized": false,
     "e2_authorized": false,
     "fast_or_zip_authorized": false
@@ -282,6 +289,30 @@
     "push_or_upload": false,
     "summary": "data/reports/axis_libero_30k/post_r6_lora/r6_egl_statistical_release/e1_action_envelope/summary.json",
     "report": "data/reports/axis_libero_30k/post_r6_lora/r6_egl_statistical_release/e1_action_envelope/E1_ACTION_ENVELOPE_REPORT_ZH.md"
+  },
+  "e1_oom_review": {
+    "reviewed_commit": "48206a708439b4a08af0ea9f8809eab9950572a5",
+    "result": "remediation_required",
+    "lock_approved": true,
+    "sentinel_approved": true,
+    "jax_full_approved": false,
+    "failure_classification": "microbatch4_peak_memory_oom",
+    "sentinel_microbatch_size": 1,
+    "sentinel_observation_count": 4,
+    "sentinel_peak_gpu_memory_mib": 24717,
+    "failed_full_microbatch_size": 4,
+    "failed_allocation": "216.00 MiB",
+    "lock_and_manifest_unchanged_since_lock_commit": true,
+    "root_and_nested_clean_at_review_start": true,
+    "tests_reproduced": {
+      "passed": 116,
+      "skipped": 7,
+      "warnings": 21
+    },
+    "review_record": "docs/reviews/axis_pi05/E1_JAX_OOM_REVIEW_20260831.md",
+    "next_phase_only": "E1_jax_microbatch1_recovery",
+    "pytorch_authorized": false,
+    "closed_loop_authorized": false
   },
   "auto_upload_authorized": false,
   "auto_submit_authorized": false,

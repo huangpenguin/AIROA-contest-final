@@ -249,7 +249,7 @@ def _base_gpu_env() -> dict[str, str]:
 def _run_child(phase: str, *, report_path: Path, log_path: Path, timeout_seconds: int, env: dict[str, str]) -> dict[str, Any]:
     env["AXIS_PI05_RECOVERY_CHILD_PHASE"] = phase
     env["AXIS_PI05_RECOVERY_REPORT"] = str(report_path)
-    command = [str(PYTHON), str(Path(__file__)), "--phase", "_child"]
+    command = [str(PYTHON), "-m", "tools.axis_pi05.dense_fullft_sharded_init_recovery", "--phase", "_child"]
     started = time.time()
     with log_path.open("w", encoding="utf-8") as log:
         process = subprocess.Popen(command, cwd=ROOT, env=env, stdout=log, stderr=subprocess.STDOUT, text=True)

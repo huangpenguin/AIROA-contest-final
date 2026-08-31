@@ -1,5 +1,11 @@
 # AXIS Pi0.5：E1 JAX Microbatch-1 可恢复全量推理计划
 
+> 归档日期：2026-08-31（Asia/Tokyo）
+> 归档状态：`stopped_at_r2_canary_bitwise_gate`
+> 已完成：R0 immutable audit、R1 atomic shard/resume、R2 16/16 canary。
+> 未完成：R3 JAX 340/340、R4 aggregate。
+> 原 bitwise failure 永久保留；本文件不再提供执行授权。
+
 > 制定日期：2026-08-31（Asia/Tokyo）
 > 审核输入 commit：`48206a708439b4a08af0ea9f8809eab9950572a5`
 > 审核结论：`remediation_required`

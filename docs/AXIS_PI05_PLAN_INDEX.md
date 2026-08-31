@@ -1,21 +1,21 @@
 # AXIS Pi0.5 计划索引与审核生命周期
 
 > 更新日期：2026-08-31（Asia/Tokyo）
-> 当前唯一活动计划：`docs/AXIS_PI05_E1_JAX_MB1_RECOVERY_PLAN.md`
-> 当前状态：`e1_jax_mb1_canary_failed`
-> 最新审核：`docs/reviews/axis_pi05/E1_JAX_OOM_REVIEW_20260831.md`
+> 当前唯一活动计划：`docs/AXIS_PI05_R6_SAME_DAY_DIAGNOSTIC_ZIP_PLAN.md`
+> 当前状态：`r6_same_day_diagnostic_zip_ready_to_execute`
+> 最新审核：`docs/reviews/axis_pi05/E1_MB1_CANARY_REVIEW_20260831.md`
 
 ## 1. 唯一活动计划
 
-- `AXIS_PI05_E1_JAX_MB1_RECOVERY_PLAN.md`
-  - 保留既有 170 pair / 340 observation lock、noise、sentinel 与 OOM failure，不得重建或改写；
-  - 先实现 fail-closed 的原子分片/resume，再以固定 `microbatch=1` 运行 16-observation canary 和 340-observation folded JAX full；
-  - 只恢复 JAX source full artifact，不运行 LeRobot/PyTorch、comparator、environment 或 closed-loop；
-  - 本轮 canary 状态为 `e1_jax_mb1_canary_failed`，前 4 个 action 未 bitwise exact，故 340-observation full 未启动并等待审核。
+- `AXIS_PI05_R6_SAME_DAY_DIAGNOSTIC_ZIP_PLAN.md`
+  - 旧 bitwise canary failure 原样保留，以新 fresh run 的预注册 `2.384185791015625e-7` 数值 replay 门禁替代其作为后续运行门禁；
+  - GPU1 并行补 JAX 340/340 evidence，FAST critical path 不再串行等待它；
+  - critical path 为 R6 identity → FAST key/vision/strict reload → 真实 folded-PyTorch↔FAST parity → FAST server/C5 → ZIP 静态与离线门禁；
+  - 只在全部 critical gate 通过时生成 `diagnostic_only_not_submission_ready` ZIP；不自动使用比赛 GPU、上传或提交。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 
-E0 closure 已通过人工审核。原 E1 计划完成 CPU lock 与 JAX 4-observation sentinel；JAX 340-observation full run 在 V100 GPU1 的 `microbatch=4` 触发 CUDA OOM，并正确 hard stop。审核结论为 `remediation_required`：输入锁与 sentinel 获准保留，当前仅授权最小 JAX `microbatch=1` recovery。本轮 canary 已完成 16/16 但前 4 个 action 未 bitwise exact，已按 hard gate 停止；不得跳到 PyTorch、comparator 或归档 EGL 计划中的 E2–E7。
+E1 microbatch-1 canary 的旧 bitwise gate 确实失败，但独立审核确认 max drift 仅 `1.1920928955078125e-7`、无 action/gripper sign flip、无 provenance drift。旧 failure 不改写；新计划预注册两个 unit-scale FP32 epsilon 的 replay 上限并从 observation 0 fresh 重验。因用户要求争取当日 ZIP，已授权 FAST 诊断 critical path 与 JAX evidence lane 并行；诊断 ZIP 不等于 submission-ready。
 
 ## 2. 已归档的 R6 执行链
 
@@ -29,6 +29,7 @@ E0 closure 已通过人工审核。原 E1 计划完成 CPU lock 与 JAX 4-observ
 6. `AXIS_PI05_R6_EGL_STATISTICAL_RELEASE_PLAN.md`：E0 已完成首次审核；E1–E7 从未获本轮执行授权。
 7. `AXIS_PI05_E0_CLOSURE_BEFORE_E1_PLAN.md`：C0–C5 完成并通过独立审核，正式释放 E1。
 8. `AXIS_PI05_E1_EGL_ACTION_ENVELOPE_PLAN.md`：完成 lock 与 JAX sentinel；E1.3 `microbatch=4` OOM 后按 hard gate 停止，E1.4/E1.5 未执行。
+9. `AXIS_PI05_E1_JAX_MB1_RECOVERY_PLAN.md`：完成 atomic shard/resume 与 16/16 canary；旧 bitwise gate失败，340/340未启动。
 
 归档不表示旧计划所有尾部阶段都完成；只表示该文件不再是活动授权入口。旧 failure、阈值、hash 和未执行阶段必须继续保留。
 

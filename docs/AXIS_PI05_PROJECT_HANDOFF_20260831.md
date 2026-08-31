@@ -1,11 +1,11 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新已审核执行 HEAD：`48206a708439b4a08af0ea9f8809eab9950572a5`
+> 最新已审核执行 HEAD：`222e5942d8274a10322ebf4679aaeb6d4f989420`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`dafa5a27266996eecf28920cacc32f3629776d91`
-> 当前总状态：`e1_jax_mb1_canary_failed`
-> 唯一活动计划：`docs/AXIS_PI05_E1_JAX_MB1_RECOVERY_PLAN.md`
+> 当前总状态：`r6_same_day_diagnostic_zip_ready_to_execute`
+> 唯一活动计划：`docs/AXIS_PI05_R6_SAME_DAY_DIAGNOSTIC_ZIP_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -13,7 +13,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO 10 Hz 数据、R6 两卡 LoRA 500-step、fold、LeRobot/PyTorch frozen parity 和 full-C20 environment dynamics 都已完成；R6 本地 B80 只比 Axis init 多 `1/80`，统计不明确。E0 closure 已批准，E1 的 170-pair/340-observation input lock 与 JAX 4-observation sentinel 也经审核可保留。JAX full 因把 microbatch 从已验证的 `1` 提至 `4` 而 OOM，当前只允许以 immutable inputs、固定 `microbatch=1` 和可恢复分片完成 JAX 340/340；尚不授权 PyTorch、comparator 或 closed-loop。
+canonical LIBERO 10 Hz 数据、R6 两卡 LoRA 500-step、fold、LeRobot/PyTorch frozen parity 和 full-C20 environment dynamics 都已完成；R6 本地 B80 只比 Axis init 多 `1/80`，统计不明确。E1 mb1 canary 的 bitwise gate失败，但 max drift 仅 `1.1920928955078125e-7`，无 action/gripper sign flip 或 provenance drift。为争取当日 ZIP，当前授权 GPU1 JAX numeric evidence 与 R6 FAST export/parity/server/diagnostic-ZIP critical path 并行；只有 critical gates 全通过才生成 ZIP，且在完整 envelope/C20/official pre-check 前仍标 `submission_ready=false`。
 
 ## 2. 数据与复现基础
 
@@ -198,7 +198,11 @@ sentinel 实际按单 observation 推理，峰值约 `24717 MiB / 32768 MiB`；f
 
 本轮 recovery 证据位于 `data/reports/axis_libero_30k/post_r6_lora/r6_egl_statistical_release/e1_jax_mb1_recovery/`：canary internal/external 前四比较分别为 `281/1280`、`226/280` exact，最大绝对差均为 `1.1920928955078125e-7`；GPU1 峰值约 `24706 MiB`，GPU0 未触碰。`[0,16)` 原子 shard 已保留但不得视作 full prefix。JAX full、PyTorch、comparator、closed-loop、E2、FAST、ZIP、训练、比赛 GPU、push、上传均未启动。
 
-审核记录：`docs/reviews/axis_pi05/E1_JAX_OOM_REVIEW_20260831.md`。
+独立审核进一步核对：internal/external `>1e-6` 元素均为 0，全 action sign mismatch 与 external gripper sign mismatch 均为 0；全量测试为 `121 passed, 7 skipped`。旧 `e1_jax_mb1_canary_failed` 保留。新 future-run replay 门禁预注册为 internal/external max `<=2.384185791015625e-7`、sign mismatch `0`、finite/provenance exact；它不替代旧 EGL `1e-6` failure，也不代表模型性能通过。
+
+为争取当日诊断 ZIP，下一计划允许两 lane 并行：GPU1 从 observation 0 fresh 完成 JAX numeric 340/340；同时 CPU/GPU2 执行 R6-only FAST staging、真实 folded-PyTorch↔FAST parity、FAST server/C5 与 ZIP 静态门禁。任一 FAST critical gate 失败则不生成 ZIP；即使生成，也先标 `diagnostic_only_not_submission_ready`。
+
+最新审核记录：`docs/reviews/axis_pi05/E1_MB1_CANARY_REVIEW_20260831.md`。
 
 ## 7. 测试、Git 与资源状态
 
@@ -206,7 +210,7 @@ sentinel 实际按单 observation 推理，峰值约 `24717 MiB / 32768 MiB`；f
 
 ```text
 .venv_axis_pi05/bin/pytest -q tests
-116 passed, 7 skipped, 21 warnings（包含 E1 lock/failure tests 与 E0 EGL tests）。
+121 passed, 7 skipped, 21 warnings（包含 E1 recovery shard/resume tests）。
 ```
 
 此前“缺少 pynvml 导致 collection 中断”不是仓库指定 venv 的真实 blocker；正确 venv 当前可以收集 119 tests。交接时不要为此随意安装依赖。
@@ -215,9 +219,9 @@ Git：
 
 ```text
 branch               codex/axis-pi05-audit-remediation
-latest audited HEAD   48206a708439b4a08af0ea9f8809eab9950572a5
+latest audited HEAD   222e5942d8274a10322ebf4679aaeb6d4f989420
 nested OpenPI        dafa5a27266996eecf28920cacc32f3629776d91
-root/nested          clean（审核 48206a7 开始时）
+root/nested          clean（审核 222e594 开始时）
 upstream             当前 branch 未设置 upstream
 ```
 
@@ -246,10 +250,10 @@ upstream             当前 branch 未设置 upstream
 ## 10. 新 section 的接手顺序
 
 1. 阅读本文件与 `docs/AXIS_PI05_PLAN_INDEX.md`。
-2. 阅读并只执行 `docs/AXIS_PI05_E1_JAX_MB1_RECOVERY_PLAN.md`。
-3. 不得修改或重建 E1 lock、pair manifest、inputs/noise、旧 sentinel 或旧 OOM summary。
-4. 先 CPU-only 实现/测试 fail-closed atomic shard + resume；再运行 16-observation canary。
-5. canary 通过才允许在一张空闲本地 GPU 上以 `microbatch=1` 完成 folded JAX 340/340；完成后停止审核。
-6. 不得启动 LeRobot/PyTorch、comparator、environment/closed-loop、E2、FAST、ZIP、训练、比赛 GPU 或外部上传。
+2. 阅读并只执行 `docs/AXIS_PI05_R6_SAME_DAY_DIAGNOSTIC_ZIP_PLAN.md`。
+3. 不得修改 R6 folded source、norm、E1 lock/noise、旧 sentinel 或两个旧 failure summary。
+4. 先 CPU-only 去除 FAST 工具的 F2/M1 硬编码并锁定 R6 identity；之后按计划并行 JAX evidence 与 FAST critical lane。
+5. 只有 source identity、key/vision/strict reload、真实 PyTorch↔FAST parity、server latency/C5 与 ZIP static/offline 全通过才能生成诊断 ZIP。
+6. 不得重新训练、使用 SLOW/旧 F2 FAST、启动比赛 GPU、push、上传或比赛提交。
 
-不要重新训练 R6，也不要恢复旧 F2 FAST 包。当前路径是：E0 closure（已批准）→ E1 JAX mb1 recovery → 人工审核 → PyTorch source（需新计划）→ envelope 审核 → E2 统计协议 → source closed-loop → FAST → ZIP。
+当前路径是：old bitwise failure（保留）→ JAX numeric evidence（并行）+ R6 FAST critical path → diagnostic ZIP → 人工审核 → 完整 envelope/C20 → official pre-check → 人工提交。

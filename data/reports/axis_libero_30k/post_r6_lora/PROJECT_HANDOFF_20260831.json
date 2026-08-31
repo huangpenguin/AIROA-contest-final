@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
   "generated_date": "2026-08-31",
-  "status": "e1_jax_mb1_canary_failed",
+  "status": "r6_same_day_diagnostic_zip_ready_to_execute",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
-  "latest_audited_execution_commit": "48206a708439b4a08af0ea9f8809eab9950572a5",
+  "latest_audited_execution_commit": "222e5942d8274a10322ebf4679aaeb6d4f989420",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
   "branch_has_upstream": false,
@@ -200,7 +200,7 @@
   },
   "tests": {
     "command": ".venv_axis_pi05/bin/pytest -q tests",
-    "passed": 116,
+    "passed": 121,
     "skipped": 7,
     "warnings": 21,
     "pynvml_is_collection_blocker": false
@@ -226,8 +226,8 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_E1_JAX_MB1_RECOVERY_PLAN.md",
-  "next_phase_only": "E1_jax_microbatch1_recovery",
+  "next_plan": "docs/AXIS_PI05_R6_SAME_DAY_DIAGNOSTIC_ZIP_PLAN.md",
+  "next_phase_only": "R6_same_day_fast_diagnostic_zip",
   "e1_authorization": {
     "input_pair_count": 170,
     "input_observation_count": 340,
@@ -235,18 +235,30 @@
     "input_manifest_sha256": "09c9e000135c192b6a3154b82c06f754a047d8006122a888f6c933852887f66e",
     "frozen_inputs_and_noise_sha256": "263a7723d1f866eb73eee9423eda7480d96e1678b4a401bd4d86460b7c37c7fe",
     "allowed_backends": [
-      "r6_folded_jax_source"
+      "r6_folded_jax_source",
+      "r6_on_disk_lerobot_folded_pytorch_source",
+      "r6_newly_exported_fast"
     ],
     "allowed_gpu_count": 1,
     "inference_microbatch_size": 1,
     "resumable_atomic_shards_required": true,
-    "canary_observation_count": 16,
+    "canary_observation_count": 4,
     "full_observation_count": 340,
-    "pytorch_authorized": false,
-    "comparator_authorized": false,
-    "closed_loop_authorized": false,
+    "fresh_replay_gate": {
+      "internal_max_abs_diff": 2.384185791015625E-7,
+      "external_max_abs_diff": 2.384185791015625E-7,
+      "all_action_sign_mismatch": 0,
+      "execute8_gripper_sign_flip": 0,
+      "finite_and_provenance_exact": true
+    },
+    "pytorch_authorized": true,
+    "comparator_authorized": true,
+    "closed_loop_authorized": true,
+    "closed_loop_scope": "C5_FAST_smoke_then_optional_C20_only_if_all_prior_gates_pass",
     "e2_authorized": false,
-    "fast_or_zip_authorized": false
+    "fast_or_zip_authorized": true,
+    "official_gpu_authorized": false,
+    "upload_or_submit_authorized": false
   },
   "e1_execution": {
     "status": "e1_jax_full_inference_failed",
@@ -356,6 +368,48 @@
     },
     "forbidden_stages_started": [],
     "next_phase_only": "manual_review_or_new_minimal_remediation"
+  },
+  "e1_mb1_canary_review": {
+    "reviewed_commit": "222e5942d8274a10322ebf4679aaeb6d4f989420",
+    "result": "remediation_required",
+    "old_bitwise_failure_preserved": true,
+    "numeric_drift_classification": "bounded_fp32_fresh_process_replay_drift",
+    "internal_max_abs_diff": 1.1920928955078125E-7,
+    "internal_p99_abs_diff": 5.960464477539063E-8,
+    "external_max_abs_diff": 1.1920928955078125E-7,
+    "external_p99_abs_diff": 1.1920928955078125E-7,
+    "elements_above_1e_6": 0,
+    "all_action_sign_mismatch": 0,
+    "external_gripper_sign_mismatch": 0,
+    "new_future_replay_max_abs_gate": 2.384185791015625E-7,
+    "old_shard_reuse_authorized": false,
+    "root_and_nested_clean_at_review_start": true,
+    "tests_reproduced": {
+      "passed": 121,
+      "skipped": 7,
+      "warnings": 21
+    },
+    "review_record": "docs/reviews/axis_pi05/E1_MB1_CANARY_REVIEW_20260831.md"
+  },
+  "same_day_zip_authorization": {
+    "diagnostic_zip_authorized_conditionally": true,
+    "diagnostic_zip_critical_gates": [
+      "r6_source_identity",
+      "fast_key_vision_and_strict_reload",
+      "real_folded_pytorch_to_fast_action_parity",
+      "fast_only_server_contract_and_latency",
+      "c5_catastrophic_regression_smoke",
+      "zip_crc_static_and_offline_import"
+    ],
+    "jax_numeric_full_parallel_lane": true,
+    "gpu0_allowed": false,
+    "allowed_local_gpu_ids": [1, 2, 3],
+    "training_authorized": false,
+    "slow_fallback_authorized": false,
+    "official_gpu_authorized": false,
+    "upload_authorized": false,
+    "submit_authorized": false,
+    "maximum_status_without_full_envelope_c20_official_precheck": "r6_diagnostic_zip_local_ready_not_submission_ready"
   },
   "auto_upload_authorized": false,
   "auto_submit_authorized": false,

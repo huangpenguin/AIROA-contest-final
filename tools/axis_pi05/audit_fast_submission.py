@@ -474,6 +474,7 @@ def collect_fixtures(manifest_path: Path, fixture_dir: Path, count: int = 8) -> 
     from pipeline.environment import EnvironmentManager
     from tools.axis_pi05.eval_manifest import load_locked_panel
 
+    _activate_libero_asset_bridge()
     rows = [row for row in load_locked_panel(manifest_path) if row.get("suite") == "libero_t1"]
     if len(rows) < count:
         raise ValueError(f"locked Track 1 panel has only {len(rows)} rows; need {count}")
@@ -553,6 +554,58 @@ def _free_port() -> int:
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
         sock.bind(("127.0.0.1", 0))
         return int(sock.getsockname()[1])
+
+
+def _activate_libero_asset_bridge() -> None:
+    """Point the LIBERO-plus loader at the validated local LIBERO assets."""
+
+    root = Path(__file__).resolve().parents[2]
+    from libero.libero.envs import bddl_base_domain
+    from libero.libero.envs.arenas import style
+
+    bddl_base_domain.DIR_PATH = root / "LIBERO/libero/libero/envs"
+    for name, module in list(sys.modules.items()):
+        if name.startswith("libero.libero.envs.objects") and hasattr(module, "absolute_path"):
+            module.absolute_path = root / "LIBERO/libero/libero"
+
+    # LIBERO-plus includes additional visual styles whose large texture pack is
+    # intentionally not vendored in this repository.  The validated local
+    # assets contain the canonical base floor/wall textures, so make only
+    # missing style filenames resolve to those existing files.  This is a
+    # runtime asset bridge; it does not rewrite locked BDDL, scene, or state
+    # inputs and leaves every already-present texture untouched.
+    texture_root = root / "LIBERO/libero/libero/assets/textures"
+    fallbacks = {"floor": "light-gray-floor-tile.png", "wall": "light-gray-plaster.png"}
+    for texture_type, mapping in style.STYLE_MAPPING.items():
+        fallback = fallbacks[texture_type]
+        if not (texture_root / fallback).is_file():
+            raise FileNotFoundError(f"validated LIBERO fallback texture is missing: {texture_root / fallback}")
+        for style_name, filename in list(mapping.items()):
+            if not (texture_root / filename).is_file():
+                mapping[style_name] = fallback
+
+    # The plus task generator also names per-light arena XML files that are
+    # not part of the validated local asset tree.  Preserve the task's arena
+    # type while routing only absent XMLs to the corresponding base scene.
+    scene_fallbacks = {
+        "floor": "scenes/libero_floor_base_style.xml",
+        "table": "scenes/libero_tabletop_base_style.xml",
+        "kitchen": "scenes/libero_kitchen_tabletop_base_style.xml",
+        "living_room": "scenes/libero_living_room_tabletop_base_style.xml",
+        "coffee_table": "scenes/libero_coffee_table_base_style.xml",
+        "study": "scenes/libero_study_base_style.xml",
+    }
+    original_init = bddl_base_domain.BDDLBaseDomain.__init__
+    if not getattr(original_init, "_axis_pi05_asset_bridge", False):
+        def bridged_init(self, bddl_file_name, *args, **kwargs):
+            scene_xml = kwargs.get("scene_xml")
+            arena_type = kwargs.get("arena_type", "table")
+            if scene_xml is not None and not (root / "LIBERO/libero/libero/assets" / scene_xml).is_file():
+                kwargs["scene_xml"] = scene_fallbacks.get(arena_type, scene_fallbacks["table"])
+            return original_init(self, bddl_file_name, *args, **kwargs)
+
+        bridged_init._axis_pi05_asset_bridge = True
+        bddl_base_domain.BDDLBaseDomain.__init__ = bridged_init
 
 
 def _validate_allowed_gpu(gpu: str) -> None:
@@ -1243,6 +1296,7 @@ def run_c5(
     from tools.axis_pi05.phase1_rollout import ChunkPolicy, _load_task_info
 
     _validate_allowed_gpu(gpu)
+    _activate_libero_asset_bridge()
 
     lock = json.loads(lock_path.read_text(encoding="utf-8"))
     cases = lock.get("cases", [])

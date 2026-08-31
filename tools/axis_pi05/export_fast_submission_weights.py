@@ -3,8 +3,8 @@
 
 This command is deliberately submission-specific.  It never reads an Orbax
 checkpoint and it never consults the historical ``model_fast.safetensors``
-asset.  The only model input accepted by the export phase is the
-``model_weights/model.safetensors`` member extracted from the source zip.
+asset.  The production path accepts only the locked on-disk R6 folded model;
+the older source-zip path remains available for historical recovery tests.
 
 The first phase inventories and safely extracts a source zip into a new
 staging directory.  The second phase loads the staged LeRobot model, applies
@@ -17,6 +17,7 @@ import argparse
 import hashlib
 import json
 import os
+import shutil
 import stat
 import sys
 import time
@@ -49,6 +50,17 @@ TIED_SOURCE_ALIASES = {
     "paligemma_with_expert.paligemma.lm_head.weight",
 }
 CHUNK = 8 * 1024 * 1024
+R6_SOURCE_KIND = "on_disk_r6_folded_pytorch"
+R6_CANDIDATE = "r6_dual_l2_fresh500_r1"
+R6_TOPOLOGY = "L2_action_lora_heads"
+R6_MODEL_SHA256 = "5c73e1e8217dbb75a934c2b0165208e851f69e66cfe2ea0430590a29901e6d5b"
+R6_NORM_SHA256 = "4c803bf59c52677c36b6b420c614d8a7742e0847708443863e13e67cb80b18f5"
+R6_PROCESSOR_SHA256 = {
+    "policy_preprocessor.json": "1d05decf37445ed3f5d2b48c2e7d61bc0299a1c200a5159517fa18f05b8430ef",
+    "policy_postprocessor.json": "9c09f2006d9035ee657dc954c4a687ec93acacbd286a25bbd489cdbf6f5340da",
+    "policy_preprocessor_step_2_normalizer_processor.safetensors": "d80c2ea8a253fc1b3b8d3ae4fb564d111ce125678abb36a1e0f63a8c02b05b3d",
+    "policy_postprocessor_step_0_unnormalizer_processor.safetensors": "15fe7b1f1692b7046fa18c6857e8fff6d8eefc07597d235c6331b8945dd55402",
+}
 
 
 def sha256_file(path: Path) -> str:
@@ -226,6 +238,116 @@ def inventory_and_extract(source_zip: Path, staging: Path, report_path: Path) ->
     return report
 
 
+def inventory_from_model_dir(
+    source_model_dir: Path,
+    staging: Path,
+    report_path: Path,
+    *,
+    server_template: Path,
+    vendor_source: Path,
+) -> dict[str, Any]:
+    """Stage the locked on-disk R6 folded model without creating a source ZIP."""
+
+    source_model_dir = source_model_dir.resolve()
+    staging = staging.resolve()
+    if not source_model_dir.is_dir():
+        raise FileNotFoundError(source_model_dir)
+    if staging.exists():
+        raise FileExistsError(f"refusing to overwrite existing staging directory: {staging}")
+    if not server_template.is_file():
+        raise FileNotFoundError(server_template)
+    if not vendor_source.is_dir():
+        raise FileNotFoundError(vendor_source)
+    required_source = (
+        "model.safetensors",
+        "config.json",
+        "policy_preprocessor.json",
+        "policy_postprocessor.json",
+        "policy_preprocessor_step_2_normalizer_processor.safetensors",
+        "policy_postprocessor_step_0_unnormalizer_processor.safetensors",
+    )
+    source_files: dict[str, dict[str, Any]] = {}
+    for name in required_source:
+        path = source_model_dir / name
+        if not path.is_file():
+            raise FileNotFoundError(path)
+        source_files[name] = {
+            "path": str(path),
+            "bytes": path.stat().st_size,
+            "sha256": sha256_file(path),
+        }
+    if source_files["model.safetensors"]["sha256"] != R6_MODEL_SHA256:
+        raise ValueError("R6 folded source model hash does not match the locked candidate")
+    for name, expected in R6_PROCESSOR_SHA256.items():
+        if source_files[name]["sha256"] != expected:
+            raise ValueError(f"R6 processor hash mismatch: {name}")
+    config = json.loads((source_model_dir / "config.json").read_text(encoding="utf-8"))
+    if config.get("type") != "pi05" or int(config.get("chunk_size", -1)) != 10 or int(config.get("n_action_steps", -1)) != 8:
+        raise ValueError("R6 folded source config must declare pi05/chunk=10/n_action_steps=8")
+    if config.get("normalization_mapping", {}).get("ACTION") != "QUANTILES" or config.get("normalization_mapping", {}).get("STATE") != "QUANTILES":
+        raise ValueError("R6 folded source config must declare ACTION/STATE QUANTILES")
+
+    model_dir = staging / "model_weights"
+    model_dir.mkdir(parents=True)
+    # Hard-link the 14GB source model on the same filesystem.  The exporter
+    # only reads it; this avoids an untracked duplicate while preserving the
+    # source hash and keeps the final ZIP's member a regular file.
+    for name in required_source:
+        target = model_dir / name
+        source = source_model_dir / name
+        if name == "model.safetensors":
+            os.link(source, target)
+        else:
+            shutil.copy2(source, target)
+    shutil.copy2(server_template, staging / "policy_server.py")
+    shutil.copy2(server_template.with_name("requirements.txt"), staging / "requirements.txt")
+    shutil.copytree(vendor_source, staging / "vendor", copy_function=os.link, ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "*.pyo"))
+
+    members = []
+    for name in required_source:
+        path = model_dir / name
+        members.append({
+            "path": f"model_weights/{name}",
+            "directory": False,
+            "uncompressed_bytes": path.stat().st_size,
+            "compressed_bytes": path.stat().st_size,
+            "crc32": None,
+            "sha256": sha256_file(path),
+        })
+    report = {
+        "schema_version": 1,
+        "source_kind": R6_SOURCE_KIND,
+        "candidate": R6_CANDIDATE,
+        "topology": R6_TOPOLOGY,
+        "training_steps": 500,
+        "normalization": "QUANTILES",
+        "source_submission_zip": None,
+        "source_submission_zip_sha256": None,
+        "source_submission_zip_bytes": None,
+        "source_model_path": str((source_model_dir / "model.safetensors")),
+        "source_model_sha256": R6_MODEL_SHA256,
+        "source_model_bytes": source_files["model.safetensors"]["bytes"],
+        "source_config_sha256": source_files["config.json"]["sha256"],
+        "source_preprocessor_sha256": source_files["policy_preprocessor.json"]["sha256"],
+        "source_postprocessor_sha256": source_files["policy_postprocessor.json"]["sha256"],
+        "source_files": source_files,
+        "source_config": config,
+        "source_has_model_fast": False,
+        "server_template": str(server_template.resolve()),
+        "vendor_source": str(vendor_source.resolve()),
+        "staging": str(staging),
+        "members": members,
+        "safety": {
+            "source_is_current_r6_on_disk_model": True,
+            "historical_fast_asset_not_used": True,
+            "source_model_hardlinked_read_only": True,
+            "training_performed": False,
+        },
+    }
+    write_json_atomic(report_path, report)
+    return report
+
+
 def verify_existing_staging(source_zip: Path, staging: Path, report_path: Path) -> dict[str, Any]:
     """Revalidate a staging directory created by an earlier failed export."""
 
@@ -343,18 +465,17 @@ def _strict_reload(model_dir: Path, fast_path: Path) -> dict[str, Any]:
     config.gradient_checkpointing = False
     model = PI05Policy(config)
     state = load_file(str(fast_path), device="cpu")
-    missing, unexpected = model.load_state_dict(state, strict=False)
+    try:
+        model.load_state_dict(state, strict=True)
+        missing, unexpected = [], []
+    except RuntimeError as exc:
+        raise RuntimeError(f"FAST reload key gate failed: {exc}") from exc
     result = {
         "missing": list(missing),
         "unexpected": list(unexpected),
         "strict_key_gate": not missing and not unexpected,
         "loaded_tensor_count": len(state),
     }
-    if missing or unexpected:
-        raise RuntimeError(
-            "FAST reload key gate failed: "
-            f"missing={list(missing)[:8]} unexpected={list(unexpected)[:8]}"
-        )
     del state, model, torch
     return result
 
@@ -410,7 +531,11 @@ def export_fast(staging: Path, report_root: Path) -> dict[str, Any]:
     # The source submission file is the underlying PI0Pytorch state dict.  A
     # PI05Policy wrapper owns that module under ``model``, so the FAST file
     # must use the wrapper's fully-qualified ``model.*`` keys.
-    load_missing, load_unexpected = policy.model.load_state_dict(source_state, strict=False)
+    try:
+        policy.model.load_state_dict(source_state, strict=True)
+        load_missing, load_unexpected = [], []
+    except RuntimeError as exc:
+        raise RuntimeError(f"source model key gate failed while loading PI05Policy: {exc}") from exc
     if load_missing or load_unexpected:
         raise RuntimeError(
             "source model key gate failed while loading PI05Policy: "
@@ -522,11 +647,17 @@ def export_fast(staging: Path, report_root: Path) -> dict[str, Any]:
     metadata = {
         "schema_version": 1,
         "format": "remapped_mixed_state_dict",
+        "candidate": R6_CANDIDATE,
+        "topology": R6_TOPOLOGY,
+        "training_steps": 500,
+        "normalization": "QUANTILES",
         "source_submission_zip": inventory.get("source_submission_zip"),
         "source_submission_zip_sha256": inventory.get("source_submission_zip_sha256"),
         "source_model": str(source_path.resolve()),
         "source_model_sha256": source_header["sha256"],
         "source_model_bytes": source_path.stat().st_size,
+        "historical_fast_asset_used": False,
+        "training_performed": False,
         "model_fast": str(fast_path.resolve()),
         "model_fast_sha256": fast_header["sha256"],
         "model_fast_bytes": fast_path.stat().st_size,
@@ -548,6 +679,11 @@ def export_fast(staging: Path, report_root: Path) -> dict[str, Any]:
     export_report = {
         "schema_version": 1,
         "status": "passed",
+        "candidate": R6_CANDIDATE,
+        "topology": R6_TOPOLOGY,
+        "training_steps": 500,
+        "normalization": "QUANTILES",
+        "norm_stats_sha256": R6_NORM_SHA256,
         "elapsed_sec": time.time() - t0,
         "source_model": source_header,
         "fast_model": fast_header,
@@ -563,6 +699,7 @@ def export_fast(staging: Path, report_root: Path) -> dict[str, Any]:
         "dtype_summary": fast_header,
         "reload": reload_result,
         "source_is_current_submission_model": True,
+        "source_kind": R6_SOURCE_KIND,
         "historical_fast_asset_used": False,
         "training_performed": False,
         "mapping_report": str((report_root / "key_mapping.json").resolve()),
@@ -598,9 +735,13 @@ def export_fast(staging: Path, report_root: Path) -> dict[str, Any]:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--source-zip", type=Path, required=True)
+    source = parser.add_mutually_exclusive_group(required=True)
+    source.add_argument("--source-zip", type=Path)
+    source.add_argument("--source-model-dir", type=Path)
     parser.add_argument("--staging", type=Path, required=True)
     parser.add_argument("--report-root", type=Path, required=True)
+    parser.add_argument("--server-template", type=Path, default=Path("outputs/axis_fast_recovery/f2_m1_500_fast/staging/policy_server.py"))
+    parser.add_argument("--vendor-source", type=Path, default=Path("outputs/axis_fast_recovery/f2_m1_500_fast/staging/vendor"))
     parser.add_argument("--inventory-only", action="store_true")
     parser.add_argument("--reuse-staging", action="store_true")
     return parser.parse_args()
@@ -610,7 +751,17 @@ def main() -> None:
     args = parse_args()
     args.report_root.mkdir(parents=True, exist_ok=True)
     source_inventory_path = args.report_root / "source_inventory.json"
-    if args.reuse_staging:
+    if args.source_model_dir is not None and args.reuse_staging:
+        raise SystemExit("--reuse-staging is only valid with --source-zip")
+    if args.source_model_dir is not None:
+        inventory_and_extract_report = inventory_from_model_dir(
+            args.source_model_dir,
+            args.staging,
+            source_inventory_path,
+            server_template=args.server_template,
+            vendor_source=args.vendor_source,
+        )
+    elif args.reuse_staging:
         inventory_and_extract_report = verify_existing_staging(
             args.source_zip, args.staging, source_inventory_path
         )

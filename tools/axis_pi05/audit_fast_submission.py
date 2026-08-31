@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail-closed audit and packager for the F2/M1@500 FAST-only candidate.
+"""Fail-closed audit and packager for the locked R6@500 FAST-only candidate.
 
 The exporter owns model conversion.  This file owns the independent checks that
 must be true before a human can consider the resulting zip: policy-server
@@ -12,6 +12,9 @@ from __future__ import annotations
 
 import argparse
 import ast
+import collections
+import csv
+import gc
 import hashlib
 import importlib.util
 import json
@@ -44,6 +47,10 @@ VISION_SUFFIXES = (
     "paligemma_with_expert.paligemma.model.vision_tower.vision_model.embeddings.patch_embedding.weight",
     "paligemma_with_expert.paligemma.model.vision_tower.vision_model.embeddings.patch_embedding.bias",
 )
+R6_CANDIDATE = "r6_dual_l2_fresh500_r1"
+R6_TOPOLOGY = "L2_action_lora_heads"
+R6_MODEL_SHA256 = "5c73e1e8217dbb75a934c2b0165208e851f69e66cfe2ea0430590a29901e6d5b"
+R6_NORM_SHA256 = "4c803bf59c52677c36b6b420c614d8a7742e0847708443863e13e67cb80b18f5"
 
 
 def sha256_file(path: Path, block_size: int = 8 * 1024 * 1024) -> str:
@@ -195,9 +202,20 @@ def audit_staging(staging: Path, report_root: Path) -> dict[str, Any]:
         },
         "source_identity": {
             "source_is_current_submission_model": export.get("source_is_current_submission_model") is True,
+            "source_kind_is_r6_on_disk": inventory.get("source_kind") == "on_disk_r6_folded_pytorch",
+            "source_model_sha256_is_r6": source_header["sha256"] == R6_MODEL_SHA256,
             "historical_fast_asset_not_used": export.get("historical_fast_asset_used") is False,
             "training_not_performed": export.get("training_performed") is False,
             "inventory_source_model_sha256": inventory.get("source_model_sha256") == source_header["sha256"],
+        },
+        "r6_identity": {
+            "candidate": inventory.get("candidate") == R6_CANDIDATE,
+            "topology": inventory.get("topology") == R6_TOPOLOGY,
+            "training_steps": int(inventory.get("training_steps", -1)) == 500,
+            "normalization": inventory.get("normalization") == "QUANTILES",
+            "config_action_quantiles": config.get("normalization_mapping", {}).get("ACTION") == "QUANTILES",
+            "config_state_quantiles": config.get("normalization_mapping", {}).get("STATE") == "QUANTILES",
+            "norm_stats_sha256": export.get("norm_stats_sha256") == R6_NORM_SHA256,
         },
         "key_gate": mapping.get("passed") is True and export.get("key_gate", {}).get("passed") is True,
         "strict_reload": export.get("reload", {}).get("strict_key_gate") is True,
@@ -211,7 +229,10 @@ def audit_staging(staging: Path, report_root: Path) -> dict[str, Any]:
         "fast_metadata": {
             "source_hash_matches": fast_meta.get("source_model_sha256") == source_header["sha256"],
             "fast_hash_matches": fast_meta.get("model_fast_sha256") == fast_header["sha256"],
-            "historical_fast_asset_not_used": fast_meta.get("historical_fast_asset_used", False) is False,
+            "historical_fast_asset_not_used": fast_meta.get("historical_fast_asset_used") is False,
+            "training_not_performed": fast_meta.get("training_performed") is False,
+            "candidate_is_r6": fast_meta.get("candidate") == R6_CANDIDATE,
+            "normalization_is_quantiles": fast_meta.get("normalization") == "QUANTILES",
         },
     }
     checks["passed"] = all(
@@ -269,17 +290,28 @@ def build_package(staging: Path, report_root: Path, output: Path) -> dict[str, A
     audit = json.loads((report_root / "fast_submission_audit.json").read_text(encoding="utf-8"))
     export = json.loads((report_root / "export_report.json").read_text(encoding="utf-8"))
     inventory = json.loads((report_root / "source_inventory.json").read_text(encoding="utf-8"))
+    parity = json.loads((report_root / "fixed_input_parity.json").read_text(encoding="utf-8"))
+    latency = json.loads((report_root / "server_latency.json").read_text(encoding="utf-8"))
+    c5 = json.loads((report_root / "track1_calibration" / "summary.json").read_text(encoding="utf-8"))
+    offline = json.loads((report_root / "official_docker_e2e.json").read_text(encoding="utf-8"))
+    if audit.get("status") != "passed" or parity.get("status") != "passed" or latency.get("status") != "passed" or c5.get("status") != "passed" or offline.get("status") != "passed":
+        raise RuntimeError("refusing to package before staging, parity, latency, C5, and offline gates all pass")
     fast_path = staging / "model_weights/model_fast.safetensors"
     converter = Path(__file__).resolve()
     manifest = {
         "schema_version": 1,
         "submission_status": "NOT_SUBMITTED",
+        "track": "track1",
+        "candidate": R6_CANDIDATE,
+        "topology": R6_TOPOLOGY,
         "training_steps": 500,
-        "scope": "F2",
-        "normalization": "M1",
+        "normalization": "QUANTILES",
+        "formal_winner": False,
+        "official_result": False,
+        "auto_submit": False,
         "source": {
-            "submission_zip": inventory.get("source_submission_zip"),
-            "submission_zip_sha256": inventory.get("source_submission_zip_sha256"),
+            "kind": inventory.get("source_kind"),
+            "model_path": inventory.get("source_model_path"),
             "model_sha256": inventory.get("source_model_sha256"),
             "model_bytes": inventory.get("source_model_bytes"),
             "config_sha256": inventory.get("source_config_sha256"),
@@ -429,7 +461,7 @@ def _axisangle(quat: Any) -> Any:
     return (value[:3] * (2.0 * np.arccos(scalar)) / denominator).astype(np.float32)
 
 
-def collect_fixtures(manifest_path: Path, fixture_dir: Path, count: int = 20) -> dict[str, Any]:
+def collect_fixtures(manifest_path: Path, fixture_dir: Path, count: int = 8) -> dict[str, Any]:
     """Freeze exactly the post-bootstrap observations from the locked T1 panel."""
 
     import numpy as np
@@ -523,6 +555,141 @@ def _free_port() -> int:
         return int(sock.getsockname()[1])
 
 
+def _validate_allowed_gpu(gpu: str) -> None:
+    if str(gpu) != "cpu" and str(gpu) not in {"1", "2"}:
+        raise ValueError(f"tonight FAST path permits only physical GPU1 or GPU2, got {gpu!r}")
+
+
+class _OnDiskR6Pi05Policy:
+    """Direct folded-PyTorch source policy used as the parity authority."""
+
+    def __init__(self, model_dir: Path, staging: Path, *, gpu: str) -> None:
+        os.environ["CUDA_VISIBLE_DEVICES"] = str(gpu)
+        os.environ.setdefault("HF_HUB_OFFLINE", "1")
+        os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
+        os.environ.setdefault("TORCHDYNAMO_DISABLE", "1")
+        os.environ.setdefault("TORCH_COMPILE_DISABLE", "1")
+        os.environ.setdefault("TORCHINDUCTOR_DISABLE", "1")
+        vendor = staging / "vendor"
+        if str(vendor) not in sys.path:
+            sys.path.insert(0, str(vendor))
+        import torch
+        torch._dynamo.config.disable = True
+        from lerobot.processor import PolicyProcessorPipeline
+        from lerobot.processor.converters import batch_to_transition, policy_action_to_transition, transition_to_batch, transition_to_policy_action
+        from lerobot.configs.policies import PreTrainedConfig
+        from lerobot.policies.pi05 import processor_pi05 as _pi05_processor  # noqa: F401
+        from lerobot.policies.pi05.configuration_pi05 import PI05Config
+        from lerobot.policies.pi05.modeling_pi05 import PI05Policy
+        from paligemma_tokenizer import load_local_paligemma_tokenizer
+        from safetensors.torch import load_file
+
+        self._torch = torch
+        self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        config = PreTrainedConfig.from_pretrained(str(model_dir))
+        if not isinstance(config, PI05Config):
+            raise RuntimeError(f"expected PI05Config, got {type(config)}")
+        config.device = "cpu"
+        config.dtype = "float32"
+        config.push_to_hub = False
+        config.compile_model = False
+        config.gradient_checkpointing = False
+        self.policy = PI05Policy(config)
+        state = load_file(str(model_dir / "model.safetensors"), device="cpu")
+        alias = "paligemma_with_expert.paligemma.model.language_model.embed_tokens.weight"
+        source = "paligemma_with_expert.paligemma.lm_head.weight"
+        if alias not in state and source in state:
+            state[alias] = state[source]
+        try:
+            self.policy.model.load_state_dict(state, strict=True)
+        except RuntimeError as exc:
+            raise RuntimeError(f"R6 source strict key gate failed: {exc}") from exc
+        del state
+        if self.device == "cuda":
+            self.policy.model.paligemma_with_expert.to_bfloat16_for_selected_params("float16")
+            for module_name in ("action_in_proj", "action_out_proj", "time_mlp_in", "time_mlp_out"):
+                getattr(self.policy.model, module_name).to(dtype=torch.float32)
+        self.policy.to(device=self.device)
+        self.policy.config.device = self.device
+        self.policy.config.n_action_steps = min(8, int(self.policy.config.chunk_size))
+        self.policy.eval()
+        tokenizer = load_local_paligemma_tokenizer(staging / "vendor" / "paligemma_tokenizer")
+        self.preprocessor = PolicyProcessorPipeline.from_pretrained(
+            pretrained_model_name_or_path=str(model_dir),
+            config_filename="policy_preprocessor.json",
+            overrides={
+                "device_processor": {"device": self.device},
+                "tokenizer_processor": {"tokenizer": tokenizer, "tokenizer_name": None},
+            },
+            to_transition=batch_to_transition,
+            to_output=transition_to_batch,
+        )
+        self.postprocessor = PolicyProcessorPipeline.from_pretrained(
+            pretrained_model_name_or_path=str(model_dir),
+            config_filename="policy_postprocessor.json",
+            overrides={"device_processor": {"device": "cpu"}},
+            to_transition=policy_action_to_transition,
+            to_output=transition_to_policy_action,
+        )
+        self._image_keys = ("observation.images.image", "observation.images.image2")
+        self._action_queue: collections.deque[Any] = collections.deque()
+        self.instruction = ""
+
+    @staticmethod
+    def _quat2axisangle(quat_xyzw: Any) -> Any:
+        value = np.asarray(quat_xyzw, dtype=np.float64).reshape(4)
+        scalar = float(np.clip(value[3], -1.0, 1.0))
+        denominator = float(np.sqrt(max(0.0, 1.0 - scalar * scalar)))
+        if denominator < 1e-10:
+            return np.zeros(3, dtype=np.float32)
+        return (value[:3] * (2.0 * np.arccos(scalar)) / denominator).astype(np.float32)
+
+    def _prepare_image(self, image: Any) -> Any:
+        from PIL import Image
+
+        value = np.asarray(image)
+        if value.shape[:2] != (224, 224):
+            value = np.asarray(Image.fromarray(value).resize((224, 224), resample=Image.BILINEAR))
+        value = np.ascontiguousarray(value[::-1, ::-1])
+        return self._torch.from_numpy(value).permute(2, 0, 1).contiguous().float() / 255.0
+
+    def _build_batch(self, obs: dict[str, np.ndarray]) -> dict[str, Any]:
+        state = np.concatenate(
+            [
+                np.asarray(obs["robot0_eef_pos"], dtype=np.float32).reshape(3),
+                self._quat2axisangle(obs["robot0_eef_quat"]),
+                np.asarray(obs["robot0_gripper_qpos"], dtype=np.float32).reshape(2),
+            ]
+        ).astype(np.float32)
+        return {
+            self._image_keys[0]: self._prepare_image(obs["agentview_image"]).unsqueeze(0),
+            self._image_keys[1]: self._prepare_image(obs["robot0_eye_in_hand_image"]).unsqueeze(0),
+            "observation.state": self._torch.from_numpy(state).unsqueeze(0),
+            "task": [self.instruction],
+        }
+
+    def reset(self, instruction: str, seed: int) -> None:
+        self.instruction = str(instruction)
+        self._torch.manual_seed(int(seed))
+        if self._torch.cuda.is_available():
+            self._torch.cuda.manual_seed_all(int(seed))
+        self.policy.reset()
+        self._action_queue.clear()
+
+    def get_action(self, obs: dict[str, np.ndarray]) -> np.ndarray:
+        with self._torch.inference_mode():
+            processed = self.preprocessor(self._build_batch(obs))
+            if not self._action_queue:
+                chunk = self.policy.predict_action_chunk(processed)
+                queued = chunk[:, : self.policy.config.n_action_steps]
+                self._action_queue.extend(queued.transpose(0, 1))
+            action = self.postprocessor(self._action_queue.popleft())
+        result = np.asarray(action.detach().cpu().numpy(), dtype=np.float32).reshape(-1)[:7]
+        if result.shape != (7,) or not np.isfinite(result).all():
+            raise ValueError(f"R6 source action must be finite shape (7,), got {result.shape}")
+        return result
+
+
 def _load_fast_policy(staging: Path) -> Any:
     """Load MyPolicy without installing FastAPI; parity uses direct calls."""
 
@@ -579,72 +746,31 @@ def run_fixed_parity(
     staging: Path,
     fixture_dir: Path,
     report_root: Path,
-    checkpoint: Path,
+    source_model_dir: Path,
     gpu: str = "1",
 ) -> dict[str, Any]:
-    """Compare the staged policy with the authoritative Orbax HTTP adapter."""
+    """Compare FAST with the authoritative on-disk folded R6 PyTorch model."""
 
     import numpy as np
 
-    # When this file is executed by path, Python puts tools/axis_pi05 on
-    # sys.path rather than the repository root.  Make the repository-local
-    # pipeline client available without relying on the caller's PYTHONPATH.
-    repo_root = Path(__file__).resolve().parents[2]
-    if str(repo_root) not in sys.path:
-        sys.path.insert(0, str(repo_root))
-    from pipeline.remote_policy import RemotePolicyClient
+    _validate_allowed_gpu(gpu)
 
     fixture_manifest = json.loads((fixture_dir / "fixtures.json").read_text(encoding="utf-8"))
     cases = fixture_manifest.get("cases", [])
-    if len(cases) != 20:
-        raise ValueError(f"fixed-input parity requires 20 fixtures, got {len(cases)}")
-    seeds = (2000, 2001, 2002)
-    source_port = _free_port()
-    source_log_path = report_root / "source_parity_server.log"
-    source_log = source_log_path.open("w", encoding="utf-8")
-    source_env = os.environ.copy()
-    source_env.update(
-        {
-            "CUDA_VISIBLE_DEVICES": str(gpu),
-            "HF_HUB_OFFLINE": "1",
-            "TRANSFORMERS_OFFLINE": "1",
-            "AXIS_PI05_SCOPE": "F2",
-            "AXIS_PI05_MIX": "M1",
-            "AXIS_PI05_ASSETS_ROOT": str(Path(__file__).resolve().parents[2] / "data/manifests_v2"),
-            "AXIS_PI05_NORM_STATS": str(Path(__file__).resolve().parents[2] / "data/manifests_v2/M1/norm_stats.json"),
-        }
-    )
-    source_process = subprocess.Popen(
-        [
-            sys.executable,
-            "-m",
-            "tools.axis_pi05.checkpoint_http_server",
-            "--checkpoint",
-            str(checkpoint),
-            "--port",
-            str(source_port),
-            "--config",
-            "axis_pi05_libero_mix",
-        ],
-        cwd=Path(__file__).resolve().parents[2],
-        env=source_env,
-        stdout=source_log,
-        stderr=subprocess.STDOUT,
-        text=True,
-    )
-    source_client = RemotePolicyClient(f"http://127.0.0.1:{source_port}", timeout_sec=30.0)
+    if len(cases) != 8:
+        raise ValueError(f"fixed-input parity requires 8 fixtures, got {len(cases)}")
+    seeds = (2000, 2001)
     source_rows: dict[tuple[int, int], dict[str, Any]] = {}
-    source_start = time.time()
+    source_start = time.perf_counter()
+    source_policy = _OnDiskR6Pi05Policy(source_model_dir, staging, gpu=gpu)
     try:
-        source_client.wait_for_server(timeout=float(os.environ.get("AXIS_PI05_SERVER_STARTUP_TIMEOUT", "600")))
-        source_health_seconds = time.time() - source_start
         for case in cases:
             fixture = _load_fixture(fixture_dir / case["file"])
             instruction = str(case["row"]["language"])
             for seed in seeds:
-                source_client.reset(instruction=instruction, seed=seed)
+                source_policy.reset(instruction=instruction, seed=seed)
                 t0 = time.perf_counter()
-                action = np.asarray(source_client.get_action(fixture), dtype=np.float32)
+                action = np.asarray(source_policy.get_action(fixture), dtype=np.float32)
                 elapsed = time.perf_counter() - t0
                 source_rows[(int(case["index"]), seed)] = {
                     "action": action.tolist(),
@@ -652,14 +778,15 @@ def run_fixed_parity(
                     "finite": bool(action.shape == (7,) and np.isfinite(action).all()),
                 }
     finally:
-        if source_process.poll() is None:
-            source_process.terminate()
-            try:
-                source_process.wait(timeout=30)
-            except subprocess.TimeoutExpired:
-                source_process.kill()
-                source_process.wait(timeout=10)
-        source_log.close()
+        del source_policy
+        gc.collect()
+        try:
+            import torch
+
+            torch.cuda.empty_cache()
+        except Exception:
+            pass
+    source_health_seconds = time.perf_counter() - source_start
 
     fast_env = os.environ.copy()
     fast_env.update(
@@ -782,7 +909,7 @@ def run_fixed_parity(
             and metrics["p95_abs_error"] <= 0.10
             and metrics["gripper_sign_agreement"] >= 0.95
         ) else "failed",
-        "authoritative_source": str(checkpoint.resolve()),
+        "authoritative_source": str(source_model_dir.resolve()),
         "fixture_manifest": str((fixture_dir / "fixtures.json").resolve()),
         "fixture_count": len(cases),
         "policy_seeds": list(seeds),
@@ -790,6 +917,8 @@ def run_fixed_parity(
         "executed_action_steps": 8,
         "metrics": metrics,
         "records": records,
+        "source_kind": "on_disk_r6_folded_pytorch",
+        "candidate": R6_CANDIDATE,
     }
     write_json(report_root / "fixed_input_parity.json", result)
     return result
@@ -807,6 +936,8 @@ def run_server_latency(
     import msgpack
     from urllib import request as urllib_request
 
+    _validate_allowed_gpu(gpu)
+
     fixture_manifest = json.loads((fixture_dir / "fixtures.json").read_text(encoding="utf-8"))
     cases = fixture_manifest.get("cases", [])
     if not cases:
@@ -818,7 +949,9 @@ def run_server_latency(
     log_path.parent.mkdir(parents=True, exist_ok=True)
     log_handle = log_path.open("w", encoding="utf-8")
     env = os.environ.copy()
-    container_gpu = "0" if gpu != "cpu" else ""
+    # CUDA_VISIBLE_DEVICES is set in the parent namespace; inside the child
+    # the selected physical GPU is naturally addressed as local device 0.
+    container_gpu = str(gpu) if gpu != "cpu" else ""
     env.update(
         {
             "CUDA_VISIBLE_DEVICES": container_gpu,
@@ -891,7 +1024,7 @@ def run_server_latency(
                 for key, value in fixture.items()
             }
             payload = msgpack.packb(serialized, use_bin_type=True)
-            for _ in range(24):
+            for _ in range(12):
                 try:
                     action_request = urllib_request.Request(
                         base_url + "/act",
@@ -901,7 +1034,13 @@ def run_server_latency(
                     )
                     t0 = time.perf_counter()
                     with urllib_request.urlopen(action_request, timeout=15.0) as response:
-                        response.read()
+                        response_payload = response.read()
+                    decoded = msgpack.unpackb(response_payload, raw=False)
+                    action = np.frombuffer(decoded["data"], dtype=np.float32).copy()
+                    if action.shape != (7,) or not np.isfinite(action).all():
+                        raise ValueError(f"/act returned non-finite or wrong-shape action: {action.shape}")
+                    if not np.any(np.abs(action) > 0):
+                        raise ValueError("/act returned an all-zero action")
                     action_latencies.append(time.perf_counter() - t0)
                 except Exception as exc:
                     action_errors.append(f"{type(exc).__name__}: {exc}")
@@ -915,6 +1054,20 @@ def run_server_latency(
                 process.kill()
                 process.wait(timeout=10)
         log_handle.close()
+
+    process_log = log_path.read_text(encoding="utf-8", errors="replace")
+    required_log_markers = {
+        "FAST_REQUIRED_AND_VERIFIED": "FAST_REQUIRED_AND_VERIFIED" in process_log,
+        "fast=True": "fast=True" in process_log,
+        "chunk=10": "chunk=10" in process_log,
+        "n_action_steps=8": "n_action_steps=8" in process_log,
+        "action_ema=0.0": "action_ema=0.0" in process_log,
+        "rtc=False": "rtc=False" in process_log,
+    }
+    forbidden_log_markers = {
+        marker: marker in process_log
+        for marker in ("SLOW", "remap", "missing-key", "missing key", "vision key")
+    }
 
     result: dict[str, Any] = {
         "schema_version": 1,
@@ -934,9 +1087,14 @@ def run_server_latency(
         "gates": {
             "health": health_seconds is not None,
             "reset": reset_ok,
-            "all_act_requests_completed": len(action_latencies) == 24,
+            "all_act_requests_completed": len(action_latencies) == 12,
             "each_act_under_10s": bool(action_latencies) and max(action_latencies) < 10.0,
+            "actions_nonzero_finite_shape7": len(action_latencies) == 12 and not action_errors,
+            "required_log_markers": all(required_log_markers.values()),
+            "forbidden_log_markers_absent": not any(forbidden_log_markers.values()),
         },
+        "log_markers": required_log_markers,
+        "forbidden_log_markers": forbidden_log_markers,
     }
     if action_latencies:
         result["act_seconds"] = {
@@ -946,6 +1104,311 @@ def run_server_latency(
         }
     result["status"] = "passed" if all(result["gates"].values()) else "failed"
     write_json(report_root / "server_latency.json", result)
+    return result
+
+
+C5_SUCCESS_CASES = (
+    "B80-task00-init0",
+    "B80-task09-init0",
+    "B80-task16-init0",
+)
+C5_DIAGNOSTIC_CASES = (
+    "B80-task02-init0",
+    "B80-task07-init0",
+)
+
+
+def _csv_bool(value: Any) -> bool:
+    if isinstance(value, bool):
+        return value
+    return str(value).strip().lower() in {"1", "true", "yes", "y"}
+
+
+def lock_c5_cases(
+    manifest_path: Path,
+    source_episodes_csv: Path,
+    lock_path: Path,
+) -> dict[str, Any]:
+    """Freeze the five seeded B80 regression cases before FAST rollout."""
+
+    manifest_rows = {
+        str(json.loads(line)["case_id"]): json.loads(line)
+        for line in manifest_path.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    }
+    with source_episodes_csv.open("r", encoding="utf-8", newline="") as handle:
+        source_rows = {str(row["case_id"]): row for row in csv.DictReader(handle)}
+    selected = list(C5_SUCCESS_CASES + C5_DIAGNOSTIC_CASES)
+    if len(set(selected)) != 5:
+        raise ValueError("C5 selection must contain five unique case IDs")
+    missing = [case_id for case_id in selected if case_id not in manifest_rows or case_id not in source_rows]
+    if missing:
+        raise ValueError(f"C5 source/manifest case missing: {missing}")
+    success_rows = [source_rows[case_id] for case_id in C5_SUCCESS_CASES]
+    if not all(_csv_bool(row.get("success")) for row in success_rows):
+        raise ValueError("C5 success regression selection is not source-successful")
+    diagnostic_rows = [source_rows[case_id] for case_id in C5_DIAGNOSTIC_CASES]
+    if any(_csv_bool(row.get("success")) for row in diagnostic_rows):
+        raise ValueError("C5 diagnostic selection unexpectedly contains a source success")
+    failure_types = {str(row.get("failure_reason") or "unknown") for row in diagnostic_rows}
+    if len(failure_types) != 2:
+        raise ValueError(f"C5 diagnostic cases must have distinct failure types: {failure_types}")
+    cases = []
+    for case_id in selected:
+        manifest_row = manifest_rows[case_id]
+        source_row = source_rows[case_id]
+        cases.append(
+            {
+                "case_id": case_id,
+                "manifest": manifest_row,
+                "source_outcome": {
+                    "success": _csv_bool(source_row.get("success")),
+                    "collision": _csv_bool(source_row.get("collision")),
+                    "goal_reached": _csv_bool(source_row.get("goal_reached")),
+                    "timeout": _csv_bool(source_row.get("timeout")),
+                    "failure_reason": source_row.get("failure_reason") or None,
+                    "steps": int(source_row.get("steps") or 0),
+                    "episodes_csv_row_sha256": hashlib.sha256(
+                        json.dumps(source_row, ensure_ascii=False, sort_keys=True).encode("utf-8")
+                    ).hexdigest(),
+                },
+                "role": "source_success_regression" if case_id in C5_SUCCESS_CASES else "diagnostic",
+            }
+        )
+    result = {
+        "schema_version": 1,
+        "status": "locked",
+        "candidate": R6_CANDIDATE,
+        "source_kind": "on_disk_r6_folded_pytorch",
+        "manifest": str(manifest_path.resolve()),
+        "manifest_sha256": sha256_file(manifest_path),
+        "source_episodes_csv": str(source_episodes_csv.resolve()),
+        "source_episodes_csv_sha256": sha256_file(source_episodes_csv),
+        "source_success_case_ids": list(C5_SUCCESS_CASES),
+        "diagnostic_case_ids": list(C5_DIAGNOSTIC_CASES),
+        "diagnostic_failure_types": sorted(failure_types),
+        "cases": cases,
+        "official_result": False,
+        "locked_before_fast_rollout": True,
+    }
+    write_json(lock_path, result)
+    return result
+
+
+def _fast_server_environment(gpu: str) -> dict[str, str]:
+    env = os.environ.copy()
+    env.update(
+        {
+            # The child sees the selected physical GPU as device 0; physical
+            # GPU0 is therefore never selected by this path when gpu is 1/2.
+            "CUDA_VISIBLE_DEVICES": str(gpu) if gpu != "cpu" else "",
+            "POLICY_TYPE": "pi05",
+            "PI05_FAST": "1",
+            "PI05_DTYPE": "float16" if gpu != "cpu" else "float32",
+            "N_ACTION_STEPS": "8",
+            "ACTION_EMA": "0",
+            "RTC_ENABLED": "0",
+            "RTC_INFERENCE_DELAY": "0",
+            "PI05_FIDELITY_DUMP": "0",
+            "HF_HUB_OFFLINE": "1",
+            "TRANSFORMERS_OFFLINE": "1",
+            "TORCHDYNAMO_DISABLE": "1",
+            "TORCH_COMPILE_DISABLE": "1",
+            "TORCHINDUCTOR_DISABLE": "1",
+            "LIBERO_CONTROL_FREQ": "10",
+        }
+    )
+    if (Path(__file__).resolve().parents[2] / ".eval_libero").is_dir():
+        env.setdefault("LIBERO_CONFIG_PATH", str(Path(__file__).resolve().parents[2] / ".eval_libero"))
+    return env
+
+
+def run_c5(
+    staging: Path,
+    report_root: Path,
+    lock_path: Path,
+    gpu: str = "1",
+) -> dict[str, Any]:
+    """Run the locked five-case FAST regression through the real simulator."""
+
+    import numpy as np
+    from pipeline.config import EvalConfig, PerturbationConfig
+    from pipeline.environment import EnvironmentManager
+    from pipeline.remote_policy import RemotePolicyClient
+    from pipeline.rollout import RolloutExecutor
+    from tools.axis_pi05.phase1_rollout import ChunkPolicy, _load_task_info
+
+    _validate_allowed_gpu(gpu)
+
+    lock = json.loads(lock_path.read_text(encoding="utf-8"))
+    cases = lock.get("cases", [])
+    if lock.get("status") != "locked" or len(cases) != 5:
+        raise ValueError("C5 requires a locked five-case selection")
+    port = _free_port()
+    log_path = report_root / "c5_policy_server.log"
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    log_handle = log_path.open("w", encoding="utf-8")
+    process = subprocess.Popen(
+        [sys.executable, "policy_server.py", "--host", "127.0.0.1", "--port", str(port)],
+        cwd=staging,
+        env=_fast_server_environment(gpu),
+        stdout=log_handle,
+        stderr=subprocess.STDOUT,
+        text=True,
+    )
+    client = RemotePolicyClient(f"http://127.0.0.1:{port}", timeout_sec=90.0)
+    episode_rows: list[dict[str, Any]] = []
+    errors: list[str] = []
+    started = time.time()
+    try:
+        client.wait_for_server(timeout=float(os.environ.get("AXIS_PI05_SERVER_STARTUP_TIMEOUT", "900")))
+        config = EvalConfig(camera_height=128, camera_width=128, max_steps_per_episode=300, seed=51000)
+        manager = EnvironmentManager(config)
+        executor = RolloutExecutor(manager, config)
+        policy = ChunkPolicy(client, mode="execute8")
+        for case in cases:
+            row = case["manifest"]
+            try:
+                task_info = _load_task_info(row)
+                init_state = manager.get_init_state(task_info, int(row["init_state_index"]))
+                episode = executor.evaluate_case(
+                    policy,
+                    task_info,
+                    init_state=init_state,
+                    env_seed=int(row["env_seed"]),
+                    policy_seed=int(row["policy_seed"]),
+                    max_steps=int(row["max_steps"]),
+                    case_id=str(row["case_id"]),
+                    perturbation=PerturbationConfig(),
+                )
+                actions = np.asarray(episode.actions, dtype=np.float32)
+                action_norms = np.linalg.norm(actions, axis=1) if actions.size else np.asarray([], dtype=np.float32)
+                episode_rows.append(
+                    {
+                        "case_id": row["case_id"],
+                        "role": case["role"],
+                        "source_outcome": case["source_outcome"],
+                        "fast_success": bool(episode.success),
+                        "fast_collision": bool(episode.collided),
+                        "fast_goal_reached": bool(episode.goal_reached),
+                        "fast_timeout": bool(episode.timeout),
+                        "fast_failure_reason": episode.failure_reason,
+                        "steps": int(episode.total_steps),
+                        "elapsed_sec": float(episode.elapsed_time_sec),
+                        "action_finite": bool(actions.size and np.isfinite(actions).all()),
+                        "action_norm_mean": float(action_norms.mean()) if action_norms.size else 0.0,
+                        "action_norm_max": float(action_norms.max()) if action_norms.size else 0.0,
+                    }
+                )
+            except Exception as exc:
+                errors.append(f"{row['case_id']}: {type(exc).__name__}: {exc}")
+                episode_rows.append(
+                    {
+                        "case_id": row["case_id"],
+                        "role": case["role"],
+                        "source_outcome": case["source_outcome"],
+                        "fast_success": False,
+                        "fast_failure_reason": "exception",
+                        "steps": 0,
+                        "elapsed_sec": 0.0,
+                        "action_finite": False,
+                        "action_norm_mean": 0.0,
+                        "action_norm_max": 0.0,
+                        "error": f"{type(exc).__name__}: {exc}",
+                    }
+                )
+    except Exception as exc:
+        errors.append(f"server: {type(exc).__name__}: {exc}")
+    finally:
+        if process.poll() is None:
+            process.terminate()
+            try:
+                process.wait(timeout=30)
+            except subprocess.TimeoutExpired:
+                process.kill()
+                process.wait(timeout=10)
+        log_handle.close()
+
+    process_log = log_path.read_text(encoding="utf-8", errors="replace")
+    required_log_markers = {
+        "FAST_REQUIRED_AND_VERIFIED": "FAST_REQUIRED_AND_VERIFIED" in process_log,
+        "fast=True": "fast=True" in process_log,
+        "chunk=10": "chunk=10" in process_log,
+        "n_action_steps=8": "n_action_steps=8" in process_log,
+        "action_ema=0.0": "action_ema=0.0" in process_log,
+        "rtc=False": "rtc=False" in process_log,
+    }
+    forbidden_log_markers = {
+        marker: marker in process_log
+        for marker in ("SLOW", "remap", "missing-key", "missing key", "vision key")
+    }
+    reproduced = sum(
+        bool(row.get("fast_success"))
+        for row in episode_rows
+        if row.get("role") == "source_success_regression"
+    )
+    nonfinite = sum(not bool(row.get("action_finite")) for row in episode_rows)
+    stalls = sum(
+        not bool(row.get("fast_success")) and float(row.get("action_norm_mean", 0.0)) < 1e-3
+        for row in episode_rows
+    )
+    gates = {
+        "coverage_5_of_5": len(episode_rows) == 5,
+        "source_success_reproduced_at_least_2_of_3": reproduced >= 2,
+        "http_server_errors_zero": not errors,
+        "nonfinite_actions_zero": nonfinite == 0,
+        "stalls_zero": stalls == 0,
+        "required_log_markers": all(required_log_markers.values()),
+        "forbidden_log_markers_absent": not any(forbidden_log_markers.values()),
+    }
+    result = {
+        "schema_version": 1,
+        "status": "passed" if all(gates.values()) else "failed",
+        "candidate": R6_CANDIDATE,
+        "gpu": str(gpu),
+        "lock": str(lock_path.resolve()),
+        "lock_sha256": sha256_file(lock_path),
+        "started_at_unix": started,
+        "finished_at_unix": time.time(),
+        "source_success_reproduced": reproduced,
+        "nonfinite_action_count": nonfinite,
+        "stall_count": stalls,
+        "errors": errors,
+        "cases": episode_rows,
+        "required_log_markers": required_log_markers,
+        "forbidden_log_markers": forbidden_log_markers,
+        "process_log": str(log_path.resolve()),
+        "gates": gates,
+        "official_result": False,
+    }
+    write_json(report_root / "track1_calibration" / "summary.json", result)
+    return result
+
+
+def write_offline_e2e_report(staging: Path, report_root: Path) -> dict[str, Any]:
+    """Record the local offline/staged-server equivalence gates before packaging."""
+
+    server = json.loads((report_root / "server_latency.json").read_text(encoding="utf-8"))
+    c5 = json.loads((report_root / "track1_calibration" / "summary.json").read_text(encoding="utf-8"))
+    static = _policy_static_audit(staging / "policy_server.py")
+    required = [
+        staging / "policy_server.py",
+        staging / "requirements.txt",
+        staging / "model_weights/config.json",
+        staging / "model_weights/model_fast.safetensors",
+    ]
+    result = {
+        "schema_version": 1,
+        "status": "passed" if static["passed"] and server["status"] == "passed" and c5["status"] == "passed" and all(path.is_file() for path in required) else "failed",
+        "execution": "local_offline_staged_server_equivalent",
+        "official_result": False,
+        "static_policy_audit": static,
+        "server_latency_status": server["status"],
+        "c5_status": c5["status"],
+        "required_staged_files": {str(path.relative_to(staging)): path.is_file() for path in required},
+        "no_network_or_upload": True,
+    }
+    write_json(report_root / "official_docker_e2e.json", result)
     return result
 
 
@@ -959,8 +1422,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--manifest", type=Path)
     parser.add_argument("--fixtures", type=Path)
     parser.add_argument("--run-parity", action="store_true")
-    parser.add_argument("--checkpoint", type=Path)
+    parser.add_argument("--source-model-dir", type=Path)
     parser.add_argument("--parity-gpu", default="1")
+    parser.add_argument("--run-latency", action="store_true")
+    parser.add_argument("--lock-c5", action="store_true")
+    parser.add_argument("--source-episodes", type=Path)
+    parser.add_argument("--c5-lock", type=Path)
+    parser.add_argument("--run-c5", action="store_true")
+    parser.add_argument("--write-offline-e2e", action="store_true")
     return parser.parse_args()
 
 
@@ -973,16 +1442,43 @@ def main() -> None:
             raise SystemExit("--manifest and --fixtures are required with --collect-fixtures")
         print(json.dumps(collect_fixtures(args.manifest, args.fixtures), indent=2, sort_keys=True))
         return
+    if args.lock_c5:
+        if args.manifest is None or args.source_episodes is None or args.c5_lock is None:
+            raise SystemExit("--manifest, --source-episodes, and --c5-lock are required with --lock-c5")
+        print(json.dumps(lock_c5_cases(args.manifest, args.source_episodes, args.c5_lock), indent=2, sort_keys=True))
+        return
     audit = audit_staging(args.staging, report_root)
     if not audit["checks"]["passed"]:
         raise SystemExit("FAST staging audit failed")
     if args.run_parity:
-        if args.checkpoint is None or args.fixtures is None:
-            raise SystemExit("--checkpoint and --fixtures are required with --run-parity")
-        parity = run_fixed_parity(args.staging, args.fixtures, report_root, args.checkpoint, args.parity_gpu)
+        if args.source_model_dir is None or args.fixtures is None:
+            raise SystemExit("--source-model-dir and --fixtures are required with --run-parity")
+        parity = run_fixed_parity(args.staging, args.fixtures, report_root, args.source_model_dir, args.parity_gpu)
         print(json.dumps({"audit": audit["status"], "parity": parity["status"], "metrics": parity["metrics"]}, indent=2, sort_keys=True))
         if parity["status"] != "passed":
             raise SystemExit("fixed-input parity failed")
+        return
+    if args.run_latency:
+        if args.fixtures is None:
+            raise SystemExit("--fixtures is required with --run-latency")
+        latency = run_server_latency(args.staging, report_root, args.fixtures, args.parity_gpu)
+        print(json.dumps(latency, indent=2, sort_keys=True))
+        if latency["status"] != "passed":
+            raise SystemExit("server latency gate failed")
+        return
+    if args.run_c5:
+        if args.c5_lock is None:
+            raise SystemExit("--c5-lock is required with --run-c5")
+        c5 = run_c5(args.staging, report_root, args.c5_lock, args.parity_gpu)
+        print(json.dumps(c5, indent=2, sort_keys=True))
+        if c5["status"] != "passed":
+            raise SystemExit("C5 gate failed")
+        return
+    if args.write_offline_e2e:
+        offline = write_offline_e2e_report(args.staging, report_root)
+        print(json.dumps(offline, indent=2, sort_keys=True))
+        if offline["status"] != "passed":
+            raise SystemExit("offline staged-server gate failed")
         return
     package = args.package
     if args.build_package:

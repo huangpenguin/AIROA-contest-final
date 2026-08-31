@@ -8,6 +8,7 @@ import pytest
 from tools.axis_pi05.e1_jax_mb1_recovery import (
     _shard_paths,
     aggregate_shards,
+    concatenate_action_chunks,
     validate_contiguous_shards,
     validate_shard,
     write_atomic_shard,
@@ -96,3 +97,13 @@ def test_aggregate_uses_explicit_observation_order_and_exact_340_coverage(tmp_pa
     assert float(internal[32, 0, 0]) == 32.0
     assert float(internal[339, 0, 0]) == 336.0
 
+
+def test_canary_concatenates_action_arrays_not_shard_metadata():
+    internal = np.ones((16, 10, 32), dtype=np.float32)
+    external = np.full((16, 10, 7), 2.0, dtype=np.float32)
+    merged_internal = concatenate_action_chunks([internal], (10, 32))
+    merged_external = concatenate_action_chunks([external], (10, 7))
+    assert merged_internal.shape == (16, 10, 32)
+    assert merged_external.shape == (16, 10, 7)
+    assert np.array_equal(merged_internal, internal)
+    assert np.array_equal(merged_external, external)

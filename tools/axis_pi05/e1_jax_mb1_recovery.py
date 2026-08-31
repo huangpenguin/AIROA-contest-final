@@ -263,6 +263,12 @@ def aggregate_shards(shard_dir: Path, expected_stop: int, expected_provenance: d
     return internal, external, shards
 
 
+def concatenate_action_chunks(chunks: list[np.ndarray], shape: tuple[int, ...]) -> np.ndarray:
+    if chunks:
+        return np.concatenate(chunks, axis=0)
+    return np.empty((0, *shape), dtype=np.float32)
+
+
 def _atomic_save_npz(path: Path, **arrays: np.ndarray) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     fd, temporary = tempfile.mkstemp(prefix=f".{path.name}.", suffix=".tmp", dir=str(path.parent))
@@ -374,6 +380,8 @@ def _run_gpu(mode: str, output: Path, gpu_id: str, *, resume: bool = False, seed
     monitor.append(gpu_snapshot())
     latency: list[float] = []
     written: list[dict[str, Any]] = []
+    canary_internal_chunks: list[np.ndarray] = []
+    canary_external_chunks: list[np.ndarray] = []
     for shard_start in range(start_index, stop_index, SHARD_SIZE):
         shard_stop = min(shard_start + SHARD_SIZE, stop_index)
         internal_values: list[np.ndarray] = []
@@ -395,6 +403,9 @@ def _run_gpu(mode: str, output: Path, gpu_id: str, *, resume: bool = False, seed
         shard_external = np.stack(external_values)
         monitor.append(gpu_snapshot())
         written.append(write_atomic_shard(SHARDS_ROOT, shard_start, shard_stop, shard_internal, shard_external, provenance, gpu_monitor={"runtime": runtime, "snapshot": monitor[-1]}))
+        if mode == "canary":
+            canary_internal_chunks.append(shard_internal)
+            canary_external_chunks.append(shard_external)
     del model, template, raw_params, folded_params
     gc.collect()
     monitor.append(gpu_snapshot())
@@ -402,8 +413,8 @@ def _run_gpu(mode: str, output: Path, gpu_id: str, *, resume: bool = False, seed
     all_internal = all_external = None
     all_shards = prior_shards
     if mode == "canary":
-        all_internal = np.concatenate([written[0]["internal"]], axis=0) if written else np.empty((0, *INTERNAL_SHAPE), dtype=np.float32)
-        all_external = np.concatenate([written[0]["external"]], axis=0) if written else np.empty((0, *EXTERNAL_SHAPE), dtype=np.float32)
+        all_internal = concatenate_action_chunks(canary_internal_chunks, INTERNAL_SHAPE)
+        all_external = concatenate_action_chunks(canary_external_chunks, EXTERNAL_SHAPE)
         sentinel_match = False
         with np.load(PRIOR_SENTINEL, allow_pickle=False) as prior:
             prior_internal = np.asarray(prior["internal_actions"])

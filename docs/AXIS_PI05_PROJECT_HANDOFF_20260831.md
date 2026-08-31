@@ -4,13 +4,15 @@
 > 最新审核输入 HEAD：`78109647e95d79690511c922845141ff492a395f`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`dafa5a27266996eecf28920cacc32f3629776d91`
-> 当前总状态：`e0_results_numerically_verified_formal_closure_required`
+> 当前总状态：`e0_closure_complete_pending_review`
 > 唯一活动计划：`docs/AXIS_PI05_E0_CLOSURE_BEFORE_E1_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
+> closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
+> closure input：`78109647e95d79690511c922845141ff492a395f`
 
 ## 1. 一句话结论
 
-canonical LIBERO 10 Hz 数据、R6 两卡 LoRA 500-step、fold、LeRobot/PyTorch frozen parity 和 full-C20 environment dynamics 都已完成；R6 本地 B80 只比 Axis init 多 `1/80`，统计不明确。E0 已完成标签修正、content 去重和 trajectory 只读重分析，当前 170 个 pair 的数值结果可信；但工具仍存在 missing 数据可被判 exact、coverage complete 写死、immutability 测试缺失以及 E0 小型报告未入 Git 的 formal-closure 问题。因此下一 section 只执行 CPU-only E0 closure，不进入 E1。
+canonical LIBERO 10 Hz 数据、R6 两卡 LoRA 500-step、fold、LeRobot/PyTorch frozen parity 和 full-C20 environment dynamics 都已完成；R6 本地 B80 只比 Axis init 多 `1/80`，统计不明确。E0 closure 已完成 fail-closed coverage、content 去重、trajectory 只读重分析、immutability 测试和小型证据入库准备，当前 170 个 pair 的数值结果可信；状态为 `e0_closure_complete_pending_review`，人工审核前不进入 E1。
 
 ## 2. 数据与复现基础
 
@@ -139,15 +141,38 @@ dynamics mismatch                              0
 
 旧四 pair 只有 3 个 content-unique；误标的 Axis reference 已确认实际为 R6 folded JAX；旧 S1.3 failure/hash 保持不变。
 
-审核状态不是 E1 approved，而是 `e0_results_numerically_verified_formal_closure_required`。剩余问题：
+审核状态不是 E1 approved，而是 `e0_closure_complete_pending_review`。E0 closure 已在 CPU-only 边界内完成，正式产物位于新的 `e0_closure/` namespace；人工审核前不得创建或执行 E1。
 
-1. `(None, None)` 仍可能被判 exact；
-2. snapshot/trajectory 缺失或 shape mismatch 会被静默跳过；
-3. `trajectory_coverage_complete` 仍为常量；
-4. 缺少旧 S1.3 status/hash immutability 回归测试；
-5. E0 reanalysis/audit/thread report 仍在 ignore 目录，未包含于 `7810964`。
+## 6.1 E0 Closure 结果
 
-下一 section 只能按活动计划完成 closure，生成新 namespace，不覆盖初次 E0 或旧 S1.3。
+正式 closure 产物：
+
+`data/reports/axis_libero_30k/post_r6_lora/r6_egl_statistical_release/e0_closure/`
+
+```text
+snapshot non-exact groups                 23
+trajectory non-exact groups               64
+snapshot candidate occurrences             23
+trajectory affected-frame occurrences    302
+snapshot content-unique                    13
+trajectory content-unique                157
+content-unique total                      170
+content duplicate occurrences             155
+renderer-only evaluable                   170
+not evaluable                               0
+dynamics mismatch                           0
+coverage issues                             0
+```
+
+expected/observed snapshot 与 trajectory group sets 完全相等。`302` 是 affected-frame occurrence，`157` 是 trajectory content-unique pair，二者不能互换。closure summary SHA-256 为 `088376936c2ecba61258316bcafe48c70c04c7c115c62917222f7add2aba3c43`，content-unique manifest SHA-256 为 `b4ea8d3bed7f9cfc60f2f7f53613471e222d9857a8d6857f39b854720905c7bf`。
+
+原 formal-closure 问题已由 E0 解决并保留为历史记录：
+
+1. missing 数据现在显式为 not exact / not evaluable；
+2. 缺失、shape/dtype mismatch 和无 changed frame 现在形成 coverage issue；
+3. expected/observed 集合相等是 coverage complete 的必要条件；
+4. 旧 S1.3 status、summary hash、manifest hash 有 immutability 回归测试；
+5. 四个小型 closure 证据文件已准备显式纳入 Git。
 
 ## 7. 测试、Git 与资源状态
 
@@ -155,7 +180,7 @@ dynamics mismatch                              0
 
 ```text
 .venv_axis_pi05/bin/pytest -q tests
-103 passed, 7 skipped, 21 warnings
+112 passed, 7 skipped, 21 warnings
 ```
 
 此前“缺少 pynvml 导致 collection 中断”不是仓库指定 venv 的真实 blocker；正确 venv 当前可以收集 110 tests。交接时不要为此随意安装依赖。
@@ -194,11 +219,8 @@ upstream             当前 branch 未设置 upstream
 
 ## 10. 新 section 的接手顺序
 
-1. 阅读本文件。
-2. 阅读 `docs/AXIS_PI05_PLAN_INDEX.md`。
-3. 阅读并只执行 `docs/AXIS_PI05_E0_CLOSURE_BEFORE_E1_PLAN.md` 的 C0–C5。
-4. 运行正确 venv 的全量测试。
-5. 更新 machine handoff 与 closure thread report，小型报告显式纳入 Git，clean commit 后停止审核。
-6. 即使 closure 通过，也不得在同一 section 启动 E1 GPU run、closed-loop、FAST、官方 Notebook、HF upload 或比赛提交。
+1. 阅读本文件与 `docs/AXIS_PI05_PLAN_INDEX.md`。
+2. 核对 `e0_closure/summary.json`、content-unique manifest、handoff 与 clean commit。
+3. 进行人工审核；在审核完成前不得启动 E1 GPU run、closed-loop、FAST、官方 Notebook、HF upload 或比赛提交。
 
-不要重新训练 R6，也不要恢复旧 F2 FAST 包。当前最短可信路径是：E0 fail-closed closure → 人工审核 → E1 envelope → 统计协议 → source closed-loop → FAST → ZIP。
+不要重新训练 R6，也不要恢复旧 F2 FAST 包。当前路径是：E0 closure → 人工审核 → E1 envelope → 统计协议 → source closed-loop → FAST → ZIP。

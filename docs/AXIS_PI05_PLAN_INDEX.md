@@ -2,7 +2,7 @@
 
 > 更新日期：2026-08-31（Asia/Tokyo）
 > 当前唯一活动计划：`docs/AXIS_PI05_E0_CLOSURE_BEFORE_E1_PLAN.md`
-> 当前状态：`e0_results_numerically_verified_formal_closure_required`
+> 当前状态：`e0_closure_complete_pending_review`
 > 最新审核：`docs/reviews/axis_pi05/E0_REVIEW_20260831.md`
 
 ## 1. 唯一活动计划
@@ -14,6 +14,8 @@
   - 不授权 E1、GPU、closed-loop、FAST、ZIP、上传或比赛提交。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
+
+E0 closure 已在 CPU-only 边界内完成，当前只等待人工审核；在人工审核前不得创建或执行 E1。
 
 ## 2. 已归档的 R6 执行链
 

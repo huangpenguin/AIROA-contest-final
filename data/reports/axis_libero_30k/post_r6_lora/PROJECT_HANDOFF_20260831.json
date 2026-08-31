@@ -1,7 +1,9 @@
 {
   "schema_version": 1,
   "generated_date": "2026-08-31",
-  "status": "e0_results_numerically_verified_formal_closure_required",
+  "status": "e0_closure_complete_pending_review",
+  "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
+  "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
@@ -70,13 +72,20 @@
     "jax_vs_pytorch_external_max_abs_diff": 0.000001043081283569336,
     "jax_vs_pytorch_internal_max_abs_diff": 0.0000014007091522216797
   },
-  "s1_3_audit_corrections_identified": [
+  "s1_3_audit_corrections_identified_historical": [
     "axis_reference_jax_is_actually_r6_folded_jax",
     "agentview_worst_and_representative_are_content_duplicate",
     "zero64_and_fixed64_trajectory_pairs_not_covered"
   ],
+  "resolved_by_e0": [
+    "missing_arrays_are_not_exact_or_evaluable",
+    "coverage_is_fail_closed_with_expected_observed_set_equality",
+    "snapshot_and_trajectory_missing_data_and_immutability_are_tested",
+    "trajectory_occurrences_are_separate_from_content_unique_pairs",
+    "closure_evidence_is_written_to_a_new_git_tracked_namespace"
+  ],
   "e0": {
-    "status": "s1_original_failure_preserved_reporting_corrected",
+    "status": "e0_closure_complete_pending_review",
     "read_only_reanalysis": true,
     "model_run_started": false,
     "gpu_started": false,
@@ -107,12 +116,46 @@
     },
     "tests": {
       "command": ".venv_axis_pi05/bin/pytest -q tests",
-      "passed": 103,
+      "passed": 112,
       "skipped": 7,
       "warnings": 21
     },
-    "review_status": "numerically_verified_formal_closure_required",
-    "next_phase_only": "E0_closure"
+    "closure": {
+      "status": "e0_closure_complete_pending_review",
+      "input_commit": "78109647e95d79690511c922845141ff492a395f",
+      "execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
+      "summary": "data/reports/axis_libero_30k/post_r6_lora/r6_egl_statistical_release/e0_closure/summary.json",
+      "summary_sha256": "088376936c2ecba61258316bcafe48c70c04c7c115c62917222f7add2aba3c43",
+      "content_unique_pair_manifest": "data/reports/axis_libero_30k/post_r6_lora/r6_egl_statistical_release/e0_closure/content_unique_pair_manifest.json",
+      "content_unique_pair_manifest_sha256": "b4ea8d3bed7f9cfc60f2f7f53613471e222d9857a8d6857f39b854720905c7bf",
+      "counts": {
+        "snapshot_non_exact_group_count": 23,
+        "trajectory_non_exact_group_count": 64,
+        "snapshot_candidate_occurrence_count": 23,
+        "trajectory_affected_frame_occurrence_count": 302,
+        "snapshot_content_unique_pair_count": 13,
+        "trajectory_content_unique_pair_count": 157,
+        "content_unique_pair_count": 170,
+        "content_duplicate_occurrence_count": 155,
+        "renderer_only_evaluable_count": 170,
+        "not_evaluable_count": 0,
+        "dynamics_mismatch_count": 0,
+        "coverage_issue_count": 0
+      },
+      "coverage_complete": true,
+      "old_s1_3_status_preserved": "s1_real_egl_pairs_failed",
+      "old_s1_3_summary_sha256": "96f6c55f2b42ea55d3e103820e52912a4fcfad79794b686411e0e1659ca1a952",
+      "old_s1_3_pair_manifest_sha256": "dacb81bcc6216c0b86be9ff350d731cdc199612b5e8f6f662560598cd588e972",
+      "tests": {
+        "command": ".venv_axis_pi05/bin/pytest -q tests",
+        "passed": 112,
+        "skipped": 7,
+        "warnings": 21
+      },
+      "next_phase_only": "E1_pending_manual_review"
+    },
+    "review_status": "complete_pending_manual_review",
+    "next_phase_only": "E1_pending_manual_review"
   },
   "e0_review": {
     "reviewed_commit": "78109647e95d79690511c922845141ff492a395f",
@@ -137,7 +180,7 @@
   },
   "tests": {
     "command": ".venv_axis_pi05/bin/pytest -q tests",
-    "passed": 103,
+    "passed": 112,
     "skipped": 7,
     "warnings": 21,
     "pynvml_is_collection_blocker": false
@@ -164,7 +207,7 @@
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
   "next_plan": "docs/AXIS_PI05_E0_CLOSURE_BEFORE_E1_PLAN.md",
-  "next_phase_only": "E0_closure",
+  "next_phase_only": "E1_pending_manual_review",
   "auto_upload_authorized": false,
   "auto_submit_authorized": false,
   "formal_winner": false

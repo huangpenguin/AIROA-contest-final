@@ -1,0 +1,172 @@
+{
+  "candidate": "r6_dual_l2_fresh500_r1",
+  "cases": [
+    {
+      "case_id": "B80-task00-init0",
+      "manifest": {
+        "bddl_path": "/home/huang/code/PARC2026_final/LIBERO-plus/libero/libero/bddl_files/libero_mix/LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate.bddl",
+        "bddl_sha256": "0c6749b920bff1e1efe47ffb0e0b801a3e6959a650e710f376dd2b812c74e865",
+        "case_id": "B80-task00-init0",
+        "env_seed": 53000,
+        "init_state_index": 0,
+        "init_state_sha256": "3075b90d016e1ab03f9de58bced47a0f3028629b46c881064fd1a61ef1fb072d",
+        "init_states_path": "/home/huang/code/PARC2026_final/LIBERO-plus/libero/libero/init_files/libero_mix/LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate.pruned_init",
+        "language": "put the white mug on the left plate and put the yellow and white mug on the right plate",
+        "max_steps": 300,
+        "official_task_index": 0,
+        "panel": "B80",
+        "policy_seed": 54000,
+        "schema_version": 1,
+        "task_name": "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate"
+      },
+      "role": "source_success_regression",
+      "source_outcome": {
+        "collision": false,
+        "episodes_csv_row_sha256": "dfb04ed5f7d538b4b48ee228d97f741b87346a10181ce92cb2ba645e8a71067e",
+        "failure_reason": null,
+        "goal_reached": true,
+        "steps": 170,
+        "success": true,
+        "timeout": false
+      }
+    },
+    {
+      "case_id": "B80-task09-init0",
+      "manifest": {
+        "bddl_path": "/home/huang/code/PARC2026_final/LIBERO-plus/libero/libero/bddl_files/libero_mix/STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy.bddl",
+        "bddl_sha256": "07ca32c940d70c065e870452ef9c63e6dfa1d8506e6a86cf9b3763f652ba2d9f",
+        "case_id": "B80-task09-init0",
+        "env_seed": 53018,
+        "init_state_index": 0,
+        "init_state_sha256": "f910e41cff6228de151359fb6e32073f232fe53b95a5b2c84ab1aa4fba99e3e4",
+        "init_states_path": "/home/huang/code/PARC2026_final/LIBERO-plus/libero/libero/init_files/libero_mix/STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy.pruned_init",
+        "language": "pick up the book and place it in the back compartment of the caddy",
+        "max_steps": 300,
+        "official_task_index": 9,
+        "panel": "B80",
+        "policy_seed": 54018,
+        "schema_version": 1,
+        "task_name": "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy"
+      },
+      "role": "source_success_regression",
+      "source_outcome": {
+        "collision": false,
+        "episodes_csv_row_sha256": "2f13583241e13a7a1001d5fe2b1920f19b965977c1d8ff6e43e84cd6bdcf69bc",
+        "failure_reason": null,
+        "goal_reached": true,
+        "steps": 113,
+        "success": true,
+        "timeout": false
+      }
+    },
+    {
+      "case_id": "B80-task16-init0",
+      "manifest": {
+        "bddl_path": "/home/huang/code/PARC2026_final/LIBERO-plus/libero/libero/bddl_files/libero_mix/turn_on_the_stove.bddl",
+        "bddl_sha256": "cbd2a0514d53226c5d09e17af40b22935d4cb6ff8fdaff0d55f555de1adecc13",
+        "case_id": "B80-task16-init0",
+        "env_seed": 53032,
+        "init_state_index": 0,
+        "init_state_sha256": "4d37125be017fceb0c694a5c979ceb0eaf4e5eac2bdb050d51e51c8b30689d5f",
+        "init_states_path": "/home/huang/code/PARC2026_final/LIBERO-plus/libero/libero/init_files/libero_mix/turn_on_the_stove.pruned_init",
+        "language": "turn on the stove",
+        "max_steps": 300,
+        "official_task_index": 16,
+        "panel": "B80",
+        "policy_seed": 54032,
+        "schema_version": 1,
+        "task_name": "turn_on_the_stove"
+      },
+      "role": "source_success_regression",
+      "source_outcome": {
+        "collision": false,
+        "episodes_csv_row_sha256": "0556b01650ad144093bf1960d57e155c1441e685e5952d84f553ef3683884461",
+        "failure_reason": null,
+        "goal_reached": true,
+        "steps": 46,
+        "success": true,
+        "timeout": false
+      }
+    },
+    {
+      "case_id": "B80-task02-init0",
+      "manifest": {
+        "bddl_path": "/home/huang/code/PARC2026_final/LIBERO-plus/libero/libero/bddl_files/libero_mix/KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it.bddl",
+        "bddl_sha256": "456d145f92be049f445fc77673dc583d9d17ea7afe92f6ffcb2fd1fa5565d420",
+        "case_id": "B80-task02-init0",
+        "env_seed": 53004,
+        "init_state_index": 0,
+        "init_state_sha256": "9da0b5e4e5f9d211c98a9d6d080bbe78d6e0a8723600bc17a0c81b48539712cf",
+        "init_states_path": "/home/huang/code/PARC2026_final/LIBERO-plus/libero/libero/init_files/libero_mix/KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it.pruned_init",
+        "language": "put the yellow and white mug in the microwave and close it",
+        "max_steps": 300,
+        "official_task_index": 2,
+        "panel": "B80",
+        "policy_seed": 54004,
+        "schema_version": 1,
+        "task_name": "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it"
+      },
+      "role": "diagnostic",
+      "source_outcome": {
+        "collision": false,
+        "episodes_csv_row_sha256": "5b4427d01cbc63119b43d8f11fae15a608523e5f80fa6a7770cd784fc07db557",
+        "failure_reason": "timeout",
+        "goal_reached": false,
+        "steps": 300,
+        "success": false,
+        "timeout": true
+      }
+    },
+    {
+      "case_id": "B80-task07-init0",
+      "manifest": {
+        "bddl_path": "/home/huang/code/PARC2026_final/LIBERO-plus/libero/libero/bddl_files/libero_mix/LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket.bddl",
+        "bddl_sha256": "3f552805c7ab34c44debcf38a48b8131d6fee3011dd86c039650b84e0f77d058",
+        "case_id": "B80-task07-init0",
+        "env_seed": 53014,
+        "init_state_index": 0,
+        "init_state_sha256": "b962e38656328e423626e866b932b9f4f85c44ca11a6c5e7ef0161e1582f48c1",
+        "init_states_path": "/home/huang/code/PARC2026_final/LIBERO-plus/libero/libero/init_files/libero_mix/LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket.pruned_init",
+        "language": "put both the cream cheese box and the butter in the basket",
+        "max_steps": 300,
+        "official_task_index": 7,
+        "panel": "B80",
+        "policy_seed": 54014,
+        "schema_version": 1,
+        "task_name": "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket"
+      },
+      "role": "diagnostic",
+      "source_outcome": {
+        "collision": true,
+        "episodes_csv_row_sha256": "985da9bfc86e3f9474d3b68d5fd3dd5dd1c36b8f69c333b2cf28367066b5f2f7",
+        "failure_reason": "collision",
+        "goal_reached": true,
+        "steps": 187,
+        "success": false,
+        "timeout": false
+      }
+    }
+  ],
+  "diagnostic_case_ids": [
+    "B80-task02-init0",
+    "B80-task07-init0"
+  ],
+  "diagnostic_failure_types": [
+    "collision",
+    "timeout"
+  ],
+  "locked_before_fast_rollout": true,
+  "manifest": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/phase1/rollout/B80.jsonl",
+  "manifest_sha256": "6209fa920dd5e7c6f225069592c08f4ee6fb14c31427414d61d2c98c04f1b581",
+  "official_result": false,
+  "schema_version": 1,
+  "source_episodes_csv": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/phase1/rollout/r6_dual_l2_fresh500_r1_B80_execute8_seeded_merge/episodes.csv",
+  "source_episodes_csv_sha256": "63c60098b9d2c085fae7e84ae691ce96a5450a63a3bc78feaf109a77c3159bfb",
+  "source_kind": "on_disk_r6_folded_pytorch",
+  "source_success_case_ids": [
+    "B80-task00-init0",
+    "B80-task09-init0",
+    "B80-task16-init0"
+  ],
+  "status": "locked"
+}

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "generated_date": "2026-08-31",
-  "status": "e1_jax_mb4_oom_remediation_ready",
+  "status": "e1_jax_mb1_canary_failed",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
@@ -313,6 +313,49 @@
     "next_phase_only": "E1_jax_microbatch1_recovery",
     "pytorch_authorized": false,
     "closed_loop_authorized": false
+  },
+  "e1_jax_mb1_recovery": {
+    "status": "e1_jax_mb1_canary_failed",
+    "execution_source_commit": "27df347393a264704955118cef0e41a0462a5113",
+    "nested_openpi_commit": "dafa5a27266996eecf28920cacc32f3629776d91",
+    "input_lock_sha256": "b96acf22e01f81d89c0bebf8adfd3dfd729e485cdc29a1b87c6fc748f67534c4",
+    "manifest_sha256": "09c9e000135c192b6a3154b82c06f754a047d8006122a888f6c933852887f66e",
+    "frozen_inputs_and_noise_sha256": "263a7723d1f866eb73eee9423eda7480d96e1678b4a401bd4d86460b7c37c7fe",
+    "prior_sentinel_sha256": "f3977cebecbd186c37ee5f4a5de53e7ce43bcef8141ed93586cd16e335422e65",
+    "canary": {
+      "observation_count": 16,
+      "microbatch_size": 1,
+      "internal_shape": [16, 10, 32],
+      "external_shape": [16, 10, 7],
+      "all_finite": true,
+      "first_four_internal_bitwise_exact": false,
+      "first_four_external_bitwise_exact": false,
+      "internal_exact_elements": 281,
+      "internal_total_elements": 1280,
+      "external_exact_elements": 226,
+      "external_total_elements": 280,
+      "internal_max_abs_diff": 1.1920928955078125e-7,
+      "external_max_abs_diff": 1.1920928955078125e-7,
+      "gpu_id": 1,
+      "gpu0_touched": false,
+      "peak_gpu_memory_mib": 24706,
+      "target_pid": 856004,
+      "report": "data/reports/axis_libero_30k/post_r6_lora/r6_egl_statistical_release/e1_jax_mb1_recovery/canary/report.json",
+      "summary": "data/reports/axis_libero_30k/post_r6_lora/r6_egl_statistical_release/e1_jax_mb1_recovery/summary.json"
+    },
+    "first_failure": {
+      "code": "first_four_action_bitwise_mismatch",
+      "retry_authorized": false,
+      "full_run_started": false
+    },
+    "atomic_shards": {
+      "written_count": 1,
+      "written_prefix": "[0,16)",
+      "usable_as_full_prefix": false,
+      "metadata": "data/reports/axis_libero_30k/post_r6_lora/r6_egl_statistical_release/e1_jax_mb1_recovery/full/shards/0000_0016.json"
+    },
+    "forbidden_stages_started": [],
+    "next_phase_only": "manual_review_or_new_minimal_remediation"
   },
   "auto_upload_authorized": false,
   "auto_submit_authorized": false,

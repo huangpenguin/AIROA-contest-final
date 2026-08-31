@@ -2,7 +2,7 @@
 
 > 更新日期：2026-08-31（Asia/Tokyo）
 > 当前唯一活动计划：`docs/AXIS_PI05_E1_JAX_MB1_RECOVERY_PLAN.md`
-> 当前状态：`e1_jax_mb4_oom_remediation_ready`
+> 当前状态：`e1_jax_mb1_canary_failed`
 > 最新审核：`docs/reviews/axis_pi05/E1_JAX_OOM_REVIEW_20260831.md`
 
 ## 1. 唯一活动计划
@@ -11,11 +11,11 @@
   - 保留既有 170 pair / 340 observation lock、noise、sentinel 与 OOM failure，不得重建或改写；
   - 先实现 fail-closed 的原子分片/resume，再以固定 `microbatch=1` 运行 16-observation canary 和 340-observation folded JAX full；
   - 只恢复 JAX source full artifact，不运行 LeRobot/PyTorch、comparator、environment 或 closed-loop；
-  - 成功状态只能是 `e1_jax_full_recovered_pending_review`，完成后必须停止审核。
+  - 本轮 canary 状态为 `e1_jax_mb1_canary_failed`，前 4 个 action 未 bitwise exact，故 340-observation full 未启动并等待审核。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 
-E0 closure 已通过人工审核。原 E1 计划完成 CPU lock 与 JAX 4-observation sentinel；JAX 340-observation full run 在 V100 GPU1 的 `microbatch=4` 触发 CUDA OOM，并正确 hard stop。审核结论为 `remediation_required`：输入锁与 sentinel 获准保留，当前仅授权最小 JAX `microbatch=1` recovery；不得跳到 PyTorch、comparator 或归档 EGL 计划中的 E2–E7。
+E0 closure 已通过人工审核。原 E1 计划完成 CPU lock 与 JAX 4-observation sentinel；JAX 340-observation full run 在 V100 GPU1 的 `microbatch=4` 触发 CUDA OOM，并正确 hard stop。审核结论为 `remediation_required`：输入锁与 sentinel 获准保留，当前仅授权最小 JAX `microbatch=1` recovery。本轮 canary 已完成 16/16 但前 4 个 action 未 bitwise exact，已按 hard gate 停止；不得跳到 PyTorch、comparator 或归档 EGL 计划中的 E2–E7。
 
 ## 2. 已归档的 R6 执行链
 

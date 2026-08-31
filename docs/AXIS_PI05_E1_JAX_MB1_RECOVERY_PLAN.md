@@ -3,10 +3,12 @@
 > 制定日期：2026-08-31（Asia/Tokyo）
 > 审核输入 commit：`48206a708439b4a08af0ea9f8809eab9950572a5`
 > 审核结论：`remediation_required`
-> 当前状态：`e1_jax_mb4_oom_remediation_ready`
+> 当前状态：`e1_jax_mb1_canary_failed`
 > 唯一目标：使用既有 immutable lock，以 folded JAX source、固定 `inference microbatch=1` 完成 340/340 observations，并生成可恢复、可审核的 full artifact。
 > 执行边界：允许一张空闲本地 GPU，优先物理 GPU1；完成或失败后 hard stop。
 > 禁止：LeRobot/PyTorch inference、JAX↔PyTorch comparator、environment、closed-loop、E2、FAST、ZIP、训练、比赛 GPU、push、上传或比赛提交。
+
+本轮执行已在 R2 canary hard gate 停止：`[0,16)` 覆盖、finite、provenance 与 GPU boundary 通过，但前 4 个 action 未与旧 sentinel bitwise exact；未启动 R3 full。详见 `data/reports/axis_libero_30k/post_r6_lora/r6_egl_statistical_release/e1_jax_mb1_recovery/summary.json`。
 
 ## 0. 一句话任务
 

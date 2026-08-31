@@ -1,5 +1,7 @@
 # AXIS Pi0.5：E0 Fail-Closed Closure 与 E1 释放门禁计划
 
+> 归档状态（2026-08-31）：C0–C5 已由 commit `327316f` 完成并通过独立审核；E0 正式批准，后续由独立 E1 action-envelope 计划接管。
+
 > 制定日期：2026-08-31（Asia/Tokyo）
 > 审核输入 commit：`78109647e95d79690511c922845141ff492a395f`
 > 输入状态：`s1_original_failure_preserved_reporting_corrected`

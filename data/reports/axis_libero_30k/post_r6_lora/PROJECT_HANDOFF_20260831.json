@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
   "generated_date": "2026-08-31",
-  "status": "e0_closure_complete_pending_review",
+  "status": "e0_closure_approved_e1_ready",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
-  "audited_input_commit": "78109647e95d79690511c922845141ff492a395f",
+  "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
   "branch_has_upstream": false,
@@ -154,10 +154,10 @@
       },
       "next_phase_only": "E1_pending_manual_review"
     },
-    "review_status": "complete_pending_manual_review",
-    "next_phase_only": "E1_pending_manual_review"
+    "review_status": "approved",
+    "next_phase_only": "E1_action_envelope"
   },
-  "e0_review": {
+  "e0_initial_review": {
     "reviewed_commit": "78109647e95d79690511c922845141ff492a395f",
     "result": "remediation_required",
     "current_artifact_values_verified": true,
@@ -177,6 +177,25 @@
       "302_is_trajectory_frame_occurrences_not_content_unique_pairs"
     ],
     "e1_approved": false
+  },
+  "e0_closure_review": {
+    "reviewed_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
+    "result": "approved",
+    "closure_regenerated_in_temporary_namespace": true,
+    "regenerated_manifest_matches_committed_pairs": true,
+    "old_s1_3_hashes_verified_unchanged": true,
+    "coverage_complete": true,
+    "coverage_issue_count": 0,
+    "not_evaluable_count": 0,
+    "dynamics_mismatch_count": 0,
+    "root_and_nested_clean_at_review": true,
+    "tests_reproduced": {
+      "passed": 112,
+      "skipped": 7,
+      "warnings": 21
+    },
+    "e1_approved": true,
+    "e2_approved": false
   },
   "tests": {
     "command": ".venv_axis_pi05/bin/pytest -q tests",
@@ -206,8 +225,22 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_E0_CLOSURE_BEFORE_E1_PLAN.md",
-  "next_phase_only": "E1_pending_manual_review",
+  "next_plan": "docs/AXIS_PI05_E1_EGL_ACTION_ENVELOPE_PLAN.md",
+  "next_phase_only": "E1_action_envelope",
+  "e1_authorization": {
+    "input_pair_count": 170,
+    "input_observation_count": 340,
+    "input_manifest_sha256": "b4ea8d3bed7f9cfc60f2f7f53613471e222d9857a8d6857f39b854720905c7bf",
+    "allowed_backends": [
+      "r6_folded_jax_source",
+      "r6_on_disk_lerobot_folded_pytorch_source"
+    ],
+    "allowed_gpu_count": 1,
+    "same_physical_gpu_sequential_fresh_processes": true,
+    "closed_loop_authorized": false,
+    "e2_authorized": false,
+    "fast_or_zip_authorized": false
+  },
   "auto_upload_authorized": false,
   "auto_submit_authorized": false,
   "formal_winner": false

@@ -1,18 +1,19 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新审核输入 HEAD：`78109647e95d79690511c922845141ff492a395f`
+> 最新审核输入 HEAD：`327316f2ffdca0df3375748bcdd65b5ce263f8f8`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`dafa5a27266996eecf28920cacc32f3629776d91`
-> 当前总状态：`e0_closure_complete_pending_review`
-> 唯一活动计划：`docs/AXIS_PI05_E0_CLOSURE_BEFORE_E1_PLAN.md`
+> 当前总状态：`e0_closure_approved_e1_ready`
+> 唯一活动计划：`docs/AXIS_PI05_E1_EGL_ACTION_ENVELOPE_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
+> closure execution commit：`327316f2ffdca0df3375748bcdd65b5ce263f8f8`
 
 ## 1. 一句话结论
 
-canonical LIBERO 10 Hz 数据、R6 两卡 LoRA 500-step、fold、LeRobot/PyTorch frozen parity 和 full-C20 environment dynamics 都已完成；R6 本地 B80 只比 Axis init 多 `1/80`，统计不明确。E0 closure 已完成 fail-closed coverage、content 去重、trajectory 只读重分析、immutability 测试和小型证据入库准备，当前 170 个 pair 的数值结果可信；状态为 `e0_closure_complete_pending_review`，人工审核前不进入 E1。
+canonical LIBERO 10 Hz 数据、R6 两卡 LoRA 500-step、fold、LeRobot/PyTorch frozen parity 和 full-C20 environment dynamics 都已完成；R6 本地 B80 只比 Axis init 多 `1/80`，统计不明确。E0 closure 已通过独立重生成、hash、coverage 和全量测试审核，正式状态为 `e0_closure_approved_e1_ready`。下一步只在冻结的 170 个 EGL pair / 340 个 observations 上测 R6 folded JAX 与真实 on-disk LeRobot PyTorch 的 action-response envelope；不运行 closed-loop。
 
 ## 2. 数据与复现基础
 
@@ -141,7 +142,7 @@ dynamics mismatch                              0
 
 旧四 pair 只有 3 个 content-unique；误标的 Axis reference 已确认实际为 R6 folded JAX；旧 S1.3 failure/hash 保持不变。
 
-审核状态不是 E1 approved，而是 `e0_closure_complete_pending_review`。E0 closure 已在 CPU-only 边界内完成，正式产物位于新的 `e0_closure/` namespace；人工审核前不得创建或执行 E1。
+第一次 E0 的 formal 问题已由后续 closure 修正；旧 E0 与旧 S1.3 产物均保留。
 
 ## 6.1 E0 Closure 结果
 
@@ -172,7 +173,16 @@ expected/observed snapshot 与 trajectory group sets 完全相等。`302` 是 af
 2. 缺失、shape/dtype mismatch 和无 changed frame 现在形成 coverage issue；
 3. expected/observed 集合相等是 coverage complete 的必要条件；
 4. 旧 S1.3 status、summary hash、manifest hash 有 immutability 回归测试；
-5. 四个小型 closure 证据文件已准备显式纳入 Git。
+5. 四个小型 closure 证据文件已显式纳入 Git。
+
+独立审核还完成了：
+
+- 在临时目录重新生成 closure；170 个 pair 的 semantic/content/source-occurrence hashes 与提交产物逐项一致；
+- 旧 S1.3 summary/pair-manifest hash 复核不变；
+- 全量测试独立复跑通过；
+- root/nested clean，E1/GPU/model/closed-loop 均未启动。
+
+审核结论：`approved`。E0 closure 计划已归档，允许按唯一活动计划执行 E1；不授权 E2。
 
 ## 7. 测试、Git 与资源状态
 
@@ -183,15 +193,15 @@ expected/observed snapshot 与 trajectory group sets 完全相等。`302` 是 af
 112 passed, 7 skipped, 21 warnings
 ```
 
-此前“缺少 pynvml 导致 collection 中断”不是仓库指定 venv 的真实 blocker；正确 venv 当前可以收集 110 tests。交接时不要为此随意安装依赖。
+此前“缺少 pynvml 导致 collection 中断”不是仓库指定 venv 的真实 blocker；正确 venv 当前可以收集 119 tests。交接时不要为此随意安装依赖。
 
 Git：
 
 ```text
 branch               codex/axis-pi05-audit-remediation
-latest audited HEAD  78109647e95d79690511c922845141ff492a395f
+latest audited HEAD  327316f2ffdca0df3375748bcdd65b5ce263f8f8
 nested OpenPI        dafa5a27266996eecf28920cacc32f3629776d91
-root/nested          clean（审核 7810964 时）
+root/nested          clean（审核 327316f 时）
 upstream             当前 branch 未设置 upstream
 ```
 
@@ -220,7 +230,10 @@ upstream             当前 branch 未设置 upstream
 ## 10. 新 section 的接手顺序
 
 1. 阅读本文件与 `docs/AXIS_PI05_PLAN_INDEX.md`。
-2. 核对 `e0_closure/summary.json`、content-unique manifest、handoff 与 clean commit。
-3. 进行人工审核；在审核完成前不得启动 E1 GPU run、closed-loop、FAST、官方 Notebook、HF upload 或比赛提交。
+2. 阅读并只执行 `docs/AXIS_PI05_E1_EGL_ACTION_ENVELOPE_PLAN.md`。
+3. 先 CPU-only 冻结 runnable inputs/noise 并形成 lock commit；此时不得读取 action。
+4. lock 通过后，只在同一张空闲本地 GPU 上顺序运行 folded JAX 与真实 LeRobot PyTorch source。
+5. 生成 170-pair action-response envelope、测试和 clean commit 后停止等待审核。
+6. 不得启动 environment/closed-loop、E2、FAST、ZIP、训练、比赛 GPU 或外部上传。
 
-不要重新训练 R6，也不要恢复旧 F2 FAST 包。当前路径是：E0 closure → 人工审核 → E1 envelope → 统计协议 → source closed-loop → FAST → ZIP。
+不要重新训练 R6，也不要恢复旧 F2 FAST 包。当前路径是：E0 closure（已批准）→ E1 envelope → 人工审核 → E2 统计协议 → source closed-loop → FAST → ZIP。

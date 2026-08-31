@@ -452,6 +452,35 @@ def audit_package(package: Path, report_root: Path) -> dict[str, Any]:
     return result
 
 
+def write_package_sidecars(package: Path, report_root: Path) -> dict[str, Any]:
+    """Write human-review sidecars after the package has passed validation."""
+
+    validation_path = report_root / "package_validation.json"
+    validation = json.loads(validation_path.read_text(encoding="utf-8"))
+    if validation.get("status") != "passed":
+        raise RuntimeError("refusing package sidecars before package validation passes")
+    digest = str(validation["sha256"])
+    sha_path = package.with_name(package.name + ".sha256")
+    sha_path.write_text(f"{digest}  {package.name}\n", encoding="utf-8")
+    with zipfile.ZipFile(package, "r") as archive:
+        entries = archive.namelist()
+    manifest = {
+        "schema_version": 1,
+        "package": str(package.resolve()),
+        "bytes": int(validation["bytes"]),
+        "sha256": digest,
+        "entry_count": len(entries),
+        "entries": entries,
+        "validation_report": str(validation_path.resolve()),
+        "validation_report_sha256": sha256_file(validation_path),
+        "official_result": False,
+        "submitted": False,
+    }
+    manifest_path = package.with_name(package.name + ".manifest.json")
+    write_json(manifest_path, manifest)
+    return {"sha256_path": str(sha_path.resolve()), "manifest_path": str(manifest_path.resolve())}
+
+
 def _axisangle(quat: Any) -> Any:
     import numpy as np
 
@@ -1526,6 +1555,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--c5-lock", type=Path)
     parser.add_argument("--run-c5", action="store_true")
     parser.add_argument("--write-offline-e2e", action="store_true")
+    parser.add_argument("--write-package-sidecars", action="store_true")
     return parser.parse_args()
 
 
@@ -1587,6 +1617,8 @@ def main() -> None:
         print(json.dumps(result, indent=2, sort_keys=True))
         if result["status"] != "passed":
             raise SystemExit("package audit failed")
+        if args.write_package_sidecars:
+            print(json.dumps(write_package_sidecars(package, report_root), indent=2, sort_keys=True))
     print(json.dumps(audit, indent=2, sort_keys=True))
 
 

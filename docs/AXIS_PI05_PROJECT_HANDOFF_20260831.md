@@ -1,10 +1,10 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新审核输入 HEAD：`327316f2ffdca0df3375748bcdd65b5ce263f8f8`
+> 最新执行输入 HEAD：`bdadd679684d5308bd04f4a9fe4a95d44bc4fe89`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`dafa5a27266996eecf28920cacc32f3629776d91`
-> 当前总状态：`e0_closure_approved_e1_ready`
+> 当前总状态：`e1_jax_full_inference_failed`
 > 唯一活动计划：`docs/AXIS_PI05_E1_EGL_ACTION_ENVELOPE_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
@@ -184,13 +184,23 @@ expected/observed snapshot 与 trajectory group sets 完全相等。`302` 是 af
 
 审核结论：`approved`。E0 closure 计划已归档，允许按唯一活动计划执行 E1；不授权 E2。
 
+## 6.2 E1 执行结果与 hard stop
+
+E1 CPU lock 已独立提交，commit `7d545ef`；后续只修正 raw tree provenance 记录并提交 `bdadd67`。lock 保持 immutable：`actions_observed=false`、`170 pairs / 340 observations`、snapshot/trajectory `13/157`、source occurrence hash mismatch `0`、other-camera mismatch `0`、not-evaluable `0`。
+
+JAX sentinel 在物理 GPU1 fresh process 通过 `4 observations`，model/norm/raw-tree provenance 与输入/noise hash 均准确，GPU0 未触碰。随后 JAX full run 使用 microbatch `4`，在 V100 CUDA OOM（申请 `216.00 MiB` 失败）后按计划 hard gate 停止；没有重试，没有启动 LeRobot/PyTorch，没有运行 comparator。
+
+E1 状态：`e1_jax_full_inference_failed`。完整失败记录：`data/reports/axis_libero_30k/post_r6_lora/r6_egl_statistical_release/e1_action_envelope/summary.json`。已执行/未执行细节、GPU evidence 与 sentinel provenance 见该 namespace 的 `E1_ACTION_ENVELOPE_REPORT_ZH.md`、`THREAD_REPORT_ZH.md` 和 `jax_source/sentinel/report.json`。
+
+本轮没有生成 170-pair action-response envelope；不得把 4-pair sentinel 当成全量结果。等待人工审核后决定最小 remediation；不得自行进入 E1.4、E1.5、closed-loop 或 E2。
+
 ## 7. 测试、Git 与资源状态
 
-正确测试入口的最新复核：
+正确测试入口的最新复核（lock/failure-record focused tests）：
 
 ```text
 .venv_axis_pi05/bin/pytest -q tests
-112 passed, 7 skipped, 21 warnings
+116 passed, 7 skipped, 21 warnings（包含 E1 lock/failure tests 与 E0 EGL tests）。
 ```
 
 此前“缺少 pynvml 导致 collection 中断”不是仓库指定 venv 的真实 blocker；正确 venv 当前可以收集 119 tests。交接时不要为此随意安装依赖。
@@ -199,7 +209,7 @@ Git：
 
 ```text
 branch               codex/axis-pi05-audit-remediation
-latest audited HEAD  327316f2ffdca0df3375748bcdd65b5ce263f8f8
+latest execution HEAD bdadd679684d5308bd04f4a9fe4a95d44bc4fe89
 nested OpenPI        dafa5a27266996eecf28920cacc32f3629776d91
 root/nested          clean（审核 327316f 时）
 upstream             当前 branch 未设置 upstream
@@ -232,8 +242,8 @@ upstream             当前 branch 未设置 upstream
 1. 阅读本文件与 `docs/AXIS_PI05_PLAN_INDEX.md`。
 2. 阅读并只执行 `docs/AXIS_PI05_E1_EGL_ACTION_ENVELOPE_PLAN.md`。
 3. 先 CPU-only 冻结 runnable inputs/noise 并形成 lock commit；此时不得读取 action。
-4. lock 通过后，只在同一张空闲本地 GPU 上顺序运行 folded JAX 与真实 LeRobot PyTorch source。
-5. 生成 170-pair action-response envelope、测试和 clean commit 后停止等待审核。
+4. 本轮已在 JAX full OOM 后 hard stop；LeRobot/PyTorch 尚未授权重试，等待新审核计划。
+5. 当前只允许 CPU-only 复核失败记录和 clean commit 后停止等待审核。
 6. 不得启动 environment/closed-loop、E2、FAST、ZIP、训练、比赛 GPU 或外部上传。
 
 不要重新训练 R6，也不要恢复旧 F2 FAST 包。当前路径是：E0 closure（已批准）→ E1 envelope → 人工审核 → E2 统计协议 → source closed-loop → FAST → ZIP。

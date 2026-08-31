@@ -690,6 +690,66 @@ EGL envelope 和 backend correspondence 的完整 pair-level 结果见 `pair_met
     (output_dir / "THREAD_REPORT_ZH.md").write_text(report + "\n本 section 已 hard stop，未进入 E2 或 closed-loop。\n", encoding="utf-8")
 
 
+def record_failure(*, output_dir: Path = E1_ROOT, failure_code: str, failure_message: str, failed_backend: str, failed_mode: str, microbatch_size: int, details: dict[str, Any] | None = None) -> dict[str, Any]:
+    """Record an E1 hard-stop without fabricating missing backend coverage."""
+    validated = validate_locked_inputs(output_dir / E1_LOCK.name, output_dir / E1_MANIFEST.name, output_dir / E1_INPUTS.name)
+    sentinel_path = output_dir / "jax_source" / "sentinel" / "report.json"
+    sentinel = json.loads(sentinel_path.read_text(encoding="utf-8")) if sentinel_path.is_file() else None
+    summary = {
+        "schema_version": 1,
+        "phase": "E1",
+        "status": failure_code,
+        "actions_observed": bool(sentinel and sentinel.get("status") == "passed"),
+        "input_lock_immutable": True,
+        "pair_count": 170,
+        "observation_count": 340,
+        "snapshot_pair_count": 13,
+        "trajectory_pair_count": 157,
+        "trajectory_affected_frame_occurrences": 302,
+        "execution": {
+            "e1_0_release_input_lock": True,
+            "e1_1_frozen_inputs_noise": True,
+            "e1_2_jax_sentinel_preflight": bool(sentinel and sentinel.get("status") == "passed"),
+            "e1_3_jax_full_inference": False,
+            "e1_4_lerobot_pytorch_full_inference": False,
+            "e1_5_comparator": False,
+            "e1_6_failure_reporting": True,
+        },
+        "coverage": {"locked_pairs": 170, "locked_observations": 340, "jax_sentinel_observations": 4, "jax_full_observations": 0, "pytorch_observations": 0, "envelope_generated": False},
+        "failure": {"code": failure_code, "backend": failed_backend, "mode": failed_mode, "microbatch_size": microbatch_size, "message": failure_message, "details": details or {}},
+        "unexecuted_after_failure": ["E1.4", "E1.5"],
+        "sentinel": sentinel,
+        "hard_stop": {"gpu0_touched": bool(sentinel and sentinel.get("gpu0_touched")), "closed_loop_started": False, "e2_started": False, "fast_started": False, "zip_created": False, "training_started": False, "push_or_upload": False},
+        "artifacts": {"input_lock": str((output_dir / E1_LOCK.name).resolve()), "frozen_pair_manifest": str((output_dir / E1_MANIFEST.name).resolve()), "jax_sentinel_report": str(sentinel_path.resolve()) if sentinel_path.is_file() else None},
+        "lock_sha256": validated["lock_sha256"],
+        "manifest_sha256": validated["manifest_sha256"],
+        "inputs_sha256": validated["inputs_sha256"],
+    }
+    write_json(output_dir / E1_SUMMARY.name, summary)
+    report = f"""# E1 EGL Action-Response Envelope
+
+状态：`{failure_code}`
+
+本 section 按 E1 hard gate 在 `{failed_backend}` 的 `{failed_mode}` 阶段停止：{failure_message}。没有重试 OOM，没有启动另一 backend，因此没有把不完整结果写成 170-pair envelope。
+
+## 已完成
+
+- E1.0–E1.1：CPU-only lock，`170 pairs / 340 observations`，snapshot/trajectory `13/157`，lock 中 `actions_observed=false`。
+- E1.2：JAX sentinel `4 observations` 通过，输入/model/norm provenance 与 GPU boundary 正常。
+
+## 未执行
+
+- E1.4 LeRobot/PyTorch full inference：未执行。
+- E1.5 full comparator：未执行。
+- closed-loop、E2、FAST、ZIP、训练、比赛 GPU、push、上传：未执行。
+
+完整失败证据见 `summary.json`；E1.6 只完成失败记录、测试和交接，不宣称 envelope 通过。等待人工审核/最小 remediation 计划。
+"""
+    (output_dir / "E1_ACTION_ENVELOPE_REPORT_ZH.md").write_text(report, encoding="utf-8")
+    (output_dir / "THREAD_REPORT_ZH.md").write_text(report + "\n本 section 已 hard stop。\n", encoding="utf-8")
+    return summary
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     sub = parser.add_subparsers(dest="command", required=True)
@@ -712,6 +772,13 @@ def main() -> None:
     backend.add_argument("--seed", type=int, default=0)
     compare = sub.add_parser("compare")
     compare.add_argument("--output", type=Path, default=E1_ROOT)
+    failure = sub.add_parser("record-failure")
+    failure.add_argument("--output", type=Path, default=E1_ROOT)
+    failure.add_argument("--failure-code", required=True)
+    failure.add_argument("--failure-message", required=True)
+    failure.add_argument("--failed-backend", required=True)
+    failure.add_argument("--failed-mode", required=True)
+    failure.add_argument("--microbatch-size", type=int, required=True)
     args = parser.parse_args()
     if args.command == "build-lock":
         print(json.dumps(build_lock(args.output, global_seed=args.global_noise_seed), ensure_ascii=False, indent=2))
@@ -725,6 +792,9 @@ def main() -> None:
     elif args.command == "compare":
         summary = compare_envelope(output_dir=args.output)
         write_reports(summary, args.output)
+        print(json.dumps(summary, ensure_ascii=False, indent=2))
+    elif args.command == "record-failure":
+        summary = record_failure(output_dir=args.output, failure_code=args.failure_code, failure_message=args.failure_message, failed_backend=args.failed_backend, failed_mode=args.failed_mode, microbatch_size=args.microbatch_size, details={"gpu_error": "RESOURCE_EXHAUSTED", "requested_allocation": "216.00MiB"})
         print(json.dumps(summary, ensure_ascii=False, indent=2))
 
 

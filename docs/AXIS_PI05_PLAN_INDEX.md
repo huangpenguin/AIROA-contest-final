@@ -2,7 +2,7 @@
 
 > 更新日期：2026-08-31（Asia/Tokyo）
 > 当前唯一活动计划：`docs/AXIS_PI05_E1_EGL_ACTION_ENVELOPE_PLAN.md`
-> 当前状态：`e0_closure_approved_e1_ready`
+> 当前状态：`e1_jax_full_inference_failed`
 > 最新审核：`docs/reviews/axis_pi05/E0_CLOSURE_REVIEW_20260831.md`
 
 ## 1. 唯一活动计划
@@ -16,6 +16,8 @@
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 
 E0 closure 已通过人工审核。E1 是当前唯一授权阶段；不得跳到归档 EGL 计划中的 E2–E7。
+
+本轮 E1 已完成 CPU lock 与 JAX 4-observation sentinel；JAX 340-observation full run 在 V100 GPU1 的 microbatch=4 触发 CUDA OOM，按 E1 hard gate 停止。LeRobot/PyTorch full inference、E1 comparator、closed-loop 与 E2 均未执行。当前仍只保留本 E1 计划，等待人工审核决定最小 remediation；不得自行重试或跳阶段。
 
 ## 2. 已归档的 R6 执行链
 

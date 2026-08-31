@@ -29,6 +29,8 @@ import zipfile
 from pathlib import Path, PurePosixPath
 from typing import Any
 
+import numpy as np
+
 
 MAX_PACKAGE_BYTES = 20_000_000_000
 REQUIRED_PACKAGE_FILES = {

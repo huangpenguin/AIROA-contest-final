@@ -237,7 +237,7 @@ def build_input_lock() -> dict[str, Any]:
             "payload_manifest_sha256": payload["manifest_sha256"],
             "payload_manifest_file_sha256": sha256_file(PAYLOAD_MANIFEST),
             "payload_files": payload["file_count"],
-            "episodes": payload["expected_episodes"],
+            "episodes": 1693,
             "tasks": 40,
             "frames": 273465,
             "fps": 10,

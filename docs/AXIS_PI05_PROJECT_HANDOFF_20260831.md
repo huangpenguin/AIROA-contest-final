@@ -1,11 +1,11 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新已审核执行 HEAD：`8938bcada74df00341ba020bf7c94f40eebd5178`
+> 最新已审核执行 HEAD：`dbd4f497af4a8fcc4d7f4957ac03dc004b508487`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
-> nested OpenPI：`dafa5a27266996eecf28920cacc32f3629776d91`
-> 当前总状态：`dense_fullft_preflight_failed`
-> 唯一活动计划：`docs/AXIS_PI05_POST_SCORE_DENSE_FULLFT_PREFLIGHT_PLAN.md`
+> nested OpenPI：`d7e41eb86cb04b91d79aa1f716a94f0361677855`
+> 当前总状态：`dense_fullft_sharded_init_recovery_ready`
+> 唯一活动计划：`docs/AXIS_PI05_DENSE_FULLFT_SHARDED_INIT_RECOVERY_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -13,7 +13,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO10Hz、R6 LoRA500-step、folded PyTorch与FAST-only Track1 ZIP均已完成；用户报告其正式Track1得分为`0.47`，显著优于此前纯Pi0.5。该结果把R6锁为首个official deployment baseline，历史本地Docker任务取消。下一主线从Axis released params重新执行标准LIBERO dense full-FT；本轮只做到配置/显存与1/10/50/100-step preflight，不启动官方Blackwell或1K以上长训。
+canonical LIBERO10Hz、R6 LoRA500-step、folded PyTorch与FAST-only Track1 ZIP均已完成；用户报告其正式Track1得分为`0.47`，显著优于此前纯Pi0.5。该结果把R6锁为首个official deployment baseline。Axis-init dense full-FT 的2卡/4卡预飞行均在 `init_train_state` OOM，还没有进入 batch/forward/backward/update；审核定位到约12.5GiB partial params先被整树replicated的无效峰值。当前唯一任务是保持FP32/dense/EMA/global64的sharded-init无损修复，先用本地4×V100验证至最多10 steps，不启动官方Blackwell。
 
 ## 2. 数据与复现基础
 
@@ -212,31 +212,30 @@ Axis init/原团队式 standard LIBERO full-FT 是后续正确研究方向，但
 
 ```text
 .venv_axis_pi05/bin/pytest -q tests
-122 passed, 7 skipped, 21 warnings（包含 R6 FAST release tests）。
+125 passed, 7 skipped, 21 warnings（dense full-FT preflight 执行 commit 记录）。
 ```
 
-此前“缺少 pynvml 导致 collection 中断”不是仓库指定 venv 的真实 blocker；正确 venv 当前可以收集 129 tests（122 passed + 7 skipped）。交接时不要为此随意安装依赖。
+此前“缺少 pynvml 导致 collection 中断”不是仓库指定 venv 的真实 blocker；最新执行记录为 132 tests（125 passed + 7 skipped）。交接时不要为此随意安装依赖。
 
 Git：
 
 ```text
 branch               codex/axis-pi05-audit-remediation
-latest audited HEAD   8938bcada74df00341ba020bf7c94f40eebd5178
-nested OpenPI        dafa5a27266996eecf28920cacc32f3629776d91
-root/nested          clean（审核 8938bca 开始时）
+latest audited HEAD   dbd4f497af4a8fcc4d7f4957ac03dc004b508487
+nested OpenPI        d7e41eb86cb04b91d79aa1f716a94f0361677855
+root/nested          clean（审核 dbd4f49 开始时）
 upstream             当前 branch 未设置 upstream
 ```
 
 `outputs/` 与 `artifacts/` 被 `.gitignore` 排除。换 Codex section 但仍使用同一 workspace 时可见；换服务器/clone 时不会随 Git 出现，必须单独传输并校验 hash。
 
-本地服务器：4× V100 32GB。GPU0 有外部 PID `237527`、约 14GB，占用不得触碰；GPU1–3 当前空闲。磁盘约 913GB 可用。
+本地服务器：4× V100 32GB。dense preflight 执行结束时四卡均约 `5 MiB`；每次新运行仍必须重新检查 PID/显存，不得凭历史状态假设空闲。当前磁盘预飞行记录可用 `894.73 GiB`。
 
 官方边界：配布开发 GPU 是 RTX PRO 6000 Blackwell，启动 Notebook 即计入本选1的 60 小时；正式 scorer 是单张 L4 24GB、CUDA13/PyTorch2.11，`/act` 与 `/reset` 每请求必须 `<10s`。Blackwell 能运行不能替代 L4 显存/延迟门禁。
 
 ## 8. 当前仍没有什么
 
-- 没有官方 pre-check/hidden score；
-- 没有人工提交或官方分数；
+- 没有完整官方日志、submission ID 或 episode 级 hidden 结果；用户已报告 Track1 正式分数 `0.47`；
 - 没有 V160/H160；
 - 没有 1K/3K/10K/30K 长程 LoRA；
 - 没有正式 Track 3 20 Hz checkpoint；ZIP 只存在本地 artifacts，未上传。
@@ -250,13 +249,13 @@ upstream             当前 branch 未设置 upstream
 ## 10. 新 section 的接手顺序
 
 1. 阅读本文件与 `docs/AXIS_PI05_PLAN_INDEX.md`。
-2. 阅读并只执行 `docs/AXIS_PI05_POST_SCORE_DENSE_FULLFT_PREFLIGHT_PLAN.md`。
+2. 阅读并只执行 `docs/AXIS_PI05_DENSE_FULLFT_SHARDED_INIT_RECOVERY_PLAN.md`。
 3. 将Track1=`0.47`、ZIP `95415a…c5f5a`锁为baseline；submission ID/log未知字段保持null。
-4. CPU先实现独立dense config与memory/disk lock；不得复用LoRA config或从R6 resume。
-5. GPU1+2只做一次有时限allocation/first-update canary；两卡OOM时不得降语义。只有GPU0自然释放才走4×V100，否则停在等待official sprint。
-6. 最多完成同一run 1/10/50/100 steps、restore、C20与60小时预算；不得启动1K/官方GPU/FAST/ZIP/提交。
+4. CPU先锁定旧 OOM 证据，将 Axis partial params 从恢复开始就按 params 目标 FSDP sharding 放置；不得复用LoRA config或从R6 resume。
+5. 不重跑2卡；四卡自然空闲时先做 init-only，通过后才做唯一first update，再条件续跑到10 steps。
+6. 不得启动官方GPU、50/100/1K、C20、FAST/ZIP/提交。只有sharded-init通过而真实first update仍OOM，才作为下一轮Blackwell人工审核依据。
 
-当前路径是：R6 FAST ZIP Track1=`0.47`（冻结）→ dense full-FT preflight≤100 → 人工审核吞吐/显存/restore → 标准LIBERO同run里程碑长训 → paired选模 → 复用R6 FAST部署链 → 目标正式分数`>0.47`。
+当前路径是：R6 FAST ZIP Track1=`0.47`（冻结）→ sharded-init无损修复 → 本地4卡1/10-step → 人工审核显存/restore/吞吐 → 100-step+C20 → 标准LIBERO同run里程碑长训 → paired选模 → 复用R6 FAST部署链 → 目标正式分数`>0.47`。
 
 ## 11. ZIP 生成阶段执行结果（历史快照）
 
@@ -298,7 +297,7 @@ R6正式Track1=`0.47`确认FAST-only、vision/key映射与server链在真实scor
 
 新主线从Axis params、canonical LIBERO10Hz、fresh QUANTILES norm开始dense full-FT。约3.353B模型的FP32 params+Adam+EMA+grads下限约67GB；2×V100每卡下限约33.5GB且未含activation，预计只适合一次allocation canary。3卡不能精确构成uniform global64；首选GPU0自然释放后的4卡，或未来同一次Blackwell长训开头完成preflight。
 
-审核记录：`docs/reviews/axis_pi05/R6_TRACK1_SCORE_047_REVIEW_20260831.md`。活动计划：`docs/AXIS_PI05_POST_SCORE_DENSE_FULLFT_PREFLIGHT_PLAN.md`。
+审核记录：`docs/reviews/axis_pi05/R6_TRACK1_SCORE_047_REVIEW_20260831.md`。当时的活动计划已归档为`docs/archive/axis_pi05/AXIS_PI05_POST_SCORE_DENSE_FULLFT_PREFLIGHT_PLAN.md`。
 
 ## 15. Dense full-FT preflight 执行结果
 
@@ -307,3 +306,13 @@ R6正式Track1=`0.47`确认FAST-only、vision/key映射与server链在真实scor
 因此当前总状态为 `dense_fullft_preflight_failed`。由于 F2 没有可用拓扑，checkpoint restore、C20、吞吐报告和 60 小时预算均未执行；不能据此判定模型能力失败，也不能修改 recipe 继续硬跑。GPU0 外部进程未触碰，四卡在进程退出后均约 `5 MiB`，没有启动官方 GPU、1K以上训练、FAST、ZIP、push 或上传。
 
 完整证据位于 `data/reports/axis_libero_30k/dense_fullft_preflight/`，尤其是 `input_lock.json`、`memory_budget.json`、`two_gpu_canary.json`、`four_gpu_preflight.json` 及对应日志。
+
+## 16. Dense full-FT OOM 审核与无损恢复决策
+
+独立审核结论为 `remediation_required`。两卡/4卡均在 `init_train_state` 失败，还没有进入 batch/forward/backward。现有代码将 Orbax 恢复的约 `12.5 GiB` partial params 通过统一 `PartitionSpec()` replicated 到每卡，输出才是 FSDP state；四卡日志同时记录大量 donation-unusable warning 与 `26,840,528,788` bytes input/output arguments。
+
+microbatch 是每卡每个 microstep 的样本数，当前 `1` 已是最小；global batch `64` 在4卡上由 `1×4×16`梯度累积实现。降 global batch 不会修复 batch 之前的初始化 OOM。
+
+新活动计划只修复 sharded parameter initialization，保持 FP32、dense、AdamW、EMA `0.999`、global64。四卡先 init-only，然后唯一 first update，最多连续10 steps。本轮不启动比赛Blackwell；只有init修复通过而真实first update仍OOM，才建议把下次preflight与长训练合并进同一个60小时session。
+
+审核记录：`docs/reviews/axis_pi05/DENSE_FULLFT_INIT_OOM_REVIEW_20260831.md`。唯一活动计划：`docs/AXIS_PI05_DENSE_FULLFT_SHARDED_INIT_RECOVERY_PLAN.md`。

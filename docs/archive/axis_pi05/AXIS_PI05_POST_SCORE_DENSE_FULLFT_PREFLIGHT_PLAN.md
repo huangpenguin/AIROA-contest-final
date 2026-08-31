@@ -3,6 +3,7 @@
 > 制定日期：2026-08-31（Asia/Tokyo）
 > 输入 commit：`97f3a35`
 > 当前状态：`dense_fullft_preflight_failed`
+> 生命周期：`archived_after_execution_and_review`；F0/F1 完成，F2 在 `init_train_state` OOM 后 hard stop，后续授权见新计划。
 > 本轮唯一目标：把AXIS标准LIBERO dense full-FT实现、显存、数值、checkpoint/restore和训练时长预算验证到可安全进入长训练冲刺；本轮不启动配布GPU、不跑1K/5K/30K、不生成新ZIP。
 
 ## 0. 最终优化目标与基线

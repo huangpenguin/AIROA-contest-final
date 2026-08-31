@@ -316,3 +316,11 @@ microbatch 是每卡每个 microstep 的样本数，当前 `1` 已是最小；gl
 新活动计划只修复 sharded parameter initialization，保持 FP32、dense、AdamW、EMA `0.999`、global64。四卡先 init-only，然后唯一 first update，最多连续10 steps。本轮不启动比赛Blackwell；只有init修复通过而真实first update仍OOM，才建议把下次preflight与长训练合并进同一个60小时session。
 
 审核记录：`docs/reviews/axis_pi05/DENSE_FULLFT_INIT_OOM_REVIEW_20260831.md`。唯一活动计划：`docs/AXIS_PI05_DENSE_FULLFT_SHARDED_INIT_RECOVERY_PLAN.md`。
+
+## 17. Sharded init recovery 执行结果
+
+CPU lock 从 root `28f4779`、nested OpenPI `92604d6` 的 clean 状态开始，旧 preflight OOM 证据 hash 保持 immutable；CPU 静态/toy sharding 门禁通过，全量项目测试为 `127 passed, 7 skipped, 21 warnings`。R3 四卡 init-only 通过：51 leaves、3,353,433,872 FP32 params、large replicated leaf `0`、sentinel exact、params/optimizer/EMA finite，且没有 data loader/forward/backward。
+
+同一 fresh run 随后完成 step-0 atomic checkpoint，进入真实 first microbatch 计算；`train_step_accumulated_host` 在每卡申请 `136.69 MiB` 时 OOM，optimizer step 仍为 `0`，step1/10 未生成。GPU 监控峰值约 `24,897 MiB/card`，进程退出后四卡均约 `5 MiB`。这属于真实训练计算容量门禁，不是初始化复制失败；当前状态为 `dense_fullft_first_update_true_compute_oom_pending_official_gpu_review`。
+
+R5、restore、C20、60 小时预算、比赛 GPU、50/100/1K、FAST、ZIP、push、上传和提交均未执行。证据目录：`data/reports/axis_libero_30k/dense_fullft_sharded_init_recovery/`，主报告为 `summary.json` 和 `ROOT_CAUSE_REPORT_ZH.md`。

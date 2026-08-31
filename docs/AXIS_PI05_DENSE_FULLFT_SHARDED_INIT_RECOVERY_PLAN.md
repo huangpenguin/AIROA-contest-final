@@ -2,7 +2,7 @@
 
 > 制定日期：2026-08-31（Asia/Tokyo）
 > 审核输入 commit：`dbd4f497af4a8fcc4d7f4957ac03dc004b508487`
-> 当前状态：`dense_fullft_sharded_init_recovery_ready`
+> 当前状态：`dense_fullft_first_update_true_compute_oom_pending_official_gpu_review`
 > 本轮唯一目标：在不改 FP32、dense 全参数、EMA、optimizer、global batch 64 和数据/norm 的前提下，消除 Axis params 初始化时的 replicated 峰值，并将本地 4×V100 验证到最多 10 optimizer steps。
 
 ## 0. 冻结基线与执行边界
@@ -126,6 +126,16 @@ R3 OOM 则 hard stop，不改 precision/EMA/batch，不转比赛 GPU；报告实
 - 生成 50/100/1K/5K/10K/30K 和单卡 Blackwell 60h 的时间预算，但不执行它们。
 
 R5 完成后 hard stop；不在本计划内跑 C20 或长训练。
+
+## R6. 本次执行结果（2026-09-01）
+
+R0/R1 CPU 定位、direct-sharded init 修复与单测完成。R3 四卡 init-only 通过：51 个参数 leaf、3,353,433,872 个 FP32 参数，large replicated leaf 为 `0`，sentinel 重建 exact，params/Adam/EMA finite，step 为 `0`，未启动 data loader 或 forward/backward。旧 `26,840,528,788` bytes init argument 峰值不再出现。
+
+R4 在同一 fresh run 完成 sharded init 和 step-0 atomic checkpoint 后，进入真实 `microbatch=1` 训练计算；首个 microbatch 的 `train_step_accumulated_host` 在每卡申请 `136.69 MiB` 时 OOM。没有产生 optimizer update、step1 metric 或 step1 checkpoint；R5 连续 10 steps、restore、C20 和 60 小时预算均未执行。
+
+四卡 GPU 监控峰值约 `24,897 MiB/card`（JAX allocator 默认环境，未使用 `XLA_PYTHON_CLIENT_PREALLOCATE=false`），进程退出后均回到约 `5 MiB`。该结果证明当前本地 V100 的失败发生在真实训练计算峰值，而不是初始化复制；按计划状态为 `dense_fullft_first_update_true_compute_oom_pending_official_gpu_review`。不得在本计划内启用比赛 GPU、改变 recipe、运行 50/100/1K/C20、导出 FAST 或生成 ZIP。
+
+证据：`data/reports/axis_libero_30k/dense_fullft_sharded_init_recovery/summary.json`、`ROOT_CAUSE_REPORT_ZH.md`、`r3_init_only.json`、`r4_r5_train_10.json` 及对应日志/显存监控。
 
 ## 6. 比赛 GPU 决策门禁
 

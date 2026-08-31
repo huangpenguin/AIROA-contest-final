@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "generated_date": "2026-08-31",
-  "status": "dense_fullft_sharded_init_recovery_ready",
+  "status": "dense_fullft_first_update_true_compute_oom_pending_official_gpu_review",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
@@ -227,7 +227,7 @@
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
   "next_plan": "docs/AXIS_PI05_DENSE_FULLFT_SHARDED_INIT_RECOVERY_PLAN.md",
-  "next_phase_only": "dense_fullft_sharded_init_recovery_R0_to_R5_max_10_steps",
+  "next_phase_only": "manual_review_or_new_plan_after_true_compute_oom",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -772,6 +772,57 @@
       "dense_fullft_first_update_true_compute_oom_pending_official_gpu_review",
       "dense_fullft_local_10step_passed_pending_review"
     ]
+  },
+  "dense_fullft_sharded_init_recovery_execution": {
+    "status": "dense_fullft_first_update_true_compute_oom_pending_official_gpu_review",
+    "root_commit": "28f4779",
+    "nested_openpi_commit": "92604d6d07d5bbf636827ee903f758538c8ba015",
+    "cpu_lock": "data/reports/axis_libero_30k/dense_fullft_sharded_init_recovery/cpu_lock.json",
+    "root_cause_lock": "data/reports/axis_libero_30k/dense_fullft_sharded_init_recovery/root_cause_lock.json",
+    "tests": {
+      "command": ".venv_axis_pi05/bin/pytest -q tests",
+      "passed": 127,
+      "skipped": 7,
+      "warnings": 21
+    },
+    "r3_init_only": {
+      "status": "sharded_init_only_passed",
+      "report": "data/reports/axis_libero_30k/dense_fullft_sharded_init_recovery/r3_init_only.json",
+      "parameter_leaf_count": 51,
+      "parameter_numel": 3353433872,
+      "large_replicated_leaf_count": 0,
+      "sentinels_exact": true,
+      "params_optimizer_ema_finite": true,
+      "train_state_step": 0,
+      "data_loader_started": false,
+      "forward_backward_optimizer_update": false,
+      "duration_seconds": 314.7692515850067
+    },
+    "r4_first_update": {
+      "status": "dense_fullft_first_update_true_compute_oom_pending_official_gpu_review",
+      "report": "data/reports/axis_libero_30k/dense_fullft_sharded_init_recovery/r4_r5_train_10.json",
+      "report_log": "data/reports/axis_libero_30k/dense_fullft_sharded_init_recovery/r4_r5_train_10.log",
+      "microbatch_per_device": 1,
+      "accumulation_steps": 16,
+      "effective_global_batch": 64,
+      "step0_checkpoint_finalized": true,
+      "checkpoint_steps_observed": [0],
+      "metric_steps_observed": [],
+      "optimizer_updates": 0,
+      "oom_stage": "train_step_accumulated_host_first_microbatch_compute",
+      "oom_allocation_bytes_per_card": 143327232,
+      "peak_gpu_memory_mib_per_card": 24897,
+      "duration_seconds": 443.63956594467163,
+      "allocator_environment": "XLA_PYTHON_CLIENT_PREALLOCATE/MEM_FRACTION unset (JAX default)"
+    },
+    "r5_status": "not_run_after_r4_true_compute_oom",
+    "restore_status": "not_run_after_r4_true_compute_oom",
+    "c20_status": "not_run",
+    "official_gpu_authorized": false,
+    "gpu0_external_process_touched": false,
+    "forbidden_stages_started": ["official_gpu", "50_steps", "100_steps", "1k_plus", "c20", "fast", "zip", "upload", "submit"],
+    "summary": "data/reports/axis_libero_30k/dense_fullft_sharded_init_recovery/summary.json",
+    "report": "data/reports/axis_libero_30k/dense_fullft_sharded_init_recovery/EXECUTION_REPORT_ZH.md"
   },
   "official_gpu_policy": {
     "use_for_current_submission_precheck": false,

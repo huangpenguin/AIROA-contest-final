@@ -2,7 +2,7 @@
 
 > 更新日期：2026-08-31（Asia/Tokyo）
 > 当前唯一活动计划：`docs/AXIS_PI05_DENSE_FULLFT_SHARDED_INIT_RECOVERY_PLAN.md`
-> 当前状态：`dense_fullft_sharded_init_recovery_ready`
+> 当前状态：`dense_fullft_first_update_true_compute_oom_pending_official_gpu_review`
 > 最新审核：`docs/reviews/axis_pi05/DENSE_FULLFT_INIT_OOM_REVIEW_20260831.md`
 
 ## 1. 唯一活动计划
@@ -11,7 +11,7 @@
   - 已审核确认两卡/四卡 OOM 都在 `init_train_state`，没有进入 batch/forward/backward/update；
   - 根因候选是约 `12.5 GiB` `partial_params` 被 `PartitionSpec()` 整树 replicated，然后才生成 FSDP-sharded train state；
   - 本轮只修复 sharded init，保持 FP32、dense、EMA `0.999`、AdamW、per-device microbatch `1`、accumulation `16`、global batch `64`；
-  - 只授权 CPU 定位/测试、4卡 init-only、唯一 first update 和条件 10-step；不授权比赛 GPU、50/100/1K、C20、FAST/ZIP。
+  - CPU 定位和 4 卡 sharded init-only 已通过；唯一 first update 在真实计算阶段 OOM，未进入 10-step；不授权比赛 GPU、50/100/1K、C20、FAST/ZIP。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 

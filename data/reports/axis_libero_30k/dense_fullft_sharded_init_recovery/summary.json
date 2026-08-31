@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "status": "dense_fullft_first_update_true_compute_oom_pending_official_gpu_review",
+  "execution_date": "2026-09-01",
+  "root_commit": "28f47792b35f2f9c494df6e2c37f073fd884999d",
+  "nested_openpi_commit": "92604d6d07d5bbf636827ee903f758538c8ba015",
+  "recipe": {
+    "init": "Axis released params only",
+    "precision": "float32",
+    "topology": "dense_nnx.Nothing",
+    "ema_decay": 0.999,
+    "microbatch_per_device": 1,
+    "four_gpu_accumulation_steps": 16,
+    "effective_global_batch": 64,
+    "dataset": "physical-intelligence/libero native 10Hz",
+    "fresh_norm_sha256": "4c803bf59c52677c36b6b420c614d8a7742e0847708443863e13e67cb80b18f5"
+  },
+  "r0_r1_cpu": {
+    "status": "passed",
+    "root_cause_lock": "root_cause_lock.json",
+    "old_evidence_immutable": true,
+    "numerical_gate": "numerical_gate.json",
+    "tests": {"command": ".venv_axis_pi05/bin/pytest -q tests", "passed": 127, "skipped": 7, "warnings": 21}
+  },
+  "r3_init_only": {
+    "status": "sharded_init_only_passed",
+    "report": "r3_init_only.json",
+    "duration_seconds": 314.7692515850067,
+    "parameter_leaf_count": 51,
+    "parameter_numel": 3353433872,
+    "large_replicated_leaf_count": 0,
+    "sentinels_exact": true,
+    "params_optimizer_ema_finite": true,
+    "train_state_step": 0,
+    "data_loader_started": false,
+    "forward_backward_optimizer_update": false,
+    "allocator_environment": "XLA_PYTHON_CLIENT_PREALLOCATE/MEM_FRACTION unset (JAX default)",
+    "gpu_peak_memory_mib_per_card": 24715
+  },
+  "r4_first_update": {
+    "status": "dense_fullft_first_update_true_compute_oom_pending_official_gpu_review",
+    "report": "r4_r5_train_10.json",
+    "log": "r4_r5_train_10.log",
+    "duration_seconds": 443.63956594467163,
+    "step0_checkpoint_finalized": true,
+    "checkpoint_steps_observed": [0],
+    "metric_steps_observed": [],
+    "optimizer_updates": 0,
+    "oom_stage": "train_step_accumulated_host first microbatch compute",
+    "oom_allocation_bytes_per_card": 143327232,
+    "oom_allocation_mib_per_card": 136.69,
+    "gpu_peak_memory_mib_per_card": 24897,
+    "forward_backward_started": true,
+    "r5_continuation_started": false
+  },
+  "not_run": [
+    "fresh restore after step1",
+    "R5 continuous 10 steps",
+    "C20",
+    "50/100/1K/30K",
+    "official GPU",
+    "FAST",
+    "ZIP",
+    "push",
+    "upload",
+    "submission"
+  ],
+  "gpu0_external_process_touched": false,
+  "all_gpus_released_after_run": true,
+  "next_phase_only": "manual_review_or_new_plan_after_true_compute_oom"
+}

@@ -1,0 +1,248 @@
+diff --git a/scripts/train.py b/scripts/train.py
+index 5a69f47..a733798 100644
+--- a/scripts/train.py
++++ b/scripts/train.py
+@@ -7,6 +7,7 @@ import os
+ import platform
+ from pathlib import Path
+ import shutil
++import time
+ from typing import Any
+ 
+ import etils.epath as epath
+@@ -100,6 +101,163 @@ def _jsonable(value: Any) -> Any:
+     return value
+ 
+ 
++_ALLOCATOR_ENV_KEYS = (
++    "XLA_CLIENT_MEM_FRACTION",
++    "XLA_PYTHON_CLIENT_MEM_FRACTION",
++    "XLA_PYTHON_CLIENT_PREALLOCATE",
++    "XLA_FLAGS",
++    "JAX_PLATFORMS",
++    "JAX_PLATFORM_NAME",
++)
++
++
++def _allocator_environment() -> dict[str, Any]:
++    """Return the allocator contract without exposing unrelated environment."""
++    return {key: os.environ.get(key) for key in _ALLOCATOR_ENV_KEYS if key in os.environ}
++
++
++def _record_allocator_stats(phase: str, **extra: Any) -> None:
++    """Append host/JAX allocator state when the recovery runner requests it."""
++    output = os.environ.get("AXIS_PI05_ALLOCATOR_STATS_PATH")
++    if not output:
++        return
++    devices = []
++    for device in jax.local_devices():
++        row: dict[str, Any] = {
++            "id": int(device.id) if isinstance(device.id, (int, np.integer)) else str(device.id),
++            "platform": device.platform,
++            "memory_stats_available": False,
++        }
++        try:
++            stats = device.memory_stats()
++        except Exception as exc:  # pragma: no cover - backend-specific
++            row["memory_stats_error"] = f"{type(exc).__name__}: {exc}"
++        else:
++            if stats is not None:
++                row["memory_stats_available"] = True
++                row["memory_stats"] = _jsonable(stats)
++        devices.append(row)
++    _append_audit_trace(
++        Path(output),
++        {
++            "schema_version": 1,
++            "timestamp": time.time(),
++            "pid": os.getpid(),
++            "phase": phase,
++            "allocator_environment": _allocator_environment(),
++            "devices": devices,
++            **extra,
++        },
++    )
++
++
++def _record_executable_memory_analysis(jitted: Any, phase: str, args: tuple[Any, ...]) -> None:
++    """Record XLA executable memory analysis when the installed JAX exposes it.
++
++    The lower/compile probe is diagnostic only and is never allowed to change
++    training control flow.  It is called after the normal first invocation so
++    the regular cached executable remains the one used for the update.
++    """
++    output = os.environ.get("AXIS_PI05_ALLOCATOR_STATS_PATH")
++    if not output or os.environ.get("AXIS_PI05_EXECUTABLE_MEMORY_ANALYSIS", "0") != "1":
++        return
++    result: dict[str, Any] = {"available": False}
++    lower = getattr(jitted, "lower", None)
++    if lower is None:
++        result["reason"] = "jitted_callable_has_no_lower"
++    else:
++        try:
++            compiled = lower(*args).compile()
++            method = getattr(compiled, "memory_analysis", None)
++            if method is None:
++                result["reason"] = "compiled_executable_has_no_memory_analysis"
++            else:
++                analysis = method()
++                if dataclasses.is_dataclass(analysis):
++                    result.update({"available": True, **_jsonable(dataclasses.asdict(analysis))})
++                else:
++                    fields = (
++                        "argument_size_in_bytes",
++                        "output_size_in_bytes",
++                        "alias_size_in_bytes",
++                        "temp_size_in_bytes",
++                        "generated_code_size_in_bytes",
++                    )
++                    result.update(
++                        {
++                            "available": True,
++                            **{field: _jsonable(getattr(analysis, field)) for field in fields if hasattr(analysis, field)},
++                        }
++                    )
++        except Exception as exc:  # pragma: no cover - backend/compiler-specific
++            result.update({"reason": f"{type(exc).__name__}: {exc}"})
++    _record_allocator_stats("executable_memory_analysis", executable_phase=phase, analysis=result)
++
++
++def _write_restore_validation(train_state: Any) -> None:
++    """Write small, deterministic restore sentinels requested by recovery runs."""
++    output = os.environ.get("AXIS_PI05_RESTORE_VALIDATION_PATH")
++    if not output:
++        return
++    expected = json.loads(os.environ.get("AXIS_PI05_EXPECTED_PARAMS_SENTINELS", "[]"))
++    flat = traverse_util.flatten_dict(train_state.params.to_pure_dict(), sep="/")
++    sentinels = []
++    for item in expected:
++        path = str(item["path"])
++        if path not in flat:
++            raise ValueError(f"restore sentinel path missing: {path}")
++        array = np.ascontiguousarray(np.asarray(jax.device_get(flat[path])))
++        actual = {
++            "path": path,
++            "shape": list(array.shape),
++            "dtype": str(array.dtype),
++            "sha256": hashlib.sha256(array.tobytes()).hexdigest(),
++        }
++        actual["exact"] = bool(
++            actual["shape"] == item.get("shape")
++            and actual["dtype"] == item.get("dtype")
++            and actual["sha256"] == item.get("sha256")
++        )
++        sentinels.append(actual)
++    finite = True
++    finite_sample_elements = 0
++    for value in jax.tree_util.tree_leaves(train_state.opt_state):
++        if not hasattr(value, "dtype"):
++            continue
++        # A restore check must not materialize the multi-gigabyte Adam tree on
++        # the host.  Check the first small leaves; Orbax has already enforced
++        # the complete shape/dtype contract for the full tree.
++        if int(np.prod(value.shape)) > 1_000_000:
++            continue
++        host_value = np.asarray(jax.device_get(value))
++        finite_sample_elements += int(host_value.size)
++        if not np.all(np.isfinite(host_value)):
++            finite = False
++            break
++    rng = train_state.rng
++    rng_fingerprint = None
++    if rng is not None:
++        rng_data = np.ascontiguousarray(np.asarray(jax.device_get(jax.random.key_data(rng))))
++        rng_fingerprint = {
++            "dtype": str(rng_data.dtype),
++            "shape": list(rng_data.shape),
++            "sha256": hashlib.sha256(rng_data.tobytes()).hexdigest(),
++        }
++    report = {
++        "schema_version": 1,
++        "status": "passed" if int(train_state.step) >= 0 and all(item["exact"] for item in sentinels) and finite else "failed",
++        "step": int(train_state.step),
++        "params_sentinels": sentinels,
++        "optimizer_finite": finite,
++        "optimizer_finite_sample_elements": finite_sample_elements,
++        "ema_params_present": train_state.ema_params is not None,
++        "rng": rng_fingerprint,
++        "scheduler_and_optimizer_restored": True,
++    }
++    Path(output).parent.mkdir(parents=True, exist_ok=True)
++    Path(output).write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
++
++
+ def _key_fingerprint(key: at.KeyArrayLike) -> dict[str, Any]:
+     data = np.ascontiguousarray(np.asarray(jax.device_get(jax.random.key_data(key))))
+     return {
+@@ -675,6 +833,12 @@ def train_step_accumulated_host(
+         try:
+             loss_sum, grads, components = microbatch_grad_fn(micro_rng, state, batch, rng_fixture)
+         except Exception as exc:
++            _record_allocator_stats(
++                "microbatch_exception",
++                optimizer_step_before=int(state.step),
++                micro_index=micro_index,
++                exception=f"{type(exc).__name__}: {exc}",
++            )
+             _save_audit_failure(
+@@ -689,6 +853,17 @@ def train_step_accumulated_host(
+                 },
+             )
+             raise
++        _record_allocator_stats(
++            "microbatch_complete",
++            optimizer_step_before=int(state.step),
++            micro_index=micro_index,
++        )
++        if micro_index == 0:
++            _record_executable_memory_analysis(
++                microbatch_grad_fn,
++                "microbatch_grad",
++                (micro_rng, state, batch, rng_fixture),
++            )
+         audit_steps = int(os.environ.get("AXIS_PI05_AUDIT_MICRO_NONFINITE_STEPS", "0"))
+@@ -798,6 +973,22 @@ def train_step_accumulated_host(
+             "optimizer_step": state.step,
+         }
+ 
++    _record_allocator_stats(
++        "optimizer_update_start",
++        optimizer_step_before=int(state.step),
++        accumulated_microbatches=len(microbatches),
++    )
++    _record_executable_memory_analysis(
++        apply_update_fn,
++        "optimizer_update",
++        (state, grads, next_rng),
++    )
+     new_state, info = apply_update_fn(state, grads, next_rng)
++    _record_allocator_stats(
++        "optimizer_update_complete",
++        optimizer_step_before=int(state.step),
++        optimizer_step_after=int(new_state.step),
++    )
+@@ -944,10 +1135,15 @@ def main(config: _config.TrainConfig):
+     train_state, train_state_sharding = init_train_state(config, init_rng, mesh, resume=resuming)
+     jax.block_until_ready(train_state)
++    _record_allocator_stats("train_state_init", resumed=resuming, train_state_step=int(train_state.step))
+     logging.info(f"Initialized train state:\n{training_utils.array_tree_to_info(train_state.params)}")
+ 
+     if resuming:
+         train_state = _checkpoints.restore_state(checkpoint_manager, train_state, data_loader)
++        jax.block_until_ready(train_state)
++        _record_allocator_stats("checkpoint_restore", train_state_step=int(train_state.step))
++        _write_restore_validation(train_state)
+@@ -1020,6 +1216,7 @@ def main(config: _config.TrainConfig):
+     infos = []
+     for step in pbar:
++        _record_allocator_stats("optimizer_step_start", loop_step=step, train_state_step=int(train_state.step))
+         microbatches = [batch]
+@@ -1089,7 +1286,12 @@ def main(config: _config.TrainConfig):
+         if internal_step in keep_steps or (save_final_checkpoint and internal_step == config.num_train_steps):
+             # Directory names are the post-update train_state.step, not the zero-based loop variable.
++            _record_allocator_stats("checkpoint_save_start", checkpoint_step=internal_step)
+             _checkpoints.save_state(checkpoint_manager, train_state, data_loader, internal_step)
++            checkpoint_manager.wait_until_finished()
++            _record_allocator_stats("checkpoint_save_complete", checkpoint_step=internal_step)
+ 
+     logging.info("Waiting for checkpoint manager to finish")

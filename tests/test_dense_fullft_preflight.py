@@ -15,6 +15,11 @@ from tools.axis_pi05.dense_fullft_preflight import (  # noqa: E402
     _memory_budget,
     validate_config_contract,
 )
+from tools.axis_pi05.dense_fullft_allocator_fraction_recovery import (  # noqa: E402
+    FORBIDDEN_ALLOCATOR_TOKENS,
+    FRACTIONS,
+    _validate_fraction_environment,
+)
 
 
 def test_dense_config_matches_canonical_recipe():
@@ -97,3 +102,51 @@ print(json.dumps({"devices": jax.device_count(), "large_spec": str(target["large
         text=True,
     )
     assert '"devices": 4' in result.stdout
+
+
+def test_allocator_contract_accepts_only_preallocated_registered_fractions():
+    environment = {
+        "XLA_CLIENT_MEM_FRACTION": "0.90",
+        "XLA_PYTHON_CLIENT_PREALLOCATE": "true",
+        "JAX_PLATFORMS": "cuda",
+    }
+    _validate_fraction_environment(environment, "0.90")
+    assert FRACTIONS == ("0.90", "0.95")
+    assert "XLA_PYTHON_CLIENT_MEM_FRACTION" not in environment
+    assert "cuda_malloc_async" in FORBIDDEN_ALLOCATOR_TOKENS
+
+
+def test_allocator_contract_rejects_deprecated_fraction_and_forbidden_flags():
+    deprecated = {
+        "XLA_CLIENT_MEM_FRACTION": "0.90",
+        "XLA_PYTHON_CLIENT_MEM_FRACTION": "0.75",
+        "XLA_PYTHON_CLIENT_PREALLOCATE": "true",
+    }
+    try:
+        _validate_fraction_environment(deprecated, "0.90")
+    except ValueError as exc:
+        assert "deprecated" in str(exc)
+    else:
+        raise AssertionError("deprecated fraction was accepted")
+
+    forbidden = {
+        "XLA_CLIENT_MEM_FRACTION": "0.95",
+        "XLA_PYTHON_CLIENT_PREALLOCATE": "true",
+        "XLA_FLAGS": "--xla_gpu_cuda_data_dir=/tmp/cuda_malloc_async",
+    }
+    try:
+        _validate_fraction_environment(forbidden, "0.95")
+    except ValueError as exc:
+        assert "forbidden" in str(exc)
+    else:
+        raise AssertionError("forbidden allocator flag was accepted")
+
+
+def test_allocator_observability_is_host_side_and_does_not_change_train_math():
+    source = (ROOT / "third_party/axis_openpi/scripts/train.py").read_text(encoding="utf-8")
+    assert "def _record_allocator_stats" in source
+    assert '"microbatch_complete"' in source
+    assert '"optimizer_update_complete"' in source
+    assert '"checkpoint_restore"' in source
+    assert "memory_analysis" in source
+    assert "donate_argnums=(1,)" not in source[source.index("def init_train_state"):source.index("def _loss_sum_and_aux")]

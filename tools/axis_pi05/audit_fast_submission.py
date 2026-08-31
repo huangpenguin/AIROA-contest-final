@@ -1030,6 +1030,7 @@ def run_server_latency(
             "TORCHINDUCTOR_DISABLE": "1",
         }
     )
+    _add_local_asgi_runtime(env)
     process = subprocess.Popen(
         [sys.executable, "policy_server.py", "--host", "127.0.0.1", "--port", str(port)],
         cwd=staging,
@@ -1255,6 +1256,23 @@ def lock_c5_cases(
     return result
 
 
+def _add_local_asgi_runtime(env: dict[str, str]) -> None:
+    """Expose already-cached pure-Python ASGI packages to local gate children."""
+
+    cached_asgi_dirs = [
+        Path("/home/huang/.cache/uv/archive-v0/2bJx66UeLSVpVgqyrY7gJ"),  # fastapi 0.103.2
+        Path("/home/huang/.cache/uv/archive-v0/1H2ycJ1cbw9RSfBTh8CXW"),  # starlette 0.27.0
+        Path("/home/huang/.cache/uv/archive-v0/LUIuAUXcJCSDLFtk5wjmQ"),  # anyio 3.7.1
+        Path("/home/huang/.cache/uv/archive-v0/M6Xz_EWXEfaxLLn-_VBlf"),  # uvicorn 0.40.0
+        Path("/home/huang/.cache/uv/archive-v0/AaRd0KygZO_CvMiwnqJfW"),  # h11 0.14.0
+        Path("/home/huang/.cache/uv/archive-v0/_ddCUekIAZsfhoS0F0CS1"),  # sniffio 1.3.1
+    ]
+    existing = env.get("PYTHONPATH", "")
+    env["PYTHONPATH"] = os.pathsep.join(
+        [str(path) for path in cached_asgi_dirs if path.is_dir()] + ([existing] if existing else [])
+    )
+
+
 def _fast_server_environment(gpu: str) -> dict[str, str]:
     env = os.environ.copy()
     env.update(
@@ -1280,21 +1298,7 @@ def _fast_server_environment(gpu: str) -> dict[str, str]:
     )
     if (Path(__file__).resolve().parents[2] / ".eval_libero").is_dir():
         env.setdefault("LIBERO_CONFIG_PATH", str(Path(__file__).resolve().parents[2] / ".eval_libero"))
-    # The audit venv deliberately does not install the submission runtime
-    # dependencies.  Reuse the already-present, offline uv cache only for the
-    # local server subprocess; the staged requirements.txt remains unchanged.
-    cached_asgi_dirs = [
-        Path("/home/huang/.cache/uv/archive-v0/2bJx66UeLSVpVgqyrY7gJ"),  # fastapi 0.103.2
-        Path("/home/huang/.cache/uv/archive-v0/1H2ycJ1cbw9RSfBTh8CXW"),  # starlette 0.27.0
-        Path("/home/huang/.cache/uv/archive-v0/LUIuAUXcJCSDLFtk5wjmQ"),  # anyio 3.7.1
-        Path("/home/huang/.cache/uv/archive-v0/M6Xz_EWXEfaxLLn-_VBlf"),  # uvicorn 0.40.0
-        Path("/home/huang/.cache/uv/archive-v0/AaRd0KygZO_CvMiwnqJfW"),  # h11 0.14.0
-        Path("/home/huang/.cache/uv/archive-v0/_ddCUekIAZsfhoS0F0CS1"),  # sniffio 1.3.1
-    ]
-    existing = env.get("PYTHONPATH", "")
-    env["PYTHONPATH"] = os.pathsep.join(
-        [str(path) for path in cached_asgi_dirs if path.is_dir()] + ([existing] if existing else [])
-    )
+    _add_local_asgi_runtime(env)
     return env
 
 

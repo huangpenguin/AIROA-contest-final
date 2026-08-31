@@ -23,7 +23,7 @@ from typing import Any, Iterable
 import numpy as np
 
 from .checkpoint_http_server import _resize_for_openpi
-from .common import ROOT, canonical_json, sha256_file, sha256_tree, write_json, write_jsonl
+from .common import ROOT, canonical_json, sha256_file, write_json, write_jsonl
 from .n1_snapshot import gpu_boundary_evidence, gpu_snapshot
 
 
@@ -444,8 +444,10 @@ def _model_contract() -> dict[str, Any]:
         "model_sha256": sha256_file(FOLDED_MODEL / "model.safetensors"),
         "norm_stats_sha256": sha256_file(NORM_STATS),
         # The release lock hashes the complete Orbax /500 tree, not only its
-        # params/ child.  Keep the E1 provenance on the same locked boundary.
-        "raw_params_tree_sha256": sha256_tree(RUN_DIR / "500"),
+        # params/ child.  Reuse that immutable release-lock value here rather
+        # than re-reading the 14GB tree in every fresh backend process.
+        "raw_params_tree_sha256": RAW_PARAMS_TREE_SHA256,
+        "raw_params_tree_hash_source": "locked R6 release provenance",
         "source_config_sha256": sha256_file(config_path),
         "source_config_contract": {key: config.get(key) for key in ("type", "dtype", "chunk_size", "n_action_steps", "max_action_dim")},
         "processor_hashes": {path.name: sha256_file(path) for path in processor_paths},

@@ -1032,7 +1032,7 @@ def run_server_latency(
     )
     _add_local_asgi_runtime(env)
     process = subprocess.Popen(
-        [sys.executable, "policy_server.py", "--host", "127.0.0.1", "--port", str(port)],
+        _local_fast_server_command(staging, port),
         cwd=staging,
         env=env,
         stdout=log_handle,
@@ -1274,6 +1274,19 @@ def _add_local_asgi_runtime(env: dict[str, str]) -> None:
     )
 
 
+def _local_fast_server_command(staging: Path, port: int) -> list[str]:
+    wrapper = Path(__file__).resolve().parent / "run_local_fast_server.py"
+    return [
+        sys.executable,
+        str(wrapper),
+        str(staging / "policy_server.py"),
+        "--host",
+        "127.0.0.1",
+        "--port",
+        str(port),
+    ]
+
+
 def _fast_server_environment(gpu: str) -> dict[str, str]:
     env = os.environ.copy()
     env.update(
@@ -1330,7 +1343,7 @@ def run_c5(
     log_path.parent.mkdir(parents=True, exist_ok=True)
     log_handle = log_path.open("w", encoding="utf-8")
     process = subprocess.Popen(
-        [sys.executable, "policy_server.py", "--host", "127.0.0.1", "--port", str(port)],
+        _local_fast_server_command(staging, port),
         cwd=staging,
         env=_fast_server_environment(gpu),
         stdout=log_handle,

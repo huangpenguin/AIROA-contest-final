@@ -443,7 +443,9 @@ def _model_contract() -> dict[str, Any]:
     return {
         "model_sha256": sha256_file(FOLDED_MODEL / "model.safetensors"),
         "norm_stats_sha256": sha256_file(NORM_STATS),
-        "raw_params_tree_sha256": sha256_tree(RAW_PARAMS),
+        # The release lock hashes the complete Orbax /500 tree, not only its
+        # params/ child.  Keep the E1 provenance on the same locked boundary.
+        "raw_params_tree_sha256": sha256_tree(RUN_DIR / "500"),
         "source_config_sha256": sha256_file(config_path),
         "source_config_contract": {key: config.get(key) for key in ("type", "dtype", "chunk_size", "n_action_steps", "max_action_dim")},
         "processor_hashes": {path.name: sha256_file(path) for path in processor_paths},

@@ -287,7 +287,7 @@ def d3_step1(timeout_seconds: int, d2: dict[str, Any]) -> dict[str, Any]:
         report = allocator._run_train_process(
             fraction=FRACTION,
             run_dir=run_dir,
-            label="d3_donated_step1_canary",
+            label="d3_donated_step1_final_canary",
             steps=1,
             expected_sentinels=lock["root_cause_lock"]["step0"]["small_restore_sentinels"],
             timeout_seconds=timeout_seconds,

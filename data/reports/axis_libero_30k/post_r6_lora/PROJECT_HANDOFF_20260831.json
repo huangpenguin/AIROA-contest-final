@@ -220,7 +220,7 @@
     "command": ".venv_axis_pi05/bin/pytest -q tests",
     "passed": 137,
     "skipped": 7,
-    "warnings": 21,
+    "warnings": 23,
     "pynvml_is_collection_blocker": false
   },
   "resources": {

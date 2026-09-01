@@ -1,8 +1,8 @@
 # AXIS Pi0.5 Dense Full-FT Donated Gradient Accumulator 修复计划
 
 > 制定日期：2026-09-02（Asia/Tokyo）
-> 审核输入：root `ecff24f`，nested OpenPI `e31c2bf`
-> 当前状态：`dense_fullft_donated_accumulator_remediation_ready`
+> 执行输入：root `8e9f3cf`，nested OpenPI `5c29b0e`
+> 当前状态：`dense_fullft_donated_accumulator_remediation_failed`
 > 唯一目标：保持FP32 dense full-FT、顺序梯度求和与global batch 64完全不变，让第二份及后续梯度归并的输出真实复用旧accumulator buffer，并在本地4×V100完成step1/step10门禁。
 
 ## 0. 审核锁与精确失败边界
@@ -94,3 +94,15 @@ CPU测试必须覆盖：16份嵌套FP32 tree与旧顺序实现逐元素exact、n
 - `dense_fullft_optimizer_update_capacity_oom_pending_resource_review`
 
 交付D0 summary、alias证据、per-phase memory table、step1/10 checkpoint与restore（若门禁允许）、全量测试和root/nested clean commit。禁止自动进入任何后续训练或官方资源。
+
+## 6. 本轮 D0–D4 执行结果
+
+本轮严格按 D0–D4 执行并在 D4 hard gate 停止。D0/D1 的 CPU/code gate 通过：donated tree add 保持 FP32、左结合和 microbatch 顺序；JAX donated optimizer observer 被移除，因为 `lower().compile()` 的观测会使 donated state 失效，实际 optimizer update 未改变，NVML/allocator runtime trace 仍保留。全量测试为 `141 passed, 7 skipped, 23 warnings`。
+
+D2 两份真实 microbatch merge-only canary 通过：compute/accumulation/release indexes 均为 `[0,1]`；merge 后每卡 live bytes 为 `19916301568–19916302080`，相对基线最大漂移 `512` bytes（门限 `256MiB`）；donated alias 为 `6479127152` bytes；optimizer update 为 `0`，step 仍为 `0`。
+
+D3 最终 fresh canary 通过：`16/16` microbatch compute/merge/release 完成，optimizer step 为 `1`，examples seen 为 `64`，finite/nonfinite gate 通过，并成功原子写入 step1 checkpoint。此前两次 D3 失败是 observer/logging 生命周期问题，均保留在带有 `observer_failure` 与 `optimizer_logging_failure` 后缀的输出目录；最终 D3 使用独立 report label 重跑并通过。
+
+D4 从 step1 继续执行。step 2 的 microbatch `0` 完成并释放后，microbatch `1` 在真实 forward/backward 阶段触发 BFC allocator OOM：申请 `143327232` bytes（`136.69MiB`），四卡均报告 `RESOURCE_EXHAUSTED`。continuation return code 为 `1`，未生成 step10 checkpoint；失败分类为 `allocator_bfc_oom_during_compute`。旧 runner 曾启动 step10 restore-only 子进程，发现 continuation 已失败后立即终止；该部分只作为不完整的失败证据保留，不作为通过项。
+
+最终状态为 `dense_fullft_donated_accumulator_remediation_failed`。没有启动 Blackwell/官方 GPU、C20、100/1K/长训、FAST/ZIP、上传、push 或提交；四张本地 GPU 已释放至约 `5MiB`。报告为 `data/reports/axis_libero_30k/dense_fullft_donated_accumulator_recovery/{d2_merge_canary.json,d3_step1.json,d4_step10.json,summary.json}`，当前停止等待审核。

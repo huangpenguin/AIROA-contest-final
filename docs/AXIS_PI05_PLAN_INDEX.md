@@ -2,15 +2,14 @@
 
 > 更新日期：2026-09-02（Asia/Tokyo）
 > 当前唯一活动计划：`docs/AXIS_PI05_DENSE_FULLFT_DONATED_ACCUMULATOR_RECOVERY_PLAN.md`
-> 当前状态：`dense_fullft_donated_accumulator_remediation_ready`
-> 最新审核：`docs/reviews/axis_pi05/DENSE_FULLFT_M2_DONATION_AUDIT_20260902.md`
+> 当前状态：`dense_fullft_donated_accumulator_remediation_failed`
+> 最新审核：`docs/reviews/axis_pi05/DENSE_FULLFT_DONATED_ACCUMULATOR_EXECUTION_20260902.md`
 
 ## 1. 唯一活动计划
 
 - `AXIS_PI05_DENSE_FULLFT_DONATED_ACCUMULATOR_RECOVERY_PLAN.md`
-  - M2真实compute index `0/1`均完成，失败发生在index1的普通`_add_gradients`新output分配；
-  - 当前普通逐叶`x+y`没有JIT donation，必须同时保留旧accumulator、current grads与新output；这是`26.42GB` live后仍差`72MiB`的首要解释；
-  - 只授权严格左结合FP32 donated tree add；先做两份真实microbatch merge-only canary，通过才允许完整16份step1和最多step10；
+  - D2两份真实microbatch merge与D3完整16份/step1均通过；D4在step2 microbatch `1`真实compute阶段因申请`136.69MiB`触发allocator OOM，已按hard gate停止；
+  - 当前最终状态为`dense_fullft_donated_accumulator_remediation_failed`，仅保留失败证据并等待审核；不得因该失败直接转向Blackwell；
   - 不授权降精度/降batch、官方GPU、Blackwell、C20、100/1K、长训或提交。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。

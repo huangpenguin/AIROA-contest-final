@@ -359,6 +359,57 @@ def d4_step10(timeout_seconds: int, d3: dict[str, Any]) -> dict[str, Any]:
     return result
 
 
+def d4_finalize_failed() -> dict[str, Any]:
+    """Finalize a continuation OOM without attempting a post-failure restore."""
+    _set_report_paths()
+    continuation = _load(REPORT_ROOT / "d4_donated_continue_10.json")
+    rows = _stats(Path(continuation["allocator_stats_path"]))
+    plateau = lifetime._plateau_gate(Path(continuation["allocator_stats_path"]), expected_count=16)
+    donation = _donation_gate(rows, Path(continuation["log_path"]))
+    restore_log = REPORT_ROOT / "d4_restore_step10.log"
+    restore_nvml = REPORT_ROOT / "d4_restore_step10_nvml.jsonl"
+    restore = {
+        "status": "restore_aborted_after_continuation_oom",
+        "started": restore_log.is_file(),
+        "terminated_before_completion": restore_log.is_file() and not (REPORT_ROOT / "d4_restore_step10.json").is_file(),
+        "log_path": str(restore_log),
+        "nvml_path": str(restore_nvml),
+    }
+    result = {
+        "schema_version": 1,
+        "status": "dense_fullft_donated_accumulator_remediation_failed",
+        "fraction": FRACTION,
+        "continuation": continuation,
+        "memory_plateau": plateau,
+        "donation": donation,
+        "restore_step10": restore,
+        "official_gpu_started": False,
+        "blackwell_started": False,
+        "c20_started": False,
+        "long_training_started": False,
+    }
+    write_json(REPORT_ROOT / "d4_step10.json", result)
+    summary = {
+        "schema_version": 1,
+        "status": result["status"],
+        "plan": "AXIS_PI05_DENSE_FULLFT_DONATED_ACCUMULATOR_RECOVERY_PLAN",
+        "d0": _load(REPORT_ROOT / "d0_cpu_lock.json"),
+        "d2": _load(REPORT_ROOT / "d2_merge_canary.json"),
+        "d3": _load(REPORT_ROOT / "d3_step1.json"),
+        "d4": result,
+        "official_gpu_started": False,
+        "blackwell_started": False,
+        "c20_started": False,
+        "long_training_started": False,
+        "fast_zip_upload_submission": False,
+        "prohibited_phases_started": [],
+        "tests": {"command": ".venv_axis_pi05/bin/pytest -q tests", "passed": 141, "skipped": 7, "warnings": 23},
+        "generated_at_unix": time.time(),
+    }
+    write_json(REPORT_ROOT / "summary.json", summary)
+    return result
+
+
 def run(timeout_seconds: int) -> dict[str, Any]:
     d0 = d0_cpu_phase()
     d2_path = REPORT_ROOT / "d2_merge_canary.json"
@@ -389,7 +440,7 @@ def run(timeout_seconds: int) -> dict[str, Any]:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--phase", choices=("d0", "d2_finalize", "run"), required=True)
+    parser.add_argument("--phase", choices=("d0", "d2_finalize", "d4_finalize_failed", "run"), required=True)
     parser.add_argument("--timeout-seconds", type=int, default=7200)
     args = parser.parse_args()
     REPORT_ROOT.mkdir(parents=True, exist_ok=True)
@@ -398,6 +449,8 @@ def main() -> None:
         result = d0_cpu_phase()
     elif args.phase == "d2_finalize":
         result = d2_finalize_existing()
+    elif args.phase == "d4_finalize_failed":
+        result = d4_finalize_failed()
     else:
         result = run(args.timeout_seconds)
     print(json.dumps({"status": result["status"], "path": str(REPORT_ROOT)}, ensure_ascii=False, sort_keys=True))

@@ -1,18 +1,18 @@
 {
   "schema_version": 1,
-  "generated_date": "2026-09-01",
-  "status": "dense_fullft_donated_accumulator_remediation_ready",
+  "generated_date": "2026-09-02",
+  "status": "dense_fullft_donated_accumulator_remediation_failed",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
-  "latest_audited_execution_commit": "ecff24f",
-  "latest_audit_input_commit": "ecff24f",
-  "latest_execution_root_commit": "17acaf3",
-  "latest_execution_nested_openpi_commit": "e31c2bf",
+  "latest_audited_execution_commit": "8e9f3cf",
+  "latest_audit_input_commit": "8e9f3cf",
+  "latest_execution_root_commit": "8e9f3cf",
+  "latest_execution_nested_openpi_commit": "5c29b0e",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
   "branch_has_upstream": false,
-  "nested_openpi_commit": "e31c2bf",
+  "nested_openpi_commit": "5c29b0e",
   "dataset": {
     "path": "data/raw/hf/physical-intelligence/libero",
     "source_fps": 10,
@@ -1235,5 +1235,82 @@
     "official_gpu_authorized": false,
     "blackwell_authorized": false,
     "c20_or_100_1k_long_training_authorized": false
+  },
+  "dense_fullft_donated_accumulator_execution": {
+    "status": "dense_fullft_donated_accumulator_remediation_failed",
+    "review": "docs/reviews/axis_pi05/DENSE_FULLFT_DONATED_ACCUMULATOR_EXECUTION_20260902.md",
+    "plan": "docs/AXIS_PI05_DENSE_FULLFT_DONATED_ACCUMULATOR_RECOVERY_PLAN.md",
+    "execution_root_commit": "8e9f3cf",
+    "execution_nested_openpi_commit": "5c29b0e",
+    "tests": {
+      "command": ".venv_axis_pi05/bin/pytest -q tests",
+      "passed": 141,
+      "skipped": 7,
+      "warnings": 23
+    },
+    "contracts_unchanged": [
+      "float32",
+      "dense_full_model",
+      "AdamW",
+      "EMA_0.999",
+      "microbatch_per_device_1",
+      "accumulation_16",
+      "effective_global_batch_64",
+      "ordered_gradient_sum"
+    ],
+    "d0": {
+      "status": "dense_fullft_donated_accumulator_d0_corrected",
+      "report": "data/reports/axis_libero_30k/dense_fullft_donated_accumulator_recovery/d0_cpu_lock.json"
+    },
+    "d1": {
+      "status": "donated_tree_add_cpu_gate_passed",
+      "nested_commit": "5c29b0e",
+      "patches": [
+        "patches/axis_openpi/0024-donated-gradient-accumulator.patch",
+        "patches/axis_openpi/0025-disable-donated-optimizer-observer.patch",
+        "patches/axis_openpi/0026-cache-optimizer-step-before-donation.patch"
+      ]
+    },
+    "d2": {
+      "status": "dense_fullft_donated_two_microbatch_merge_passed_pending_review",
+      "fraction": "0.95",
+      "compute_completed_indexes": [0, 1],
+      "accumulation_completed_indexes": [0, 1],
+      "temporaries_released_indexes": [0, 1],
+      "max_absolute_drift_bytes_per_card": 512,
+      "donated_alias_size_bytes": 6479127152,
+      "optimizer_updates": 0,
+      "report": "data/reports/axis_libero_30k/dense_fullft_donated_accumulator_recovery/d2_merge_canary.json"
+    },
+    "d3": {
+      "status": "dense_fullft_donated_step1_passed_pending_review",
+      "microbatch_count": 16,
+      "optimizer_step": 1,
+      "examples_seen": 64,
+      "step1_checkpoint": true,
+      "report": "data/reports/axis_libero_30k/dense_fullft_donated_accumulator_recovery/d3_step1.json"
+    },
+    "d4": {
+      "status": "dense_fullft_donated_accumulator_remediation_failed",
+      "failure_classification": "allocator_bfc_oom_during_compute",
+      "optimizer_step_before": 2,
+      "failed_microbatch_index": 1,
+      "completed_microbatch_indexes": [0],
+      "allocation_bytes": 143327232,
+      "allocation_mib": 136.69,
+      "continuation_return_code": 1,
+      "step10_checkpoint_generated": false,
+      "report": "data/reports/axis_libero_30k/dense_fullft_donated_accumulator_recovery/d4_step10.json",
+      "restore_status": "restore_aborted_after_continuation_oom",
+      "restore_log": "data/reports/axis_libero_30k/dense_fullft_donated_accumulator_recovery/d4_restore_step10.log",
+      "restore_nvml": "data/reports/axis_libero_30k/dense_fullft_donated_accumulator_recovery/d4_restore_step10_nvml.jsonl"
+    },
+    "official_gpu_started": false,
+    "blackwell_started": false,
+    "c20_started": false,
+    "long_training_started": false,
+    "fast_zip_upload_submission": false,
+    "gpu_released_after_exit": true,
+    "next_phase_only": "manual_review_before_any_new_remediation_or_resource_escalation"
   }
 }

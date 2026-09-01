@@ -1,11 +1,11 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新已审核执行 HEAD：`ecff24f`
-> accumulation lifetime execution HEAD：`ecff24f`（执行输入代码提交：`1ac116f`）
+> 最新已审核执行 HEAD：`8e9f3cf`
+> donated accumulator execution HEAD：`8e9f3cf`（执行输入代码提交）
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
-> nested OpenPI：`e31c2bf`（accumulation lifetime implementation）
-> 当前总状态：`dense_fullft_donated_accumulator_remediation_ready`
+> nested OpenPI：`5c29b0e`（donated accumulator implementation）
+> 当前总状态：`dense_fullft_donated_accumulator_remediation_failed`
 > 唯一活动计划：`docs/AXIS_PI05_DENSE_FULLFT_DONATED_ACCUMULATOR_RECOVERY_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
@@ -14,7 +14,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式 Track1=`0.47`、Track2=`0.33`。Dense full-FT direct-sharded init和两份真实microbatch compute均可运行；M2失败精确位于index1普通`_add_gradients`创建新output，当前实现没有donated alias。审核不批准Blackwell或改配方，只授权donated accumulator的两份merge canary、step1和最多step10。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式 Track1=`0.47`、Track2=`0.33`。Donated accumulator 的 D2 两份 merge 与 D3 step1 通过；D4 在 step2 microbatch `1` 的真实 compute 阶段因申请 `136.69MiB` 触发 allocator OOM，无法完成 step10。已停止并等待审核，不批准Blackwell或改配方。
 
 ## 2. 数据与复现基础
 
@@ -213,7 +213,7 @@ Axis init/原团队式 standard LIBERO full-FT 是后续正确研究方向，但
 
 ```text
 .venv_axis_pi05/bin/pytest -q tests
-127 passed, 7 skipped, 21 warnings（sharded-init recovery 执行 commit 记录）。
+141 passed, 7 skipped, 23 warnings（donated accumulator recovery 执行记录）。
 ```
 
 此前“缺少 pynvml 导致 collection 中断”不是仓库指定 venv 的真实 blocker；最新执行记录为 134 tests（127 passed + 7 skipped）。交接时不要为此随意安装依赖。
@@ -222,8 +222,8 @@ Git：
 
 ```text
 branch               codex/axis-pi05-audit-remediation
-latest audited HEAD   6239704752dc2966d23b0f6c9d49744efdb152ef
-nested OpenPI        92604d6d07d5bbf636827ee903f758538c8ba015
+latest execution HEAD 8e9f3cf
+nested OpenPI        5c29b0e
 root/nested          clean（审核 6239704 开始时）
 upstream             当前 branch 未设置 upstream
 ```
@@ -372,3 +372,15 @@ nested OpenPI `e31c2bf`已移除审计`values`长期引用并显式block/delete�
 审核状态为`remediation_required`。旧memory-lifetime计划已归档；当前唯一活动计划为`docs/AXIS_PI05_DENSE_FULLFT_DONATED_ACCUMULATOR_RECOVERY_PLAN.md`。D2必须先证明两份真实microbatch donated merge后live bytes回到baseline；失败即停止，不批准Blackwell、降精度/降batch或继续完整step。
 
 审核记录：`docs/reviews/axis_pi05/DENSE_FULLFT_M2_DONATION_AUDIT_20260902.md`。
+
+## 23. Donated accumulator D0–D4 执行结果
+
+本轮执行输入为 root `8e9f3cf`、nested OpenPI `5c29b0e`，只运行 D0–D4。D0/D1 的 CPU/code gate 通过：严格 FP32、左结合、按 microbatch 顺序的 donated tree add 已落地；optimizer observer 因会使 donated state 失效而移除，实际 update 配方不变，NVML/allocator runtime trace 保留。全量测试为 `141 passed, 7 skipped, 23 warnings`。
+
+D2 两份真实 merge-only canary 通过：compute/accumulation/release indexes 均为 `[0,1]`；merge 后每卡 live bytes `19916301568–19916302080`，最大漂移 `512` bytes（门限 `256MiB`）；donated alias `6479127152` bytes；optimizer updates 为 `0`。
+
+D3 最终 fresh run 通过 `16/16` compute/merge/release，完成一次 optimizer update（step `1`、examples seen `64`），finite gate 通过并成功原子写入 step1 checkpoint。此前两次 D3 运行的 observer/logging 生命周期故障已保留在带后缀的输出目录，最终独立 report 为通过结果。
+
+D4 从 step1 续跑时，step2 的 microbatch `0` 完成并释放；microbatch `1` 在真实 forward/backward 阶段因 BFC allocator 申请 `143327232` bytes（`136.69MiB`）失败，四卡均为 `RESOURCE_EXHAUSTED`。continuation return code 为 `1`，未生成 step10 checkpoint，失败分类为 `allocator_bfc_oom_during_compute`。旧 runner 启动的 restore-only 子进程在确认 continuation 失败后立即终止，保留为不完整 restore 证据，不视作通过。
+
+最终状态为 `dense_fullft_donated_accumulator_remediation_failed`。没有启动 Blackwell/官方 GPU、C20、100/1K/长训、FAST/ZIP、上传、push 或提交；本地四张 GPU 均已释放至约 `5MiB`。主证据为 `data/reports/axis_libero_30k/dense_fullft_donated_accumulator_recovery/{d2_merge_canary.json,d3_step1.json,d4_step10.json,summary.json}`。当前停止等待审核，不自动进入下一修复。

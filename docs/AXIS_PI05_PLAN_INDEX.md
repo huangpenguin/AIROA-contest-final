@@ -2,8 +2,8 @@
 
 > 更新日期：2026-09-01（Asia/Tokyo）
 > 当前唯一活动计划：`docs/AXIS_PI05_DENSE_FULLFT_ACCUMULATION_MEMORY_LIFETIME_RECOVERY_PLAN.md`
-> 当前状态：`dense_fullft_accumulation_memory_lifetime_remediation_ready`
-> 最新审核：`docs/reviews/axis_pi05/DENSE_FULLFT_ACCUMULATION_LIFETIME_AUDIT_20260901.md`
+> 当前状态：`dense_fullft_accumulation_lifetime_remediation_failed`
+> 最新执行记录：`docs/reviews/axis_pi05/DENSE_FULLFT_ACCUMULATION_MEMORY_LIFETIME_EXECUTION_20260901.md`
 
 ## 1. 唯一活动计划
 
@@ -12,6 +12,7 @@
   - `0.95` 下 live bytes 每完成一份约增加 `6.48GB/card`，与一份完整 FP32 gradient tree 相符；
   - 当前最小修复对象是 host accumulation 的 `grads` 与审计 `values` 引用生命周期/observer effect，保持 FP32、dense、EMA、global64 和顺序累加数学不变；
   - 只授权本地4×V100的 memory-plateau step1/step10；不授权官方GPU、C20、100/1K、长训或提交。
+  - M0/M1 与 CPU 回归通过；M2 在 microbatch index `1` 的第二份梯度归并申请 `72 MiB` 时 OOM，optimizer update 为 `0`，M3 未启动，当前等待审核。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 

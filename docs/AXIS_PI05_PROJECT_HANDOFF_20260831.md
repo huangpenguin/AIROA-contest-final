@@ -2,10 +2,10 @@
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
 > 最新已审核执行 HEAD：`c353ff0`
-> allocator recovery execution HEAD：`c353ff0`
+> accumulation lifetime execution HEAD：`1ac116f`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
-> nested OpenPI：`81d82200cb9b31916eaacb05184c77d1bdce9f83`
-> 当前总状态：`dense_fullft_accumulation_memory_lifetime_remediation_ready`
+> nested OpenPI：`e31c2bf`（accumulation lifetime implementation）
+> 当前总状态：`dense_fullft_accumulation_lifetime_remediation_failed`
 > 唯一活动计划：`docs/AXIS_PI05_DENSE_FULLFT_ACCUMULATION_MEMORY_LIFETIME_RECOVERY_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
@@ -354,3 +354,11 @@ root `c353ff0`、nested OpenPI `81d8220` 的0.90/0.95执行边界可信：step0 
 审核状态为`remediation_required`。旧计划已归档；当前唯一计划为`docs/AXIS_PI05_DENSE_FULLFT_ACCUMULATION_MEMORY_LIFETIME_RECOVERY_PLAN.md`。只允许释放临时梯度引用、建立per-micro memory plateau证据并在本地4×V100验证step1/step10；不批准直接启动Blackwell、C20、100/1K、长训或提交。
 
 审核记录：`docs/reviews/axis_pi05/DENSE_FULLFT_ACCUMULATION_LIFETIME_AUDIT_20260901.md`。
+
+## 21. Accumulation memory-lifetime 执行结果
+
+本轮按唯一活动计划完成 M0/M1，并在四张自然空闲的本地 V100 上执行 M2；没有启动官方 GPU、Blackwell、M3、100/1K/长训、C20、FAST、ZIP、上传、push 或提交。M0 只修正旧 summary 标签并保留 raw logs/checkpoints；M1 只加入 gradient temporary lifetime boundary、释放引用和 CPU 测试，不改变 FP32、dense、AdamW、EMA `0.999`、microbatch `1`、accumulation `16`、global batch `64` 或顺序。
+
+CPU 全量回归为 `137 passed, 7 skipped, 23 warnings`。M2 的 immutable step-0 copy 为 `24,879,588,870` bytes，atomic rename 与 source hash 通过；restore sentinel、scheduler/optimizer/EMA presence 与 finite、四卡自然空闲和 GPU0 外部 PID 门禁均通过。训练使用 `XLA_CLIENT_MEM_FRACTION=0.95`、preallocate=true，实际在 microbatch index `1` 的 `_add_gradients(grad_sum, grads)` 申请 `72 MiB` 时 BFC OOM；compute indexes 为 `[0,1]`，`temporaries_released` 仅 `[0]`，optimizer update=`0`，没有 step1 checkpoint 或 metric。
+
+最终执行状态为 `dense_fullft_accumulation_lifetime_remediation_failed`，不是模型能力失败结论。M3 未启动；四卡退出后均约 `5 MiB`，source step-0 hash 保持 `9380fd770ced87368c82a05a4dbb8c00fd0f0e82c4e569879aacd127a01038f5`。完整小型结果见 `data/reports/axis_libero_30k/dense_fullft_accumulation_memory_lifetime_recovery/summary.json` 与 `m2_step1.json`，执行记录见 `docs/reviews/axis_pi05/DENSE_FULLFT_ACCUMULATION_MEMORY_LIFETIME_EXECUTION_20260901.md`。当前停止等待审核，不自动进入下一修复或比赛资源。

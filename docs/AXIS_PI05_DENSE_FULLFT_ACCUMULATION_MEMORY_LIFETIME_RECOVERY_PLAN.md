@@ -1,8 +1,8 @@
 # AXIS Pi0.5 Dense Full-FT 梯度累积内存生命周期修复计划
 
 > 制定日期：2026-09-01（Asia/Tokyo）
-> 审核输入：root `c353ff0`，nested OpenPI `81d8220`
-> 当前状态：`dense_fullft_accumulation_memory_lifetime_remediation_ready`
+> 审核输入：root `1ac116f`，nested OpenPI `e31c2bf`
+> 当前状态：`dense_fullft_accumulation_lifetime_remediation_failed`
 > 唯一目标：保持训练数学配方不变，消除 host gradient accumulation 与审计代码对上一 microbatch 完整梯度树的非必要保留，在本地 4×V100 上完成 1-step 与最多 10-step 数值预飞行。
 
 ## 0. 审核结论与问题锁
@@ -103,3 +103,9 @@ dense_fullft_accumulation_10step_passed_pending_review
 ```
 
 禁止自动进入官方 GPU、100-step、C20、长训或提交。
+
+## 6. 本轮执行停止点
+
+M0 标签纠偏、M1 CPU 生命周期测试和完整 CPU 回归已通过；完整回归为 `137 passed, 7 skipped, 23 warnings`。M2 从 immutable step-0 fresh restore 启动，恢复 sentinel、FP32/dense/EMA/global batch 64 合同和四卡空闲门禁均通过，但在 `0.95` BFC pool 下 microbatch index `1` 的第二份梯度归并申请 `72 MiB` 时 OOM。已完成的 compute index 为 `[0, 1]`，已完成的 `temporaries_released` 仅为 `[0]`，optimizer update 为 `0`，step1 checkpoint 未生成；因此 memory plateau 未通过，M3 未启动。
+
+证据：`data/reports/axis_libero_30k/dense_fullft_accumulation_memory_lifetime_recovery/m2_step1.json` 与同名 allocator/NVML 原始记录。source step-0 tree hash `9380fd770ced87368c82a05a4dbb8c00fd0f0e82c4e569879aacd127a01038f5` 未改变，四卡退出后均回到约 `5 MiB`，GPU0 无外部进程。该状态等待下一次审核；不得据此启动 Blackwell 或扩大训练范围。

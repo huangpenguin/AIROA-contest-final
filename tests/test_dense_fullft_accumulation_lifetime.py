@@ -157,6 +157,6 @@ def test_m0_summary_is_fail_closed_and_machine_handoff_matches_execution():
     execution = handoff["dense_fullft_allocator_fraction_recovery_execution"]
     assert handoff["next_plan"].endswith("AXIS_PI05_DENSE_FULLFT_ACCUMULATION_MEMORY_LIFETIME_RECOVERY_PLAN.md")
     assert handoff["next_phase_only"] == "accumulation_memory_lifetime_M0_to_M3_max_10_steps"
-    assert handoff["tests"]["passed"] == 132
+    assert handoff["tests"]["passed"] == 137
     assert execution["a2_fraction_090"]["optimizer_updates"] == 0
     assert execution["a3_fraction_095"]["optimizer_updates"] == 0

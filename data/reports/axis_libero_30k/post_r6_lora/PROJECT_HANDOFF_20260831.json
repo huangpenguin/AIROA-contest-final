@@ -1,12 +1,14 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-01",
-  "status": "dense_fullft_accumulation_memory_lifetime_remediation_ready",
+  "status": "dense_fullft_accumulation_lifetime_remediation_failed",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
   "latest_audited_execution_commit": "c353ff0",
   "latest_audit_input_commit": "c353ff0",
+  "latest_execution_root_commit": "1ac116f",
+  "latest_execution_nested_openpi_commit": "e31c2bf",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
   "branch_has_upstream": false,
@@ -216,7 +218,7 @@
   },
   "tests": {
     "command": ".venv_axis_pi05/bin/pytest -q tests",
-    "passed": 132,
+    "passed": 137,
     "skipped": 7,
     "warnings": 21,
     "pynvml_is_collection_blocker": false
@@ -1086,6 +1088,64 @@
     "max_authorized_optimizer_steps": 10,
     "official_gpu_authorized": false,
     "c20_or_100_1k_long_training_authorized": false
+  },
+  "dense_fullft_accumulation_lifetime_execution": {
+    "status": "dense_fullft_accumulation_lifetime_remediation_failed",
+    "review": "docs/reviews/axis_pi05/DENSE_FULLFT_ACCUMULATION_MEMORY_LIFETIME_EXECUTION_20260901.md",
+    "plan": "docs/AXIS_PI05_DENSE_FULLFT_ACCUMULATION_MEMORY_LIFETIME_RECOVERY_PLAN.md",
+    "input_root_commit": "1ac116f",
+    "input_nested_openpi_commit": "e31c2bf",
+    "tests": {
+      "command": ".venv_axis_pi05/bin/pytest -q tests",
+      "passed": 137,
+      "skipped": 7,
+      "warnings": 23
+    },
+    "m0": {
+      "status": "dense_fullft_accumulation_memory_lifetime_m0_corrected",
+      "raw_logs_and_checkpoints_modified": false
+    },
+    "m1": {
+      "status": "cpu_lifetime_tests_passed",
+      "recipe_changed_to_fit": false,
+      "contracts_unchanged": [
+        "float32",
+        "dense_full_model",
+        "AdamW",
+        "EMA_0.999",
+        "microbatch_per_device_1",
+        "accumulation_16",
+        "effective_global_batch_64",
+        "ordered_gradient_sum"
+      ]
+    },
+    "m2": {
+      "status": "dense_fullft_accumulation_lifetime_remediation_failed",
+      "fraction": "0.95",
+      "microbatch_compute_complete_indexes": [0, 1],
+      "accumulation_complete_indexes": [0],
+      "temporaries_released_indexes": [0],
+      "first_uncompleted_microbatch_index": 1,
+      "failure_classification": "allocator_bfc_oom_during_compute",
+      "failure_location": "_add_gradients(grad_sum, grads)",
+      "failure_allocation_bytes": 75497472,
+      "optimizer_updates": 0,
+      "step1_checkpoint_generated": false,
+      "step0_restore_passed": true,
+      "source_step0_unchanged": true,
+      "gpu0_external_process_touched": false,
+      "gpu_released_after_exit": true,
+      "report": "data/reports/axis_libero_30k/dense_fullft_accumulation_memory_lifetime_recovery/m2_step1.json"
+    },
+    "m3": {
+      "status": "not_started_requires_m2_pass"
+    },
+    "official_gpu_started": false,
+    "blackwell_started": false,
+    "c20_started": false,
+    "long_training_started": false,
+    "fast_zip_upload_submission": false,
+    "next_phase_only": "manual_review_before_any_new_memory_lifetime_remediation_or_official_gpu"
   },
   "track2_manual_submission": {
     "score": 0.33,

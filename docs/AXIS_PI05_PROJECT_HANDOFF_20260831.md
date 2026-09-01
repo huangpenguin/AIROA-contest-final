@@ -2,7 +2,7 @@
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
 > 最新已审核执行 HEAD：`c353ff0`
-> accumulation lifetime execution HEAD：`1ac116f`
+> accumulation lifetime execution HEAD：`17acaf3`（执行输入代码提交：`1ac116f`）
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`e31c2bf`（accumulation lifetime implementation）
 > 当前总状态：`dense_fullft_accumulation_lifetime_remediation_failed`

@@ -7,7 +7,7 @@
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
   "latest_audited_execution_commit": "c353ff0",
   "latest_audit_input_commit": "c353ff0",
-  "latest_execution_root_commit": "1ac116f",
+  "latest_execution_root_commit": "17acaf3",
   "latest_execution_nested_openpi_commit": "e31c2bf",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",

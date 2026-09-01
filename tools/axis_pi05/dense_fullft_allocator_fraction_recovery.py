@@ -479,7 +479,14 @@ def _classify_failure(log_path: Path, stats: list[dict[str, Any]], timed_out: bo
 
 
 def _run_train_process(
-    *, fraction: str, run_dir: Path, label: str, steps: int, expected_sentinels: list[dict[str, Any]], timeout_seconds: int
+    *,
+    fraction: str,
+    run_dir: Path,
+    label: str,
+    steps: int,
+    expected_sentinels: list[dict[str, Any]],
+    timeout_seconds: int,
+    extra_env: dict[str, str] | None = None,
 ) -> dict[str, Any]:
     report_path = REPORT_ROOT / f"{label}.json"
     log_path = REPORT_ROOT / f"{label}.log"
@@ -507,6 +514,8 @@ def _run_train_process(
             "AXIS_PI05_RESTORE_VALIDATION_PATH": str(validation_path),
         }
     )
+    if extra_env:
+        env.update(extra_env)
     _validate_fraction_environment(env, fraction)
     before = _gpu_snapshot()
     before_processes = sorted({process["pid"] for gpu in before for process in gpu.get("processes", [])})

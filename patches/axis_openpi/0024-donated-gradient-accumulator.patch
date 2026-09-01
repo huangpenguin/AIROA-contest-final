@@ -1,0 +1,118 @@
+diff --git a/scripts/train.py b/scripts/train.py
+index 57b81dd..a99dce5 100644
+--- a/scripts/train.py
++++ b/scripts/train.py
+@@ -618,12 +618,23 @@ def _compute_microbatch_grad(
+     return loss_sum, grads, components
+
+
+-def _add_gradients(left, right):
++def _add_gradients_impl(left, right):
+     return jax.tree.map(
+         lambda x, y: jnp.asarray(x, dtype=jnp.float32) + jnp.asarray(y, dtype=jnp.float32), left, right
+     )
+
+
++# Keep the exact left-to-right FP32 tree addition, but donate the previous
++# accumulator so XLA may alias each same-shaped output leaf onto its input.
++# The host loop still enforces the ordering and blocks before releasing the
++# current microbatch tree.
++_DONATED_GRADIENT_ADD = jax.jit(_add_gradients_impl, donate_argnums=(0,))
++
++
++def _add_gradients(left, right):
++    return _DONATED_GRADIENT_ADD(left, right)
++
++
+ def _apply_optimizer_update(
+     config: _config.TrainConfig,
+     state: training_utils.TrainState,
+@@ -757,6 +768,7 @@ def train_step_accumulated_host(
+     microbatch_grad_fn,
+     apply_update_fn,
+     audit: dict[str, Any] | None = None,
++    merge_only: bool = False,
+ ) -> tuple[training_utils.TrainState, dict[str, at.Array]]:
+     """Accumulate compiled microbatch gradients without unrolling 32 models.
+
+@@ -767,7 +779,7 @@ def train_step_accumulated_host(
+     """
+     if not microbatches:
+         raise ValueError("gradient accumulation requires at least one microbatch")
+-    if config.effective_global_batch is not None:
++    if config.effective_global_batch is not None and not merge_only:
+         observed = microbatches[0][1].shape[0] * len(microbatches)
+         if config.effective_global_batch != observed:
+             raise ValueError(
+@@ -914,9 +926,14 @@ def train_step_accumulated_host(
+             grad_sum = grads
+             jax.block_until_ready(grad_sum)
+         else:
++            if micro_index == 1:
++                _record_executable_memory_analysis(
++                    _DONATED_GRADIENT_ADD,
++                    "donated_gradient_add",
++                    (grad_sum, grads),
++                )
+             next_grad_sum = _add_gradients(grad_sum, grads)
+             jax.block_until_ready(next_grad_sum)
+-            del grad_sum
+             grad_sum = next_grad_sum
+             del next_grad_sum
+         total_loss_sum = total_loss_sum + loss_sum
+@@ -937,6 +954,21 @@ def train_step_accumulated_host(
+             micro_index=micro_index,
+         )
+     assert grad_sum is not None
++    if merge_only:
++        _record_allocator_stats(
++            "merge_only_complete",
++            optimizer_step_before=int(state.step),
++            microbatch_count=len(microbatches),
++        )
++        del grad_sum
++        return state, {
++            "loss": total_loss_sum / jnp.maximum(total_valid, 1),
++            "loss_sum": total_loss_sum,
++            "valid_action_elements": total_valid,
++            "examples_seen": total_examples,
++            "micro_steps": jnp.asarray(len(microbatches), dtype=jnp.int32),
++            "optimizer_step": state.step,
++        }
+     denominator = jnp.maximum(total_valid, 1).astype(jnp.float32)
+     grads = jax.tree.map(lambda value: value / denominator, grad_sum)
+     jax.block_until_ready(grads)
+@@ -1229,6 +1261,16 @@ def main(config: _config.TrainConfig):
+             donate_argnums=(1,),
+         )
+
++    merge_only_count = int(os.environ.get("AXIS_PI05_FULLFT_MERGE_ONLY", "0"))
++    if merge_only_count and (
++        config.gradient_accumulation_steps <= 1
++        or merge_only_count < 2
++        or merge_only_count > config.gradient_accumulation_steps
++    ):
++        raise ValueError(
++            "AXIS_PI05_FULLFT_MERGE_ONLY must be between 2 and the configured accumulation steps"
++        )
++
+     keep_steps = {
+         int(value.strip()) for value in os.environ.get("OPENPI_KEEP_STEPS", "500,1000,3000").split(",") if value.strip()
+     }
+@@ -1255,7 +1297,8 @@ def main(config: _config.TrainConfig):
+         _record_allocator_stats("optimizer_step_start", loop_step=step, train_state_step=int(train_state.step))
+         microbatches = [batch]
+         microbatch_metadata = [batch_metadata]
+-        for _ in range(config.gradient_accumulation_steps - 1):
++        accumulation_count = merge_only_count or config.gradient_accumulation_steps
++        for _ in range(accumulation_count - 1):
+             next_batch, next_metadata = _split_loaded_batch(next(data_iter))
+             microbatches.append(next_batch)
+             microbatch_metadata.append(next_metadata)
+@@ -1295,5 +1338,6 @@ def main(config: _config.TrainConfig):
+                     papply_optimizer_update,
+                     audit=audit,
++                    merge_only=bool(merge_only_count),
+                 )
+             else:
+                 train_state, info = ptrain_step(train_rng, train_state, tuple(microbatches))

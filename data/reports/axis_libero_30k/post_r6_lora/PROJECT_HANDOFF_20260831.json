@@ -1132,8 +1132,17 @@
       "temporaries_released_indexes": [
         0
       ],
-      "first_uncompleted_microbatch_index": 1,
-      "failure_classification": "allocator_bfc_oom_during_compute",
+      "compute_completed": [
+        0,
+        1
+      ],
+      "accumulation_completed": [
+        0
+      ],
+      "failed_accumulation_index": 1,
+      "first_unattempted_compute_index": 2,
+      "failure_classification": "allocator_bfc_oom_during_gradient_merge",
+      "raw_failure_classification": "allocator_bfc_oom_during_compute",
       "failure_location": "_add_gradients(grad_sum, grads)",
       "failure_allocation_bytes": 75497472,
       "optimizer_updates": 0,

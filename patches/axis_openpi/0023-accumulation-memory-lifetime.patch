@@ -1,0 +1,166 @@
+diff --git a/scripts/train.py b/scripts/train.py
+index b85be30..57b81dd 100644
+--- a/scripts/train.py
++++ b/scripts/train.py
+@@ -89,6 +89,15 @@ def _first_nonfinite_path(tree: Any) -> str | None:
+     return None
+
+
++def _first_nonfinite_microbatch_name(loss_sum: Any, components: dict[str, Any], grads: Any) -> str | None:
++    """Check one microbatch without retaining a flattened gradient dict."""
++    for name, value in (("loss_sum", loss_sum), *components.items()):
++        if hasattr(value, "dtype") and not np.all(np.isfinite(np.asarray(value))):
++            return name
++    path = _first_nonfinite_path(grads)
++    return f"grad:{path}" if path is not None else None
++
++
+ def _jsonable(value: Any) -> Any:
+     if isinstance(value, dict):
+         return {str(key): _jsonable(item) for key, item in value.items()}
+@@ -858,6 +867,11 @@ def train_step_accumulated_host(
+             optimizer_step_before=int(state.step),
+             micro_index=micro_index,
+         )
++        _record_allocator_stats(
++            "microbatch_compute_complete",
++            optimizer_step_before=int(state.step),
++            micro_index=micro_index,
++        )
+         if micro_index == 0:
+             _record_executable_memory_analysis(
+                 microbatch_grad_fn,
+@@ -869,66 +883,80 @@ def train_step_accumulated_host(
+             audit_steps <= 0 or int(state.step) < audit_steps
+         )
+         if audit_micro:
+-            values = {"loss_sum": loss_sum, **components}
+-            values.update(
+-                {
+-                    f"grad:{jax.tree_util.keystr(path)}": value
+-                    for path, value in jax.tree_util.tree_leaves_with_path(grads)
+-                }
+-            )
+-            for name, value in values.items():
+-                if hasattr(value, "dtype") and not np.all(np.isfinite(np.asarray(value))):
+-                    _save_audit_failure(
+-                        audit,
+-                        microbatches=microbatches[: micro_index + 1],
+-                        metadata_rows=metadata_rows[: micro_index + 1],
+-                        rng_fixtures=rng_fixtures,
+-                        failure={
+-                            "schema_version": 1,
+-                            "optimizer_step_before": int(state.step),
+-                            "micro_index": micro_index,
+-                            "name": name,
+-                            "first_nonfinite_path": (
+-                                _first_nonfinite_path(grads) if name.startswith("grad:") else None
+-                            ),
+-                            "loss_stats": _nan_replay.array_fingerprint(loss_sum),
+-                            "component_stats": {
+-                                key: _nan_replay.array_fingerprint(value)
+-                                for key, value in components.items()
+-                            },
+-                            "gradient_stats": _nan_replay.tree_fingerprints(grads),
+-                            "rng": rng_record,
++            bad_name = _first_nonfinite_microbatch_name(loss_sum, components, grads)
++            if bad_name is not None:
++                _save_audit_failure(
++                    audit,
++                    microbatches=microbatches[: micro_index + 1],
++                    metadata_rows=metadata_rows[: micro_index + 1],
++                    rng_fixtures=rng_fixtures,
++                    failure={
++                        "schema_version": 1,
++                        "optimizer_step_before": int(state.step),
++                        "micro_index": micro_index,
++                        "name": bad_name,
++                        "first_nonfinite_path": (
++                            _first_nonfinite_path(grads) if bad_name.startswith("grad:") else None
++                        ),
++                        "loss_stats": _nan_replay.array_fingerprint(loss_sum),
++                        "component_stats": {
++                            key: _nan_replay.array_fingerprint(value)
++                            for key, value in components.items()
+                         },
+-                    )
+-                    raise FloatingPointError(
+-                        f"non-finite microbatch value at micro_index={micro_index}; name={name}"
+-                    )
+-        grad_sum = grads if grad_sum is None else _add_gradients(grad_sum, grads)
++                        "gradient_stats": _nan_replay.tree_fingerprints(grads),
++                        "rng": rng_record,
++                    },
++                )
++                raise FloatingPointError(
++                    f"non-finite microbatch value at micro_index={micro_index}; name={bad_name}"
++                )
++        if grad_sum is None:
++            grad_sum = grads
++            jax.block_until_ready(grad_sum)
++        else:
++            next_grad_sum = _add_gradients(grad_sum, grads)
++            jax.block_until_ready(next_grad_sum)
++            del grad_sum
++            grad_sum = next_grad_sum
++            del next_grad_sum
+         total_loss_sum = total_loss_sum + loss_sum
+         total_valid = total_valid + components["valid_action_elements"]
+         total_examples = total_examples + batch[1].shape[0]
+         total_seven = total_seven + components["seven_d_loss_mass"]
+         total_padded25 = total_padded25 + components["padded25_loss_mass"]
+         total_temporal_pad = total_temporal_pad + components["temporal_padding_loss_mass"]
++        del grads, loss_sum, components
++        _record_allocator_stats(
++            "accumulation_complete",
++            optimizer_step_before=int(state.step),
++            micro_index=micro_index,
++        )
++        _record_allocator_stats(
++            "temporaries_released",
++            optimizer_step_before=int(state.step),
++            micro_index=micro_index,
++        )
+     assert grad_sum is not None
+     denominator = jnp.maximum(total_valid, 1).astype(jnp.float32)
+     grads = jax.tree.map(lambda value: value / denominator, grad_sum)
++    jax.block_until_ready(grads)
++    del grad_sum
+     if audit:
+-        aggregate_values = {
+-            "total_loss_sum": total_loss_sum,
+-            "total_valid": total_valid,
+-            "denominator": denominator,
+-            "gradient_sum": grad_sum,
+-            "gradient_mean": grads,
+-        }
+         aggregate_bad = next(
+             (
+                 name
+-                for name, value in aggregate_values.items()
++                for name, value in (
++                    ("total_loss_sum", total_loss_sum),
++                    ("total_valid", total_valid),
++                    ("denominator", denominator),
++                )
+                 if hasattr(value, "dtype") and not np.all(np.isfinite(np.asarray(value)))
+             ),
+             None,
+         )
++        if aggregate_bad is None:
++            path = _first_nonfinite_path(grads)
++            aggregate_bad = f"gradient_mean:{path}" if path is not None else None
+         if aggregate_bad is not None:
+             _save_audit_failure(
+                 audit,
+@@ -941,8 +969,8 @@ def train_step_accumulated_host(
+                     "optimizer_step_before": int(state.step),
+                     "micro_index": len(microbatches),
+                     "name": aggregate_bad,
+                     "first_nonfinite_path": (
+-                        _first_nonfinite_path(grad_sum)
+-                        if aggregate_bad in {"gradient_sum", "gradient_mean"}
++                        _first_nonfinite_path(grads)
++                        if aggregate_bad.startswith("gradient_mean:")
+                         else None
+                     ),

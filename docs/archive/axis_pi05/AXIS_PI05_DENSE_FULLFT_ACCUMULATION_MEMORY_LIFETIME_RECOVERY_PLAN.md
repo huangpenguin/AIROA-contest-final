@@ -1,8 +1,8 @@
-# AXIS Pi0.5 Dense Full-FT 梯度累积内存生命周期修复计划
+# AXIS Pi0.5 Dense Full-FT 梯度累积内存生命周期修复计划（已归档）
 
 > 制定日期：2026-09-01（Asia/Tokyo）
 > 审核输入：root `1ac116f`，nested OpenPI `e31c2bf`
-> 当前状态：`dense_fullft_accumulation_lifetime_remediation_failed`
+> 归档状态：M0/M1完成；M2在microbatch index1 compute完成后的普通`_add_gradients`新输出分配阶段OOM；M3未启动。后续由donated accumulator计划接管。
 > 唯一目标：保持训练数学配方不变，消除 host gradient accumulation 与审计代码对上一 microbatch 完整梯度树的非必要保留，在本地 4×V100 上完成 1-step 与最多 10-step 数值预飞行。
 
 ## 0. 审核结论与问题锁

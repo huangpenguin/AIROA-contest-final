@@ -1,12 +1,12 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新已审核执行 HEAD：`c353ff0`
-> accumulation lifetime execution HEAD：`17acaf3`（执行输入代码提交：`1ac116f`）
+> 最新已审核执行 HEAD：`ecff24f`
+> accumulation lifetime execution HEAD：`ecff24f`（执行输入代码提交：`1ac116f`）
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`e31c2bf`（accumulation lifetime implementation）
-> 当前总状态：`dense_fullft_accumulation_lifetime_remediation_failed`
-> 唯一活动计划：`docs/AXIS_PI05_DENSE_FULLFT_ACCUMULATION_MEMORY_LIFETIME_RECOVERY_PLAN.md`
+> 当前总状态：`dense_fullft_donated_accumulator_remediation_ready`
+> 唯一活动计划：`docs/AXIS_PI05_DENSE_FULLFT_DONATED_ACCUMULATOR_RECOVERY_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -14,7 +14,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式 Track1=`0.47`、Track2=`0.33`。Dense full-FT direct-sharded init已通过，0.90/0.95 canary均无optimizer update；但raw trace显示两次都已完成microbatch index0/1，live bytes每份增长约6.48GB/card，当前首要问题是host accumulation和审计临时对象保留完整gradient tree。审核不批准直接转向Blackwell，只授权保持训练数学不变的memory-lifetime step1/step10 remediation。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式 Track1=`0.47`、Track2=`0.33`。Dense full-FT direct-sharded init和两份真实microbatch compute均可运行；M2失败精确位于index1普通`_add_gradients`创建新output，当前实现没有donated alias。审核不批准Blackwell或改配方，只授权donated accumulator的两份merge canary、step1和最多step10。
 
 ## 2. 数据与复现基础
 
@@ -250,13 +250,13 @@ upstream             当前 branch 未设置 upstream
 ## 10. 新 section 的接手顺序
 
 1. 阅读本文件与 `docs/AXIS_PI05_PLAN_INDEX.md`。
-2. 阅读并只执行 `docs/AXIS_PI05_DENSE_FULLFT_ACCUMULATION_MEMORY_LIFETIME_RECOVERY_PLAN.md`。
+2. 阅读并只执行 `docs/AXIS_PI05_DENSE_FULLFT_DONATED_ACCUMULATOR_RECOVERY_PLAN.md`。
 3. 将Track1=`0.47`、Track2=`0.33`及ZIP `95415a…c5f5a`锁为当前官方baseline；Track2包身份在无上传回执/hash时保持conditional provenance。
-4. M0先修正旧summary/handoff的阶段标签和stale顶层字段；raw logs/checkpoints immutable。
-5. M1只修host accumulation与审计临时gradient引用生命周期，不改FP32/dense/EMA/global64、顺序累加、RNG或data/norm。
-6. M2/M3最多在本地4×V100验证step1/step10和per-micro memory plateau；不得启动官方GPU、C20、100/1K、长训、FAST/ZIP或提交。
+4. D0先闭合summary/handoff的stale字段，并区分compute complete、merge failure和下一未尝试compute；raw logs/checkpoints immutable。
+5. D1只把严格左结合FP32 tree add改为donated/aliased旧accumulator，不改EMA/global64、RNG、loss或data/norm。
+6. D2先做两份真实microbatch merge-only canary；通过后D3/D4最多本地step1/step10。不得启动官方GPU、Blackwell、C20、100/1K、长训、FAST/ZIP或提交。
 
-当前路径是：R6 FAST ZIP Track1=`0.47`/Track2=`0.33`（冻结）→ sharded-init已通过 → accumulation memory-lifetime本地step1/10 → 人工审核显存/restore/吞吐 → 100-step+C20（20Hz主协议）→ 标准LIBERO同run里程碑长训 → paired选模 → 复用R6 FAST部署链 → 目标正式分数`>0.47`。
+当前路径是：R6 FAST ZIP Track1=`0.47`/Track2=`0.33`（冻结）→ sharded-init已通过 → donated merge D2 → 本地step1/10 → 人工审核显存/restore/吞吐 → 100-step+C20（20Hz主协议）→ 标准LIBERO同run里程碑长训 → paired选模 → 复用R6 FAST部署链 → 目标正式分数`>0.47`。
 
 ## 19. Dense full-FT allocator fraction recovery 执行结果
 
@@ -362,3 +362,13 @@ root `c353ff0`、nested OpenPI `81d8220` 的0.90/0.95执行边界可信：step0 
 CPU 全量回归为 `137 passed, 7 skipped, 23 warnings`。M2 的 immutable step-0 copy 为 `24,879,588,870` bytes，atomic rename 与 source hash 通过；restore sentinel、scheduler/optimizer/EMA presence 与 finite、四卡自然空闲和 GPU0 外部 PID 门禁均通过。训练使用 `XLA_CLIENT_MEM_FRACTION=0.95`、preallocate=true，实际在 microbatch index `1` 的 `_add_gradients(grad_sum, grads)` 申请 `72 MiB` 时 BFC OOM；compute indexes 为 `[0,1]`，`temporaries_released` 仅 `[0]`，optimizer update=`0`，没有 step1 checkpoint 或 metric。
 
 最终执行状态为 `dense_fullft_accumulation_lifetime_remediation_failed`，不是模型能力失败结论。M3 未启动；四卡退出后均约 `5 MiB`，source step-0 hash 保持 `9380fd770ced87368c82a05a4dbb8c00fd0f0e82c4e569879aacd127a01038f5`。完整小型结果见 `data/reports/axis_libero_30k/dense_fullft_accumulation_memory_lifetime_recovery/summary.json` 与 `m2_step1.json`，执行记录见 `docs/reviews/axis_pi05/DENSE_FULLFT_ACCUMULATION_MEMORY_LIFETIME_EXECUTION_20260901.md`。当前停止等待审核，不自动进入下一修复或比赛资源。
+
+## 22. M2 Gradient Merge 独立审核
+
+独立审核确认M2 hard stop正确，但失败不能归因于index1 forward/backward：raw trace的`microbatch_compute_complete`为`[0,1]`，`accumulation_complete/temporaries_released`只有`[0]`。index1 compute完成时每卡约`26.42GB` live，随后普通逐叶`_add_gradients`在创建新output时申请`72MiB`失败。
+
+nested OpenPI `e31c2bf`已移除审计`values`长期引用并显式block/delete，但`_add_gradients`仍是非JIT、非donated的`x+y`。它必须同时保留旧accumulator、current grads和新output；因此当前结果只证明普通merge不适合0.95 pool，不证明稳定donated accumulation或单microbatch需要更大GPU。
+
+审核状态为`remediation_required`。旧memory-lifetime计划已归档；当前唯一活动计划为`docs/AXIS_PI05_DENSE_FULLFT_DONATED_ACCUMULATOR_RECOVERY_PLAN.md`。D2必须先证明两份真实microbatch donated merge后live bytes回到baseline；失败即停止，不批准Blackwell、降精度/降batch或继续完整step。
+
+审核记录：`docs/reviews/axis_pi05/DENSE_FULLFT_M2_DONATION_AUDIT_20260902.md`。

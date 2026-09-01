@@ -1,18 +1,18 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-01",
-  "status": "dense_fullft_accumulation_lifetime_remediation_failed",
+  "status": "dense_fullft_donated_accumulator_remediation_ready",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
-  "latest_audited_execution_commit": "c353ff0",
-  "latest_audit_input_commit": "c353ff0",
+  "latest_audited_execution_commit": "ecff24f",
+  "latest_audit_input_commit": "ecff24f",
   "latest_execution_root_commit": "17acaf3",
   "latest_execution_nested_openpi_commit": "e31c2bf",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
   "branch_has_upstream": false,
-  "nested_openpi_commit": "81d82200cb9b31916eaacb05184c77d1bdce9f83",
+  "nested_openpi_commit": "e31c2bf",
   "dataset": {
     "path": "data/raw/hf/physical-intelligence/libero",
     "source_fps": 10,
@@ -253,8 +253,8 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_DENSE_FULLFT_ACCUMULATION_MEMORY_LIFETIME_RECOVERY_PLAN.md",
-  "next_phase_only": "accumulation_memory_lifetime_M0_to_M3_max_10_steps",
+  "next_plan": "docs/AXIS_PI05_DENSE_FULLFT_DONATED_ACCUMULATOR_RECOVERY_PLAN.md",
+  "next_phase_only": "donated_accumulator_D0_to_D4_max_10_steps",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -1122,9 +1122,16 @@
     "m2": {
       "status": "dense_fullft_accumulation_lifetime_remediation_failed",
       "fraction": "0.95",
-      "microbatch_compute_complete_indexes": [0, 1],
-      "accumulation_complete_indexes": [0],
-      "temporaries_released_indexes": [0],
+      "microbatch_compute_complete_indexes": [
+        0,
+        1
+      ],
+      "accumulation_complete_indexes": [
+        0
+      ],
+      "temporaries_released_indexes": [
+        0
+      ],
       "first_uncompleted_microbatch_index": 1,
       "failure_classification": "allocator_bfc_oom_during_compute",
       "failure_location": "_add_gradients(grad_sum, grads)",
@@ -1135,7 +1142,23 @@
       "source_step0_unchanged": true,
       "gpu0_external_process_touched": false,
       "gpu_released_after_exit": true,
-      "report": "data/reports/axis_libero_30k/dense_fullft_accumulation_memory_lifetime_recovery/m2_step1.json"
+      "report": "data/reports/axis_libero_30k/dense_fullft_accumulation_memory_lifetime_recovery/m2_step1.json",
+      "audit_correction": {
+        "compute_completed_indices": [
+          0,
+          1
+        ],
+        "accumulation_completed_indices": [
+          0
+        ],
+        "temporaries_released_indices": [
+          0
+        ],
+        "failed_accumulation_index": 1,
+        "first_unattempted_compute_index": 2,
+        "corrected_failure_classification": "allocator_bfc_oom_during_gradient_merge",
+        "raw_failure_classification_preserved": "allocator_bfc_oom_during_compute"
+      }
     },
     "m3": {
       "status": "not_started_requires_m2_pass"
@@ -1174,5 +1197,34 @@
     "competition_local_environment_default_control_freq": 20,
     "historical_r6_c5_forced_control_freq": 10,
     "future_eval_primary_control_freq": 20
+  },
+  "dense_fullft_m2_donation_audit": {
+    "status": "remediation_required",
+    "review": "docs/reviews/axis_pi05/DENSE_FULLFT_M2_DONATION_AUDIT_20260902.md",
+    "next_plan": "docs/AXIS_PI05_DENSE_FULLFT_DONATED_ACCUMULATOR_RECOVERY_PLAN.md",
+    "audit_input_root_commit": "ecff24f",
+    "audit_input_nested_openpi_commit": "e31c2bf",
+    "finding": {
+      "compute_completed_indices": [
+        0,
+        1
+      ],
+      "accumulation_completed_indices": [
+        0
+      ],
+      "failed_accumulation_index": 1,
+      "first_unattempted_compute_index": 2,
+      "failure_location": "_add_gradients(grad_sum, grads)",
+      "failure_allocation_bytes": 75497472,
+      "live_bytes_per_card_before_failed_merge_approx": 26420844032,
+      "current_add_is_jitted": false,
+      "current_add_donates_accumulator": false
+    },
+    "decision": "require_donated_aliased_tree_add_before_resource_escalation",
+    "max_authorized_optimizer_steps": 10,
+    "two_microbatch_merge_canary_required_before_full_step": true,
+    "official_gpu_authorized": false,
+    "blackwell_authorized": false,
+    "c20_or_100_1k_long_training_authorized": false
   }
 }

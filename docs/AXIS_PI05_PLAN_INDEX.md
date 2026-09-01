@@ -1,22 +1,21 @@
 # AXIS Pi0.5 计划索引与审核生命周期
 
-> 更新日期：2026-09-01（Asia/Tokyo）
-> 当前唯一活动计划：`docs/AXIS_PI05_DENSE_FULLFT_ACCUMULATION_MEMORY_LIFETIME_RECOVERY_PLAN.md`
-> 当前状态：`dense_fullft_accumulation_lifetime_remediation_failed`
-> 最新执行记录：`docs/reviews/axis_pi05/DENSE_FULLFT_ACCUMULATION_MEMORY_LIFETIME_EXECUTION_20260901.md`
+> 更新日期：2026-09-02（Asia/Tokyo）
+> 当前唯一活动计划：`docs/AXIS_PI05_DENSE_FULLFT_DONATED_ACCUMULATOR_RECOVERY_PLAN.md`
+> 当前状态：`dense_fullft_donated_accumulator_remediation_ready`
+> 最新审核：`docs/reviews/axis_pi05/DENSE_FULLFT_M2_DONATION_AUDIT_20260902.md`
 
 ## 1. 唯一活动计划
 
-- `AXIS_PI05_DENSE_FULLFT_ACCUMULATION_MEMORY_LIFETIME_RECOVERY_PLAN.md`
-  - `0.90`/`0.95` raw traces 均完成 microbatch index `0`、`1`，index `2` 才未完成；旧“首个 microbatch OOM”标签已判定不准确；
-  - `0.95` 下 live bytes 每完成一份约增加 `6.48GB/card`，与一份完整 FP32 gradient tree 相符；
-  - 当前最小修复对象是 host accumulation 的 `grads` 与审计 `values` 引用生命周期/observer effect，保持 FP32、dense、EMA、global64 和顺序累加数学不变；
-  - 只授权本地4×V100的 memory-plateau step1/step10；不授权官方GPU、C20、100/1K、长训或提交。
-  - M0/M1 与 CPU 回归通过；M2 在 microbatch index `1` 的第二份梯度归并申请 `72 MiB` 时 OOM，optimizer update 为 `0`，M3 未启动，当前等待审核。
+- `AXIS_PI05_DENSE_FULLFT_DONATED_ACCUMULATOR_RECOVERY_PLAN.md`
+  - M2真实compute index `0/1`均完成，失败发生在index1的普通`_add_gradients`新output分配；
+  - 当前普通逐叶`x+y`没有JIT donation，必须同时保留旧accumulator、current grads与新output；这是`26.42GB` live后仍差`72MiB`的首要解释；
+  - 只授权严格左结合FP32 donated tree add；先做两份真实microbatch merge-only canary，通过才允许完整16份step1和最多step10；
+  - 不授权降精度/降batch、官方GPU、Blackwell、C20、100/1K、长训或提交。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 
-正式 Track1 `0.47` 与 Track2 `0.33` 已证明R6 FAST在官方20Hz闭环有效。下一问题是如何用AXIS原团队式标准LIBERO dense full-FT提高策略能力。replicated init与75% allocator误判已排除；当前必须先让16份顺序梯度累积的显存保持平台化，不能把审计/局部变量持有的完整gradient tree误判为模型真实最小容量。
+正式 Track1 `0.47` 与 Track2 `0.33` 已证明R6 FAST在官方20Hz闭环有效。dense full-FT当前不是模型单份计算装不下，而是gradient merge输出尚未复用旧accumulator；必须先取得donation alias与memory plateau证据，再讨论更大GPU。
 
 ## 2. 已归档的 R6 执行链
 
@@ -38,14 +37,15 @@
 14. `AXIS_PI05_POST_SCORE_DENSE_FULLFT_PREFLIGHT_PLAN.md`：F0/F1完成；2卡和4卡均在`init_train_state` OOM，未进入optimizer update；原计划已按hard gate结束并转入sharded-init修复。
 15. `AXIS_PI05_DENSE_FULLFT_SHARDED_INIT_RECOVERY_PLAN.md`：R3 direct-sharded init通过；R4在默认75% JAX allocator pool内的首轮累积计算OOM，未完成update/10-step；转入allocator-fraction最小复测。
 16. `AXIS_PI05_DENSE_FULLFT_ALLOCATOR_FRACTION_RECOVERY_PLAN.md`：完成0.90/0.95 canary且均无optimizer update；后续审核发现两次均已完成microbatch 0/1，失败与完整gradient引用生命周期强相关，转入最小accumulation remediation。
+17. `AXIS_PI05_DENSE_FULLFT_ACCUMULATION_MEMORY_LIFETIME_RECOVERY_PLAN.md`：M0/M1完成；M2在index1 compute完成后的普通gradient merge申请72MiB失败，未完成update/M3；转入donated accumulator最小修复。
 
 归档不表示旧计划所有尾部阶段都完成；只表示该文件不再是活动授权入口。旧 failure、阈值、hash 和未执行阶段必须继续保留。
 
-当前只执行新的 memory-lifetime remediation；不得从归档的 allocator 计划直接转向 Blackwell。
+当前只执行donated accumulator D0–D4；不得从任何归档OOM计划直接转向Blackwell。
 
 ## 3. 保留但非活动的研究线
 
-- `AXIS_PI05_STANDARD_LIBERO_30K_RESEARCH_PLAN.md`：长期标准LIBERO 30K/full-FT研究的事实与路线来源；当前执行授权由memory-lifetime计划收窄到最多10 steps。
+- `AXIS_PI05_STANDARD_LIBERO_30K_RESEARCH_PLAN.md`：长期标准LIBERO 30K/full-FT研究的事实与路线来源；当前执行授权由donated accumulator计划收窄到最多10 steps。
 - `TRACK3_REVERSE_DATA_SYNTHESIS_PLAN.md`：Track 3 逆向任务研究，当前不授权生成或训练。
 - `AXIS_PI05_TWO_GPU_LORA_TODAY_PLAN.md`：历史 provenance 路径被配置/工具引用，因此保留原位置；不再是活动计划。
 - 其余早期 post-training、低分恢复、urgent FAST、比赛 GPU 计划均不能覆盖本索引的当前活动计划。

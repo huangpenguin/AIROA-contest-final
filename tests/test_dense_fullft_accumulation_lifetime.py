@@ -139,7 +139,7 @@ def test_memory_plateau_gate_requires_all_microbatch_boundaries():
     assert recovery._plateau_for_rows(missing, expected_count=16)["passed"] is False
 
 
-def test_m0_summary_is_fail_closed_and_machine_handoff_matches_execution():
+def test_m0_summary_is_fail_closed_and_machine_handoff_advances_without_losing_execution():
     summary_path = ROOT / "data/reports/axis_libero_30k/dense_fullft_allocator_fraction_recovery/summary.json"
     summary = __import__("json").loads(summary_path.read_text(encoding="utf-8"))
     for key in ("a2_fraction_090", "a3_fraction_095"):
@@ -155,8 +155,14 @@ def test_m0_summary_is_fail_closed_and_machine_handoff_matches_execution():
     handoff_path = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
     handoff = __import__("json").loads(handoff_path.read_text(encoding="utf-8"))
     execution = handoff["dense_fullft_allocator_fraction_recovery_execution"]
-    assert handoff["next_plan"].endswith("AXIS_PI05_DENSE_FULLFT_ACCUMULATION_MEMORY_LIFETIME_RECOVERY_PLAN.md")
-    assert handoff["next_phase_only"] == "accumulation_memory_lifetime_M0_to_M3_max_10_steps"
+    assert handoff["next_plan"].endswith("AXIS_PI05_DENSE_FULLFT_DONATED_ACCUMULATOR_RECOVERY_PLAN.md")
+    assert handoff["next_phase_only"] == "donated_accumulator_D0_to_D4_max_10_steps"
     assert handoff["tests"]["passed"] == 137
     assert execution["a2_fraction_090"]["optimizer_updates"] == 0
     assert execution["a3_fraction_095"]["optimizer_updates"] == 0
+    audit = handoff["dense_fullft_m2_donation_audit"]
+    assert audit["status"] == "remediation_required"
+    assert audit["finding"]["compute_completed_indices"] == [0, 1]
+    assert audit["finding"]["failed_accumulation_index"] == 1
+    assert audit["finding"]["first_unattempted_compute_index"] == 2
+    assert audit["blackwell_authorized"] is False

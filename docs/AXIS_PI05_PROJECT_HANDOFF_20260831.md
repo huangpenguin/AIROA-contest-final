@@ -1,12 +1,12 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新已审核执行 HEAD：`6239704752dc2966d23b0f6c9d49744efdb152ef`
-> allocator recovery execution HEAD：`ff382e7f6f959c900569978349bd3b5eaf015bea`
+> 最新已审核执行 HEAD：`c353ff0`
+> allocator recovery execution HEAD：`c353ff0`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
-> nested OpenPI：`92604d6d07d5bbf636827ee903f758538c8ba015`
-> 当前总状态：`dense_fullft_local_95pct_pool_true_capacity_oom_pending_official_gpu_review`
-> 唯一活动计划：`docs/AXIS_PI05_DENSE_FULLFT_ALLOCATOR_FRACTION_RECOVERY_PLAN.md`
+> nested OpenPI：`81d82200cb9b31916eaacb05184c77d1bdce9f83`
+> 当前总状态：`dense_fullft_accumulation_memory_lifetime_remediation_ready`
+> 唯一活动计划：`docs/AXIS_PI05_DENSE_FULLFT_ACCUMULATION_MEMORY_LIFETIME_RECOVERY_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -14,7 +14,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO10Hz、R6 LoRA500-step、folded PyTorch与FAST-only Track1 ZIP均已完成；用户报告其正式Track1得分为`0.47`。Axis-init dense full-FT 的 direct-sharded init 已通过；allocator recovery 在保持 FP32/dense/EMA/global64 不变的前提下完成了 `0.90` 与条件授权的唯一 `0.95` 复测，两次均在真实首个 microbatch 计算阶段 OOM，均未完成 optimizer update。当前状态等待人工审核是否转向 Blackwell；不自动启动官方 GPU，也不执行 A4/长程训练。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式 Track1=`0.47`、Track2=`0.33`。Dense full-FT direct-sharded init已通过，0.90/0.95 canary均无optimizer update；但raw trace显示两次都已完成microbatch index0/1，live bytes每份增长约6.48GB/card，当前首要问题是host accumulation和审计临时对象保留完整gradient tree。审核不批准直接转向Blackwell，只授权保持训练数学不变的memory-lifetime step1/step10 remediation。
 
 ## 2. 数据与复现基础
 
@@ -38,7 +38,7 @@ meta/info.json sha256           77c0da93c67960bac803a8ea25dabf380d752c26c1d91c54
 - `configs/axis_pi05/standard_libero_30k.yaml`
 - `configs/axis_pi05/libero_plus_track3_20hz.yaml`
 
-10 Hz canonical reproduction 与比赛 20 Hz adaptation 是两条独立线。20 Hz 分支必须从完成的 checkpoint 分叉、使用真实 20 Hz 数据并重新计算 norm；禁止插帧冒充 20 Hz。
+`physical-intelligence/libero` metadata为10 FPS；IPEC标准20 FPS转换版的同一episode并非两倍帧：episode 0同为214帧，8D state与前6维action exact，timestamp从0.1改0.05秒，gripper从`{-1,+1}`改为`{0,1}`。训练loader按frame index取action chunk且不输入timestamp。比赛环境默认control_freq=20，历史R6 C5强制10只能作对照；正式Track1/2分数是20Hz闭环证据。LIBERO-plus仍是独立20Hz适配数据，混合前必须统一gripper并重算norm。
 
 ## 3. 训练与 R6 checkpoint
 
@@ -236,7 +236,7 @@ upstream             当前 branch 未设置 upstream
 
 ## 8. 当前仍没有什么
 
-- 没有完整官方日志、submission ID 或 episode 级 hidden 结果；用户已报告 Track1 正式分数 `0.47`；
+- 没有完整官方日志、submission ID 或 episode 级 hidden 结果；用户已报告 Track1 正式分数 `0.47`、Track2 正式分数 `0.33`；
 - 没有 V160/H160；
 - 没有 1K/3K/10K/30K 长程 LoRA；
 - 没有正式 Track 3 20 Hz checkpoint；ZIP 只存在本地 artifacts，未上传。
@@ -250,24 +250,24 @@ upstream             当前 branch 未设置 upstream
 ## 10. 新 section 的接手顺序
 
 1. 阅读本文件与 `docs/AXIS_PI05_PLAN_INDEX.md`。
-2. 阅读并只执行 `docs/AXIS_PI05_DENSE_FULLFT_ALLOCATOR_FRACTION_RECOVERY_PLAN.md`。
-3. 将Track1=`0.47`、ZIP `95415a…c5f5a`锁为baseline；submission ID/log未知字段保持null。
-4. CPU 先锁定旧 R4 OOM 与 step-0 checkpoint，增加 allocator internal stats/XLA memory analysis 可观测性；不改 train-step math。
-5. allocator recovery 已从 step0 fresh restore 完成 `0.90`，确认 allocator/BFC OOM 后完成唯一 `0.95`；两次均在首个 microbatch 失败，step1/10 未生成。
-6. 不得启动官方GPU、preallocate false/其他allocator、C20、50/100/1K、FAST/ZIP/提交。只有人工审核明确授权，才可把 `0.95` 证据用于下一轮 Blackwell 决策。
+2. 阅读并只执行 `docs/AXIS_PI05_DENSE_FULLFT_ACCUMULATION_MEMORY_LIFETIME_RECOVERY_PLAN.md`。
+3. 将Track1=`0.47`、Track2=`0.33`及ZIP `95415a…c5f5a`锁为当前官方baseline；Track2包身份在无上传回执/hash时保持conditional provenance。
+4. M0先修正旧summary/handoff的阶段标签和stale顶层字段；raw logs/checkpoints immutable。
+5. M1只修host accumulation与审计临时gradient引用生命周期，不改FP32/dense/EMA/global64、顺序累加、RNG或data/norm。
+6. M2/M3最多在本地4×V100验证step1/step10和per-micro memory plateau；不得启动官方GPU、C20、100/1K、长训、FAST/ZIP或提交。
 
-当前路径是：R6 FAST ZIP Track1=`0.47`（冻结）→ sharded-init已通过 → allocator 90%/95% 本地4卡1/10-step → 人工审核显存/restore/吞吐 → 100-step+C20 → 标准LIBERO同run里程碑长训 → paired选模 → 复用R6 FAST部署链 → 目标正式分数`>0.47`。
+当前路径是：R6 FAST ZIP Track1=`0.47`/Track2=`0.33`（冻结）→ sharded-init已通过 → accumulation memory-lifetime本地step1/10 → 人工审核显存/restore/吞吐 → 100-step+C20（20Hz主协议）→ 标准LIBERO同run里程碑长训 → paired选模 → 复用R6 FAST部署链 → 目标正式分数`>0.47`。
 
 ## 19. Dense full-FT allocator fraction recovery 执行结果
 
 本轮按唯一活动计划执行 A0–A3。CPU lock、step-0 checkpoint tree/hash、fixed recipe 与 allocator contract 均通过；step-0 source tree 为 `9380fd770ced87368c82a05a4dbb8c00fd0f0e82c4e569879aacd127a01038f5`，源 checkpoint 未被修改。全量测试为 `.venv_axis_pi05/bin/pytest -q tests`：`132 passed, 7 skipped, 21 warnings`。
 
-- `0.90`：`allocator_bfc_oom_during_compute`；restore step `0` 通过，allocator `6` samples、NVML `212` samples，首个 microbatch 后申请 `1207959552 bytes` 失败，checkpoint/metric steps 仅 `[0]`/`[]`。
-- `0.95`：在 A2 allocator OOM 后按条件执行；restore step `0` 通过，allocator `6` samples、NVML `208` samples，首个 microbatch 后申请 `75497472 bytes` 失败，checkpoint/metric steps 仅 `[0]`/`[]`。
+- `0.90`：`allocator_bfc_oom_during_compute`；restore step `0` 通过，allocator `6` samples、NVML `212` samples；microbatch index `0/1` 已完成，index `2` 未完成并在申请 `1207959552 bytes` 时失败，checkpoint/metric steps 仅 `[0]`/`[]`。
+- `0.95`：在 A2 allocator OOM 后按条件执行；restore step `0` 通过，allocator `6` samples、NVML `208` samples；microbatch index `0/1` 已完成，index `2` 未完成并在申请 `75497472 bytes` 时失败，checkpoint/metric steps 仅 `[0]`/`[]`。
 - 两次均为 FP32 dense、AdamW、EMA `0.999`、microbatch `1`、global batch `64`；无 optimizer update，A4/10-step、C20、长训均未执行。
 - 4×V100 运行前后均无外部 PID，GPU0 未被外部进程触碰；四卡退出后均约 `5 MiB`。比赛 GPU、官方 Blackwell、FAST、ZIP、上传、push、提交均未启动。
 
-证据目录为 `data/reports/axis_libero_30k/dense_fullft_allocator_fraction_recovery/`；执行审核为 `docs/reviews/axis_pi05/DENSE_FULLFT_ALLOCATOR_FRACTION_EXECUTION_REVIEW_20260901.md`。当前 hard stop：等待人工审核，不自动创建下一训练计划。
+证据目录为 `data/reports/axis_libero_30k/dense_fullft_allocator_fraction_recovery/`；当时的执行审核为 `docs/reviews/axis_pi05/DENSE_FULLFT_ALLOCATOR_FRACTION_EXECUTION_REVIEW_20260901.md`。该 hard stop 已由第20节的独立审核接管。
 
 ## 11. ZIP 生成阶段执行结果（历史快照）
 
@@ -343,4 +343,14 @@ R4 的 allocator 环境变量全部 unset；JAX/JAXLIB 为 `0.5.3`。官方 JAX 
 
 审核结论为 `remediation_required`：先保持 preallocation，只设 `XLA_CLIENT_MEM_FRACTION=0.90`复测；仅 allocator OOM 才允许唯一 `0.95`。这不改 FP32、dense、loss、batch64、AdamW 或 EMA。不使用 preallocate false/其他 allocator，不启动比赛 GPU。
 
-审核记录：`docs/reviews/axis_pi05/DENSE_FULLFT_R4_ALLOCATOR_REVIEW_20260901.md`。唯一活动计划：`docs/AXIS_PI05_DENSE_FULLFT_ALLOCATOR_FRACTION_RECOVERY_PLAN.md`。
+审核记录：`docs/reviews/axis_pi05/DENSE_FULLFT_R4_ALLOCATOR_REVIEW_20260901.md`。当时的活动计划现已归档为 `docs/archive/axis_pi05/AXIS_PI05_DENSE_FULLFT_ALLOCATOR_FRACTION_RECOVERY_PLAN.md`。
+
+## 20. Allocator fraction 后续独立审核与重分类
+
+root `c353ff0`、nested OpenPI `81d8220` 的0.90/0.95执行边界可信：step0 restore通过、配方未改、optimizer update为0、官方GPU及后续阶段未启动。但失败阶段标签和资源决策需要修复：两份raw allocator trace都记录了`microbatch_complete` index `0`与`1`，index `2`才未完成，并非首份microbatch失败。
+
+`0.95`每卡`bytes_in_use`为`13,435,195,392 → 19,941,608,448 → 26,420,739,584`；第二份completed microbatch带来约`6.48GB/card`常驻增长。代码中`grads`在累积后继续存活，审计`values`字典也持有全部gradient leaves，足以形成下一份RHS计算时的完整梯度重复驻留。该证据证明当前实现/observer在0.95 pool失败，但不能证明数学配方的稳定累积需要超过32GB/card。
+
+审核状态为`remediation_required`。旧计划已归档；当前唯一计划为`docs/AXIS_PI05_DENSE_FULLFT_ACCUMULATION_MEMORY_LIFETIME_RECOVERY_PLAN.md`。只允许释放临时梯度引用、建立per-micro memory plateau证据并在本地4×V100验证step1/step10；不批准直接启动Blackwell、C20、100/1K、长训或提交。
+
+审核记录：`docs/reviews/axis_pi05/DENSE_FULLFT_ACCUMULATION_LIFETIME_AUDIT_20260901.md`。

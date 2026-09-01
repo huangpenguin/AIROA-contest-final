@@ -1,8 +1,8 @@
-# AXIS Pi0.5 Dense Full-FT Allocator Fraction 无损复测计划
+# AXIS Pi0.5 Dense Full-FT Allocator Fraction 无损复测计划（已归档）
 
 > 制定日期：2026-09-01（Asia/Tokyo）
 > 审核输入：root `6239704752dc2966d23b0f6c9d49744efdb152ef`，nested OpenPI `92604d6d07d5bbf636827ee903f758538c8ba015`
-> 当前状态：`dense_fullft_local_95pct_pool_true_capacity_oom_pending_official_gpu_review`
+> 归档状态：A0–A3 已执行，A4 因 OOM 门禁未执行；后续审核将失败重分类为 accumulation memory-lifetime remediation，不再据此直接启动 Blackwell。
 > 唯一目标：保持训练数学配方完全不变，先排除 JAX 默认 75% BFC pool 对 4×V100 first update 的人为容量限制，最多验证到连续 10 optimizer steps。
 
 ## 0. 不可变合同

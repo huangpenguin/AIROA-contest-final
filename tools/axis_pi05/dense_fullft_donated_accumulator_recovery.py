@@ -139,7 +139,7 @@ def _merge_gate(report: dict[str, Any], *, expected_count: int = 2) -> dict[str,
         and max_drift is not None
         and max_drift <= PLATEAU_LIMIT_BYTES
         and donation["passed"]
-        and allocator._checkpoint_steps(report["checkpoint_dir"]) == [0]
+        and allocator._checkpoint_steps(Path(report["checkpoint_dir"])) == [0]
     )
     return {
         "expected_microbatch_count": expected_count,
@@ -209,6 +209,40 @@ def d0_cpu_phase() -> dict[str, Any]:
     return result
 
 
+def _finalize_d2_report(report: dict[str, Any], copy: dict[str, Any], lock: dict[str, Any]) -> dict[str, Any]:
+    rows = _stats(Path(report["allocator_stats_path"]))
+    merge = _merge_gate(report)
+    result = {
+        "schema_version": 1,
+        "status": "dense_fullft_donated_two_microbatch_merge_passed_pending_review" if merge["passed"] else "dense_fullft_donated_accumulator_remediation_failed",
+        "fraction": FRACTION,
+        "copy_step0": copy,
+        "train_report": report,
+        "merge_gate": merge,
+        "allocator_phases": sorted({row.get("phase") for row in rows}),
+        "source_step0_tree_sha256": lock["step0_tree_sha256"],
+        "source_step0_unchanged": allocator.sha256_tree(SOURCE_STEP0) == lock["step0_tree_sha256"],
+        "official_gpu_started": False,
+        "blackwell_started": False,
+        "optimizer_updates": 0,
+    }
+    write_json(REPORT_ROOT / "d2_merge_canary.json", result)
+    return result
+
+
+def d2_finalize_existing() -> dict[str, Any]:
+    _set_report_paths()
+    lock = _load(ALLOCATOR_REPORT_ROOT / "cpu_lock.json")
+    report_path = REPORT_ROOT / "d2_donated_merge_canary.json"
+    report = _load(report_path)
+    copy = {
+        "existing_training_result": True,
+        "target": report.get("checkpoint_dir"),
+        "tree_sha256": lock["step0_tree_sha256"],
+    }
+    return _finalize_d2_report(report, copy, lock)
+
+
 def d2_merge_canary(timeout_seconds: int) -> dict[str, Any]:
     _set_report_paths()
     lock = _load(ALLOCATOR_REPORT_ROOT / "cpu_lock.json")
@@ -235,24 +269,7 @@ def d2_merge_canary(timeout_seconds: int) -> dict[str, Any]:
         )
     finally:
         _restore_environment(old_env)
-    rows = _stats(Path(report["allocator_stats_path"]))
-    merge = _merge_gate(report)
-    result = {
-        "schema_version": 1,
-        "status": "dense_fullft_donated_two_microbatch_merge_passed_pending_review" if merge["passed"] else "dense_fullft_donated_accumulator_remediation_failed",
-        "fraction": FRACTION,
-        "copy_step0": copy,
-        "train_report": report,
-        "merge_gate": merge,
-        "allocator_phases": sorted({row.get("phase") for row in rows}),
-        "source_step0_tree_sha256": lock["step0_tree_sha256"],
-        "source_step0_unchanged": allocator.sha256_tree(SOURCE_STEP0) == lock["step0_tree_sha256"],
-        "official_gpu_started": False,
-        "blackwell_started": False,
-        "optimizer_updates": 0,
-    }
-    write_json(REPORT_ROOT / "d2_merge_canary.json", result)
-    return result
+    return _finalize_d2_report(report, copy, lock)
 
 
 def d3_step1(timeout_seconds: int, d2: dict[str, Any]) -> dict[str, Any]:
@@ -343,7 +360,8 @@ def d4_step10(timeout_seconds: int, d3: dict[str, Any]) -> dict[str, Any]:
 
 def run(timeout_seconds: int) -> dict[str, Any]:
     d0 = d0_cpu_phase()
-    d2 = d2_merge_canary(timeout_seconds)
+    d2_path = REPORT_ROOT / "d2_merge_canary.json"
+    d2 = _load(d2_path) if d2_path.is_file() else d2_merge_canary(timeout_seconds)
     d3 = d3_step1(timeout_seconds, d2) if d2["status"] == "dense_fullft_donated_two_microbatch_merge_passed_pending_review" else None
     d4 = d4_step10(timeout_seconds, d3) if d3 is not None and d3["status"] == "dense_fullft_donated_step1_passed_pending_review" else None
     status = (d4 or d3 or d2)["status"]
@@ -370,12 +388,17 @@ def run(timeout_seconds: int) -> dict[str, Any]:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--phase", choices=("d0", "run"), required=True)
+    parser.add_argument("--phase", choices=("d0", "d2_finalize", "run"), required=True)
     parser.add_argument("--timeout-seconds", type=int, default=7200)
     args = parser.parse_args()
     REPORT_ROOT.mkdir(parents=True, exist_ok=True)
     OUTPUT_ROOT.mkdir(parents=True, exist_ok=True)
-    result = d0_cpu_phase() if args.phase == "d0" else run(args.timeout_seconds)
+    if args.phase == "d0":
+        result = d0_cpu_phase()
+    elif args.phase == "d2_finalize":
+        result = d2_finalize_existing()
+    else:
+        result = run(args.timeout_seconds)
     print(json.dumps({"status": result["status"], "path": str(REPORT_ROOT)}, ensure_ascii=False, sort_keys=True))
 
 

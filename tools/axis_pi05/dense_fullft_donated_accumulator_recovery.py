@@ -15,6 +15,7 @@ import time
 from typing import Any
 
 from . import dense_fullft_allocator_fraction_recovery as allocator
+from . import dense_fullft_accumulation_memory_lifetime_recovery as lifetime
 from .common import ROOT, write_json
 
 
@@ -293,7 +294,7 @@ def d3_step1(timeout_seconds: int, d2: dict[str, Any]) -> dict[str, Any]:
         )
     finally:
         _restore_environment(old_env)
-    plateau = allocator._plateau_gate(Path(report["allocator_stats_path"]), expected_count=16)
+    plateau = lifetime._plateau_gate(Path(report["allocator_stats_path"]), expected_count=16)
     rows = _stats(Path(report["allocator_stats_path"]))
     donation = _donation_gate(rows, Path(report["log_path"]))
     passed = allocator._full_report_status(report, 1) and plateau["passed"] and donation["passed"]
@@ -329,7 +330,7 @@ def d4_step10(timeout_seconds: int, d3: dict[str, Any]) -> dict[str, Any]:
             expected_sentinels=[],
             timeout_seconds=timeout_seconds,
         )
-        plateau = allocator._plateau_gate(Path(continuation["allocator_stats_path"]), expected_count=16)
+        plateau = lifetime._plateau_gate(Path(continuation["allocator_stats_path"]), expected_count=16)
         rows = _stats(Path(continuation["allocator_stats_path"]))
         donation = _donation_gate(rows, Path(continuation["log_path"]))
         restore = allocator._run_restore_only(

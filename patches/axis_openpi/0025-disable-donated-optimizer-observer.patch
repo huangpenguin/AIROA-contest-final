@@ -1,0 +1,23 @@
+diff --git a/scripts/train.py b/scripts/train.py
+index a99dce5..66f51c7 100644
+--- a/scripts/train.py
++++ b/scripts/train.py
+@@ -1038,11 +1038,12 @@ def train_step_accumulated_host(
+         optimizer_step_before=int(state.step),
+         accumulated_microbatches=len(microbatches),
+     )
+-    _record_executable_memory_analysis(
+-        apply_update_fn,
+-        "optimizer_update",
+-        (state, grads, next_rng),
+-    )
++    # Do not lower/compile the donated optimizer callable as an observer here.
++    # On this JAX build, compiling a jitted function with donate_argnums can
++    # invalidate the live state buffers even without executing the update;
++    # the subsequent state.step read would then fail with Array-is-deleted.
++    # The actual donated update remains the only state-mutating operation, and
++    # NVML/allocator traces still capture its runtime memory behavior.
+     new_state, info = apply_update_fn(state, grads, next_rng)
+     _record_allocator_stats(
+         "optimizer_update_complete",
+         optimizer_step_before=int(state.step),

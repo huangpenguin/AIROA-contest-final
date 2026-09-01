@@ -21,6 +21,7 @@ from .common import ROOT, write_json
 REPORT_ROOT = ROOT / "data/reports/axis_libero_30k/dense_fullft_donated_accumulator_recovery"
 OUTPUT_ROOT = ROOT / "outputs/axis_pi05/dense_fullft_donated_accumulator_recovery"
 OLD_REPORT_ROOT = ROOT / "data/reports/axis_libero_30k/dense_fullft_accumulation_memory_lifetime_recovery"
+ALLOCATOR_REPORT_ROOT = ROOT / "data/reports/axis_libero_30k/dense_fullft_allocator_fraction_recovery"
 OLD_SUMMARY = OLD_REPORT_ROOT / "summary.json"
 SOURCE_STEP0 = allocator.SOURCE_STEP0
 FRACTION = "0.95"
@@ -210,7 +211,7 @@ def d0_cpu_phase() -> dict[str, Any]:
 
 def d2_merge_canary(timeout_seconds: int) -> dict[str, Any]:
     _set_report_paths()
-    lock = _load(OLD_REPORT_ROOT / "cpu_lock.json")
+    lock = _load(ALLOCATOR_REPORT_ROOT / "cpu_lock.json")
     if allocator.sha256_tree(SOURCE_STEP0) != lock["step0_tree_sha256"]:
         raise RuntimeError("immutable step-0 source changed before D2")
     run_dir = OUTPUT_ROOT / "d2_merge_canary"
@@ -258,7 +259,7 @@ def d3_step1(timeout_seconds: int, d2: dict[str, Any]) -> dict[str, Any]:
     if d2.get("status") != "dense_fullft_donated_two_microbatch_merge_passed_pending_review":
         raise RuntimeError("D3 requires a passing D2 merge gate")
     _set_report_paths()
-    lock = _load(OLD_REPORT_ROOT / "cpu_lock.json")
+    lock = _load(ALLOCATOR_REPORT_ROOT / "cpu_lock.json")
     run_dir = OUTPUT_ROOT / "d3_step1"
     if run_dir.exists():
         raise FileExistsError(f"refusing to reuse D3 output: {run_dir}")

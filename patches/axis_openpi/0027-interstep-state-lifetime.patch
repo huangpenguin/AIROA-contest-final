@@ -1,0 +1,172 @@
+diff --git a/scripts/train.py b/scripts/train.py
+index 0a39b95..5903921 100644
+--- a/scripts/train.py
++++ b/scripts/train.py
+@@ -98,6 +98,15 @@ def _first_nonfinite_microbatch_name(loss_sum: Any, components: dict[str, Any],
+     return f"grad:{path}" if path is not None else None
+ 
+ 
++def _materialize_metric_scalars(info: dict[str, Any]) -> dict[str, Any]:
++    """Copy scalar metrics to host values so device metric arrays do not span steps."""
++    result: dict[str, Any] = {}
++    for key, value in info.items():
++        host_value = np.asarray(jax.device_get(value))
++        result[key] = host_value.item() if host_value.ndim == 0 else host_value.copy()
++    return result
++
++
+ def _jsonable(value: Any) -> Any:
+@@ -769,6 +778,7 @@ def train_step_accumulated_host(
+     apply_update_fn,
+     audit: dict[str, Any] | None = None,
+     merge_only: bool = False,
++    transition_probe: bool = False,
+ ) -> tuple[training_utils.TrainState, dict[str, at.Array]]:
+@@ -779,7 +789,9 @@ def train_step_accumulated_host(
+     """
+     if not microbatches:
+         raise ValueError("gradient accumulation requires at least one microbatch")
+-    if config.effective_global_batch is not None and not merge_only:
++    if transition_probe and len(microbatches) != 1:
++        raise ValueError("transition_probe requires exactly one microbatch")
++    if config.effective_global_batch is not None and not merge_only and not transition_probe:
+@@ -954,21 +966,33 @@ def train_step_accumulated_host(
+             micro_index=micro_index,
+         )
+     assert grad_sum is not None
+-    if merge_only:
++    if merge_only or transition_probe:
+         _record_allocator_stats(
+-            "merge_only_complete",
++            "transition_probe_complete" if transition_probe else "merge_only_complete",
+             optimizer_step_before=int(state.step),
+             microbatch_count=len(microbatches),
+         )
+         del grad_sum
+-        return state, {
++        host_info = _materialize_metric_scalars({
+             "loss": total_loss_sum / jnp.maximum(total_valid, 1),
+             "loss_sum": total_loss_sum,
+             "valid_action_elements": total_valid,
+             "examples_seen": total_examples,
+             "micro_steps": jnp.asarray(len(microbatches), dtype=jnp.int32),
+             "optimizer_step": state.step,
+-        }
++        })
++        _record_allocator_stats(
++            "metrics_host_materialized",
++            optimizer_step_before=int(state.step),
++            metric_keys=sorted(host_info),
++            transition_probe=transition_probe,
++        )
++        _record_allocator_stats(
++            "device_metrics_released",
++            optimizer_step_before=int(state.step),
++            transition_probe=transition_probe,
++        )
++        return state, host_info
+@@ -1045,18 +1069,42 @@ def train_step_accumulated_host(
+     # the subsequent state.step read would then fail with Array-is-deleted.
+     # The actual donated update remains the only state-mutating operation, and
+     # NVML/allocator traces still capture its runtime memory behavior.
+-    new_state, info = apply_update_fn(state, grads, next_rng)
++    new_state, device_info = apply_update_fn(state, grads, next_rng)
++    optimizer_step_after = int(new_state.step)
+     _record_allocator_stats(
+-        "optimizer_update_complete",
++        "optimizer_returned",
+         optimizer_step_before=optimizer_step_before,
+-        optimizer_step_after=int(new_state.step),
++        optimizer_step_after=optimizer_step_after,
+     )
+-    info = {
+-        **info,
++    _record_allocator_stats(
++        "new_state_ready",
++        optimizer_step_before=optimizer_step_before,
++        optimizer_step_after=optimizer_step_after,
++    )
++    device_info = {
++        **device_info,
+         **common_info,
+         "optimizer_step": new_state.step,
+     }
+-    return new_state, info
++    host_info = _materialize_metric_scalars(device_info)
++    _record_allocator_stats(
++        "metrics_host_materialized",
++        optimizer_step_before=optimizer_step_before,
++        optimizer_step_after=optimizer_step_after,
++        metric_keys=sorted(host_info),
++    )
++    del device_info, common_info, grads, state, next_rng
++    _record_allocator_stats(
++        "device_metrics_released",
++        optimizer_step_before=optimizer_step_before,
++        optimizer_step_after=optimizer_step_after,
++    )
++    _record_allocator_stats(
++        "optimizer_update_complete",
++        optimizer_step_before=optimizer_step_before,
++        optimizer_step_after=optimizer_step_after,
++    )
++    return new_state, host_info
+@@ -1252,7 +1300,7 @@ def main(config: _config.TrainConfig):
+             functools.partial(_apply_optimizer_update, config),
+             in_shardings=(train_state_sharding, None, replicated_sharding),
+             out_shardings=(train_state_sharding, replicated_sharding),
+-            donate_argnums=(0,),
++            donate_argnums=(0, 1),
+         )
+@@ -1295,11 +1343,14 @@ def main(config: _config.TrainConfig):
+     )
+ 
+     infos = []
++    transition_probe_enabled = os.environ.get("AXIS_PI05_INTERSTEP_TRANSITION_PROBE", "0") == "1"
++    transition_probe_target = int(os.environ.get("AXIS_PI05_INTERSTEP_TARGET_STEP", "2"))
+     for step in pbar:
+         _record_allocator_stats("optimizer_step_start", loop_step=step, train_state_step=int(train_state.step))
++        transition_probe = transition_probe_enabled and int(train_state.step) == transition_probe_target
+         microbatches = [batch]
+         microbatch_metadata = [batch_metadata]
+-        accumulation_count = merge_only_count or config.gradient_accumulation_steps
++        accumulation_count = 1 if transition_probe else merge_only_count or config.gradient_accumulation_steps
+@@ -1341,6 +1392,7 @@ def main(config: _config.TrainConfig):
+                     papply_optimizer_update,
+                     audit=audit,
+                     merge_only=bool(merge_only_count),
++                    transition_probe=transition_probe,
+                 )
+@@ -1355,6 +1407,29 @@ def main(config: _config.TrainConfig)
+                 raise FloatingPointError(
+                     f"non-finite training metrics at loop step {step}; first_param_path={first_path}; info={info}"
+                 )
++        if transition_probe:
++            transition_path = Path(
++                os.environ.get(
++                    "AXIS_PI05_INTERSTEP_TRANSITION_METRICS_PATH",
++                    str(config.checkpoint_dir / "interstep_transition_metrics.json"),
++                )
++            )
++            transition_path.write_text(
++                json.dumps(
++                    {
++                        "schema_version": 1,
++                        "status": "transition_probe_completed",
++                        "optimizer_step_before": transition_probe_target,
++                        "optimizer_step_after": int(train_state.step),
++                        "metrics": _jsonable(info),
++                    },
++                    indent=2,
++                    sort_keys=True,
++                )
++                + "\n",
++                encoding="utf-8",
++            )
++            del info, microbatches, microbatch_metadata, batch, batch_metadata
++            _record_allocator_stats(
++                "next_step_start",
++                optimizer_step_before=int(train_state.step),
++                transition_probe=True,
++            )
++            break

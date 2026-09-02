@@ -88,8 +88,51 @@ def test_merge_only_uses_two_microbatches_without_optimizer_update():
     assert int(np.asarray(info["examples_seen"])) == 8
 
 
+def test_transition_probe_accepts_one_microbatch_without_optimizer_update():
+    config = SimpleNamespace(effective_global_batch=64)
+    state = SimpleNamespace(step=jnp.asarray(2, dtype=jnp.int32), rng=jax.random.key(37))
+    updates = []
+
+    def microbatch_grad(_micro_rng, _state, _batch_value, rng_fixture):
+        assert rng_fixture is None
+        return (
+            jnp.asarray(2.0, dtype=jnp.float32),
+            {"g": jnp.asarray([2.0], dtype=jnp.float32)},
+            _components(2.0),
+        )
+
+    def apply_update(*_args):
+        updates.append(True)
+        raise AssertionError("transition probe must not call optimizer update")
+
+    new_state, info = _TRAIN.train_step_accumulated_host(
+        config,
+        jax.random.key(41),
+        state,
+        (_batch(),),
+        microbatch_grad,
+        apply_update,
+        transition_probe=True,
+    )
+    assert not updates
+    assert int(new_state.step) == 2
+    assert info["optimizer_step"] == 2
+    assert info["micro_steps"] == 1
+    assert not any(hasattr(value, "device") for value in info.values())
+
+
 def test_d1_source_contract_is_explicit():
     source = TRAIN_SOURCE.read_text(encoding="utf-8")
     assert "_DONATED_GRADIENT_ADD = jax.jit(_add_gradients_impl, donate_argnums=(0,))" in source
+    assert "donate_argnums=(0, 1)" in source
     assert '"donated_gradient_add"' in source
     assert '"merge_only_complete"' in source
+    for marker in (
+        '"optimizer_returned"',
+        '"new_state_ready"',
+        '"metrics_host_materialized"',
+        '"device_metrics_released"',
+        '"next_step_start"',
+        '"transition_probe_complete"',
+    ):
+        assert marker in source

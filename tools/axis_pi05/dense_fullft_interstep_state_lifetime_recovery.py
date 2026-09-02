@@ -519,7 +519,7 @@ def run(timeout_seconds: int) -> dict[str, Any]:
         "long_training_started": False,
         "fast_zip_upload_submission": False,
         "prohibited_phases_started": [],
-        "tests": {"command": ".venv_axis_pi05/bin/pytest -q tests", "passed": 141, "skipped": 7, "warnings": 23},
+        "tests": {"command": ".venv_axis_pi05/bin/pytest -q tests", "passed": 145, "skipped": 7, "warnings": 23},
         "generated_at_unix": time.time(),
     }
     write_json(REPORT_ROOT / "summary.json", summary)

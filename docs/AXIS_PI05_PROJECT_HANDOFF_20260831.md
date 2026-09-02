@@ -1,12 +1,12 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新执行提交（待本次独立审核）：`f4dcee2`
-> interstep L0/L1 execution HEAD：`88796b2`
+> 最新已审核执行提交：`1e71ec5`
+> interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_reverse_rules_or_pilot_blocked`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_REVERSE_LORA_POSITIVE_SCORE_PLAN.md`
+> 当前总状态：`track3_public_terminal_recovery_ready`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_PUBLIC_TERMINAL_TELEOP_PLANNER_RECOVERY_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -14,7 +14,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Dense interstep的L0/L1已完成，但L2因GPU0外部YOLO阻塞；成果已冻结。当前用GPU1+2/GPU3改道Track3：只依据官方公开的“现有LIBERO逆向操作”高层规则，先做真实20Hz reverse pilot，再从R6分叉保守LoRA，不使用泄漏的隐藏任务细节。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Dense interstep成果继续冻结。Track3旧pilot因完整终态来源不合格得到0条accepted episode；当前只恢复公开LIBERO full simulator terminal state、20Hz teleop/planner与30–60条3/3 replay pilot，完成前禁止LoRA。
 
 ## 2. 数据与复现基础
 
@@ -250,13 +250,13 @@ upstream             当前 branch 未设置 upstream
 ## 10. 新 section 的接手顺序
 
 1. 阅读本文件与 `docs/AXIS_PI05_PLAN_INDEX.md`。
-2. 阅读并只执行 `docs/AXIS_PI05_DENSE_FULLFT_DONATED_ACCUMULATOR_RECOVERY_PLAN.md`。
+2. 阅读并只执行 `docs/AXIS_PI05_TRACK3_PUBLIC_TERMINAL_TELEOP_PLANNER_RECOVERY_PLAN.md`。
 3. 将Track1=`0.47`、Track2=`0.33`及ZIP `95415a…c5f5a`锁为当前官方baseline；Track2包身份在无上传回执/hash时保持conditional provenance。
-4. D0先闭合summary/handoff的stale字段，并区分compute complete、merge failure和下一未尝试compute；raw logs/checkpoints immutable。
-5. D1只把严格左结合FP32 tree add改为donated/aliased旧accumulator，不改EMA/global64、RNG、loss或data/norm。
-6. D2先做两份真实microbatch merge-only canary；通过后D3/D4最多本地step1/step10。不得启动官方GPU、Blackwell、C20、100/1K、长训、FAST/ZIP或提交。
+4. P0下载并锁定官方公开原始LIBERO HDF5及`data/demo_i/states` schema，不用GPU、不触碰独立dirty `LIBERO-plus`目录。
+5. P1只用official HDF5 full state或当前环境R6公开正向成功live capture，完成restore/settle/predicate/3/3资格验证。
+6. P2–P5依次完成teleop canary、闭环planner、30–60条pilot和loader forward smoke；不得启动LoRA、dense、FAST/ZIP、比赛GPU或提交。
 
-当前路径是：R6 FAST ZIP Track1=`0.47`/Track2=`0.33`（冻结）→ sharded-init已通过 → donated merge D2 → 本地step1/10 → 人工审核显存/restore/吞吐 → 100-step+C20（20Hz主协议）→ 标准LIBERO同run里程碑长训 → paired选模 → 复用R6 FAST部署链 → 目标正式分数`>0.47`。
+当前路径是：R6 FAST ZIP Track1=`0.47`/Track2=`0.33`（冻结）→ 官方公开LIBERO full terminal state → 20Hz teleop/planner真实逆向轨迹 → 30–60条3/3 replay pilot → 人工审核 → 另行决定是否从R6分叉LoRA。Dense 30K为冻结的独立研究线。
 
 ## 19. Dense full-FT allocator fraction recovery 执行结果
 
@@ -421,3 +421,11 @@ T0 在 root `61d4a9f`、nested OpenPI `b58aff0` 上完成。R6 raw/folded/FAST/�
 T1 CPU compiler 从公开 canonical LIBERO catalog 与 public BDDL/init 生成40个候选 reverse spec，`32 train / 8 template-holdout`，但没有把它们当作 demonstration。GPU3 的真实20Hz探测未能获得可审计 terminal snapshot：task10 reverse object-on-plate 初始状态失稳，task17 motion primitive 未抓取；公开 episode0 的 forward init 对齐/replay 也未产生可验证 terminal success。accepted episode 为 `0`，没有达到30–60 episode、3 families、6 templates、2 scenes、每 family两 template及3/3 replay门禁。
 
 当前状态：`track3_reverse_rules_or_pilot_blocked`。T2、两卡 LoRA、T3、FAST、ZIP、closed-loop、E2、C20、训练、比赛 GPU、上传和提交均未启动；GPU0 未触碰，R6资产和正分 ZIP 未修改。候选 manifest 与报告：`data/reports/axis_libero_30k/track3_reverse_lora/t1_reverse_task_manifest.jsonl`、`T1_CPU_COMPILER_REPORT_ZH.md`、`T1_PILOT_BLOCKED_REPORT_ZH.md`。继续工作需要新计划明确提供可审计的公开 terminal-state 获取与 teleop/planner 路径。
+
+## 29. T1 独立审核与公开终态恢复决策
+
+独立审核输入为root `1e71ec5`、nested OpenPI `b58aff0`。T1边界、测试和hard stop可信；40/40只表示公开reverse spec编译成功，不表示物理initial state或demonstration成功。`0 accepted episode`定位到旧terminal source/action proposal路径：`.pruned_init`不是成功终态，LeRobot 8D observation state不是完整MuJoCo state，predicate swap也不会产生稳定物理状态。约`2.29mm`最近init差异与3/3 replay门禁均不得放宽。
+
+官方公开LIBERO原始HDF5包含完整`data/demo_i/states`；官方检查代码会把demonstration末状态送入`env.set_init_state`。新唯一活动计划为`docs/AXIS_PI05_TRACK3_PUBLIC_TERMINAL_TELEOP_PLANNER_RECOVERY_PLAN.md`：P0下载并锁定公开原始HDF5；P1验证official full state，版本不兼容时改用当前环境R6公开正向成功live full-state capture；P2实现20Hz teleop并取得3 families canary；P3从成功teleop抽取闭环keypose planner；P4扩展到30–60条、6 templates、2 scenes且逐条3/3 replay；P5只做schema/manifest/loader forward smoke。完成后状态只能到`track3_reverse_pilot_ready_pending_review`，仍不得训练。
+
+GPU0继续禁止触碰；GPU3仅用于simulator/capture，GPU1/2不启动训练；比赛GPU、LoRA/dense、FAST、ZIP、C20、E2、上传与提交均未授权。独立`LIBERO-plus`目录的既有dirty状态原样保留。审核记录：`docs/reviews/axis_pi05/TRACK3_T1_TERMINAL_SOURCE_AUDIT_20260902.md`。

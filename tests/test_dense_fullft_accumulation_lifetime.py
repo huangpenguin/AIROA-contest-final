@@ -155,8 +155,8 @@ def test_m0_summary_is_fail_closed_and_machine_handoff_advances_without_losing_e
     handoff_path = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
     handoff = __import__("json").loads(handoff_path.read_text(encoding="utf-8"))
     execution = handoff["dense_fullft_allocator_fraction_recovery_execution"]
-    assert handoff["next_plan"].endswith("AXIS_PI05_TRACK3_REVERSE_LORA_POSITIVE_SCORE_PLAN.md")
-    assert handoff["next_phase_only"] == "track3_reverse_T1_blocked_no_training_without_new_pilot_authorization"
+    assert handoff["next_plan"].endswith("AXIS_PI05_TRACK3_PUBLIC_TERMINAL_TELEOP_PLANNER_RECOVERY_PLAN.md")
+    assert handoff["next_phase_only"] == "track3_terminal_P0_to_P5_no_training"
     assert handoff["tests"]["passed"] == 153
     assert execution["a2_fraction_090"]["optimizer_updates"] == 0
     assert execution["a3_fraction_095"]["optimizer_updates"] == 0
@@ -182,3 +182,16 @@ def test_m0_summary_is_fail_closed_and_machine_handoff_advances_without_losing_e
     track3 = handoff["track3_t1"]
     assert track3["status"] == "track3_reverse_rules_or_pilot_blocked"
     assert track3["pilot"]["accepted_episode_count"] == 0
+    terminal_audit = handoff["track3_t1_terminal_source_audit"]
+    assert terminal_audit["status"] == "blocked_old_pilot_public_terminal_recovery_authorized"
+    assert terminal_audit["diagnosis"]["lerobot_8d_state_is_full_simulator_state"] is False
+    assert terminal_audit["diagnosis"]["reverse_supervision_hypothesis_falsified"] is False
+    assert terminal_audit["authorized_terminal_sources"] == [
+        "official_hdf5_terminal_state",
+        "live_public_forward_success_capture",
+    ]
+    assert terminal_audit["pilot_gate"]["fresh_process_replay"] == "3/3"
+    assert terminal_audit["resource_boundaries"]["gpu0_authorized"] is False
+    assert terminal_audit["training_fast_zip_upload_submission_authorized"] is False
+    assert (ROOT / handoff["next_plan"]).is_file()
+    assert (ROOT / terminal_audit["archived_plan"]).is_file()

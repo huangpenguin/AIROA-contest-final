@@ -1,24 +1,23 @@
 # AXIS Pi0.5 计划索引与审核生命周期
 
 > 更新日期：2026-09-02（Asia/Tokyo）
-> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_REVERSE_LORA_POSITIVE_SCORE_PLAN.md`
-> 当前状态：`track3_reverse_rules_or_pilot_blocked`
-> 最新审核：`docs/reviews/axis_pi05/T3_REVERSE_LORA_T1_PILOT_BLOCKED_REVIEW_20260902.md`
+> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_PUBLIC_TERMINAL_TELEOP_PLANNER_RECOVERY_PLAN.md`
+> 当前状态：`track3_public_terminal_recovery_ready`
+> 最新审核：`docs/reviews/axis_pi05/TRACK3_T1_TERMINAL_SOURCE_AUDIT_20260902.md`
 
 ## 1. 唯一活动计划
 
-- `AXIS_PI05_TRACK3_REVERSE_LORA_POSITIVE_SCORE_PLAN.md`
-  - dense interstep L0语义锁与L1 CPU/code gate通过；L2因GPU0外部PID `1133706`阻塞，代码/checkpoint hash已冻结，当前不再让项目整体等待；
-  - 用户报告R6 FAST正式Track1=`0.47`、Track2=`0.33`、Track3=`0`；Track3按官方公开高层规则是现有LIBERO操作的逆向任务；
-  - 只用公开规则和generic reverse tasks，先生成30–60条真实20Hz、predicate/replay验证的pilot，再从R6 step500分叉两卡保守LoRA；
-  - GPU1+2训练、GPU3评估，GPU0及外部任务不触碰；不得使用泄漏脚本内部细节、隐藏任务或未经环境验证的倒放轨迹；
-  - 最多到500-step候选和独立FAST ZIP，之后hard stop；不自动上传/提交，不启动dense或比赛Blackwell。
-  - T0 CPU-only lock 已通过（root `61d4a9f`，nested `b58aff0`，GPU1–3 idle，evaluation denylist overlap `0`）；T1 CPU compiler 已生成40个公开候选，但真实20Hz pilot 为 `0 accepted episodes`，未满足门禁，当前状态为 `track3_reverse_rules_or_pilot_blocked`。
-  - T1 证据：`data/reports/axis_libero_30k/track3_reverse_lora/T1_PILOT_BLOCKED_REPORT_ZH.md`；不得把候选 specs 当作训练数据，T2及以后均未授权。
+- `AXIS_PI05_TRACK3_PUBLIC_TERMINAL_TELEOP_PLANNER_RECOVERY_PLAN.md`
+  - 独立审核确认T1 hard stop正确：40个CPU reverse specs只是候选，GPU3真实20Hz pilot为`0 accepted episodes`；旧`.pruned_init`/8D state路径不能恢复完整成功终态；
+  - P0先下载并锁定官方公开LIBERO原始HDF5，检查`data/demo_i/states`、task/BDDL/model provenance；下载不使用GPU；
+  - P1只用完整官方HDF5 state或当前环境中R6公开正向成功的live full-state capture，完成restore、settle、predicate与fresh-process 3/3门禁；
+  - P2实现keyboard必备/SpaceMouse可选的20Hz teleop recorder并取得3 families canary；P3才允许从成功teleop提取闭环keypose planner；
+  - P4逐级扩展到30–60条、3 families、6 templates、2 scenes、逐条3/3 replay与H.264人工审核；P5只做schema/manifest/loader forward smoke；
+  - GPU0不触碰，GPU3只用于simulator/capture，GPU1/2不训练；本计划不授权LoRA、dense、FAST、ZIP、C20、E2、比赛GPU、上传或提交。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 
-正式Track1 `0.47`与Track2 `0.33`已证明R6 FAST在官方20Hz闭环有效；Track3 `0`说明纯正向LIBERO LoRA并未自然获得逆向能力。当前优先级是用空闲两卡建立合法、通用、可回放的reverse supervision并小步适配；dense full-FT保留为GPU0释放后的独立研究线。
+正式Track1 `0.47`与Track2 `0.33`已证明R6 FAST在官方20Hz闭环有效；Track3 `0`说明纯正向LIBERO LoRA并未自然获得逆向能力。当前优先级不是立即训练，而是先用公开完整simulator state建立合法、通用、可回放的reverse supervision；dense full-FT继续冻结为独立研究线。
 
 ## 2. 已归档的 R6 执行链
 
@@ -43,10 +42,11 @@
 17. `AXIS_PI05_DENSE_FULLFT_ACCUMULATION_MEMORY_LIFETIME_RECOVERY_PLAN.md`：M0/M1完成；M2在index1 compute完成后的普通gradient merge申请72MiB失败，未完成update/M3；转入donated accumulator最小修复。
 18. `AXIS_PI05_DENSE_FULLFT_DONATED_ACCUMULATOR_RECOVERY_PLAN.md`：D2 donated merge和D3 step1通过；D4从step1完成update到step2后，在下一轮microbatch 1 compute OOM；转入跨optimizer step生命周期修复。
 19. `AXIS_PI05_DENSE_FULLFT_INTERSTEP_STATE_LIFETIME_RECOVERY_PLAN.md`：L0语义/hash锁与L1生命周期CPU gate通过；GPU0被外部YOLO占用，L2–L4未启动；冻结成果并改道Track3正分优先。
+20. `AXIS_PI05_TRACK3_REVERSE_LORA_POSITIVE_SCORE_PLAN.md`：T0资产锁通过；T1编译40个公开候选但真实20Hz pilot为0条，按门禁停止；LoRA及后续阶段均未执行，转入公开完整终态与teleop/planner恢复。
 
 归档不表示旧计划所有尾部阶段都完成；只表示该文件不再是活动授权入口。旧 failure、阈值、hash 和未执行阶段必须继续保留。
 
-当前只执行Track3 reverse T0–T6；不得从归档interstep计划自动恢复L2，也不得直接转向Blackwell。
+当前只执行Track3 terminal recovery P0–P5；不得从归档reverse LoRA/interstep计划自动恢复训练，也不得直接转向Blackwell。
 
 ## 3. 保留但非活动的研究线
 

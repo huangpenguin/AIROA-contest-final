@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-02",
-  "status": "track3_reverse_rules_or_pilot_blocked",
+  "status": "track3_public_terminal_recovery_ready",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
-  "latest_audited_execution_commit": "88796b2",
-  "latest_audit_input_commit": "88796b2",
-  "latest_execution_root_commit": "f4dcee2",
+  "latest_audited_execution_commit": "1e71ec5",
+  "latest_audit_input_commit": "1e71ec5",
+  "latest_execution_root_commit": "1e71ec5",
   "latest_execution_nested_openpi_commit": "b58aff0",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
@@ -253,8 +253,8 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_TRACK3_REVERSE_LORA_POSITIVE_SCORE_PLAN.md",
-    "next_phase_only": "track3_reverse_T1_blocked_no_training_without_new_pilot_authorization",
+  "next_plan": "docs/AXIS_PI05_TRACK3_PUBLIC_TERMINAL_TELEOP_PLANNER_RECOVERY_PLAN.md",
+  "next_phase_only": "track3_terminal_P0_to_P5_no_training",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -1485,5 +1485,50 @@
       "fast_zip_or_upload_started": false
     },
     "next_phase_only": "blocked_pending_new_auditable_public_terminal_state_path"
+  },
+  "track3_t1_terminal_source_audit": {
+    "status": "blocked_old_pilot_public_terminal_recovery_authorized",
+    "review": "docs/reviews/axis_pi05/TRACK3_T1_TERMINAL_SOURCE_AUDIT_20260902.md",
+    "archived_plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_REVERSE_LORA_POSITIVE_SCORE_PLAN.md",
+    "new_plan": "docs/AXIS_PI05_TRACK3_PUBLIC_TERMINAL_TELEOP_PLANNER_RECOVERY_PLAN.md",
+    "audit_input_root_commit": "1e71ec5",
+    "audit_input_nested_openpi_commit": "b58aff0",
+    "diagnosis": {
+      "candidate_specs_are_demonstrations": false,
+      "accepted_episode_count": 0,
+      "pruned_init_is_forward_terminal_state": false,
+      "lerobot_8d_state_is_full_simulator_state": false,
+      "old_terminal_or_action_proposal_path_qualified": false,
+      "reverse_supervision_hypothesis_falsified": false,
+      "two_point_two_nine_mm_alignment_gate_relaxed": false,
+      "three_of_three_replay_gate_relaxed": false
+    },
+    "official_public_sources": {
+      "dataset_page": "https://libero-project.github.io/datasets",
+      "download_documentation": "https://github.com/Lifelong-Robot-Learning/LIBERO/blob/master/README.md?plain=1",
+      "terminal_state_reference": "https://github.com/Lifelong-Robot-Learning/LIBERO/blob/master/benchmark_scripts/check_task_suites.py"
+    },
+    "authorized_terminal_sources": [
+      "official_hdf5_terminal_state",
+      "live_public_forward_success_capture"
+    ],
+    "pilot_gate": {
+      "accepted_episode_range": [30, 60],
+      "minimum_operator_families": 3,
+      "minimum_base_templates": 6,
+      "minimum_scenes": 2,
+      "fresh_process_replay": "3/3",
+      "human_h264_review_required": true
+    },
+    "resource_boundaries": {
+      "cpu_network_download_only_at_p0": true,
+      "gpu3_simulator_or_capture_only": true,
+      "gpu0_authorized": false,
+      "gpu1_gpu2_training_authorized": false,
+      "official_gpu_authorized": false,
+      "libero_plus_existing_dirty_state_must_be_preserved": true
+    },
+    "training_fast_zip_upload_submission_authorized": false,
+    "next_phase_only": "P0_official_hdf5_provenance_lock_then_P1_to_P5_hard_gates"
   }
 }

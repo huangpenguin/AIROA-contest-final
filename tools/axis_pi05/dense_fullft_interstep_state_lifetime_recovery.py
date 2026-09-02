@@ -277,7 +277,7 @@ def l0_cpu_phase() -> dict[str, Any]:
         },
         "semantic_correction": semantics,
         "boundary_table": boundaries,
-        "gpu_idle_before": donated._gpu_snapshot(),
+        "gpu_idle_before": allocator._gpu_snapshot(),
         "contracts_unchanged": {
             "precision": "float32",
             "topology": "dense_full_model",

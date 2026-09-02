@@ -1,12 +1,12 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新已审核执行 HEAD：`8e9f3cf`
-> donated accumulator execution HEAD：`8e9f3cf`（执行输入代码提交）
+> 最新已审核执行 HEAD：`c8b0a42`
+> donated accumulator execution HEAD：`c8b0a42`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`5c29b0e`（donated accumulator implementation）
-> 当前总状态：`dense_fullft_donated_accumulator_remediation_failed`
-> 唯一活动计划：`docs/AXIS_PI05_DENSE_FULLFT_DONATED_ACCUMULATOR_RECOVERY_PLAN.md`
+> 当前总状态：`dense_fullft_interstep_lifetime_remediation_pending`
+> 唯一活动计划：`docs/AXIS_PI05_DENSE_FULLFT_INTERSTEP_STATE_LIFETIME_RECOVERY_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -14,7 +14,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式 Track1=`0.47`、Track2=`0.33`。Donated accumulator 的 D2 两份 merge 与 D3 step1 通过；D4 在 step2 microbatch `1` 的真实 compute 阶段因申请 `136.69MiB` 触发 allocator OOM，无法完成 step10。已停止并等待审核，不批准Blackwell或改配方。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式 Track1=`0.47`、Track2=`0.33`。Donated accumulator 的 D2 两份 merge 与 D3 step1 通过；D4从internal step1恢复后又完成一次update到step2，随后在下一轮`optimizer_step_before=2`的microbatch `1`因申请`136.69MiB` OOM。update后残留约一份`6.5GB/card` full-tree-equivalent allocation，现转入跨step生命周期修复，不批准Blackwell或改配方。
 
 ## 2. 数据与复现基础
 
@@ -381,6 +381,14 @@ D2 两份真实 merge-only canary 通过：compute/accumulation/release indexes 
 
 D3 最终 fresh run 通过 `16/16` compute/merge/release，完成一次 optimizer update（step `1`、examples seen `64`），finite gate 通过并成功原子写入 step1 checkpoint。此前两次 D3 运行的 observer/logging 生命周期故障已保留在带后缀的输出目录，最终独立 report 为通过结果。
 
-D4 从 step1 续跑时，step2 的 microbatch `0` 完成并释放；microbatch `1` 在真实 forward/backward 阶段因 BFC allocator 申请 `143327232` bytes（`136.69MiB`）失败，四卡均为 `RESOURCE_EXHAUSTED`。continuation return code 为 `1`，未生成 step10 checkpoint，失败分类为 `allocator_bfc_oom_during_compute`。旧 runner 启动的 restore-only 子进程在确认 continuation 失败后立即终止，保留为不完整 restore 证据，不视作通过。
+D4 从internal step1续跑，先完成`16/16` accumulation和一次optimizer update，`train_state.step`由`1`前进到`2`；随后在下一轮`optimizer_step_before=2`中，microbatch `0`完成并释放，microbatch `1`在真实forward/backward阶段因BFC allocator申请`143327232` bytes（`136.69MiB`）失败，四卡均为`RESOURCE_EXHAUSTED`。continuation return code为`1`，未生成step10 checkpoint；step2也没有atomic checkpoint/restore，不能升级为checkpoint门禁通过。旧runner启动的restore-only子进程在确认continuation失败后立即终止，保留为不完整restore证据，不视作通过。
 
-最终状态为 `dense_fullft_donated_accumulator_remediation_failed`。没有启动 Blackwell/官方 GPU、C20、100/1K/长训、FAST/ZIP、上传、push 或提交；本地四张 GPU 均已释放至约 `5MiB`。主证据为 `data/reports/axis_libero_30k/dense_fullft_donated_accumulator_recovery/{d2_merge_canary.json,d3_step1.json,d4_step10.json,summary.json}`。当前停止等待审核，不自动进入下一修复。
+最终执行状态为`dense_fullft_donated_accumulator_remediation_failed`。没有启动Blackwell/官方GPU、C20、100/1K/长训、FAST/ZIP、上传、push或提交；本地四张GPU均已释放至约`5MiB`。主证据为`data/reports/axis_libero_30k/dense_fullft_donated_accumulator_recovery/{d2_merge_canary.json,d3_step1.json,d4_step10.json,summary.json}`。
+
+## 24. D4 独立审核与跨 step 生命周期决策
+
+审核输入为root `c8b0a42`、nested OpenPI `5c29b0e`，结论为`remediation_required`。D2 donated alias/plateau、D3 step1 checkpoint、D4 hard stop均可信；但原始allocator trace把失败定位得更精确：step1 checkpoint恢复基线约`13.435GB/card`，第一轮持有accumulator时约`19.942GB/card`，update `1→2`完成后仍约`19.942GB/card`，下一轮microbatch 0 release升到约`26.511GB/card`。新增约`6.57GB/card`与一份gradient tree量级一致。
+
+这证明当前阻塞已从“gradient merge无法复用output”推进到“optimizer update之后full-tree-equivalent device allocation跨step存活”。可能涉及未donate的gradient输入、device metrics异步依赖、旧state/update引用或observer生命周期；现有证据尚不能唯一归因，禁止把推断写成根因。
+
+旧donated计划已归档。唯一活动计划为`docs/AXIS_PI05_DENSE_FULLFT_INTERSTEP_STATE_LIFETIME_RECOVERY_PLAN.md`：L0闭合step语义，L1只修复host/device对象生命周期并证明数学exact，L2从step1完成update到step2后只探测下一microbatch 0的plateau；通过才允许step3和step10。仍不授权比赛GPU、Blackwell、降精度/降batch、C20或长训。审核记录为`docs/reviews/axis_pi05/DENSE_FULLFT_D4_INTERSTEP_LIFETIME_AUDIT_20260902.md`。

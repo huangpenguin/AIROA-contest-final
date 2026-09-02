@@ -7,4 +7,4 @@
 - 归档计划中仍写有“下一步”的文字属于历史上下文；当前唯一入口以 `docs/AXIS_PI05_PLAN_INDEX.md` 为准。
 - 当前活动计划完成审核后，也按相同方式移入本目录。
 
-归档顺序：LoRA R6 恢复 → post-R6 selection → evaluator nondeterminism → policy boundary → folded deployment → EGL statistical E0 → E0 fail-closed closure。
+归档顺序继续覆盖：LoRA R6恢复 → post-R6 selection → evaluator nondeterminism → policy boundary → folded deployment → EGL statistical release → dense full-FT preflight/sharded init → allocator/accumulation/donated accumulator修复。具体当前入口只看`docs/AXIS_PI05_PLAN_INDEX.md`。

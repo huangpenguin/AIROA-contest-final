@@ -1,20 +1,21 @@
 # AXIS Pi0.5 计划索引与审核生命周期
 
 > 更新日期：2026-09-02（Asia/Tokyo）
-> 当前唯一活动计划：`docs/AXIS_PI05_DENSE_FULLFT_DONATED_ACCUMULATOR_RECOVERY_PLAN.md`
-> 当前状态：`dense_fullft_donated_accumulator_remediation_failed`
-> 最新审核：`docs/reviews/axis_pi05/DENSE_FULLFT_DONATED_ACCUMULATOR_EXECUTION_20260902.md`
+> 当前唯一活动计划：`docs/AXIS_PI05_DENSE_FULLFT_INTERSTEP_STATE_LIFETIME_RECOVERY_PLAN.md`
+> 当前状态：`dense_fullft_interstep_lifetime_remediation_pending`
+> 最新审核：`docs/reviews/axis_pi05/DENSE_FULLFT_D4_INTERSTEP_LIFETIME_AUDIT_20260902.md`
 
 ## 1. 唯一活动计划
 
-- `AXIS_PI05_DENSE_FULLFT_DONATED_ACCUMULATOR_RECOVERY_PLAN.md`
-  - D2两份真实microbatch merge与D3完整16份/step1均通过；D4在step2 microbatch `1`真实compute阶段因申请`136.69MiB`触发allocator OOM，已按hard gate停止；
-  - 当前最终状态为`dense_fullft_donated_accumulator_remediation_failed`，仅保留失败证据并等待审核；不得因该失败直接转向Blackwell；
-  - 不授权降精度/降batch、官方GPU、Blackwell、C20、100/1K、长训或提交。
+- `AXIS_PI05_DENSE_FULLFT_INTERSTEP_STATE_LIFETIME_RECOVERY_PLAN.md`
+  - D4原始trace证明从internal step1恢复后已经完整update到step2；真正失败在下一轮`optimizer_step_before=2`的microbatch `1` compute，旧文字的step语义已在审核中纠正；
+  - update完成后下一microbatch 0 release由约`19.94GB/card`升至约`26.51GB/card`，残留量级约等于一份`6.48GB/card` gradient tree；具体引用来源尚未证明；
+  - L0/L1先修复device metrics、gradient input、old state与observer的跨步生命周期；L2只做step1→2→next-micro0 transition canary，通过才允许L3 step3与L4 step10；
+  - 不授权降精度/降batch、官方GPU、Blackwell、C20、50/100/1K/长训或提交。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 
-正式 Track1 `0.47` 与 Track2 `0.33` 已证明R6 FAST在官方20Hz闭环有效。dense full-FT当前不是模型单份计算装不下，而是gradient merge输出尚未复用旧accumulator；必须先取得donation alias与memory plateau证据，再讨论更大GPU。
+正式 Track1 `0.47` 与 Track2 `0.33` 已证明R6 FAST在官方20Hz闭环有效。dense full-FT已证明donated gradient merge可稳定完成16份和一次update；当前缺口是optimizer update之后一份full-tree-equivalent allocation跨步存活，必须先取得跨步baseline plateau证据，再讨论更大GPU。
 
 ## 2. 已归档的 R6 执行链
 
@@ -37,10 +38,11 @@
 15. `AXIS_PI05_DENSE_FULLFT_SHARDED_INIT_RECOVERY_PLAN.md`：R3 direct-sharded init通过；R4在默认75% JAX allocator pool内的首轮累积计算OOM，未完成update/10-step；转入allocator-fraction最小复测。
 16. `AXIS_PI05_DENSE_FULLFT_ALLOCATOR_FRACTION_RECOVERY_PLAN.md`：完成0.90/0.95 canary且均无optimizer update；后续审核发现两次均已完成microbatch 0/1，失败与完整gradient引用生命周期强相关，转入最小accumulation remediation。
 17. `AXIS_PI05_DENSE_FULLFT_ACCUMULATION_MEMORY_LIFETIME_RECOVERY_PLAN.md`：M0/M1完成；M2在index1 compute完成后的普通gradient merge申请72MiB失败，未完成update/M3；转入donated accumulator最小修复。
+18. `AXIS_PI05_DENSE_FULLFT_DONATED_ACCUMULATOR_RECOVERY_PLAN.md`：D2 donated merge和D3 step1通过；D4从step1完成update到step2后，在下一轮microbatch 1 compute OOM；转入跨optimizer step生命周期修复。
 
 归档不表示旧计划所有尾部阶段都完成；只表示该文件不再是活动授权入口。旧 failure、阈值、hash 和未执行阶段必须继续保留。
 
-当前只执行donated accumulator D0–D4；不得从任何归档OOM计划直接转向Blackwell。
+当前只执行inter-step lifetime L0–L4；不得从任何归档OOM计划直接转向Blackwell。
 
 ## 3. 保留但非活动的研究线
 

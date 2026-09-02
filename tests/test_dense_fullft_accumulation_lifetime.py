@@ -155,9 +155,9 @@ def test_m0_summary_is_fail_closed_and_machine_handoff_advances_without_losing_e
     handoff_path = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
     handoff = __import__("json").loads(handoff_path.read_text(encoding="utf-8"))
     execution = handoff["dense_fullft_allocator_fraction_recovery_execution"]
-    assert handoff["next_plan"].endswith("AXIS_PI05_DENSE_FULLFT_DONATED_ACCUMULATOR_RECOVERY_PLAN.md")
-    assert handoff["next_phase_only"] == "donated_accumulator_D0_to_D4_max_10_steps"
-    assert handoff["tests"]["passed"] == 137
+    assert handoff["next_plan"].endswith("AXIS_PI05_DENSE_FULLFT_INTERSTEP_STATE_LIFETIME_RECOVERY_PLAN.md")
+    assert handoff["next_phase_only"] == "interstep_lifetime_L0_to_L4_max_internal_step10"
+    assert handoff["tests"]["passed"] == 141
     assert execution["a2_fraction_090"]["optimizer_updates"] == 0
     assert execution["a3_fraction_095"]["optimizer_updates"] == 0
     audit = handoff["dense_fullft_m2_donation_audit"]
@@ -166,3 +166,9 @@ def test_m0_summary_is_fail_closed_and_machine_handoff_advances_without_losing_e
     assert audit["finding"]["failed_accumulation_index"] == 1
     assert audit["finding"]["first_unattempted_compute_index"] == 2
     assert audit["blackwell_authorized"] is False
+    interstep = handoff["dense_fullft_interstep_lifetime_audit"]
+    assert interstep["status"] == "remediation_required"
+    assert interstep["d4_semantic_correction"]["completed_update_transition"] == [1, 2]
+    assert interstep["d4_semantic_correction"]["failed_optimizer_step_before"] == 2
+    assert interstep["d4_semantic_correction"]["failed_compute_microbatch_index"] == 1
+    assert interstep["official_gpu_authorized"] is False

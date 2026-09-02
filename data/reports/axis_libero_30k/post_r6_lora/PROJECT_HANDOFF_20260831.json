@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-02",
-  "status": "dense_fullft_donated_accumulator_remediation_failed",
+  "status": "dense_fullft_interstep_lifetime_remediation_pending",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
-  "latest_audited_execution_commit": "8e9f3cf",
-  "latest_audit_input_commit": "8e9f3cf",
-  "latest_execution_root_commit": "8e9f3cf",
+  "latest_audited_execution_commit": "c8b0a42",
+  "latest_audit_input_commit": "c8b0a42",
+  "latest_execution_root_commit": "c8b0a42",
   "latest_execution_nested_openpi_commit": "5c29b0e",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
@@ -218,7 +218,7 @@
   },
   "tests": {
     "command": ".venv_axis_pi05/bin/pytest -q tests",
-    "passed": 137,
+    "passed": 141,
     "skipped": 7,
     "warnings": 23,
     "pynvml_is_collection_blocker": false
@@ -253,8 +253,8 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_DENSE_FULLFT_DONATED_ACCUMULATOR_RECOVERY_PLAN.md",
-  "next_phase_only": "donated_accumulator_D0_to_D4_max_10_steps",
+  "next_plan": "docs/AXIS_PI05_DENSE_FULLFT_INTERSTEP_STATE_LIFETIME_RECOVERY_PLAN.md",
+  "next_phase_only": "interstep_lifetime_L0_to_L4_max_internal_step10",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -1240,7 +1240,8 @@
     "status": "dense_fullft_donated_accumulator_remediation_failed",
     "review": "docs/reviews/axis_pi05/DENSE_FULLFT_DONATED_ACCUMULATOR_EXECUTION_20260902.md",
     "plan": "docs/AXIS_PI05_DENSE_FULLFT_DONATED_ACCUMULATOR_RECOVERY_PLAN.md",
-    "execution_root_commit": "8e9f3cf",
+    "execution_input_root_commit": "8e9f3cf",
+    "execution_root_commit": "c8b0a42",
     "execution_nested_openpi_commit": "5c29b0e",
     "tests": {
       "command": ".venv_axis_pi05/bin/pytest -q tests",
@@ -1293,6 +1294,15 @@
     "d4": {
       "status": "dense_fullft_donated_accumulator_remediation_failed",
       "failure_classification": "allocator_bfc_oom_during_compute",
+      "restored_internal_step": 1,
+      "completed_update_before_failure": {
+        "optimizer_step_before": 1,
+        "optimizer_step_after": 2,
+        "microbatch_count": 16,
+        "examples_seen": 64,
+        "finite_metrics": true,
+        "atomic_step2_checkpoint": false
+      },
       "optimizer_step_before": 2,
       "failed_microbatch_index": 1,
       "completed_microbatch_indexes": [0],
@@ -1311,6 +1321,35 @@
     "long_training_started": false,
     "fast_zip_upload_submission": false,
     "gpu_released_after_exit": true,
-    "next_phase_only": "manual_review_before_any_new_remediation_or_resource_escalation"
+    "next_phase_only": "superseded_by_interstep_lifetime_audit"
+  },
+  "dense_fullft_interstep_lifetime_audit": {
+    "status": "remediation_required",
+    "review": "docs/reviews/axis_pi05/DENSE_FULLFT_D4_INTERSTEP_LIFETIME_AUDIT_20260902.md",
+    "next_plan": "docs/AXIS_PI05_DENSE_FULLFT_INTERSTEP_STATE_LIFETIME_RECOVERY_PLAN.md",
+    "audit_input_root_commit": "c8b0a42",
+    "audit_input_nested_openpi_commit": "5c29b0e",
+    "d4_semantic_correction": {
+      "restored_internal_step": 1,
+      "completed_update_transition": [1, 2],
+      "failed_optimizer_step_before": 2,
+      "completed_microbatch_indexes": [0],
+      "failed_compute_microbatch_index": 1,
+      "step2_checkpoint_and_restore_passed": false
+    },
+    "per_card_live_bytes": {
+      "checkpoint_restore": 13435318528,
+      "step1_microbatch0_release": 19941729536,
+      "step1_microbatch15_release": 19941729792,
+      "optimizer_update_1_to_2_complete": 19941608704,
+      "next_step_start": 19943419136,
+      "step2_microbatch0_release": 26510640384
+    },
+    "classification": "full_tree_equivalent_device_allocation_survives_optimizer_boundary_root_cause_unresolved",
+    "gradient_tree_alias_size_bytes": 6479127152,
+    "max_authorized_internal_step": 10,
+    "official_gpu_authorized": false,
+    "blackwell_authorized": false,
+    "c20_or_50_100_1k_long_training_authorized": false
   }
 }

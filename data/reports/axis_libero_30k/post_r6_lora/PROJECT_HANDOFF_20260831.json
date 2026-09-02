@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
-  "generated_date": "2026-09-02",
-  "status": "track3_teleop_recorder_remediation_ready",
+  "generated_date": "2026-09-03",
+  "status": "track3_teleop_ready_for_human_after_remediation",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
   "latest_audited_execution_commit": "9dac308",
   "latest_audit_input_commit": "9dac308",
-  "latest_execution_root_commit": "9dac308",
+  "latest_execution_root_commit": "07de201",
   "latest_execution_nested_openpi_commit": "b58aff0",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
@@ -1637,5 +1637,74 @@
       "libero_plus_existing_dirty_state_must_be_preserved": true
     },
     "next_phase_only": "R0_to_R4_recorder_remediation_then_stop_before_human_input"
+  },
+  "track3_teleop_recorder_remediation_execution": {
+    "status": "track3_teleop_ready_for_human_after_remediation",
+    "input_root_commit": "07de201",
+    "input_root_parent": "9dac308",
+    "input_nested_openpi_commit": "b58aff0",
+    "plan": "docs/AXIS_PI05_TRACK3_TELEOP_RECORDER_REMEDIATION_PLAN.md",
+    "r0": {
+      "status": "passed",
+      "summary": "data/reports/axis_libero_30k/track3_public_terminal_recovery/R0_CORRECTION_SUMMARY.json",
+      "p0_lock_sha256": "be12795b3d18d46f774022d817789a14d64a5e16c8e27bee58e256c29acb4ab5",
+      "p1_summary_sha256": "62db697a1ff6afb5d157c9fc786c77eb17a0bdf1054edb060fea50b3f3fe211e",
+      "accepted_demonstration_count": 0,
+      "historical_evidence_rewritten": false
+    },
+    "r1": {
+      "status": "passed",
+      "tool": "tools/axis_pi05/track3_public_teleop.py",
+      "report": "data/reports/axis_libero_30k/track3_public_terminal_recovery/R1_ACTION_STATE_MACHINE_REPORT_ZH.md",
+      "no_key_gripper_contract": true,
+      "reset_reload_and_clear": true,
+      "diagnostic_rejected_atomic": true
+    },
+    "r2": {
+      "status": "passed",
+      "report": "data/reports/axis_libero_30k/track3_public_terminal_recovery/R2_LOCAL_PREVIEW_REPORT_ZH.md",
+      "bind_host": "127.0.0.1",
+      "first_frame_gate": true,
+      "front_wrist_preview": true,
+      "review_asset_report": "data/reports/axis_libero_30k/track3_public_terminal_recovery/R4_GPU3_NONHUMAN_CANARY.json"
+    },
+    "r3": {
+      "status": "passed_implementation_only",
+      "tool": "tools/axis_pi05/track3_public_replay.py",
+      "report": "data/reports/axis_libero_30k/track3_public_terminal_recovery/R3_PENDING_REPLAY_PROMOTION_REPORT_ZH.md",
+      "accepted_promotion_requires": ["fresh_process_replay_3_of_3", "human_review_approved", "atomic_directory_rename"],
+      "candidate_count_created": 0,
+      "accepted_count_created": 0
+    },
+    "r4": {
+      "status": "passed",
+      "tool": "tools/axis_pi05/track3_public_teleop_canary.py --run",
+      "report": "data/reports/axis_libero_30k/track3_public_terminal_recovery/R4_GPU3_NONHUMAN_CANARY.json",
+      "task_order": [19, 10, 20],
+      "gpu_physical": 3,
+      "gpu3_before_mib": 5,
+      "gpu3_after_mib": 5,
+      "preview_http_status": [200, 200, 200],
+      "idle_ticks_each": 20,
+      "accepted_episode_count": 0,
+      "human_input": false
+    },
+    "verification": {
+      "project_python_pytest": "158_passed_7_skipped_23_warnings",
+      "main_python_pytest": "blocked_no_pytest_module",
+      "py_compile": "passed",
+      "json_and_diff_check": "passed",
+      "gpu0_touched": false,
+      "gpu1_gpu2_training_started": false,
+      "forbidden_phases_started": false,
+      "libero_plus_dirty_state_modified": false
+    },
+    "human_next_step": {
+      "status": "pending_human_input",
+      "task_order": [19, 10, 20],
+      "command": "PYTHONPATH=LIBERO:. CUDA_VISIBLE_DEVICES=3 MUJOCO_EGL_DEVICE_ID=3 MUJOCO_GL=egl .venv_axis_pi05/bin/python tools/axis_pi05/track3_public_teleop.py --record --task-index 19 --operator operator-local --preview-port 8765",
+      "localhost_url": "http://127.0.0.1:8765/",
+      "ssh_tunnel": "ssh -N -L 8765:127.0.0.1:8765 huang@gpu01"
+    }
   }
 }

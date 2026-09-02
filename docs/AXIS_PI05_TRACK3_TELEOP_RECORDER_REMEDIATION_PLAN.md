@@ -1,8 +1,8 @@
 # AXIS Pi0.5 Track 3 Teleop Recorder 修复与人工就绪计划
 
 > 制定日期：2026-09-02（Asia/Tokyo）
-> 执行输入：root `9dac308`，nested OpenPI `b58aff0`
-> 当前状态：`track3_teleop_recorder_remediation_ready`
+> 执行输入：root `07de201`（计划标签 `9dac308` 的直接后继），nested OpenPI `b58aff0`
+> 当前状态：`track3_teleop_ready_for_human_after_remediation`
 > 目标：把现有P2 recorder修成在当前headless环境可见、可控、可回放且fail-closed的人工采集工具；结束时停止在人工输入前。
 > 不授权：真实人工accepted demo、P3 planner、P4/P5、LoRA/dense训练、FAST、ZIP、C20、E2、比赛GPU、上传或提交。
 

@@ -1,0 +1,36 @@
+{
+  "schema_version": "track3_teleop_r0_correction_v1",
+  "status": "passed",
+  "created_at_local": "2026-09-03T00:34:20+09:00",
+  "plan_declared_root_input_commit": "9dac308",
+  "actual_root_execution_input_commit": "07de201",
+  "actual_root_execution_input_parent": "9dac308",
+  "nested_openpi_input_commit": "b58aff0",
+  "p0_lock": {
+    "path": "data/reports/axis_libero_30k/track3_reverse_lora/p0_lock.json",
+    "sha256": "be12795b3d18d46f774022d817789a14d64a5e16c8e27bee58e256c29acb4ab5",
+    "historical_reported_sha256_stale": "06c2d8deb5fbd9363f9ca9cb3412b15d761dbe42940b5909a83f6565bae0e725"
+  },
+  "p0_summary": {
+    "path": "data/reports/axis_libero_30k/track3_reverse_lora/P0_CPU_HDF5_LOCK_SUMMARY.json",
+    "sha256": "aa4643f585940197abfea4ef7ecb1cd9dcf5a5440041b19f42037d8c7e45957e"
+  },
+  "p1_summary": {
+    "path": "data/reports/axis_libero_30k/track3_public_terminal_recovery/p1_restore_canary_summary.json",
+    "sha256": "62db697a1ff6afb5d157c9fc786c77eb17a0bdf1054edb060fea50b3f3fe211e",
+    "status": "track3_terminal_snapshot_canary_passed_pending_review",
+    "accepted_snapshot_count": 3,
+    "accepted_demonstration_count": 0
+  },
+  "activation_exclusion": {
+    "path": "data/reports/axis_libero_30k/track3_public_terminal_recovery/p1_activation_task16_failed_summary.json",
+    "sha256": "06d3ab034b231ffcaa594658c16f4e5d1ccb9e5ea84cb90bd9b7d7a060460369",
+    "counted_as_canary": false
+  },
+  "immutability": {
+    "historical_p0_p1_evidence_rewritten": false,
+    "libero_plus_modified": false,
+    "accepted_episode_count_before_r1": 0
+  },
+  "gate": "R1_R4_only; stop_before_human_input"
+}

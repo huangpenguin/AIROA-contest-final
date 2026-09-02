@@ -1,11 +1,11 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新已审核执行提交：`9dac308`（P0/P1保留，P2需要修复）
+> 最新已审核执行提交：`07de201`（R0–R4 remediation 输入；完成后停在人工作业前）
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_teleop_recorder_remediation_ready`
+> 当前总状态：`track3_teleop_ready_for_human_after_remediation`
 > 唯一活动计划：`docs/AXIS_PI05_TRACK3_TELEOP_RECORDER_REMEDIATION_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
@@ -449,3 +449,13 @@ P2不能交给人工：真实record loop在no-key时把7D action全置0，grippe
 证据闭合还有两处错误：`p0_lock.json`实际SHA-256为`be12795b3d18d46f774022d817789a14d64a5e16c8e27bee58e256c29acb4ab5`，不是报告/handoff中的`06c2d8...`；在clean `9dac308`上复跑两个相关测试文件得到`1 failed, 6 passed`，旧测试仍断言P0状态，因此提交记录的全量155通过不可复现。
 
 第30节最后一句授权旧GPU3命令已被本节撤销。旧计划已归档；新唯一活动计划`docs/AXIS_PI05_TRACK3_TELEOP_RECORDER_REMEDIATION_PLAN.md`只允许：闭合hash/tests，修复action/reset，增加localhost headless实时画面，实现pending→fresh-process 3/3 replay→human review promotion，再做GPU3 idle/reset/preview diagnostic。完成后hard stop于`track3_teleop_ready_for_human_after_remediation`；在此之前不要运行旧命令。审核记录：`docs/reviews/axis_pi05/TRACK3_P0_P2_RECORDER_READINESS_AUDIT_20260902.md`。
+
+## 32. Track 3 R0–R4 Recorder remediation 完成停止点
+
+本轮实际执行输入为 root `07de201`（计划旧标签 `9dac308` 的直接后继），nested OpenPI `b58aff0`；P0 lock、P1 summary 与 activation exclusion 的原始 evidence 未改写。R0 correction/hash closure 见 `data/reports/axis_libero_30k/track3_public_terminal_recovery/R0_CORRECTION_SUMMARY.json`，其中锁定实际 P0 lock SHA-256 `be12795b3d18d46f774022d817789a14d64a5e16c8e27bee58e256c29acb4ab5` 与 P1 summary SHA-256 `62db697a1ff6afb5d157c9fc786c77eb17a0bdf1054edb060fea50b3f3fe211e`。
+
+R1–R3 已完成：共同 action state machine 使 no-key 永远保持 `-1/+1` gripper，支持 pause、camera、reset、abort、断连安全控制；localhost-only front/wrist preview 要求首帧被取到后才开始记录；candidate 先 atomic 写入 `pending/`，fresh-process replay `3/3` 与完整 human-review sidecar 通过后才允许 atomic promotion 到 `accepted/`。R3 只实现门禁，本轮没有 candidate、replay、human review 或 promotion，accepted demonstration 仍为 `0`。
+
+R4 仅使用 GPU3，任务顺序 `19 → 10 → 20`。三项 reverse goal reset false、20 个 no-key tick、preview root/front/wrist HTTP 200 均通过；task19 额外通过 motion/pause/camera/reset byte-equal/abort，task10 与 task20 完成 idle gate。GPU3 执行前后均 `5 MiB / 32768 MiB`，GPU0 未触碰，GPU1/2 未训练。真实 review asset 的 codec/hash 见 `data/reports/axis_libero_30k/track3_public_terminal_recovery/R4_GPU3_NONHUMAN_CANARY.json`；没有把 PNG hash 冒充 H.264。
+
+当前唯一状态为 `track3_teleop_ready_for_human_after_remediation`。人工命令固定使用 task19、operator `operator-local` 与 localhost `8765`；人工顺序只能是 task19→task10→20。不得执行旧 teleop 命令，也不得进入 P3/P4/P5、LoRA/dense、FAST、ZIP、C20、E2、官方GPU、上传或提交。`LIBERO-plus` 既有 dirty 状态保持原样。

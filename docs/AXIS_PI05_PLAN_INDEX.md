@@ -1,18 +1,18 @@
 # AXIS Pi0.5 计划索引与审核生命周期
 
-> 更新日期：2026-09-02（Asia/Tokyo）
+> 更新日期：2026-09-03（Asia/Tokyo）
 > 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_TELEOP_RECORDER_REMEDIATION_PLAN.md`
-> 当前状态：`track3_teleop_recorder_remediation_ready`
-> 最新审核：`docs/reviews/axis_pi05/TRACK3_P0_P2_RECORDER_READINESS_AUDIT_20260902.md`
+> 当前状态：`track3_teleop_ready_for_human_after_remediation`
+> 最新执行：`07de201`（R0–R4 remediation；等待人工输入前停止）
 
 ## 1. 唯一活动计划
 
 - `AXIS_PI05_TRACK3_TELEOP_RECORDER_REMEDIATION_PLAN.md`
   - P0的40个公开HDF5与P1 support/containment/articulation三族full-state `3/3`成果保留；activation失稳继续排除，accepted demo仍为0；
-  - P2 recorder审核未通过：no-key路径生成gripper=0并会异常；当前headless环境没有实时画面；camera/reset宣称与实现不一致；
-  - predicate成功会在3/3 replay和human review前直接写入accepted，必须改为pending→replay→review→atomic promotion；
+  - R0–R4已通过：R0 hash/state闭合，R1 action/reset fail-closed，R2 localhost front/wrist preview，R3 pending→fresh-process 3/3 replay→human-review→atomic accepted promotion，R4 GPU3 task19→10→20非人工canary；
+  - predicate成功先写入`pending/`；只有3/3 replay和human review通过后才允许atomic promotion到`accepted/`；
   - R0闭合stale P0 hash/测试，R1修action/control/reset，R2实现localhost headless preview，R3实现replay/promotion，R4只做GPU3非人工canary；
-  - 完成后停在`track3_teleop_ready_for_human_after_remediation`，不得直接采集accepted episode或进入planner/训练；GPU0不触碰，GPU1/2不训练。
+  - 当前停在`track3_teleop_ready_for_human_after_remediation`，下一步只能人工按task19→10→20逐条操作；不得直接采集accepted episode或进入planner/训练；GPU0不触碰，GPU1/2不训练。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 

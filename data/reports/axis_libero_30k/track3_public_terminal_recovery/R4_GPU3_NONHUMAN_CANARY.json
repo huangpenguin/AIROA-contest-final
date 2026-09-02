@@ -1,0 +1,242 @@
+{
+  "accepted_episode_count": 0,
+  "created_at_utc": "2026-09-02T15:48:16.685854+00:00",
+  "gpu3_after": {
+    "command": [
+      "nvidia-smi",
+      "-i",
+      "3",
+      "--query-gpu=index,memory.used,memory.total",
+      "--format=csv,noheader,nounits"
+    ],
+    "gpu": 3,
+    "status": "passed",
+    "threshold_mib": 1024,
+    "total_mib": 32768,
+    "used_mib": 5
+  },
+  "gpu3_before": {
+    "command": [
+      "nvidia-smi",
+      "-i",
+      "3",
+      "--query-gpu=index,memory.used,memory.total",
+      "--format=csv,noheader,nounits"
+    ],
+    "gpu": 3,
+    "status": "passed",
+    "threshold_mib": 1024,
+    "total_mib": 32768,
+    "used_mib": 5
+  },
+  "gpu_policy": {
+    "gpu0_touched": false,
+    "gpu1_gpu2_training_started": false,
+    "human_input": false,
+    "physical_gpu": 3
+  },
+  "results": [
+    {
+      "accepted_episode_count_delta": 0,
+      "all_idle_actions_valid": true,
+      "details": {
+        "abort_fail_closed": true,
+        "camera": true,
+        "motion": true,
+        "pause": true,
+        "reset_snapshot_equal": true
+      },
+      "idle_grippers": [
+        1.0
+      ],
+      "idle_tick_count": 20,
+      "motion_pause_camera_reset_abort": true,
+      "operator_family": "articulation_inverse",
+      "p0_lock_sha256": "be12795b3d18d46f774022d817789a14d64a5e16c8e27bee58e256c29acb4ab5",
+      "p1_snapshot_sha256": "0e2ee6afffe27c3ed8811b79a368111562b968ed381f3fb7388c68f2a6b1708e",
+      "preview_first_frame": {
+        "front": 200,
+        "front_bytes": 6181,
+        "root": 200,
+        "wrist": 200,
+        "wrist_bytes": 4170
+      },
+      "preview_url": "http://127.0.0.1:39931/",
+      "reverse_goal_false_at_reset": true,
+      "reverse_instruction": "Reverse the public LIBERO operation: close the wooden cabinet 1 middle.",
+      "review_assets": {
+        "front_contact_sha256": "d759aa6018d630693a5b0277218dd56ae9614132038d81e2c6b818580b0ad3a3",
+        "front_temporal_sequence": {
+          "codec": "raw_rgb_npz",
+          "fps": 20.0,
+          "frame_count": 20,
+          "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_terminal_recovery/r2_preview_review/task_19/settle_front_frames.npz",
+          "sha256": "000bcc735b122ec7edf4294dec2b2c9d44efc3406e0bdabec5fe3424c737c6d1",
+          "status": "written"
+        },
+        "front_video": {
+          "codec": "mp4v",
+          "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_terminal_recovery/r2_preview_review/task_19/settle_front.mp4",
+          "sha256": "2d0a73359894c10955ea8118d016e21f6c7fb40dbf965b6a87be6c47b83dbe8c",
+          "status": "written"
+        },
+        "wrist_contact_sha256": "a986e7b060d7b01d0664912f17e7f7b8c49733aecc6a8e5afc02cfa1a503eece",
+        "wrist_temporal_sequence": {
+          "codec": "raw_rgb_npz",
+          "fps": 20.0,
+          "frame_count": 20,
+          "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_terminal_recovery/r2_preview_review/task_19/settle_wrist_frames.npz",
+          "sha256": "2976fe50b60f8976f9aa2c8687b77fb74c6e196004e2668bd644ca0bde03d2af",
+          "status": "written"
+        },
+        "wrist_video": {
+          "codec": "mp4v",
+          "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_terminal_recovery/r2_preview_review/task_19/settle_wrist.mp4",
+          "sha256": "538bdd003809f10a2da7716c13ab32fdcfe35edd2067d136c0a413385655b71a",
+          "status": "written"
+        }
+      },
+      "status": "passed_nonhuman_canary",
+      "task_index": 19
+    },
+    {
+      "accepted_episode_count_delta": 0,
+      "all_idle_actions_valid": true,
+      "details": {
+        "abort_fail_closed": true,
+        "camera": true,
+        "motion": true,
+        "pause": true,
+        "reset_snapshot_equal": true
+      },
+      "idle_grippers": [
+        1.0
+      ],
+      "idle_tick_count": 20,
+      "motion_pause_camera_reset_abort": true,
+      "operator_family": "support_remove_restore",
+      "p0_lock_sha256": "be12795b3d18d46f774022d817789a14d64a5e16c8e27bee58e256c29acb4ab5",
+      "p1_snapshot_sha256": "34e0c70edac11ce668e548c5cca308a9fbd16b64afc8726e8800280c8c82c66d",
+      "preview_first_frame": {
+        "front": 200,
+        "front_bytes": 6425,
+        "root": 200,
+        "wrist": 200,
+        "wrist_bytes": 6223
+      },
+      "preview_url": "http://127.0.0.1:34141/",
+      "reverse_goal_false_at_reset": true,
+      "reverse_instruction": "Reverse the public LIBERO operation: remove the akita black bowl from the plate and put it back at its akita black bowl.",
+      "review_assets": {
+        "front_contact_sha256": "fdbbf933036caed2d093d026425684eae8546c8db31d856dacda993875999647",
+        "front_temporal_sequence": {
+          "codec": "raw_rgb_npz",
+          "fps": 20.0,
+          "frame_count": 20,
+          "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_terminal_recovery/r2_preview_review/task_10/settle_front_frames.npz",
+          "sha256": "f9977ebef71838f43546e3a31ad1ab290d9f373a09612a0b08e986f9bcec9fd3",
+          "status": "written"
+        },
+        "front_video": {
+          "codec": "mp4v",
+          "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_terminal_recovery/r2_preview_review/task_10/settle_front.mp4",
+          "sha256": "668388beebe2d7c41677eb61896353b6c7bb0642e9bafce0800af6683dfc0c56",
+          "status": "written"
+        },
+        "wrist_contact_sha256": "273260df82c31f0f9c7c90003a11d4f7342454c025e39f9b110272414d19f1c7",
+        "wrist_temporal_sequence": {
+          "codec": "raw_rgb_npz",
+          "fps": 20.0,
+          "frame_count": 20,
+          "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_terminal_recovery/r2_preview_review/task_10/settle_wrist_frames.npz",
+          "sha256": "485cd3683c56013f5d4dbc5bb43226ed7e6fa294d12551b3b68d12b9ef645810",
+          "status": "written"
+        },
+        "wrist_video": {
+          "codec": "mp4v",
+          "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_terminal_recovery/r2_preview_review/task_10/settle_wrist.mp4",
+          "sha256": "e4c6f363875f4a5784e507f77e0aed1ae83adeae8915bc74fe956269ad3e9f10",
+          "status": "written"
+        }
+      },
+      "status": "passed_nonhuman_canary",
+      "task_index": 10
+    },
+    {
+      "accepted_episode_count_delta": 0,
+      "all_idle_actions_valid": true,
+      "details": {
+        "abort_fail_closed": true,
+        "camera": true,
+        "motion": true,
+        "pause": true,
+        "reset_snapshot_equal": true
+      },
+      "idle_grippers": [
+        1.0
+      ],
+      "idle_tick_count": 20,
+      "motion_pause_camera_reset_abort": true,
+      "operator_family": "containment_remove_restore",
+      "p0_lock_sha256": "be12795b3d18d46f774022d817789a14d64a5e16c8e27bee58e256c29acb4ab5",
+      "p1_snapshot_sha256": "7d3d2547794fef4576672e6f37b666700556f857f1afddf19a8e173139f2d3e8",
+      "preview_first_frame": {
+        "front": 200,
+        "front_bytes": 6806,
+        "root": 200,
+        "wrist": 200,
+        "wrist_bytes": 7026
+      },
+      "preview_url": "http://127.0.0.1:33243/",
+      "reverse_goal_false_at_reset": true,
+      "reverse_instruction": "Reverse the public LIBERO operation: take the orange juice out of the basket 1 contain and return it to its floor target object.",
+      "review_assets": {
+        "front_contact_sha256": "a3ff8e4fef129f717fe902bafac0c452bc2ae6515cb088de479420e3c9b2cdba",
+        "front_temporal_sequence": {
+          "codec": "raw_rgb_npz",
+          "fps": 20.0,
+          "frame_count": 20,
+          "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_terminal_recovery/r2_preview_review/task_20/settle_front_frames.npz",
+          "sha256": "8fe4d7fa5cf5a10c0cad9a53d71a3660f069d47e61d79afcd53d5d0fd8b36818",
+          "status": "written"
+        },
+        "front_video": {
+          "codec": "mp4v",
+          "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_terminal_recovery/r2_preview_review/task_20/settle_front.mp4",
+          "sha256": "b02934bc6a271be9bc7a47869b0f32cb8e122f08d1cc96b5b124930e0a08f89c",
+          "status": "written"
+        },
+        "wrist_contact_sha256": "2d1250533acf70045624ea42a391c146834b88b7d5e9f48bf7a2104de167096d",
+        "wrist_temporal_sequence": {
+          "codec": "raw_rgb_npz",
+          "fps": 20.0,
+          "frame_count": 20,
+          "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_terminal_recovery/r2_preview_review/task_20/settle_wrist_frames.npz",
+          "sha256": "414267cd706242be4aa7335b24e582a9904d2ee12512656424f777df215044cd",
+          "status": "written"
+        },
+        "wrist_video": {
+          "codec": "mp4v",
+          "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_terminal_recovery/r2_preview_review/task_20/settle_wrist.mp4",
+          "sha256": "7f0da673555be8063fc52cea4a1e85d90b5b1134fcc26b4ddc25d021ad2b3e17",
+          "status": "written"
+        }
+      },
+      "status": "passed_nonhuman_canary",
+      "task_index": 20
+    }
+  ],
+  "schema_version": "track3_teleop_r4_canary_v1",
+  "status": "passed",
+  "task_order": [
+    19,
+    10,
+    20
+  ],
+  "worker_command": [
+    "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+    "/home/huang/code/PARC2026_final/tools/axis_pi05/track3_public_teleop_canary.py",
+    "--worker"
+  ],
+  "worker_returncode": 0
+}

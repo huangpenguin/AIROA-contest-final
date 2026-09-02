@@ -2,15 +2,15 @@
 
 > 更新日期：2026-09-02（Asia/Tokyo）
 > 当前唯一活动计划：`docs/AXIS_PI05_DENSE_FULLFT_INTERSTEP_STATE_LIFETIME_RECOVERY_PLAN.md`
-> 当前状态：`dense_fullft_interstep_lifetime_remediation_pending`
-> 最新审核：`docs/reviews/axis_pi05/DENSE_FULLFT_D4_INTERSTEP_LIFETIME_AUDIT_20260902.md`
+> 当前状态：`dense_fullft_interstep_l0_blocked_external_gpu`
+> 最新执行记录：`docs/reviews/axis_pi05/DENSE_FULLFT_INTERSTEP_L0_BLOCKED_EXECUTION_20260902.md`
 
 ## 1. 唯一活动计划
 
 - `AXIS_PI05_DENSE_FULLFT_INTERSTEP_STATE_LIFETIME_RECOVERY_PLAN.md`
   - D4原始trace证明从internal step1恢复后已经完整update到step2；真正失败在下一轮`optimizer_step_before=2`的microbatch `1` compute，旧文字的step语义已在审核中纠正；
   - update完成后下一microbatch 0 release由约`19.94GB/card`升至约`26.51GB/card`，残留量级约等于一份`6.48GB/card` gradient tree；具体引用来源尚未证明；
-  - L0/L1先修复device metrics、gradient input、old state与observer的跨步生命周期；L2只做step1→2→next-micro0 transition canary，通过才允许L3 step3与L4 step10；
+  - L0语义锁和L1 CPU/code gate已通过，但四卡资源 gate 被外部 GPU0 PID `1133706` fail-closed；L2未启动，待GPU0自然释放后重新检查再执行；
   - 不授权降精度/降batch、官方GPU、Blackwell、C20、50/100/1K/长训或提交。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。

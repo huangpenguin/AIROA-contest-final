@@ -1,11 +1,11 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新已审核执行 HEAD：`c8b0a42`
-> donated accumulator execution HEAD：`c8b0a42`
+> 最新执行 HEAD：`35e67b6`
+> interstep L0/L1 execution input：`35e67b6`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
-> nested OpenPI：`5c29b0e`（donated accumulator implementation）
-> 当前总状态：`dense_fullft_interstep_lifetime_remediation_pending`
+> nested OpenPI：`b58aff0`（interstep lifetime implementation）
+> 当前总状态：`dense_fullft_interstep_l0_blocked_external_gpu`
 > 唯一活动计划：`docs/AXIS_PI05_DENSE_FULLFT_INTERSTEP_STATE_LIFETIME_RECOVERY_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
@@ -14,7 +14,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式 Track1=`0.47`、Track2=`0.33`。Donated accumulator 的 D2 两份 merge 与 D3 step1 通过；D4从internal step1恢复后又完成一次update到step2，随后在下一轮`optimizer_step_before=2`的microbatch `1`因申请`136.69MiB` OOM。update后残留约一份`6.5GB/card` full-tree-equivalent allocation，现转入跨step生命周期修复，不批准Blackwell或改配方。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式 Track1=`0.47`、Track2=`0.33`。跨step生命周期修复已完成 L0/L1，但四卡资源 gate 因 GPU0 外部 YOLO PID `1133706` 被 fail-closed，L2 尚未启动。不得触碰外部任务或转向Blackwell。
 
 ## 2. 数据与复现基础
 
@@ -213,7 +213,7 @@ Axis init/原团队式 standard LIBERO full-FT 是后续正确研究方向，但
 
 ```text
 .venv_axis_pi05/bin/pytest -q tests
-141 passed, 7 skipped, 23 warnings（donated accumulator recovery 执行记录）。
+146 passed, 7 skipped, 23 warnings（interstep lifetime L0/L1 执行记录）。
 ```
 
 此前“缺少 pynvml 导致 collection 中断”不是仓库指定 venv 的真实 blocker；最新执行记录为 134 tests（127 passed + 7 skipped）。交接时不要为此随意安装依赖。
@@ -222,8 +222,8 @@ Git：
 
 ```text
 branch               codex/axis-pi05-audit-remediation
-latest execution HEAD 8e9f3cf
-nested OpenPI        5c29b0e
+latest execution HEAD 35e67b6
+nested OpenPI        b58aff0
 root/nested          clean（审核 6239704 开始时）
 upstream             当前 branch 未设置 upstream
 ```
@@ -392,3 +392,10 @@ D4 从internal step1续跑，先完成`16/16` accumulation和一次optimizer upd
 这证明当前阻塞已从“gradient merge无法复用output”推进到“optimizer update之后full-tree-equivalent device allocation跨step存活”。可能涉及未donate的gradient输入、device metrics异步依赖、旧state/update引用或observer生命周期；现有证据尚不能唯一归因，禁止把推断写成根因。
 
 旧donated计划已归档。唯一活动计划为`docs/AXIS_PI05_DENSE_FULLFT_INTERSTEP_STATE_LIFETIME_RECOVERY_PLAN.md`：L0闭合step语义，L1只修复host/device对象生命周期并证明数学exact，L2从step1完成update到step2后只探测下一microbatch 0的plateau；通过才允许step3和step10。仍不授权比赛GPU、Blackwell、降精度/降batch、C20或长训。审核记录为`docs/reviews/axis_pi05/DENSE_FULLFT_D4_INTERSTEP_LIFETIME_AUDIT_20260902.md`。
+## 25. Interstep L0/L1 执行阻塞
+
+本轮执行输入为 root `35e67b6`、nested OpenPI `b58aff0`。L0 已锁定 D4 raw evidence、step1 checkpoint tree hash `9aeeb1a9b1fdf428486b476930ca9117c28d822dd108b4efaeebf911ca0fafef` 及正确的 step 语义；L1 仅加入 gradient/state donation、host metrics materialization 和 device temporary release 边界，CPU 全量测试为 `146 passed, 7 skipped, 23 warnings`。
+
+启动 L2 前的只读资源检查发现 GPU0 被外部 YOLO 训练 PID `1133706` 占用约 `14.3GiB`，GPU utilization 非零；GPU1–3 各约 `5MiB`。L0 因此按 fail-closed 规则记录为 `dense_fullft_interstep_l0_blocked_external_gpu`。没有触碰或终止外部 PID，也没有启动 L2/L3/L4、Blackwell/官方 GPU、C20、长训、FAST/ZIP、上传或提交。
+
+当前只等待 GPU0 外部任务自然释放；释放后必须重新检查完整 4×V100 的 PID/显存，再运行 L2 transition。证据为 `data/reports/axis_libero_30k/dense_fullft_interstep_state_lifetime_recovery/l0_cpu_lock.json` 及 `docs/reviews/axis_pi05/DENSE_FULLFT_INTERSTEP_L0_BLOCKED_EXECUTION_20260902.md`。

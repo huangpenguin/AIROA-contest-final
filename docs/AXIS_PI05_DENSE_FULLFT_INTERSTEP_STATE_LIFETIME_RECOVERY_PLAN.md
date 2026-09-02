@@ -1,8 +1,8 @@
 # AXIS Pi0.5 Dense Full-FT 跨 optimizer step State 生命周期修复计划
 
 > 制定日期：2026-09-02（Asia/Tokyo）
-> 审核输入：root `c8b0a42`，nested OpenPI `5c29b0e`
-> 当前状态：`dense_fullft_interstep_lifetime_remediation_pending`
+> 执行输入：root `35e67b6`，nested OpenPI `b58aff0`
+> 当前状态：`dense_fullft_interstep_l0_blocked_external_gpu`
 > 唯一目标：不改变训练数学与global batch 64，消除 optimizer update 后跨步残留的一份约 `6.5GB/card` full-tree-equivalent allocation，并在本地4×V100证明连续到internal step10的稳定显存 plateau。
 
 ## 0. 已锁定事实
@@ -93,3 +93,11 @@ L3失败立即停止，不允许转Blackwell。
 - `dense_fullft_interstep_step10_passed_pending_review`
 
 交付L0派生summary、compiled donation/alias证据、per-boundary memory table、L2/L3/L4报告与允许阶段的checkpoint/restore、全量测试、root/nested clean commit。每个hard gate失败都必须保留raw evidence并停止；不得自动扩权。
+
+## 6. 本轮执行结果
+
+L0 的 CPU 语义锁定和 L1 CPU/code gate 已完成。原始 D4 证据被标记为 immutable，step1 checkpoint tree hash 为 `9aeeb1a9b1fdf428486b476930ca9117c28d822dd108b4efaeebf911ca0fafef`；语义为 restore internal step `1`、完成 update `1→2`、在 `optimizer_step_before=2` 的 microbatch `1` 失败。L1 只增加 gradient/state donation、host metrics materialization 和 device temporary release 边界，不改变训练数学；全量测试为 `146 passed, 7 skipped, 23 warnings`。
+
+L0 的四卡资源 gate fail-closed：GPU0 被外部 PID `1133706` 的 YOLO 训练占用约 `14.3GiB`，GPU utilization 非零；GPU1–3 各约 `5MiB`。因此不能按计划启动完整 4×V100。L2 transition、L3 step3、L4 step10 均未启动，也没有终止或触碰外部任务。
+
+当前状态为 `dense_fullft_interstep_l0_blocked_external_gpu`。待 GPU0 外部 PID 自然释放后，必须重新检查四卡 PID/显存，再从 L2 开始；不得用部分 GPU 绕过门禁或转向 Blackwell。

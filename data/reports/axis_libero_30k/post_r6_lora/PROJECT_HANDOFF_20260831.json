@@ -1,18 +1,18 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-02",
-  "status": "dense_fullft_interstep_lifetime_remediation_pending",
+  "status": "dense_fullft_interstep_l0_blocked_external_gpu",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
-  "latest_audited_execution_commit": "c8b0a42",
-  "latest_audit_input_commit": "c8b0a42",
-  "latest_execution_root_commit": "c8b0a42",
-  "latest_execution_nested_openpi_commit": "5c29b0e",
+  "latest_audited_execution_commit": "35e67b6",
+  "latest_audit_input_commit": "35e67b6",
+  "latest_execution_root_commit": "35e67b6",
+  "latest_execution_nested_openpi_commit": "b58aff0",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
   "branch_has_upstream": false,
-  "nested_openpi_commit": "5c29b0e",
+  "nested_openpi_commit": "b58aff0",
   "dataset": {
     "path": "data/raw/hf/physical-intelligence/libero",
     "source_fps": 10,
@@ -1351,5 +1351,44 @@
     "official_gpu_authorized": false,
     "blackwell_authorized": false,
     "c20_or_50_100_1k_long_training_authorized": false
+  },
+  "dense_fullft_interstep_lifetime_execution": {
+    "status": "dense_fullft_interstep_l0_blocked_external_gpu",
+    "review": "docs/reviews/axis_pi05/DENSE_FULLFT_INTERSTEP_L0_BLOCKED_EXECUTION_20260902.md",
+    "plan": "docs/AXIS_PI05_DENSE_FULLFT_INTERSTEP_STATE_LIFETIME_RECOVERY_PLAN.md",
+    "execution_root_commit": "35e67b6",
+    "execution_nested_openpi_commit": "b58aff0",
+    "tests": {
+      "command": ".venv_axis_pi05/bin/pytest -q tests",
+      "passed": 146,
+      "skipped": 7,
+      "warnings": 23
+    },
+    "l0": {
+      "status": "dense_fullft_interstep_l0_blocked_external_gpu",
+      "report": "data/reports/axis_libero_30k/dense_fullft_interstep_state_lifetime_recovery/l0_cpu_lock.json",
+      "source_step1_tree_sha256": "9aeeb1a9b1fdf428486b476930ca9117c28d822dd108b4efaeebf911ca0fafef",
+      "semantic_correction": {
+        "restored_internal_step": 1,
+        "completed_update_transition": [1, 2],
+        "failed_optimizer_step_before": 2,
+        "completed_microbatches": [0],
+        "failed_compute_microbatch": 1
+      },
+      "external_pids": [1133706],
+      "external_gpu": 0,
+      "external_gpu_memory_used_mib": 14311,
+      "local_idle_gpu_ids": [1, 2, 3]
+    },
+    "l1_cpu_gate_passed": true,
+    "l2_started": false,
+    "l3_started": false,
+    "l4_started": false,
+    "official_gpu_started": false,
+    "blackwell_started": false,
+    "c20_started": false,
+    "long_training_started": false,
+    "fast_zip_upload_submission": false,
+    "next_phase_only": "wait_for_external_gpu0_release_then_recheck_full_4xV100_before_L2"
   }
 }

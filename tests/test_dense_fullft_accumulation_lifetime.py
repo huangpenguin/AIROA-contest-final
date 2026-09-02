@@ -155,9 +155,9 @@ def test_m0_summary_is_fail_closed_and_machine_handoff_advances_without_losing_e
     handoff_path = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
     handoff = __import__("json").loads(handoff_path.read_text(encoding="utf-8"))
     execution = handoff["dense_fullft_allocator_fraction_recovery_execution"]
-    assert handoff["next_plan"].endswith("AXIS_PI05_TRACK3_TELEOP_RECORDER_REMEDIATION_PLAN.md")
-    assert handoff["next_phase_only"] == "track3_recorder_R0_to_R4_then_stop_before_human_input"
-    assert handoff["tests"]["passed"] == 155
+    assert handoff["next_plan"].endswith("AXIS_PI05_TRACK3_TASK19_HUMAN_CANARY_PLAN.md")
+    assert handoff["next_phase_only"] == "track3_task19_H0_to_H3_no_promotion"
+    assert handoff["tests"]["passed"] == 158
     assert execution["a2_fraction_090"]["optimizer_updates"] == 0
     assert execution["a3_fraction_095"]["optimizer_updates"] == 0
     audit = handoff["dense_fullft_m2_donation_audit"]
@@ -206,3 +206,12 @@ def test_m0_summary_is_fail_closed_and_machine_handoff_advances_without_losing_e
     assert recorder_audit["human_input_authorized"] is False
     assert recorder_audit["planner_pilot_training_fast_zip_authorized"] is False
     assert (ROOT / recorder_audit["archived_plan"]).is_file()
+    readiness = handoff["track3_teleop_r0_r4_readiness_audit"]
+    assert readiness["status"] == "approved_task19_only"
+    assert readiness["approved_evidence"]["r4_gpu3_task_order"] == [19, 10, 20]
+    assert readiness["approved_evidence"]["accepted_count"] == 0
+    assert readiness["residual_risk"]["task19_is_first_true_end_to_end_canary"] is True
+    assert readiness["authorization"]["task19_single_human_pending_candidate"] is True
+    assert readiness["authorization"]["accepted_promotion"] is False
+    assert readiness["authorization"]["task10_task20_recording"] is False
+    assert (ROOT / readiness["archived_plan"]).is_file()

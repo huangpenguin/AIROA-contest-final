@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-03",
-  "status": "track3_teleop_ready_for_human_after_remediation",
+  "status": "track3_task19_human_canary_ready",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
-  "latest_audited_execution_commit": "9dac308",
-  "latest_audit_input_commit": "9dac308",
-  "latest_execution_root_commit": "07de201",
+  "latest_audited_execution_commit": "15791f9",
+  "latest_audit_input_commit": "15791f9",
+  "latest_execution_root_commit": "15791f9",
   "latest_execution_nested_openpi_commit": "b58aff0",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
@@ -218,7 +218,7 @@
   },
   "tests": {
     "command": "JAX_PLATFORMS=cpu .venv_axis_pi05/bin/pytest -q tests",
-    "passed": 155,
+    "passed": 158,
     "skipped": 7,
     "warnings": 23,
     "pynvml_is_collection_blocker": false
@@ -253,8 +253,8 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_TRACK3_TELEOP_RECORDER_REMEDIATION_PLAN.md",
-  "next_phase_only": "track3_recorder_R0_to_R4_then_stop_before_human_input",
+  "next_plan": "docs/AXIS_PI05_TRACK3_TASK19_HUMAN_CANARY_PLAN.md",
+  "next_phase_only": "track3_task19_H0_to_H3_no_promotion",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -1706,5 +1706,48 @@
       "localhost_url": "http://127.0.0.1:8765/",
       "ssh_tunnel": "ssh -N -L 8765:127.0.0.1:8765 huang@gpu01"
     }
+  },
+  "track3_teleop_r0_r4_readiness_audit": {
+    "status": "approved_task19_only",
+    "review": "docs/reviews/axis_pi05/TRACK3_TELEOP_R0_R4_READINESS_AUDIT_20260903.md",
+    "audit_input_root_commit": "15791f9",
+    "audit_input_nested_openpi_commit": "b58aff0",
+    "archived_plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_TELEOP_RECORDER_REMEDIATION_PLAN.md",
+    "new_plan": "docs/AXIS_PI05_TRACK3_TASK19_HUMAN_CANARY_PLAN.md",
+    "approved_evidence": {
+      "r0_hash_closure": true,
+      "r1_action_reset_state_machine": true,
+      "r2_loopback_first_frame_preview": true,
+      "r3_pending_replay_review_promotion_gate": true,
+      "r4_gpu3_task_order": [19, 10, 20],
+      "r4_status": "passed",
+      "accepted_count": 0,
+      "pending_count": 0,
+      "full_tests": "158_passed_7_skipped_23_warnings"
+    },
+    "visual_review": {
+      "task19_front_drawer_open_and_robot_visible": true,
+      "task19_settle_obvious_drift": false,
+      "wrist_view_information_limited": true,
+      "actual_video_codec": "mp4v",
+      "exact_raw_rgb_npz_present": true
+    },
+    "residual_risk": {
+      "r4_executed_full_record_episode_path": false,
+      "r3_executed_real_candidate_replay": false,
+      "task19_is_first_true_end_to_end_canary": true
+    },
+    "authorization": {
+      "task19_single_human_pending_candidate": true,
+      "task19_fresh_process_replay_3_of_3": true,
+      "human_review_sidecar_creation": false,
+      "accepted_promotion": false,
+      "task10_task20_recording": false,
+      "planner_pilot_expansion_training_fast_zip": false,
+      "gpu0": false,
+      "gpu1_gpu2_training": false,
+      "official_gpu": false
+    },
+    "next_phase_only": "H0_task19_single_record_H2_replay_then_H3_stop_before_human_review"
   }
 }

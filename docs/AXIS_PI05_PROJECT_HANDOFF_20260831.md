@@ -1,12 +1,12 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新已审核执行提交：`07de201`（R0–R4 remediation 输入；完成后停在人工作业前）
+> 最新已审核执行提交：`15791f9`（R0–R4批准，仅释放task19单条人工canary）
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_teleop_ready_for_human_after_remediation`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_TELEOP_RECORDER_REMEDIATION_PLAN.md`
+> 当前总状态：`track3_task19_human_canary_ready`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_TASK19_HUMAN_CANARY_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -14,7 +14,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3已锁定40个公开HDF5并通过三个family的full-state canary；但recorder存在no-key gripper=0、headless不可见、reset/camera未实现及premature accepted问题。当前先修recorder，禁止运行旧teleop命令与启动LoRA。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3的40个公开HDF5、三个family full-state canary与recorder R0–R4修复均已通过审核；当前只允许人工完成task19一条pending并3/3 replay，停在视频人审前，禁止task10/20与LoRA。
 
 ## 2. 数据与复现基础
 
@@ -250,13 +250,13 @@ upstream             当前 branch 未设置 upstream
 ## 10. 新 section 的接手顺序
 
 1. 阅读本文件与 `docs/AXIS_PI05_PLAN_INDEX.md`。
-2. 阅读并只执行 `docs/AXIS_PI05_TRACK3_TELEOP_RECORDER_REMEDIATION_PLAN.md`。
+2. 阅读并只执行 `docs/AXIS_PI05_TRACK3_TASK19_HUMAN_CANARY_PLAN.md`。
 3. 将Track1=`0.47`、Track2=`0.33`及ZIP `95415a…c5f5a`锁为当前官方baseline；Track2包身份在无上传回执/hash时保持conditional provenance。
-4. R0修正P0 lock hash与stale回归测试；P0/P1 raw evidence保持immutable。
-5. R1/R2修no-key action、reset/camera与localhost headless实时预览；当前无DISPLAY，terminal-only不能通过。
-6. R3/R4实现pending→3/3 replay→human review promotion并完成GPU3非人工canary；结束时仍不得产生accepted demo、planner、训练或ZIP。
+4. H0确认GPU3/8765/accepted/pending门禁；浏览器不在gpu01时先建立localhost SSH tunnel。
+5. H1只人工录制task19，网页success=true后才能Save；结果只能进入pending，失败即停止。
+6. H2对返回的实际pending路径做fresh-process replay 3/3；H3停在人审前，不创建human_review、不promote、不运行task10/20。
 
-当前路径是：R6 FAST ZIP Track1=`0.47`/Track2=`0.33`（冻结）→ 公开full terminal state（三族已通过）→ 修复可见且fail-closed的20Hz recorder → 人工task19→10→20 canary → planner/30–60条pilot → 另行审核LoRA。Dense 30K为冻结的独立研究线。
+当前路径是：R6 FAST ZIP Track1=`0.47`/Track2=`0.33`（冻结）→ 公开full terminal state（三族已通过）→ recorder R0–R4已通过 → task19单条人工pending+3/3 replay → 视频人审 → 再决定promotion/task10。Dense 30K为冻结的独立研究线。
 
 ## 19. Dense full-FT allocator fraction recovery 执行结果
 
@@ -459,3 +459,11 @@ R1–R3 已完成：共同 action state machine 使 no-key 永远保持 `-1/+1` 
 R4 仅使用 GPU3，任务顺序 `19 → 10 → 20`。三项 reverse goal reset false、20 个 no-key tick、preview root/front/wrist HTTP 200 均通过；task19 额外通过 motion/pause/camera/reset byte-equal/abort，task10 与 task20 完成 idle gate。GPU3 执行前后均 `5 MiB / 32768 MiB`，GPU0 未触碰，GPU1/2 未训练。真实 review asset 的 codec/hash 见 `data/reports/axis_libero_30k/track3_public_terminal_recovery/R4_GPU3_NONHUMAN_CANARY.json`；没有把 PNG hash 冒充 H.264。
 
 当前唯一状态为 `track3_teleop_ready_for_human_after_remediation`。人工命令固定使用 task19、operator `operator-local` 与 localhost `8765`；人工顺序只能是 task19→task10→20。不得执行旧 teleop 命令，也不得进入 P3/P4/P5、LoRA/dense、FAST、ZIP、C20、E2、官方GPU、上传或提交。`LIBERO-plus` 既有 dirty 状态保持原样。
+
+## 33. R0–R4 独立审核与 Task19 单条释放
+
+独立审核输入root `15791f9`、nested OpenPI `b58aff0`，结论为`approved`，但只批准task19单条人工pending canary及其fresh-process 3/3 replay。审核确认R1 no-key/gripper/reset状态机、R2 loopback first-frame preview、R3 pending/replay/review promotion门禁与R4 GPU3 task19→10→20非人工canary均符合计划；独立全量测试为`158 passed, 7 skipped, 23 warnings`。
+
+task19 front contact sheet已目视确认中间抽屉打开、robot/cabinet可见且settle无明显漂移；wrist信息有限但front足够作为主画面。实际视频codec为`mp4v`，另有exact raw RGB NPZ，记录真实且不冒充H.264。R4没有调用完整人工record/replay路径，R3 promotion也只有fixture测试，因此task19仍必须作为第一个端到端canary。
+
+旧remediation计划已归档。新唯一活动计划为`docs/AXIS_PI05_TRACK3_TASK19_HUMAN_CANARY_PLAN.md`：H0检查GPU3/端口/空目录，H1只人工关闭中间抽屉并写一条pending，H2只对返回的实际目录replay 3/3，H3停在front/wrist视频人审前。不得创建human_review、promote到accepted、录task10/20或进入planner/训练。审核记录：`docs/reviews/axis_pi05/TRACK3_TELEOP_R0_R4_READINESS_AUDIT_20260903.md`。

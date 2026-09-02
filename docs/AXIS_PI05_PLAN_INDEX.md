@@ -1,18 +1,17 @@
 # AXIS Pi0.5 计划索引与审核生命周期
 
 > 更新日期：2026-09-03（Asia/Tokyo）
-> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_TELEOP_RECORDER_REMEDIATION_PLAN.md`
-> 当前状态：`track3_teleop_ready_for_human_after_remediation`
-> 最新执行：`07de201`（R0–R4 remediation；等待人工输入前停止）
+> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_TASK19_HUMAN_CANARY_PLAN.md`
+> 当前状态：`track3_task19_human_canary_ready`
+> 最新审核：`docs/reviews/axis_pi05/TRACK3_TELEOP_R0_R4_READINESS_AUDIT_20260903.md`
 
 ## 1. 唯一活动计划
 
-- `AXIS_PI05_TRACK3_TELEOP_RECORDER_REMEDIATION_PLAN.md`
-  - P0的40个公开HDF5与P1 support/containment/articulation三族full-state `3/3`成果保留；activation失稳继续排除，accepted demo仍为0；
-  - R0–R4已通过：R0 hash/state闭合，R1 action/reset fail-closed，R2 localhost front/wrist preview，R3 pending→fresh-process 3/3 replay→human-review→atomic accepted promotion，R4 GPU3 task19→10→20非人工canary；
-  - predicate成功先写入`pending/`；只有3/3 replay和human review通过后才允许atomic promotion到`accepted/`；
-  - R0闭合stale P0 hash/测试，R1修action/control/reset，R2实现localhost headless preview，R3实现replay/promotion，R4只做GPU3非人工canary；
-  - 当前停在`track3_teleop_ready_for_human_after_remediation`，下一步只能人工按task19→10→20逐条操作；不得直接采集accepted episode或进入planner/训练；GPU0不触碰，GPU1/2不训练。
+- `AXIS_PI05_TRACK3_TASK19_HUMAN_CANARY_PLAN.md`
+  - R0–R4独立审核为approved：no-key/reset/loopback preview/pending promotion门禁及GPU3三任务非人工canary通过；全量测试158/7/23；
+  - 当前只批准task19“关闭中间抽屉”一条真实人工端到端canary；task10/20仍未授权；
+  - H0锁定GPU/目录/端口，H1人工录制只生成pending，H2对实际pending路径fresh-process replay 3/3，H3停在视频人审前；
+  - 本计划不得创建human_review或promote到accepted；accepted必须保持0，也不得进入planner、扩充或训练。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 
@@ -43,10 +42,11 @@
 19. `AXIS_PI05_DENSE_FULLFT_INTERSTEP_STATE_LIFETIME_RECOVERY_PLAN.md`：L0语义/hash锁与L1生命周期CPU gate通过；GPU0被外部YOLO占用，L2–L4未启动；冻结成果并改道Track3正分优先。
 20. `AXIS_PI05_TRACK3_REVERSE_LORA_POSITIVE_SCORE_PLAN.md`：T0资产锁通过；T1编译40个公开候选但真实20Hz pilot为0条，按门禁停止；LoRA及后续阶段均未执行，转入公开完整终态与teleop/planner恢复。
 21. `AXIS_PI05_TRACK3_PUBLIC_TERMINAL_TELEOP_PLANNER_RECOVERY_PLAN.md`：P0锁定40个官方公开HDF5，P1三个family full-state canary通过，P2 recorder原型完成；独立审核发现recorder尚不可见/不可安全空闲/replay promotion不合格，转入最小修复。
+22. `AXIS_PI05_TRACK3_TELEOP_RECORDER_REMEDIATION_PLAN.md`：R0–R4完成，修复action/reset、localhost preview与pending/replay/review promotion语义；GPU3 task19→10→20非人工canary通过，转入单条task19人工端到端canary。
 
 归档不表示旧计划所有尾部阶段都完成；只表示该文件不再是活动授权入口。旧 failure、阈值、hash 和未执行阶段必须继续保留。
 
-当前只执行Track3 teleop recorder R0–R4修复；不要运行旧报告中的人工命令，不得从归档reverse LoRA/interstep计划自动恢复训练，也不得直接转向Blackwell。
+当前只执行Track3 task19 H0–H3单条人工canary；不得同时运行task10/20，不得从归档reverse LoRA/interstep计划自动恢复训练，也不得直接转向Blackwell。
 
 ## 3. 保留但非活动的研究线
 

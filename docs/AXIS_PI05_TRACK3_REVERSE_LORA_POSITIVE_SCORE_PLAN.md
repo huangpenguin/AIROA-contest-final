@@ -2,7 +2,7 @@
 
 > 制定日期：2026-09-02（Asia/Tokyo）
 > 执行输入：root `88796b2`，nested OpenPI `b58aff0`
-> 当前状态：`track3_reverse_lora_plan_ready`
+> 当前状态：`track3_reverse_t0_cpu_locked`
 > 资源边界：GPU1+2用于已验证的两卡LoRA；GPU3用于rollout/FAST诊断；GPU0及外部PID绝对不触碰
 > 目标：基于官方已公开的“现有LIBERO任务的逆向操作”规则，为Track3构建通用reverse supervision，用最小LoRA适配获得可提交的Track3正分候选，同时保留Track1/2能力。
 
@@ -13,6 +13,15 @@
 - R6配置为action-expert LoRA rank `32`，PaliGemma LoRA关闭，action in/out projections与time MLP随L2 arm训练；FP32、valid7 temporal、LR `1e-6`、clip `0.1`、两卡global batch `64`。
 - `lerobot/libero_plus`已本地落盘，metadata为20 FPS、14,347 episodes；它可作20Hz retention/扰动评估，但不是reverse supervision，不能代替逆向数据。
 - dense interstep L0/L1成果已冻结；本计划不启动或修改dense full-FT。
+
+## T0 执行记录（待审核）
+
+T0 已在 root `61d4a9f`、nested OpenPI `b58aff0` 上完成 CPU-only 锁定。GPU1–3 idle gate 通过，GPU0 仍由外部 PID 占用但只做只读观察；没有启动 CUDA context、simulator、训练或 reverse 数据生成。
+
+- 证据：[t0_cpu_lock.json](../data/reports/axis_libero_30k/track3_reverse_lora/t0_cpu_lock.json)；报告：[T0_CPU_LOCK_REPORT_ZH.md](../data/reports/axis_libero_30k/track3_reverse_lora/T0_CPU_LOCK_REPORT_ZH.md)
+- R6 raw/folded/FAST/正分 ZIP 与 fresh QUANTILES norm hash 已锁定；正分 ZIP 未修改。
+- evaluation-only denylist 与 canonical training manifest 的 exact overlap 为 `0`；不输出其中的 task identifiers。
+- 下一步仅为 T1 generic reverse compiler/pilot；未达到 30–60 条真实 20Hz、3/3 replay accepted episode 门禁前，不启动 LoRA。
 
 ## 1. 公平性与数据红线
 

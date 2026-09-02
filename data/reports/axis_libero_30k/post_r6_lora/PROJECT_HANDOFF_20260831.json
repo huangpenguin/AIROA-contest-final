@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-02",
-  "status": "track3_reverse_lora_plan_ready",
+  "status": "track3_reverse_t0_cpu_locked",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
@@ -1443,6 +1443,19 @@
     },
     "max_track3_adaptation_steps": 500,
     "reverse_pilot_required_before_training": true,
-    "auto_upload_or_submit_authorized": false
+    "auto_upload_or_submit_authorized": false,
+    "t0_cpu_lock": {
+      "status": "track3_reverse_t0_cpu_locked",
+      "root_implementation_commit": "61d4a9f",
+      "nested_openpi_commit": "b58aff0",
+      "lock": "data/reports/axis_libero_30k/track3_reverse_lora/t0_cpu_lock.json",
+      "report": "data/reports/axis_libero_30k/track3_reverse_lora/T0_CPU_LOCK_REPORT_ZH.md",
+      "gpu1_2_3_idle_gate": true,
+      "gpu0_touched": false,
+      "cuda_or_simulator_started": false,
+      "reverse_data_generated": false,
+      "evaluation_only_denylist_overlap": 0,
+      "next_phase_only": "T1_generic_reverse_compiler_and_30_to_60_episode_pilot"
+    }
   }
 }

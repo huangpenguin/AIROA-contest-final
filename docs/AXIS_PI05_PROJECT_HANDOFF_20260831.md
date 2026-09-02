@@ -409,3 +409,9 @@ D4 从internal step1续跑，先完成`16/16` accumulation和一次optimizer upd
 用户提供的官方公开规则确认Track3核心是现有LIBERO任务的逆向操作。现有R6在Track1/2有正分而Track3为0，故继续纯正向LIBERO LoRA缺乏直接supervision。唯一活动计划改为`docs/AXIS_PI05_TRACK3_REVERSE_LORA_POSITIVE_SCORE_PLAN.md`：以公开LIBERO构造generic reverse init/goal/instruction，真实环境20Hz执行并3/3 replay验证30–60条pilot，再从R6 raw step500以GPU1+2训练最多两个保守LoRA arm、GPU3做reverse holdout和retention；通过后最多生成独立Track3 FAST ZIP并停止。禁止使用泄漏脚本中的family/hidden task/数量/命名等内部细节。
 
 审核记录：`docs/reviews/axis_pi05/INTERSTEP_BLOCKED_TRACK3_REDIRECTION_AUDIT_20260902.md`。
+
+## 27. Track 3 T0 CPU-only 执行记录（待审核）
+
+T0 在 root `61d4a9f`、nested OpenPI `b58aff0` 上完成。R6 raw/folded/FAST/正分 ZIP、canonical 10Hz、LIBERO-plus 20Hz metadata、action/state/gripper contract 已锁定；R6 资产和正分 ZIP 未修改。GPU1–3 idle gate 通过；GPU0 外部 PID 只做只读观察且未触碰。evaluation-only denylist 与 canonical training manifest exact overlap 为 `0`，没有输出 denylist identifiers。T0 没有启动 CUDA context、simulator、数据生成或训练。
+
+证据：`data/reports/axis_libero_30k/track3_reverse_lora/t0_cpu_lock.json`、`T0_CPU_LOCK_REPORT_ZH.md`。下一步只允许 T1 generic reverse compiler/pilot；在真实 20Hz、predicate、3/3 replay 的 30–60 条 accepted episode 门禁前不得启动 LoRA。

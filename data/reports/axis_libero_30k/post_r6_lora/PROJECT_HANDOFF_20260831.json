@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-02",
-  "status": "track3_public_terminal_recovery_ready",
+  "status": "track3_teleop_input_pending_human",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
   "latest_audited_execution_commit": "1e71ec5",
   "latest_audit_input_commit": "1e71ec5",
-  "latest_execution_root_commit": "1e71ec5",
+  "latest_execution_root_commit": "5c0e92b",
   "latest_execution_nested_openpi_commit": "b58aff0",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
@@ -254,7 +254,7 @@
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
   "next_plan": "docs/AXIS_PI05_TRACK3_PUBLIC_TERMINAL_TELEOP_PLANNER_RECOVERY_PLAN.md",
-  "next_phase_only": "track3_terminal_P0_to_P5_no_training",
+  "next_phase_only": "track3_P2_manual_keyboard_teleop_on_GPU3_only",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -1530,5 +1530,60 @@
     },
     "training_fast_zip_upload_submission_authorized": false,
     "next_phase_only": "P0_official_hdf5_provenance_lock_then_P1_to_P5_hard_gates"
+  },
+  "track3_public_terminal_recovery_execution": {
+    "status": "track3_teleop_input_pending_human",
+    "input_root_commit": "5c0e92b",
+    "input_nested_openpi_commit": "b58aff0",
+    "p0": {
+      "status": "track3_public_terminal_source_locked",
+      "file_count": 40,
+      "total_bytes": 33784856577,
+      "partial_file_count": 0,
+      "required_dataset_failures": 0,
+      "task_mapping_count": 40,
+      "p0_lock": "data/reports/axis_libero_30k/track3_reverse_lora/p0_lock.json",
+      "p0_lock_sha256": "06c2d8deb5fbd9363f9ca9cb3412b15d761dbe42940b5909a83f6565bae0e725",
+      "mapping_sha256": "7fbc22916d7eb960c80df834a47132839b6cd761b511b304d840c7410d1b18b8",
+      "public_only": true,
+      "hidden_track3_details_used": false
+    },
+    "p1": {
+      "status": "track3_terminal_snapshot_canary_passed_pending_review",
+      "accepted_snapshot_count": 3,
+      "accepted_task_indices": [10, 19, 20],
+      "canary_families": ["support_remove_restore", "containment_remove_restore", "articulation_inverse"],
+      "fresh_process_replay": "3/3_each",
+      "summary": "data/reports/axis_libero_30k/track3_public_terminal_recovery/p1_restore_canary_summary.json",
+      "summary_sha256": "62db697a1ff6afb5d157c9fc786c77eb17a0bdf1054edb060fea50b3f3fe211e",
+      "activation_task16_failure_summary": "data/reports/axis_libero_30k/track3_public_terminal_recovery/p1_activation_task16_failed_summary.json",
+      "activation_task16_dual_source_stable": false,
+      "video_review": "pending"
+    },
+    "p2": {
+      "recorder": "tools/axis_pi05/track3_public_teleop.py",
+      "schema": "track3_reverse_pilot_v2",
+      "human_input": "pending",
+      "accepted_episode_count": 0,
+      "cpu_self_test": "passed",
+      "py_compile": "passed"
+    },
+    "tests": {
+      "command": "JAX_PLATFORMS=cpu PYTHONPATH=. .venv_axis_pi05/bin/pytest -q tests",
+      "passed": 155,
+      "skipped": 7,
+      "warnings": 23
+    },
+    "resources": {
+      "gpu0_touched": false,
+      "gpu3_only_for_p1": true,
+      "gpu1_gpu2_training_started": false,
+      "official_gpu_started": false,
+      "training_started": false,
+      "fast_zip_c20_e2_upload_submission_started": false,
+      "libero_plus_existing_dirty_state_modified": false
+    },
+    "evidence_report": "data/reports/axis_libero_30k/track3_public_terminal_recovery/P0_P1_P2_EXECUTION_REPORT_ZH.md",
+    "next_phase_only": "manual_keyboard_teleop_on_GPU3_then_stop_for_review"
   }
 }

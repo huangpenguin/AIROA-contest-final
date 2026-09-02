@@ -2,7 +2,8 @@
 
 > 制定日期：2026-09-02（Asia/Tokyo）
 > 执行输入：root `1e71ec5`，nested OpenPI `b58aff0`
-> 当前状态：`track3_public_terminal_recovery_ready`
+> 当前状态：`track3_teleop_input_pending_human`
+> P0/P1 已完成；P1 canary 采用 support、containment、articulation 三个公开 family。activation task16 的双来源稳定性失败已单独保留；当前停在 P2 人工 keyboard 输入前。
 > 唯一目标：用公开、可追溯的完整 simulator state 建立真实 20 Hz reverse demonstrations；达到 pilot 门禁后停止等待审核。
 > 本计划不授权：LoRA/dense训练、FAST、ZIP、C20、E2、比赛 GPU、上传或提交。
 

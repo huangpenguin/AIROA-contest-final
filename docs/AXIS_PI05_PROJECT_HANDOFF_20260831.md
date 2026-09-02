@@ -5,7 +5,7 @@
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_public_terminal_recovery_ready`
+> 当前总状态：`track3_teleop_input_pending_human`
 > 唯一活动计划：`docs/AXIS_PI05_TRACK3_PUBLIC_TERMINAL_TELEOP_PLANNER_RECOVERY_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
@@ -253,8 +253,8 @@ upstream             当前 branch 未设置 upstream
 2. 阅读并只执行 `docs/AXIS_PI05_TRACK3_PUBLIC_TERMINAL_TELEOP_PLANNER_RECOVERY_PLAN.md`。
 3. 将Track1=`0.47`、Track2=`0.33`及ZIP `95415a…c5f5a`锁为当前官方baseline；Track2包身份在无上传回执/hash时保持conditional provenance。
 4. P0下载并锁定官方公开原始LIBERO HDF5及`data/demo_i/states` schema，不用GPU、不触碰独立dirty `LIBERO-plus`目录。
-5. P1只用official HDF5 full state或当前环境R6公开正向成功live capture，完成restore/settle/predicate/3/3资格验证。
-6. P2–P5依次完成teleop canary、闭环planner、30–60条pilot和loader forward smoke；不得启动LoRA、dense、FAST/ZIP、比赛GPU或提交。
+5. P1只用official HDF5 full state或当前环境R6公开正向成功live capture，完成restore/settle/predicate/3/3资格验证；当前 support/containment/articulation 已通过，activation task16 双来源失稳证据保留。
+6. P2–P5依次完成teleop canary、闭环planner、30–60条pilot和loader forward smoke；P2 recorder 已就绪，当前等待人工 keyboard 输入；不得启动LoRA、dense、FAST/ZIP、比赛GPU或提交。
 
 当前路径是：R6 FAST ZIP Track1=`0.47`/Track2=`0.33`（冻结）→ 官方公开LIBERO full terminal state → 20Hz teleop/planner真实逆向轨迹 → 30–60条3/3 replay pilot → 人工审核 → 另行决定是否从R6分叉LoRA。Dense 30K为冻结的独立研究线。
 
@@ -429,3 +429,13 @@ T1 CPU compiler 从公开 canonical LIBERO catalog 与 public BDDL/init 生成40
 官方公开LIBERO原始HDF5包含完整`data/demo_i/states`；官方检查代码会把demonstration末状态送入`env.set_init_state`。新唯一活动计划为`docs/AXIS_PI05_TRACK3_PUBLIC_TERMINAL_TELEOP_PLANNER_RECOVERY_PLAN.md`：P0下载并锁定公开原始HDF5；P1验证official full state，版本不兼容时改用当前环境R6公开正向成功live full-state capture；P2实现20Hz teleop并取得3 families canary；P3从成功teleop抽取闭环keypose planner；P4扩展到30–60条、6 templates、2 scenes且逐条3/3 replay；P5只做schema/manifest/loader forward smoke。完成后状态只能到`track3_reverse_pilot_ready_pending_review`，仍不得训练。
 
 GPU0继续禁止触碰；GPU3仅用于simulator/capture，GPU1/2不启动训练；比赛GPU、LoRA/dense、FAST、ZIP、C20、E2、上传与提交均未授权。独立`LIBERO-plus`目录的既有dirty状态原样保留。审核记录：`docs/reviews/axis_pi05/TRACK3_T1_TERMINAL_SOURCE_AUDIT_20260902.md`。
+
+## 30. Track 3 P0–P2 执行停止点
+
+本轮执行输入为 root `5c0e92b`、nested OpenPI `b58aff0`。P0 已下载并锁定官方公开四 suite 各 10 个 HDF5，共 `40` 个、`33784856577` bytes；40/40 具备 `data/demo_0/states/actions/rewards/dones`，task/BDDL 映射通过，reverse BDDL 由官方 BDDL 与 `.pruned_init` CPU 重新编译。P0 证据和 hash 见 `data/reports/axis_libero_30k/track3_reverse_lora/{p0_lock.json,p0_download_manifest.json,p0_hdf5_schema_inventory.json,p0_task_mapping.json}`。
+
+P1 使用 GPU3 fresh process 完成 task10 support、task20 containment、task19 articulation 三个公开 family 的 `3/3` restore/settle/reverse-not-success canary，共 3 个 snapshot；activation task16 的官方 state 与 live public forward capture 均在 no-op settle 后失稳，独立摘要保留在 `data/reports/axis_libero_30k/track3_public_terminal_recovery/p1_activation_task16_failed_summary.json`，不计入成功。
+
+P2 keyboard-first recorder 已实现并通过 CPU self-test、py_compile；支持 20Hz、7D OSC_POSE、完整 per-frame state、front/wrist、timestamp/deadline miss、start/end state、视频与 accepted/rejected 分离。当前状态为 `track3_teleop_input_pending_human`，没有 accepted episode；P3/P4/P5 未启动。全量测试为 `155 passed, 7 skipped, 23 warnings`。
+
+GPU0 外部任务未触碰，GPU1/2 未训练，官方 GPU、LoRA/dense、FAST、ZIP、C20、E2、上传和提交均未启动。`LIBERO-plus` 既有 dirty 状态未修改。人工输入只能使用执行报告中的 GPU3 命令，完成后停止等待审核。

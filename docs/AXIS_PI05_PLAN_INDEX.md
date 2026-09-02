@@ -1,19 +1,18 @@
 # AXIS Pi0.5 计划索引与审核生命周期
 
 > 更新日期：2026-09-02（Asia/Tokyo）
-> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_PUBLIC_TERMINAL_TELEOP_PLANNER_RECOVERY_PLAN.md`
-> 当前状态：`track3_teleop_input_pending_human`
-> 最新审核：`docs/reviews/axis_pi05/TRACK3_T1_TERMINAL_SOURCE_AUDIT_20260902.md`
+> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_TELEOP_RECORDER_REMEDIATION_PLAN.md`
+> 当前状态：`track3_teleop_recorder_remediation_ready`
+> 最新审核：`docs/reviews/axis_pi05/TRACK3_P0_P2_RECORDER_READINESS_AUDIT_20260902.md`
 
 ## 1. 唯一活动计划
 
-- `AXIS_PI05_TRACK3_PUBLIC_TERMINAL_TELEOP_PLANNER_RECOVERY_PLAN.md`
-  - 独立审核确认T1 hard stop正确：40个CPU reverse specs只是候选，GPU3真实20Hz pilot为`0 accepted episodes`；旧`.pruned_init`/8D state路径不能恢复完整成功终态；
-  - P0先下载并锁定官方公开LIBERO原始HDF5，检查`data/demo_i/states`、task/BDDL/model provenance；下载不使用GPU；
-  - P1只用完整官方HDF5 state或当前环境中R6公开正向成功的live full-state capture，完成restore、settle、predicate与fresh-process 3/3门禁；当前 support/containment/articulation 三个公开 family 已通过，activation task16 的双来源失稳证据单独保留；
-  - P2实现keyboard必备/SpaceMouse可选的20Hz teleop recorder并取得3 families canary；recorder 与 CPU self-test 已完成，当前等待真实人工输入；P3才允许从成功teleop提取闭环keypose planner；
-  - P4逐级扩展到30–60条、3 families、6 templates、2 scenes、逐条3/3 replay与H.264人工审核；P5只做schema/manifest/loader forward smoke；
-  - GPU0不触碰，GPU3只用于simulator/capture，GPU1/2不训练；本计划不授权LoRA、dense、FAST、ZIP、C20、E2、比赛GPU、上传或提交。
+- `AXIS_PI05_TRACK3_TELEOP_RECORDER_REMEDIATION_PLAN.md`
+  - P0的40个公开HDF5与P1 support/containment/articulation三族full-state `3/3`成果保留；activation失稳继续排除，accepted demo仍为0；
+  - P2 recorder审核未通过：no-key路径生成gripper=0并会异常；当前headless环境没有实时画面；camera/reset宣称与实现不一致；
+  - predicate成功会在3/3 replay和human review前直接写入accepted，必须改为pending→replay→review→atomic promotion；
+  - R0闭合stale P0 hash/测试，R1修action/control/reset，R2实现localhost headless preview，R3实现replay/promotion，R4只做GPU3非人工canary；
+  - 完成后停在`track3_teleop_ready_for_human_after_remediation`，不得直接采集accepted episode或进入planner/训练；GPU0不触碰，GPU1/2不训练。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 
@@ -43,10 +42,11 @@
 18. `AXIS_PI05_DENSE_FULLFT_DONATED_ACCUMULATOR_RECOVERY_PLAN.md`：D2 donated merge和D3 step1通过；D4从step1完成update到step2后，在下一轮microbatch 1 compute OOM；转入跨optimizer step生命周期修复。
 19. `AXIS_PI05_DENSE_FULLFT_INTERSTEP_STATE_LIFETIME_RECOVERY_PLAN.md`：L0语义/hash锁与L1生命周期CPU gate通过；GPU0被外部YOLO占用，L2–L4未启动；冻结成果并改道Track3正分优先。
 20. `AXIS_PI05_TRACK3_REVERSE_LORA_POSITIVE_SCORE_PLAN.md`：T0资产锁通过；T1编译40个公开候选但真实20Hz pilot为0条，按门禁停止；LoRA及后续阶段均未执行，转入公开完整终态与teleop/planner恢复。
+21. `AXIS_PI05_TRACK3_PUBLIC_TERMINAL_TELEOP_PLANNER_RECOVERY_PLAN.md`：P0锁定40个官方公开HDF5，P1三个family full-state canary通过，P2 recorder原型完成；独立审核发现recorder尚不可见/不可安全空闲/replay promotion不合格，转入最小修复。
 
 归档不表示旧计划所有尾部阶段都完成；只表示该文件不再是活动授权入口。旧 failure、阈值、hash 和未执行阶段必须继续保留。
 
-当前只执行Track3 terminal recovery P0–P5；本轮已完成 P0/P1 与 P2 recorder，下一步仅为人工 keyboard teleop；不得从归档reverse LoRA/interstep计划自动恢复训练，也不得直接转向Blackwell。
+当前只执行Track3 teleop recorder R0–R4修复；不要运行旧报告中的人工命令，不得从归档reverse LoRA/interstep计划自动恢复训练，也不得直接转向Blackwell。
 
 ## 3. 保留但非活动的研究线
 

@@ -1,12 +1,12 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新已审核执行提交：`1e71ec5`
+> 最新已审核执行提交：`9dac308`（P0/P1保留，P2需要修复）
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_teleop_input_pending_human`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_PUBLIC_TERMINAL_TELEOP_PLANNER_RECOVERY_PLAN.md`
+> 当前总状态：`track3_teleop_recorder_remediation_ready`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_TELEOP_RECORDER_REMEDIATION_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -14,7 +14,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Dense interstep成果继续冻结。Track3旧pilot因完整终态来源不合格得到0条accepted episode；当前只恢复公开LIBERO full simulator terminal state、20Hz teleop/planner与30–60条3/3 replay pilot，完成前禁止LoRA。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3已锁定40个公开HDF5并通过三个family的full-state canary；但recorder存在no-key gripper=0、headless不可见、reset/camera未实现及premature accepted问题。当前先修recorder，禁止运行旧teleop命令与启动LoRA。
 
 ## 2. 数据与复现基础
 
@@ -250,13 +250,13 @@ upstream             当前 branch 未设置 upstream
 ## 10. 新 section 的接手顺序
 
 1. 阅读本文件与 `docs/AXIS_PI05_PLAN_INDEX.md`。
-2. 阅读并只执行 `docs/AXIS_PI05_TRACK3_PUBLIC_TERMINAL_TELEOP_PLANNER_RECOVERY_PLAN.md`。
+2. 阅读并只执行 `docs/AXIS_PI05_TRACK3_TELEOP_RECORDER_REMEDIATION_PLAN.md`。
 3. 将Track1=`0.47`、Track2=`0.33`及ZIP `95415a…c5f5a`锁为当前官方baseline；Track2包身份在无上传回执/hash时保持conditional provenance。
-4. P0下载并锁定官方公开原始LIBERO HDF5及`data/demo_i/states` schema，不用GPU、不触碰独立dirty `LIBERO-plus`目录。
-5. P1只用official HDF5 full state或当前环境R6公开正向成功live capture，完成restore/settle/predicate/3/3资格验证；当前 support/containment/articulation 已通过，activation task16 双来源失稳证据保留。
-6. P2–P5依次完成teleop canary、闭环planner、30–60条pilot和loader forward smoke；P2 recorder 已就绪，当前等待人工 keyboard 输入；不得启动LoRA、dense、FAST/ZIP、比赛GPU或提交。
+4. R0修正P0 lock hash与stale回归测试；P0/P1 raw evidence保持immutable。
+5. R1/R2修no-key action、reset/camera与localhost headless实时预览；当前无DISPLAY，terminal-only不能通过。
+6. R3/R4实现pending→3/3 replay→human review promotion并完成GPU3非人工canary；结束时仍不得产生accepted demo、planner、训练或ZIP。
 
-当前路径是：R6 FAST ZIP Track1=`0.47`/Track2=`0.33`（冻结）→ 官方公开LIBERO full terminal state → 20Hz teleop/planner真实逆向轨迹 → 30–60条3/3 replay pilot → 人工审核 → 另行决定是否从R6分叉LoRA。Dense 30K为冻结的独立研究线。
+当前路径是：R6 FAST ZIP Track1=`0.47`/Track2=`0.33`（冻结）→ 公开full terminal state（三族已通过）→ 修复可见且fail-closed的20Hz recorder → 人工task19→10→20 canary → planner/30–60条pilot → 另行审核LoRA。Dense 30K为冻结的独立研究线。
 
 ## 19. Dense full-FT allocator fraction recovery 执行结果
 
@@ -436,6 +436,16 @@ GPU0继续禁止触碰；GPU3仅用于simulator/capture，GPU1/2不启动训练�
 
 P1 使用 GPU3 fresh process 完成 task10 support、task20 containment、task19 articulation 三个公开 family 的 `3/3` restore/settle/reverse-not-success canary，共 3 个 snapshot；activation task16 的官方 state 与 live public forward capture 均在 no-op settle 后失稳，独立摘要保留在 `data/reports/axis_libero_30k/track3_public_terminal_recovery/p1_activation_task16_failed_summary.json`，不计入成功。
 
-P2 keyboard-first recorder 已实现并通过 CPU self-test、py_compile；支持 20Hz、7D OSC_POSE、完整 per-frame state、front/wrist、timestamp/deadline miss、start/end state、视频与 accepted/rejected 分离。当前状态为 `track3_teleop_input_pending_human`，没有 accepted episode；P3/P4/P5 未启动。全量测试为 `155 passed, 7 skipped, 23 warnings`。
+P2 keyboard-first recorder 原型已实现并通过其CPU self-test、py_compile；支持20Hz、7D OSC_POSE、完整per-frame state、front/wrist、timestamp/deadline miss、start/end state与视频写出。执行提交将状态记为`track3_teleop_input_pending_human`，没有accepted episode；P3/P4/P5未启动。执行报告声称全量测试为`155 passed, 7 skipped, 23 warnings`，但该claim已被第31节的clean-tree复跑否定。
 
-GPU0 外部任务未触碰，GPU1/2 未训练，官方 GPU、LoRA/dense、FAST、ZIP、C20、E2、上传和提交均未启动。`LIBERO-plus` 既有 dirty 状态未修改。人工输入只能使用执行报告中的 GPU3 命令，完成后停止等待审核。
+GPU0 外部任务未触碰，GPU1/2 未训练，官方 GPU、LoRA/dense、FAST、ZIP、C20、E2、上传和提交均未启动。`LIBERO-plus` 既有 dirty 状态未修改。执行时曾给出的GPU3人工命令已由第31节审核撤销，不得继续使用。
+
+## 31. P0–P2 独立审核与 Recorder 修复决策
+
+独立审核输入root `9dac308`、nested OpenPI `b58aff0`，结论为`remediation_required`。P0/P1核心证据保留：本地实际有40个HDF5、总计`33784856577` bytes、无partial；task10/19/20各自fresh-process restore/settle/reverse-not-success为3/3；activation task16正确排除。但P1仍标`pending_video_review`，accepted demonstration仍为0。
+
+P2不能交给人工：真实record loop在no-key时把7D action全置0，gripper=0会被自身校验拒绝；当前`DISPLAY`/`WAYLAND_DISPLAY`为空且代码没有实时preview，camera toggle没有可见消费；reset字段未实现按键与state reload；predicate成功会在3/3 replay和human review前直接写入`accepted/`。报告中的`--operator <operator-name>`也不能原样粘贴。
+
+证据闭合还有两处错误：`p0_lock.json`实际SHA-256为`be12795b3d18d46f774022d817789a14d64a5e16c8e27bee58e256c29acb4ab5`，不是报告/handoff中的`06c2d8...`；在clean `9dac308`上复跑两个相关测试文件得到`1 failed, 6 passed`，旧测试仍断言P0状态，因此提交记录的全量155通过不可复现。
+
+第30节最后一句授权旧GPU3命令已被本节撤销。旧计划已归档；新唯一活动计划`docs/AXIS_PI05_TRACK3_TELEOP_RECORDER_REMEDIATION_PLAN.md`只允许：闭合hash/tests，修复action/reset，增加localhost headless实时画面，实现pending→fresh-process 3/3 replay→human review promotion，再做GPU3 idle/reset/preview diagnostic。完成后hard stop于`track3_teleop_ready_for_human_after_remediation`；在此之前不要运行旧命令。审核记录：`docs/reviews/axis_pi05/TRACK3_P0_P2_RECORDER_READINESS_AUDIT_20260902.md`。

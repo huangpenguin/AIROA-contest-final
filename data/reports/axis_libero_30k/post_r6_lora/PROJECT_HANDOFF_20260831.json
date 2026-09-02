@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-02",
-  "status": "track3_teleop_input_pending_human",
+  "status": "track3_teleop_recorder_remediation_ready",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
-  "latest_audited_execution_commit": "1e71ec5",
-  "latest_audit_input_commit": "1e71ec5",
-  "latest_execution_root_commit": "5c0e92b",
+  "latest_audited_execution_commit": "9dac308",
+  "latest_audit_input_commit": "9dac308",
+  "latest_execution_root_commit": "9dac308",
   "latest_execution_nested_openpi_commit": "b58aff0",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
@@ -218,7 +218,7 @@
   },
   "tests": {
     "command": "JAX_PLATFORMS=cpu .venv_axis_pi05/bin/pytest -q tests",
-    "passed": 153,
+    "passed": 155,
     "skipped": 7,
     "warnings": 23,
     "pynvml_is_collection_blocker": false
@@ -253,8 +253,8 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_TRACK3_PUBLIC_TERMINAL_TELEOP_PLANNER_RECOVERY_PLAN.md",
-  "next_phase_only": "track3_P2_manual_keyboard_teleop_on_GPU3_only",
+  "next_plan": "docs/AXIS_PI05_TRACK3_TELEOP_RECORDER_REMEDIATION_PLAN.md",
+  "next_phase_only": "track3_recorder_R0_to_R4_then_stop_before_human_input",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -1543,7 +1543,8 @@
       "required_dataset_failures": 0,
       "task_mapping_count": 40,
       "p0_lock": "data/reports/axis_libero_30k/track3_reverse_lora/p0_lock.json",
-      "p0_lock_sha256": "06c2d8deb5fbd9363f9ca9cb3412b15d761dbe42940b5909a83f6565bae0e725",
+      "p0_lock_sha256": "be12795b3d18d46f774022d817789a14d64a5e16c8e27bee58e256c29acb4ab5",
+      "historical_reported_p0_lock_sha256_stale": "06c2d8deb5fbd9363f9ca9cb3412b15d761dbe42940b5909a83f6565bae0e725",
       "mapping_sha256": "7fbc22916d7eb960c80df834a47132839b6cd761b511b304d840c7410d1b18b8",
       "public_only": true,
       "hidden_track3_details_used": false
@@ -1585,5 +1586,56 @@
     },
     "evidence_report": "data/reports/axis_libero_30k/track3_public_terminal_recovery/P0_P1_P2_EXECUTION_REPORT_ZH.md",
     "next_phase_only": "manual_keyboard_teleop_on_GPU3_then_stop_for_review"
+  },
+  "track3_p0_p2_recorder_readiness_audit": {
+    "status": "remediation_required",
+    "review": "docs/reviews/axis_pi05/TRACK3_P0_P2_RECORDER_READINESS_AUDIT_20260902.md",
+    "audit_input_root_commit": "9dac308",
+    "audit_input_nested_openpi_commit": "b58aff0",
+    "archived_plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_PUBLIC_TERMINAL_TELEOP_PLANNER_RECOVERY_PLAN.md",
+    "new_plan": "docs/AXIS_PI05_TRACK3_TELEOP_RECORDER_REMEDIATION_PLAN.md",
+    "preserved_results": {
+      "official_hdf5_file_count": 40,
+      "official_hdf5_total_bytes": 33784856577,
+      "partial_file_count": 0,
+      "p1_fresh_process_tasks": [10, 19, 20],
+      "p1_families": [
+        "support_remove_restore",
+        "articulation_inverse",
+        "containment_remove_restore"
+      ],
+      "p1_replay_each": "3/3",
+      "activation_task16_excluded_as_unstable": true,
+      "accepted_demonstration_count": 0
+    },
+    "corrections": {
+      "p0_lock_actual_sha256": "be12795b3d18d46f774022d817789a14d64a5e16c8e27bee58e256c29acb4ab5",
+      "p0_lock_historical_reported_sha256": "06c2d8deb5fbd9363f9ca9cb3412b15d761dbe42940b5909a83f6565bae0e725",
+      "p1_video_review": "pending",
+      "execution_claimed_full_test_pass_reproducible": false,
+      "audit_reproduction": "1_failed_6_passed_on_two_related_test_files"
+    },
+    "recorder_findings": {
+      "no_key_preserves_gripper_contract": false,
+      "current_headless_environment_has_display": false,
+      "live_visual_preview_implemented": false,
+      "camera_toggle_visible": false,
+      "reset_control_implemented": false,
+      "external_gpu3_process_gate_implemented": false,
+      "predicate_success_written_pending_before_replay": false,
+      "fresh_process_replay_verifier_implemented": false,
+      "human_review_required_before_accepted_promotion": false
+    },
+    "old_teleop_command_authorized": false,
+    "human_input_authorized": false,
+    "planner_pilot_training_fast_zip_authorized": false,
+    "resource_boundaries": {
+      "gpu0_authorized": false,
+      "gpu1_gpu2_training_authorized": false,
+      "gpu3_nonhuman_diagnostic_only_after_cpu_gates": true,
+      "official_gpu_authorized": false,
+      "libero_plus_existing_dirty_state_must_be_preserved": true
+    },
+    "next_phase_only": "R0_to_R4_recorder_remediation_then_stop_before_human_input"
   }
 }

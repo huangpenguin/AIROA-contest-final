@@ -155,9 +155,9 @@ def test_m0_summary_is_fail_closed_and_machine_handoff_advances_without_losing_e
     handoff_path = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
     handoff = __import__("json").loads(handoff_path.read_text(encoding="utf-8"))
     execution = handoff["dense_fullft_allocator_fraction_recovery_execution"]
-    assert handoff["next_plan"].endswith("AXIS_PI05_TRACK3_PUBLIC_TERMINAL_TELEOP_PLANNER_RECOVERY_PLAN.md")
-    assert handoff["next_phase_only"] == "track3_terminal_P0_to_P5_no_training"
-    assert handoff["tests"]["passed"] == 153
+    assert handoff["next_plan"].endswith("AXIS_PI05_TRACK3_TELEOP_RECORDER_REMEDIATION_PLAN.md")
+    assert handoff["next_phase_only"] == "track3_recorder_R0_to_R4_then_stop_before_human_input"
+    assert handoff["tests"]["passed"] == 155
     assert execution["a2_fraction_090"]["optimizer_updates"] == 0
     assert execution["a3_fraction_095"]["optimizer_updates"] == 0
     audit = handoff["dense_fullft_m2_donation_audit"]
@@ -195,3 +195,14 @@ def test_m0_summary_is_fail_closed_and_machine_handoff_advances_without_losing_e
     assert terminal_audit["training_fast_zip_upload_submission_authorized"] is False
     assert (ROOT / handoff["next_plan"]).is_file()
     assert (ROOT / terminal_audit["archived_plan"]).is_file()
+    recorder_audit = handoff["track3_p0_p2_recorder_readiness_audit"]
+    assert recorder_audit["status"] == "remediation_required"
+    assert recorder_audit["preserved_results"]["accepted_demonstration_count"] == 0
+    assert recorder_audit["corrections"]["p0_lock_actual_sha256"] == (
+        "be12795b3d18d46f774022d817789a14d64a5e16c8e27bee58e256c29acb4ab5"
+    )
+    assert recorder_audit["recorder_findings"]["no_key_preserves_gripper_contract"] is False
+    assert recorder_audit["recorder_findings"]["live_visual_preview_implemented"] is False
+    assert recorder_audit["human_input_authorized"] is False
+    assert recorder_audit["planner_pilot_training_fast_zip_authorized"] is False
+    assert (ROOT / recorder_audit["archived_plan"]).is_file()

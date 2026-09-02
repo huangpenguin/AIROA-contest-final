@@ -1,21 +1,22 @@
 # AXIS Pi0.5 计划索引与审核生命周期
 
 > 更新日期：2026-09-02（Asia/Tokyo）
-> 当前唯一活动计划：`docs/AXIS_PI05_DENSE_FULLFT_INTERSTEP_STATE_LIFETIME_RECOVERY_PLAN.md`
-> 当前状态：`dense_fullft_interstep_l0_blocked_external_gpu`
-> 最新执行记录：`docs/reviews/axis_pi05/DENSE_FULLFT_INTERSTEP_L0_BLOCKED_EXECUTION_20260902.md`
+> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_REVERSE_LORA_POSITIVE_SCORE_PLAN.md`
+> 当前状态：`track3_reverse_lora_plan_ready`
+> 最新审核：`docs/reviews/axis_pi05/INTERSTEP_BLOCKED_TRACK3_REDIRECTION_AUDIT_20260902.md`
 
 ## 1. 唯一活动计划
 
-- `AXIS_PI05_DENSE_FULLFT_INTERSTEP_STATE_LIFETIME_RECOVERY_PLAN.md`
-  - D4原始trace证明从internal step1恢复后已经完整update到step2；真正失败在下一轮`optimizer_step_before=2`的microbatch `1` compute，旧文字的step语义已在审核中纠正；
-  - update完成后下一microbatch 0 release由约`19.94GB/card`升至约`26.51GB/card`，残留量级约等于一份`6.48GB/card` gradient tree；具体引用来源尚未证明；
-  - L0语义锁和L1 CPU/code gate已通过，但四卡资源 gate 被外部 GPU0 PID `1133706` fail-closed；L2未启动，待GPU0自然释放后重新检查再执行；
-  - 不授权降精度/降batch、官方GPU、Blackwell、C20、50/100/1K/长训或提交。
+- `AXIS_PI05_TRACK3_REVERSE_LORA_POSITIVE_SCORE_PLAN.md`
+  - dense interstep L0语义锁与L1 CPU/code gate通过；L2因GPU0外部PID `1133706`阻塞，代码/checkpoint hash已冻结，当前不再让项目整体等待；
+  - 用户报告R6 FAST正式Track1=`0.47`、Track2=`0.33`、Track3=`0`；Track3按官方公开高层规则是现有LIBERO操作的逆向任务；
+  - 只用公开规则和generic reverse tasks，先生成30–60条真实20Hz、predicate/replay验证的pilot，再从R6 step500分叉两卡保守LoRA；
+  - GPU1+2训练、GPU3评估，GPU0及外部任务不触碰；不得使用泄漏脚本内部细节、隐藏任务或未经环境验证的倒放轨迹；
+  - 最多到500-step候选和独立FAST ZIP，之后hard stop；不自动上传/提交，不启动dense或比赛Blackwell。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 
-正式 Track1 `0.47` 与 Track2 `0.33` 已证明R6 FAST在官方20Hz闭环有效。dense full-FT已证明donated gradient merge可稳定完成16份和一次update；当前缺口是optimizer update之后一份full-tree-equivalent allocation跨步存活，必须先取得跨步baseline plateau证据，再讨论更大GPU。
+正式Track1 `0.47`与Track2 `0.33`已证明R6 FAST在官方20Hz闭环有效；Track3 `0`说明纯正向LIBERO LoRA并未自然获得逆向能力。当前优先级是用空闲两卡建立合法、通用、可回放的reverse supervision并小步适配；dense full-FT保留为GPU0释放后的独立研究线。
 
 ## 2. 已归档的 R6 执行链
 
@@ -39,15 +40,16 @@
 16. `AXIS_PI05_DENSE_FULLFT_ALLOCATOR_FRACTION_RECOVERY_PLAN.md`：完成0.90/0.95 canary且均无optimizer update；后续审核发现两次均已完成microbatch 0/1，失败与完整gradient引用生命周期强相关，转入最小accumulation remediation。
 17. `AXIS_PI05_DENSE_FULLFT_ACCUMULATION_MEMORY_LIFETIME_RECOVERY_PLAN.md`：M0/M1完成；M2在index1 compute完成后的普通gradient merge申请72MiB失败，未完成update/M3；转入donated accumulator最小修复。
 18. `AXIS_PI05_DENSE_FULLFT_DONATED_ACCUMULATOR_RECOVERY_PLAN.md`：D2 donated merge和D3 step1通过；D4从step1完成update到step2后，在下一轮microbatch 1 compute OOM；转入跨optimizer step生命周期修复。
+19. `AXIS_PI05_DENSE_FULLFT_INTERSTEP_STATE_LIFETIME_RECOVERY_PLAN.md`：L0语义/hash锁与L1生命周期CPU gate通过；GPU0被外部YOLO占用，L2–L4未启动；冻结成果并改道Track3正分优先。
 
 归档不表示旧计划所有尾部阶段都完成；只表示该文件不再是活动授权入口。旧 failure、阈值、hash 和未执行阶段必须继续保留。
 
-当前只执行inter-step lifetime L0–L4；不得从任何归档OOM计划直接转向Blackwell。
+当前只执行Track3 reverse T0–T6；不得从归档interstep计划自动恢复L2，也不得直接转向Blackwell。
 
 ## 3. 保留但非活动的研究线
 
 - `AXIS_PI05_STANDARD_LIBERO_30K_RESEARCH_PLAN.md`：长期标准LIBERO 30K/full-FT研究的事实与路线来源；当前执行授权由donated accumulator计划收窄到最多10 steps。
-- `TRACK3_REVERSE_DATA_SYNTHESIS_PLAN.md`：Track 3 逆向任务研究，当前不授权生成或训练。
+- `TRACK3_REVERSE_DATA_SYNTHESIS_PLAN.md`：长期完整逆向数据研究的事实来源；当前执行授权由正分优先计划收窄到pilot、500-step LoRA和候选ZIP。
 - `AXIS_PI05_TWO_GPU_LORA_TODAY_PLAN.md`：历史 provenance 路径被配置/工具引用，因此保留原位置；不再是活动计划。
 - 其余早期 post-training、低分恢复、urgent FAST、比赛 GPU 计划均不能覆盖本索引的当前活动计划。
 

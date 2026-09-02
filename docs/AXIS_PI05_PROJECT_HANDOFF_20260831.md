@@ -1,12 +1,12 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新执行 HEAD：`35e67b6`
-> interstep L0/L1 execution input：`35e67b6`
+> 最新已审核执行 HEAD：`88796b2`
+> interstep L0/L1 execution HEAD：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`dense_fullft_interstep_l0_blocked_external_gpu`
-> 唯一活动计划：`docs/AXIS_PI05_DENSE_FULLFT_INTERSTEP_STATE_LIFETIME_RECOVERY_PLAN.md`
+> 当前总状态：`track3_reverse_lora_plan_ready`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_REVERSE_LORA_POSITIVE_SCORE_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -14,7 +14,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式 Track1=`0.47`、Track2=`0.33`。跨step生命周期修复已完成 L0/L1，但四卡资源 gate 因 GPU0 外部 YOLO PID `1133706` 被 fail-closed，L2 尚未启动。不得触碰外部任务或转向Blackwell。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Dense interstep的L0/L1已完成，但L2因GPU0外部YOLO阻塞；成果已冻结。当前用GPU1+2/GPU3改道Track3：只依据官方公开的“现有LIBERO逆向操作”高层规则，先做真实20Hz reverse pilot，再从R6分叉保守LoRA，不使用泄漏的隐藏任务细节。
 
 ## 2. 数据与复现基础
 
@@ -398,4 +398,14 @@ D4 从internal step1续跑，先完成`16/16` accumulation和一次optimizer upd
 
 启动 L2 前的只读资源检查发现 GPU0 被外部 YOLO 训练 PID `1133706` 占用约 `14.3GiB`，GPU utilization 非零；GPU1–3 各约 `5MiB`。L0 因此按 fail-closed 规则记录为 `dense_fullft_interstep_l0_blocked_external_gpu`。没有触碰或终止外部 PID，也没有启动 L2/L3/L4、Blackwell/官方 GPU、C20、长训、FAST/ZIP、上传或提交。
 
-当前只等待 GPU0 外部任务自然释放；释放后必须重新检查完整 4×V100 的 PID/显存，再运行 L2 transition。证据为 `data/reports/axis_libero_30k/dense_fullft_interstep_state_lifetime_recovery/l0_cpu_lock.json` 及 `docs/reviews/axis_pi05/DENSE_FULLFT_INTERSTEP_L0_BLOCKED_EXECUTION_20260902.md`。
+该次执行在此停止等待审核；证据为`data/reports/axis_libero_30k/dense_fullft_interstep_state_lifetime_recovery/l0_cpu_lock.json`及`docs/reviews/axis_pi05/DENSE_FULLFT_INTERSTEP_L0_BLOCKED_EXECUTION_20260902.md`。后续资源决策以第26节为准。
+
+## 26. Interstep 阻塞审核与 Track 3 正分改道
+
+独立审核输入root `88796b2`、nested OpenPI `b58aff0`。L0 semantic/hash lock和L1生命周期实现通过；全量测试为`146 passed, 7 skipped, 23 warnings`。GPU0外部PID `1133706`未被触碰，L2–L4未运行。审核状态为`blocked`，但只阻塞锁定的4卡dense实验，不阻塞GPU1–3上的LoRA/rollout。
+
+三卡不能无损复现当前4卡dense配方：microbatch/device `1`和integer accumulation不能得到global batch `64`，3-device sharding/checkpoint topology也不同。它只能成为新recipe，当前不以此绕过门禁。interstep计划已归档，L0/L1代码与step1 tree hash `9aeeb1a9b1fdf428486b476930ca9117c28d822dd108b4efaeebf911ca0fafef`保留；即使GPU0释放，也要另开恢复审核，不能自动运行L2。
+
+用户提供的官方公开规则确认Track3核心是现有LIBERO任务的逆向操作。现有R6在Track1/2有正分而Track3为0，故继续纯正向LIBERO LoRA缺乏直接supervision。唯一活动计划改为`docs/AXIS_PI05_TRACK3_REVERSE_LORA_POSITIVE_SCORE_PLAN.md`：以公开LIBERO构造generic reverse init/goal/instruction，真实环境20Hz执行并3/3 replay验证30–60条pilot，再从R6 raw step500以GPU1+2训练最多两个保守LoRA arm、GPU3做reverse holdout和retention；通过后最多生成独立Track3 FAST ZIP并停止。禁止使用泄漏脚本中的family/hidden task/数量/命名等内部细节。
+
+审核记录：`docs/reviews/axis_pi05/INTERSTEP_BLOCKED_TRACK3_REDIRECTION_AUDIT_20260902.md`。

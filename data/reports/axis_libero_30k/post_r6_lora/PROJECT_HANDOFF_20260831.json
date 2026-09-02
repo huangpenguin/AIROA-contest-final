@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-02",
-  "status": "dense_fullft_interstep_l0_blocked_external_gpu",
+  "status": "track3_reverse_lora_plan_ready",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
-  "latest_audited_execution_commit": "35e67b6",
-  "latest_audit_input_commit": "35e67b6",
-  "latest_execution_root_commit": "35e67b6",
+  "latest_audited_execution_commit": "88796b2",
+  "latest_audit_input_commit": "88796b2",
+  "latest_execution_root_commit": "88796b2",
   "latest_execution_nested_openpi_commit": "b58aff0",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
@@ -217,8 +217,8 @@
     "e2_approved": false
   },
   "tests": {
-    "command": ".venv_axis_pi05/bin/pytest -q tests",
-    "passed": 141,
+    "command": "JAX_PLATFORMS=cpu .venv_axis_pi05/bin/pytest -q tests",
+    "passed": 146,
     "skipped": 7,
     "warnings": 23,
     "pynvml_is_collection_blocker": false
@@ -253,8 +253,8 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_DENSE_FULLFT_INTERSTEP_STATE_LIFETIME_RECOVERY_PLAN.md",
-  "next_phase_only": "interstep_lifetime_L0_to_L4_max_internal_step10",
+  "next_plan": "docs/AXIS_PI05_TRACK3_REVERSE_LORA_POSITIVE_SCORE_PLAN.md",
+  "next_phase_only": "track3_reverse_T0_to_T6_max_500_steps_and_candidate_zip",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -1356,7 +1356,8 @@
     "status": "dense_fullft_interstep_l0_blocked_external_gpu",
     "review": "docs/reviews/axis_pi05/DENSE_FULLFT_INTERSTEP_L0_BLOCKED_EXECUTION_20260902.md",
     "plan": "docs/AXIS_PI05_DENSE_FULLFT_INTERSTEP_STATE_LIFETIME_RECOVERY_PLAN.md",
-    "execution_root_commit": "35e67b6",
+    "execution_input_root_commit": "35e67b6",
+    "execution_root_commit": "88796b2",
     "execution_nested_openpi_commit": "b58aff0",
     "tests": {
       "command": ".venv_axis_pi05/bin/pytest -q tests",
@@ -1389,6 +1390,59 @@
     "c20_started": false,
     "long_training_started": false,
     "fast_zip_upload_submission": false,
-    "next_phase_only": "wait_for_external_gpu0_release_then_recheck_full_4xV100_before_L2"
+    "next_phase_only": "parked_after_L0_L1_external_gpu_block_requires_new_authorization_before_L2"
+  },
+  "track3_manual_submission": {
+    "score": 0.0,
+    "provenance": "user_reported",
+    "submission_id_or_receipt": null,
+    "candidate_if_same_r6_zip": "artifacts/submission_axis_r6_step500_fast_positive_score_20260831.zip",
+    "candidate_zip_sha256_if_same_package": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a",
+    "package_identity_confirmation": "pending_official_upload_receipt_or_uploaded_zip_hash"
+  },
+  "interstep_blocked_track3_redirection_audit": {
+    "status": "blocked_dense_only_project_redirected",
+    "review": "docs/reviews/axis_pi05/INTERSTEP_BLOCKED_TRACK3_REDIRECTION_AUDIT_20260902.md",
+    "next_plan": "docs/AXIS_PI05_TRACK3_REVERSE_LORA_POSITIVE_SCORE_PLAN.md",
+    "audit_input_root_commit": "88796b2",
+    "audit_input_nested_openpi_commit": "b58aff0",
+    "dense_interstep": {
+      "l0_semantic_and_checkpoint_lock_passed": true,
+      "l1_cpu_code_gate_passed": true,
+      "l2_l3_l4_started": false,
+      "source_step1_tree_sha256": "9aeeb1a9b1fdf428486b476930ca9117c28d822dd108b4efaeebf911ca0fafef",
+      "blocked_gpu": 0,
+      "external_pid": 1133706,
+      "external_pid_touched": false,
+      "three_gpu_is_exact_recipe_equivalent": false,
+      "resume_requires_new_authorization": true
+    },
+    "track3_public_rule": {
+      "source": "user_provided_official_public_announcement",
+      "scope": "reverse_operations_of_existing_LIBERO_tasks",
+      "hidden_task_details_or_counts_used": false,
+      "leaked_internal_mechanisms_used": false
+    },
+    "resource_route": {
+      "training_gpu_ids": [1, 2],
+      "rollout_gpu_ids": [3],
+      "gpu0_authorized": false,
+      "official_blackwell_authorized": false
+    },
+    "r6_track_scores_user_reported": {
+      "track1": 0.47,
+      "track2": 0.33,
+      "track3": 0.0
+    },
+    "review_tests": {
+      "command": "JAX_PLATFORMS=cpu .venv_axis_pi05/bin/pytest -q tests",
+      "passed": 146,
+      "skipped": 7,
+      "warnings": 23,
+      "unlocked_cuda_attempt": "infrastructure_failure_cublas_handle_external_gpu_contention"
+    },
+    "max_track3_adaptation_steps": 500,
+    "reverse_pilot_required_before_training": true,
+    "auto_upload_or_submit_authorized": false
   }
 }

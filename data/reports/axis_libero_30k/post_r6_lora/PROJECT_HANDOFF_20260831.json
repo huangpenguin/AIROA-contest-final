@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-02",
-  "status": "track3_reverse_t0_cpu_locked",
+  "status": "track3_reverse_rules_or_pilot_blocked",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
   "latest_audited_execution_commit": "88796b2",
   "latest_audit_input_commit": "88796b2",
-  "latest_execution_root_commit": "88796b2",
+  "latest_execution_root_commit": "f4dcee2",
   "latest_execution_nested_openpi_commit": "b58aff0",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
@@ -218,7 +218,7 @@
   },
   "tests": {
     "command": "JAX_PLATFORMS=cpu .venv_axis_pi05/bin/pytest -q tests",
-    "passed": 146,
+    "passed": 153,
     "skipped": 7,
     "warnings": 23,
     "pynvml_is_collection_blocker": false
@@ -254,7 +254,7 @@
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
   "next_plan": "docs/AXIS_PI05_TRACK3_REVERSE_LORA_POSITIVE_SCORE_PLAN.md",
-  "next_phase_only": "track3_reverse_T0_to_T6_max_500_steps_and_candidate_zip",
+    "next_phase_only": "track3_reverse_T1_blocked_no_training_without_new_pilot_authorization",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -1455,7 +1455,35 @@
       "cuda_or_simulator_started": false,
       "reverse_data_generated": false,
       "evaluation_only_denylist_overlap": 0,
-      "next_phase_only": "T1_generic_reverse_compiler_and_30_to_60_episode_pilot"
+      "next_phase_only": "T1_generic_reverse_compiler_and_30_to_60_episode_pilot_blocked"
     }
+  },
+  "track3_t1": {
+    "status": "track3_reverse_rules_or_pilot_blocked",
+    "cpu_compiler": {
+      "public_catalog_tasks": 40,
+      "accepted_compiled_tasks": 40,
+      "train_templates": 32,
+      "holdout_templates": 8,
+      "manifest": "data/reports/axis_libero_30k/track3_reverse_lora/t1_reverse_task_manifest.jsonl",
+      "manifest_sha256": "41bbea22eedc5cef9f23e7f0b6bba126f488f5d1e4ba4d3b4fe7b45a75e36856",
+      "public_reverse_rule_only": true,
+      "hidden_track3_details_used": false
+    },
+    "pilot": {
+      "accepted_episode_count": 0,
+      "required_episode_range": [30, 60],
+      "required_replay_success": "3/3",
+      "status": "blocked_before_training",
+      "report": "data/reports/axis_libero_30k/track3_reverse_lora/T1_PILOT_BLOCKED_REPORT_ZH.md"
+    },
+    "resources": {
+      "gpu3_probe_only": true,
+      "gpu0_touched": false,
+      "gpu1_gpu2_training_started": false,
+      "official_gpu_started": false,
+      "fast_zip_or_upload_started": false
+    },
+    "next_phase_only": "blocked_pending_new_auditable_public_terminal_state_path"
   }
 }

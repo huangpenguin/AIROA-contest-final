@@ -2,8 +2,8 @@
 
 > 更新日期：2026-09-02（Asia/Tokyo）
 > 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_REVERSE_LORA_POSITIVE_SCORE_PLAN.md`
-> 当前状态：`track3_reverse_t0_cpu_locked`
-> 最新审核：`docs/reviews/axis_pi05/INTERSTEP_BLOCKED_TRACK3_REDIRECTION_AUDIT_20260902.md`
+> 当前状态：`track3_reverse_rules_or_pilot_blocked`
+> 最新审核：`docs/reviews/axis_pi05/T3_REVERSE_LORA_T1_PILOT_BLOCKED_REVIEW_20260902.md`
 
 ## 1. 唯一活动计划
 
@@ -13,7 +13,8 @@
   - 只用公开规则和generic reverse tasks，先生成30–60条真实20Hz、predicate/replay验证的pilot，再从R6 step500分叉两卡保守LoRA；
   - GPU1+2训练、GPU3评估，GPU0及外部任务不触碰；不得使用泄漏脚本内部细节、隐藏任务或未经环境验证的倒放轨迹；
   - 最多到500-step候选和独立FAST ZIP，之后hard stop；不自动上传/提交，不启动dense或比赛Blackwell。
-  - T0 CPU-only lock 已通过（root `61d4a9f`，nested `b58aff0`，GPU1–3 idle，evaluation denylist overlap `0`）；当前只允许继续 T1 generic reverse compiler/pilot。
+  - T0 CPU-only lock 已通过（root `61d4a9f`，nested `b58aff0`，GPU1–3 idle，evaluation denylist overlap `0`）；T1 CPU compiler 已生成40个公开候选，但真实20Hz pilot 为 `0 accepted episodes`，未满足门禁，当前状态为 `track3_reverse_rules_or_pilot_blocked`。
+  - T1 证据：`data/reports/axis_libero_30k/track3_reverse_lora/T1_PILOT_BLOCKED_REPORT_ZH.md`；不得把候选 specs 当作训练数据，T2及以后均未授权。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 

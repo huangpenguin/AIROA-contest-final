@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 import pytest
 
 from tools.axis_pi05 import track3_reverse_lora as t3
@@ -54,3 +56,41 @@ def test_t0_validation_rejects_overclaimed_score() -> None:
     }
     with pytest.raises(ValueError, match="score provenance"):
         t3.validate_t0_lock(record)
+
+
+def test_public_predicate_parser_drops_empty_unary_argument() -> None:
+    text = """
+    (:init
+      (Open drawer_1)
+      (On bowl_1 table_bowl_init_region)
+    )
+    (:goal
+      (And (Close drawer_1) (In bowl_1 drawer_1_top_region))
+    )
+    """
+    assert t3.parse_public_predicates(text, "init") == (
+        t3.Predicate("Open", ("drawer_1",)),
+        t3.Predicate("On", ("bowl_1", "table_bowl_init_region")),
+    )
+    assert t3.parse_public_predicates(text, "goal") == (
+        t3.Predicate("Close", ("drawer_1",)),
+        t3.Predicate("In", ("bowl_1", "drawer_1_top_region")),
+    )
+
+
+def test_compile_reverse_spec_preserves_roles_and_flips_state(tmp_path: Path) -> None:
+    bddl = tmp_path / "KITCHEN_SCENE1_put_the_bowl_in_the_drawer.bddl"
+    init = tmp_path / "KITCHEN_SCENE1_put_the_bowl_in_the_drawer.pruned_init"
+    bddl.write_text(
+        """(define (problem P)\n(:language put the bowl in the drawer)\n(:init\n (Open drawer_1)\n (On bowl_1 table_bowl_init_region)\n)\n(:goal\n (And (In bowl_1 drawer_1_top_region) (Close drawer_1))\n)\n)\n""",
+        encoding="utf-8",
+    )
+    init.write_bytes(b"public-init")
+    spec = t3.compile_reverse_spec(0, "put the bowl in the drawer", bddl, init)
+    assert spec["operator_family"] == "sequence_reverse"
+    assert "(In bowl_1 drawer_1_top_region)" in spec["reverse_initial_predicates"]
+    assert "(Close drawer_1)" in spec["reverse_initial_predicates"]
+    assert "(On bowl_1 table_bowl_init_region)" in spec["reverse_goal_predicates"]
+    assert "(Open drawer_1)" in spec["reverse_goal_predicates"]
+    assert spec["reverse_goal_predicates"][0] == "(On bowl_1 table_bowl_init_region)"
+    assert "swap" not in spec["reverse_instruction"].lower()

@@ -156,8 +156,8 @@ def test_m0_summary_is_fail_closed_and_machine_handoff_advances_without_losing_e
     handoff = __import__("json").loads(handoff_path.read_text(encoding="utf-8"))
     execution = handoff["dense_fullft_allocator_fraction_recovery_execution"]
     assert handoff["next_plan"].endswith("AXIS_PI05_TRACK3_REVERSE_LORA_POSITIVE_SCORE_PLAN.md")
-    assert handoff["next_phase_only"] == "track3_reverse_T0_to_T6_max_500_steps_and_candidate_zip"
-    assert handoff["tests"]["passed"] == 146
+    assert handoff["next_phase_only"] == "track3_reverse_T1_blocked_no_training_without_new_pilot_authorization"
+    assert handoff["tests"]["passed"] == 153
     assert execution["a2_fraction_090"]["optimizer_updates"] == 0
     assert execution["a3_fraction_095"]["optimizer_updates"] == 0
     audit = handoff["dense_fullft_m2_donation_audit"]
@@ -179,3 +179,6 @@ def test_m0_summary_is_fail_closed_and_machine_handoff_advances_without_losing_e
     assert redirect["track3_public_rule"]["hidden_task_details_or_counts_used"] is False
     assert redirect["resource_route"]["training_gpu_ids"] == [1, 2]
     assert redirect["resource_route"]["gpu0_authorized"] is False
+    track3 = handoff["track3_t1"]
+    assert track3["status"] == "track3_reverse_rules_or_pilot_blocked"
+    assert track3["pilot"]["accepted_episode_count"] == 0

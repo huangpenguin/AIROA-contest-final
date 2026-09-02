@@ -13,6 +13,7 @@ import hashlib
 import json
 import re
 import subprocess
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable
 
@@ -61,6 +62,319 @@ PUBLIC_OPERATOR_FAMILIES = (
     "activation_inverse",
     "sequence_reverse",
 )
+
+PUBLIC_BDDL_ROOT = ROOT / "LIBERO-plus/libero/libero/bddl_files/libero_mix"
+PUBLIC_INIT_ROOT = ROOT / "LIBERO-plus/libero/libero/init_files/libero_mix"
+T1_COMPILED_ROOT = TRACK3_ROOT / "t1_compiled_bddl"
+T1_MANIFEST = TRACK3_ROOT / "t1_reverse_task_manifest.jsonl"
+T1_REPORT = TRACK3_ROOT / "T1_CPU_COMPILER_REPORT_ZH.md"
+
+
+@dataclass(frozen=True)
+class Predicate:
+    """One public BDDL predicate, kept as an immutable CPU-side value."""
+
+    name: str
+    args: tuple[str, ...]
+
+    def render(self) -> str:
+        return f"({self.name} {' '.join(self.args)})"
+
+
+_ATOM_RE = re.compile(r"\((In|On|Open|Close|Turnon|Turnoff)\s+([^()\s]+)(?:\s+([^()\s]+))?\)")
+_SECTION_NAMES = ("regions", "fixtures", "objects", "obj_of_interest", "init", "goal")
+
+
+def _balanced_section(text: str, section: str) -> tuple[int, int, str]:
+    """Return the exact span/body of a balanced public BDDL section."""
+
+    marker = f"(:{section}"
+    start = text.find(marker)
+    if start < 0:
+        raise ValueError(f"missing BDDL section: {section}")
+    open_index = text.find("(", start)
+    depth = 0
+    for index in range(open_index, len(text)):
+        char = text[index]
+        if char == "(":
+            depth += 1
+        elif char == ")":
+            depth -= 1
+            if depth == 0:
+                return start, index + 1, text[start : index + 1]
+    raise ValueError(f"unbalanced BDDL section: {section}")
+
+
+def parse_public_predicates(text: str, section: str) -> tuple[Predicate, ...]:
+    """Parse only executable public predicates from one BDDL section."""
+
+    _, _, body = _balanced_section(text, section)
+    return tuple(Predicate(name, tuple(arg for arg in (left, right) if arg)) for name, left, right in _ATOM_RE.findall(body))
+
+
+def _canonical_public_bddl(language: str) -> Path:
+    """Resolve the checked-in canonical LIBERO-mix BDDL for a public language."""
+
+    safe = language.replace(" ", "_")
+    direct = PUBLIC_BDDL_ROOT / f"{safe}.bddl"
+    if direct.is_file():
+        return direct
+    candidates = sorted(PUBLIC_BDDL_ROOT.glob(f"*_{safe}*.bddl"))
+    excluded = (" copy", "_add_", "_language_", "_tb_", "_view_", "_initstate_", "_pruned", "_aug", "_demo", "_level", "_light", "_table_")
+    candidates = [path for path in candidates if not any(token in path.name for token in excluded)]
+    if not candidates:
+        raise FileNotFoundError(f"no canonical public LIBERO-mix BDDL for {language!r}")
+    return candidates[0]
+
+
+def resolve_public_bddl(language: str) -> tuple[Path, Path]:
+    """Resolve a public BDDL and its matching fixed-init state file."""
+
+    bddl = _canonical_public_bddl(language)
+    stem = re.sub(r" copy(?: \d+)?$", "", bddl.stem)
+    stem = re.sub(r"_(?:language|add|tb|view)_\d+$", "", stem)
+    init = PUBLIC_INIT_ROOT / f"{stem}.pruned_init"
+    if not init.is_file():
+        init = PUBLIC_INIT_ROOT / f"{language.replace(' ', '_')}.pruned_init"
+    if not init.is_file():
+        raise FileNotFoundError(f"missing canonical public init state for {language!r}: {bddl}")
+    return bddl, init
+
+
+def _flip_state(name: str) -> str:
+    pairs = {"Open": "Close", "Close": "Open", "Turnon": "Turnoff", "Turnoff": "Turnon"}
+    return pairs[name]
+
+
+def _same_subject(left: Predicate, right: Predicate) -> bool:
+    return bool(left.args) and bool(right.args) and left.args[0] == right.args[0]
+
+
+def _human_label(value: str) -> str:
+    value = re.sub(r"(?:^|_)\d+$", "", value)
+    value = value.replace("_", " ")
+    value = re.sub(r"^(?:kitchen table|living room table|main table) ", "", value)
+    value = value.replace(" init region", " original starting location")
+    value = value.replace(" region", "")
+    return value
+
+
+def _reverse_instruction(operations: list[tuple[str, Predicate, Predicate]]) -> str:
+    sentences: list[str] = []
+    for family, forward_goal, reverse_goal in operations:
+        if family == "containment_remove_restore":
+            sentences.append(
+                f"take the {_human_label(forward_goal.args[0])} out of the {_human_label(forward_goal.args[1])} and return it to its {_human_label(reverse_goal.args[1])}"
+            )
+        elif family == "support_remove_restore":
+            sentences.append(
+                f"remove the {_human_label(forward_goal.args[0])} from the {_human_label(forward_goal.args[1])} and put it back at its {_human_label(reverse_goal.args[1])}"
+            )
+        elif family == "articulation_inverse":
+            verb = "open" if reverse_goal.name == "Open" else "close"
+            sentences.append(f"{verb} the {_human_label(reverse_goal.args[0])}")
+        elif family == "activation_inverse":
+            verb = "turn on" if reverse_goal.name == "Turnon" else "turn off"
+            sentences.append(f"{verb} the {_human_label(reverse_goal.args[0])}")
+    if not sentences:
+        raise ValueError("reverse instruction has no executable operation")
+    return "Reverse the public LIBERO operation: " + "; then ".join(sentences) + "."
+
+
+def compile_reverse_spec(task_index: int, language: str, bddl: Path, init_path: Path) -> dict[str, Any]:
+    """Compile one public task by swapping forward state/goal, never A/B roles."""
+
+    text = bddl.read_text(encoding="utf-8")
+    init = list(parse_public_predicates(text, "init"))
+    goal = list(parse_public_predicates(text, "goal"))
+    if not init or not goal:
+        raise ValueError("public BDDL has no executable init/goal predicates")
+
+    reverse_initial: list[Predicate] = []
+    reverse_goal: list[Predicate] = []
+    consumed_init: set[int] = set()
+    operations: list[tuple[str, Predicate, Predicate]] = []
+
+    relation_goals = [predicate for predicate in goal if predicate.name in {"In", "On"}]
+    for forward_goal in relation_goals:
+        if len(forward_goal.args) != 2:
+            raise ValueError(f"relation goal has unexpected arity: {forward_goal}")
+        matches = [
+            (index, predicate)
+            for index, predicate in enumerate(init)
+            if predicate.name in {"In", "On"} and predicate.args[0] == forward_goal.args[0]
+        ]
+        if len(matches) != 1 or matches[0][1].args[1] == forward_goal.args[1]:
+            raise ValueError(f"relation goal is not a reversible move: {forward_goal}")
+        init_index, forward_init = matches[0]
+        consumed_init.add(init_index)
+        family = "containment_remove_restore" if forward_goal.name == "In" else "support_remove_restore"
+        reverse_initial.append(forward_goal)
+        reverse_goal.append(forward_init)
+        operations.append((family, forward_goal, forward_init))
+
+    state_goals = [predicate for predicate in goal if predicate.name in {"Open", "Close", "Turnon", "Turnoff"}]
+    for forward_goal in state_goals:
+        matches = [
+            (index, predicate)
+            for index, predicate in enumerate(init)
+            if predicate.name == forward_goal.name and predicate.args == forward_goal.args
+        ]
+        if matches:
+            # Some public multi-step tasks repeat a fixture condition (for
+            # example, Turnon) in both init and goal.  It is an invariant, not
+            # a reverse operator, so leave it in the unchanged init context.
+            continue
+        opposite = _flip_state(forward_goal.name)
+        opposite_matches = [
+            (index, predicate)
+            for index, predicate in enumerate(init)
+            if predicate.name == opposite and predicate.args == forward_goal.args
+        ]
+        if len(opposite_matches) > 1:
+            raise ValueError(f"state init contains duplicate opposite predicates: {forward_goal}")
+        if opposite_matches:
+            consumed_init.add(opposite_matches[0][0])
+        reverse_initial.append(forward_goal)
+        reverse_goal_predicate = opposite_matches[0][1] if opposite_matches else Predicate(opposite, forward_goal.args)
+        reverse_goal.append(reverse_goal_predicate)
+        operations.append(("articulation_inverse" if forward_goal.name in {"Open", "Close"} else "activation_inverse", forward_goal, reverse_goal_predicate))
+
+    if not operations:
+        raise ValueError("public task has no supported reverse operator")
+    families = {family for family, _, _ in operations}
+    family = next(iter(families)) if len(operations) == 1 else "sequence_reverse"
+    if family not in PUBLIC_OPERATOR_FAMILIES:
+        raise ValueError(f"unsupported reverse family: {family}")
+
+    unchanged_init = [predicate for index, predicate in enumerate(init) if index not in consumed_init]
+    reverse_initial = unchanged_init + reverse_initial
+    reverse_goal = list(dict.fromkeys(reverse_goal))
+    scene_match = re.match(r"((?:KITCHEN|LIVING_ROOM|STUDY)_SCENE\d+)_", bddl.stem)
+    scene_id = scene_match.group(1) if scene_match else "public_mix_generic"
+    template_id = hashlib.sha256(bddl.read_bytes()).hexdigest()[:16]
+    seed = 310000 + int(task_index)
+    provenance = hashlib.sha256(canonical_json({
+        "task_index": task_index,
+        "language": language,
+        "bddl_sha256": sha256_file(bddl),
+        "init_sha256": sha256_file(init_path),
+        "reverse_initial": [predicate.render() for predicate in reverse_initial],
+        "reverse_goal": [predicate.render() for predicate in reverse_goal],
+        "family": family,
+        "seed": seed,
+    })).hexdigest()
+    return {
+        "schema_version": "track3_reverse_pilot_v1",
+        "task_index": task_index,
+        "base_public_task": language,
+        "base_task_template_id": template_id,
+        "scene_id": scene_id,
+        "operator_family": family,
+        "seed": seed,
+        "forward_bddl_path": str(bddl.resolve()),
+        "forward_bddl_sha256": sha256_file(bddl),
+        "forward_init_path": str(init_path.resolve()),
+        "forward_init_sha256": sha256_file(init_path),
+        "reverse_instruction": _reverse_instruction(operations),
+        "reverse_initial_predicates": [predicate.render() for predicate in reverse_initial],
+        "reverse_goal_predicates": [predicate.render() for predicate in reverse_goal],
+        "invariants": [predicate.render() for predicate in unchanged_init],
+        "provenance_sha256": provenance,
+        "official_result": False,
+        "training_eligible": True,
+    }
+
+
+def _render_custom_bddl(text: str, language: str, initial: list[str], goal: list[str]) -> str:
+    """Render a local reverse BDDL while preserving public world geometry."""
+
+    def section(name: str, values: list[str]) -> str:
+        if name == "goal":
+            expression = values[0] if len(values) == 1 else "(And " + " ".join(values) + ")"
+        else:
+            expression = "\n".join(f"    {value}" for value in values)
+        return f"(:{name}\n    {expression}\n  )"
+
+    replacements = [("language", f"(:language {language})"), ("init", section("init", initial)), ("goal", section("goal", goal))]
+    rendered = text
+    for name, replacement in replacements:
+        start, end, _ = _balanced_section(rendered, name)
+        rendered = rendered[:start] + replacement + rendered[end:]
+    return rendered
+
+
+def compile_public_reverse_tasks() -> dict[str, Any]:
+    """CPU-only T1 compiler; no simulator, CUDA, model, or hidden task import."""
+
+    validate_t0_lock(json.loads(T0_LOCK.read_text(encoding="utf-8")))
+    catalog = [json.loads(line)["task"] for line in CANONICAL_TASKS.read_text(encoding="utf-8").splitlines() if line.strip()]
+    if len(catalog) != 40:
+        raise RuntimeError(f"public canonical catalog must have 40 tasks, got {len(catalog)}")
+    accepted: list[dict[str, Any]] = []
+    rejected: list[dict[str, Any]] = []
+    for task_index, language in enumerate(catalog):
+        try:
+            bddl, init_path = resolve_public_bddl(language)
+            spec = compile_reverse_spec(task_index, language, bddl, init_path)
+            accepted.append(spec)
+        except (FileNotFoundError, ValueError) as exc:
+            rejected.append({"task_index": task_index, "reason_class": type(exc).__name__, "reason": str(exc)})
+
+    if not accepted:
+        raise RuntimeError("public reverse compiler produced no supported task")
+    template_order = sorted({row["base_task_template_id"] for row in accepted})
+    holdout_count = max(1, (len(template_order) + 4) // 5)
+    holdout_templates = set(template_order[:: max(1, len(template_order) // holdout_count)][:holdout_count])
+    for row in accepted:
+        row["split"] = "template_holdout" if row["base_task_template_id"] in holdout_templates else "train"
+        source = Path(row["forward_bddl_path"])
+        initial = list(row["reverse_initial_predicates"])
+        goal = list(row["reverse_goal_predicates"])
+        output = T1_COMPILED_ROOT / f"task_{int(row['task_index']):02d}_{row['base_task_template_id']}.bddl"
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(_render_custom_bddl(source.read_text(encoding="utf-8"), row["reverse_instruction"], initial, goal), encoding="utf-8")
+        row["reverse_bddl_path"] = str(output.resolve())
+        row["reverse_bddl_sha256"] = sha256_file(output)
+
+    T1_MANIFEST.parent.mkdir(parents=True, exist_ok=True)
+    T1_MANIFEST.write_text("".join(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n" for row in accepted), encoding="utf-8")
+    split_counts = {split: sum(row["split"] == split for row in accepted) for split in ("train", "template_holdout")}
+    family_counts = {family: sum(row["operator_family"] == family for row in accepted) for family in PUBLIC_OPERATOR_FAMILIES}
+    report = {
+        "status": "t1_cpu_compiled_pending_pilot",
+        "schema_version": "track3_reverse_pilot_v1",
+        "public_catalog_tasks": len(catalog),
+        "accepted_compiled_tasks": len(accepted),
+        "rejected_tasks": len(rejected),
+        "rejections": rejected,
+        "split_counts": split_counts,
+        "operator_family_counts": family_counts,
+        "template_count": len(template_order),
+        "holdout_template_count": len(holdout_templates),
+        "holdout_fraction": split_counts["template_holdout"] / len(accepted),
+        "public_reverse_rule_only": True,
+        "hidden_track3_details_used": False,
+        "simulator_or_cuda_started": False,
+        "accepted_episodes": 0,
+        "pilot_gate": "not_met",
+        "training_started": False,
+        "official_result": False,
+        "manifest_sha256": sha256_file(T1_MANIFEST),
+    }
+    write_json(TRACK3_ROOT / "t1_cpu_compile_summary.json", report)
+    T1_REPORT.write_text(
+        "# T1 CPU-only 公共 reverse 编译报告\n\n"
+        f"状态：`{report['status']}`\n\n"
+        f"公共任务：`{len(catalog)}`；编译通过：`{len(accepted)}`；静态拒绝：`{len(rejected)}`。\n\n"
+        f"template split：train `{split_counts['train']}` / holdout `{split_counts['template_holdout']}`（`{report['holdout_fraction']:.1%}`）。\n\n"
+        f"operator families：`{json.dumps(family_counts, ensure_ascii=False, sort_keys=True)}`。\n\n"
+        "这些只是由公开 BDDL 的 init/goal 交换生成的候选规格，不是 accepted demonstration；尚未启动 simulator、CUDA 或训练。\n\n"
+        "下一门禁：GPU3 真实 20Hz pilot，必须达到 30–60 条且每条 3/3 replay predicate success；当前 accepted episodes 为 `0`。\n\n"
+        f"manifest SHA-256：`{report['manifest_sha256']}`\n",
+        encoding="utf-8",
+    )
+    return report
 
 
 def _git(*args: str, cwd: Path = ROOT) -> str:
@@ -326,10 +640,14 @@ def validate_t0_lock(record: dict[str, Any]) -> None:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Track 3 reverse LoRA CPU-only T0 lock")
+    parser = argparse.ArgumentParser(description="Track 3 reverse LoRA CPU-side lock/compiler")
     parser.add_argument("--validate", action="store_true")
+    parser.add_argument("--compile", action="store_true", help="compile public LIBERO reverse task candidates on CPU")
     args = parser.parse_args()
-    if args.validate:
+    if args.compile:
+        value = compile_public_reverse_tasks()
+        print(json.dumps(value, ensure_ascii=False, indent=2))
+    elif args.validate:
         value = json.loads(T0_LOCK.read_text(encoding="utf-8"))
         validate_t0_lock(value)
         print(json.dumps({"status": "passed", "lock": str(T0_LOCK)}, ensure_ascii=False, indent=2))

@@ -2,7 +2,7 @@
 
 > 制定日期：2026-09-02（Asia/Tokyo）
 > 执行输入：root `88796b2`，nested OpenPI `b58aff0`
-> 当前状态：`track3_reverse_t0_cpu_locked`
+> 当前状态：`track3_reverse_rules_or_pilot_blocked`
 > 资源边界：GPU1+2用于已验证的两卡LoRA；GPU3用于rollout/FAST诊断；GPU0及外部PID绝对不触碰
 > 目标：基于官方已公开的“现有LIBERO任务的逆向操作”规则，为Track3构建通用reverse supervision，用最小LoRA适配获得可提交的Track3正分候选，同时保留Track1/2能力。
 
@@ -22,6 +22,14 @@ T0 已在 root `61d4a9f`、nested OpenPI `b58aff0` 上完成 CPU-only 锁定。G
 - R6 raw/folded/FAST/正分 ZIP 与 fresh QUANTILES norm hash 已锁定；正分 ZIP 未修改。
 - evaluation-only denylist 与 canonical training manifest 的 exact overlap 为 `0`；不输出其中的 task identifiers。
 - 下一步仅为 T1 generic reverse compiler/pilot；未达到 30–60 条真实 20Hz、3/3 replay accepted episode 门禁前，不启动 LoRA。
+
+## T1 执行记录（已按门禁停止）
+
+T1 CPU compiler 已完成：40/40 个公开 canonical task 生成候选 reverse spec，template split 为 `32 train / 8 holdout`，manifest SHA-256 为 `41bbea22eedc5cef9f23e7f0b6bba126f488f5d1e4ba4d3b4fe7b45a75e36856`。这些候选不是 accepted demonstration。
+
+GPU3 的受限真实 20Hz 探测没有形成合法 pilot：task10 的 object-on-plate reverse initial 在数个零动作后失稳，task17 的 action-only motion primitive 未抓取成功；公开 episode0 也没有得到可验证的 forward terminal simulator snapshot。accepted episode 为 `0`，因此未达到 30–60、3 families、6 templates、2 scenes、每 family 两 template 和 3/3 replay gates。
+
+证据：[T1_PILOT_BLOCKED_REPORT_ZH.md](../data/reports/axis_libero_30k/track3_reverse_lora/T1_PILOT_BLOCKED_REPORT_ZH.md)、[T1_CPU_COMPILER_REPORT_ZH.md](../data/reports/axis_libero_30k/track3_reverse_lora/T1_CPU_COMPILER_REPORT_ZH.md)。状态固定为 `track3_reverse_rules_or_pilot_blocked`；T2、LoRA、T3、FAST、ZIP、closed-loop、E2、C20、训练和比赛 GPU 均未启动。
 
 ## 1. 公平性与数据红线
 

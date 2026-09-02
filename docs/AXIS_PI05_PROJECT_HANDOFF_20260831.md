@@ -1,11 +1,11 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新已审核执行 HEAD：`88796b2`
+> 最新执行提交（待本次独立审核）：`f4dcee2`
 > interstep L0/L1 execution HEAD：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_reverse_lora_plan_ready`
+> 当前总状态：`track3_reverse_rules_or_pilot_blocked`
 > 唯一活动计划：`docs/AXIS_PI05_TRACK3_REVERSE_LORA_POSITIVE_SCORE_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
@@ -415,3 +415,9 @@ D4 从internal step1续跑，先完成`16/16` accumulation和一次optimizer upd
 T0 在 root `61d4a9f`、nested OpenPI `b58aff0` 上完成。R6 raw/folded/FAST/正分 ZIP、canonical 10Hz、LIBERO-plus 20Hz metadata、action/state/gripper contract 已锁定；R6 资产和正分 ZIP 未修改。GPU1–3 idle gate 通过；GPU0 外部 PID 只做只读观察且未触碰。evaluation-only denylist 与 canonical training manifest exact overlap 为 `0`，没有输出 denylist identifiers。T0 没有启动 CUDA context、simulator、数据生成或训练。
 
 证据：`data/reports/axis_libero_30k/track3_reverse_lora/t0_cpu_lock.json`、`T0_CPU_LOCK_REPORT_ZH.md`。下一步只允许 T1 generic reverse compiler/pilot；在真实 20Hz、predicate、3/3 replay 的 30–60 条 accepted episode 门禁前不得启动 LoRA。
+
+## 28. Track 3 T1 compiler / pilot 执行结果
+
+T1 CPU compiler 从公开 canonical LIBERO catalog 与 public BDDL/init 生成40个候选 reverse spec，`32 train / 8 template-holdout`，但没有把它们当作 demonstration。GPU3 的真实20Hz探测未能获得可审计 terminal snapshot：task10 reverse object-on-plate 初始状态失稳，task17 motion primitive 未抓取；公开 episode0 的 forward init 对齐/replay 也未产生可验证 terminal success。accepted episode 为 `0`，没有达到30–60 episode、3 families、6 templates、2 scenes、每 family两 template及3/3 replay门禁。
+
+当前状态：`track3_reverse_rules_or_pilot_blocked`。T2、两卡 LoRA、T3、FAST、ZIP、closed-loop、E2、C20、训练、比赛 GPU、上传和提交均未启动；GPU0 未触碰，R6资产和正分 ZIP 未修改。候选 manifest 与报告：`data/reports/axis_libero_30k/track3_reverse_lora/t1_reverse_task_manifest.jsonl`、`T1_CPU_COMPILER_REPORT_ZH.md`、`T1_PILOT_BLOCKED_REPORT_ZH.md`。继续工作需要新计划明确提供可审计的公开 terminal-state 获取与 teleop/planner 路径。

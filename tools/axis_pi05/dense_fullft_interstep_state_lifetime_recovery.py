@@ -71,6 +71,27 @@ def _device_bytes(row: dict[str, Any]) -> list[int]:
     ]
 
 
+def _gpu_idle_gate(snapshot: list[dict[str, Any]]) -> dict[str, Any]:
+    expected = {0, 1, 2, 3}
+    observed = {int(row["index"]) for row in snapshot}
+    external = sorted(
+        {
+            int(process["pid"])
+            for row in snapshot
+            for process in row.get("processes", [])
+            if "pid" in process
+        }
+    )
+    passed = observed == expected and not external and all(row.get("memory_used_mib", 0) <= 256 for row in snapshot)
+    return {
+        "passed": passed,
+        "expected_gpu_ids": sorted(expected),
+        "observed_gpu_ids": sorted(observed),
+        "external_pids": external,
+        "snapshot": snapshot,
+    }
+
+
 def _release_rows(rows: list[dict[str, Any]], step: int) -> list[dict[str, Any]]:
     return [
         {"micro_index": int(row["micro_index"]), "bytes_in_use_per_card": _device_bytes(row), "timestamp": row.get("timestamp")}
@@ -256,9 +277,10 @@ def l0_cpu_phase() -> dict[str, Any]:
         ]
         for phase in boundary_phases
     }
+    gpu_idle = _gpu_idle_gate(allocator._gpu_snapshot())
     lock = {
         "schema_version": 1,
-        "status": "dense_fullft_interstep_l0_cpu_locked",
+        "status": "dense_fullft_interstep_l0_cpu_locked" if gpu_idle["passed"] else "dense_fullft_interstep_l0_blocked_external_gpu",
         "input_root_commit": _git_commit(ROOT),
         "input_nested_openpi_commit": _git_commit(ROOT / "third_party/axis_openpi"),
         "raw_evidence_immutable": True,
@@ -277,7 +299,7 @@ def l0_cpu_phase() -> dict[str, Any]:
         },
         "semantic_correction": semantics,
         "boundary_table": boundaries,
-        "gpu_idle_before": allocator._gpu_snapshot(),
+        "gpu_idle_before": gpu_idle,
         "contracts_unchanged": {
             "precision": "float32",
             "topology": "dense_full_model",
@@ -289,7 +311,11 @@ def l0_cpu_phase() -> dict[str, Any]:
             "allocator_fraction": FRACTION,
             "ordered_gradient_sum": True,
         },
-        "next_allowed": ["L1 CPU lifecycle gate", "L2 step1-to-step2-to-next-microbatch-0 transition canary"],
+        "next_allowed": (
+            ["L1 CPU lifecycle gate", "L2 step1-to-step2-to-next-microbatch-0 transition canary"]
+            if gpu_idle["passed"]
+            else ["wait for external GPU PID release; do not start L2"]
+        ),
     }
     write_json(REPORT_ROOT / "l0_cpu_lock.json", lock)
     return lock

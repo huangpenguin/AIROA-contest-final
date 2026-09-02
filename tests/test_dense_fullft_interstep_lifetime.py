@@ -55,3 +55,15 @@ def test_l0_semantic_fields_do_not_use_loop_index_as_post_update_step():
     ]
     assert recovery._indexes(rows, "temporaries_released", 2) == [0]
     assert recovery._indexes(rows, "microbatch_exception", 2) == [1]
+
+
+def test_gpu_idle_gate_is_fail_closed_for_external_processes():
+    snapshot = [
+        {"index": index, "memory_used_mib": 5, "processes": []}
+        for index in range(4)
+    ]
+    assert recovery._gpu_idle_gate(snapshot)["passed"] is True
+    snapshot[0]["processes"] = [{"pid": 1234, "memory_mib": "14000"}]
+    blocked = recovery._gpu_idle_gate(snapshot)
+    assert blocked["passed"] is False
+    assert blocked["external_pids"] == [1234]

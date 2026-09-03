@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-03",
-  "status": "track3_reverse_semantic_adapter_v2_failed_support_remove",
+  "status": "track3_dynamic_gate_model_state_reconciliation_planned",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
-  "latest_audited_execution_commit": "73f675477a41a80241a7549f12f991187ecaaa25",
-  "latest_audit_input_commit": "73f675477a41a80241a7549f12f991187ecaaa25",
-  "latest_execution_root_commit": "73f675477a41a80241a7549f12f991187ecaaa25",
-  "latest_execution_nested_openpi_commit": "b58aff0",
+  "latest_audited_execution_commit": "179045a6d7a7998bf1a54452ef79739c9383c09f",
+  "latest_audit_input_commit": "179045a6d7a7998bf1a54452ef79739c9383c09f",
+  "latest_execution_root_commit": "179045a6d7a7998bf1a54452ef79739c9383c09f",
+  "latest_execution_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
   "branch_has_upstream": false,
@@ -218,7 +218,7 @@
   },
   "tests": {
     "command": "JAX_PLATFORMS=cpu .venv_axis_pi05/bin/pytest -q tests",
-    "passed": 165,
+    "passed": 171,
     "skipped": 7,
     "warnings": 23,
     "pynvml_is_collection_blocker": false
@@ -253,8 +253,8 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_TRACK3_SUPPORT_AUTOGEN_SE3_RECOVERY_PLAN.md",
-  "next_phase_only": "G0_to_G4_support_only_then_G5_closeout_hard_stop",
+  "next_plan": "docs/AXIS_PI05_TRACK3_DYNAMIC_GATE_MODEL_STATE_RECONCILIATION_PLAN.md",
+  "next_phase_only": "D0_to_D3_dynamic_validator_reconciliation_then_D4_closeout_hard_stop",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -2015,6 +2015,90 @@
       "root_clean_after_closeout_commit": true,
       "nested_openpi_clean": true
     },
-    "hard_stop": "G1 dynamic gate failed; do not resume G2/G3/G4 or any family/training without a new review and plan."
+    "hard_stop": "G1 dynamic gate failed under the historical gate; do not resume G2/G3/G4 or any family/training without a new review and plan."
+  },
+  "track3_support_se3_g0_g1_audit": {
+    "status": "remediation_required",
+    "review": "docs/reviews/axis_pi05/TRACK3_SUPPORT_SE3_G0_G1_AUDIT_20260903.md",
+    "audit_input_root_commit": "179045a6d7a7998bf1a54452ef79739c9383c09f",
+    "audit_input_parent_commit": "8e9883cb748ecf15e5ff1fb988e2707e02dd153e",
+    "audit_input_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "archived_plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_SUPPORT_AUTOGEN_SE3_RECOVERY_PLAN.md",
+    "new_plan": "docs/AXIS_PI05_TRACK3_DYNAMIC_GATE_MODEL_STATE_RECONCILIATION_PLAN.md",
+    "approved_results": {
+      "g0_release_lock": true,
+      "s1_v2_task_rows": 195,
+      "s1_v2_episode_rows": 21961,
+      "s1_v2_identity_sums_exact": true,
+      "exact_reverse_task_and_episode_count": 0,
+      "typed_language": true,
+      "fresh_process_runs_completed": 9,
+      "hdf5_qpos_offset": 1,
+      "hard_stop_respected": true
+    },
+    "invalidating_findings": {
+      "hdf5_state_used_across_nonidentical_model_xml": true,
+      "fresh_reverse_xml_varies_task10_and_task19": true,
+      "reverse_initial_gate_uses_forward_success_proxy": true,
+      "raw_proprio_combines_heterogeneous_units": true,
+      "settle_action_forces_gripper_minus_one": true,
+      "controller_goal_reset_followed_by_state_overwrite": true,
+      "historical_dynamic_gate_interpretation": "inconclusive_not_reverse_semantics_failure",
+      "hdf5_model_file_sha256": {
+        "task10": "e9a508e1e98a7bd2631796a4c41476a449fd9821fb45837a27d2ebefd87c8830",
+        "task19": "ccf958ea89aa0e84e32cb90b99e31faf66f3cd5e33082f7d2a1d4444c4660257",
+        "task20": "4e0497a77437ac5846c84c6bea8e08a9af66b11829f8edbe8bc692616a1be723"
+      },
+      "scene_drift": {
+        "task10_object_m": 1.3914997329335044e-7,
+        "task10_fixture": 1.5481181635246255e-8,
+        "task20_object_m": 1.2014993166128821e-11,
+        "task20_fixture": 5.271299889642034e-12,
+        "task19_object_m": 8.709926868580822e-10,
+        "task19_fixture": 1.7468183149960126e-10
+      }
+    },
+    "scope_boundaries": {
+      "old_g2_g3_g4_authorized": false,
+      "real_reverse_canary_authorized": false,
+      "human_teleop_authorized": false,
+      "batch_generation_authorized": false,
+      "training_or_norm_authorized": false,
+      "fast_zip_authorized": false,
+      "official_gpu_authorized": false,
+      "upload_or_submission_authorized": false
+    },
+    "verification": {
+      "targeted_tests": "11_passed_2_warnings",
+      "full_tests": "171_passed_7_skipped_23_warnings",
+      "json_parse": "passed",
+      "git_diff_check": "passed"
+    }
+  },
+  "track3_dynamic_gate_reconciliation_authorization": {
+    "status": "track3_dynamic_gate_model_state_reconciliation_planned",
+    "plan": "docs/AXIS_PI05_TRACK3_DYNAMIC_GATE_MODEL_STATE_RECONCILIATION_PLAN.md",
+    "authorized_phases": ["D0", "D1", "D2", "D3", "D4_closeout_only"],
+    "authorization": {
+      "hdf5_model_state_compatibility_audit": true,
+      "reverse_native_reset_predicate_evaluation": true,
+      "named_dimensioned_settle_metrics": true,
+      "gpu3_support_non_grasp_canary_max": 1,
+      "gpu3_three_family_fresh_process_runs_max": 9,
+      "old_g2_hdf5_se3_mining": false,
+      "old_g3_executor": false,
+      "old_g4_support_retry": false,
+      "real_reverse_canary": false,
+      "human_teleop": false,
+      "batch_generation": false,
+      "lora_or_dense_training": false,
+      "norm_replacement": false,
+      "fast_zip": false,
+      "official_gpu": false,
+      "upload_or_submission": false
+    },
+    "success_stop": "track3_reverse_semantics_v2_dynamic_validated_pending_se3_review",
+    "failure_stop_prefix": "track3_reverse_semantics_v2_dynamic_failed_",
+    "next_phase_only": "D0_to_D3_dynamic_validator_reconciliation_then_D4_closeout_hard_stop"
   }
 }

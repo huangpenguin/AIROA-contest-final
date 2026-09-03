@@ -1,4 +1,7 @@
-# AXIS Pi0.5 Track 3：Support 自动生成 SE(3) 最小恢复计划
+# AXIS Pi0.5 Track 3：Support 自动生成 SE(3) 最小恢复计划（已归档）
+
+> 归档日期：2026-09-03（Asia/Tokyo）
+> 归档原因：G0/G1 已执行并按动态门禁停止；后续独立审核确认 S1 v2 与 typed language 有效，但原 G1.3 跨 model state 与整段 proprio 漂移门禁不能支持“reverse semantics 失败”的结论。G2–G4 未执行，后续授权由 `docs/AXIS_PI05_TRACK3_DYNAMIC_GATE_MODEL_STATE_RECONCILIATION_PLAN.md` 取代。
 
 > 制定日期：2026-09-03（Asia/Tokyo）
 > 输入执行 commit：root `73f675477a41a80241a7549f12f991187ecaaa25`，nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`

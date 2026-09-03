@@ -67,6 +67,30 @@ def test_dynamic_gate_report_is_fresh_process_fail_closed() -> None:
     assert report["hard_gate"]["all_families_3_of_3"] is False
 
 
+def test_historical_dynamic_failure_is_preserved_but_new_plan_repairs_validator() -> None:
+    handoff = json.loads(
+        (
+            ROOT
+            / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert handoff["status"] == "track3_dynamic_gate_model_state_reconciliation_planned"
+    assert handoff["next_plan"].endswith(
+        "AXIS_PI05_TRACK3_DYNAMIC_GATE_MODEL_STATE_RECONCILIATION_PLAN.md"
+    )
+    audit = handoff["track3_support_se3_g0_g1_audit"]
+    assert audit["status"] == "remediation_required"
+    assert (
+        audit["invalidating_findings"]["historical_dynamic_gate_interpretation"]
+        == "inconclusive_not_reverse_semantics_failure"
+    )
+    authorization = handoff["track3_dynamic_gate_reconciliation_authorization"]
+    assert authorization["authorization"]["reverse_native_reset_predicate_evaluation"] is True
+    assert authorization["authorization"]["old_g2_hdf5_se3_mining"] is False
+    assert authorization["authorization"]["real_reverse_canary"] is False
+    assert authorization["authorization"]["lora_or_dense_training"] is False
+
+
 def test_predicate_parser_remains_strict() -> None:
     assert parse_atom("(Close wooden_cabinet_1_middle_region)") == (
         "Close",

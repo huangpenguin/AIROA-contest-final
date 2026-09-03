@@ -1,12 +1,12 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新执行状态：`track3_reverse_semantic_adapter_v2_failed_support_remove`（G1 动态门禁 hard stop）
+> 最新审核状态：`track3_dynamic_gate_model_state_reconciliation_planned`
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_reverse_semantic_adapter_v2_failed_support_remove`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_SUPPORT_AUTOGEN_SE3_RECOVERY_PLAN.md`
+> 当前总状态：`track3_dynamic_gate_model_state_reconciliation_planned`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_DYNAMIC_GATE_MODEL_STATE_RECONCILIATION_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -14,7 +14,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3 S0–S5 已在首条 support canary 失败后正确停止；本次恢复已完成 G0、S1 v2 与 typed language，但 S3 动态 3/3 门禁失败并在 G1 停止。G2 的 HDF5/SE(3) 提取、G3 执行器和 G4 support retry 均未启动。accepted/pending reverse demo 仍为 `0/0`。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3 G0、S1 v2、typed language 与三族动态运行已完成，但独立审核发现旧 G1.3 把 HDF5 state 跨随机 XML 使用、用 forward success 代替 reverse initial，并以异量纲整段 proprio + 主动 `gripper=-1` 判 settle，故其“reverse semantics 失败”结论无效。当前先修 validator；G2 的 HDF5/SE(3) 提取、G3 执行器和 G4 support retry 均未启动，accepted/pending reverse demo 仍为 `0/0`。
 
 ## 2. 数据与复现基础
 
@@ -250,14 +250,14 @@ upstream             当前 branch 未设置 upstream
 ## 10. 新 section 的接手顺序
 
 1. 阅读本文件与 `docs/AXIS_PI05_PLAN_INDEX.md`。
-2. 阅读并只执行 `docs/AXIS_PI05_TRACK3_SUPPORT_AUTOGEN_SE3_RECOVERY_PLAN.md` 的 G0–G4，之后仅做 G5 收尾并 hard stop。
+2. 阅读并只执行 `docs/AXIS_PI05_TRACK3_DYNAMIC_GATE_MODEL_STATE_RECONCILIATION_PLAN.md` 的 D0–D3，之后仅做 D4 收尾并 hard stop。
 3. 将Track1=`0.47`、Track2=`0.33`、Track3=`0`及ZIP `95415a…c5f5a`锁为当前official-score baseline；无上传回执的字段保持conditional provenance。
-4. G0 锁定旧 S0–S5、小型 summary 和 support 失败资产；不得重写 v1 evidence。
-5. G1 将 21,961 episode 与 195 task rows 分开计数，并用 v2 typed language + 三族 fresh-process 3/3 动态 predicate 测试替代旧 S3 静态 pass。
-6. G2 对 task10 至少 3 条成功 HDF5 验证逐 state alignment，提取 object→EEF 的 pregrasp/grasp/lift 相对 SE(3)，并逐帧恢复旧失败 state 获得 contact pair/姿态证据。
-7. G3/G4 实现并验证 6D OSC_POSE 后，只允许一次固定 support canary；成功也只能 pending+3/3 replay 并停，失败保留增强诊断并停。不得恢复人工 task19、containment/articulation、批量生成或训练。
+4. D0 锁定 `179045a`、旧 G1 evidence、v2 specs、P1/HDF5/model-file hashes，旧失败不得重写。
+5. D1 禁止跨 model HDF5 predicate oracle；在 reverse BDDL 自身 native reset 中逐 predicate 检查，按 joint/EEF/gripper/object/fixture 的命名物理量分别做 warm-up 后 settle。
+6. D2 只用 GPU3 对 task10 做一次不抓取、不生成 demo 的 native reset canary；通过才允许 D3。
+7. D3 对三族各 `3/3` 做同 model 动态 release；成功也只停在 `pending_se3_review`。不得自动恢复旧 G2–G4、人工 task19、真实 support canary、批量生成或训练。
 
-当前路径是：R6 FAST ZIP Track1=`0.47`/Track2=`0.33`/Track3=`0`（冻结）→ 公开full-state与20Hz数据（已在本地）→ S1/S3 v2 evidence closure → 公开成功 HDF5 的抓取 SE(3) 挖掘 → 一次 support-only canary → 视频人审 → 再决定其余两族、30–60 exact reverse扩充与R6分叉LoRA。Dense 30K为冻结的独立研究线。
+当前路径是：R6 FAST ZIP Track1=`0.47`/Track2=`0.33`/Track3=`0`（冻结）→ 公开full-state与20Hz数据（已在本地）→ validator model/state 对齐与 native reverse reset 动态 release → 新审核 → exact-model HDF5 抓取 SE(3) 挖掘 → 一次 support-only canary → 视频人审 → 再决定其余两族、30–60 exact reverse扩充与R6分叉LoRA。Dense 30K为冻结的独立研究线。
 
 ## 19. Dense full-FT allocator fraction recovery 执行结果
 
@@ -506,3 +506,13 @@ GPU3 仅作已授权 simulator/replay，postflight 为 `6 MiB`；GPU0/1/2 未被
 S3 动态门禁使用 GPU3 跑三族各 `3/3` fresh process，共 9 次。task10/task19 的 forward HDF5 `states[0]` reverse goal 为 false；三族 P1 reverse initial/goal、受控 destruction 和 object/fixture settle 检查通过，但 robot policy-state 20-step 漂移分别为 `0.1306809517`、`0.1388652157`、`0.5143735875`，均超过 `0.05` 门限。因此状态为 `track3_reverse_semantic_adapter_v2_failed_support_remove`，不得进入 G2。
 
 执行期间修正了受控破坏的 HDF5 state offset（time scalar 在 index 0，qpos offset 为 1），并复跑完整 9 次；这只修正测试实现，不改变 hard stop。没有提取 task10 成功抓取位姿、没有重建旧失败轨迹、没有实现 SE(3)、没有 retry support，没有创建 pending，未触碰训练/FAST/ZIP/官方 GPU/上传。详细中文报告：`docs/reports/AXIS_PI05_TRACK3_SUPPORT_AUTOGEN_SE3_RECOVERY_G1_CLOSEOUT_20260903.md`。
+
+## 38. G0–G1 独立审核与 dynamic validator 对齐授权（2026-09-03）
+
+审核输入 root `179045a6d7a7998bf1a54452ef79739c9383c09f`、parent `8e9883cb748ecf15e5ff1fb988e2707e02dd153e`、nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`。root/OpenPI clean、`LIBERO-plus` 既有 dirty 未触碰、GPU 边界与 hard stop 均核对通过；S1 v2、typed language 与 HDF5 qpos offset 修复获批准。
+
+审核发现旧 G1.3 的两个结论性缺陷。第一，三份 HDF5 的 exact MuJoCo XML 存在 `model_file` attribute，hash 分别为 task10 `e9a508e...8830`、task19 `ccf958e...0257`、task20 `4e0497a...723`，均不等于 fresh reverse env XML；task10/task19 的 fresh XML 每次还不同。MuJoCo state 不携带完整 model body/site placement，故跨 model 的 `states[0]` predicate false 不是合法反向语义证据。第二，旧 settle 把 joint sin/cos/velocity、EEF pose/quaternion 与 gripper qpos/qvel 合成一个 max，并连续发送 `gripper=-1`；object/fixture 漂移实际仅 `1e-7～1e-11`，不支持场景失稳结论。
+
+因此审核为 `remediation_required`，但不是退回 Teleop 或宣布 reverse BDDL 无效。旧 G1 report 保持 immutable，旧计划归档；唯一活动计划改为 `docs/AXIS_PI05_TRACK3_DYNAMIC_GATE_MODEL_STATE_RECONCILIATION_PLAN.md`。它只授权：HDF5/model compatibility fail-closed、reverse BDDL native reset 的逐 predicate 检查、按单位拆分的 controller/gripper settle，以及 GPU3 上 task10 单次 canary 后三族各 `3/3` 非抓取动态 release。即使全通过也必须停在 `track3_reverse_semantics_v2_dynamic_validated_pending_se3_review`，等待新审核才可恢复 SE(3) 与真实 support canary。完整审核见 `docs/reviews/axis_pi05/TRACK3_SUPPORT_SE3_G0_G1_AUDIT_20260903.md`。
+
+审核后全量测试为 `171 passed, 7 skipped, 23 warnings`。

@@ -1,0 +1,163 @@
+{
+  "accepted_reverse_demo_count": 0,
+  "created_at_utc": "2026-09-03T10:12:28.043865+00:00",
+  "gpu_policy": {
+    "gpu0_touched": false,
+    "gpu1_gpu2_training_started": false,
+    "physical_gpu": 3
+  },
+  "hard_gate": {
+    "finite_7d_actions": true,
+    "hdf5_action_replay_passed": true,
+    "lerobot_schema_passed": true,
+    "new_download_bytes": 0,
+    "three_family_references": true,
+    "unresolved_plus_license_not_training_eligible": true
+  },
+  "hdf5_replays": [
+    {
+      "action_shape": [
+        90,
+        7
+      ],
+      "end_success": true,
+      "first_success_action_index": 69,
+      "fps": 20,
+      "full_state_present": true,
+      "replay_mode": "recorded_state0_restore_plus_actions1",
+      "state_action_alignment": "states[0] is restored before replay; actions[1:] are applied",
+      "source": "original_libero_hdf5_demo_0",
+      "start_success": false,
+      "state_shape": [
+        90,
+        79
+      ],
+      "status": "passed",
+      "task_index": 10
+    },
+    {
+      "action_shape": [
+        126,
+        7
+      ],
+      "end_success": true,
+      "first_success_action_index": 114,
+      "fps": 20,
+      "full_state_present": true,
+      "replay_mode": "recorded_state0_restore_plus_actions1",
+      "state_action_alignment": "states[0] is restored before replay; actions[1:] are applied",
+      "source": "original_libero_hdf5_demo_0",
+      "start_success": false,
+      "state_shape": [
+        126,
+        110
+      ],
+      "status": "passed",
+      "task_index": 20
+    }
+  ],
+  "lerobot_samples": [
+    {
+      "action_dim": 7,
+      "columns": [
+        "observation.state",
+        "action",
+        "timestamp",
+        "frame_index",
+        "episode_index",
+        "index",
+        "task_index"
+      ],
+      "contact_sheet": {
+        "contact_sheet": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_autogen/s2_samples/ipec_goal_front_contact.jpg",
+        "decoded_frame_count": 5,
+        "sampled_h264": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_autogen/s2_samples/ipec_goal_front_sampled_h264.mp4",
+        "sampled_h264_sha256": "1423849764f3c359bbaadf48aec08ba130ea2d74ce20fca8c9435c8cb8673239",
+        "sha256": "61384729f57d36849163087401af0165bbe4eab531ce18562aef3b26862a55bb",
+        "source": "/home/huang/code/PARC2026_final/data/raw/hf/IPEC-COMMUNITY/libero_goal_no_noops_1.0.0_lerobot/videos/chunk-000/observation.images.image/episode_000000.mp4",
+        "status": "passed"
+      },
+      "episode_index": 0,
+      "fps": 20,
+      "identity": "reverse_relevant_primitive",
+      "instruction": "put the bowl on the plate",
+      "license_status": "CC-BY-4.0",
+      "row_count": 112,
+      "source": "IPEC-COMMUNITY/libero_goal_no_noops_1.0.0_lerobot",
+      "state_dim": 8,
+      "video_front": {
+        "status": "passed",
+        "streams": [
+          {
+            "codec_name": "av1",
+            "height": 256,
+            "nb_frames": "112",
+            "r_frame_rate": "20/1",
+            "width": 256
+          }
+        ]
+      },
+      "video_wrist": {
+        "status": "passed",
+        "streams": [
+          {
+            "codec_name": "av1",
+            "height": 256,
+            "nb_frames": "112",
+            "r_frame_rate": "20/1",
+            "width": 256
+          }
+        ]
+      }
+    },
+    {
+      "action_dim": 7,
+      "episode_index": 0,
+      "fps": 20,
+      "frame_count": 277,
+      "identity": "reverse_relevant_primitive",
+      "instruction": "put the white mug on the left plate and put the yellow and white mug on the right plate",
+      "license_status": "unresolved_at_primary_revision",
+      "media_decode": "metadata_only_due_unresolved_dataset_license",
+      "source": "lerobot/libero_plus",
+      "state_dim": 8,
+      "video_front": {
+        "status": "passed",
+        "streams": [
+          {
+            "codec_name": "av1",
+            "height": 256,
+            "nb_frames": "56031",
+            "r_frame_rate": "20/1",
+            "width": 256
+          }
+        ]
+      },
+      "video_segment": {
+        "file_index": 0,
+        "from_timestamp": 0.0,
+        "to_timestamp": 13.85
+      }
+    }
+  ],
+  "prior_full_state_family_references": {
+    "articulation_close": {
+      "status": "accepted_p1_snapshot_pending_video_review",
+      "task_index": 19,
+      "terminal_state_sha256": "5abdba61bc4e083cf26f9416b76e80e1106c8b9cbdf7f2e6016e98c5cd9bb5f6"
+    },
+    "containment_remove": {
+      "status": "accepted_p1_snapshot_pending_video_review",
+      "task_index": 20,
+      "terminal_state_sha256": "7d3d2547794fef4576672e6f37b666700556f857f1afddf19a8e173139f2d3e8"
+    },
+    "support_remove": {
+      "status": "accepted_p1_snapshot_pending_video_review",
+      "task_index": 10,
+      "terminal_state_sha256": "34e0c70edac11ce668e548c5cca308a9fbd16b64afc8726e8800280c8c82c66d"
+    }
+  },
+  "schema_version": 1,
+  "status": "s2_selective_schema_replay_passed",
+  "training_started": false
+}

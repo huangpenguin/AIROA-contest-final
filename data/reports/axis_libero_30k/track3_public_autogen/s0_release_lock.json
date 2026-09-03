@@ -1,0 +1,327 @@
+{
+  "episode_counts_before_s1": {
+    "accepted": 0,
+    "legacy_track3_pilot": {
+      "accepted": 0,
+      "pending": 0,
+      "pending_autogen": 0,
+      "rejected": 0
+    },
+    "pending": 0,
+    "pending_autogen": 0,
+    "rejected": 0
+  },
+  "gpu_read_only_snapshot": [
+    {
+      "index": 0,
+      "memory_total_mib": 32768,
+      "memory_used_mib": 15403,
+      "utilization_gpu_percent": 8,
+      "uuid": "GPU-0a004a52-e72d-9b46-0391-9488e841db41"
+    },
+    {
+      "index": 1,
+      "memory_total_mib": 32768,
+      "memory_used_mib": 5,
+      "utilization_gpu_percent": 0,
+      "uuid": "GPU-dbf876c3-dcaf-054b-ac9d-035e7198ceda"
+    },
+    {
+      "index": 2,
+      "memory_total_mib": 32768,
+      "memory_used_mib": 5,
+      "utilization_gpu_percent": 0,
+      "uuid": "GPU-0cf6b31a-016b-6e71-a7b5-a790922d89ae"
+    },
+    {
+      "index": 3,
+      "memory_total_mib": 32768,
+      "memory_used_mib": 5,
+      "utilization_gpu_percent": 0,
+      "uuid": "GPU-b03055ef-af46-2cf8-7545-c60870f745f5"
+    }
+  ],
+  "hdf5_lock": {
+    "file_count": 40,
+    "p0_lock_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_lora/p0_lock.json",
+    "p0_lock_sha256": "be12795b3d18d46f774022d817789a14d64a5e16c8e27bee58e256c29acb4ab5",
+    "p1_restore_summary_sha256": "62db697a1ff6afb5d157c9fc786c77eb17a0bdf1054edb060fea50b3f3fe211e",
+    "total_bytes": 33784856577
+  },
+  "identity_counts_before_s1": {
+    "exact_reverse_demo": 0,
+    "generator_reference_only": 0,
+    "reverse_relevant_primitive": 0
+  },
+  "immutable_assets": {
+    "r6_fast": {
+      "path": "/home/huang/code/PARC2026_final/outputs/axis_pi05/r6_positive_score_fast/staging/model_weights/model_fast.safetensors",
+      "sha256": "e55bf7dcca78b2195993dd7a12b96a4ea13e94761d711c99a82b7411c3f8ceb6"
+    },
+    "r6_fast_audit": {
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/post_r6_lora/r6_positive_score_fast/fast_submission_audit.json",
+      "sha256": "4935fa3a8f9dc414635657666218383115dfc2584b353f1ec63d806b31ffdc89"
+    },
+    "r6_folded": {
+      "path": "/home/huang/code/PARC2026_final/outputs/axis_pi05/axis_libero_lora_folded/r6_dual_l2_fresh500_r1_step500/model.safetensors",
+      "sha256": "5c73e1e8217dbb75a934c2b0165208e851f69e66cfe2ea0430590a29901e6d5b"
+    },
+    "r6_norm": {
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/phase1/norm_stats.json",
+      "sha256": "4c803bf59c52677c36b6b420c614d8a7742e0847708443863e13e67cb80b18f5"
+    },
+    "r6_release_lock": {
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/post_r6_lora/r6_positive_score_fast/R6_FOLDED_RELEASE_LOCK.json",
+      "sha256": "b62ffea8ad031a51930bcb0374043e5e3dbfa88aa323890281233f5cf115ca50"
+    },
+    "r6_zip": {
+      "path": "/home/huang/code/PARC2026_final/artifacts/submission_axis_r6_step500_fast_positive_score_20260831.zip",
+      "sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a"
+    }
+  },
+  "libero_plus_dirty_read_only_snapshot": {
+    "modified": false,
+    "policy": "record_only_never_clean_or_touch",
+    "status_porcelain": [
+      "M libero/libero/benchmark/__init__.py",
+      "?? libero/__init__.py",
+      "?? libero/libero/assets",
+      "?? libero/libero/bddl_files/libero_t3",
+      "?? libero/libero/init_files/libero_t3"
+    ]
+  },
+  "local_sources": [
+    {
+      "episodes_sha256": "690349688e96d984007bf2cca3ccf2683dfc809f03dab55e1159e4cc71f150b7",
+      "info": {
+        "features": [
+          "action",
+          "episode_index",
+          "frame_index",
+          "index",
+          "observation.images.image",
+          "observation.images.wrist_image",
+          "observation.state",
+          "task_index",
+          "timestamp"
+        ],
+        "fps": 20,
+        "fps_check": true,
+        "path": "/home/huang/code/PARC2026_final/data/raw/hf/IPEC-COMMUNITY/libero_spatial_no_noops_1.0.0_lerobot/meta/info.json",
+        "sha256": "8995d3b6f7b723137fe7273eba41e9356be8b3a9176ec11678c13c7215676c85",
+        "source": "IPEC-COMMUNITY/libero_spatial_no_noops_1.0.0_lerobot",
+        "total_episodes": 432,
+        "total_frames": 52970,
+        "total_tasks": 10,
+        "total_videos": 864
+      },
+      "revision": "bf14d6258218d12c2e3c1a3b9922e163cdf6455d",
+      "source": "IPEC-COMMUNITY/libero_spatial_no_noops_1.0.0_lerobot",
+      "tasks_sha256": "399841cf8e861052d3fb7214ed619b5a10b4eded2d6f107e7fed338a233dd0e1"
+    },
+    {
+      "episodes_sha256": "63c6fb6940f46d0bc74c0242c1cde2a39a945bbe7de7b1709d38f5d9a82fcfea",
+      "info": {
+        "features": [
+          "action",
+          "episode_index",
+          "frame_index",
+          "index",
+          "observation.images.image",
+          "observation.images.wrist_image",
+          "observation.state",
+          "task_index",
+          "timestamp"
+        ],
+        "fps": 20,
+        "fps_check": true,
+        "path": "/home/huang/code/PARC2026_final/data/raw/hf/IPEC-COMMUNITY/libero_object_no_noops_1.0.0_lerobot/meta/info.json",
+        "sha256": "21535a56762186b69cb7db2ac2148de5060d0c91ac5c54e261437856a4512a42",
+        "source": "IPEC-COMMUNITY/libero_object_no_noops_1.0.0_lerobot",
+        "total_episodes": 454,
+        "total_frames": 66984,
+        "total_tasks": 10,
+        "total_videos": 908
+      },
+      "revision": "15657dac2ad1c01b4e94bf54ab0493b46a8d63f9",
+      "source": "IPEC-COMMUNITY/libero_object_no_noops_1.0.0_lerobot",
+      "tasks_sha256": "68ef5f9bc5a0bd74f46140f6721fa0ea74e997d74e37b8714a539f61337e7862"
+    },
+    {
+      "episodes_sha256": "548d91fe48b7d439248523dd3f7a5e4b15fc77d5eb1b7cfdd6da0033d422cb43",
+      "info": {
+        "features": [
+          "action",
+          "episode_index",
+          "frame_index",
+          "index",
+          "observation.images.image",
+          "observation.images.wrist_image",
+          "observation.state",
+          "task_index",
+          "timestamp"
+        ],
+        "fps": 20,
+        "fps_check": true,
+        "path": "/home/huang/code/PARC2026_final/data/raw/hf/IPEC-COMMUNITY/libero_goal_no_noops_1.0.0_lerobot/meta/info.json",
+        "sha256": "5e435c9b98d6515aea0f87bc6738a4fea9c67b3ce3a7765aad4801cd499dbc8e",
+        "source": "IPEC-COMMUNITY/libero_goal_no_noops_1.0.0_lerobot",
+        "total_episodes": 428,
+        "total_frames": 52042,
+        "total_tasks": 10,
+        "total_videos": 856
+      },
+      "revision": "222cf888ed360fad0a5f983748c1cc40743d43e7",
+      "source": "IPEC-COMMUNITY/libero_goal_no_noops_1.0.0_lerobot",
+      "tasks_sha256": "39f08f81b289ad3041f1c8ada88f679fe60774e9fde4083415881486edc23d55"
+    },
+    {
+      "episodes_sha256": "5589f8f87cfddb34812782462160bf55b0d3082e404240682d1d0a89faba8265",
+      "info": {
+        "features": [
+          "action",
+          "episode_index",
+          "frame_index",
+          "index",
+          "observation.images.image",
+          "observation.images.wrist_image",
+          "observation.state",
+          "task_index",
+          "timestamp"
+        ],
+        "fps": 20,
+        "fps_check": true,
+        "path": "/home/huang/code/PARC2026_final/data/raw/hf/IPEC-COMMUNITY/libero_10_no_noops_1.0.0_lerobot/meta/info.json",
+        "sha256": "e5643c4e72e65f133ce0b1a5b9d9aaa5b2f065ed7f0f00ebbc231bde61af96d5",
+        "source": "IPEC-COMMUNITY/libero_10_no_noops_1.0.0_lerobot",
+        "total_episodes": 379,
+        "total_frames": 101469,
+        "total_tasks": 10,
+        "total_videos": 758
+      },
+      "revision": "e1a223d30b896c1613f270a2bfc63d382b3de7e1",
+      "source": "IPEC-COMMUNITY/libero_10_no_noops_1.0.0_lerobot",
+      "tasks_sha256": "45f9eb4d4b6b04999f64640c0aae380555372b7b273a904f5f459ad05d4a0a6a"
+    },
+    {
+      "episodes_sha256": "78fa111f3f9c407bc18c26c004656fffa90c728e839d37c7cc5e29252b2df27e",
+      "info": {
+        "features": [
+          "action",
+          "episode_index",
+          "frame_index",
+          "index",
+          "observation.images.image",
+          "observation.images.wrist_image",
+          "observation.state",
+          "observation.states.ee_state",
+          "observation.states.gripper_state",
+          "observation.states.joint_state",
+          "task_index",
+          "timestamp"
+        ],
+        "fps": 20,
+        "fps_check": true,
+        "path": "/home/huang/code/PARC2026_final/data/raw/hf/IPEC-COMMUNITY/libero_90_no_noops_lerobot/meta/info.json",
+        "sha256": "34550f9254d76285bd551dbf6ff2f6c2ccb68d3be9d2d494db1d0a8167573fa7",
+        "source": "IPEC-COMMUNITY/libero_90_no_noops_lerobot",
+        "total_episodes": 3921,
+        "total_frames": 569249,
+        "total_tasks": 73,
+        "total_videos": 7842
+      },
+      "revision": "70696aef03def70c17917f43c5e79276b7e5fbe7",
+      "source": "IPEC-COMMUNITY/libero_90_no_noops_lerobot",
+      "tasks_sha256": "0a5b04658b8f0c8bb6f4ed13bce583882c78d594a7039d785479da7131c0230c"
+    },
+    {
+      "episodes_sha256": "1e3ea98a70ff94fdadbc11ce17ca1bc380cc05a7eca9097d8281e66d65b2810f",
+      "info": {
+        "features": [
+          "action",
+          "episode_index",
+          "frame_index",
+          "index",
+          "observation.images.front",
+          "observation.images.wrist",
+          "observation.state",
+          "task_index",
+          "timestamp"
+        ],
+        "fps": 20,
+        "fps_check": true,
+        "path": "/home/huang/code/PARC2026_final/data/raw/hf/lerobot/libero_plus/meta/info.json",
+        "sha256": "5374c74f2c9ed44575d1ffa8d5528068bb601388d2a646e9e8b666ce83cf48a0",
+        "source": "lerobot/libero_plus",
+        "total_episodes": 14347,
+        "total_frames": 2238036,
+        "total_tasks": 40,
+        "total_videos": null
+      },
+      "revision": "f3f49f426d75030177b18778374005bc12ccd588",
+      "source": "lerobot/libero_plus",
+      "stats_sha256": "9c2679d28e09728aa745e7650d30663a9a1d64c1a87650673794b88bca8ec2db",
+      "tasks_sha256": "d65b02b53e99b202bba23e77136fcefc2edc1787e2fee744b55d617eabca6033"
+    },
+    {
+      "episodes_sha256": "0479a2ced6117700e4638a1da54dccd9f60ae5f47485ea6d91390c869befcf08",
+      "info": {
+        "features": [
+          "actions",
+          "episode_index",
+          "frame_index",
+          "image",
+          "index",
+          "state",
+          "task_index",
+          "timestamp",
+          "wrist_image"
+        ],
+        "fps": 10,
+        "fps_check": true,
+        "path": "/home/huang/code/PARC2026_final/data/raw/hf/physical-intelligence/libero/meta/info.json",
+        "sha256": "77c0da93c67960bac803a8ea25dabf380d752c26c1d91c54151121dd10e7d82f",
+        "source": "physical-intelligence/libero",
+        "total_episodes": 1693,
+        "total_frames": 273465,
+        "total_tasks": 40,
+        "total_videos": 0
+      },
+      "revision": "a4336d589d589045d1c56423ffdf3b88a0e19b1f",
+      "source": "physical-intelligence/libero",
+      "tasks_sha256": "e72ef3cf7ca7a3abe70b3e142a0d1acf2719d2a3f27598869092cc4f1762bb99"
+    }
+  ],
+  "nested_openpi": {
+    "clean_before_lock": true,
+    "commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "tree": "f1b9e6ce72c01dfa41ce3aab4a59b0ef92b67dc9"
+  },
+  "phase": "S0",
+  "plan": "/home/huang/code/PARC2026_final/docs/AXIS_PI05_TRACK3_PUBLIC_PRIMITIVE_MINING_AND_AUTOGEN_PLAN.md",
+  "policy": {
+    "fast_or_zip_started": false,
+    "hidden_track3_details_used": false,
+    "human_operation": false,
+    "large_download_started": false,
+    "official_gpu_used": false,
+    "simulator_started": false,
+    "training_started": false
+  },
+  "public_t3_denylist": {
+    "case_count": 40,
+    "path": "/home/huang/code/PARC2026_final/data/eval_manifests/axis_pi05_eval_v1/public_t3_holdout.jsonl",
+    "sha256": "64a1124ef17a866e259ba7e8bce96351cd183dff1ebf76c1afbd5694dfe0ec95"
+  },
+  "recorder_canary": {
+    "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_terminal_recovery/R4_GPU3_NONHUMAN_CANARY.json",
+    "sha256": "b6c52496b6dc28daf6163ca3326d8dffd79debcdbe6e7b86d9d280e2b644bb25"
+  },
+  "root": {
+    "clean_before_lock": true,
+    "commit": "b0078dc6ffc54036006c732c890f02824ca593a0",
+    "tree": "2c9ae04a9c5816ee8af90101f02690d7248b4064"
+  },
+  "schema_version": 1,
+  "status": "track3_public_release_locked"
+}

@@ -2,7 +2,7 @@
 
 > 制定日期：2026-09-03（Asia/Tokyo）
 > 计划输入：root `bcf7e1c0deffc9c2eaf7595931f7fb2372d05257`，nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`
-> 当前状态：`track3_public_primitive_mining_autogen_ready`
+> 当前状态：`track3_scripted_executor_failed`
 > 唯一活动授权：执行 S0–S5，最多生成 3 条非人工自动 canary，完成后 hard stop 等待审核
 > 不授权：人工 Teleop、批量 30–60 条生成、LoRA/dense 训练、norm 替换、FAST/ZIP、C20/E2、官方 GPU、上传或比赛提交
 

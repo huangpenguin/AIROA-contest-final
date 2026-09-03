@@ -1,0 +1,166 @@
+{
+  "denylist_overlap_count": 0,
+  "families": [
+    "support_remove",
+    "containment_remove",
+    "articulation_close"
+  ],
+  "official_track3_claim": false,
+  "predicate_nontrivial_static": true,
+  "schema_version": 1,
+  "spec_count": 3,
+  "specs": [
+    {
+      "base_template_id": "358b7781437e412c",
+      "canary_id": "support_remove_task_10",
+      "denylist_overlap": false,
+      "forward_bddl_path": "/home/huang/code/PARC2026_final/LIBERO/libero/libero/bddl_files/libero_goal/put_the_bowl_on_the_plate.bddl",
+      "forward_bddl_sha256": "358b7781437e412c67d6a7648c1c28796b6b1bf117a25e61316cb8dfeb940e5b",
+      "forward_init_path": "/home/huang/code/PARC2026_final/LIBERO/libero/libero/init_files/libero_goal/put_the_bowl_on_the_plate.pruned_init",
+      "forward_init_sha256": "ef3466ffad734754dc40eba1f6f5712e37aa46b9692c595e0da34f16d3a0c668",
+      "generator_provenance": {
+        "adapter": "track3_reverse_semantic_adapter",
+        "hidden_track3_details_used": false,
+        "public_rule_source": "KE7/libero-infinity task_reverser plus locked public LIBERO BDDL",
+        "source_revision": "dc5451ff80efa33ef170350188a6c3457fbd7a81"
+      },
+      "identity": "generator_reference_only",
+      "invariants": [
+        "(On wine_bottle_1 main_table_wine_bottle_region)",
+        "(On plate_1 main_table_plate_region)",
+        "(On cream_cheese_1 main_table_cream_cheese_region)",
+        "(On wooden_cabinet_1 main_table_cabinet_region)",
+        "(On flat_stove_1 main_table_stove_region)",
+        "(On wine_rack_1 main_table_wine_rack_region)"
+      ],
+      "official_track3_claim": false,
+      "operator_family": "support_remove",
+      "reverse_bddl_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_autogen/s3_reverse_specs/canary_support_remove_task_10.bddl",
+      "reverse_bddl_sha256": "8cbd2a5508922403699d35f08cb02501da58417c0ab1b96c350c0cfb681081f1",
+      "reverse_goal_predicates": [
+        "(On akita_black_bowl_1 main_table_akita_black_bowl_region)"
+      ],
+      "reverse_initial_predicates": [
+        "(On wine_bottle_1 main_table_wine_bottle_region)",
+        "(On plate_1 main_table_plate_region)",
+        "(On cream_cheese_1 main_table_cream_cheese_region)",
+        "(On wooden_cabinet_1 main_table_cabinet_region)",
+        "(On flat_stove_1 main_table_stove_region)",
+        "(On wine_rack_1 main_table_wine_rack_region)",
+        "(On akita_black_bowl_1 plate_1)"
+      ],
+      "reverse_instruction": "Reverse the public LIBERO operation: remove the akita black bowl from the plate and put it back at its akita black bowl.",
+      "schema_version": "track3_reverse_spec_v1",
+      "source_region_invariants": {
+        "forward_goal_predicates": [
+          "(On akita_black_bowl_1 plate_1)"
+        ]
+      },
+      "task_index": 10
+    },
+    {
+      "base_template_id": "6298533e7bcfb83e",
+      "canary_id": "containment_remove_task_20",
+      "denylist_overlap": false,
+      "forward_bddl_path": "/home/huang/code/PARC2026_final/LIBERO/libero/libero/bddl_files/libero_object/pick_up_the_orange_juice_and_place_it_in_the_basket.bddl",
+      "forward_bddl_sha256": "6298533e7bcfb83e40779a77fda39216e8cd53f22bf1af6388585dad0abb0b50",
+      "forward_init_path": "/home/huang/code/PARC2026_final/LIBERO/libero/libero/init_files/libero_object/pick_up_the_orange_juice_and_place_it_in_the_basket.pruned_init",
+      "forward_init_sha256": "35b19ffab1fe08c6457ebd732c37d04b9bc0d22b7ce7de015986092ddddea151",
+      "generator_provenance": {
+        "adapter": "track3_reverse_semantic_adapter",
+        "hidden_track3_details_used": false,
+        "public_rule_source": "KE7/libero-infinity task_reverser plus locked public LIBERO BDDL",
+        "source_revision": "dc5451ff80efa33ef170350188a6c3457fbd7a81"
+      },
+      "identity": "generator_reference_only",
+      "invariants": [
+        "(On butter_1 floor_other_object_region_0)",
+        "(On chocolate_pudding_1 floor_other_object_region_1)",
+        "(On bbq_sauce_1 floor_other_object_region_2)",
+        "(On ketchup_1 floor_other_object_region_3)",
+        "(On salad_dressing_1 floor_other_object_region_4)",
+        "(On basket_1 floor_bin_region)"
+      ],
+      "official_track3_claim": false,
+      "operator_family": "containment_remove",
+      "reverse_bddl_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_autogen/s3_reverse_specs/canary_containment_remove_task_20.bddl",
+      "reverse_bddl_sha256": "5e7a15c4606ce9c58e078b446dec28ab26c8850f0040f6e4bc30198a75283c54",
+      "reverse_goal_predicates": [
+        "(On orange_juice_1 floor_target_object_region)"
+      ],
+      "reverse_initial_predicates": [
+        "(On butter_1 floor_other_object_region_0)",
+        "(On chocolate_pudding_1 floor_other_object_region_1)",
+        "(On bbq_sauce_1 floor_other_object_region_2)",
+        "(On ketchup_1 floor_other_object_region_3)",
+        "(On salad_dressing_1 floor_other_object_region_4)",
+        "(On basket_1 floor_bin_region)",
+        "(In orange_juice_1 basket_1_contain_region)"
+      ],
+      "reverse_instruction": "Reverse the public LIBERO operation: take the orange juice out of the basket 1 contain and return it to its floor target object.",
+      "schema_version": "track3_reverse_spec_v1",
+      "source_region_invariants": {
+        "forward_goal_predicates": [
+          "(In orange_juice_1 basket_1_contain_region)"
+        ]
+      },
+      "task_index": 20
+    },
+    {
+      "base_template_id": "832ab48ec476807c",
+      "canary_id": "articulation_close_task_19",
+      "denylist_overlap": false,
+      "forward_bddl_path": "/home/huang/code/PARC2026_final/LIBERO/libero/libero/bddl_files/libero_goal/open_the_middle_drawer_of_the_cabinet.bddl",
+      "forward_bddl_sha256": "832ab48ec476807c767e8985666e295700f92d1f8daeae1c34eee1e75293769b",
+      "forward_init_path": "/home/huang/code/PARC2026_final/LIBERO/libero/libero/init_files/libero_goal/open_the_middle_drawer_of_the_cabinet.pruned_init",
+      "forward_init_sha256": "977efe1216bee72bb4e9fa9ec4be1bcfe37fb00ece815eac117feba019b34b9f",
+      "generator_provenance": {
+        "adapter": "track3_reverse_semantic_adapter",
+        "hidden_track3_details_used": false,
+        "public_rule_source": "KE7/libero-infinity task_reverser plus locked public LIBERO BDDL",
+        "source_revision": "dc5451ff80efa33ef170350188a6c3457fbd7a81"
+      },
+      "identity": "generator_reference_only",
+      "invariants": [
+        "(On wine_bottle_1 main_table_wine_bottle_region)",
+        "(On akita_black_bowl_1 main_table_akita_black_bowl_region)",
+        "(On plate_1 main_table_plate_region)",
+        "(On cream_cheese_1 main_table_cream_cheese_region)",
+        "(On wooden_cabinet_1 main_table_cabinet_region)",
+        "(On flat_stove_1 main_table_stove_region)",
+        "(On wine_rack_1 main_table_wine_rack_region)"
+      ],
+      "official_track3_claim": false,
+      "operator_family": "articulation_close",
+      "reverse_bddl_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_autogen/s3_reverse_specs/canary_articulation_close_task_19.bddl",
+      "reverse_bddl_sha256": "54f92ee202577d67180f246c62138f6ec6152ba4dbb75f8fd2e70e2cf2000352",
+      "reverse_goal_predicates": [
+        "(Close wooden_cabinet_1_middle_region)"
+      ],
+      "reverse_initial_predicates": [
+        "(On wine_bottle_1 main_table_wine_bottle_region)",
+        "(On akita_black_bowl_1 main_table_akita_black_bowl_region)",
+        "(On plate_1 main_table_plate_region)",
+        "(On cream_cheese_1 main_table_cream_cheese_region)",
+        "(On wooden_cabinet_1 main_table_cabinet_region)",
+        "(On flat_stove_1 main_table_stove_region)",
+        "(On wine_rack_1 main_table_wine_rack_region)",
+        "(Open wooden_cabinet_1_middle_region)"
+      ],
+      "reverse_instruction": "Reverse the public LIBERO operation: close the wooden cabinet 1 middle.",
+      "schema_version": "track3_reverse_spec_v1",
+      "source_region_invariants": {
+        "forward_goal_predicates": [
+          "(Open wooden_cabinet_1_middle_region)"
+        ]
+      },
+      "task_index": 19
+    }
+  ],
+  "status": "s3_reverse_semantic_adapter_passed",
+  "task_order": [
+    10,
+    20,
+    19
+  ]
+}

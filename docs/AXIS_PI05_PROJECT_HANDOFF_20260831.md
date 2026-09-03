@@ -1,11 +1,11 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新已审核执行提交：`15791f9`（R0–R4批准，仅释放task19单条人工canary）
+> 最新执行停止点：`track3_scripted_executor_failed`（S0–S5，support 自动 canary 单次失败）
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_public_primitive_mining_autogen_ready`
+> 当前总状态：`track3_scripted_executor_failed`
 > 唯一活动计划：`docs/AXIS_PI05_TRACK3_PUBLIC_PRIMITIVE_MINING_AND_AUTOGEN_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
@@ -480,3 +480,13 @@ task19人工计划在H0前被取代并归档，没有产生candidate；recorder/
 任一hard gate失败即停止；尤其close-drawer自动primitive失败时不得自动转人工，而应进入`track3_autogen_close_drawer_gap_pending_review`。三族都通过也只能进入`track3_autogen_three_family_canary_pending_human_video_review`，等待审核后才可另建30–60条exact reverse扩充、auxiliary primitive bank和从R6 step500分叉的小步LoRA计划。
 
 本次只落盘计划与状态指针，未执行S0或任何实验。计划切换后全量CPU回归为`158 passed, 7 skipped, 23 warnings`；root/nested在计划修改前clean，`LIBERO-plus`既有dirty内容未触碰。提交前还需完成JSON/Markdown路径、`git diff --check`与最终worktree校验。
+
+## 35. Track 3 S0–S5 自动执行停止点
+
+本轮以 root `b0078dc6ffc54036006c732c890f02824ca593a0`、nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1` 为 S0 lock 输入。S0 primary source/revision/license 复核、S1 本地语义挖掘、S2 选择性 schema/replay 与 S3 reverse semantic adapter 均通过。S1 共索引 `21,961` episodes / `3,080,750` 本地20Hz frames：`exact_reverse_demo=0`、`reverse_relevant_primitive=19,704`、`generator_reference_only=2,452`，denylist overlap=`0`。S2 的 full-state replay 明确采用 `states[0]` restore 后执行 `actions[1:]`，没有新增下载；S3 生成三族静态 reverse BDDL，`official_track3_claim=false`。
+
+S4/S5 严格按 `support_remove → containment_remove → articulation_close` 只尝试一次 support canary。task10 在 `descend_object` 阶段 120 步超时，最终 predicate 为 false；保留了 132 帧未裁剪失败资产（完整 simulator states、policy states、predicate/subgoal/contact/deadline/action、front/wrist H.264）于 `data/reports/axis_libero_30k/track3_public_autogen/diagnostics/support_remove_task_10/`。按计划停止，没有 retry、containment/articulation 继续、人工 Teleop、human review sidecar、accepted promotion 或训练；`pending_autogen=0`。
+
+GPU3 仅作已授权 simulator/replay，postflight 为 `6 MiB`；GPU0/1/2 未被本轮执行触碰。没有使用官方 GPU、FAST、ZIP、上传或比赛提交。当前唯一状态为 `track3_scripted_executor_failed`，后续只能由新的审核决定最小 remediation 或是否另开人工兜底计划；本交接不授权恢复旧 task19 命令。
+
+主要证据：`data/reports/axis_libero_30k/track3_public_autogen/{s0_source_verification.json,s0_release_lock.json,s1_semantic_mining.json,s2_selective_schema_replay.json,s3_reverse_adapter.json,s5_canary_summary.json,S5_AUTOGEN_CANARY_REPORT_ZH.md}`；机器状态同步在 `data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json`。

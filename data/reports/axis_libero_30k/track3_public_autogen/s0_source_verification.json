@@ -1,0 +1,159 @@
+{
+  "claims": {
+    "reverse_bddl_generator": true,
+    "scripted_20hz_osc_pose_generator": true
+  },
+  "git_sources": [
+    {
+      "clean": true,
+      "evidence": {
+        "docs/task-reversal.md": {
+          "bytes": 5045,
+          "exists": true,
+          "sha256": "2e53e28e12029b9ac660b79a9b5c4d846878da01c06fc08612b7523c3147912f"
+        },
+        "scripts/generate_reversed_bddls.py": {
+          "bytes": 1856,
+          "exists": true,
+          "sha256": "766d35d8bef48938311d49de96bde65e7e3f097bbe963df110fe0704cc239f10"
+        },
+        "src/libero_infinity/task_reverser.py": {
+          "bytes": 13543,
+          "exists": true,
+          "sha256": "81481c89e90936cba4ca678384ce087d2332b6d02d80adccffb006116ccb7020"
+        }
+      },
+      "id": "libero_infinity",
+      "kind": "git",
+      "license_path": "LICENSE",
+      "license_sha256": "a908b37af0ee6f39640e6e6c417ca53b725d93b632e344d53d97e891420f2f4c",
+      "revision": "dc5451ff80efa33ef170350188a6c3457fbd7a81",
+      "status_porcelain": [],
+      "tree": "b1883715864a3ba3a3202f5436247459d68f476e",
+      "url": "https://github.com/KE7/libero-infinity.git"
+    },
+    {
+      "clean": true,
+      "evidence": {
+        "behavior_prompting/train_network/scripts/libero/collect_demonstration.py": {
+          "bytes": 17122,
+          "exists": true,
+          "sha256": "6ae0539965bde9401ffc0fb01f93f46d9541e0fe37c154820fd769b0256c87e3"
+        },
+        "behavior_prompting/train_network/scripts/libero/create_dataset.py": {
+          "bytes": 11130,
+          "exists": true,
+          "sha256": "edaf7aa2df72cd23f973921adfc284457a364f5287dbbe4efb9c73ee1a771ca7"
+        },
+        "behavior_prompting/train_network/scripts/libero/generate_demonstrations.py": {
+          "bytes": 207488,
+          "exists": true,
+          "sha256": "05326167c4b18bdffc527274db19a114b53d8e7e6320817eeb08db2286dd19bd"
+        },
+        "docs/liberogen.md": {
+          "bytes": 10405,
+          "exists": true,
+          "sha256": "0321907d7eb5358f8a354ce66c14381da214a3e3fff7d84b0bc8482f9feb19de"
+        }
+      },
+      "id": "behavior_prompting",
+      "kind": "git",
+      "license_path": "LICENSE",
+      "license_sha256": "85f041c5c9a4e6b3e6df4748737a70cd5825b6a781d95aacc1fd1e54b3677eb0",
+      "revision": "ec29e62dde999ac3423df7d99a773c1dd28b480e",
+      "status_porcelain": [],
+      "tree": "5aaaca3e352366ee61bf28a87c82961d488d42a0",
+      "url": "https://github.com/real-stanford/behavior_prompting.git"
+    },
+    {
+      "clean": true,
+      "evidence": {
+        "README.md": {
+          "bytes": 8128,
+          "exists": true,
+          "sha256": "e87d5b284da3d7c127e1bc8282ea80b5da02aad3e9272c13adc96c4eca0eaa41"
+        },
+        "libero/libero/envs/base_object.py": {
+          "bytes": 645,
+          "exists": true,
+          "sha256": "88ee0d4b2a39f39437d97fb12ec08831cb5064e23a7456d2f882e3baab246f1a"
+        }
+      },
+      "id": "libero_upstream",
+      "kind": "git",
+      "license_path": "LICENSE",
+      "license_sha256": "e2885fd30a08381b799c4a33385522b23d637b4051b8f9a7f9f2519944b68ff6",
+      "revision": "8f1084e3132a39270c3a13ebe37270a43ece2a01",
+      "status_porcelain": [],
+      "tree": "99f4ada3f1d62e026fc9ff2390eb4ff8a1760e60",
+      "url": "https://github.com/Lifelong-Robot-Learning/LIBERO.git"
+    }
+  ],
+  "hf_datasets": [
+    {
+      "file_count": 965,
+      "gated": false,
+      "last_modified": "2026-06-28T18:44:08.000Z",
+      "license": "mit",
+      "private": false,
+      "repo_id": "austinpatel/libero_gen_goal_chain_hdf5",
+      "requested_revision": "5127777ed156e68c0301cf6b08a9fd24c6d14479",
+      "required_files": {
+        "README.md": {
+          "exists": true,
+          "lfs": null,
+          "size": null
+        }
+      },
+      "resolved_revision": "5127777ed156e68c0301cf6b08a9fd24c6d14479",
+      "status": "passed",
+      "used_storage_bytes": 377730813609
+    },
+    {
+      "file_count": 524,
+      "gated": false,
+      "last_modified": "2026-06-28T18:47:20.000Z",
+      "license": "mit",
+      "private": false,
+      "repo_id": "austinpatel/libero_gen_spatial_combination_hdf5",
+      "requested_revision": "34503f3b51883acf175247b94dd55b2bdc2e1d96",
+      "required_files": {
+        "README.md": {
+          "exists": true,
+          "lfs": null,
+          "size": null
+        }
+      },
+      "resolved_revision": "34503f3b51883acf175247b94dd55b2bdc2e1d96",
+      "status": "passed",
+      "used_storage_bytes": 158798932087
+    },
+    {
+      "file_count": 83,
+      "gated": false,
+      "last_modified": "2026-03-12T14:12:25.000Z",
+      "license": "unresolved_at_primary_revision",
+      "private": false,
+      "repo_id": "lerobot/libero_plus",
+      "requested_revision": "f3f49f426d75030177b18778374005bc12ccd588",
+      "required_files": {
+        "meta/info.json": {
+          "exists": true,
+          "lfs": null,
+          "size": null
+        },
+        "meta/tasks.parquet": {
+          "exists": true,
+          "lfs": null,
+          "size": null
+        }
+      },
+      "resolved_revision": "f3f49f426d75030177b18778374005bc12ccd588",
+      "status": "passed",
+      "used_storage_bytes": 15832116382
+    }
+  ],
+  "schema_version": 1,
+  "status": "s0_primary_sources_verified",
+  "verified_at_utc": "2026-09-03T10:02:31.580168+00:00"
+}

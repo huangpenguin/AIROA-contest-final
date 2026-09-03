@@ -2,10 +2,16 @@
 
 > 更新日期：2026-09-03（Asia/Tokyo）
 > 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_PUBLIC_PRIMITIVE_MINING_AND_AUTOGEN_PLAN.md`
-> 当前状态：`track3_public_primitive_mining_autogen_ready`
+> 当前状态：`track3_scripted_executor_failed`
 > 最新审核：`docs/reviews/axis_pi05/TRACK3_TELEOP_R0_R4_READINESS_AUDIT_20260903.md`
 
-## 1. 唯一活动计划
+## 1. 本轮执行停止点
+
+S0–S3 已通过；S4/S5 按固定顺序仅尝试 support canary 一次，在 `descend_object` 阶段 120 步超时后停止。失败资产为 `data/reports/axis_libero_30k/track3_public_autogen/diagnostics/support_remove_task_10/`，含 132 帧完整 trajectory states、policy states、front/wrist H.264 和失败原因；`pending_autogen` 仍为 `0`。本轮没有 retry、人工 Teleop、accepted promotion、训练、官方 GPU、FAST 或 ZIP。当前唯一审核状态为 `track3_scripted_executor_failed`，不得从此处自动恢复人工或训练。
+
+证据：`data/reports/axis_libero_30k/track3_public_autogen/{s0_source_verification.json,s0_release_lock.json,s1_semantic_mining.json,s2_selective_schema_replay.json,s3_reverse_adapter.json,s5_canary_summary.json,S5_AUTOGEN_CANARY_REPORT_ZH.md}`。
+
+## 2. 唯一活动计划
 
 - `AXIS_PI05_TRACK3_PUBLIC_PRIMITIVE_MINING_AND_AUTOGEN_PLAN.md`
   - 研究对话只作为线索；S0从primary source独立锁定LIBERO-Infinity、Behavior Prompting/LIBERO-Gen、原始LIBERO和相关数据的commit/revision/license/schema；
@@ -18,7 +24,7 @@
 
 正式Track1 `0.47`与Track2 `0.33`已证明R6 FAST在官方20Hz闭环有效；Track3 `0`说明纯正向LIBERO LoRA并未自然获得逆向能力。当前优先级不是立即训练，而是先用公开完整simulator state建立合法、通用、可回放的reverse supervision；dense full-FT继续冻结为独立研究线。
 
-## 2. 已归档的 R6 执行链
+## 3. 已归档的 R6 执行链
 
 以下计划已完成其获授权阶段或已按 hard gate 停止，并被后续计划取代。文件保存在 `docs/archive/axis_pi05/`，只用于审计：
 
@@ -50,14 +56,14 @@
 
 当前只执行Track3公开来源核验、primitive语义挖掘、选择性replay、reverse adapter与最多三条非人工自动canary；不得恢复人工task19、批量生成、旧reverse LoRA/interstep训练或直接转向Blackwell。
 
-## 3. 保留但非活动的研究线
+## 4. 保留但非活动的研究线
 
 - `AXIS_PI05_STANDARD_LIBERO_30K_RESEARCH_PLAN.md`：长期标准LIBERO 30K/full-FT研究的事实与路线来源；当前执行授权由donated accumulator计划收窄到最多10 steps。
 - `TRACK3_REVERSE_DATA_SYNTHESIS_PLAN.md`：长期完整逆向数据研究的事实来源；当前执行授权由正分优先计划收窄到pilot、500-step LoRA和候选ZIP。
 - `AXIS_PI05_TWO_GPU_LORA_TODAY_PLAN.md`：历史 provenance 路径被配置/工具引用，因此保留原位置；不再是活动计划。
 - 其余早期 post-training、低分恢复、urgent FAST、比赛 GPU 计划均不能覆盖本索引的当前活动计划。
 
-## 4. 今后每一步审核的固定动作
+## 5. 今后每一步审核的固定动作
 
 用户要求从本次开始，每一次阶段审核都执行完整闭环：
 

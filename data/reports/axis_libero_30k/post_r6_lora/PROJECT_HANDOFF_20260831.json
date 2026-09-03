@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-03",
-  "status": "track3_public_primitive_mining_autogen_ready",
+  "status": "track3_scripted_executor_failed",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
@@ -1751,7 +1751,7 @@
     "next_phase_only": "H0_task19_single_record_H2_replay_then_H3_stop_before_human_review"
   },
   "track3_public_primitive_autogen_planning": {
-    "status": "track3_public_primitive_mining_autogen_ready",
+    "status": "track3_scripted_executor_failed",
     "planning_input_root_commit": "bcf7e1c0deffc9c2eaf7595931f7fb2372d05257",
     "planning_input_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
     "active_plan": "docs/AXIS_PI05_TRACK3_PUBLIC_PRIMITIVE_MINING_AND_AUTOGEN_PLAN.md",
@@ -1805,5 +1805,77 @@
       "s0_started": false
     },
     "next_phase_only": "S0_to_S5_then_hard_stop"
+  },
+  "track3_public_primitive_autogen_execution": {
+    "status": "track3_scripted_executor_failed",
+    "execution_code_parent_commit": "b0078dc6ffc54036006c732c890f02824ca593a0",
+    "execution_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "active_plan": "docs/AXIS_PI05_TRACK3_PUBLIC_PRIMITIVE_MINING_AND_AUTOGEN_PLAN.md",
+    "authorized_phases": ["S0", "S1", "S2", "S3", "S4", "S5"],
+    "completed_phases": ["S0", "S1", "S2", "S3", "S4", "S5"],
+    "reports": {
+      "s0_source_verification": "data/reports/axis_libero_30k/track3_public_autogen/s0_source_verification.json",
+      "s0_release_lock": "data/reports/axis_libero_30k/track3_public_autogen/s0_release_lock.json",
+      "s1_semantic_mining": "data/reports/axis_libero_30k/track3_public_autogen/s1_semantic_mining.json",
+      "s2_selective_schema_replay": "data/reports/axis_libero_30k/track3_public_autogen/s2_selective_schema_replay.json",
+      "s3_reverse_adapter": "data/reports/axis_libero_30k/track3_public_autogen/s3_reverse_adapter.json",
+      "s5_canary_summary": "data/reports/axis_libero_30k/track3_public_autogen/s5_canary_summary.json",
+      "s5_report_zh": "data/reports/axis_libero_30k/track3_public_autogen/S5_AUTOGEN_CANARY_REPORT_ZH.md"
+    },
+    "artifact_sha256": {
+      "s0_source_verification": "55672c3e3e68140e72e00958eec5408a6c9296ccd790a04fd84992994c883f6e",
+      "s0_release_lock": "3e1b45e4e967c0bf72d2e889d6318637ba91497c4c002e6df2de4ffeddd7e3d4",
+      "s1_semantic_mining": "b5ecce37d83f46cc8014ce0a1305e8dc4c876c2b5b205ca029805e66545a515e",
+      "s2_selective_schema_replay": "967b8a39354160254b02381a41c9eb043dae615835014aed83932c4e9651fd811",
+      "s3_reverse_adapter": "3d9b5fa606b87edfc49daa5d02d82f17c4b67cf8c49764545e827c308e70af12",
+      "s5_canary_summary": "296b645389613033cbe629478aa35a8ad5f5b1b57e59cecc0a85069dfd991e2d"
+    },
+    "s1_counts": {
+      "episodes": 21961,
+      "frames_20hz_local": 3080750,
+      "exact_reverse_demo": 0,
+      "reverse_relevant_primitive": 19704,
+      "generator_reference_only": 2452,
+      "denylist_overlap": 0
+    },
+    "s2": {
+      "status": "s2_selective_schema_replay_passed",
+      "hdf5_replay_alignment": "states[0] restore plus actions[1:]",
+      "new_download_bytes": 0,
+      "three_family_references": true
+    },
+    "s3": {
+      "status": "s3_reverse_semantic_adapter_passed",
+      "spec_count": 3,
+      "predicate_nontrivial": true,
+      "official_track3_claim": false
+    },
+    "s4_s5": {
+      "attempted_canaries": 1,
+      "max_pending_autogen_canaries": 3,
+      "pending_autogen_count": 0,
+      "attempt_order": ["support_remove"],
+      "failure_reason": "stage_timeout:descend_object",
+      "failure_stage_frames": 120,
+      "complete_failure_asset": "data/reports/axis_libero_30k/track3_public_autogen/diagnostics/support_remove_task_10",
+      "human_operation": false,
+      "retry": false,
+      "accepted_promotion": false,
+      "training_started": false,
+      "official_gpu_used": false,
+      "fast_or_zip_used": false,
+      "gpu3_postflight_used_mib": 6
+    },
+    "verification": {
+      "cpu_self_test": "passed",
+      "py_compile": "passed",
+      "json_yaml_parse": "passed",
+      "git_diff_check": "passed",
+      "full_tests": "165_passed_7_skipped_23_warnings",
+      "libero_plus_dirty_state_modified": false,
+      "gpu0_touched": false,
+      "gpu1_gpu2_training_started": false
+    },
+    "hard_stop": "No automatic retry, human Teleop, containment/articulation continuation, accepted promotion, batch generation or training without a separate review decision."
   }
 }

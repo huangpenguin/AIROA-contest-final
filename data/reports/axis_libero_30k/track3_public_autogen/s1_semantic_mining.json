@@ -1,0 +1,55 @@
+{
+  "coverage": {
+    "catalog_hashes": {
+      "episode_catalog": "c4d456131ab28ee8813d46c0faa2c14937db143a9fade778c432b6cc884fd200",
+      "task_catalog": "76aae507cab1a8ec3ad56252d2fd09e8ddcf4c02707e0fd14619c5dd07a50280"
+    },
+    "decoded_full_video": false,
+    "denylist_overlap_count": 0,
+    "denylist_sha256": "64a1124ef17a866e259ba7e8bce96351cd183dff1ebf76c1afbd5694dfe0ec95",
+    "episode_count": 21961,
+    "exact_reverse_demo_count": 0,
+    "family_counts": {
+      "articulation_close": 1830,
+      "containment_remove": 7107,
+      "support_remove": 10767
+    },
+    "family_template_counts": {
+      "articulation_close": 21,
+      "containment_remove": 46,
+      "support_remove": 88
+    },
+    "identity_counts": {
+      "exact_reverse_demo": 0,
+      "generator_reference_only": 2452,
+      "reverse_relevant_primitive": 19704
+    },
+    "new_trajectory_count": 0,
+    "schema_version": 1,
+    "source_counts": {
+      "IPEC-COMMUNITY/libero_10_no_noops_1.0.0_lerobot": 379,
+      "IPEC-COMMUNITY/libero_90_no_noops_lerobot": 3921,
+      "IPEC-COMMUNITY/libero_goal_no_noops_1.0.0_lerobot": 428,
+      "IPEC-COMMUNITY/libero_object_no_noops_1.0.0_lerobot": 454,
+      "IPEC-COMMUNITY/libero_spatial_no_noops_1.0.0_lerobot": 432,
+      "lerobot/libero_plus": 14347,
+      "original_libero_hdf5": 2000
+    },
+    "task_row_count": 195
+  },
+  "created_at_utc": "2026-09-03T10:03:58.009802+00:00",
+  "hard_gate": {
+    "catalog_hash_exact": true,
+    "denylist_overlap_zero": true,
+    "identity_classes_separate": true,
+    "three_family_candidates": true,
+    "two_templates_or_shortfall_recorded": true
+  },
+  "license_policy": {
+    "lerobot_plus_new_training_eligible": false,
+    "unresolved_license_is_read_only": true
+  },
+  "no_new_trajectory": true,
+  "schema_version": 1,
+  "status": "s1_semantic_mining_passed_pending_schema_replay"
+}

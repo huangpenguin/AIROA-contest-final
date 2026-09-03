@@ -1,0 +1,138 @@
+{
+  "canaries": [
+    {
+      "action_contract": "7D OSC_POSE delta action; translation/rotation normalized; gripper exactly -1 or +1",
+      "action_saturation_count": 7,
+      "asset_dir": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_autogen/diagnostics/support_remove_task_10",
+      "canary_id": "support_remove_task_10",
+      "config_dir": "/tmp/axis_libero_public_teleop_config_yyy74e_h",
+      "control_freq_hz": 20.0,
+      "created_at_utc": "2026-09-03T10:27:07.567957+00:00",
+      "deadline_miss_count": 116,
+      "end_state_sha256": "9a0fee92bfb622b45f3348ecd2223da5a79ad0f431ce0e94c3b45d40d91b5d61",
+      "end_success": false,
+      "failure_reason": "stage_timeout:descend_object",
+      "first_success_frame": null,
+      "frame_count": 132,
+      "generator": "track3_scripted_autogen_closed_loop_osc_pose",
+      "generator_provenance": {
+        "adapter": "track3_reverse_semantic_adapter",
+        "hidden_track3_details_used": false,
+        "public_rule_source": "KE7/libero-infinity task_reverser plus locked public LIBERO BDDL",
+        "source_revision": "dc5451ff80efa33ef170350188a6c3457fbd7a81"
+      },
+      "gpu_policy": {
+        "mujoco_render_gpu_device_id": 0,
+        "physical_gpu": 3,
+        "visible_device": "3"
+      },
+      "human_operation": false,
+      "identity": "generator_reference_only",
+      "official_track3_claim": false,
+      "operator_family": "support_remove",
+      "p1_start_state_sha256": "34e0c70edac11ce668e548c5cca308a9fbd16b64afc8726e8800280c8c82c66d",
+      "reverse_bddl_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_autogen/s3_reverse_specs/canary_support_remove_task_10.bddl",
+      "reverse_bddl_sha256": "8cbd2a5508922403699d35f08cb02501da58417c0ab1b96c350c0cfb681081f1",
+      "reverse_instruction": "Reverse the public LIBERO operation: remove the akita black bowl from the plate and put it back at its akita black bowl.",
+      "schema_version": "track3_public_autogen_canary_v1",
+      "source": "public_LIBERO_BDDL_plus_P1_full_state_start",
+      "stage_results": [
+        {
+          "frames": 12,
+          "last_eef_error": 0.0034968230089980836,
+          "max_steps": 150,
+          "reached": true,
+          "stage": "approach_object"
+        },
+        {
+          "frames": 120,
+          "last_eef_error": 0.03203374253149425,
+          "max_steps": 120,
+          "reached": false,
+          "stage": "descend_object"
+        }
+      ],
+      "start_state_sha256": "34e0c70edac11ce668e548c5cca308a9fbd16b64afc8726e8800280c8c82c66d",
+      "state_contract": "complete simulator state after every action plus exact restored start_state",
+      "status": "failed",
+      "task_index": 10,
+      "training_eligible": false,
+      "trajectory": {
+        "keys": [
+          "action_saturated",
+          "actions",
+          "contact_count",
+          "deadline_miss",
+          "dones",
+          "eef_error",
+          "phase",
+          "policy_states",
+          "predicate_success",
+          "rewards",
+          "states"
+        ],
+        "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_autogen/diagnostics/support_remove_task_10/trajectory.npz",
+        "sha256": "52cf879fe55a3c02aec33193fd691bdd66770e26f67dcb24b816c80d8c54141d"
+      },
+      "videos": {
+        "front": {
+          "codec": "h264",
+          "frame_count": 132,
+          "height": 128,
+          "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_autogen/diagnostics/support_remove_task_10/front.mp4",
+          "sha256": "bcc204f0e8fd3cd1d8f50bd03c06e0ddf496a928c46ca14c49903121ffd5b772",
+          "status": "written",
+          "width": 128
+        },
+        "wrist": {
+          "codec": "h264",
+          "frame_count": 132,
+          "height": 128,
+          "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_autogen/diagnostics/support_remove_task_10/wrist.mp4",
+          "sha256": "865bb81a1ea8206614e79d8f16fe562b3e8de31a0cdca43ed65349d0cd6c9d72",
+          "status": "written",
+          "width": 128
+        }
+      }
+    }
+  ],
+  "created_at_utc": "2026-09-03T10:27:00.309197+00:00",
+  "fast_or_zip_used": false,
+  "gpu3_after": {
+    "command": [
+      "nvidia-smi",
+      "-i",
+      "3",
+      "--query-gpu=index,memory.used,memory.total",
+      "--format=csv,noheader,nounits"
+    ],
+    "gpu": 3,
+    "status": "passed",
+    "threshold_mib": 1024,
+    "total_mib": 32768,
+    "used_mib": 6
+  },
+  "human_operation": false,
+  "max_pending_autogen_canaries": 3,
+  "official_gpu_used": false,
+  "pending_autogen_count": 0,
+  "plan_scope": "S4-S5_only",
+  "s3_adapter_sha256": "3d9b5fa606b87edfc49daa5d02d82f17c4b67cf8c49764545e827c308e70af12",
+  "schema_version": "track3_public_autogen_s5_v1",
+  "status": "track3_scripted_executor_failed",
+  "task_order": [
+    {
+      "operator_family": "support_remove",
+      "task_index": 10
+    },
+    {
+      "operator_family": "containment_remove",
+      "task_index": 20
+    },
+    {
+      "operator_family": "articulation_close",
+      "task_index": 19
+    }
+  ],
+  "training_started": false
+}

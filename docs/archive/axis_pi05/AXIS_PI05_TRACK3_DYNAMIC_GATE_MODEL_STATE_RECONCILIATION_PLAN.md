@@ -1,4 +1,7 @@
-# AXIS Pi0.5 Track 3：动态门禁 Model/State 对齐修复计划
+# AXIS Pi0.5 Track 3：动态门禁 Model/State 对齐修复计划（已归档）
+
+> 归档日期：2026-09-03（Asia/Tokyo）
+> 归档原因：D0/D1 完成，D2 唯一 task10 fresh process 在 validator `TargetZone` telemetry 适配处异常，D3 未运行；D4 已按门禁收尾。该异常没有产生 reverse semantic/settle 结论，后续授权由 `docs/AXIS_PI05_TRACK3_NATIVE_REVERSE_VALIDATOR_RECOVERY_PLAN.md` 取代。
 
 > 制定日期：2026-09-03（Asia/Tokyo）
 > 输入执行 commit：root `179045a6d7a7998bf1a54452ef79739c9383c09f`，nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`

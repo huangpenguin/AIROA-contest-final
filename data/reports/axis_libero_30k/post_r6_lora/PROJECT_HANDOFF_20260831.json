@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-03",
-  "status": "track3_native_reverse_dynamic_canary_failed_support",
+  "status": "track3_native_reverse_validator_recovery_planned",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
-  "latest_audited_execution_commit": "179045a6d7a7998bf1a54452ef79739c9383c09f",
-  "latest_audit_input_commit": "179045a6d7a7998bf1a54452ef79739c9383c09f",
-  "latest_execution_root_commit": "179045a6d7a7998bf1a54452ef79739c9383c09f",
+  "latest_audited_execution_commit": "84c2655f610bb957b0ad1ec2a952776bf023821e",
+  "latest_audit_input_commit": "84c2655f610bb957b0ad1ec2a952776bf023821e",
+  "latest_execution_root_commit": "84c2655f610bb957b0ad1ec2a952776bf023821e",
   "latest_execution_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
@@ -218,7 +218,7 @@
   },
   "tests": {
     "command": "JAX_PLATFORMS=cpu .venv_axis_pi05/bin/pytest -q tests",
-    "passed": 171,
+    "passed": 180,
     "skipped": 7,
     "warnings": 23,
     "pynvml_is_collection_blocker": false
@@ -253,8 +253,8 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_TRACK3_DYNAMIC_GATE_MODEL_STATE_RECONCILIATION_PLAN.md",
-  "next_phase_only": "D0_to_D3_dynamic_validator_reconciliation_then_D4_closeout_hard_stop",
+  "next_plan": "docs/AXIS_PI05_TRACK3_NATIVE_REVERSE_VALIDATOR_RECOVERY_PLAN.md",
+  "next_phase_only": "R0_to_R3_native_validator_recovery_then_R4_closeout_hard_stop",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -2152,5 +2152,88 @@
     "success_stop": "track3_reverse_semantics_v2_dynamic_validated_pending_se3_review",
     "failure_stop_prefix": "track3_reverse_semantics_v2_dynamic_failed_",
     "next_phase_only": "new_review_and_minimal_validator_remediation_plan"
+  },
+  "track3_dynamic_gate_d0_d4_audit": {
+    "status": "remediation_required",
+    "review": "docs/reviews/axis_pi05/TRACK3_DYNAMIC_GATE_D0_D4_AUDIT_20260903.md",
+    "audit_input_root_commit": "84c2655f610bb957b0ad1ec2a952776bf023821e",
+    "audit_input_parent_commit": "f0034b9976e6de81644d1535d60328006bbe83cf",
+    "audit_input_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "archived_plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_DYNAMIC_GATE_MODEL_STATE_RECONCILIATION_PLAN.md",
+    "new_plan": "docs/AXIS_PI05_TRACK3_NATIVE_REVERSE_VALIDATOR_RECOVERY_PLAN.md",
+    "approved_results": {
+      "d0_old_evidence_count": 28,
+      "d0_hdf5_count": 3,
+      "d0_states0_equals_init_state_all": true,
+      "d0_qpos_offset": 1,
+      "d2_fresh_process_runs": 1,
+      "d2_not_retried": true,
+      "d3_runs": 0,
+      "hard_stop_respected": true,
+      "reverse_demo_counts_zero": true
+    },
+    "d2_interpretation": {
+      "historical_status": "track3_native_reverse_dynamic_canary_failed_support",
+      "worker_status": "worker_exception",
+      "worker_returncode": 0,
+      "error": "AttributeError: TargetZone has no get_geom_state",
+      "failure_layer": "predicate_detail_telemetry_before_persisted_dynamic_evidence",
+      "valid_predicate_settle_results": 0,
+      "reverse_semantics_conclusion": "inconclusive"
+    },
+    "source_review": {
+      "target_zone_is_raw_site_object": true,
+      "site_object_state_wrapper_is_in_object_states_dict": true,
+      "post_d2_fix_direction_source_aligned": true,
+      "fake_unit_test_sufficient_for_release": false,
+      "runtime_three_family_schema_probe_required": true,
+      "predicate_truth_and_detail_must_be_separated": true,
+      "worker_exception_nonzero_returncode_required": true
+    },
+    "scope_boundaries": {
+      "task10_recovery_canary_max": 1,
+      "d3_allowed_only_after_recovery_pass": true,
+      "se3_or_real_demo_authorized": false,
+      "human_teleop_authorized": false,
+      "batch_generation_authorized": false,
+      "training_or_norm_authorized": false,
+      "fast_zip_authorized": false,
+      "official_gpu_authorized": false,
+      "upload_or_submission_authorized": false
+    },
+    "verification": {
+      "targeted_tests": "20_passed_2_warnings",
+      "full_tests": "180_passed_7_skipped_23_warnings",
+      "json_parse": "passed",
+      "py_compile": "passed",
+      "git_diff_check": "passed"
+    }
+  },
+  "track3_native_reverse_validator_recovery_authorization": {
+    "status": "track3_native_reverse_validator_recovery_planned",
+    "plan": "docs/AXIS_PI05_TRACK3_NATIVE_REVERSE_VALIDATOR_RECOVERY_PLAN.md",
+    "authorized_phases": ["R0", "R1", "R2", "R3", "R4_closeout_only"],
+    "authorization": {
+      "runtime_no_renderer_schema_probe_families": 3,
+      "predicate_truth_detail_separation": true,
+      "worker_parent_returncode_contract": true,
+      "gpu3_task10_recovery_canary_max": 1,
+      "gpu3_three_family_release_runs_max_after_r2_pass": 9,
+      "code_spec_threshold_change_between_r2_r3": false,
+      "se3_or_grasp_executor": false,
+      "real_reverse_demo_or_pending": false,
+      "human_teleop": false,
+      "batch_generation": false,
+      "lora_or_dense_training": false,
+      "norm_replacement": false,
+      "fast_zip": false,
+      "official_gpu": false,
+      "upload_or_submission": false
+    },
+    "recovery_success_then_r3": true,
+    "success_stop": "track3_reverse_semantics_v2_dynamic_validated_pending_se3_review",
+    "exception_stop": "track3_native_reverse_validator_recovery_exception",
+    "failure_stop_prefix": "track3_native_reverse_dynamic_failed_support_",
+    "next_phase_only": "R0_to_R3_native_validator_recovery_then_R4_closeout_hard_stop"
   }
 }

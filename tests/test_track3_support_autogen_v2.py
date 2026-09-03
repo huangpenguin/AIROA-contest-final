@@ -74,9 +74,9 @@ def test_historical_dynamic_failure_is_preserved_but_new_plan_repairs_validator(
             / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
         ).read_text(encoding="utf-8")
     )
-    assert handoff["status"] == "track3_native_reverse_dynamic_canary_failed_support"
+    assert handoff["status"] == "track3_native_reverse_validator_recovery_planned"
     assert handoff["next_plan"].endswith(
-        "AXIS_PI05_TRACK3_DYNAMIC_GATE_MODEL_STATE_RECONCILIATION_PLAN.md"
+        "AXIS_PI05_TRACK3_NATIVE_REVERSE_VALIDATOR_RECOVERY_PLAN.md"
     )
     audit = handoff["track3_support_se3_g0_g1_audit"]
     assert audit["status"] == "remediation_required"
@@ -89,6 +89,16 @@ def test_historical_dynamic_failure_is_preserved_but_new_plan_repairs_validator(
     assert authorization["authorization"]["old_g2_hdf5_se3_mining"] is False
     assert authorization["authorization"]["real_reverse_canary"] is False
     assert authorization["authorization"]["lora_or_dense_training"] is False
+
+    d0_d4_audit = handoff["track3_dynamic_gate_d0_d4_audit"]
+    assert d0_d4_audit["status"] == "remediation_required"
+    assert d0_d4_audit["d2_interpretation"]["valid_predicate_settle_results"] == 0
+    assert d0_d4_audit["d2_interpretation"]["reverse_semantics_conclusion"] == "inconclusive"
+    assert d0_d4_audit["source_review"]["post_d2_fix_direction_source_aligned"] is True
+    recovery = handoff["track3_native_reverse_validator_recovery_authorization"]
+    assert recovery["authorization"]["gpu3_task10_recovery_canary_max"] == 1
+    assert recovery["authorization"]["se3_or_grasp_executor"] is False
+    assert recovery["authorization"]["lora_or_dense_training"] is False
 
 
 def test_predicate_parser_remains_strict() -> None:

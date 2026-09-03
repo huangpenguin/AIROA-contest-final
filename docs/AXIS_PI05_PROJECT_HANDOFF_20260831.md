@@ -1,12 +1,12 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新审核状态：`track3_native_reverse_dynamic_canary_failed_support`
+> 最新审核状态：`track3_native_reverse_validator_recovery_planned`
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_native_reverse_dynamic_canary_failed_support`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_DYNAMIC_GATE_MODEL_STATE_RECONCILIATION_PLAN.md`
+> 当前总状态：`track3_native_reverse_validator_recovery_planned`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_NATIVE_REVERSE_VALIDATOR_RECOVERY_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -14,7 +14,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3 G0、S1 v2、typed language 与三族动态运行已完成，但独立审核发现旧 G1.3 把 HDF5 state 跨随机 XML 使用、用 forward success 代替 reverse initial，并以异量纲整段 proprio + 主动 `gripper=-1` 判 settle，故其“reverse semantics 失败”结论无效。当前先修 validator；G2 的 HDF5/SE(3) 提取、G3 执行器和 G4 support retry 均未启动，accepted/pending reverse demo 仍为 `0/0`。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3 新 validator 已解决跨 model state 与异量纲 settle 设计，但第一次 task10 runtime 在 detail telemetry 读取 `TargetZone` 时异常，尚未产生任何有效 native predicate/settle 结论。后置 site-wrapper 修复方向正确；当前只允许补齐真实 runtime schema/return-code 门禁并执行一次有效 recovery canary，accepted/pending reverse demo 仍为 `0/0`。
 
 ## 2. 数据与复现基础
 
@@ -250,14 +250,14 @@ upstream             当前 branch 未设置 upstream
 ## 10. 新 section 的接手顺序
 
 1. 阅读本文件与 `docs/AXIS_PI05_PLAN_INDEX.md`。
-2. 阅读并只执行 `docs/AXIS_PI05_TRACK3_DYNAMIC_GATE_MODEL_STATE_RECONCILIATION_PLAN.md` 的 D0–D3，之后仅做 D4 收尾并 hard stop。
+2. 阅读并只执行 `docs/AXIS_PI05_TRACK3_NATIVE_REVERSE_VALIDATOR_RECOVERY_PLAN.md` 的 R0–R3，之后仅做 R4 收尾并 hard stop。
 3. 将Track1=`0.47`、Track2=`0.33`、Track3=`0`及ZIP `95415a…c5f5a`锁为当前official-score baseline；无上传回执的字段保持conditional provenance。
-4. D0 锁定 `179045a`、旧 G1 evidence、v2 specs、P1/HDF5/model-file hashes，旧失败不得重写。
-5. D1 禁止跨 model HDF5 predicate oracle；在 reverse BDDL 自身 native reset 中逐 predicate 检查，按 joint/EEF/gripper/object/fixture 的命名物理量分别做 warm-up 后 settle。
-6. D2 只用 GPU3 对 task10 做一次不抓取、不生成 demo 的 native reset canary；通过才允许 D3。
-7. D3 对三族各 `3/3` 做同 model 动态 release；成功也只停在 `pending_se3_review`。不得自动恢复旧 G2–G4、人工 task19、真实 support canary、批量生成或训练。
+4. R0 锁定 `84c2655`、原 D0/D2/D4、旧 G1、v2 specs 与零 reverse-demo 状态，旧异常不得覆盖。
+5. R1 将 predicate truth 与 detail telemetry 分层，异常必须 nonzero return code，并对三个真实 no-renderer reverse env 做 schema probe。
+6. R2 只允许 GPU3 上一次 task10 recovery canary；异常或真实 gate 失败立即停，不得再 retry。
+7. R2 通过后才执行 R3 三族各 `3/3`；代码/spec/threshold 必须保持相同。成功也只停在 `pending_se3_review`，不得进入 SE(3)、demo 或训练。
 
-当前路径是：R6 FAST ZIP Track1=`0.47`/Track2=`0.33`/Track3=`0`（冻结）→ 公开full-state与20Hz数据（已在本地）→ validator model/state 对齐与 native reverse reset 动态 release → 新审核 → exact-model HDF5 抓取 SE(3) 挖掘 → 一次 support-only canary → 视频人审 → 再决定其余两族、30–60 exact reverse扩充与R6分叉LoRA。Dense 30K为冻结的独立研究线。
+当前路径是：R6 FAST ZIP Track1=`0.47`/Track2=`0.33`/Track3=`0`（冻结）→ 公开full-state与20Hz数据（已在本地）→ validator runtime closure + native reverse reset 动态 release → 新审核 → exact-model HDF5 抓取 SE(3) 挖掘 → 一次 support-only canary → 视频人审 → 再决定其余两族、30–60 exact reverse扩充与R6分叉LoRA。Dense 30K为冻结的独立研究线。
 
 ## 19. Dense full-FT allocator fraction recovery 执行结果
 
@@ -526,3 +526,13 @@ D1 的 validator/schema CPU 门禁修复后为 `15 passed`：reverse initial 逐
 D2 仅在 GPU3 启动一次 task10 fresh process，未抓取、未写 demo。首次运行在 validator site detail 将原始 `TargetZone` 错当 state wrapper、调用不存在的 `get_geom_state`，故没有形成有效 predicate/settle 证据；状态为 `track3_native_reverse_dynamic_canary_failed_support`。随后只修复 validator 并补 CPU 回归，D2 不重跑。
 
 因此 D3 未运行（`0/9`），D4 已 hard stop。没有 SE(3)、demo/pending、训练、Teleop、FAST/ZIP、官方 GPU、上传或提交；本轮结果不解释为 reverse semantics 成功或失败。证据：`d0_release_lock.json`、`d2_task10_canary.json`、`runs/d2_task10_canary_run_1.json`、`summary.json`、`D4_CLOSEOUT_REPORT_ZH.md`。下一步需要新的审核和最小 validator remediation 计划。
+
+## 40. D0–D4 独立审核与 Native Validator 恢复授权（2026-09-03）
+
+审核输入 root `84c2655f610bb957b0ad1ec2a952776bf023821e`、parent `f0034b9976e6de81644d1535d60328006bbe83cf`、nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`。D0 evidence、单次 D2、D3 `0/9`、范围边界、root/OpenPI clean 与 `LIBERO-plus` 既有 dirty preservation 均核对通过。审核结论为 `remediation_required`，不是 reverse semantics failure。
+
+D2 唯一持久化结果为 `worker_exception: TargetZone has no get_geom_state`，且 `worker_returncode=0`；异常发生在 predicate detail telemetry，未形成 native predicate、settle 或 controlled-destruction 证据。后置修复从 `object_states_dict` 获取 `SiteObjectState` wrapper，与 LIBERO 源码一致；但 fake unit test 尚不能代替三个真实 native env 的 runtime schema。新计划还要求 predicate truth 与 advisory detail 分层，以及 exception 的非零 OS return code。
+
+旧计划已归档；唯一活动计划为 `docs/AXIS_PI05_TRACK3_NATIVE_REVERSE_VALIDATOR_RECOVERY_PLAN.md`。R0/R1 只做 evidence/runtime/进程契约；通过后 R2 只允许一次 task10 recovery canary。R2 全通过可在不改代码/spec/threshold 的前提下执行 R3 三族各 `3/3`，随后 R4 hard stop。即使 `9/9` 通过也不授权 SE(3)、抓取/demo、Teleop、批量生成、训练、norm、FAST/ZIP、官方 GPU、上传或比赛提交。审核记录：`docs/reviews/axis_pi05/TRACK3_DYNAMIC_GATE_D0_D4_AUDIT_20260903.md`。
+
+审核后全量测试为 `180 passed, 7 skipped, 23 warnings`。

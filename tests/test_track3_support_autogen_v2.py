@@ -74,7 +74,7 @@ def test_historical_dynamic_failure_is_preserved_but_new_plan_repairs_validator(
             / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
         ).read_text(encoding="utf-8")
     )
-    assert handoff["status"] == "track3_native_reverse_validator_recovery_planned"
+    assert handoff["status"] == "track3_native_reverse_dynamic_failed_support_reverse_initial_or_goal"
     assert handoff["next_plan"].endswith(
         "AXIS_PI05_TRACK3_NATIVE_REVERSE_VALIDATOR_RECOVERY_PLAN.md"
     )

@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-03",
-  "status": "track3_native_reverse_validator_recovery_planned",
+  "status": "track3_native_reverse_dynamic_failed_support_reverse_initial_or_goal",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
   "latest_audited_execution_commit": "84c2655f610bb957b0ad1ec2a952776bf023821e",
   "latest_audit_input_commit": "84c2655f610bb957b0ad1ec2a952776bf023821e",
-  "latest_execution_root_commit": "84c2655f610bb957b0ad1ec2a952776bf023821e",
+  "latest_execution_root_commit": "3748c2ebc2a9e5fc66ca90657cf8a4639488f7d7",
   "latest_execution_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
@@ -2210,7 +2210,7 @@
     }
   },
   "track3_native_reverse_validator_recovery_authorization": {
-    "status": "track3_native_reverse_validator_recovery_planned",
+    "status": "track3_native_reverse_dynamic_failed_support_reverse_initial_or_goal",
     "plan": "docs/AXIS_PI05_TRACK3_NATIVE_REVERSE_VALIDATOR_RECOVERY_PLAN.md",
     "authorized_phases": ["R0", "R1", "R2", "R3", "R4_closeout_only"],
     "authorization": {
@@ -2234,6 +2234,54 @@
     "success_stop": "track3_reverse_semantics_v2_dynamic_validated_pending_se3_review",
     "exception_stop": "track3_native_reverse_validator_recovery_exception",
     "failure_stop_prefix": "track3_native_reverse_dynamic_failed_support_",
-    "next_phase_only": "R0_to_R3_native_validator_recovery_then_R4_closeout_hard_stop"
+    "next_phase_only": "await_next_review_after_r4_hard_stop"
+  },
+  "track3_native_reverse_validator_recovery_execution": {
+    "status": "track3_native_reverse_dynamic_failed_support_reverse_initial_or_goal",
+    "plan": "docs/AXIS_PI05_TRACK3_NATIVE_REVERSE_VALIDATOR_RECOVERY_PLAN.md",
+    "r0": {
+      "status": "track3_native_reverse_validator_recovery_input_locked",
+      "report": "data/reports/axis_libero_30k/track3_native_reverse_validator_recovery/r0_release_lock.json",
+      "input_root_commit": "84c2655f610bb957b0ad1ec2a952776bf023821e",
+      "observed_root_commit": "3748c2ebc2a9e5fc66ca90657cf8a4639488f7d7",
+      "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+      "historical_d2_worker_status": "worker_exception",
+      "historical_d2_worker_returncode": 0,
+      "historical_d2_valid_predicate_settle_evidence": 0,
+      "historical_d3_runs": 0
+    },
+    "r1": {
+      "status": "track3_native_reverse_validator_runtime_schema_passed",
+      "report": "data/reports/axis_libero_30k/track3_native_reverse_validator_recovery/r1_runtime_schema_probe.json",
+      "fresh_process_schema_runs": 3,
+      "family_3_of_3_schema": {"support_remove": true, "containment_remove": true, "articulation_close": true},
+      "no_renderer": true,
+      "truth_detail_separated": true,
+      "worker_returncode_contract": true,
+      "hdf5_state_used_for_predicate_oracle": false
+    },
+    "r2": {
+      "status": "track3_native_reverse_dynamic_failed_support_reverse_initial_or_goal",
+      "report": "data/reports/axis_libero_30k/track3_native_reverse_validator_recovery/r2_task10_recovery_canary.json",
+      "run": "data/reports/axis_libero_30k/track3_native_reverse_validator_recovery/runs/r2_task10_recovery_run_1.json",
+      "task_index": 10,
+      "run_index": "recovery_1",
+      "worker_returncode": 0,
+      "schema_complete": true,
+      "reverse_initial_all_true": false,
+      "reverse_goal_all_false": true,
+      "failure_field": "reverse_initial_or_goal",
+      "gpu_policy": "physical_gpu3_only",
+      "attempts": 1
+    },
+    "r3": {"status": "not_run_due_to_r2_hard_stop", "fresh_process_runs": 0},
+    "r4": {
+      "status": "completed_hard_stop",
+      "summary": "data/reports/axis_libero_30k/track3_native_reverse_validator_recovery/summary.json",
+      "report": "data/reports/axis_libero_30k/track3_native_reverse_validator_recovery/R4_CLOSEOUT_REPORT_ZH.md"
+    },
+    "counts": {"exact_reverse_demo": 0, "pending_autogen": 0, "accepted_reverse_demo": 0, "se3_grasp_attempts": 0, "training_started": false, "human_operation": false},
+    "stop_boundary": {"se3": false, "demo_generation": false, "batch_generation": false, "training_or_norm": false, "fast_or_zip": false, "official_gpu": false, "upload_or_submission": false, "libero_plus_touched": false},
+    "verification": {"targeted_tests": "17_passed", "full_tests": "182_passed_7_skipped_23_warnings", "json_parse": "passed", "py_compile": "passed", "git_diff_check": "passed"}
   }
 }

@@ -50,7 +50,7 @@ def test_reverse_initial_is_evaluated_atom_by_atom_without_forward_proxy() -> No
 
         @staticmethod
         def _eval_predicate(state: tuple[str, ...]) -> bool:
-            return state[0] == "On"
+            return state[0] == "on"
 
     result = gate.evaluate_predicates(
         SimpleNamespace(env=FakeEnv(), sim=FakeSim()),
@@ -62,12 +62,52 @@ def test_reverse_initial_is_evaluated_atom_by_atom_without_forward_proxy() -> No
     assert "check_success" not in inspect.getsource(gate.evaluate_predicates)
 
 
-def test_site_predicate_details_use_site_state_wrapper_not_raw_target_zone() -> None:
+def test_truth_is_preserved_when_detail_telemetry_fails() -> None:
     class FakeModel:
         body_names = ()
 
     class FakeSim:
         model = FakeModel()
+
+    class FakeEnv:
+        sim = FakeSim()
+        object_states_dict = {}
+        object_sites_dict = {}
+
+        @staticmethod
+        def _eval_predicate(state: tuple[str, ...]) -> bool:
+            return True
+
+    result = gate.evaluate_predicates(
+        SimpleNamespace(env=FakeEnv(), sim=FakeSim()),
+        ["(On object_a region_a)"],
+        label="truth_detail_split",
+    )
+    row = result["predicates"][0]
+    assert row["truth_status"] == "passed"
+    assert row["value"] is True
+    assert row["detail_status"] == "failed"
+    assert result["all_true"] is True
+    assert result["detail_complete"] is False
+
+
+def test_worker_exception_has_nonzero_process_exit_contract() -> None:
+    assert gate.worker_exit_code("passed") == 0
+    assert gate.worker_exit_code("failed_gate") == 0
+    assert gate.worker_exit_code("worker_exception") != 0
+    assert gate.worker_exit_code("worker_output_invalid") != 0
+
+
+def test_site_predicate_details_use_site_state_wrapper_not_raw_target_zone() -> None:
+    class FakeModel:
+        body_names = ("object_a",)
+
+    class FakeSim:
+        model = FakeModel()
+        data = SimpleNamespace(
+            body_xpos=np.zeros((1, 3)),
+            body_xquat=np.array([[1.0, 0.0, 0.0, 0.0]]),
+        )
 
     class SiteState:
         object_state_type = "site"
@@ -91,7 +131,8 @@ def test_site_predicate_details_use_site_state_wrapper_not_raw_target_zone() -> 
         label="site_detail",
     )
     assert result["all_true"] is True
-    assert result["predicates"][0]["detail"]["geometry"][0]["kind"] == "site"
+    geometry = result["predicates"][0]["detail"]["geometry"]
+    assert any(item["kind"] == "site" and item["name"] == "region_a" for item in geometry)
 
 
 def test_controller_reset_order_is_native_forward_update_then_goal() -> None:

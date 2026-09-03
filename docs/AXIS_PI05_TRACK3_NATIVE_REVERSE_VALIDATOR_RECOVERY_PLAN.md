@@ -3,7 +3,7 @@
 > 制定日期：2026-09-03（Asia/Tokyo）
 > 输入执行 commit：root `84c2655f610bb957b0ad1ec2a952776bf023821e`，nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`
 > 审核结论：`remediation_required`
-> 当前状态：`track3_native_reverse_validator_recovery_planned`
+> 当前状态：`track3_native_reverse_dynamic_failed_support_reverse_initial_or_goal`
 > 唯一授权：执行 R0–R3，随后只做 R4 收尾并 hard stop
 > 不授权：SE(3)、任何抓取/demo、Teleop、批量生成、训练、norm、FAST/ZIP、官方 GPU、上传或比赛提交
 

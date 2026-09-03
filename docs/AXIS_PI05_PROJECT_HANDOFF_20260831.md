@@ -1,11 +1,11 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新审核状态：`track3_native_reverse_validator_recovery_planned`
+> 最新审核状态：`track3_native_reverse_dynamic_failed_support_reverse_initial_or_goal`
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_native_reverse_validator_recovery_planned`
+> 当前总状态：`track3_native_reverse_dynamic_failed_support_reverse_initial_or_goal`
 > 唯一活动计划：`docs/AXIS_PI05_TRACK3_NATIVE_REVERSE_VALIDATOR_RECOVERY_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
@@ -14,7 +14,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3 新 validator 已解决跨 model state 与异量纲 settle 设计，但第一次 task10 runtime 在 detail telemetry 读取 `TargetZone` 时异常，尚未产生任何有效 native predicate/settle 结论。后置 site-wrapper 修复方向正确；当前只允许补齐真实 runtime schema/return-code 门禁并执行一次有效 recovery canary，accepted/pending reverse demo 仍为 `0/0`。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3 新 validator 已解决跨 model state 与异量纲 settle 设计；R1 三族真实 no-renderer schema probe 已通过，R2 唯一 task10 recovery canary 在 schema 完整的前提下发现 native reverse initial 未全 true，R3 未启动并已 R4 hard stop。没有 reverse demo，accepted/pending 仍为 `0/0`，不得进入 SE(3)、Teleop 或训练。
 
 ## 2. 数据与复现基础
 
@@ -536,3 +536,13 @@ D2 唯一持久化结果为 `worker_exception: TargetZone has no get_geom_state`
 旧计划已归档；唯一活动计划为 `docs/AXIS_PI05_TRACK3_NATIVE_REVERSE_VALIDATOR_RECOVERY_PLAN.md`。R0/R1 只做 evidence/runtime/进程契约；通过后 R2 只允许一次 task10 recovery canary。R2 全通过可在不改代码/spec/threshold 的前提下执行 R3 三族各 `3/3`，随后 R4 hard stop。即使 `9/9` 通过也不授权 SE(3)、抓取/demo、Teleop、批量生成、训练、norm、FAST/ZIP、官方 GPU、上传或比赛提交。审核记录：`docs/reviews/axis_pi05/TRACK3_DYNAMIC_GATE_D0_D4_AUDIT_20260903.md`。
 
 审核后全量测试为 `180 passed, 7 skipped, 23 warnings`。
+
+## 41. Native Reverse Validator Recovery R0–R4 收尾（2026-09-03）
+
+本轮按唯一活动计划 `docs/AXIS_PI05_TRACK3_NATIVE_REVERSE_VALIDATOR_RECOVERY_PLAN.md` 完成并停止。R0 新 namespace 锁定了 root 输入 `84c2655f...`、观察到的审核 descendant `3748c2eb...`、nested OpenPI `b58aff0...`、旧 D2/D4 与三族 v2 specs；旧 D2 的 `TargetZone.get_geom_state`、worker returncode=`0`、有效 predicate/settle evidence=`0` 保持不变。`LIBERO-plus` 仅读取，原 dirty 状态未触碰。
+
+R1 使用三个独立 fresh process 和真实 `ControlEnv(has_renderer=false, has_offscreen_renderer=false, use_camera_obs=false)` 完成 schema probe，task10/task20/task19 三族 `3/3 schema_passed`。逐条 native `_eval_predicate` truth 与 geometry/joint/contact detail 已分层；对象使用 `ObjectState`、区域使用 `SiteObjectState`；7D OSC_POSE zero hold、named robot/scene snapshot、target resolution、finite/schema 和 worker return-code 契约均通过，HDF5 未作为 predicate oracle。
+
+R2 在 GPU3 仅执行一次 task10 `recovery_1`。worker returncode=`0`、schema_complete=`true`、reverse goal 全 false，但 native reverse reset 的 reverse initial predicates 未全部为 true，故最终状态为 `track3_native_reverse_dynamic_failed_support_reverse_initial_or_goal`。这不是旧 D2 exception，也不是 settle/SE(3) 结论；settle 与 controlled destruction 因 native initial gate fail closed 未执行。R3 按授权未运行（`0/9`），R4 已停止。
+
+本轮没有 exact/pending/accepted reverse demo，没有 SE(3) 抓取、人工 Teleop、批量生成、训练/norm、FAST/ZIP、官方 GPU、上传或比赛提交。机器证据：`data/reports/axis_libero_30k/track3_native_reverse_validator_recovery/r0_release_lock.json`、`r1_runtime_schema_probe.json`、`r2_task10_recovery_canary.json`、`runs/r2_task10_recovery_run_1.json`、`summary.json`、`R4_CLOSEOUT_REPORT_ZH.md`。等待下一次审核。

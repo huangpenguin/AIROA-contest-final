@@ -1,0 +1,4208 @@
+{
+  "created_at_utc": "2026-09-03T13:35:03.177559+00:00",
+  "family_3_of_3_schema": {
+    "articulation_close": true,
+    "containment_remove": true,
+    "support_remove": true
+  },
+  "fresh_process_schema_probe_runs": [
+    {
+      "fresh_process": true,
+      "gripper_hold_contract": {
+        "action": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "fixed_gripper_minus_one_used": false
+      },
+      "hdf5_state_used_for_predicate_oracle": false,
+      "layout": {
+        "body_names": [
+          "world",
+          "table",
+          "robot0_base",
+          "robot0_link0",
+          "robot0_link1",
+          "robot0_link2",
+          "robot0_link3",
+          "robot0_link4",
+          "robot0_link5",
+          "robot0_link6",
+          "robot0_link7",
+          "robot0_right_hand",
+          "gripper0_right_gripper",
+          "gripper0_eef",
+          "gripper0_leftfinger",
+          "gripper0_finger_joint1_tip",
+          "gripper0_rightfinger",
+          "gripper0_finger_joint2_tip",
+          "mount0_base",
+          "mount0_controller_box",
+          "mount0_pedestal_feet",
+          "mount0_torso",
+          "mount0_pedestal",
+          "akita_black_bowl_1_main",
+          "cream_cheese_1_main",
+          "wine_bottle_1_main",
+          "plate_1_main",
+          "wooden_cabinet_1_main",
+          "wooden_cabinet_1_base",
+          "wooden_cabinet_1_cabinet_top",
+          "wooden_cabinet_1_cabinet_middle",
+          "wooden_cabinet_1_cabinet_bottom",
+          "flat_stove_1_main",
+          "flat_stove_1_base",
+          "flat_stove_1_burner",
+          "flat_stove_1_burner_plate",
+          "flat_stove_1_button",
+          "wine_rack_1_main"
+        ],
+        "compatibility": {
+          "compatible": false,
+          "current_env_xml_sha256": "d6275ec736e3c7c8d958da0cf96240645aef8d2496e63f015dd35944682c16ac",
+          "hdf5_state_used_for_predicate_oracle": false,
+          "predicate_oracle": "native_reverse_bddl_only",
+          "recorded_model_file_sha256": "e9a508e1e98a7bd2631796a4c41476a449fd9821fb45837a27d2ebefd87c8830",
+          "status": "incompatible_for_predicate_oracle"
+        },
+        "current_env_xml_sha256": "d6275ec736e3c7c8d958da0cf96240645aef8d2496e63f015dd35944682c16ac",
+        "hdf5_state_used_for_predicate_oracle": false,
+        "joint_names": [
+          "robot0_joint1",
+          "robot0_joint2",
+          "robot0_joint3",
+          "robot0_joint4",
+          "robot0_joint5",
+          "robot0_joint6",
+          "robot0_joint7",
+          "gripper0_finger_joint1",
+          "gripper0_finger_joint2",
+          "akita_black_bowl_1_joint0",
+          "cream_cheese_1_joint0",
+          "wine_bottle_1_joint0",
+          "plate_1_joint0",
+          "wooden_cabinet_1_top_level",
+          "wooden_cabinet_1_middle_level",
+          "wooden_cabinet_1_bottom_level",
+          "flat_stove_1_button"
+        ],
+        "key_body_site_pose_diff": {
+          "comparison_status": "reported_in_separate_frames_no_numeric_cross_frame_difference",
+          "current_model_xml_sha256": "d6275ec736e3c7c8d958da0cf96240645aef8d2496e63f015dd35944682c16ac",
+          "current_native_reset_pose": {
+            "akita_black_bowl_1": {
+              "kind": "object",
+              "name": "akita_black_bowl_1",
+              "pos_m": [
+                0.0,
+                -0.1,
+                0.0
+              ],
+              "quat": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "cream_cheese_1": {
+              "kind": "object",
+              "name": "cream_cheese_1",
+              "pos_m": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "quat": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "flat_stove_1": {
+              "kind": "object",
+              "name": "flat_stove_1",
+              "pos_m": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "quat": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "main_table_akita_black_bowl_region": {
+              "kind": "site",
+              "name": "main_table_akita_black_bowl_region",
+              "pos_m": [
+                -0.09,
+                0.0,
+                0.895
+              ],
+              "quat": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            },
+            "main_table_cabinet_region": {
+              "kind": "site",
+              "name": "main_table_cabinet_region",
+              "pos_m": [
+                0.03,
+                -0.24,
+                0.895
+              ],
+              "quat": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            },
+            "main_table_cream_cheese_region": {
+              "kind": "site",
+              "name": "main_table_cream_cheese_region",
+              "pos_m": [
+                -0.05,
+                0.13,
+                0.895
+              ],
+              "quat": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            },
+            "main_table_plate_region": {
+              "kind": "site",
+              "name": "main_table_plate_region",
+              "pos_m": [
+                0.05,
+                -0.02,
+                0.895
+              ],
+              "quat": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            },
+            "main_table_stove_region": {
+              "kind": "site",
+              "name": "main_table_stove_region",
+              "pos_m": [
+                -0.41000000000000003,
+                0.21000000000000002,
+                0.895
+              ],
+              "quat": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            },
+            "main_table_wine_bottle_region": {
+              "kind": "site",
+              "name": "main_table_wine_bottle_region",
+              "pos_m": [
+                -0.2,
+                -0.05,
+                0.895
+              ],
+              "quat": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            },
+            "main_table_wine_rack_region": {
+              "kind": "site",
+              "name": "main_table_wine_rack_region",
+              "pos_m": [
+                -0.26,
+                -0.26,
+                0.895
+              ],
+              "quat": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            },
+            "plate_1": {
+              "kind": "object",
+              "name": "plate_1",
+              "pos_m": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "quat": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "wine_bottle_1": {
+              "kind": "object",
+              "name": "wine_bottle_1",
+              "pos_m": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "quat": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "wine_rack_1": {
+              "kind": "object",
+              "name": "wine_rack_1",
+              "pos_m": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "quat": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "wooden_cabinet_1": {
+              "kind": "object",
+              "name": "wooden_cabinet_1",
+              "pos_m": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "quat": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "recorded_model_file_sha256": "e9a508e1e98a7bd2631796a4c41476a449fd9821fb45837a27d2ebefd87c8830",
+          "recorded_xml_pose": {
+            "site:main_table_akita_black_bowl_region": {
+              "declared_local_pos": "-0.09 0 0.02",
+              "declared_local_quat": null,
+              "frame": "recorded_xml_local"
+            },
+            "site:main_table_cabinet_region": {
+              "declared_local_pos": "0.03 -0.24 0.02",
+              "declared_local_quat": null,
+              "frame": "recorded_xml_local"
+            },
+            "site:main_table_cream_cheese_region": {
+              "declared_local_pos": "-0.05 0.13 0.02",
+              "declared_local_quat": null,
+              "frame": "recorded_xml_local"
+            },
+            "site:main_table_plate_region": {
+              "declared_local_pos": "0.05 -0.02 0.02",
+              "declared_local_quat": null,
+              "frame": "recorded_xml_local"
+            },
+            "site:main_table_stove_region": {
+              "declared_local_pos": "-0.41 0.21 0.02",
+              "declared_local_quat": null,
+              "frame": "recorded_xml_local"
+            },
+            "site:main_table_wine_bottle_region": {
+              "declared_local_pos": "-0.2 -0.05 0.02",
+              "declared_local_quat": null,
+              "frame": "recorded_xml_local"
+            },
+            "site:main_table_wine_rack_region": {
+              "declared_local_pos": "-0.26 -0.26 0.02",
+              "declared_local_quat": null,
+              "frame": "recorded_xml_local"
+            }
+          },
+          "status": "reported_recorded_local_and_current_native_world_pose"
+        },
+        "name_order_comparison": {
+          "body": {
+            "current_count": 38,
+            "current_names": [
+              "world",
+              "table",
+              "robot0_base",
+              "robot0_link0",
+              "robot0_link1",
+              "robot0_link2",
+              "robot0_link3",
+              "robot0_link4",
+              "robot0_link5",
+              "robot0_link6",
+              "robot0_link7",
+              "robot0_right_hand",
+              "gripper0_right_gripper",
+              "gripper0_eef",
+              "gripper0_leftfinger",
+              "gripper0_finger_joint1_tip",
+              "gripper0_rightfinger",
+              "gripper0_finger_joint2_tip",
+              "mount0_base",
+              "mount0_controller_box",
+              "mount0_pedestal_feet",
+              "mount0_torso",
+              "mount0_pedestal",
+              "akita_black_bowl_1_main",
+              "cream_cheese_1_main",
+              "wine_bottle_1_main",
+              "plate_1_main",
+              "wooden_cabinet_1_main",
+              "wooden_cabinet_1_base",
+              "wooden_cabinet_1_cabinet_top",
+              "wooden_cabinet_1_cabinet_middle",
+              "wooden_cabinet_1_cabinet_bottom",
+              "flat_stove_1_main",
+              "flat_stove_1_base",
+              "flat_stove_1_burner",
+              "flat_stove_1_burner_plate",
+              "flat_stove_1_button",
+              "wine_rack_1_main"
+            ],
+            "order_equal": false,
+            "recorded_count": 37,
+            "recorded_names": [
+              "table",
+              "robot0_base",
+              "robot0_link0",
+              "robot0_link1",
+              "robot0_link2",
+              "robot0_link3",
+              "robot0_link4",
+              "robot0_link5",
+              "robot0_link6",
+              "robot0_link7",
+              "robot0_right_hand",
+              "gripper0_right_gripper",
+              "gripper0_eef",
+              "gripper0_leftfinger",
+              "gripper0_finger_joint1_tip",
+              "gripper0_rightfinger",
+              "gripper0_finger_joint2_tip",
+              "mount0_base",
+              "mount0_controller_box",
+              "mount0_pedestal_feet",
+              "mount0_torso",
+              "mount0_pedestal",
+              "akita_black_bowl_1_main",
+              "cream_cheese_1_main",
+              "wine_bottle_1_main",
+              "plate_1_main",
+              "wooden_cabinet_1_main",
+              "wooden_cabinet_1_base",
+              "wooden_cabinet_1_cabinet_top",
+              "wooden_cabinet_1_cabinet_middle",
+              "wooden_cabinet_1_cabinet_bottom",
+              "flat_stove_1_main",
+              "flat_stove_1_base",
+              "flat_stove_1_burner",
+              "flat_stove_1_burner_plate",
+              "flat_stove_1_button",
+              "wine_rack_1_main"
+            ]
+          },
+          "joint": {
+            "current_count": 17,
+            "current_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7",
+              "gripper0_finger_joint1",
+              "gripper0_finger_joint2",
+              "akita_black_bowl_1_joint0",
+              "cream_cheese_1_joint0",
+              "wine_bottle_1_joint0",
+              "plate_1_joint0",
+              "wooden_cabinet_1_top_level",
+              "wooden_cabinet_1_middle_level",
+              "wooden_cabinet_1_bottom_level",
+              "flat_stove_1_button"
+            ],
+            "order_equal": true,
+            "recorded_count": 17,
+            "recorded_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7",
+              "gripper0_finger_joint1",
+              "gripper0_finger_joint2",
+              "akita_black_bowl_1_joint0",
+              "cream_cheese_1_joint0",
+              "wine_bottle_1_joint0",
+              "plate_1_joint0",
+              "wooden_cabinet_1_top_level",
+              "wooden_cabinet_1_middle_level",
+              "wooden_cabinet_1_bottom_level",
+              "flat_stove_1_button"
+            ]
+          },
+          "site": {
+            "current_count": 29,
+            "current_names": [
+              "table_top",
+              "main_table_plate_region",
+              "main_table_akita_black_bowl_region",
+              "main_table_wine_bottle_region",
+              "main_table_cream_cheese_region",
+              "main_table_stove_front_region",
+              "main_table_cabinet_region",
+              "main_table_stove_region",
+              "main_table_wine_rack_region",
+              "gripper0_ft_frame",
+              "gripper0_grip_site",
+              "gripper0_ee_x",
+              "gripper0_ee_y",
+              "gripper0_ee_z",
+              "gripper0_grip_site_cylinder",
+              "akita_black_bowl_1_default_site",
+              "cream_cheese_1_default_site",
+              "wine_bottle_1_default_site",
+              "plate_1_default_site",
+              "wooden_cabinet_1_default_site",
+              "wooden_cabinet_1_top_side",
+              "wooden_cabinet_1_top_region",
+              "wooden_cabinet_1_middle_region",
+              "wooden_cabinet_1_bottom_region",
+              "flat_stove_1_default_site",
+              "flat_stove_1_cook_region",
+              "flat_stove_1_burner",
+              "wine_rack_1_top_region",
+              "wine_rack_1_default_site"
+            ],
+            "order_equal": true,
+            "recorded_count": 29,
+            "recorded_names": [
+              "table_top",
+              "main_table_plate_region",
+              "main_table_akita_black_bowl_region",
+              "main_table_wine_bottle_region",
+              "main_table_cream_cheese_region",
+              "main_table_stove_front_region",
+              "main_table_cabinet_region",
+              "main_table_stove_region",
+              "main_table_wine_rack_region",
+              "gripper0_ft_frame",
+              "gripper0_grip_site",
+              "gripper0_ee_x",
+              "gripper0_ee_y",
+              "gripper0_ee_z",
+              "gripper0_grip_site_cylinder",
+              "akita_black_bowl_1_default_site",
+              "cream_cheese_1_default_site",
+              "wine_bottle_1_default_site",
+              "plate_1_default_site",
+              "wooden_cabinet_1_default_site",
+              "wooden_cabinet_1_top_side",
+              "wooden_cabinet_1_top_region",
+              "wooden_cabinet_1_middle_region",
+              "wooden_cabinet_1_bottom_region",
+              "flat_stove_1_default_site",
+              "flat_stove_1_cook_region",
+              "flat_stove_1_burner",
+              "wine_rack_1_top_region",
+              "wine_rack_1_default_site"
+            ]
+          }
+        },
+        "nq": 41,
+        "nv": 37,
+        "recorded_model_file_sha256": "e9a508e1e98a7bd2631796a4c41476a449fd9821fb45837a27d2ebefd87c8830",
+        "site_names": [
+          "table_top",
+          "main_table_plate_region",
+          "main_table_akita_black_bowl_region",
+          "main_table_wine_bottle_region",
+          "main_table_cream_cheese_region",
+          "main_table_stove_front_region",
+          "main_table_cabinet_region",
+          "main_table_stove_region",
+          "main_table_wine_rack_region",
+          "gripper0_ft_frame",
+          "gripper0_grip_site",
+          "gripper0_ee_x",
+          "gripper0_ee_y",
+          "gripper0_ee_z",
+          "gripper0_grip_site_cylinder",
+          "akita_black_bowl_1_default_site",
+          "cream_cheese_1_default_site",
+          "wine_bottle_1_default_site",
+          "plate_1_default_site",
+          "wooden_cabinet_1_default_site",
+          "wooden_cabinet_1_top_side",
+          "wooden_cabinet_1_top_region",
+          "wooden_cabinet_1_middle_region",
+          "wooden_cabinet_1_bottom_region",
+          "flat_stove_1_default_site",
+          "flat_stove_1_cook_region",
+          "flat_stove_1_burner",
+          "wine_rack_1_top_region",
+          "wine_rack_1_default_site"
+        ]
+      },
+      "native_reset_state_sha256": "f4697fdae5b21c13990518c02053b7665228f5942332f00d22489e07ac14c54b",
+      "native_truth": {
+        "goal": {
+          "all_false": true,
+          "all_true": false,
+          "count": 1,
+          "detail_complete": true,
+          "label": "schema_native_goal",
+          "predicates": [
+            {
+              "args": [
+                "akita_black_bowl_1",
+                "main_table_akita_black_bowl_region"
+              ],
+              "atom": "(On akita_black_bowl_1 main_table_akita_black_bowl_region)",
+              "detail": {
+                "args": [
+                  "akita_black_bowl_1",
+                  "main_table_akita_black_bowl_region"
+                ],
+                "contact_information": {
+                  "ontop_xy_threshold_m": 0.03,
+                  "predicate_contact_is_model_defined": true,
+                  "site_contact_is_logical_true": true
+                },
+                "detail_status": "passed",
+                "geometry": [
+                  {
+                    "kind": "object",
+                    "name": "akita_black_bowl_1",
+                    "pos_m": [
+                      0.05030709498265613,
+                      -0.03019515353599987,
+                      1.08
+                    ],
+                    "quat": [
+                      0.7071067811865475,
+                      0.0,
+                      0.0,
+                      0.7071067811865476
+                    ]
+                  },
+                  {
+                    "kind": "site",
+                    "name": "main_table_akita_black_bowl_region",
+                    "pos_m": [
+                      -0.09,
+                      0.0,
+                      0.895
+                    ],
+                    "quat": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  }
+                ],
+                "predicate": "On",
+                "value": false
+              },
+              "detail_status": "passed",
+              "predicate": "On",
+              "truth_status": "passed",
+              "value": false
+            }
+          ],
+          "true_count": 0,
+          "truth_complete": true
+        },
+        "initial": {
+          "all_false": false,
+          "all_true": false,
+          "count": 7,
+          "detail_complete": true,
+          "label": "schema_native_initial",
+          "predicates": [
+            {
+              "args": [
+                "wine_bottle_1",
+                "main_table_wine_bottle_region"
+              ],
+              "atom": "(On wine_bottle_1 main_table_wine_bottle_region)",
+              "detail": {
+                "args": [
+                  "wine_bottle_1",
+                  "main_table_wine_bottle_region"
+                ],
+                "contact_information": {
+                  "ontop_xy_threshold_m": 0.03,
+                  "predicate_contact_is_model_defined": true,
+                  "site_contact_is_logical_true": true
+                },
+                "detail_status": "passed",
+                "geometry": [
+                  {
+                    "kind": "object",
+                    "name": "wine_bottle_1",
+                    "pos_m": [
+                      -0.20439878983197618,
+                      -0.0538701292509256,
+                      0.97
+                    ],
+                    "quat": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "kind": "site",
+                    "name": "main_table_wine_bottle_region",
+                    "pos_m": [
+                      -0.2,
+                      -0.05,
+                      0.895
+                    ],
+                    "quat": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  }
+                ],
+                "predicate": "On",
+                "value": true
+              },
+              "detail_status": "passed",
+              "predicate": "On",
+              "truth_status": "passed",
+              "value": true
+            },
+            {
+              "args": [
+                "plate_1",
+                "main_table_plate_region"
+              ],
+              "atom": "(On plate_1 main_table_plate_region)",
+              "detail": {
+                "args": [
+                  "plate_1",
+                  "main_table_plate_region"
+                ],
+                "contact_information": {
+                  "ontop_xy_threshold_m": 0.03,
+                  "predicate_contact_is_model_defined": true,
+                  "site_contact_is_logical_true": true
+                },
+                "detail_status": "passed",
+                "geometry": [
+                  {
+                    "kind": "object",
+                    "name": "plate_1",
+                    "pos_m": [
+                      0.05030709498265613,
+                      -0.03019515353599987,
+                      0.97
+                    ],
+                    "quat": [
+                      0.7071067811865475,
+                      0.0,
+                      0.0,
+                      0.7071067811865476
+                    ]
+                  },
+                  {
+                    "kind": "site",
+                    "name": "main_table_plate_region",
+                    "pos_m": [
+                      0.05,
+                      -0.02,
+                      0.895
+                    ],
+                    "quat": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  }
+                ],
+                "predicate": "On",
+                "value": false
+              },
+              "detail_status": "passed",
+              "predicate": "On",
+              "truth_status": "passed",
+              "value": false
+            },
+            {
+              "args": [
+                "cream_cheese_1",
+                "main_table_cream_cheese_region"
+              ],
+              "atom": "(On cream_cheese_1 main_table_cream_cheese_region)",
+              "detail": {
+                "args": [
+                  "cream_cheese_1",
+                  "main_table_cream_cheese_region"
+                ],
+                "contact_information": {
+                  "ontop_xy_threshold_m": 0.03,
+                  "predicate_contact_is_model_defined": true,
+                  "site_contact_is_logical_true": true
+                },
+                "detail_status": "passed",
+                "geometry": [
+                  {
+                    "kind": "object",
+                    "name": "cream_cheese_1",
+                    "pos_m": [
+                      -0.050067132489032246,
+                      0.13191579663618178,
+                      0.935
+                    ],
+                    "quat": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "kind": "site",
+                    "name": "main_table_cream_cheese_region",
+                    "pos_m": [
+                      -0.05,
+                      0.13,
+                      0.895
+                    ],
+                    "quat": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  }
+                ],
+                "predicate": "On",
+                "value": true
+              },
+              "detail_status": "passed",
+              "predicate": "On",
+              "truth_status": "passed",
+              "value": true
+            },
+            {
+              "args": [
+                "wooden_cabinet_1",
+                "main_table_cabinet_region"
+              ],
+              "atom": "(On wooden_cabinet_1 main_table_cabinet_region)",
+              "detail": {
+                "args": [
+                  "wooden_cabinet_1",
+                  "main_table_cabinet_region"
+                ],
+                "contact_information": {
+                  "ontop_xy_threshold_m": 0.03,
+                  "predicate_contact_is_model_defined": true,
+                  "site_contact_is_logical_true": true
+                },
+                "detail_status": "passed",
+                "geometry": [
+                  {
+                    "kind": "object",
+                    "name": "wooden_cabinet_1",
+                    "pos_m": [
+                      0.03242928115116613,
+                      -0.24977544713180422,
+                      0.905
+                    ],
+                    "quat": [
+                      6.123233995736766e-17,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "kind": "site",
+                    "name": "main_table_cabinet_region",
+                    "pos_m": [
+                      0.03,
+                      -0.24,
+                      0.895
+                    ],
+                    "quat": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  }
+                ],
+                "predicate": "On",
+                "value": true
+              },
+              "detail_status": "passed",
+              "predicate": "On",
+              "truth_status": "passed",
+              "value": true
+            },
+            {
+              "args": [
+                "flat_stove_1",
+                "main_table_stove_region"
+              ],
+              "atom": "(On flat_stove_1 main_table_stove_region)",
+              "detail": {
+                "args": [
+                  "flat_stove_1",
+                  "main_table_stove_region"
+                ],
+                "contact_information": {
+                  "ontop_xy_threshold_m": 0.03,
+                  "predicate_contact_is_model_defined": true,
+                  "site_contact_is_logical_true": true
+                },
+                "detail_status": "passed",
+                "geometry": [
+                  {
+                    "kind": "object",
+                    "name": "flat_stove_1",
+                    "pos_m": [
+                      -0.4194620485541694,
+                      0.20986645881687083,
+                      0.905
+                    ],
+                    "quat": [
+                      1.0,
+                      0.0,
+                      0.0,
+                      0.0
+                    ]
+                  },
+                  {
+                    "kind": "site",
+                    "name": "main_table_stove_region",
+                    "pos_m": [
+                      -0.41000000000000003,
+                      0.21000000000000002,
+                      0.895
+                    ],
+                    "quat": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  }
+                ],
+                "predicate": "On",
+                "value": true
+              },
+              "detail_status": "passed",
+              "predicate": "On",
+              "truth_status": "passed",
+              "value": true
+            },
+            {
+              "args": [
+                "wine_rack_1",
+                "main_table_wine_rack_region"
+              ],
+              "atom": "(On wine_rack_1 main_table_wine_rack_region)",
+              "detail": {
+                "args": [
+                  "wine_rack_1",
+                  "main_table_wine_rack_region"
+                ],
+                "contact_information": {
+                  "ontop_xy_threshold_m": 0.03,
+                  "predicate_contact_is_model_defined": true,
+                  "site_contact_is_logical_true": true
+                },
+                "detail_status": "passed",
+                "geometry": [
+                  {
+                    "kind": "object",
+                    "name": "wine_rack_1",
+                    "pos_m": [
+                      -0.2503950913694983,
+                      -0.26976149014111805,
+                      0.9199999999999999
+                    ],
+                    "quat": [
+                      6.123233995736766e-17,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "kind": "site",
+                    "name": "main_table_wine_rack_region",
+                    "pos_m": [
+                      -0.26,
+                      -0.26,
+                      0.895
+                    ],
+                    "quat": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  }
+                ],
+                "predicate": "On",
+                "value": true
+              },
+              "detail_status": "passed",
+              "predicate": "On",
+              "truth_status": "passed",
+              "value": true
+            },
+            {
+              "args": [
+                "akita_black_bowl_1",
+                "plate_1"
+              ],
+              "atom": "(On akita_black_bowl_1 plate_1)",
+              "detail": {
+                "args": [
+                  "akita_black_bowl_1",
+                  "plate_1"
+                ],
+                "contact_information": {
+                  "ontop_xy_threshold_m": 0.03,
+                  "predicate_contact_is_model_defined": true,
+                  "site_contact_is_logical_true": false
+                },
+                "detail_status": "passed",
+                "geometry": [
+                  {
+                    "kind": "object",
+                    "name": "akita_black_bowl_1",
+                    "pos_m": [
+                      0.05030709498265613,
+                      -0.03019515353599987,
+                      1.08
+                    ],
+                    "quat": [
+                      0.7071067811865475,
+                      0.0,
+                      0.0,
+                      0.7071067811865476
+                    ]
+                  },
+                  {
+                    "kind": "object",
+                    "name": "plate_1",
+                    "pos_m": [
+                      0.05030709498265613,
+                      -0.03019515353599987,
+                      0.97
+                    ],
+                    "quat": [
+                      0.7071067811865475,
+                      0.0,
+                      0.0,
+                      0.7071067811865476
+                    ]
+                  }
+                ],
+                "predicate": "On",
+                "value": false
+              },
+              "detail_status": "passed",
+              "predicate": "On",
+              "truth_status": "passed",
+              "value": false
+            }
+          ],
+          "true_count": 5,
+          "truth_complete": true
+        }
+      },
+      "operator_family": "support_remove",
+      "renderer_contract": {
+        "has_offscreen_renderer": false,
+        "has_renderer": false,
+        "use_camera_obs": false
+      },
+      "robot_snapshot": {
+        "action_dim": 7,
+        "arm_joint_qpos_rad": [
+          0.0,
+          -0.161037389,
+          0.0,
+          -2.44459747,
+          0.0,
+          2.2267522,
+          0.7853981633974483
+        ],
+        "arm_joint_qvel_rad_s": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "control_freq_hz": 20,
+        "controller_class": "OperationalSpaceController",
+        "controller_control_dim": 6,
+        "eef_quaternion": [
+          -0.7066475220051942,
+          -0.7069955535586975,
+          0.02007697152252108,
+          0.020086864031836973
+        ],
+        "eef_translation_m": [
+          -0.2084646605658236,
+          0.0,
+          1.1732794757296403
+        ],
+        "gripper_controller_target": [
+          0.0
+        ],
+        "gripper_hold_action": 0.0,
+        "gripper_qpos_m": [
+          0.020833,
+          -0.020833
+        ],
+        "gripper_qvel_m_s": [
+          0.0,
+          0.0
+        ]
+      },
+      "scene_snapshot": {
+        "fixture_joint_qpos": {},
+        "object_and_site_poses": {
+          "akita_black_bowl_1": {
+            "kind": "object",
+            "name": "akita_black_bowl_1",
+            "pos_m": [
+              0.05030709498265613,
+              -0.03019515353599987,
+              1.08
+            ],
+            "quat": [
+              0.7071067811865475,
+              0.0,
+              0.0,
+              0.7071067811865476
+            ]
+          },
+          "cream_cheese_1": {
+            "kind": "object",
+            "name": "cream_cheese_1",
+            "pos_m": [
+              -0.050067132489032246,
+              0.13191579663618178,
+              0.935
+            ],
+            "quat": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "flat_stove_1": {
+            "kind": "object",
+            "name": "flat_stove_1",
+            "pos_m": [
+              -0.4194620485541694,
+              0.20986645881687083,
+              0.905
+            ],
+            "quat": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "main_table_akita_black_bowl_region": {
+            "kind": "site",
+            "name": "main_table_akita_black_bowl_region",
+            "pos_m": [
+              -0.09,
+              0.0,
+              0.895
+            ],
+            "quat": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "main_table_cabinet_region": {
+            "kind": "site",
+            "name": "main_table_cabinet_region",
+            "pos_m": [
+              0.03,
+              -0.24,
+              0.895
+            ],
+            "quat": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "main_table_cream_cheese_region": {
+            "kind": "site",
+            "name": "main_table_cream_cheese_region",
+            "pos_m": [
+              -0.05,
+              0.13,
+              0.895
+            ],
+            "quat": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "main_table_plate_region": {
+            "kind": "site",
+            "name": "main_table_plate_region",
+            "pos_m": [
+              0.05,
+              -0.02,
+              0.895
+            ],
+            "quat": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "main_table_stove_region": {
+            "kind": "site",
+            "name": "main_table_stove_region",
+            "pos_m": [
+              -0.41000000000000003,
+              0.21000000000000002,
+              0.895
+            ],
+            "quat": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "main_table_wine_bottle_region": {
+            "kind": "site",
+            "name": "main_table_wine_bottle_region",
+            "pos_m": [
+              -0.2,
+              -0.05,
+              0.895
+            ],
+            "quat": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "main_table_wine_rack_region": {
+            "kind": "site",
+            "name": "main_table_wine_rack_region",
+            "pos_m": [
+              -0.26,
+              -0.26,
+              0.895
+            ],
+            "quat": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "plate_1": {
+            "kind": "object",
+            "name": "plate_1",
+            "pos_m": [
+              0.05030709498265613,
+              -0.03019515353599987,
+              0.97
+            ],
+            "quat": [
+              0.7071067811865475,
+              0.0,
+              0.0,
+              0.7071067811865476
+            ]
+          },
+          "wine_bottle_1": {
+            "kind": "object",
+            "name": "wine_bottle_1",
+            "pos_m": [
+              -0.20439878983197618,
+              -0.0538701292509256,
+              0.97
+            ],
+            "quat": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "wine_rack_1": {
+            "kind": "object",
+            "name": "wine_rack_1",
+            "pos_m": [
+              -0.2503950913694983,
+              -0.26976149014111805,
+              0.9199999999999999
+            ],
+            "quat": [
+              6.123233995736766e-17,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "wooden_cabinet_1": {
+            "kind": "object",
+            "name": "wooden_cabinet_1",
+            "pos_m": [
+              0.03242928115116613,
+              -0.24977544713180422,
+              0.905
+            ],
+            "quat": [
+              6.123233995736766e-17,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        }
+      },
+      "schema_complete": true,
+      "schema_version": "track3_native_reverse_validator_recovery_schema_run_v1",
+      "status": "schema_passed",
+      "stderr_tail": "[robosuite WARNING] No private macro file found! (__init__.py:7)\n[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)\n[robosuite WARNING] To setup, run: python /home/huang/code/PARC2026_final/.venv_axis_pi05/lib/python3.12/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)\n",
+      "stdout_tail": "rer\": false, \"has_renderer\": false, \"use_camera_obs\": false}, \"robot_snapshot\": {\"action_dim\": 7, \"arm_joint_qpos_rad\": [0.0, -0.161037389, 0.0, -2.44459747, 0.0, 2.2267522, 0.7853981633974483], \"arm_joint_qvel_rad_s\": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], \"control_freq_hz\": 20, \"controller_class\": \"OperationalSpaceController\", \"controller_control_dim\": 6, \"eef_quaternion\": [-0.7066475220051942, -0.7069955535586975, 0.02007697152252108, 0.020086864031836973], \"eef_translation_m\": [-0.2084646605658236, 0.0, 1.1732794757296403], \"gripper_controller_target\": [0.0], \"gripper_hold_action\": 0.0, \"gripper_qpos_m\": [0.020833, -0.020833], \"gripper_qvel_m_s\": [0.0, 0.0]}, \"scene_snapshot\": {\"fixture_joint_qpos\": {}, \"object_and_site_poses\": {\"akita_black_bowl_1\": {\"kind\": \"object\", \"name\": \"akita_black_bowl_1\", \"pos_m\": [0.05030709498265613, -0.03019515353599987, 1.08], \"quat\": [0.7071067811865475, 0.0, 0.0, 0.7071067811865476]}, \"cream_cheese_1\": {\"kind\": \"object\", \"name\": \"cream_cheese_1\", \"pos_m\": [-0.050067132489032246, 0.13191579663618178, 0.935], \"quat\": [0.0, 0.0, 0.0, 1.0]}, \"flat_stove_1\": {\"kind\": \"object\", \"name\": \"flat_stove_1\", \"pos_m\": [-0.4194620485541694, 0.20986645881687083, 0.905], \"quat\": [1.0, 0.0, 0.0, 0.0]}, \"main_table_akita_black_bowl_region\": {\"kind\": \"site\", \"name\": \"main_table_akita_black_bowl_region\", \"pos_m\": [-0.09, 0.0, 0.895], \"quat\": [0.0, 0.0, 0.0, 1.0]}, \"main_table_cabinet_region\": {\"kind\": \"site\", \"name\": \"main_table_cabinet_region\", \"pos_m\": [0.03, -0.24, 0.895], \"quat\": [0.0, 0.0, 0.0, 1.0]}, \"main_table_cream_cheese_region\": {\"kind\": \"site\", \"name\": \"main_table_cream_cheese_region\", \"pos_m\": [-0.05, 0.13, 0.895], \"quat\": [0.0, 0.0, 0.0, 1.0]}, \"main_table_plate_region\": {\"kind\": \"site\", \"name\": \"main_table_plate_region\", \"pos_m\": [0.05, -0.02, 0.895], \"quat\": [0.0, 0.0, 0.0, 1.0]}, \"main_table_stove_region\": {\"kind\": \"site\", \"name\": \"main_table_stove_region\", \"pos_m\": [-0.41000000000000003, 0.21000000000000002, 0.895], \"quat\": [0.0, 0.0, 0.0, 1.0]}, \"main_table_wine_bottle_region\": {\"kind\": \"site\", \"name\": \"main_table_wine_bottle_region\", \"pos_m\": [-0.2, -0.05, 0.895], \"quat\": [0.0, 0.0, 0.0, 1.0]}, \"main_table_wine_rack_region\": {\"kind\": \"site\", \"name\": \"main_table_wine_rack_region\", \"pos_m\": [-0.26, -0.26, 0.895], \"quat\": [0.0, 0.0, 0.0, 1.0]}, \"plate_1\": {\"kind\": \"object\", \"name\": \"plate_1\", \"pos_m\": [0.05030709498265613, -0.03019515353599987, 0.97], \"quat\": [0.7071067811865475, 0.0, 0.0, 0.7071067811865476]}, \"wine_bottle_1\": {\"kind\": \"object\", \"name\": \"wine_bottle_1\", \"pos_m\": [-0.20439878983197618, -0.0538701292509256, 0.97], \"quat\": [0.0, 0.0, 0.0, 1.0]}, \"wine_rack_1\": {\"kind\": \"object\", \"name\": \"wine_rack_1\", \"pos_m\": [-0.2503950913694983, -0.26976149014111805, 0.9199999999999999], \"quat\": [6.123233995736766e-17, 0.0, 0.0, 1.0]}, \"wooden_cabinet_1\": {\"kind\": \"object\", \"name\": \"wooden_cabinet_1\", \"pos_m\": [0.03242928115116613, -0.24977544713180422, 0.905], \"quat\": [6.123233995736766e-17, 0.0, 0.0, 1.0]}}}, \"schema_complete\": true, \"schema_version\": \"track3_native_reverse_validator_recovery_schema_run_v1\", \"status\": \"schema_passed\", \"target_resolution\": {\"hold_action\": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], \"joint_names\": [\"akita_black_bowl_1_joint0\"], \"joint_values\": [0.05030709498265613], \"native_state_sha256\": \"f4697fdae5b21c13990518c02053b7665228f5942332f00d22489e07ac14c54b\", \"predicate\": \"On\", \"references\": [{\"name\": \"akita_black_bowl_1\", \"pose\": {\"kind\": \"object\", \"name\": \"akita_black_bowl_1\", \"pos_m\": [0.05030709498265613, -0.03019515353599987, 1.08], \"quat\": [0.7071067811865475, 0.0, 0.0, 0.7071067811865476]}, \"state_type\": \"object\"}, {\"name\": \"plate_1\", \"pose\": {\"kind\": \"object\", \"name\": \"plate_1\", \"pos_m\": [0.05030709498265613, -0.03019515353599987, 0.97], \"quat\": [0.7071067811865475, 0.0, 0.0, 0.7071067811865476]}, \"state_type\": \"object\"}], \"schema_complete\": true, \"target_atom\": \"(On akita_black_bowl_1 plate_1)\", \"task_index\": 10}, \"task_index\": 10, \"truth_detail_separated\": true}\n",
+      "target_resolution": {
+        "hold_action": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "joint_names": [
+          "akita_black_bowl_1_joint0"
+        ],
+        "joint_values": [
+          0.05030709498265613
+        ],
+        "native_state_sha256": "f4697fdae5b21c13990518c02053b7665228f5942332f00d22489e07ac14c54b",
+        "predicate": "On",
+        "references": [
+          {
+            "name": "akita_black_bowl_1",
+            "pose": {
+              "kind": "object",
+              "name": "akita_black_bowl_1",
+              "pos_m": [
+                0.05030709498265613,
+                -0.03019515353599987,
+                1.08
+              ],
+              "quat": [
+                0.7071067811865475,
+                0.0,
+                0.0,
+                0.7071067811865476
+              ]
+            },
+            "state_type": "object"
+          },
+          {
+            "name": "plate_1",
+            "pose": {
+              "kind": "object",
+              "name": "plate_1",
+              "pos_m": [
+                0.05030709498265613,
+                -0.03019515353599987,
+                0.97
+              ],
+              "quat": [
+                0.7071067811865475,
+                0.0,
+                0.0,
+                0.7071067811865476
+              ]
+            },
+            "state_type": "object"
+          }
+        ],
+        "schema_complete": true,
+        "target_atom": "(On akita_black_bowl_1 plate_1)",
+        "task_index": 10
+      },
+      "task_index": 10,
+      "truth_detail_separated": true,
+      "worker_returncode": 0
+    },
+    {
+      "fresh_process": true,
+      "gripper_hold_contract": {
+        "action": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "fixed_gripper_minus_one_used": false
+      },
+      "hdf5_state_used_for_predicate_oracle": false,
+      "layout": {
+        "body_names": [
+          "world",
+          "floor",
+          "robot0_base",
+          "robot0_link0",
+          "robot0_link1",
+          "robot0_link2",
+          "robot0_link3",
+          "robot0_link4",
+          "robot0_link5",
+          "robot0_link6",
+          "robot0_link7",
+          "robot0_right_hand",
+          "gripper0_right_gripper",
+          "gripper0_eef",
+          "gripper0_leftfinger",
+          "gripper0_finger_joint1_tip",
+          "gripper0_rightfinger",
+          "gripper0_finger_joint2_tip",
+          "mount0_base",
+          "orange_juice_1_main",
+          "basket_1_main",
+          "butter_1_main",
+          "chocolate_pudding_1_main",
+          "bbq_sauce_1_main",
+          "ketchup_1_main",
+          "salad_dressing_1_main"
+        ],
+        "compatibility": {
+          "compatible": false,
+          "current_env_xml_sha256": "d663cc44b679c4726f577abb1ba7c9977a9bcf882cc408ed47f0836b9714262a",
+          "hdf5_state_used_for_predicate_oracle": false,
+          "predicate_oracle": "native_reverse_bddl_only",
+          "recorded_model_file_sha256": "4e0497a77437ac5846c84c6bea8e08a9af66b11829f8edbe8bc692616a1be723",
+          "status": "incompatible_for_predicate_oracle"
+        },
+        "current_env_xml_sha256": "d663cc44b679c4726f577abb1ba7c9977a9bcf882cc408ed47f0836b9714262a",
+        "hdf5_state_used_for_predicate_oracle": false,
+        "joint_names": [
+          "robot0_joint1",
+          "robot0_joint2",
+          "robot0_joint3",
+          "robot0_joint4",
+          "robot0_joint5",
+          "robot0_joint6",
+          "robot0_joint7",
+          "gripper0_finger_joint1",
+          "gripper0_finger_joint2",
+          "orange_juice_1_joint0",
+          "basket_1_joint0",
+          "butter_1_joint0",
+          "chocolate_pudding_1_joint0",
+          "bbq_sauce_1_joint0",
+          "ketchup_1_joint0",
+          "salad_dressing_1_joint0"
+        ],
+        "key_body_site_pose_diff": {
+          "comparison_status": "reported_in_separate_frames_no_numeric_cross_frame_difference",
+          "current_model_xml_sha256": "d663cc44b679c4726f577abb1ba7c9977a9bcf882cc408ed47f0836b9714262a",
+          "current_native_reset_pose": {
+            "basket_1": {
+              "kind": "object",
+              "name": "basket_1",
+              "pos_m": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "quat": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "basket_1_contain_region": {
+              "kind": "site",
+              "name": "basket_1_contain_region",
+              "pos_m": [
+                0.0,
+                0.0,
+                0.07185
+              ],
+              "quat": [
+                0.0,
+                0.0,
+                1.0,
+                0.0
+              ]
+            },
+            "bbq_sauce_1": {
+              "kind": "object",
+              "name": "bbq_sauce_1",
+              "pos_m": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "quat": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "butter_1": {
+              "kind": "object",
+              "name": "butter_1",
+              "pos_m": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "quat": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "chocolate_pudding_1": {
+              "kind": "object",
+              "name": "chocolate_pudding_1",
+              "pos_m": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "quat": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "floor_bin_region": {
+              "kind": "site",
+              "name": "floor_bin_region",
+              "pos_m": [
+                0.0,
+                0.26,
+                0.02
+              ],
+              "quat": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            },
+            "floor_other_object_region_0": {
+              "kind": "site",
+              "name": "floor_other_object_region_0",
+              "pos_m": [
+                -0.12,
+                -0.24,
+                0.02
+              ],
+              "quat": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            },
+            "floor_other_object_region_1": {
+              "kind": "site",
+              "name": "floor_other_object_region_1",
+              "pos_m": [
+                -0.15,
+                0.06,
+                0.02
+              ],
+              "quat": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            },
+            "floor_other_object_region_2": {
+              "kind": "site",
+              "name": "floor_other_object_region_2",
+              "pos_m": [
+                0.1,
+                -0.2,
+                0.02
+              ],
+              "quat": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            },
+            "floor_other_object_region_3": {
+              "kind": "site",
+              "name": "floor_other_object_region_3",
+              "pos_m": [
+                0.15,
+                0.03,
+                0.02
+              ],
+              "quat": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            },
+            "floor_other_object_region_4": {
+              "kind": "site",
+              "name": "floor_other_object_region_4",
+              "pos_m": [
+                -0.2,
+                -0.08,
+                0.02
+              ],
+              "quat": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            },
+            "floor_target_object_region": {
+              "kind": "site",
+              "name": "floor_target_object_region",
+              "pos_m": [
+                0.05,
+                -0.1,
+                0.02
+              ],
+              "quat": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            },
+            "ketchup_1": {
+              "kind": "object",
+              "name": "ketchup_1",
+              "pos_m": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "quat": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "orange_juice_1": {
+              "kind": "object",
+              "name": "orange_juice_1",
+              "pos_m": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "quat": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "salad_dressing_1": {
+              "kind": "object",
+              "name": "salad_dressing_1",
+              "pos_m": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "quat": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "recorded_model_file_sha256": "4e0497a77437ac5846c84c6bea8e08a9af66b11829f8edbe8bc692616a1be723",
+          "recorded_xml_pose": {
+            "site:basket_1_contain_region": {
+              "declared_local_pos": "0 0 0.07185",
+              "declared_local_quat": "0 0 0 1",
+              "frame": "recorded_xml_local"
+            },
+            "site:floor_bin_region": {
+              "declared_local_pos": "0 0.26 0.02",
+              "declared_local_quat": null,
+              "frame": "recorded_xml_local"
+            },
+            "site:floor_other_object_region_0": {
+              "declared_local_pos": "-0.12 -0.24 0.02",
+              "declared_local_quat": null,
+              "frame": "recorded_xml_local"
+            },
+            "site:floor_other_object_region_1": {
+              "declared_local_pos": "-0.15 0.06 0.02",
+              "declared_local_quat": null,
+              "frame": "recorded_xml_local"
+            },
+            "site:floor_other_object_region_2": {
+              "declared_local_pos": "0.1 -0.2 0.02",
+              "declared_local_quat": null,
+              "frame": "recorded_xml_local"
+            },
+            "site:floor_other_object_region_3": {
+              "declared_local_pos": "0.15 0.03 0.02",
+              "declared_local_quat": null,
+              "frame": "recorded_xml_local"
+            },
+            "site:floor_other_object_region_4": {
+              "declared_local_pos": "-0.2 -0.08 0.02",
+              "declared_local_quat": null,
+              "frame": "recorded_xml_local"
+            },
+            "site:floor_target_object_region": {
+              "declared_local_pos": "0.05 -0.1 0.02",
+              "declared_local_quat": null,
+              "frame": "recorded_xml_local"
+            }
+          },
+          "status": "reported_recorded_local_and_current_native_world_pose"
+        },
+        "name_order_comparison": {
+          "body": {
+            "current_count": 26,
+            "current_names": [
+              "world",
+              "floor",
+              "robot0_base",
+              "robot0_link0",
+              "robot0_link1",
+              "robot0_link2",
+              "robot0_link3",
+              "robot0_link4",
+              "robot0_link5",
+              "robot0_link6",
+              "robot0_link7",
+              "robot0_right_hand",
+              "gripper0_right_gripper",
+              "gripper0_eef",
+              "gripper0_leftfinger",
+              "gripper0_finger_joint1_tip",
+              "gripper0_rightfinger",
+              "gripper0_finger_joint2_tip",
+              "mount0_base",
+              "orange_juice_1_main",
+              "basket_1_main",
+              "butter_1_main",
+              "chocolate_pudding_1_main",
+              "bbq_sauce_1_main",
+              "ketchup_1_main",
+              "salad_dressing_1_main"
+            ],
+            "order_equal": false,
+            "recorded_count": 25,
+            "recorded_names": [
+              "floor",
+              "robot0_base",
+              "robot0_link0",
+              "robot0_link1",
+              "robot0_link2",
+              "robot0_link3",
+              "robot0_link4",
+              "robot0_link5",
+              "robot0_link6",
+              "robot0_link7",
+              "robot0_right_hand",
+              "gripper0_right_gripper",
+              "gripper0_eef",
+              "gripper0_leftfinger",
+              "gripper0_finger_joint1_tip",
+              "gripper0_rightfinger",
+              "gripper0_finger_joint2_tip",
+              "mount0_base",
+              "orange_juice_1_main",
+              "basket_1_main",
+              "butter_1_main",
+              "chocolate_pudding_1_main",
+              "bbq_sauce_1_main",
+              "ketchup_1_main",
+              "salad_dressing_1_main"
+            ]
+          },
+          "joint": {
+            "current_count": 16,
+            "current_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7",
+              "gripper0_finger_joint1",
+              "gripper0_finger_joint2",
+              "orange_juice_1_joint0",
+              "basket_1_joint0",
+              "butter_1_joint0",
+              "chocolate_pudding_1_joint0",
+              "bbq_sauce_1_joint0",
+              "ketchup_1_joint0",
+              "salad_dressing_1_joint0"
+            ],
+            "order_equal": true,
+            "recorded_count": 16,
+            "recorded_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7",
+              "gripper0_finger_joint1",
+              "gripper0_finger_joint2",
+              "orange_juice_1_joint0",
+              "basket_1_joint0",
+              "butter_1_joint0",
+              "chocolate_pudding_1_joint0",
+              "bbq_sauce_1_joint0",
+              "ketchup_1_joint0",
+              "salad_dressing_1_joint0"
+            ]
+          },
+          "site": {
+            "current_count": 21,
+            "current_names": [
+              "floor_bin_region",
+              "floor_target_object_region",
+              "floor_other_object_region_0",
+              "floor_other_object_region_1",
+              "floor_other_object_region_2",
+              "floor_other_object_region_3",
+              "floor_other_object_region_4",
+              "gripper0_ft_frame",
+              "gripper0_grip_site",
+              "gripper0_ee_x",
+              "gripper0_ee_y",
+              "gripper0_ee_z",
+              "gripper0_grip_site_cylinder",
+              "orange_juice_1_default_site",
+              "basket_1_contain_region",
+              "basket_1_default_site",
+              "butter_1_default_site",
+              "chocolate_pudding_1_default_site",
+              "bbq_sauce_1_default_site",
+              "ketchup_1_default_site",
+              "salad_dressing_1_default_site"
+            ],
+            "order_equal": true,
+            "recorded_count": 21,
+            "recorded_names": [
+              "floor_bin_region",
+              "floor_target_object_region",
+              "floor_other_object_region_0",
+              "floor_other_object_region_1",
+              "floor_other_object_region_2",
+              "floor_other_object_region_3",
+              "floor_other_object_region_4",
+              "gripper0_ft_frame",
+              "gripper0_grip_site",
+              "gripper0_ee_x",
+              "gripper0_ee_y",
+              "gripper0_ee_z",
+              "gripper0_grip_site_cylinder",
+              "orange_juice_1_default_site",
+              "basket_1_contain_region",
+              "basket_1_default_site",
+              "butter_1_default_site",
+              "chocolate_pudding_1_default_site",
+              "bbq_sauce_1_default_site",
+              "ketchup_1_default_site",
+              "salad_dressing_1_default_site"
+            ]
+          }
+        },
+        "nq": 58,
+        "nv": 51,
+        "recorded_model_file_sha256": "4e0497a77437ac5846c84c6bea8e08a9af66b11829f8edbe8bc692616a1be723",
+        "site_names": [
+          "floor_bin_region",
+          "floor_target_object_region",
+          "floor_other_object_region_0",
+          "floor_other_object_region_1",
+          "floor_other_object_region_2",
+          "floor_other_object_region_3",
+          "floor_other_object_region_4",
+          "gripper0_ft_frame",
+          "gripper0_grip_site",
+          "gripper0_ee_x",
+          "gripper0_ee_y",
+          "gripper0_ee_z",
+          "gripper0_grip_site_cylinder",
+          "orange_juice_1_default_site",
+          "basket_1_contain_region",
+          "basket_1_default_site",
+          "butter_1_default_site",
+          "chocolate_pudding_1_default_site",
+          "bbq_sauce_1_default_site",
+          "ketchup_1_default_site",
+          "salad_dressing_1_default_site"
+        ]
+      },
+      "native_reset_state_sha256": "e3bf08f552dba64e3f5eddd17b18bffc04b3f8b7fd27c59ba0126151ec62fbc8",
+      "native_truth": {
+        "goal": {
+          "all_false": true,
+          "all_true": false,
+          "count": 1,
+          "detail_complete": true,
+          "label": "schema_native_goal",
+          "predicates": [
+            {
+              "args": [
+                "orange_juice_1",
+                "floor_target_object_region"
+              ],
+              "atom": "(On orange_juice_1 floor_target_object_region)",
+              "detail": {
+                "args": [
+                  "orange_juice_1",
+                  "floor_target_object_region"
+                ],
+                "contact_information": {
+                  "ontop_xy_threshold_m": 0.03,
+                  "predicate_contact_is_model_defined": true,
+                  "site_contact_is_logical_true": true
+                },
+                "detail_status": "passed",
+                "geometry": [
+                  {
+                    "kind": "object",
+                    "name": "orange_juice_1",
+                    "pos_m": [
+                      0.006897964391726097,
+                      0.26107238084265133,
+                      0.16685
+                    ],
+                    "quat": [
+                      0.5,
+                      0.5,
+                      0.5,
+                      0.5
+                    ]
+                  },
+                  {
+                    "kind": "site",
+                    "name": "floor_target_object_region",
+                    "pos_m": [
+                      0.05,
+                      -0.1,
+                      0.02
+                    ],
+                    "quat": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  }
+                ],
+                "predicate": "On",
+                "value": false
+              },
+              "detail_status": "passed",
+              "predicate": "On",
+              "truth_status": "passed",
+              "value": false
+            }
+          ],
+          "true_count": 0,
+          "truth_complete": true
+        },
+        "initial": {
+          "all_false": false,
+          "all_true": false,
+          "count": 7,
+          "detail_complete": true,
+          "label": "schema_native_initial",
+          "predicates": [
+            {
+              "args": [
+                "butter_1",
+                "floor_other_object_region_0"
+              ],
+              "atom": "(On butter_1 floor_other_object_region_0)",
+              "detail": {
+                "args": [
+                  "butter_1",
+                  "floor_other_object_region_0"
+                ],
+                "contact_information": {
+                  "ontop_xy_threshold_m": 0.03,
+                  "predicate_contact_is_model_defined": true,
+                  "site_contact_is_logical_true": true
+                },
+                "detail_status": "passed",
+                "geometry": [
+                  {
+                    "kind": "object",
+                    "name": "butter_1",
+                    "pos_m": [
+                      -0.12254298718607425,
+                      -0.23806536548306106,
+                      -0.005000000000000001
+                    ],
+                    "quat": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "kind": "site",
+                    "name": "floor_other_object_region_0",
+                    "pos_m": [
+                      -0.12,
+                      -0.24,
+                      0.02
+                    ],
+                    "quat": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  }
+                ],
+                "predicate": "On",
+                "value": false
+              },
+              "detail_status": "passed",
+              "predicate": "On",
+              "truth_status": "passed",
+              "value": false
+            },
+            {
+              "args": [
+                "chocolate_pudding_1",
+                "floor_other_object_region_1"
+              ],
+              "atom": "(On chocolate_pudding_1 floor_other_object_region_1)",
+              "detail": {
+                "args": [
+                  "chocolate_pudding_1",
+                  "floor_other_object_region_1"
+                ],
+                "contact_information": {
+                  "ontop_xy_threshold_m": 0.03,
+                  "predicate_contact_is_model_defined": true,
+                  "site_contact_is_logical_true": true
+                },
+                "detail_status": "passed",
+                "geometry": [
+                  {
+                    "kind": "object",
+                    "name": "chocolate_pudding_1",
+                    "pos_m": [
+                      -0.15,
+                      0.05999999999999999,
+                      0.034999999999999996
+                    ],
+                    "quat": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "kind": "site",
+                    "name": "floor_other_object_region_1",
+                    "pos_m": [
+                      -0.15,
+                      0.06,
+                      0.02
+                    ],
+                    "quat": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  }
+                ],
+                "predicate": "On",
+                "value": true
+              },
+              "detail_status": "passed",
+              "predicate": "On",
+              "truth_status": "passed",
+              "value": true
+            },
+            {
+              "args": [
+                "bbq_sauce_1",
+                "floor_other_object_region_2"
+              ],
+              "atom": "(On bbq_sauce_1 floor_other_object_region_2)",
+              "detail": {
+                "args": [
+                  "bbq_sauce_1",
+                  "floor_other_object_region_2"
+                ],
+                "contact_information": {
+                  "ontop_xy_threshold_m": 0.03,
+                  "predicate_contact_is_model_defined": true,
+                  "site_contact_is_logical_true": true
+                },
+                "detail_status": "passed",
+                "geometry": [
+                  {
+                    "kind": "object",
+                    "name": "bbq_sauce_1",
+                    "pos_m": [
+                      0.0951721676588718,
+                      -0.2084115553393251,
+                      0.034999999999999996
+                    ],
+                    "quat": [
+                      0.7071067811865475,
+                      0.0,
+                      0.0,
+                      0.7071067811865476
+                    ]
+                  },
+                  {
+                    "kind": "site",
+                    "name": "floor_other_object_region_2",
+                    "pos_m": [
+                      0.1,
+                      -0.2,
+                      0.02
+                    ],
+                    "quat": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  }
+                ],
+                "predicate": "On",
+                "value": true
+              },
+              "detail_status": "passed",
+              "predicate": "On",
+              "truth_status": "passed",
+              "value": true
+            },
+            {
+              "args": [
+                "ketchup_1",
+                "floor_other_object_region_3"
+              ],
+              "atom": "(On ketchup_1 floor_other_object_region_3)",
+              "detail": {
+                "args": [
+                  "ketchup_1",
+                  "floor_other_object_region_3"
+                ],
+                "contact_information": {
+                  "ontop_xy_threshold_m": 0.03,
+                  "predicate_contact_is_model_defined": true,
+                  "site_contact_is_logical_true": true
+                },
+                "detail_status": "passed",
+                "geometry": [
+                  {
+                    "kind": "object",
+                    "name": "ketchup_1",
+                    "pos_m": [
+                      0.15,
+                      0.03,
+                      0.034999999999999996
+                    ],
+                    "quat": [
+                      0.5,
+                      0.5,
+                      0.5,
+                      0.5
+                    ]
+                  },
+                  {
+                    "kind": "site",
+                    "name": "floor_other_object_region_3",
+                    "pos_m": [
+                      0.15,
+                      0.03,
+                      0.02
+                    ],
+                    "quat": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  }
+                ],
+                "predicate": "On",
+                "value": true
+              },
+              "detail_status": "passed",
+              "predicate": "On",
+              "truth_status": "passed",
+              "value": true
+            },
+            {
+              "args": [
+                "salad_dressing_1",
+                "floor_other_object_region_4"
+              ],
+              "atom": "(On salad_dressing_1 floor_other_object_region_4)",
+              "detail": {
+                "args": [
+                  "salad_dressing_1",
+                  "floor_other_object_region_4"
+                ],
+                "contact_information": {
+                  "ontop_xy_threshold_m": 0.03,
+                  "predicate_contact_is_model_defined": true,
+                  "site_contact_is_logical_true": true
+                },
+                "detail_status": "passed",
+                "geometry": [
+                  {
+                    "kind": "object",
+                    "name": "salad_dressing_1",
+                    "pos_m": [
+                      -0.2,
+                      -0.08000000000000002,
+                      0.034999999999999996
+                    ],
+                    "quat": [
+                      0.5,
+                      0.5,
+                      0.5,
+                      0.5
+                    ]
+                  },
+                  {
+                    "kind": "site",
+                    "name": "floor_other_object_region_4",
+                    "pos_m": [
+                      -0.2,
+                      -0.08,
+                      0.02
+                    ],
+                    "quat": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  }
+                ],
+                "predicate": "On",
+                "value": true
+              },
+              "detail_status": "passed",
+              "predicate": "On",
+              "truth_status": "passed",
+              "value": true
+            },
+            {
+              "args": [
+                "basket_1",
+                "floor_bin_region"
+              ],
+              "atom": "(On basket_1 floor_bin_region)",
+              "detail": {
+                "args": [
+                  "basket_1",
+                  "floor_bin_region"
+                ],
+                "contact_information": {
+                  "ontop_xy_threshold_m": 0.03,
+                  "predicate_contact_is_model_defined": true,
+                  "site_contact_is_logical_true": true
+                },
+                "detail_status": "passed",
+                "geometry": [
+                  {
+                    "kind": "object",
+                    "name": "basket_1",
+                    "pos_m": [
+                      0.006897964391726097,
+                      0.26107238084265133,
+                      0.034999999999999996
+                    ],
+                    "quat": [
+                      0.7071067811865475,
+                      0.0,
+                      0.0,
+                      0.7071067811865476
+                    ]
+                  },
+                  {
+                    "kind": "site",
+                    "name": "floor_bin_region",
+                    "pos_m": [
+                      0.0,
+                      0.26,
+                      0.02
+                    ],
+                    "quat": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  }
+                ],
+                "predicate": "On",
+                "value": true
+              },
+              "detail_status": "passed",
+              "predicate": "On",
+              "truth_status": "passed",
+              "value": true
+            },
+            {
+              "args": [
+                "orange_juice_1",
+                "basket_1_contain_region"
+              ],
+              "atom": "(In orange_juice_1 basket_1_contain_region)",
+              "detail": {
+                "args": [
+                  "orange_juice_1",
+                  "basket_1_contain_region"
+                ],
+                "contact_information": {
+                  "ontop_xy_threshold_m": null,
+                  "predicate_contact_is_model_defined": true,
+                  "site_contact_is_logical_true": true
+                },
+                "detail_status": "passed",
+                "geometry": [
+                  {
+                    "kind": "object",
+                    "name": "orange_juice_1",
+                    "pos_m": [
+                      0.006897964391726097,
+                      0.26107238084265133,
+                      0.16685
+                    ],
+                    "quat": [
+                      0.5,
+                      0.5,
+                      0.5,
+                      0.5
+                    ]
+                  },
+                  {
+                    "kind": "site",
+                    "name": "basket_1_contain_region",
+                    "pos_m": [
+                      0.006897964391726097,
+                      0.26107238084265133,
+                      0.10685
+                    ],
+                    "quat": [
+                      0.0,
+                      0.0,
+                      -0.7071067811865475,
+                      0.7071067811865475
+                    ]
+                  }
+                ],
+                "predicate": "In",
+                "value": true
+              },
+              "detail_status": "passed",
+              "predicate": "In",
+              "truth_status": "passed",
+              "value": true
+            }
+          ],
+          "true_count": 6,
+          "truth_complete": true
+        }
+      },
+      "operator_family": "containment_remove",
+      "renderer_contract": {
+        "has_offscreen_renderer": false,
+        "has_renderer": false,
+        "use_camera_obs": false
+      },
+      "robot_snapshot": {
+        "action_dim": 7,
+        "arm_joint_qpos_rad": [
+          0.0,
+          -0.161037389,
+          0.0,
+          -2.44459747,
+          0.0,
+          2.2267522,
+          0.7853981633974483
+        ],
+        "arm_joint_qvel_rad_s": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "control_freq_hz": 20,
+        "controller_class": "OperationalSpaceController",
+        "controller_control_dim": 6,
+        "eef_quaternion": [
+          -0.7066475220051942,
+          -0.7069955535586975,
+          0.02007697152252108,
+          0.020086864031836973
+        ],
+        "eef_translation_m": [
+          -0.14846466056582355,
+          0.0,
+          0.26127947572963994
+        ],
+        "gripper_controller_target": [
+          0.0
+        ],
+        "gripper_hold_action": 0.0,
+        "gripper_qpos_m": [
+          0.020833,
+          -0.020833
+        ],
+        "gripper_qvel_m_s": [
+          0.0,
+          0.0
+        ]
+      },
+      "scene_snapshot": {
+        "fixture_joint_qpos": {},
+        "object_and_site_poses": {
+          "basket_1": {
+            "kind": "object",
+            "name": "basket_1",
+            "pos_m": [
+              0.006897964391726097,
+              0.26107238084265133,
+              0.034999999999999996
+            ],
+            "quat": [
+              0.7071067811865475,
+              0.0,
+              0.0,
+              0.7071067811865476
+            ]
+          },
+          "basket_1_contain_region": {
+            "kind": "site",
+            "name": "basket_1_contain_region",
+            "pos_m": [
+              0.006897964391726097,
+              0.26107238084265133,
+              0.10685
+            ],
+            "quat": [
+              0.0,
+              0.0,
+              -0.7071067811865475,
+              0.7071067811865475
+            ]
+          },
+          "bbq_sauce_1": {
+            "kind": "object",
+            "name": "bbq_sauce_1",
+            "pos_m": [
+              0.0951721676588718,
+              -0.2084115553393251,
+              0.034999999999999996
+            ],
+            "quat": [
+              0.7071067811865475,
+              0.0,
+              0.0,
+              0.7071067811865476
+            ]
+          },
+          "butter_1": {
+            "kind": "object",
+            "name": "butter_1",
+            "pos_m": [
+              -0.12254298718607425,
+              -0.23806536548306106,
+              -0.005000000000000001
+            ],
+            "quat": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "chocolate_pudding_1": {
+            "kind": "object",
+            "name": "chocolate_pudding_1",
+            "pos_m": [
+              -0.15,
+              0.05999999999999999,
+              0.034999999999999996
+            ],
+            "quat": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "floor_bin_region": {
+            "kind": "site",
+            "name": "floor_bin_region",
+            "pos_m": [
+              0.0,
+              0.26,
+              0.02
+            ],
+            "quat": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "floor_other_object_region_0": {
+            "kind": "site",
+            "name": "floor_other_object_region_0",
+            "pos_m": [
+              -0.12,
+              -0.24,
+              0.02
+            ],
+            "quat": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "floor_other_object_region_1": {
+            "kind": "site",
+            "name": "floor_other_object_region_1",
+            "pos_m": [
+              -0.15,
+              0.06,
+              0.02
+            ],
+            "quat": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "floor_other_object_region_2": {
+            "kind": "site",
+            "name": "floor_other_object_region_2",
+            "pos_m": [
+              0.1,
+              -0.2,
+              0.02
+            ],
+            "quat": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "floor_other_object_region_3": {
+            "kind": "site",
+            "name": "floor_other_object_region_3",
+            "pos_m": [
+              0.15,
+              0.03,
+              0.02
+            ],
+            "quat": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "floor_other_object_region_4": {
+            "kind": "site",
+            "name": "floor_other_object_region_4",
+            "pos_m": [
+              -0.2,
+              -0.08,
+              0.02
+            ],
+            "quat": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "floor_target_object_region": {
+            "kind": "site",
+            "name": "floor_target_object_region",
+            "pos_m": [
+              0.05,
+              -0.1,
+              0.02
+            ],
+            "quat": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "ketchup_1": {
+            "kind": "object",
+            "name": "ketchup_1",
+            "pos_m": [
+              0.15,
+              0.03,
+              0.034999999999999996
+            ],
+            "quat": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "orange_juice_1": {
+            "kind": "object",
+            "name": "orange_juice_1",
+            "pos_m": [
+              0.006897964391726097,
+              0.26107238084265133,
+              0.16685
+            ],
+            "quat": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "salad_dressing_1": {
+            "kind": "object",
+            "name": "salad_dressing_1",
+            "pos_m": [
+              -0.2,
+              -0.08000000000000002,
+              0.034999999999999996
+            ],
+            "quat": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      },
+      "schema_complete": true,
+      "schema_version": "track3_native_reverse_validator_recovery_schema_run_v1",
+      "status": "schema_passed",
+      "stderr_tail": "[robosuite WARNING] No private macro file found! (__init__.py:7)\n[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)\n[robosuite WARNING] To setup, run: python /home/huang/code/PARC2026_final/.venv_axis_pi05/lib/python3.12/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)\n",
+      "stdout_tail": "ad\": [0.0, -0.161037389, 0.0, -2.44459747, 0.0, 2.2267522, 0.7853981633974483], \"arm_joint_qvel_rad_s\": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], \"control_freq_hz\": 20, \"controller_class\": \"OperationalSpaceController\", \"controller_control_dim\": 6, \"eef_quaternion\": [-0.7066475220051942, -0.7069955535586975, 0.02007697152252108, 0.020086864031836973], \"eef_translation_m\": [-0.14846466056582355, 0.0, 0.26127947572963994], \"gripper_controller_target\": [0.0], \"gripper_hold_action\": 0.0, \"gripper_qpos_m\": [0.020833, -0.020833], \"gripper_qvel_m_s\": [0.0, 0.0]}, \"scene_snapshot\": {\"fixture_joint_qpos\": {}, \"object_and_site_poses\": {\"basket_1\": {\"kind\": \"object\", \"name\": \"basket_1\", \"pos_m\": [0.006897964391726097, 0.26107238084265133, 0.034999999999999996], \"quat\": [0.7071067811865475, 0.0, 0.0, 0.7071067811865476]}, \"basket_1_contain_region\": {\"kind\": \"site\", \"name\": \"basket_1_contain_region\", \"pos_m\": [0.006897964391726097, 0.26107238084265133, 0.10685], \"quat\": [0.0, 0.0, -0.7071067811865475, 0.7071067811865475]}, \"bbq_sauce_1\": {\"kind\": \"object\", \"name\": \"bbq_sauce_1\", \"pos_m\": [0.0951721676588718, -0.2084115553393251, 0.034999999999999996], \"quat\": [0.7071067811865475, 0.0, 0.0, 0.7071067811865476]}, \"butter_1\": {\"kind\": \"object\", \"name\": \"butter_1\", \"pos_m\": [-0.12254298718607425, -0.23806536548306106, -0.005000000000000001], \"quat\": [0.0, 0.0, 0.0, 1.0]}, \"chocolate_pudding_1\": {\"kind\": \"object\", \"name\": \"chocolate_pudding_1\", \"pos_m\": [-0.15, 0.05999999999999999, 0.034999999999999996], \"quat\": [0.0, 0.0, 0.0, 1.0]}, \"floor_bin_region\": {\"kind\": \"site\", \"name\": \"floor_bin_region\", \"pos_m\": [0.0, 0.26, 0.02], \"quat\": [0.0, 0.0, 0.0, 1.0]}, \"floor_other_object_region_0\": {\"kind\": \"site\", \"name\": \"floor_other_object_region_0\", \"pos_m\": [-0.12, -0.24, 0.02], \"quat\": [0.0, 0.0, 0.0, 1.0]}, \"floor_other_object_region_1\": {\"kind\": \"site\", \"name\": \"floor_other_object_region_1\", \"pos_m\": [-0.15, 0.06, 0.02], \"quat\": [0.0, 0.0, 0.0, 1.0]}, \"floor_other_object_region_2\": {\"kind\": \"site\", \"name\": \"floor_other_object_region_2\", \"pos_m\": [0.1, -0.2, 0.02], \"quat\": [0.0, 0.0, 0.0, 1.0]}, \"floor_other_object_region_3\": {\"kind\": \"site\", \"name\": \"floor_other_object_region_3\", \"pos_m\": [0.15, 0.03, 0.02], \"quat\": [0.0, 0.0, 0.0, 1.0]}, \"floor_other_object_region_4\": {\"kind\": \"site\", \"name\": \"floor_other_object_region_4\", \"pos_m\": [-0.2, -0.08, 0.02], \"quat\": [0.0, 0.0, 0.0, 1.0]}, \"floor_target_object_region\": {\"kind\": \"site\", \"name\": \"floor_target_object_region\", \"pos_m\": [0.05, -0.1, 0.02], \"quat\": [0.0, 0.0, 0.0, 1.0]}, \"ketchup_1\": {\"kind\": \"object\", \"name\": \"ketchup_1\", \"pos_m\": [0.15, 0.03, 0.034999999999999996], \"quat\": [0.5, 0.5, 0.5, 0.5]}, \"orange_juice_1\": {\"kind\": \"object\", \"name\": \"orange_juice_1\", \"pos_m\": [0.006897964391726097, 0.26107238084265133, 0.16685], \"quat\": [0.5, 0.5, 0.5, 0.5]}, \"salad_dressing_1\": {\"kind\": \"object\", \"name\": \"salad_dressing_1\", \"pos_m\": [-0.2, -0.08000000000000002, 0.034999999999999996], \"quat\": [0.5, 0.5, 0.5, 0.5]}}}, \"schema_complete\": true, \"schema_version\": \"track3_native_reverse_validator_recovery_schema_run_v1\", \"status\": \"schema_passed\", \"target_resolution\": {\"hold_action\": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], \"joint_names\": [\"orange_juice_1_joint0\"], \"joint_values\": [0.006897964391726097], \"native_state_sha256\": \"e3bf08f552dba64e3f5eddd17b18bffc04b3f8b7fd27c59ba0126151ec62fbc8\", \"predicate\": \"In\", \"references\": [{\"name\": \"orange_juice_1\", \"pose\": {\"kind\": \"object\", \"name\": \"orange_juice_1\", \"pos_m\": [0.006897964391726097, 0.26107238084265133, 0.16685], \"quat\": [0.5, 0.5, 0.5, 0.5]}, \"state_type\": \"object\"}, {\"name\": \"basket_1_contain_region\", \"pose\": {\"kind\": \"site\", \"name\": \"basket_1_contain_region\", \"pos_m\": [0.006897964391726097, 0.26107238084265133, 0.10685], \"quat\": [0.0, 0.0, -0.7071067811865475, 0.7071067811865475]}, \"state_type\": \"site\"}], \"schema_complete\": true, \"target_atom\": \"(In orange_juice_1 basket_1_contain_region)\", \"task_index\": 20}, \"task_index\": 20, \"truth_detail_separated\": true}\n",
+      "target_resolution": {
+        "hold_action": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "joint_names": [
+          "orange_juice_1_joint0"
+        ],
+        "joint_values": [
+          0.006897964391726097
+        ],
+        "native_state_sha256": "e3bf08f552dba64e3f5eddd17b18bffc04b3f8b7fd27c59ba0126151ec62fbc8",
+        "predicate": "In",
+        "references": [
+          {
+            "name": "orange_juice_1",
+            "pose": {
+              "kind": "object",
+              "name": "orange_juice_1",
+              "pos_m": [
+                0.006897964391726097,
+                0.26107238084265133,
+                0.16685
+              ],
+              "quat": [
+                0.5,
+                0.5,
+                0.5,
+                0.5
+              ]
+            },
+            "state_type": "object"
+          },
+          {
+            "name": "basket_1_contain_region",
+            "pose": {
+              "kind": "site",
+              "name": "basket_1_contain_region",
+              "pos_m": [
+                0.006897964391726097,
+                0.26107238084265133,
+                0.10685
+              ],
+              "quat": [
+                0.0,
+                0.0,
+                -0.7071067811865475,
+                0.7071067811865475
+              ]
+            },
+            "state_type": "site"
+          }
+        ],
+        "schema_complete": true,
+        "target_atom": "(In orange_juice_1 basket_1_contain_region)",
+        "task_index": 20
+      },
+      "task_index": 20,
+      "truth_detail_separated": true,
+      "worker_returncode": 0
+    },
+    {
+      "fresh_process": true,
+      "gripper_hold_contract": {
+        "action": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "fixed_gripper_minus_one_used": false
+      },
+      "hdf5_state_used_for_predicate_oracle": false,
+      "layout": {
+        "body_names": [
+          "world",
+          "table",
+          "robot0_base",
+          "robot0_link0",
+          "robot0_link1",
+          "robot0_link2",
+          "robot0_link3",
+          "robot0_link4",
+          "robot0_link5",
+          "robot0_link6",
+          "robot0_link7",
+          "robot0_right_hand",
+          "gripper0_right_gripper",
+          "gripper0_eef",
+          "gripper0_leftfinger",
+          "gripper0_finger_joint1_tip",
+          "gripper0_rightfinger",
+          "gripper0_finger_joint2_tip",
+          "mount0_base",
+          "mount0_controller_box",
+          "mount0_pedestal_feet",
+          "mount0_torso",
+          "mount0_pedestal",
+          "akita_black_bowl_1_main",
+          "cream_cheese_1_main",
+          "wine_bottle_1_main",
+          "plate_1_main",
+          "wooden_cabinet_1_main",
+          "wooden_cabinet_1_base",
+          "wooden_cabinet_1_cabinet_top",
+          "wooden_cabinet_1_cabinet_middle",
+          "wooden_cabinet_1_cabinet_bottom",
+          "flat_stove_1_main",
+          "flat_stove_1_base",
+          "flat_stove_1_burner",
+          "flat_stove_1_burner_plate",
+          "flat_stove_1_button",
+          "wine_rack_1_main"
+        ],
+        "compatibility": {
+          "compatible": false,
+          "current_env_xml_sha256": "26cdc2226c3d357fcaecc61a1ede55365e69d3bf04ed5f4cbfb94aa187805f24",
+          "hdf5_state_used_for_predicate_oracle": false,
+          "predicate_oracle": "native_reverse_bddl_only",
+          "recorded_model_file_sha256": "ccf958ea89aa0e84e32cb90b99e31faf66f3cd5e33082f7d2a1d4444c4660257",
+          "status": "incompatible_for_predicate_oracle"
+        },
+        "current_env_xml_sha256": "26cdc2226c3d357fcaecc61a1ede55365e69d3bf04ed5f4cbfb94aa187805f24",
+        "hdf5_state_used_for_predicate_oracle": false,
+        "joint_names": [
+          "robot0_joint1",
+          "robot0_joint2",
+          "robot0_joint3",
+          "robot0_joint4",
+          "robot0_joint5",
+          "robot0_joint6",
+          "robot0_joint7",
+          "gripper0_finger_joint1",
+          "gripper0_finger_joint2",
+          "akita_black_bowl_1_joint0",
+          "cream_cheese_1_joint0",
+          "wine_bottle_1_joint0",
+          "plate_1_joint0",
+          "wooden_cabinet_1_top_level",
+          "wooden_cabinet_1_middle_level",
+          "wooden_cabinet_1_bottom_level",
+          "flat_stove_1_button"
+        ],
+        "key_body_site_pose_diff": {
+          "comparison_status": "reported_in_separate_frames_no_numeric_cross_frame_difference",
+          "current_model_xml_sha256": "26cdc2226c3d357fcaecc61a1ede55365e69d3bf04ed5f4cbfb94aa187805f24",
+          "current_native_reset_pose": {
+            "akita_black_bowl_1": {
+              "kind": "object",
+              "name": "akita_black_bowl_1",
+              "pos_m": [
+                0.0,
+                -0.1,
+                0.0
+              ],
+              "quat": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "cream_cheese_1": {
+              "kind": "object",
+              "name": "cream_cheese_1",
+              "pos_m": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "quat": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "flat_stove_1": {
+              "kind": "object",
+              "name": "flat_stove_1",
+              "pos_m": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "quat": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "main_table_akita_black_bowl_region": {
+              "kind": "site",
+              "name": "main_table_akita_black_bowl_region",
+              "pos_m": [
+                -0.09,
+                0.0,
+                0.895
+              ],
+              "quat": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            },
+            "main_table_cabinet_region": {
+              "kind": "site",
+              "name": "main_table_cabinet_region",
+              "pos_m": [
+                0.03,
+                -0.24,
+                0.895
+              ],
+              "quat": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            },
+            "main_table_cream_cheese_region": {
+              "kind": "site",
+              "name": "main_table_cream_cheese_region",
+              "pos_m": [
+                -0.05,
+                0.13,
+                0.895
+              ],
+              "quat": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            },
+            "main_table_plate_region": {
+              "kind": "site",
+              "name": "main_table_plate_region",
+              "pos_m": [
+                0.05,
+                -0.02,
+                0.895
+              ],
+              "quat": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            },
+            "main_table_stove_region": {
+              "kind": "site",
+              "name": "main_table_stove_region",
+              "pos_m": [
+                -0.41000000000000003,
+                0.21000000000000002,
+                0.895
+              ],
+              "quat": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            },
+            "main_table_wine_bottle_region": {
+              "kind": "site",
+              "name": "main_table_wine_bottle_region",
+              "pos_m": [
+                -0.2,
+                -0.05,
+                0.895
+              ],
+              "quat": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            },
+            "main_table_wine_rack_region": {
+              "kind": "site",
+              "name": "main_table_wine_rack_region",
+              "pos_m": [
+                -0.26,
+                -0.26,
+                0.895
+              ],
+              "quat": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            },
+            "plate_1": {
+              "kind": "object",
+              "name": "plate_1",
+              "pos_m": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "quat": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "wine_bottle_1": {
+              "kind": "object",
+              "name": "wine_bottle_1",
+              "pos_m": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "quat": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "wine_rack_1": {
+              "kind": "object",
+              "name": "wine_rack_1",
+              "pos_m": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "quat": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "wooden_cabinet_1": {
+              "kind": "object",
+              "name": "wooden_cabinet_1",
+              "pos_m": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "quat": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "wooden_cabinet_1_middle_region": {
+              "kind": "site",
+              "name": "wooden_cabinet_1_middle_region",
+              "pos_m": [
+                0.00328,
+                -0.13225197921287418,
+                0.1169
+              ],
+              "quat": [
+                -0.0,
+                0.7071067811865475,
+                -0.0,
+                0.7071067811865475
+              ]
+            }
+          },
+          "recorded_model_file_sha256": "ccf958ea89aa0e84e32cb90b99e31faf66f3cd5e33082f7d2a1d4444c4660257",
+          "recorded_xml_pose": {
+            "site:main_table_akita_black_bowl_region": {
+              "declared_local_pos": "-0.09 0 0.02",
+              "declared_local_quat": null,
+              "frame": "recorded_xml_local"
+            },
+            "site:main_table_cabinet_region": {
+              "declared_local_pos": "0.03 -0.24 0.02",
+              "declared_local_quat": null,
+              "frame": "recorded_xml_local"
+            },
+            "site:main_table_cream_cheese_region": {
+              "declared_local_pos": "-0.05 0.13 0.02",
+              "declared_local_quat": null,
+              "frame": "recorded_xml_local"
+            },
+            "site:main_table_plate_region": {
+              "declared_local_pos": "0.05 -0.02 0.02",
+              "declared_local_quat": null,
+              "frame": "recorded_xml_local"
+            },
+            "site:main_table_stove_region": {
+              "declared_local_pos": "-0.41 0.21 0.02",
+              "declared_local_quat": null,
+              "frame": "recorded_xml_local"
+            },
+            "site:main_table_wine_bottle_region": {
+              "declared_local_pos": "-0.2 -0.05 0.02",
+              "declared_local_quat": null,
+              "frame": "recorded_xml_local"
+            },
+            "site:main_table_wine_rack_region": {
+              "declared_local_pos": "-0.26 -0.26 0.02",
+              "declared_local_quat": null,
+              "frame": "recorded_xml_local"
+            },
+            "site:wooden_cabinet_1_middle_region": {
+              "declared_local_pos": "0.00328 0.01128 0.1169",
+              "declared_local_quat": "0.707107 0 0.707107 0",
+              "frame": "recorded_xml_local"
+            }
+          },
+          "status": "reported_recorded_local_and_current_native_world_pose"
+        },
+        "name_order_comparison": {
+          "body": {
+            "current_count": 38,
+            "current_names": [
+              "world",
+              "table",
+              "robot0_base",
+              "robot0_link0",
+              "robot0_link1",
+              "robot0_link2",
+              "robot0_link3",
+              "robot0_link4",
+              "robot0_link5",
+              "robot0_link6",
+              "robot0_link7",
+              "robot0_right_hand",
+              "gripper0_right_gripper",
+              "gripper0_eef",
+              "gripper0_leftfinger",
+              "gripper0_finger_joint1_tip",
+              "gripper0_rightfinger",
+              "gripper0_finger_joint2_tip",
+              "mount0_base",
+              "mount0_controller_box",
+              "mount0_pedestal_feet",
+              "mount0_torso",
+              "mount0_pedestal",
+              "akita_black_bowl_1_main",
+              "cream_cheese_1_main",
+              "wine_bottle_1_main",
+              "plate_1_main",
+              "wooden_cabinet_1_main",
+              "wooden_cabinet_1_base",
+              "wooden_cabinet_1_cabinet_top",
+              "wooden_cabinet_1_cabinet_middle",
+              "wooden_cabinet_1_cabinet_bottom",
+              "flat_stove_1_main",
+              "flat_stove_1_base",
+              "flat_stove_1_burner",
+              "flat_stove_1_burner_plate",
+              "flat_stove_1_button",
+              "wine_rack_1_main"
+            ],
+            "order_equal": false,
+            "recorded_count": 37,
+            "recorded_names": [
+              "table",
+              "robot0_base",
+              "robot0_link0",
+              "robot0_link1",
+              "robot0_link2",
+              "robot0_link3",
+              "robot0_link4",
+              "robot0_link5",
+              "robot0_link6",
+              "robot0_link7",
+              "robot0_right_hand",
+              "gripper0_right_gripper",
+              "gripper0_eef",
+              "gripper0_leftfinger",
+              "gripper0_finger_joint1_tip",
+              "gripper0_rightfinger",
+              "gripper0_finger_joint2_tip",
+              "mount0_base",
+              "mount0_controller_box",
+              "mount0_pedestal_feet",
+              "mount0_torso",
+              "mount0_pedestal",
+              "akita_black_bowl_1_main",
+              "cream_cheese_1_main",
+              "wine_bottle_1_main",
+              "plate_1_main",
+              "wooden_cabinet_1_main",
+              "wooden_cabinet_1_base",
+              "wooden_cabinet_1_cabinet_top",
+              "wooden_cabinet_1_cabinet_middle",
+              "wooden_cabinet_1_cabinet_bottom",
+              "flat_stove_1_main",
+              "flat_stove_1_base",
+              "flat_stove_1_burner",
+              "flat_stove_1_burner_plate",
+              "flat_stove_1_button",
+              "wine_rack_1_main"
+            ]
+          },
+          "joint": {
+            "current_count": 17,
+            "current_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7",
+              "gripper0_finger_joint1",
+              "gripper0_finger_joint2",
+              "akita_black_bowl_1_joint0",
+              "cream_cheese_1_joint0",
+              "wine_bottle_1_joint0",
+              "plate_1_joint0",
+              "wooden_cabinet_1_top_level",
+              "wooden_cabinet_1_middle_level",
+              "wooden_cabinet_1_bottom_level",
+              "flat_stove_1_button"
+            ],
+            "order_equal": true,
+            "recorded_count": 17,
+            "recorded_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7",
+              "gripper0_finger_joint1",
+              "gripper0_finger_joint2",
+              "akita_black_bowl_1_joint0",
+              "cream_cheese_1_joint0",
+              "wine_bottle_1_joint0",
+              "plate_1_joint0",
+              "wooden_cabinet_1_top_level",
+              "wooden_cabinet_1_middle_level",
+              "wooden_cabinet_1_bottom_level",
+              "flat_stove_1_button"
+            ]
+          },
+          "site": {
+            "current_count": 29,
+            "current_names": [
+              "table_top",
+              "main_table_plate_region",
+              "main_table_akita_black_bowl_region",
+              "main_table_wine_bottle_region",
+              "main_table_cream_cheese_region",
+              "main_table_stove_front_region",
+              "main_table_cabinet_region",
+              "main_table_stove_region",
+              "main_table_wine_rack_region",
+              "gripper0_ft_frame",
+              "gripper0_grip_site",
+              "gripper0_ee_x",
+              "gripper0_ee_y",
+              "gripper0_ee_z",
+              "gripper0_grip_site_cylinder",
+              "akita_black_bowl_1_default_site",
+              "cream_cheese_1_default_site",
+              "wine_bottle_1_default_site",
+              "plate_1_default_site",
+              "wooden_cabinet_1_default_site",
+              "wooden_cabinet_1_top_side",
+              "wooden_cabinet_1_top_region",
+              "wooden_cabinet_1_middle_region",
+              "wooden_cabinet_1_bottom_region",
+              "flat_stove_1_default_site",
+              "flat_stove_1_cook_region",
+              "flat_stove_1_burner",
+              "wine_rack_1_top_region",
+              "wine_rack_1_default_site"
+            ],
+            "order_equal": true,
+            "recorded_count": 29,
+            "recorded_names": [
+              "table_top",
+              "main_table_plate_region",
+              "main_table_akita_black_bowl_region",
+              "main_table_wine_bottle_region",
+              "main_table_cream_cheese_region",
+              "main_table_stove_front_region",
+              "main_table_cabinet_region",
+              "main_table_stove_region",
+              "main_table_wine_rack_region",
+              "gripper0_ft_frame",
+              "gripper0_grip_site",
+              "gripper0_ee_x",
+              "gripper0_ee_y",
+              "gripper0_ee_z",
+              "gripper0_grip_site_cylinder",
+              "akita_black_bowl_1_default_site",
+              "cream_cheese_1_default_site",
+              "wine_bottle_1_default_site",
+              "plate_1_default_site",
+              "wooden_cabinet_1_default_site",
+              "wooden_cabinet_1_top_side",
+              "wooden_cabinet_1_top_region",
+              "wooden_cabinet_1_middle_region",
+              "wooden_cabinet_1_bottom_region",
+              "flat_stove_1_default_site",
+              "flat_stove_1_cook_region",
+              "flat_stove_1_burner",
+              "wine_rack_1_top_region",
+              "wine_rack_1_default_site"
+            ]
+          }
+        },
+        "nq": 41,
+        "nv": 37,
+        "recorded_model_file_sha256": "ccf958ea89aa0e84e32cb90b99e31faf66f3cd5e33082f7d2a1d4444c4660257",
+        "site_names": [
+          "table_top",
+          "main_table_plate_region",
+          "main_table_akita_black_bowl_region",
+          "main_table_wine_bottle_region",
+          "main_table_cream_cheese_region",
+          "main_table_stove_front_region",
+          "main_table_cabinet_region",
+          "main_table_stove_region",
+          "main_table_wine_rack_region",
+          "gripper0_ft_frame",
+          "gripper0_grip_site",
+          "gripper0_ee_x",
+          "gripper0_ee_y",
+          "gripper0_ee_z",
+          "gripper0_grip_site_cylinder",
+          "akita_black_bowl_1_default_site",
+          "cream_cheese_1_default_site",
+          "wine_bottle_1_default_site",
+          "plate_1_default_site",
+          "wooden_cabinet_1_default_site",
+          "wooden_cabinet_1_top_side",
+          "wooden_cabinet_1_top_region",
+          "wooden_cabinet_1_middle_region",
+          "wooden_cabinet_1_bottom_region",
+          "flat_stove_1_default_site",
+          "flat_stove_1_cook_region",
+          "flat_stove_1_burner",
+          "wine_rack_1_top_region",
+          "wine_rack_1_default_site"
+        ]
+      },
+      "native_reset_state_sha256": "f925b69d268b58a1d64eb17730b9a1be3cc38cbdf94439eb39144d26795f9e68",
+      "native_truth": {
+        "goal": {
+          "all_false": true,
+          "all_true": false,
+          "count": 1,
+          "detail_complete": true,
+          "label": "schema_native_goal",
+          "predicates": [
+            {
+              "args": [
+                "wooden_cabinet_1_middle_region"
+              ],
+              "atom": "(Close wooden_cabinet_1_middle_region)",
+              "detail": {
+                "args": [
+                  "wooden_cabinet_1_middle_region"
+                ],
+                "detail_status": "passed",
+                "geometry": [
+                  {
+                    "kind": "site",
+                    "name": "wooden_cabinet_1_middle_region",
+                    "pos_m": [
+                      0.03518830523879141,
+                      -0.10901718369741308,
+                      1.0219
+                    ],
+                    "quat": [
+                      -0.7071067811865475,
+                      -0.0,
+                      0.7071067811865475,
+                      4.329780375814312e-17
+                    ]
+                  }
+                ],
+                "joint_names": [
+                  "wooden_cabinet_1_middle_level"
+                ],
+                "joint_values": [
+                  -0.14390864811160647
+                ],
+                "predicate": "Close",
+                "value": false
+              },
+              "detail_status": "passed",
+              "predicate": "Close",
+              "truth_status": "passed",
+              "value": false
+            }
+          ],
+          "true_count": 0,
+          "truth_complete": true
+        },
+        "initial": {
+          "all_false": false,
+          "all_true": false,
+          "count": 8,
+          "detail_complete": true,
+          "label": "schema_native_initial",
+          "predicates": [
+            {
+              "args": [
+                "wine_bottle_1",
+                "main_table_wine_bottle_region"
+              ],
+              "atom": "(On wine_bottle_1 main_table_wine_bottle_region)",
+              "detail": {
+                "args": [
+                  "wine_bottle_1",
+                  "main_table_wine_bottle_region"
+                ],
+                "contact_information": {
+                  "ontop_xy_threshold_m": 0.03,
+                  "predicate_contact_is_model_defined": true,
+                  "site_contact_is_logical_true": true
+                },
+                "detail_status": "passed",
+                "geometry": [
+                  {
+                    "kind": "object",
+                    "name": "wine_bottle_1",
+                    "pos_m": [
+                      -0.1983655252493648,
+                      -0.054959605611979205,
+                      0.97
+                    ],
+                    "quat": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "kind": "site",
+                    "name": "main_table_wine_bottle_region",
+                    "pos_m": [
+                      -0.2,
+                      -0.05,
+                      0.895
+                    ],
+                    "quat": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  }
+                ],
+                "predicate": "On",
+                "value": true
+              },
+              "detail_status": "passed",
+              "predicate": "On",
+              "truth_status": "passed",
+              "value": true
+            },
+            {
+              "args": [
+                "akita_black_bowl_1",
+                "main_table_akita_black_bowl_region"
+              ],
+              "atom": "(On akita_black_bowl_1 main_table_akita_black_bowl_region)",
+              "detail": {
+                "args": [
+                  "akita_black_bowl_1",
+                  "main_table_akita_black_bowl_region"
+                ],
+                "contact_information": {
+                  "ontop_xy_threshold_m": 0.03,
+                  "predicate_contact_is_model_defined": true,
+                  "site_contact_is_logical_true": true
+                },
+                "detail_status": "passed",
+                "geometry": [
+                  {
+                    "kind": "object",
+                    "name": "akita_black_bowl_1",
+                    "pos_m": [
+                      -0.09546417167135349,
+                      -0.007443449992516381,
+                      0.97
+                    ],
+                    "quat": [
+                      0.7071067811865475,
+                      0.0,
+                      0.0,
+                      0.7071067811865476
+                    ]
+                  },
+                  {
+                    "kind": "site",
+                    "name": "main_table_akita_black_bowl_region",
+                    "pos_m": [
+                      -0.09,
+                      0.0,
+                      0.895
+                    ],
+                    "quat": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  }
+                ],
+                "predicate": "On",
+                "value": true
+              },
+              "detail_status": "passed",
+              "predicate": "On",
+              "truth_status": "passed",
+              "value": true
+            },
+            {
+              "args": [
+                "plate_1",
+                "main_table_plate_region"
+              ],
+              "atom": "(On plate_1 main_table_plate_region)",
+              "detail": {
+                "args": [
+                  "plate_1",
+                  "main_table_plate_region"
+                ],
+                "contact_information": {
+                  "ontop_xy_threshold_m": 0.03,
+                  "predicate_contact_is_model_defined": true,
+                  "site_contact_is_logical_true": true
+                },
+                "detail_status": "passed",
+                "geometry": [
+                  {
+                    "kind": "object",
+                    "name": "plate_1",
+                    "pos_m": [
+                      0.060276164157449894,
+                      -0.013775422140341982,
+                      0.97
+                    ],
+                    "quat": [
+                      0.7071067811865475,
+                      0.0,
+                      0.0,
+                      0.7071067811865476
+                    ]
+                  },
+                  {
+                    "kind": "site",
+                    "name": "main_table_plate_region",
+                    "pos_m": [
+                      0.05,
+                      -0.02,
+                      0.895
+                    ],
+                    "quat": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  }
+                ],
+                "predicate": "On",
+                "value": false
+              },
+              "detail_status": "passed",
+              "predicate": "On",
+              "truth_status": "passed",
+              "value": false
+            },
+            {
+              "args": [
+                "cream_cheese_1",
+                "main_table_cream_cheese_region"
+              ],
+              "atom": "(On cream_cheese_1 main_table_cream_cheese_region)",
+              "detail": {
+                "args": [
+                  "cream_cheese_1",
+                  "main_table_cream_cheese_region"
+                ],
+                "contact_information": {
+                  "ontop_xy_threshold_m": 0.03,
+                  "predicate_contact_is_model_defined": true,
+                  "site_contact_is_logical_true": true
+                },
+                "detail_status": "passed",
+                "geometry": [
+                  {
+                    "kind": "object",
+                    "name": "cream_cheese_1",
+                    "pos_m": [
+                      -0.050918201858120446,
+                      0.12636449089675578,
+                      0.935
+                    ],
+                    "quat": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "kind": "site",
+                    "name": "main_table_cream_cheese_region",
+                    "pos_m": [
+                      -0.05,
+                      0.13,
+                      0.895
+                    ],
+                    "quat": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  }
+                ],
+                "predicate": "On",
+                "value": true
+              },
+              "detail_status": "passed",
+              "predicate": "On",
+              "truth_status": "passed",
+              "value": true
+            },
+            {
+              "args": [
+                "wooden_cabinet_1",
+                "main_table_cabinet_region"
+              ],
+              "atom": "(On wooden_cabinet_1 main_table_cabinet_region)",
+              "detail": {
+                "args": [
+                  "wooden_cabinet_1",
+                  "main_table_cabinet_region"
+                ],
+                "contact_information": {
+                  "ontop_xy_threshold_m": 0.03,
+                  "predicate_contact_is_model_defined": true,
+                  "site_contact_is_logical_true": true
+                },
+                "detail_status": "passed",
+                "geometry": [
+                  {
+                    "kind": "object",
+                    "name": "wooden_cabinet_1",
+                    "pos_m": [
+                      0.03846830523879139,
+                      -0.24164583180901955,
+                      0.905
+                    ],
+                    "quat": [
+                      6.123233995736766e-17,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "kind": "site",
+                    "name": "main_table_cabinet_region",
+                    "pos_m": [
+                      0.03,
+                      -0.24,
+                      0.895
+                    ],
+                    "quat": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  }
+                ],
+                "predicate": "On",
+                "value": true
+              },
+              "detail_status": "passed",
+              "predicate": "On",
+              "truth_status": "passed",
+              "value": true
+            },
+            {
+              "args": [
+                "flat_stove_1",
+                "main_table_stove_region"
+              ],
+              "atom": "(On flat_stove_1 main_table_stove_region)",
+              "detail": {
+                "args": [
+                  "flat_stove_1",
+                  "main_table_stove_region"
+                ],
+                "contact_information": {
+                  "ontop_xy_threshold_m": 0.03,
+                  "predicate_contact_is_model_defined": true,
+                  "site_contact_is_logical_true": true
+                },
+                "detail_status": "passed",
+                "geometry": [
+                  {
+                    "kind": "object",
+                    "name": "flat_stove_1",
+                    "pos_m": [
+                      -0.41635420778603016,
+                      0.21476779542934082,
+                      0.905
+                    ],
+                    "quat": [
+                      1.0,
+                      0.0,
+                      0.0,
+                      0.0
+                    ]
+                  },
+                  {
+                    "kind": "site",
+                    "name": "main_table_stove_region",
+                    "pos_m": [
+                      -0.41000000000000003,
+                      0.21000000000000002,
+                      0.895
+                    ],
+                    "quat": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  }
+                ],
+                "predicate": "On",
+                "value": true
+              },
+              "detail_status": "passed",
+              "predicate": "On",
+              "truth_status": "passed",
+              "value": true
+            },
+            {
+              "args": [
+                "wine_rack_1",
+                "main_table_wine_rack_region"
+              ],
+              "atom": "(On wine_rack_1 main_table_wine_rack_region)",
+              "detail": {
+                "args": [
+                  "wine_rack_1",
+                  "main_table_wine_rack_region"
+                ],
+                "contact_information": {
+                  "ontop_xy_threshold_m": 0.03,
+                  "predicate_contact_is_model_defined": true,
+                  "site_contact_is_logical_true": true
+                },
+                "detail_status": "passed",
+                "geometry": [
+                  {
+                    "kind": "object",
+                    "name": "wine_rack_1",
+                    "pos_m": [
+                      -0.25362030575759414,
+                      -0.26525203963020694,
+                      0.9199999999999999
+                    ],
+                    "quat": [
+                      6.123233995736766e-17,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  },
+                  {
+                    "kind": "site",
+                    "name": "main_table_wine_rack_region",
+                    "pos_m": [
+                      -0.26,
+                      -0.26,
+                      0.895
+                    ],
+                    "quat": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  }
+                ],
+                "predicate": "On",
+                "value": true
+              },
+              "detail_status": "passed",
+              "predicate": "On",
+              "truth_status": "passed",
+              "value": true
+            },
+            {
+              "args": [
+                "wooden_cabinet_1_middle_region"
+              ],
+              "atom": "(Open wooden_cabinet_1_middle_region)",
+              "detail": {
+                "args": [
+                  "wooden_cabinet_1_middle_region"
+                ],
+                "detail_status": "passed",
+                "geometry": [
+                  {
+                    "kind": "site",
+                    "name": "wooden_cabinet_1_middle_region",
+                    "pos_m": [
+                      0.03518830523879141,
+                      -0.10901718369741308,
+                      1.0219
+                    ],
+                    "quat": [
+                      -0.7071067811865475,
+                      -0.0,
+                      0.7071067811865475,
+                      4.329780375814312e-17
+                    ]
+                  }
+                ],
+                "joint_names": [
+                  "wooden_cabinet_1_middle_level"
+                ],
+                "joint_values": [
+                  -0.14390864811160647
+                ],
+                "predicate": "Open",
+                "value": true
+              },
+              "detail_status": "passed",
+              "predicate": "Open",
+              "truth_status": "passed",
+              "value": true
+            }
+          ],
+          "true_count": 7,
+          "truth_complete": true
+        }
+      },
+      "operator_family": "articulation_close",
+      "renderer_contract": {
+        "has_offscreen_renderer": false,
+        "has_renderer": false,
+        "use_camera_obs": false
+      },
+      "robot_snapshot": {
+        "action_dim": 7,
+        "arm_joint_qpos_rad": [
+          0.0,
+          -0.161037389,
+          0.0,
+          -2.44459747,
+          0.0,
+          2.2267522,
+          0.7853981633974483
+        ],
+        "arm_joint_qvel_rad_s": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "control_freq_hz": 20,
+        "controller_class": "OperationalSpaceController",
+        "controller_control_dim": 6,
+        "eef_quaternion": [
+          -0.7066475220051942,
+          -0.7069955535586975,
+          0.02007697152252108,
+          0.020086864031836973
+        ],
+        "eef_translation_m": [
+          -0.2084646605658236,
+          0.0,
+          1.1732794757296403
+        ],
+        "gripper_controller_target": [
+          0.0
+        ],
+        "gripper_hold_action": 0.0,
+        "gripper_qpos_m": [
+          0.020833,
+          -0.020833
+        ],
+        "gripper_qvel_m_s": [
+          0.0,
+          0.0
+        ]
+      },
+      "scene_snapshot": {
+        "fixture_joint_qpos": {
+          "wooden_cabinet_1_middle_level": -0.14390864811160647
+        },
+        "object_and_site_poses": {
+          "akita_black_bowl_1": {
+            "kind": "object",
+            "name": "akita_black_bowl_1",
+            "pos_m": [
+              -0.09546417167135349,
+              -0.007443449992516381,
+              0.97
+            ],
+            "quat": [
+              0.7071067811865475,
+              0.0,
+              0.0,
+              0.7071067811865476
+            ]
+          },
+          "cream_cheese_1": {
+            "kind": "object",
+            "name": "cream_cheese_1",
+            "pos_m": [
+              -0.050918201858120446,
+              0.12636449089675578,
+              0.935
+            ],
+            "quat": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "flat_stove_1": {
+            "kind": "object",
+            "name": "flat_stove_1",
+            "pos_m": [
+              -0.41635420778603016,
+              0.21476779542934082,
+              0.905
+            ],
+            "quat": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "main_table_akita_black_bowl_region": {
+            "kind": "site",
+            "name": "main_table_akita_black_bowl_region",
+            "pos_m": [
+              -0.09,
+              0.0,
+              0.895
+            ],
+            "quat": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "main_table_cabinet_region": {
+            "kind": "site",
+            "name": "main_table_cabinet_region",
+            "pos_m": [
+              0.03,
+              -0.24,
+              0.895
+            ],
+            "quat": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "main_table_cream_cheese_region": {
+            "kind": "site",
+            "name": "main_table_cream_cheese_region",
+            "pos_m": [
+              -0.05,
+              0.13,
+              0.895
+            ],
+            "quat": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "main_table_plate_region": {
+            "kind": "site",
+            "name": "main_table_plate_region",
+            "pos_m": [
+              0.05,
+              -0.02,
+              0.895
+            ],
+            "quat": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "main_table_stove_region": {
+            "kind": "site",
+            "name": "main_table_stove_region",
+            "pos_m": [
+              -0.41000000000000003,
+              0.21000000000000002,
+              0.895
+            ],
+            "quat": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "main_table_wine_bottle_region": {
+            "kind": "site",
+            "name": "main_table_wine_bottle_region",
+            "pos_m": [
+              -0.2,
+              -0.05,
+              0.895
+            ],
+            "quat": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "main_table_wine_rack_region": {
+            "kind": "site",
+            "name": "main_table_wine_rack_region",
+            "pos_m": [
+              -0.26,
+              -0.26,
+              0.895
+            ],
+            "quat": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "plate_1": {
+            "kind": "object",
+            "name": "plate_1",
+            "pos_m": [
+              0.060276164157449894,
+              -0.013775422140341982,
+              0.97
+            ],
+            "quat": [
+              0.7071067811865475,
+              0.0,
+              0.0,
+              0.7071067811865476
+            ]
+          },
+          "wine_bottle_1": {
+            "kind": "object",
+            "name": "wine_bottle_1",
+            "pos_m": [
+              -0.1983655252493648,
+              -0.054959605611979205,
+              0.97
+            ],
+            "quat": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "wine_rack_1": {
+            "kind": "object",
+            "name": "wine_rack_1",
+            "pos_m": [
+              -0.25362030575759414,
+              -0.26525203963020694,
+              0.9199999999999999
+            ],
+            "quat": [
+              6.123233995736766e-17,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "wooden_cabinet_1": {
+            "kind": "object",
+            "name": "wooden_cabinet_1",
+            "pos_m": [
+              0.03846830523879139,
+              -0.24164583180901955,
+              0.905
+            ],
+            "quat": [
+              6.123233995736766e-17,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "wooden_cabinet_1_middle_region": {
+            "kind": "site",
+            "name": "wooden_cabinet_1_middle_region",
+            "pos_m": [
+              0.03518830523879141,
+              -0.10901718369741308,
+              1.0219
+            ],
+            "quat": [
+              -0.7071067811865475,
+              -0.0,
+              0.7071067811865475,
+              4.329780375814312e-17
+            ]
+          }
+        }
+      },
+      "schema_complete": true,
+      "schema_version": "track3_native_reverse_validator_recovery_schema_run_v1",
+      "status": "schema_passed",
+      "stderr_tail": "[robosuite WARNING] No private macro file found! (__init__.py:7)\n[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)\n[robosuite WARNING] To setup, run: python /home/huang/code/PARC2026_final/.venv_axis_pi05/lib/python3.12/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)\n",
+      "stdout_tail": " 0.0, -2.44459747, 0.0, 2.2267522, 0.7853981633974483], \"arm_joint_qvel_rad_s\": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], \"control_freq_hz\": 20, \"controller_class\": \"OperationalSpaceController\", \"controller_control_dim\": 6, \"eef_quaternion\": [-0.7066475220051942, -0.7069955535586975, 0.02007697152252108, 0.020086864031836973], \"eef_translation_m\": [-0.2084646605658236, 0.0, 1.1732794757296403], \"gripper_controller_target\": [0.0], \"gripper_hold_action\": 0.0, \"gripper_qpos_m\": [0.020833, -0.020833], \"gripper_qvel_m_s\": [0.0, 0.0]}, \"scene_snapshot\": {\"fixture_joint_qpos\": {\"wooden_cabinet_1_middle_level\": -0.14390864811160647}, \"object_and_site_poses\": {\"akita_black_bowl_1\": {\"kind\": \"object\", \"name\": \"akita_black_bowl_1\", \"pos_m\": [-0.09546417167135349, -0.007443449992516381, 0.97], \"quat\": [0.7071067811865475, 0.0, 0.0, 0.7071067811865476]}, \"cream_cheese_1\": {\"kind\": \"object\", \"name\": \"cream_cheese_1\", \"pos_m\": [-0.050918201858120446, 0.12636449089675578, 0.935], \"quat\": [0.0, 0.0, 0.0, 1.0]}, \"flat_stove_1\": {\"kind\": \"object\", \"name\": \"flat_stove_1\", \"pos_m\": [-0.41635420778603016, 0.21476779542934082, 0.905], \"quat\": [1.0, 0.0, 0.0, 0.0]}, \"main_table_akita_black_bowl_region\": {\"kind\": \"site\", \"name\": \"main_table_akita_black_bowl_region\", \"pos_m\": [-0.09, 0.0, 0.895], \"quat\": [0.0, 0.0, 0.0, 1.0]}, \"main_table_cabinet_region\": {\"kind\": \"site\", \"name\": \"main_table_cabinet_region\", \"pos_m\": [0.03, -0.24, 0.895], \"quat\": [0.0, 0.0, 0.0, 1.0]}, \"main_table_cream_cheese_region\": {\"kind\": \"site\", \"name\": \"main_table_cream_cheese_region\", \"pos_m\": [-0.05, 0.13, 0.895], \"quat\": [0.0, 0.0, 0.0, 1.0]}, \"main_table_plate_region\": {\"kind\": \"site\", \"name\": \"main_table_plate_region\", \"pos_m\": [0.05, -0.02, 0.895], \"quat\": [0.0, 0.0, 0.0, 1.0]}, \"main_table_stove_region\": {\"kind\": \"site\", \"name\": \"main_table_stove_region\", \"pos_m\": [-0.41000000000000003, 0.21000000000000002, 0.895], \"quat\": [0.0, 0.0, 0.0, 1.0]}, \"main_table_wine_bottle_region\": {\"kind\": \"site\", \"name\": \"main_table_wine_bottle_region\", \"pos_m\": [-0.2, -0.05, 0.895], \"quat\": [0.0, 0.0, 0.0, 1.0]}, \"main_table_wine_rack_region\": {\"kind\": \"site\", \"name\": \"main_table_wine_rack_region\", \"pos_m\": [-0.26, -0.26, 0.895], \"quat\": [0.0, 0.0, 0.0, 1.0]}, \"plate_1\": {\"kind\": \"object\", \"name\": \"plate_1\", \"pos_m\": [0.060276164157449894, -0.013775422140341982, 0.97], \"quat\": [0.7071067811865475, 0.0, 0.0, 0.7071067811865476]}, \"wine_bottle_1\": {\"kind\": \"object\", \"name\": \"wine_bottle_1\", \"pos_m\": [-0.1983655252493648, -0.054959605611979205, 0.97], \"quat\": [0.0, 0.0, 0.0, 1.0]}, \"wine_rack_1\": {\"kind\": \"object\", \"name\": \"wine_rack_1\", \"pos_m\": [-0.25362030575759414, -0.26525203963020694, 0.9199999999999999], \"quat\": [6.123233995736766e-17, 0.0, 0.0, 1.0]}, \"wooden_cabinet_1\": {\"kind\": \"object\", \"name\": \"wooden_cabinet_1\", \"pos_m\": [0.03846830523879139, -0.24164583180901955, 0.905], \"quat\": [6.123233995736766e-17, 0.0, 0.0, 1.0]}, \"wooden_cabinet_1_middle_region\": {\"kind\": \"site\", \"name\": \"wooden_cabinet_1_middle_region\", \"pos_m\": [0.03518830523879141, -0.10901718369741308, 1.0219], \"quat\": [-0.7071067811865475, -0.0, 0.7071067811865475, 4.329780375814312e-17]}}}, \"schema_complete\": true, \"schema_version\": \"track3_native_reverse_validator_recovery_schema_run_v1\", \"status\": \"schema_passed\", \"target_resolution\": {\"hold_action\": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], \"joint_names\": [\"wooden_cabinet_1_middle_level\"], \"joint_values\": [-0.14390864811160647], \"native_state_sha256\": \"f925b69d268b58a1d64eb17730b9a1be3cc38cbdf94439eb39144d26795f9e68\", \"predicate\": \"Open\", \"references\": [{\"name\": \"wooden_cabinet_1_middle_region\", \"pose\": {\"kind\": \"site\", \"name\": \"wooden_cabinet_1_middle_region\", \"pos_m\": [0.03518830523879141, -0.10901718369741308, 1.0219], \"quat\": [-0.7071067811865475, -0.0, 0.7071067811865475, 4.329780375814312e-17]}, \"state_type\": \"site\"}], \"schema_complete\": true, \"target_atom\": \"(Open wooden_cabinet_1_middle_region)\", \"task_index\": 19}, \"task_index\": 19, \"truth_detail_separated\": true}\n",
+      "target_resolution": {
+        "hold_action": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "joint_names": [
+          "wooden_cabinet_1_middle_level"
+        ],
+        "joint_values": [
+          -0.14390864811160647
+        ],
+        "native_state_sha256": "f925b69d268b58a1d64eb17730b9a1be3cc38cbdf94439eb39144d26795f9e68",
+        "predicate": "Open",
+        "references": [
+          {
+            "name": "wooden_cabinet_1_middle_region",
+            "pose": {
+              "kind": "site",
+              "name": "wooden_cabinet_1_middle_region",
+              "pos_m": [
+                0.03518830523879141,
+                -0.10901718369741308,
+                1.0219
+              ],
+              "quat": [
+                -0.7071067811865475,
+                -0.0,
+                0.7071067811865475,
+                4.329780375814312e-17
+              ]
+            },
+            "state_type": "site"
+          }
+        ],
+        "schema_complete": true,
+        "target_atom": "(Open wooden_cabinet_1_middle_region)",
+        "task_index": 19
+      },
+      "task_index": 19,
+      "truth_detail_separated": true,
+      "worker_returncode": 0
+    }
+  ],
+  "hard_gate": {
+    "all_families_schema_passed": true,
+    "hdf5_state_used_for_predicate_oracle": false,
+    "three_real_no_renderer_envs": true,
+    "truth_detail_separated": true,
+    "worker_returncode_contract": true
+  },
+  "mode": "CPU_no_renderer",
+  "schema_version": "track3_native_reverse_validator_recovery_r1_v1",
+  "status": "track3_native_reverse_validator_runtime_schema_passed"
+}

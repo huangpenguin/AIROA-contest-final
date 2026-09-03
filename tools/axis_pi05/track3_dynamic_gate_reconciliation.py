@@ -61,6 +61,7 @@ WARMUP_STEPS = 20
 MEASUREMENT_STEPS = 20
 CONTROL_FREQ_HZ = 20
 ACTION_DIM = 7
+WORKER_SUCCESS_STATUSES = frozenset({"passed", "failed_gate", "failed_native_predicate"})
 
 HDF5_INPUTS = {
     10: ROOT / "data/raw/public/libero_official_hdf5/libero_goal/put_the_bowl_on_the_plate_demo.hdf5",
@@ -178,6 +179,11 @@ def gripper_hold_action() -> np.ndarray:
     hold.  The worker records the target before and after the window.
     """
     return hold_action(0.0)
+
+
+def worker_exit_code(status: str) -> int:
+    """Only structured, completed gate results are normal worker exits."""
+    return 0 if status in WORKER_SUCCESS_STATUSES else 1
 
 
 def controller_reset_sequence(controller: Any, sim: Any) -> list[str]:
@@ -477,14 +483,17 @@ def _body_pose(env: Any, name: str) -> dict[str, Any] | None:
 
 def _object_or_site_pose(env: Any, name: str) -> dict[str, Any] | None:
     state = getattr(env.env, "object_states_dict", {}).get(name)
-    if state is not None and getattr(state, "object_state_type", None) == "site":
-        state = state.get_geom_state()
-        return {
-            "kind": "site",
-            "name": name,
-            "pos_m": finite_array(f"site.{name}.pos", state["pos"], (3,)).tolist(),
-            "quat": normalize_quat(state["quat"]).tolist(),
-        }
+    if state is not None:
+        get_geom_state = getattr(state, "get_geom_state", None)
+        if callable(get_geom_state):
+            geometry = get_geom_state()
+            kind = "site" if getattr(state, "object_state_type", None) == "site" else "object"
+            return {
+                "kind": kind,
+                "name": name,
+                "pos_m": finite_array(f"{kind}.{name}.pos", geometry["pos"], (3,)).tolist(),
+                "quat": normalize_quat(geometry["quat"]).tolist(),
+            }
     return _body_pose(env, name)
 
 
@@ -494,20 +503,23 @@ def _predicate_detail(env: Any, atom: str, value: bool) -> dict[str, Any]:
     states = getattr(env.env, "object_states_dict", {})
     for name in args:
         pose = _object_or_site_pose(env, name)
-        if pose is not None:
-            detail.setdefault("geometry", []).append(pose)
+        if pose is None:
+            raise ValueError(f"missing geometry state for predicate argument {name}")
+        detail.setdefault("geometry", []).append(pose)
     if predicate in {"Open", "Close"} and args:
         state = states.get(args[0])
         if state is not None:
-            joints = list(getattr(state, "joints", ())) or list(getattr(getattr(env.env, "object_sites_dict", {}).get(args[0]), "joints", ()))
+            joints = list(getattr(state, "joints", None) or ()) or list(getattr(getattr(env.env, "object_sites_dict", {}).get(args[0]), "joints", None) or ())
             if not joints and hasattr(state, "parent_name"):
                 parent = states.get(state.parent_name)
-                joints = list(getattr(parent, "joints", ())) if parent is not None else []
+                joints = list(getattr(parent, "joints", None) or ()) if parent is not None else []
             values: list[float] = []
             for joint in joints:
                 address = env.sim.model.get_joint_qpos_addr(joint)
                 address = int(address[0]) if isinstance(address, tuple) else int(address)
                 values.append(float(env.sim.data.qpos[address]))
+            if not values or not np.all(np.isfinite(values)):
+                raise ValueError(f"missing or non-finite articulation joint detail for {args[0]}")
             detail["joint_values"] = values
             if hasattr(state, "object_name"):
                 detail["joint_names"] = joints
@@ -517,6 +529,7 @@ def _predicate_detail(env: Any, atom: str, value: bool) -> dict[str, Any]:
             "site_contact_is_logical_true": any(name in getattr(env.env, "object_sites_dict", {}) for name in args),
             "ontop_xy_threshold_m": 0.03 if predicate == "On" else None,
         }
+    detail["detail_status"] = "passed"
     return detail
 
 
@@ -525,13 +538,31 @@ def evaluate_predicates(env: Any, atoms: Iterable[str], *, label: str) -> dict[s
     rows: list[dict[str, Any]] = []
     for atom in atoms:
         predicate, args = parse_atom(atom)
-        state = (predicate, *args)
+        # BDDL text uses the public CamelCase spelling (for example ``On``),
+        # while LIBERO's predicate registry is keyed case-insensitively only
+        # through ``get_predicate_fn``; ``eval_predicate_fn`` itself expects
+        # the normalized lower-case key.  Preserve the source atom in the
+        # evidence, but call the native reverse oracle with its schema key.
+        state = (predicate.lower(), *args)
         try:
             value = bool(env.env._eval_predicate(state))
-            rows.append({"atom": atom, "predicate": predicate, "args": list(args), "value": value, "detail": _predicate_detail(env, atom, value)})
-        except (KeyError, ValueError, TypeError, IndexError) as exc:
-            rows.append({"atom": atom, "predicate": predicate, "args": list(args), "value": False, "error": f"{type(exc).__name__}: {exc}", "fail_closed": True})
-    return {"label": label, "predicates": rows, "all_true": bool(rows) and all(row.get("value") is True for row in rows), "count": len(rows), "true_count": sum(row.get("value") is True for row in rows)}
+        except (AssertionError, KeyError, ValueError, TypeError, IndexError) as exc:
+            rows.append({"atom": atom, "predicate": predicate, "args": list(args), "truth_status": "failed", "value": None, "truth_error": f"{type(exc).__name__}: {exc}", "detail_status": "not_attempted", "fail_closed": True})
+            continue
+        row = {"atom": atom, "predicate": predicate, "args": list(args), "truth_status": "passed", "value": value}
+        # Truth is authoritative and is deliberately preserved even when
+        # geometry/joint telemetry cannot be materialized.
+        try:
+            row["detail"] = _predicate_detail(env, atom, value)
+            row["detail_status"] = "passed"
+        except (KeyError, ValueError, TypeError, IndexError, AttributeError) as exc:
+            row["detail_status"] = "failed"
+            row["detail_error"] = f"{type(exc).__name__}: {exc}"
+            row["detail_fail_closed"] = True
+        rows.append(row)
+    truth_complete = bool(rows) and all(row.get("truth_status") == "passed" for row in rows)
+    detail_complete = truth_complete and all(row.get("detail_status") == "passed" for row in rows)
+    return {"label": label, "predicates": rows, "truth_complete": truth_complete, "detail_complete": detail_complete, "all_true": truth_complete and all(row.get("value") is True for row in rows), "all_false": truth_complete and all(row.get("value") is False for row in rows), "count": len(rows), "true_count": sum(row.get("value") is True for row in rows)}
 
 
 def _controller(env: Any) -> Any:
@@ -555,18 +586,13 @@ def _robot_metrics(env: Any) -> dict[str, Any]:
     except Exception as exc:
         raise ValueError(f"could not convert EEF rotation: {exc}") from exc
     robot = env.env.robots[0]
-    observations = env.env._get_observations(force=True)
+    # LIBERO's ControlEnv and the wrapped MujocoEnv expose the same
+    # observation snapshot without a ``force`` keyword.  Reading it here is
+    # telemetry-only; the settle loop owns all simulation stepping.
+    observations = env.env._get_observations()
     gripper_qpos = finite_array("gripper_qpos", observations.get("robot0_gripper_qpos"), None)
     gripper_qvel = finite_array("gripper_qvel", observations.get("robot0_gripper_qvel"), None)
     gripper_target = finite_array("gripper_controller_target", getattr(robot.gripper, "current_action", None), None)
-    target_drift = float(
-        np.max(
-            np.abs(
-                np.asarray(current["gripper_controller_target"])
-                - np.asarray(base["gripper_controller_target"])
-            )
-        )
-    )
     return {
         "arm_joint_qpos_rad": qpos.tolist(),
         "arm_joint_qvel_rad_s": qvel.tolist(),
@@ -591,7 +617,7 @@ def _fixture_joint_values(env: Any, names: Iterable[str]) -> dict[str, float]:
             state = getattr(env.env, "object_sites_dict", {}).get(object_name)
         if state is None and object_name in getattr(env.env, "object_sites_dict", {}):
             state = env.env.object_sites_dict[object_name]
-        joints = list(getattr(state, "joints", ())) if state is not None else []
+        joints = list(getattr(state, "joints", None) or ()) if state is not None else []
         for joint in joints:
             address = env.sim.model.get_joint_qpos_addr(joint)
             address = int(address[0]) if isinstance(address, tuple) else int(address)
@@ -616,6 +642,7 @@ def _metric_drift(base: Mapping[str, Any], current: Mapping[str, Any]) -> dict[s
     eef_rotation = quat_geodesic_rad(current["eef_quaternion"], base["eef_quaternion"])
     gripper_qpos = float(np.max(np.abs(np.asarray(current["gripper_qpos_m"]) - np.asarray(base["gripper_qpos_m"]))))
     gripper_qvel = float(np.max(np.abs(np.asarray(current["gripper_qvel_m_s"]) - np.asarray(base["gripper_qvel_m_s"]))))
+    target_drift = float(np.max(np.abs(np.asarray(current["gripper_controller_target"]) - np.asarray(base["gripper_controller_target"]))))
     return {
         "arm_joint_qpos_rad": qpos,
         "arm_joint_qvel_rad_s": qvel,
@@ -682,6 +709,7 @@ def settle_gate(env: Any, initial_atoms: Sequence[str], goal_atoms: Sequence[str
     }
     initial_continuous = all(sample["initial"]["all_true"] for sample in windows["measurement"])
     goal_continuous_false = all(not any(row["value"] for row in sample["goal"]["predicates"]) for sample in windows["measurement"])
+    predicate_detail_complete = all(sample["initial"]["detail_complete"] and sample["goal"]["detail_complete"] for sample in windows["measurement"])
     robot_gate = all(measurement_robot_max[key] <= THRESHOLDS[key] for key in THRESHOLDS if key in measurement_robot_max)
     scene_gate = scene_max["max_object_translation_m"] <= THRESHOLDS["object_translation_m"] and scene_max["max_object_rotation_rad"] <= THRESHOLDS["object_rotation_rad"] and scene_max["max_fixture_joint_rad_or_m"] <= THRESHOLDS["fixture_joint_rad_or_m"]
     return {
@@ -693,8 +721,8 @@ def settle_gate(env: Any, initial_atoms: Sequence[str], goal_atoms: Sequence[str
         "warmup_drift": {"robot": warmup_robot_drift},
         "measurement_robot_max_drift": measurement_robot_max,
         "measurement_scene_max_drift": scene_max,
-        "predicate_continuity": {"reverse_initial_all_true": initial_continuous, "reverse_goal_all_false": goal_continuous_false, "measurement_initial_samples": [sample["initial"] for sample in windows["measurement"]], "measurement_goal_samples": [sample["goal"] for sample in windows["measurement"]]},
-        "hard_gate": {"robot_named_fields_stable": robot_gate, "scene_named_fields_stable": scene_gate, "reverse_initial_predicates_continuous": initial_continuous, "reverse_goal_predicates_continuously_false": goal_continuous_false, "all_named_settle_gates": bool(robot_gate and scene_gate and initial_continuous and goal_continuous_false)},
+        "predicate_continuity": {"reverse_initial_all_true": initial_continuous, "reverse_goal_all_false": goal_continuous_false, "detail_schema_complete": predicate_detail_complete, "measurement_initial_samples": [sample["initial"] for sample in windows["measurement"]], "measurement_goal_samples": [sample["goal"] for sample in windows["measurement"]]},
+        "hard_gate": {"robot_named_fields_stable": robot_gate, "scene_named_fields_stable": scene_gate, "reverse_initial_predicates_continuous": initial_continuous, "reverse_goal_predicates_continuously_false": goal_continuous_false, "predicate_detail_schema_complete": predicate_detail_complete, "all_named_settle_gates": bool(robot_gate and scene_gate and initial_continuous and goal_continuous_false and predicate_detail_complete)},
     }
 
 
@@ -737,10 +765,65 @@ def controlled_destruction(env: Any, task_index: int, target_atom: str, native_s
     return {"mutation": mutation, "target_atom": target_atom, "true_to_false": destroyed_false, "restored_true": restored_true, "destroyed_evidence": destroyed, "restored_evidence": restored, "hard_gate": destroyed_false and restored_true}
 
 
+def target_resolution(env: Any, task_index: int, native_state: np.ndarray, target_atom: str) -> dict[str, Any]:
+    """Resolve the controlled target and required telemetry without mutating state."""
+    predicate, args = parse_atom(target_atom)
+    references: list[dict[str, Any]] = []
+    for name in args:
+        wrapper = getattr(env.env, "object_states_dict", {}).get(name)
+        if wrapper is None:
+            raise KeyError(f"predicate argument is absent from object_states_dict: {name}")
+        pose = _object_or_site_pose(env, name)
+        if pose is None:
+            raise ValueError(f"predicate argument has no resolvable pose: {name}")
+        references.append({"name": name, "state_type": getattr(wrapper, "object_state_type", "unknown"), "pose": pose})
+    joint_names: list[str] = []
+    if predicate in {"Open", "Close"}:
+        site_or_object = getattr(env.env, "object_sites_dict", {}).get(args[0])
+        joint_names = list(getattr(site_or_object, "joints", None) or ())
+        if not joint_names:
+            wrapper = getattr(env.env, "object_states_dict", {}).get(args[0])
+            parent_name = getattr(wrapper, "parent_name", None)
+            parent = getattr(env.env, "objects_dict", {}).get(parent_name) or getattr(env.env, "fixtures_dict", {}).get(parent_name)
+            joint_names = list(getattr(parent, "joints", None) or ()) if parent is not None else []
+    else:
+        object_model = env.env.get_object(args[0])
+        joint_names = list(getattr(object_model, "joints", None) or ())
+    if predicate in {"Open", "Close"} and not joint_names:
+        raise ValueError(f"articulation target has no joints: {args[0]}")
+    joint_values: list[float] = []
+    for joint in joint_names:
+        address = env.sim.model.get_joint_qpos_addr(joint)
+        address = int(address[0]) if isinstance(address, tuple) else int(address)
+        value = float(env.sim.data.qpos[address])
+        if not math.isfinite(value):
+            raise ValueError(f"non-finite target joint value: {joint}")
+        joint_values.append(value)
+    action = gripper_hold_action()
+    return {
+        "task_index": task_index,
+        "target_atom": target_atom,
+        "predicate": predicate,
+        "references": references,
+        "joint_names": joint_names,
+        "joint_values": joint_values,
+        "native_state_sha256": state_hash(native_state),
+        "hold_action": action.tolist(),
+        "schema_complete": bool(references and np.all(np.isfinite(action)) and all("pose" in item for item in references) and (predicate not in {"Open", "Close"} or bool(joint_names))),
+    }
+
+
 def make_env(bddl_path: str) -> Any:
     from libero.libero.envs import OffScreenRenderEnv
 
     return OffScreenRenderEnv(bddl_file_name=bddl_path, control_freq=CONTROL_FREQ_HZ, use_camera_obs=False, has_renderer=False, has_offscreen_renderer=False, render_gpu_device_id=0)
+
+
+def make_schema_env(bddl_path: str) -> Any:
+    """Create a real MuJoCo env with both renderer flags disabled."""
+    from libero.libero.envs.env_wrapper import ControlEnv
+
+    return ControlEnv(bddl_file_name=bddl_path, control_freq=CONTROL_FREQ_HZ, use_camera_obs=False, has_renderer=False, has_offscreen_renderer=False, render_gpu_device_id=-1)
 
 
 def dynamic_worker(task_index: int, run_index: int, phase: str) -> dict[str, Any]:
@@ -754,15 +837,18 @@ def dynamic_worker(task_index: int, run_index: int, phase: str) -> dict[str, Any
         _, native_state = _native_reset(env)
         initial = evaluate_predicates(env, spec["reverse_initial_predicates"], label="native_reset_reverse_initial")
         goal = evaluate_predicates(env, spec["reverse_goal_predicates"], label="native_reset_reverse_goal")
-        if not initial["all_true"] or any(row["value"] for row in goal["predicates"]):
-            return {"status": "failed_native_predicate", "failure_field": "reverse_initial_or_goal", "task_index": task_index, "operator_family": spec["operator_family"], "run_index": run_index, "phase": phase, "layout": layout, "native_reset": {"initial": initial, "goal": goal}, "hdf5_state_used_for_predicate_oracle": False}
-        settle = settle_gate(env, spec["reverse_initial_predicates"], spec["reverse_goal_predicates"])
         target_atom = spec["reverse_initial_predicates"][-1]
+        target = target_resolution(env, task_index, native_state, target_atom)
+        schema_complete = bool(initial["truth_complete"] and goal["truth_complete"] and initial["detail_complete"] and goal["detail_complete"] and target["schema_complete"])
+        if not initial["all_true"] or not goal["all_false"] or not initial["detail_complete"] or not goal["detail_complete"]:
+            return {"status": "failed_native_predicate", "failure_field": "reverse_initial_or_goal", "task_index": task_index, "operator_family": spec["operator_family"], "run_index": run_index, "phase": phase, "layout": layout, "native_reset": {"initial": initial, "goal": goal}, "target_resolution": target, "schema_complete": schema_complete, "hdf5_state_used_for_predicate_oracle": False}
+        settle = settle_gate(env, spec["reverse_initial_predicates"], spec["reverse_goal_predicates"])
         destruction = controlled_destruction(env, task_index, target_atom, native_state)
         gates = {
+            "schema_complete": schema_complete,
             "model_state_predicate_oracle_reconciled": layout["compatibility"]["status"] in {"compatible_for_exact_reference", "incompatible_for_predicate_oracle"},
             "reverse_initial_at_native_reset": initial["all_true"],
-            "reverse_goal_false_at_native_reset": not any(row["value"] for row in goal["predicates"]),
+            "reverse_goal_false_at_native_reset": goal["all_false"],
             "settle_all_named_fields": settle["hard_gate"]["all_named_settle_gates"],
             "controlled_predicate_true_to_false": destruction["true_to_false"],
             "controlled_predicate_restored_true": destruction["restored_true"],
@@ -783,6 +869,8 @@ def dynamic_worker(task_index: int, run_index: int, phase: str) -> dict[str, Any
             "controller_contract": {"controller": "OSC_POSE", "control_dim": int(getattr(_controller(env), "control_dim", -1)), "action_dim": ACTION_DIM, "control_freq_hz": CONTROL_FREQ_HZ},
             "layout": layout,
             "native_reset": {"state_sha256": state_hash(native_state), "initial": initial, "goal": goal, "hdf5_state_used_for_predicate_oracle": False},
+            "target_resolution": target,
+            "schema_complete": schema_complete,
             "settle": settle,
             "controlled_destruction": destruction,
             "hard_gate": gates,
@@ -811,6 +899,9 @@ def _run_worker_subprocess(task_index: int, run_index: int, phase: str) -> dict[
     result["worker_returncode"] = completed.returncode
     result["stdout_tail"] = completed.stdout[-4000:]
     result["stderr_tail"] = completed.stderr[-4000:]
+    if result.get("status") == "passed" and completed.returncode != 0:
+        result["status"] = "worker_contract_failure"
+        result["contract_error"] = "passed status with nonzero worker returncode"
     return result
 
 
@@ -893,8 +984,9 @@ def main() -> int:
     if args.worker:
         # Worker stdout is one JSON object so the parent can preserve it in the
         # per-run evidence even when MuJoCo emits normal startup warnings.
-        print(json.dumps(dynamic_worker(int(args.worker[0]), int(args.worker[1]), args.worker[2]), ensure_ascii=False, sort_keys=True))
-        return 0
+        result = dynamic_worker(int(args.worker[0]), int(args.worker[1]), args.worker[2])
+        print(json.dumps(result, ensure_ascii=False, sort_keys=True))
+        return worker_exit_code(str(result.get("status")))
     if args.d2:
         print(json.dumps(run_d2(), ensure_ascii=False, indent=2))
         return 0

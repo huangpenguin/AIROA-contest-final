@@ -2,14 +2,14 @@
 
 > 更新日期：2026-09-03（Asia/Tokyo）
 > 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_NATIVE_REVERSE_VALIDATOR_RECOVERY_PLAN.md`
-> 当前状态：`track3_native_reverse_validator_recovery_planned`
+> 当前状态：`track3_native_reverse_dynamic_failed_support_reverse_initial_or_goal`
 > 最新审核：`docs/reviews/axis_pi05/TRACK3_DYNAMIC_GATE_D0_D4_AUDIT_20260903.md`
 
 ## 1. 本轮执行停止点
 
 G0/G1 已按失败门禁停止，S1 v2 与 typed language 获批准，三族 `3/3` fresh-process 运行及 hard stop 也真实完成；但 G1.3 的失败结论不能证明 reverse semantics 无效。旧 validator 把 HDF5 `states[0]` 恢复到不同/randomized XML 的 reverse env，以 forward success 冒充 reverse initial predicate 检查，并对包含 joint velocity、EEF quaternion、gripper qpos/qvel 的整段 proprio 使用一个 `0.05` 阈值；20 步 action 还固定发送 `gripper=-1`。相反，三族 object/fixture drift 仅约 `1e-7～1e-11`。
 
-最新审核裁决仍为 `remediation_required`，但范围已收窄：D0 与 hard stop 获批；D2 只在 predicate detail telemetry 将 `TargetZone` 误当 state wrapper 时异常，没有形成 task10 predicate/settle 结论。后置修复与 LIBERO 的 `object_states_dict → SiteObjectState` 源码一致，但需真实三族 no-renderer schema probe、truth/detail 分层和非零 exception return code 后，才能执行一次有效 recovery canary。证据：`docs/reviews/axis_pi05/TRACK3_DYNAMIC_GATE_D0_D4_AUDIT_20260903.md`。
+最新审核裁决仍为 `remediation_required`，但范围已收窄：D0 与 hard stop 获批；D2 只在 predicate detail telemetry 将 `TargetZone` 误当 state wrapper 时异常，没有形成 task10 predicate/settle 结论。R1 已完成三族真实 no-renderer schema probe，三族均 `schema_passed`；R2 唯一 task10 recovery canary 已在 GPU3 执行，schema 完整但 native reverse reset 的 task10 reverse initial 未全 true，故按具体字段 fail closed；R3 未运行（`0/9`），R4 已停止。证据：`data/reports/axis_libero_30k/track3_native_reverse_validator_recovery/`。
 
 ## 2. 唯一活动计划
 
@@ -20,6 +20,8 @@ G0/G1 已按失败门禁停止，S1 v2 与 typed language 获批准，三族 `3/
   - R2 通过后才允许 R3 以不变代码/spec/threshold 做三族各 `3/3`；
   - R4 只收尾并 hard stop；即使 `9/9` 通过也等待 SE(3) 专项新审核；
   - 不得运行 SE(3)、抓取/demo、人工 Teleop、批量生成、训练、norm、FAST/ZIP、官方 GPU、上传或提交。
+
+R0–R4 已完成并停止：R0 保留 `84c2655` 输入锁及旧 D2 exception；R1 三族 schema 为 `3/3`；R2 状态为 `track3_native_reverse_dynamic_failed_support_reverse_initial_or_goal`，其中 `schema_complete=true`、goal 全 false，但 native reverse initial 不满足全部 predicates；R3 为 hard stop，fresh-process runs=`0`。当前仍为 `0` 条 exact/pending/accepted reverse demo，等待下一次审核，不得据此进入 SE(3) 或训练。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 

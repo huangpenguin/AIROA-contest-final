@@ -1,0 +1,91 @@
+{
+  "created_at_utc": "2026-09-03T13:39:06.792268+00:00",
+  "hard_stop": {
+    "awaiting_se3_review": true,
+    "do_not_enter": [
+      "SE(3) grasp",
+      "demo generation",
+      "batch generation",
+      "training",
+      "Teleop",
+      "FAST/ZIP",
+      "upload/submission"
+    ],
+    "stop_after": "R2"
+  },
+  "outputs": {
+    "accepted_reverse_demo": 0,
+    "exact_reverse_demo": 0,
+    "fast_or_zip_used": false,
+    "human_operation": false,
+    "libero_plus_touched": false,
+    "official_gpu_used": false,
+    "pending_autogen": 0,
+    "pending_autogen_v2": 0,
+    "se3_grasp_attempts": 0,
+    "training_started": false,
+    "upload_or_submission": false
+  },
+  "r0": {
+    "counts_at_r0": {
+      "accepted_reverse_demo": 0,
+      "exact_reverse_demo": 0,
+      "pending_autogen": 0,
+      "pending_autogen_v2": 0,
+      "support_retry_attempts": 0
+    },
+    "historical_d2": {
+      "d3_runs": 0,
+      "error": "AttributeError: 'TargetZone' object has no attribute 'get_geom_state'",
+      "must_not_relabel_or_overwrite": true,
+      "report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation/d2_task10_canary.json",
+      "valid_predicate_settle_evidence": 0,
+      "worker_returncode": 0,
+      "worker_status": "worker_exception"
+    },
+    "input_root_commit": "84c2655f610bb957b0ad1ec2a952776bf023821e",
+    "observed_root_commit_at_r0": "3748c2ebc2a9e5fc66ca90657cf8a4639488f7d7",
+    "status": "track3_native_reverse_validator_recovery_input_locked"
+  },
+  "r1": {
+    "family_3_of_3_schema": {
+      "articulation_close": true,
+      "containment_remove": true,
+      "support_remove": true
+    },
+    "hard_gate": {
+      "all_families_schema_passed": true,
+      "hdf5_state_used_for_predicate_oracle": false,
+      "three_real_no_renderer_envs": true,
+      "truth_detail_separated": true,
+      "worker_returncode_contract": true
+    },
+    "status": "track3_native_reverse_validator_runtime_schema_passed"
+  },
+  "r2": {
+    "failure": "reverse_initial_or_goal",
+    "hard_gate": {
+      "controlled_predicate_restored_true": false,
+      "controlled_predicate_true_to_false": false,
+      "hdf5_state_not_predicate_oracle": true,
+      "model_state_predicate_oracle_reconciled": false,
+      "no_grasp_or_demo_generation": false,
+      "reverse_goal_all_false": true,
+      "reverse_initial_all_true": false,
+      "schema_complete": true,
+      "settle_all_named_fields": false,
+      "worker_returncode_zero": true,
+      "worker_status_passed": false
+    },
+    "run_index": "recovery_1",
+    "status": "track3_native_reverse_dynamic_failed_support_reverse_initial_or_goal",
+    "task_index": 10
+  },
+  "r3": {
+    "family_3_of_3": null,
+    "fresh_process_runs": 0,
+    "status": "not_run_due_to_r2_hard_stop"
+  },
+  "schema_version": "track3_native_reverse_validator_recovery_r4_v1",
+  "status": "track3_native_reverse_dynamic_failed_support_reverse_initial_or_goal"
+}

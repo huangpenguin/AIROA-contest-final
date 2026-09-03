@@ -1,0 +1,127 @@
+{
+  "authorization_at_r0": {
+    "batch_generation": false,
+    "fast_or_zip": false,
+    "official_gpu": false,
+    "se3_or_grasp": false,
+    "source_status": "track3_native_reverse_validator_recovery_planned",
+    "teleop": false,
+    "training_or_norm": false,
+    "upload_or_submission": false
+  },
+  "counts_at_r0": {
+    "accepted_reverse_demo": 0,
+    "exact_reverse_demo": 0,
+    "pending_autogen": 0,
+    "pending_autogen_v2": 0,
+    "support_retry_attempts": 0
+  },
+  "created_at_utc": "2026-09-03T13:18:27.592125+00:00",
+  "hard_gate": {
+    "all_inputs_exist": true,
+    "counts_zero": true,
+    "historical_d2_exception_locked": true,
+    "historical_d2_valid_results_zero": true,
+    "libero_plus_not_touched": true,
+    "nested_input_commit_locked": true,
+    "old_d2_and_d4_immutable": true,
+    "root_input_commit_locked": false
+  },
+  "historical_d2": {
+    "d3_runs": 0,
+    "error": "AttributeError: 'TargetZone' object has no attribute 'get_geom_state'",
+    "must_not_relabel_or_overwrite": true,
+    "report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation/d2_task10_canary.json",
+    "valid_predicate_settle_evidence": 0,
+    "worker_returncode": 0,
+    "worker_status": "worker_exception"
+  },
+  "immutable_recovery_inputs": {
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation/D4_CLOSEOUT_REPORT_ZH.md": {
+      "bytes": 1113,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation/D4_CLOSEOUT_REPORT_ZH.md",
+      "sha256": "f5b904dc4310a50cd4fbae8022cf570cf630fd8e6f99e90e127239653d89b18b"
+    },
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation/d0_release_lock.json": {
+      "bytes": 16972,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation/d0_release_lock.json",
+      "sha256": "0e71d93dc622e6ce4b90a2c53ea7a06934a8fb0fed1ff7433eb75b1fc357571c"
+    },
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation/d2_task10_canary.json": {
+      "bytes": 1675,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation/d2_task10_canary.json",
+      "sha256": "9f4bf4db9c1b369a93068c2c806b9b056feb3cdb6ecaf841a3b05c271bc98ad3"
+    },
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation/runs/d2_task10_canary_run_1.json": {
+      "bytes": 1332,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation/runs/d2_task10_canary_run_1.json",
+      "sha256": "524d8c2979e5711ce934bd468537e519fdf6360e145fdf3ee96520ab340ae321"
+    },
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation/summary.json": {
+      "bytes": 2328,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation/summary.json",
+      "sha256": "6d43dc4c582ed414b28d397bd91c52fcdf1cd3953fc3b1e4f8bda4e927b72218"
+    },
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s3_dynamic_gates.json": {
+      "bytes": 26639,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s3_dynamic_gates.json",
+      "sha256": "b133703c569e922ebcab07c758720554478ea16e5fa30928088855490a291b8a"
+    },
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s3_v2_specs/canary_articulation_close_task_19.bddl": {
+      "bytes": 2995,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s3_v2_specs/canary_articulation_close_task_19.bddl",
+      "sha256": "ddfca4566379eb7f18a99ec25d22030e158afb416e321aef4ec10c3c0ae30cad"
+    },
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s3_v2_specs/canary_containment_remove_task_20.bddl": {
+      "bytes": 2178,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s3_v2_specs/canary_containment_remove_task_20.bddl",
+      "sha256": "27305e326a53a0b3c70d573066262eadcfcf326de8c8f5a252da34e39581f28d"
+    },
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s3_v2_specs/canary_support_remove_task_10.bddl": {
+      "bytes": 2999,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s3_v2_specs/canary_support_remove_task_10.bddl",
+      "sha256": "575b5fcf0fcbfe78842610035574ddd9d91fd8394a04637eba3b2d9cec17cb6f"
+    },
+    "/home/huang/code/PARC2026_final/tests/test_track3_dynamic_gate_reconciliation.py": {
+      "bytes": 5611,
+      "path": "/home/huang/code/PARC2026_final/tests/test_track3_dynamic_gate_reconciliation.py",
+      "sha256": "8f8357d5caf004a1110c110ad7c5a38ccadaed0af1966c860c6339b28989489d"
+    },
+    "/home/huang/code/PARC2026_final/tests/test_track3_support_autogen_v2.py": {
+      "bytes": 4280,
+      "path": "/home/huang/code/PARC2026_final/tests/test_track3_support_autogen_v2.py",
+      "sha256": "f160b844ea53d5a5732bdbcadc2bc05f09d53faa5239732da3dfdf48651ac3a7"
+    },
+    "/home/huang/code/PARC2026_final/tools/axis_pi05/track3_dynamic_gate_reconciliation.py": {
+      "bytes": 48068,
+      "path": "/home/huang/code/PARC2026_final/tools/axis_pi05/track3_dynamic_gate_reconciliation.py",
+      "sha256": "c366db9b861f915bda6354ef9ea2cee24ade924e1271a69be4d49e791b010002"
+    }
+  },
+  "input_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "input_root_commit": "84c2655f610bb957b0ad1ec2a952776bf023821e",
+  "input_root_parent_commit": "f0034b9976e6de81644d1535d60328006bbe83cf",
+  "libero_plus_dirty_read_only_snapshot": {
+    "path": "/home/huang/code/PARC2026_final/LIBERO-plus",
+    "policy": "record_only_never_clean_or_touch",
+    "status_porcelain": [
+      "M libero/libero/benchmark/__init__.py",
+      "?? libero/__init__.py",
+      "?? libero/libero/assets",
+      "?? libero/libero/bddl_files/libero_t3",
+      "?? libero/libero/init_files/libero_t3"
+    ]
+  },
+  "missing_inputs": [],
+  "nested_input_commit_clean": true,
+  "nested_openpi_status_porcelain_at_r0": [],
+  "observed_nested_openpi_commit_at_r0": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "observed_root_commit_at_r0": "3748c2ebc2a9e5fc66ca90657cf8a4639488f7d7",
+  "plan": "/home/huang/code/PARC2026_final/docs/AXIS_PI05_TRACK3_NATIVE_REVERSE_VALIDATOR_RECOVERY_PLAN.md",
+  "root_input_commit_clean": false,
+  "root_status_porcelain_at_r0": [
+    "?? tools/axis_pi05/track3_native_reverse_validator_recovery.py"
+  ],
+  "schema_version": "track3_native_reverse_validator_recovery_r0_v1",
+  "status": "track3_native_reverse_validator_recovery_input_locked"
+}

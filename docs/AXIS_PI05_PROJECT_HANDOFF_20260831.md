@@ -1,12 +1,12 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新执行停止点：`track3_scripted_executor_failed`（S0–S5，support 自动 canary 单次失败）
+> 最新审核状态：`track3_support_autogen_se3_recovery_planned`（S0–S5 审核为 remediation_required）
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_scripted_executor_failed`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_PUBLIC_PRIMITIVE_MINING_AND_AUTOGEN_PLAN.md`
+> 当前总状态：`track3_support_autogen_se3_recovery_planned`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_SUPPORT_AUTOGEN_SE3_RECOVERY_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -14,7 +14,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3的40个公开HDF5、三个family full-state canary与recorder R0–R4修复均已通过审核；新的唯一活动路线先独立验证公开reverse/generator资产、挖掘现有成功primitive，并最多自动生成三族各一条pending canary。原task19人工计划未执行且已归档，人工只作为自动化缺口经后续审核后的兜底。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3 S0–S5 已在首条 support canary 失败后正确停止，但审核发现 S1 把 task/episode 混合计数、S3 未执行动态 3/3 predicate 门禁且 instruction 文本不合格；自动执行器还只控制 xyz 并使用固定 object-center offset。当前唯一活动路线先闭合统计/语义，再从公开 task10 成功 HDF5 提取相对 SE(3) 抓取模板，只重试一条 support canary。accepted/pending reverse demo 仍为 `0/0`。
 
 ## 2. 数据与复现基础
 
@@ -250,14 +250,14 @@ upstream             当前 branch 未设置 upstream
 ## 10. 新 section 的接手顺序
 
 1. 阅读本文件与 `docs/AXIS_PI05_PLAN_INDEX.md`。
-2. 阅读并只执行 `docs/AXIS_PI05_TRACK3_PUBLIC_PRIMITIVE_MINING_AND_AUTOGEN_PLAN.md` 的 S0–S5。
+2. 阅读并只执行 `docs/AXIS_PI05_TRACK3_SUPPORT_AUTOGEN_SE3_RECOVERY_PLAN.md` 的 G0–G4，之后仅做 G5 收尾并 hard stop。
 3. 将Track1=`0.47`、Track2=`0.33`、Track3=`0`及ZIP `95415a…c5f5a`锁为当前official-score baseline；无上传回执的字段保持conditional provenance。
-4. S0把研究对话仅当作lookup hints，从primary source复核LIBERO-Infinity、Behavior Prompting/LIBERO-Gen、原始LIBERO及相关数据的commit/license/schema；不下载大型数据。
-5. S1对本地40个full-state HDF5和19,961个20Hz IPEC/Plus episodes做语义挖掘，严格分开exact reverse、reverse-relevant primitive与generator reference，public T3 denylist overlap必须为0。
-6. S2只做每族少量选择性schema/replay；S3适配reverse BDDL；S4/S5最多自动生成support/containment/articulation各1条pending canary并3/3 replay。
-7. 任一hard gate失败即停；不得自动恢复人工task19。只有`articulation_close`等明确缺口经过下一次审核，才决定补primitive或使用已归档人工canary作为reference seed。
+4. G0 锁定旧 S0–S5、小型 summary 和 support 失败资产；不得重写 v1 evidence。
+5. G1 将 21,961 episode 与 195 task rows 分开计数，并用 v2 typed language + 三族 fresh-process 3/3 动态 predicate 测试替代旧 S3 静态 pass。
+6. G2 对 task10 至少 3 条成功 HDF5 验证逐 state alignment，提取 object→EEF 的 pregrasp/grasp/lift 相对 SE(3)，并逐帧恢复旧失败 state 获得 contact pair/姿态证据。
+7. G3/G4 实现并验证 6D OSC_POSE 后，只允许一次固定 support canary；成功也只能 pending+3/3 replay 并停，失败保留增强诊断并停。不得恢复人工 task19、containment/articulation、批量生成或训练。
 
-当前路径是：R6 FAST ZIP Track1=`0.47`/Track2=`0.33`/Track3=`0`（冻结）→ 公开full-state与20Hz数据（已在本地）→ primary-source verification → primitive semantic mining → reverse semantic adapter → 三族non-human autogen canary → 视频人审 → 再决定30–60 exact reverse扩充与R6分叉LoRA。Dense 30K为冻结的独立研究线。
+当前路径是：R6 FAST ZIP Track1=`0.47`/Track2=`0.33`/Track3=`0`（冻结）→ 公开full-state与20Hz数据（已在本地）→ S1/S3 v2 evidence closure → 公开成功 HDF5 的抓取 SE(3) 挖掘 → 一次 support-only canary → 视频人审 → 再决定其余两族、30–60 exact reverse扩充与R6分叉LoRA。Dense 30K为冻结的独立研究线。
 
 ## 19. Dense full-FT allocator fraction recovery 执行结果
 
@@ -490,3 +490,13 @@ S4/S5 严格按 `support_remove → containment_remove → articulation_close` �
 GPU3 仅作已授权 simulator/replay，postflight 为 `6 MiB`；GPU0/1/2 未被本轮执行触碰。没有使用官方 GPU、FAST、ZIP、上传或比赛提交。当前唯一状态为 `track3_scripted_executor_failed`，后续只能由新的审核决定最小 remediation 或是否另开人工兜底计划；本交接不授权恢复旧 task19 命令。
 
 主要证据：`data/reports/axis_libero_30k/track3_public_autogen/{s0_source_verification.json,s0_release_lock.json,s1_semantic_mining.json,s2_selective_schema_replay.json,s3_reverse_adapter.json,s5_canary_summary.json,S5_AUTOGEN_CANARY_REPORT_ZH.md}`；机器状态同步在 `data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json`。
+
+## 36. S0–S5 独立审核与 support SE(3) 恢复授权
+
+独立审核输入 root `73f675477a41a80241a7549f12f991187ecaaa25`、parent `b0078dc6ffc54036006c732c890f02824ca593a0`、nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`。commit/hash、root/OpenPI clean、`LIBERO-plus` dirty-preservation、单次 support 尝试与 hard stop 均核对无误；S0 source lock 和 S2 selective replay 保留。
+
+审核结论为 `remediation_required`，原因有三项。第一，S1 identity/family counts 来自 `task_rows + episode_rows`，所以三类总和 `22,156` 不等于 `21,961` episodes，旧 `identity_classes_separate` 仅验证 key set。第二，S3 `passed` 只有静态 predicate-list 不等检查，缺少计划要求的三族 fresh-process `3/3`、20-step settle 和受控 goal true/false；三条 instruction 还含 `its akita black bowl`、`floor target object`、`wooden cabinet 1 middle` 等错误文本。第三，support 执行器只发 xyz，旋转恒零，抓取目标为 object center + `0.025 m`。
+
+失败轨迹的 approach 在 12 steps 达到 `0.003496823 m`，descend 的最小误差为 `0.027499298 m`，最终为 `0.032033743 m`；接触数由 20 上升至最高 36。结合 front/wrist 抽帧，当前最强假设是目标位姿/几何接触错误，而非 120-step timeout 太短。旧 telemetry 没有 EEF quaternion、object pose 与 contact pair name，因此下一计划必须先重建根因，不能直接增加 timeout。
+
+旧计划已归档；新唯一活动计划 `docs/AXIS_PI05_TRACK3_SUPPORT_AUTOGEN_SE3_RECOVERY_PLAN.md` 只授权 G0–G4 实验与 G5 收尾：v2 分层统计、typed instruction、三族动态 predicate 门禁、task10 公开成功 HDF5 alignment/相对 SE(3) 抓取模板、6D OSC_POSE 和一次 support-only canary。通过也只能写入 `pending_autogen_v2/` 并 replay `3/3` 后停；不授权 containment/articulation、人工、批量数据、训练、norm、FAST/ZIP、官方 GPU、上传或提交。完整审核见 `docs/reviews/axis_pi05/TRACK3_PUBLIC_AUTOGEN_S0_S5_AUDIT_20260903.md`。

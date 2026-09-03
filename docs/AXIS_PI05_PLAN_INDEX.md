@@ -1,24 +1,25 @@
 # AXIS Pi0.5 计划索引与审核生命周期
 
 > 更新日期：2026-09-03（Asia/Tokyo）
-> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_PUBLIC_PRIMITIVE_MINING_AND_AUTOGEN_PLAN.md`
-> 当前状态：`track3_scripted_executor_failed`
-> 最新审核：`docs/reviews/axis_pi05/TRACK3_TELEOP_R0_R4_READINESS_AUDIT_20260903.md`
+> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_SUPPORT_AUTOGEN_SE3_RECOVERY_PLAN.md`
+> 当前状态：`track3_support_autogen_se3_recovery_planned`
+> 最新审核：`docs/reviews/axis_pi05/TRACK3_PUBLIC_AUTOGEN_S0_S5_AUDIT_20260903.md`
 
 ## 1. 本轮执行停止点
 
-S0–S3 已通过；S4/S5 按固定顺序仅尝试 support canary 一次，在 `descend_object` 阶段 120 步超时后停止。失败资产为 `data/reports/axis_libero_30k/track3_public_autogen/diagnostics/support_remove_task_10/`，含 132 帧完整 trajectory states、policy states、front/wrist H.264 和失败原因；`pending_autogen` 仍为 `0`。本轮没有 retry、人工 Teleop、accepted promotion、训练、官方 GPU、FAST 或 ZIP。当前唯一审核状态为 `track3_scripted_executor_failed`，不得从此处自动恢复人工或训练。
+S0–S5 已按失败门禁停止；执行边界、S0 source lock、S2 selective replay 与 132 帧失败资产获保留，但独立审核结论为 `remediation_required`。S1 将 195 条 task rows 混入 21,961 条 episode 的 identity/family 计数，三类之和错误为 22,156；S3 只有静态 predicate-list 检查，没有计划要求的三族 fresh-process 3/3 动态门禁，且三条 instruction 含错误指代/内部 token。support descend 的误差由最小 0.02750 m 回升并稳定在约 0.03203 m，接触数从 20 升至最高 36，xyz-only + object-center 固定 offset 是当前主要根因假设，不能靠增加 timeout 处理。
 
-证据：`data/reports/axis_libero_30k/track3_public_autogen/{s0_source_verification.json,s0_release_lock.json,s1_semantic_mining.json,s2_selective_schema_replay.json,s3_reverse_adapter.json,s5_canary_summary.json,S5_AUTOGEN_CANARY_REPORT_ZH.md}`。
+证据：`docs/reviews/axis_pi05/TRACK3_PUBLIC_AUTOGEN_S0_S5_AUDIT_20260903.md` 与 `data/reports/axis_libero_30k/track3_public_autogen/{s0_source_verification.json,s0_release_lock.json,s1_semantic_mining.json,s2_selective_schema_replay.json,s3_reverse_adapter.json,s5_canary_summary.json,S5_AUTOGEN_CANARY_REPORT_ZH.md}`。
 
 ## 2. 唯一活动计划
 
-- `AXIS_PI05_TRACK3_PUBLIC_PRIMITIVE_MINING_AND_AUTOGEN_PLAN.md`
-  - 研究对话只作为线索；S0从primary source独立锁定LIBERO-Infinity、Behavior Prompting/LIBERO-Gen、原始LIBERO和相关数据的commit/revision/license/schema；
-  - S1先对本地40个full-state HDF5及19,961个20Hz IPEC/Plus episodes做语义挖掘，严格区分exact reverse、reverse-relevant primitive与generator reference；
-  - S2只选择性验证三族schema/replay，新增下载上限20GiB；S3把reverse semantics适配到当前固定环境；S4/S5最多自动生成support/containment/articulation各1条pending canary；
-  - 人工Teleop不再是当前首要授权；只有自动close-drawer等明确失败并经下一次审核后，才允许恢复单条人工reference seed；
-  - 本计划不得批量生成30–60条、训练、修改norm、FAST/ZIP、使用官方GPU、上传或提交。
+- `AXIS_PI05_TRACK3_SUPPORT_AUTOGEN_SE3_RECOVERY_PLAN.md`
+  - G0 锁定 S0–S5 与 support 失败资产，不原地重写 v1 evidence；
+  - G1 生成 S1 v2 的 task/episode 分层计数，并补齐 S3 v2 typed language 与三族 fresh-process 3/3 动态 predicate 门禁；
+  - G2 从至少 3 条本地 task10 成功 HDF5 验证 state/action alignment，提取 object→EEF pregrasp/grasp/lift 的真实相对 SE(3)；同时逐帧重建旧失败的 EEF/object/contact pair；
+  - G3 实现 6D OSC_POSE、参考姿态、名称级 contact gate 与完整 telemetry；先做无接触 controller sign/gain canary；
+  - G4 固定输入只重新尝试 1 条 support canary；通过则 3/3 replay 后进入 pending 并停，失败则保留增强诊断并停；
+  - 不得继续 containment/articulation、人工 Teleop、批量生成、训练、norm、FAST/ZIP、官方 GPU、上传或提交。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 
@@ -51,10 +52,11 @@ S0–S3 已通过；S4/S5 按固定顺序仅尝试 support canary 一次，在 `
 21. `AXIS_PI05_TRACK3_PUBLIC_TERMINAL_TELEOP_PLANNER_RECOVERY_PLAN.md`：P0锁定40个官方公开HDF5，P1三个family full-state canary通过，P2 recorder原型完成；独立审核发现recorder尚不可见/不可安全空闲/replay promotion不合格，转入最小修复。
 22. `AXIS_PI05_TRACK3_TELEOP_RECORDER_REMEDIATION_PLAN.md`：R0–R4完成，修复action/reset、localhost preview与pending/replay/review promotion语义；GPU3 task19→10→20非人工canary通过，转入单条task19人工端到端canary。
 23. `AXIS_PI05_TRACK3_TASK19_HUMAN_CANARY_PLAN.md`：在H0执行前被公开primitive挖掘与自动生成路线取代；没有人工candidate。recorder/replay实现保留为自动生成失败后的显式人工兜底，不再是活动授权。
+24. `AXIS_PI05_TRACK3_PUBLIC_PRIMITIVE_MINING_AND_AUTOGEN_PLAN.md`：S0–S5 已执行；首条 support canary 在 descend 超时后正确停止。独立审核发现 S1 统计和 S3 动态/语言门禁未闭合，转入 support-only SE(3) 最小恢复。
 
 归档不表示旧计划所有尾部阶段都完成；只表示该文件不再是活动授权入口。旧 failure、阈值、hash 和未执行阶段必须继续保留。
 
-当前只执行Track3公开来源核验、primitive语义挖掘、选择性replay、reverse adapter与最多三条非人工自动canary；不得恢复人工task19、批量生成、旧reverse LoRA/interstep训练或直接转向Blackwell。
+当前只执行 S1/S3 evidence closure、support 失败根因重建、公开成功 HDF5 的 SE(3) 抓取模板提取与一次 support-only 自动 canary；不得恢复人工 task19、继续 containment/articulation、批量生成、旧 reverse LoRA/interstep 训练或直接转向 Blackwell。
 
 ## 4. 保留但非活动的研究线
 

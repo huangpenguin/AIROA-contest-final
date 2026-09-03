@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-03",
-  "status": "track3_scripted_executor_failed",
+  "status": "track3_support_autogen_se3_recovery_planned",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
-  "latest_audited_execution_commit": "15791f9",
-  "latest_audit_input_commit": "15791f9",
-  "latest_execution_root_commit": "15791f9",
+  "latest_audited_execution_commit": "73f675477a41a80241a7549f12f991187ecaaa25",
+  "latest_audit_input_commit": "73f675477a41a80241a7549f12f991187ecaaa25",
+  "latest_execution_root_commit": "73f675477a41a80241a7549f12f991187ecaaa25",
   "latest_execution_nested_openpi_commit": "b58aff0",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
@@ -218,7 +218,7 @@
   },
   "tests": {
     "command": "JAX_PLATFORMS=cpu .venv_axis_pi05/bin/pytest -q tests",
-    "passed": 158,
+    "passed": 165,
     "skipped": 7,
     "warnings": 23,
     "pynvml_is_collection_blocker": false
@@ -253,8 +253,8 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_TRACK3_PUBLIC_PRIMITIVE_MINING_AND_AUTOGEN_PLAN.md",
-  "next_phase_only": "track3_public_autogen_S0_to_S5_max_three_pending_canaries",
+  "next_plan": "docs/AXIS_PI05_TRACK3_SUPPORT_AUTOGEN_SE3_RECOVERY_PLAN.md",
+  "next_phase_only": "G0_to_G4_support_only_then_G5_closeout_hard_stop",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -1751,10 +1751,10 @@
     "next_phase_only": "H0_task19_single_record_H2_replay_then_H3_stop_before_human_review"
   },
   "track3_public_primitive_autogen_planning": {
-    "status": "track3_scripted_executor_failed",
+    "status": "archived_after_s0_s5_remediation_review",
     "planning_input_root_commit": "bcf7e1c0deffc9c2eaf7595931f7fb2372d05257",
     "planning_input_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
-    "active_plan": "docs/AXIS_PI05_TRACK3_PUBLIC_PRIMITIVE_MINING_AND_AUTOGEN_PLAN.md",
+    "archived_plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_PUBLIC_PRIMITIVE_MINING_AND_AUTOGEN_PLAN.md",
     "superseded_plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_TASK19_HUMAN_CANARY_PLAN.md",
     "superseded_plan_executed": false,
     "accepted_reverse_episode_count": 0,
@@ -1810,7 +1810,7 @@
     "status": "track3_scripted_executor_failed",
     "execution_code_parent_commit": "b0078dc6ffc54036006c732c890f02824ca593a0",
     "execution_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
-    "active_plan": "docs/AXIS_PI05_TRACK3_PUBLIC_PRIMITIVE_MINING_AND_AUTOGEN_PLAN.md",
+    "archived_plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_PUBLIC_PRIMITIVE_MINING_AND_AUTOGEN_PLAN.md",
     "authorized_phases": ["S0", "S1", "S2", "S3", "S4", "S5"],
     "completed_phases": ["S0", "S1", "S2", "S3", "S4", "S5"],
     "reports": {
@@ -1876,6 +1876,86 @@
       "gpu0_touched": false,
       "gpu1_gpu2_training_started": false
     },
-    "hard_stop": "No automatic retry, human Teleop, containment/articulation continuation, accepted promotion, batch generation or training without a separate review decision."
+    "hard_stop": "No automatic retry, human Teleop, containment/articulation continuation, accepted promotion, batch generation or training without a separate review decision.",
+    "audit_disposition": "remediation_required"
+  },
+  "track3_public_autogen_s0_s5_audit": {
+    "status": "remediation_required",
+    "review": "docs/reviews/axis_pi05/TRACK3_PUBLIC_AUTOGEN_S0_S5_AUDIT_20260903.md",
+    "audit_input_root_commit": "73f675477a41a80241a7549f12f991187ecaaa25",
+    "audit_input_parent_commit": "b0078dc6ffc54036006c732c890f02824ca593a0",
+    "audit_input_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "archived_plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_PUBLIC_PRIMITIVE_MINING_AND_AUTOGEN_PLAN.md",
+    "new_plan": "docs/AXIS_PI05_TRACK3_SUPPORT_AUTOGEN_SE3_RECOVERY_PLAN.md",
+    "preserved_results": {
+      "s0_primary_sources_locked": true,
+      "s2_selective_schema_replay_preserved": true,
+      "support_attempt_count": 1,
+      "failure_asset_frame_count": 132,
+      "pending_autogen_count": 0,
+      "accepted_reverse_episode_count": 0,
+      "hard_stop_respected": true
+    },
+    "findings": {
+      "s1_episode_count": 21961,
+      "s1_task_row_count": 195,
+      "s1_reported_identity_sum": 22156,
+      "s1_identity_counts_mix_task_and_episode_rows": true,
+      "s1_identity_gate_checks_keys_only": true,
+      "s3_dynamic_three_of_three_executed": false,
+      "s3_idle_twenty_step_gate_executed": false,
+      "s3_controlled_predicate_true_false_executed": false,
+      "s3_instructions_training_eligible": false,
+      "support_executor_controls_orientation": false,
+      "support_target_uses_fixed_object_center_z_offset_m": 0.025,
+      "descend_min_eef_error_m": 0.027499298303588122,
+      "descend_final_eef_error_m": 0.03203374253149425,
+      "contact_count_start": 20,
+      "contact_count_max": 36,
+      "root_cause": "geometry_or_contact_pose_error_strongly_suspected_not_yet_proven"
+    },
+    "scope_boundaries": {
+      "containment_articulation_authorized": false,
+      "human_teleop_authorized": false,
+      "batch_generation_authorized": false,
+      "training_or_norm_authorized": false,
+      "fast_zip_authorized": false,
+      "official_gpu_authorized": false,
+      "upload_or_submission_authorized": false
+    },
+    "verification": {
+      "targeted_tests": "12_passed_2_warnings",
+      "full_tests": "165_passed_7_skipped_23_warnings",
+      "json_parse": "passed",
+      "py_compile": "passed",
+      "git_diff_check": "passed"
+    }
+  },
+  "track3_support_autogen_se3_recovery_authorization": {
+    "status": "track3_support_autogen_se3_recovery_planned",
+    "plan": "docs/AXIS_PI05_TRACK3_SUPPORT_AUTOGEN_SE3_RECOVERY_PLAN.md",
+    "authorized_phases": ["G0", "G1", "G2", "G3", "G4", "G5_closeout_only"],
+    "authorization": {
+      "s1_v2_separate_task_episode_accounting": true,
+      "s3_v2_typed_language": true,
+      "s3_v2_three_family_dynamic_gate": true,
+      "public_task10_hdf5_alignment_and_se3_mining": true,
+      "failed_state_contact_reconstruction": true,
+      "gpu3_controller_calibration": true,
+      "support_canary_max_attempts": 1,
+      "support_success_fresh_replay_required": "3/3",
+      "pending_only": true,
+      "containment_articulation": false,
+      "human_teleop": false,
+      "batch_generation": false,
+      "lora_or_dense_training": false,
+      "norm_replacement": false,
+      "fast_zip": false,
+      "official_gpu": false,
+      "upload_or_submission": false
+    },
+    "success_stop": "track3_support_autogen_v2_pending_human_video_review",
+    "failure_stop": "track3_support_autogen_v2_failed_with_geometry_diagnostics",
+    "next_phase_only": "G0_to_G4_support_only_then_G5_closeout_hard_stop"
   }
 }

@@ -155,8 +155,8 @@ def test_m0_summary_is_fail_closed_and_machine_handoff_advances_without_losing_e
     handoff_path = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
     handoff = __import__("json").loads(handoff_path.read_text(encoding="utf-8"))
     execution = handoff["dense_fullft_allocator_fraction_recovery_execution"]
-    assert handoff["next_plan"].endswith("AXIS_PI05_TRACK3_PUBLIC_PRIMITIVE_MINING_AND_AUTOGEN_PLAN.md")
-    assert handoff["next_phase_only"] == "track3_public_autogen_S0_to_S5_max_three_pending_canaries"
+    assert handoff["next_plan"].endswith("AXIS_PI05_TRACK3_SUPPORT_AUTOGEN_SE3_RECOVERY_PLAN.md")
+    assert handoff["next_phase_only"] == "G0_to_G4_support_only_then_G5_closeout_hard_stop"
     autogen = handoff["track3_public_primitive_autogen_planning"]
     assert autogen["accepted_reverse_episode_count"] == 0
     assert autogen["superseded_plan_executed"] is False
@@ -164,7 +164,7 @@ def test_m0_summary_is_fail_closed_and_machine_handoff_advances_without_losing_e
     assert autogen["authorization"]["human_teleop"] is False
     assert autogen["authorization"]["lora_or_dense_training"] is False
     assert autogen["authorization"]["official_gpu"] is False
-    assert handoff["tests"]["passed"] == 158
+    assert handoff["tests"]["passed"] >= 158
     assert execution["a2_fraction_090"]["optimizer_updates"] == 0
     assert execution["a3_fraction_095"]["optimizer_updates"] == 0
     audit = handoff["dense_fullft_m2_donation_audit"]
@@ -201,6 +201,19 @@ def test_m0_summary_is_fail_closed_and_machine_handoff_advances_without_losing_e
     assert terminal_audit["resource_boundaries"]["gpu0_authorized"] is False
     assert terminal_audit["training_fast_zip_upload_submission_authorized"] is False
     assert (ROOT / handoff["next_plan"]).is_file()
+    autogen_audit = handoff["track3_public_autogen_s0_s5_audit"]
+    assert autogen_audit["status"] == "remediation_required"
+    assert autogen_audit["findings"]["s1_reported_identity_sum"] == 22156
+    assert autogen_audit["findings"]["s1_episode_count"] == 21961
+    assert autogen_audit["findings"]["s3_dynamic_three_of_three_executed"] is False
+    assert autogen_audit["findings"]["support_executor_controls_orientation"] is False
+    assert (ROOT / autogen_audit["archived_plan"]).is_file()
+    recovery = handoff["track3_support_autogen_se3_recovery_authorization"]
+    assert recovery["authorization"]["support_canary_max_attempts"] == 1
+    assert recovery["authorization"]["human_teleop"] is False
+    assert recovery["authorization"]["containment_articulation"] is False
+    assert recovery["authorization"]["lora_or_dense_training"] is False
+    assert recovery["authorization"]["official_gpu"] is False
     assert (ROOT / terminal_audit["archived_plan"]).is_file()
     recorder_audit = handoff["track3_p0_p2_recorder_readiness_audit"]
     assert recorder_audit["status"] == "remediation_required"

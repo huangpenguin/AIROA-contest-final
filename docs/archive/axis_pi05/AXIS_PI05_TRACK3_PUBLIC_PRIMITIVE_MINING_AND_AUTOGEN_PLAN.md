@@ -1,5 +1,8 @@
 # AXIS Pi0.5 Track 3：公开 Primitive 挖掘与自动逆向轨迹 Canary 计划
 
+> 归档日期：2026-09-03（Asia/Tokyo）
+> 归档原因：S0–S5 已执行并在首条 support canary 的 `descend_object` 超时后 hard stop；独立审核发现 S1 分类统计混入 task rows、S3 缺少计划要求的动态门禁且 instruction 文本不合格。本文件不再提供执行授权，后续只遵循 `docs/AXIS_PI05_TRACK3_SUPPORT_AUTOGEN_SE3_RECOVERY_PLAN.md`。
+>
 > 制定日期：2026-09-03（Asia/Tokyo）
 > 计划输入：root `bcf7e1c0deffc9c2eaf7595931f7fb2372d05257`，nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`
 > 当前状态：`track3_scripted_executor_failed`

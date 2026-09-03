@@ -5,8 +5,8 @@
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_task19_human_canary_ready`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_TASK19_HUMAN_CANARY_PLAN.md`
+> 当前总状态：`track3_public_primitive_mining_autogen_ready`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_PUBLIC_PRIMITIVE_MINING_AND_AUTOGEN_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -14,7 +14,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3的40个公开HDF5、三个family full-state canary与recorder R0–R4修复均已通过审核；当前只允许人工完成task19一条pending并3/3 replay，停在视频人审前，禁止task10/20与LoRA。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3的40个公开HDF5、三个family full-state canary与recorder R0–R4修复均已通过审核；新的唯一活动路线先独立验证公开reverse/generator资产、挖掘现有成功primitive，并最多自动生成三族各一条pending canary。原task19人工计划未执行且已归档，人工只作为自动化缺口经后续审核后的兜底。
 
 ## 2. 数据与复现基础
 
@@ -250,13 +250,14 @@ upstream             当前 branch 未设置 upstream
 ## 10. 新 section 的接手顺序
 
 1. 阅读本文件与 `docs/AXIS_PI05_PLAN_INDEX.md`。
-2. 阅读并只执行 `docs/AXIS_PI05_TRACK3_TASK19_HUMAN_CANARY_PLAN.md`。
-3. 将Track1=`0.47`、Track2=`0.33`及ZIP `95415a…c5f5a`锁为当前官方baseline；Track2包身份在无上传回执/hash时保持conditional provenance。
-4. H0确认GPU3/8765/accepted/pending门禁；浏览器不在gpu01时先建立localhost SSH tunnel。
-5. H1只人工录制task19，网页success=true后才能Save；结果只能进入pending，失败即停止。
-6. H2对返回的实际pending路径做fresh-process replay 3/3；H3停在人审前，不创建human_review、不promote、不运行task10/20。
+2. 阅读并只执行 `docs/AXIS_PI05_TRACK3_PUBLIC_PRIMITIVE_MINING_AND_AUTOGEN_PLAN.md` 的 S0–S5。
+3. 将Track1=`0.47`、Track2=`0.33`、Track3=`0`及ZIP `95415a…c5f5a`锁为当前official-score baseline；无上传回执的字段保持conditional provenance。
+4. S0把研究对话仅当作lookup hints，从primary source复核LIBERO-Infinity、Behavior Prompting/LIBERO-Gen、原始LIBERO及相关数据的commit/license/schema；不下载大型数据。
+5. S1对本地40个full-state HDF5和19,961个20Hz IPEC/Plus episodes做语义挖掘，严格分开exact reverse、reverse-relevant primitive与generator reference，public T3 denylist overlap必须为0。
+6. S2只做每族少量选择性schema/replay；S3适配reverse BDDL；S4/S5最多自动生成support/containment/articulation各1条pending canary并3/3 replay。
+7. 任一hard gate失败即停；不得自动恢复人工task19。只有`articulation_close`等明确缺口经过下一次审核，才决定补primitive或使用已归档人工canary作为reference seed。
 
-当前路径是：R6 FAST ZIP Track1=`0.47`/Track2=`0.33`（冻结）→ 公开full terminal state（三族已通过）→ recorder R0–R4已通过 → task19单条人工pending+3/3 replay → 视频人审 → 再决定promotion/task10。Dense 30K为冻结的独立研究线。
+当前路径是：R6 FAST ZIP Track1=`0.47`/Track2=`0.33`/Track3=`0`（冻结）→ 公开full-state与20Hz数据（已在本地）→ primary-source verification → primitive semantic mining → reverse semantic adapter → 三族non-human autogen canary → 视频人审 → 再决定30–60 exact reverse扩充与R6分叉LoRA。Dense 30K为冻结的独立研究线。
 
 ## 19. Dense full-FT allocator fraction recovery 执行结果
 
@@ -467,3 +468,15 @@ R4 仅使用 GPU3，任务顺序 `19 → 10 → 20`。三项 reverse goal reset 
 task19 front contact sheet已目视确认中间抽屉打开、robot/cabinet可见且settle无明显漂移；wrist信息有限但front足够作为主画面。实际视频codec为`mp4v`，另有exact raw RGB NPZ，记录真实且不冒充H.264。R4没有调用完整人工record/replay路径，R3 promotion也只有fixture测试，因此task19仍必须作为第一个端到端canary。
 
 旧remediation计划已归档。新唯一活动计划为`docs/AXIS_PI05_TRACK3_TASK19_HUMAN_CANARY_PLAN.md`：H0检查GPU3/端口/空目录，H1只人工关闭中间抽屉并写一条pending，H2只对返回的实际目录replay 3/3，H3停在front/wrist视频人审前。不得创建human_review、promote到accepted、录task10/20或进入planner/训练。审核记录：`docs/reviews/axis_pi05/TRACK3_TELEOP_R0_R4_READINESS_AUDIT_20260903.md`。
+
+## 34. 公开 Primitive / 自动生成路线规划决策
+
+用户账户内可访问的研究对话“Track3逆向训练方案”没有发现一个可直接使用的成熟Track3 reverse expert dataset，但给出了需独立复核的公开组合：LIBERO-Infinity负责reverse init/goal/language，原始LIBERO/LIBERO-plus/LIBERO-Gen提供成功reverse-relevant primitives，Behavior Prompting/LIBERO-Gen提供20Hz waypoint/scripted collection。研究对话属于线索，不是项目provenance；所有source/commit/license/schema必须在新计划S0从primary source重新验证。
+
+本地已确认可供S1挖掘的20Hz原料为IPEC五套`5,614` episodes与`lerobot/libero_plus` `14,347` episodes，合计`19,961 episodes / 3,080,750 frames`；另有40个原始LIBERO full-state HDF5及task10/19/20三族restore canary。`data/eval_manifests/axis_pi05_eval_v1/public_t3_holdout.jsonl`的40 cases继续作为evaluation-only denylist。`exact_reverse_demo`、`reverse_relevant_primitive`与`generator_reference_only`必须分开，不得把forward task或`inverse_view`重标成Track3 supervision。
+
+task19人工计划在H0前被取代并归档，没有产生candidate；recorder/replay实现不删除。新唯一活动计划为`docs/AXIS_PI05_TRACK3_PUBLIC_PRIMITIVE_MINING_AND_AUTOGEN_PLAN.md`，只授权S0–S5：primary-source lock、CPU semantic mining、每族少量选择性schema/replay、reverse semantic adapter、scripted executor及support/containment/articulation每族最多1条non-human pending canary。新增外部数据上限20GiB，GPU仅允许GPU3，官方GPU和训练均禁止。
+
+任一hard gate失败即停止；尤其close-drawer自动primitive失败时不得自动转人工，而应进入`track3_autogen_close_drawer_gap_pending_review`。三族都通过也只能进入`track3_autogen_three_family_canary_pending_human_video_review`，等待审核后才可另建30–60条exact reverse扩充、auxiliary primitive bank和从R6 step500分叉的小步LoRA计划。
+
+本次只落盘计划与状态指针，未执行S0或任何实验。计划切换后全量CPU回归为`158 passed, 7 skipped, 23 warnings`；root/nested在计划修改前clean，`LIBERO-plus`既有dirty内容未触碰。提交前还需完成JSON/Markdown路径、`git diff --check`与最终worktree校验。

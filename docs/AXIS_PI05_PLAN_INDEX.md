@@ -1,17 +1,18 @@
 # AXIS Pi0.5 计划索引与审核生命周期
 
 > 更新日期：2026-09-03（Asia/Tokyo）
-> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_TASK19_HUMAN_CANARY_PLAN.md`
-> 当前状态：`track3_task19_human_canary_ready`
+> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_PUBLIC_PRIMITIVE_MINING_AND_AUTOGEN_PLAN.md`
+> 当前状态：`track3_public_primitive_mining_autogen_ready`
 > 最新审核：`docs/reviews/axis_pi05/TRACK3_TELEOP_R0_R4_READINESS_AUDIT_20260903.md`
 
 ## 1. 唯一活动计划
 
-- `AXIS_PI05_TRACK3_TASK19_HUMAN_CANARY_PLAN.md`
-  - R0–R4独立审核为approved：no-key/reset/loopback preview/pending promotion门禁及GPU3三任务非人工canary通过；全量测试158/7/23；
-  - 当前只批准task19“关闭中间抽屉”一条真实人工端到端canary；task10/20仍未授权；
-  - H0锁定GPU/目录/端口，H1人工录制只生成pending，H2对实际pending路径fresh-process replay 3/3，H3停在视频人审前；
-  - 本计划不得创建human_review或promote到accepted；accepted必须保持0，也不得进入planner、扩充或训练。
+- `AXIS_PI05_TRACK3_PUBLIC_PRIMITIVE_MINING_AND_AUTOGEN_PLAN.md`
+  - 研究对话只作为线索；S0从primary source独立锁定LIBERO-Infinity、Behavior Prompting/LIBERO-Gen、原始LIBERO和相关数据的commit/revision/license/schema；
+  - S1先对本地40个full-state HDF5及19,961个20Hz IPEC/Plus episodes做语义挖掘，严格区分exact reverse、reverse-relevant primitive与generator reference；
+  - S2只选择性验证三族schema/replay，新增下载上限20GiB；S3把reverse semantics适配到当前固定环境；S4/S5最多自动生成support/containment/articulation各1条pending canary；
+  - 人工Teleop不再是当前首要授权；只有自动close-drawer等明确失败并经下一次审核后，才允许恢复单条人工reference seed；
+  - 本计划不得批量生成30–60条、训练、修改norm、FAST/ZIP、使用官方GPU、上传或提交。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 
@@ -43,10 +44,11 @@
 20. `AXIS_PI05_TRACK3_REVERSE_LORA_POSITIVE_SCORE_PLAN.md`：T0资产锁通过；T1编译40个公开候选但真实20Hz pilot为0条，按门禁停止；LoRA及后续阶段均未执行，转入公开完整终态与teleop/planner恢复。
 21. `AXIS_PI05_TRACK3_PUBLIC_TERMINAL_TELEOP_PLANNER_RECOVERY_PLAN.md`：P0锁定40个官方公开HDF5，P1三个family full-state canary通过，P2 recorder原型完成；独立审核发现recorder尚不可见/不可安全空闲/replay promotion不合格，转入最小修复。
 22. `AXIS_PI05_TRACK3_TELEOP_RECORDER_REMEDIATION_PLAN.md`：R0–R4完成，修复action/reset、localhost preview与pending/replay/review promotion语义；GPU3 task19→10→20非人工canary通过，转入单条task19人工端到端canary。
+23. `AXIS_PI05_TRACK3_TASK19_HUMAN_CANARY_PLAN.md`：在H0执行前被公开primitive挖掘与自动生成路线取代；没有人工candidate。recorder/replay实现保留为自动生成失败后的显式人工兜底，不再是活动授权。
 
 归档不表示旧计划所有尾部阶段都完成；只表示该文件不再是活动授权入口。旧 failure、阈值、hash 和未执行阶段必须继续保留。
 
-当前只执行Track3 task19 H0–H3单条人工canary；不得同时运行task10/20，不得从归档reverse LoRA/interstep计划自动恢复训练，也不得直接转向Blackwell。
+当前只执行Track3公开来源核验、primitive语义挖掘、选择性replay、reverse adapter与最多三条非人工自动canary；不得恢复人工task19、批量生成、旧reverse LoRA/interstep训练或直接转向Blackwell。
 
 ## 3. 保留但非活动的研究线
 

@@ -155,8 +155,15 @@ def test_m0_summary_is_fail_closed_and_machine_handoff_advances_without_losing_e
     handoff_path = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
     handoff = __import__("json").loads(handoff_path.read_text(encoding="utf-8"))
     execution = handoff["dense_fullft_allocator_fraction_recovery_execution"]
-    assert handoff["next_plan"].endswith("AXIS_PI05_TRACK3_TASK19_HUMAN_CANARY_PLAN.md")
-    assert handoff["next_phase_only"] == "track3_task19_H0_to_H3_no_promotion"
+    assert handoff["next_plan"].endswith("AXIS_PI05_TRACK3_PUBLIC_PRIMITIVE_MINING_AND_AUTOGEN_PLAN.md")
+    assert handoff["next_phase_only"] == "track3_public_autogen_S0_to_S5_max_three_pending_canaries"
+    autogen = handoff["track3_public_primitive_autogen_planning"]
+    assert autogen["accepted_reverse_episode_count"] == 0
+    assert autogen["superseded_plan_executed"] is False
+    assert autogen["authorization"]["max_pending_autogen_canaries"] == 3
+    assert autogen["authorization"]["human_teleop"] is False
+    assert autogen["authorization"]["lora_or_dense_training"] is False
+    assert autogen["authorization"]["official_gpu"] is False
     assert handoff["tests"]["passed"] == 158
     assert execution["a2_fraction_090"]["optimizer_updates"] == 0
     assert execution["a3_fraction_095"]["optimizer_updates"] == 0

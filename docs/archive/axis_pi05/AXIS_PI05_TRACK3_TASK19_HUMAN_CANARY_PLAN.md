@@ -1,10 +1,12 @@
-# AXIS Pi0.5 Track 3 Task19 单条人工 Teleop Canary 计划
+# AXIS Pi0.5 Track 3 Task19 单条人工 Teleop Canary 计划（已被公开资产自动生成路线取代）
 
 > 制定日期：2026-09-03（Asia/Tokyo）
 > 执行输入：root `15791f9`，nested OpenPI `b58aff0`
 > 当前状态：`track3_task19_human_canary_ready`
 > 目标：人工完成“关闭木柜中间抽屉”一条task19轨迹，写入pending并fresh-process replay 3/3；随后停在人审前。
 > 不授权：promotion到accepted、task10/20、planner、P4/P5、训练、FAST、ZIP、C20/E2、官方GPU、上传或提交。
+
+> 归档说明（2026-09-03）：本计划未执行 H0–H3，也未产生人工 candidate。公开资料研究发现可先验证 LIBERO-Infinity、现有 reverse-relevant primitives 与 Behavior Prompting/LIBERO-Gen 自动生成链，因此人工 canary 改为自动生成失败后的显式兜底，不再是当前活动授权。
 
 ## H0. 启动前门禁
 

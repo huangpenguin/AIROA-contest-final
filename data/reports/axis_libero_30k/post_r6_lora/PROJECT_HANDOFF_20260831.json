@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-03",
-  "status": "track3_task19_human_canary_ready",
+  "status": "track3_public_primitive_mining_autogen_ready",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
@@ -253,8 +253,8 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_TRACK3_TASK19_HUMAN_CANARY_PLAN.md",
-  "next_phase_only": "track3_task19_H0_to_H3_no_promotion",
+  "next_plan": "docs/AXIS_PI05_TRACK3_PUBLIC_PRIMITIVE_MINING_AND_AUTOGEN_PLAN.md",
+  "next_phase_only": "track3_public_autogen_S0_to_S5_max_three_pending_canaries",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -1749,5 +1749,61 @@
       "official_gpu": false
     },
     "next_phase_only": "H0_task19_single_record_H2_replay_then_H3_stop_before_human_review"
+  },
+  "track3_public_primitive_autogen_planning": {
+    "status": "track3_public_primitive_mining_autogen_ready",
+    "planning_input_root_commit": "bcf7e1c0deffc9c2eaf7595931f7fb2372d05257",
+    "planning_input_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "active_plan": "docs/AXIS_PI05_TRACK3_PUBLIC_PRIMITIVE_MINING_AND_AUTOGEN_PLAN.md",
+    "superseded_plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_TASK19_HUMAN_CANARY_PLAN.md",
+    "superseded_plan_executed": false,
+    "accepted_reverse_episode_count": 0,
+    "research_conversation": {
+      "title": "Track3逆向训练方案",
+      "conversation_id": "6a97d006-eb58-83ee-9f32-e96f0d423182",
+      "treated_as_provenance": false,
+      "use": "lookup_hints_requiring_primary_source_verification"
+    },
+    "local_public_inputs": {
+      "original_libero_hdf5_file_count": 40,
+      "original_libero_hdf5_total_bytes": 33784856577,
+      "ipec_20hz_episode_count": 5614,
+      "libero_plus_20hz_episode_count": 14347,
+      "combined_local_20hz_episode_count": 19961,
+      "combined_local_20hz_frame_count": 3080750,
+      "public_t3_denylist": "data/eval_manifests/axis_pi05_eval_v1/public_t3_holdout.jsonl",
+      "public_t3_denylist_case_count": 40
+    },
+    "identity_classes": [
+      "exact_reverse_demo",
+      "reverse_relevant_primitive",
+      "generator_reference_only"
+    ],
+    "authorized_phases": ["S0", "S1", "S2", "S3", "S4", "S5"],
+    "authorization": {
+      "primary_source_verification": true,
+      "local_semantic_mining": true,
+      "selective_download_max_gib": 20,
+      "gpu3_schema_replay_and_autogen": true,
+      "max_pending_autogen_canaries": 3,
+      "human_teleop": false,
+      "accepted_promotion": false,
+      "batch_30_to_60_generation": false,
+      "lora_or_dense_training": false,
+      "norm_replacement": false,
+      "official_gpu": false,
+      "fast_zip_upload_submission": false
+    },
+    "manual_fallback_policy": "only_after_autogen_gap_and_separate_manual_review",
+    "success_stop": "track3_autogen_three_family_canary_pending_human_video_review",
+    "plan_only_validation": {
+      "command": "JAX_PLATFORMS=cpu PYTHONPATH=. .venv_axis_pi05/bin/pytest -q tests",
+      "passed": 158,
+      "skipped": 7,
+      "warnings": 23,
+      "gpu_started": false,
+      "s0_started": false
+    },
+    "next_phase_only": "S0_to_S5_then_hard_stop"
   }
 }

@@ -1,0 +1,16 @@
+{
+  "completed_at_utc": "2026-09-03T12:26:13.732048+00:00",
+  "created_at_utc": "2026-09-03T12:26:03.927263+00:00",
+  "error": "AttributeError: 'TargetZone' object has no attribute 'get_geom_state'",
+  "fresh_process": true,
+  "hdf5_state_used_for_predicate_oracle": false,
+  "operator_family": "support_remove",
+  "phase": "D2",
+  "run_index": 1,
+  "schema_version": "track3_dynamic_gate_reconciliation_run_v1",
+  "status": "worker_exception",
+  "stderr_tail": "[robosuite WARNING] No private macro file found! (__init__.py:7)\n[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)\n[robosuite WARNING] To setup, run: python /home/huang/code/PARC2026_final/.venv_axis_pi05/lib/python3.12/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)\n",
+  "stdout_tail": "{\"completed_at_utc\": \"2026-09-03T12:26:13.732048+00:00\", \"created_at_utc\": \"2026-09-03T12:26:03.927263+00:00\", \"error\": \"AttributeError: 'TargetZone' object has no attribute 'get_geom_state'\", \"fresh_process\": true, \"hdf5_state_used_for_predicate_oracle\": false, \"operator_family\": \"support_remove\", \"phase\": \"D2\", \"run_index\": 1, \"schema_version\": \"track3_dynamic_gate_reconciliation_run_v1\", \"status\": \"worker_exception\", \"task_index\": 10}\n",
+  "task_index": 10,
+  "worker_returncode": 0
+}

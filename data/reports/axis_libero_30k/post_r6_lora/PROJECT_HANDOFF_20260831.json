@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-03",
-  "status": "track3_dynamic_gate_model_state_reconciliation_planned",
+  "status": "track3_native_reverse_dynamic_canary_failed_support",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
@@ -2075,8 +2075,60 @@
       "git_diff_check": "passed"
     }
   },
+  "track3_dynamic_gate_reconciliation_execution": {
+    "status": "track3_native_reverse_dynamic_canary_failed_support",
+    "plan": "docs/AXIS_PI05_TRACK3_DYNAMIC_GATE_MODEL_STATE_RECONCILIATION_PLAN.md",
+    "evidence_root": "data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation",
+    "completed_phases": ["D0_input_lock", "D1_validator_cpu_schema", "D2_task10_single_fresh_process", "D4_closeout"],
+    "stopped_before": ["D3_three_family_3_of_3", "SE3", "demo_generation", "training", "human_teleop"],
+    "d0": {
+      "status": "track3_dynamic_gate_reconciliation_input_locked",
+      "report": "data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation/d0_release_lock.json",
+      "input_execution_commit": "179045a6d7a7998bf1a54452ef79739c9383c09f",
+      "audit_commit_observed": "f0034b9976e6de81644d1535d60328006bbe83cf",
+      "old_evidence_count": 28,
+      "hdf5_count": 3,
+      "states0_equals_init_state_all": true,
+      "states_qpos_offset": 1,
+      "counts_zero": true
+    },
+    "d1": {
+      "validator_module": "tools/axis_pi05/track3_dynamic_gate_reconciliation.py",
+      "cpu_schema_tests": 15,
+      "cpu_schema_gate": true,
+      "old_g1_report_immutable": true,
+      "site_state_fix_after_d2": true
+    },
+    "d2": {
+      "report": "data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation/d2_task10_canary.json",
+      "per_run_report": "data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation/runs/d2_task10_canary_run_1.json",
+      "task_index": 10,
+      "fresh_process_runs": 1,
+      "gpu_policy": "physical_gpu3_only",
+      "status": "track3_native_reverse_dynamic_canary_failed_support",
+      "failure_class": "validator_exception_before_dynamic_gate_evidence",
+      "failure": "TargetZone has no get_geom_state",
+      "rerun": false
+    },
+    "d3": {"status": "not_run_due_to_d2_hard_stop", "fresh_process_runs": 0, "family_3_of_3": null},
+    "outputs": {
+      "exact_reverse_demo": 0,
+      "pending_autogen": 0,
+      "pending_autogen_v2": 0,
+      "accepted_reverse_demo": 0,
+      "support_retry_attempts": 0,
+      "training_started": false,
+      "human_operation": false,
+      "official_gpu_used": false,
+      "fast_or_zip_used": false,
+      "upload_or_submission": false,
+      "libero_plus_touched": false
+    },
+    "hard_stop": "D2 validator exception; do not run D2 again, D3, SE(3), demo generation or training without a new review and plan",
+    "summary": "data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation/summary.json"
+  },
   "track3_dynamic_gate_reconciliation_authorization": {
-    "status": "track3_dynamic_gate_model_state_reconciliation_planned",
+    "status": "track3_native_reverse_dynamic_canary_failed_support",
     "plan": "docs/AXIS_PI05_TRACK3_DYNAMIC_GATE_MODEL_STATE_RECONCILIATION_PLAN.md",
     "authorized_phases": ["D0", "D1", "D2", "D3", "D4_closeout_only"],
     "authorization": {
@@ -2099,6 +2151,6 @@
     },
     "success_stop": "track3_reverse_semantics_v2_dynamic_validated_pending_se3_review",
     "failure_stop_prefix": "track3_reverse_semantics_v2_dynamic_failed_",
-    "next_phase_only": "D0_to_D3_dynamic_validator_reconciliation_then_D4_closeout_hard_stop"
+    "next_phase_only": "new_review_and_minimal_validator_remediation_plan"
   }
 }

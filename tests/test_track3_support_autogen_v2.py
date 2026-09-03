@@ -74,7 +74,7 @@ def test_historical_dynamic_failure_is_preserved_but_new_plan_repairs_validator(
             / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
         ).read_text(encoding="utf-8")
     )
-    assert handoff["status"] == "track3_dynamic_gate_model_state_reconciliation_planned"
+    assert handoff["status"] == "track3_native_reverse_dynamic_canary_failed_support"
     assert handoff["next_plan"].endswith(
         "AXIS_PI05_TRACK3_DYNAMIC_GATE_MODEL_STATE_RECONCILIATION_PLAN.md"
     )

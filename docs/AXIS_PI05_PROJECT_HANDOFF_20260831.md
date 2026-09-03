@@ -1,11 +1,11 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新审核状态：`track3_dynamic_gate_model_state_reconciliation_planned`
+> 最新审核状态：`track3_native_reverse_dynamic_canary_failed_support`
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_dynamic_gate_model_state_reconciliation_planned`
+> 当前总状态：`track3_native_reverse_dynamic_canary_failed_support`
 > 唯一活动计划：`docs/AXIS_PI05_TRACK3_DYNAMIC_GATE_MODEL_STATE_RECONCILIATION_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
@@ -516,3 +516,13 @@ S3 动态门禁使用 GPU3 跑三族各 `3/3` fresh process，共 9 次。task10
 因此审核为 `remediation_required`，但不是退回 Teleop 或宣布 reverse BDDL 无效。旧 G1 report 保持 immutable，旧计划归档；唯一活动计划改为 `docs/AXIS_PI05_TRACK3_DYNAMIC_GATE_MODEL_STATE_RECONCILIATION_PLAN.md`。它只授权：HDF5/model compatibility fail-closed、reverse BDDL native reset 的逐 predicate 检查、按单位拆分的 controller/gripper settle，以及 GPU3 上 task10 单次 canary 后三族各 `3/3` 非抓取动态 release。即使全通过也必须停在 `track3_reverse_semantics_v2_dynamic_validated_pending_se3_review`，等待新审核才可恢复 SE(3) 与真实 support canary。完整审核见 `docs/reviews/axis_pi05/TRACK3_SUPPORT_SE3_G0_G1_AUDIT_20260903.md`。
 
 审核后全量测试为 `171 passed, 7 skipped, 23 warnings`。
+
+## 39. Dynamic gate reconciliation D0–D4 收尾（2026-09-03）
+
+D0 在新 namespace `data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation/` 完成输入锁定：旧 evidence 28 项、三份官方 HDF5、三份 P1 attempt-1 snapshot 均保留 hash；HDF5 `states[0] == init_state` 均为真，time/qpos offset 为 `0/1`，exact/pending/accepted reverse demo 仍为 `0/0/0`。`LIBERO-plus` 只读取并保持原有 dirty 状态。
+
+D1 的 validator/schema CPU 门禁修复后为 `15 passed`：reverse initial 逐条调用 reverse env predicate，native reset 后按 `sim.forward → controller.update → controller.reset_goal`，7D OSC_POSE 使用零 gripper command 保持当前 target；四元数、named field、单位阈值、warm-up/measurement 分窗和 fail-closed schema 均有回归测试。旧 `g1_s3_dynamic_gates.json` hash 未变化。
+
+D2 仅在 GPU3 启动一次 task10 fresh process，未抓取、未写 demo。首次运行在 validator site detail 将原始 `TargetZone` 错当 state wrapper、调用不存在的 `get_geom_state`，故没有形成有效 predicate/settle 证据；状态为 `track3_native_reverse_dynamic_canary_failed_support`。随后只修复 validator 并补 CPU 回归，D2 不重跑。
+
+因此 D3 未运行（`0/9`），D4 已 hard stop。没有 SE(3)、demo/pending、训练、Teleop、FAST/ZIP、官方 GPU、上传或提交；本轮结果不解释为 reverse semantics 成功或失败。证据：`d0_release_lock.json`、`d2_task10_canary.json`、`runs/d2_task10_canary_run_1.json`、`summary.json`、`D4_CLOSEOUT_REPORT_ZH.md`。下一步需要新的审核和最小 validator remediation 计划。

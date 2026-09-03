@@ -1,0 +1,68 @@
+{
+  "created_at_utc": "2026-09-03T12:28:51.308603+00:00",
+  "d0": {
+    "audit_commit_observed_at_d0": "f0034b9976e6de81644d1535d60328006bbe83cf",
+    "hard_gate": {
+      "all_locked_inputs_exist": true,
+      "counts_zero": true,
+      "hdf5_model_state_metadata_locked": true,
+      "libero_plus_recorded_without_touch": true,
+      "nested_openpi_clean_at_input_execution_commit": true,
+      "old_dynamic_report_locked": true,
+      "old_dynamic_report_not_rewritten_by_d0": true,
+      "root_clean_at_input_execution_commit": true
+    },
+    "input_execution_commit": "179045a6d7a7998bf1a54452ef79739c9383c09f",
+    "status": "track3_dynamic_gate_reconciliation_input_locked"
+  },
+  "d1": {
+    "d2_was_not_retried": true,
+    "fix_after_d2_exception": "TargetZone is not a SiteObjectState; site pose now comes from object_states_dict state wrapper",
+    "targeted_test_count_at_d1": 15,
+    "validator_cpu_tests_passed": true
+  },
+  "d2": {
+    "failure": "AttributeError: 'TargetZone' object has no attribute 'get_geom_state'",
+    "fresh_process": true,
+    "gpu_policy": "physical_gpu3_only",
+    "no_grasp_or_demo_generation": true,
+    "status": "track3_native_reverse_dynamic_canary_failed_support",
+    "task_index": 10
+  },
+  "d3": {
+    "family_3_of_3": null,
+    "fresh_process_runs": 0,
+    "status": "not_run_due_to_d2_hard_stop"
+  },
+  "hard_stop": {
+    "do_not_enter": [
+      "D3",
+      "SE(3)",
+      "demo generation",
+      "training",
+      "Teleop"
+    ],
+    "reason": "validator exception occurred before predicate/settle evidence; no valid reverse dynamic conclusion",
+    "stop_after": "D2"
+  },
+  "old_evidence": {
+    "old_evidence_drift": false,
+    "old_g1_dynamic_report_preserved": true,
+    "old_g1_dynamic_report_sha256": "b133703c569e922ebcab07c758720554478ea16e5fa30928088855490a291b8a"
+  },
+  "outputs": {
+    "accepted_reverse_demo": 0,
+    "exact_reverse_demo": 0,
+    "fast_or_zip_used": false,
+    "human_operation": false,
+    "libero_plus_touched": false,
+    "official_gpu_used": false,
+    "pending_autogen": 0,
+    "pending_autogen_v2": 0,
+    "support_retry_attempts": 0,
+    "training_started": false,
+    "upload_or_submission": false
+  },
+  "schema_version": "track3_dynamic_gate_reconciliation_d4_v1",
+  "status": "track3_native_reverse_dynamic_canary_failed_support"
+}

@@ -2,22 +2,22 @@
 
 > 更新日期：2026-09-03（Asia/Tokyo）
 > 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_DYNAMIC_GATE_MODEL_STATE_RECONCILIATION_PLAN.md`
-> 当前状态：`track3_dynamic_gate_model_state_reconciliation_planned`
+> 当前状态：`track3_native_reverse_dynamic_canary_failed_support`
 > 最新审核：`docs/reviews/axis_pi05/TRACK3_SUPPORT_SE3_G0_G1_AUDIT_20260903.md`
 
 ## 1. 本轮执行停止点
 
 G0/G1 已按失败门禁停止，S1 v2 与 typed language 获批准，三族 `3/3` fresh-process 运行及 hard stop 也真实完成；但 G1.3 的失败结论不能证明 reverse semantics 无效。旧 validator 把 HDF5 `states[0]` 恢复到不同/randomized XML 的 reverse env，以 forward success 冒充 reverse initial predicate 检查，并对包含 joint velocity、EEF quaternion、gripper qpos/qvel 的整段 proprio 使用一个 `0.05` 阈值；20 步 action 还固定发送 `gripper=-1`。相反，三族 object/fixture drift 仅约 `1e-7～1e-11`。
 
-审核裁决为 `remediation_required`：保留旧 G1 failure immutable，但将其解释改为 `validator inconclusive`。先修复 model/state 与 named-field settle 门禁；暂不进入 SE(3)、canary、Teleop 或训练。证据：`docs/reviews/axis_pi05/TRACK3_SUPPORT_SE3_G0_G1_AUDIT_20260903.md`、`data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s3_dynamic_gates.json`。
+审核裁决为 `remediation_required`：保留旧 G1 failure immutable，但将其解释改为 `validator inconclusive`。本轮 D0/D1 完成，D2 唯一 fresh task10 process 在 validator site-state 适配处异常，D3 未运行，已按 hard stop 收尾；该结果不是 reverse semantics 失败。证据：`docs/reviews/axis_pi05/TRACK3_SUPPORT_SE3_G0_G1_AUDIT_20260903.md`、`data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation/summary.json`。
 
 ## 2. 唯一活动计划
 
 - `AXIS_PI05_TRACK3_DYNAMIC_GATE_MODEL_STATE_RECONCILIATION_PLAN.md`
   - D0 锁定 `179045a`、旧 G1 evidence、v2 specs、P1/HDF5/model-file hashes 与零 reverse-demo 状态；
   - D1 禁止跨 model HDF5 predicate oracle，改为 reverse BDDL 自身 native reset、逐 predicate 检查、同量纲 named-field settle 与正确 controller/gripper hold 顺序；
-  - D2 只用 GPU3 对 task10 做一次 native-reset 动态 canary，不抓取、不生成 demo；
-  - D3 只有 D2 通过后才对三族各 `3/3` fresh process 做同 model release；
+  - D2 只用 GPU3 对 task10 做一次 native-reset 动态 canary，不抓取、不生成 demo；实际首次运行触发 validator exception，未重跑；
+  - D3 因 D2 未通过未运行（`0/9`）；
   - D4 只收尾并 hard stop；即使 `9/9` 通过，也要等待新审核才可恢复 HDF5 SE(3) 与一次 support canary；
   - 不得运行旧 G2/G3/G4、真实 reverse canary、人工 Teleop、批量生成、训练、norm、FAST/ZIP、官方 GPU、上传或提交。
 
@@ -63,7 +63,7 @@ G0/G1 已按失败门禁停止，S1 v2 与 typed language 获批准，三族 `3/
 
 G0 输入锁、S1 v2 分层统计和 S3 typed language 已完成并获批准。S3 动态门禁运行三族各 `3/3` fresh process，共 9 次，并正确按旧门禁停止；但 task10/task19 的 HDF5 `states[0]` 来自与 fresh reverse env 不同的 recorded model，不能作为 goal oracle。旧 robot drift 又混合异量纲字段，且固定 `gripper=-1` 主动改变状态；三族 object/fixture 实际稳定。
 
-审核结论为 `remediation_required`，当前状态改为 `track3_dynamic_gate_model_state_reconciliation_planned`。G2 HDF5 alignment/SE(3) 提取、G3 执行器、G4 support retry 均未启动；没有产生 `pending_autogen_v2`，exact/pending/accepted reverse demo 仍为 `0`。旧报告保持 immutable；下一执行者只能运行新计划 D0–D3 与 D4 收尾。
+审核结论为 `remediation_required`，当前状态先进入 `track3_native_reverse_dynamic_canary_failed_support` 并停止。D0 输入锁定，D1 CPU/schema 门禁修复后 `15/15`；D2 首次 fresh process 在 `TargetZone.get_geom_state` validator 缺口处异常，D2 未重跑，D3 `0/9` 未启动。G2 HDF5 alignment/SE(3) 提取、G3 执行器、G4 support retry 均未启动；没有产生 `pending_autogen_v2`，exact/pending/accepted reverse demo 仍为 `0`。旧报告保持 immutable，等待新的审核与最小 remediation 计划。
 
 ## 4. 保留但非活动的研究线
 

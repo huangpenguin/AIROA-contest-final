@@ -3,7 +3,7 @@
 > 制定日期：2026-09-03（Asia/Tokyo）
 > 输入执行 commit：root `179045a6d7a7998bf1a54452ef79739c9383c09f`，nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`
 > 审核结论：`remediation_required`
-> 当前状态：`track3_dynamic_gate_model_state_reconciliation_planned`
+> 当前状态：`track3_native_reverse_dynamic_canary_failed_support`
 > 唯一授权：执行 D0–D3，随后仅做 D4 收尾并 hard stop
 > 不授权：原 G2/G3/G4、任何真实 reverse canary、人工 Teleop、批量生成、训练、norm、FAST/ZIP、官方 GPU、上传或比赛提交
 
@@ -82,11 +82,11 @@ CPU/schema 任一失败即置为 `track3_dynamic_gate_validator_remediation_fail
 5. 在同一 model 内构造最小 controlled state，使一个 reverse initial predicate 从 true→false；恢复原 native state 后还须 true；
 6. 不移动机械臂去抓取，不生成 demo，不写 pending。
 
-只有 D2 全部通过才能进入 D3。失败则状态为 `track3_native_reverse_dynamic_canary_failed_support`，保留具体 predicate/field/video（若已有）并停止；不得调整阈值后重跑。
+只有 D2 全部通过才能进入 D3。实际 D2 的唯一 fresh process 在 site-state 详情记录处因 validator 把原始 `TargetZone` 当作带 `get_geom_state` 的 state wrapper 而异常；因此没有形成可用 predicate/settle 结论。该次状态记为 `track3_native_reverse_dynamic_canary_failed_support`，修复后不重跑，不调整阈值。
 
 ## 4. D3：三族同 model 动态 release（GPU3 only）
 
-对 task10/task20/task19 各运行 `3/3` fresh process，共最多 9 次；输入是各 reverse BDDL 自身 native reset，不是 P1 terminal 或跨 model HDF5 state。
+对 task10/task20/task19 各运行 `3/3` fresh process，共最多 9 次；输入是各 reverse BDDL 自身 native reset，不是 P1 terminal 或跨 model HDF5 state。由于 D2 未通过，本轮 D3 未运行（`0/9`）。
 
 每次必须满足：
 
@@ -124,6 +124,8 @@ git diff --check
 ```
 
 - 形成 clean commit；不得 push、上传或比赛提交。
+
+本轮实际收尾：D0 锁定成功；D1 CPU/schema 门禁在修复后为 `15/15`；D2 首次 fresh process 触发 validator exception，D2 不重跑；D3 hard stop，未产生任何三族 release 结果。D4 报告位于 `data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation/`。因此本计划到此结束，等待下一次审核，不把该异常解释为 reverse semantics 失败。
 
 ## 6. 本计划之后（不授权）
 

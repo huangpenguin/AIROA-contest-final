@@ -74,9 +74,9 @@ def test_historical_dynamic_failure_is_preserved_but_new_plan_repairs_validator(
             / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
         ).read_text(encoding="utf-8")
     )
-    assert handoff["status"] == "track3_native_reverse_dynamic_failed_support_reverse_initial_or_goal"
+    assert handoff["status"] == "track3_reverse_init_stabilization_semantics_planned"
     assert handoff["next_plan"].endswith(
-        "AXIS_PI05_TRACK3_NATIVE_REVERSE_VALIDATOR_RECOVERY_PLAN.md"
+        "AXIS_PI05_TRACK3_REVERSE_INIT_STABILIZATION_SEMANTICS_PLAN.md"
     )
     audit = handoff["track3_support_se3_g0_g1_audit"]
     assert audit["status"] == "remediation_required"
@@ -99,6 +99,18 @@ def test_historical_dynamic_failure_is_preserved_but_new_plan_repairs_validator(
     assert recovery["authorization"]["gpu3_task10_recovery_canary_max"] == 1
     assert recovery["authorization"]["se3_or_grasp_executor"] is False
     assert recovery["authorization"]["lora_or_dense_training"] is False
+
+    r0_r4_audit = handoff["track3_native_validator_r0_r4_audit"]
+    assert r0_r4_audit["status"] == "remediation_required"
+    assert r0_r4_audit["r2_predicate_evidence"]["initial_true_count"] == 4
+    assert r0_r4_audit["r2_predicate_evidence"]["bowl_plate_xy_exact"] is True
+    assert r0_r4_audit["r2_predicate_evidence"]["settle_executed"] is False
+    assert r0_r4_audit["report_findings"]["tri_state_gate_required"] is True
+    stabilization = handoff["track3_reverse_init_stabilization_authorization"]
+    assert stabilization["authorization"]["release_stabilization_step"] == 5
+    assert stabilization["authorization"]["bddl_region_or_predicate_modification"] is False
+    assert stabilization["authorization"]["se3_or_grasp_executor"] is False
+    assert stabilization["authorization"]["lora_or_dense_training"] is False
 
 
 def test_predicate_parser_remains_strict() -> None:

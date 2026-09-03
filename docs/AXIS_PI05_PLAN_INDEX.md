@@ -1,27 +1,25 @@
 # AXIS Pi0.5 计划索引与审核生命周期
 
 > 更新日期：2026-09-03（Asia/Tokyo）
-> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_NATIVE_REVERSE_VALIDATOR_RECOVERY_PLAN.md`
-> 当前状态：`track3_native_reverse_dynamic_failed_support_reverse_initial_or_goal`
-> 最新审核：`docs/reviews/axis_pi05/TRACK3_DYNAMIC_GATE_D0_D4_AUDIT_20260903.md`
+> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_REVERSE_INIT_STABILIZATION_SEMANTICS_PLAN.md`
+> 当前状态：`track3_reverse_init_stabilization_semantics_planned`
+> 最新审核：`docs/reviews/axis_pi05/TRACK3_NATIVE_VALIDATOR_R0_R4_AUDIT_20260903.md`
 
 ## 1. 本轮执行停止点
 
 G0/G1 已按失败门禁停止，S1 v2 与 typed language 获批准，三族 `3/3` fresh-process 运行及 hard stop 也真实完成；但 G1.3 的失败结论不能证明 reverse semantics 无效。旧 validator 把 HDF5 `states[0]` 恢复到不同/randomized XML 的 reverse env，以 forward success 冒充 reverse initial predicate 检查，并对包含 joint velocity、EEF quaternion、gripper qpos/qvel 的整段 proprio 使用一个 `0.05` 阈值；20 步 action 还固定发送 `gripper=-1`。相反，三族 object/fixture drift 仅约 `1e-7～1e-11`。
 
-最新审核裁决仍为 `remediation_required`，但范围已收窄：D0 与 hard stop 获批；D2 只在 predicate detail telemetry 将 `TargetZone` 误当 state wrapper 时异常，没有形成 task10 predicate/settle 结论。R1 已完成三族真实 no-renderer schema probe，三族均 `schema_passed`；R2 唯一 task10 recovery canary 已在 GPU3 执行，schema 完整但 native reverse reset 的 task10 reverse initial 未全 true，故按具体字段 fail closed；R3 未运行（`0/9`），R4 已停止。证据：`data/reports/axis_libero_30k/track3_native_reverse_validator_recovery/`。
+最新审核仍为 `remediation_required`，但 R2 已取得第一条有效结论：task10 reset 瞬间 7 条 reverse init 中 3 条 false，goal 正确 false；bowl 与 plate XY 完全一致而 Z 相差 `0.11 m`，符合 sampler 已放置但尚未形成 runtime contact。三族 R1 都至少有一个 background init atom=false；本地 LIBERO evaluator 会先执行 5 个零动作物理步。因此当前先校准 initializer-vs-runtime 和 step5 stabilization 语义，不能直接改 BDDL 或宣布 reverse start 无效。证据：`docs/reviews/axis_pi05/TRACK3_NATIVE_VALIDATOR_R0_R4_AUDIT_20260903.md`。
 
 ## 2. 唯一活动计划
 
-- `AXIS_PI05_TRACK3_NATIVE_REVERSE_VALIDATOR_RECOVERY_PLAN.md`
-  - R0 锁定 `84c2655`、原 D0/D2/D4、旧 G1、v2 specs 与零 reverse-demo 状态；
-  - R1 分离 authoritative predicate truth 与 detail telemetry，修复 worker/parent return-code 契约，并用三个真实 no-renderer env 做 runtime schema probe；
-  - R2 只允许一次 task10 recovery canary；原 D2 是无有效结论的 validator exception，不计作行为失败；
-  - R2 通过后才允许 R3 以不变代码/spec/threshold 做三族各 `3/3`；
-  - R4 只收尾并 hard stop；即使 `9/9` 通过也等待 SE(3) 专项新审核；
-  - 不得运行 SE(3)、抓取/demo、人工 Teleop、批量生成、训练、norm、FAST/ZIP、官方 GPU、上传或提交。
-
-R0–R4 已完成并停止：R0 保留 `84c2655` 输入锁及旧 D2 exception；R1 三族 schema 为 `3/3`；R2 状态为 `track3_native_reverse_dynamic_failed_support_reverse_initial_or_goal`，其中 `schema_complete=true`、goal 全 false，但 native reverse initial 不满足全部 predicates；R3 为 hard stop，fresh-process runs=`0`。当前仍为 `0` 条 exact/pending/accepted reverse demo，等待下一次审核，不得据此进入 SE(3) 或训练。
+- `AXIS_PI05_TRACK3_REVERSE_INIT_STABILIZATION_SEMANTICS_PLAN.md`
+  - I0 锁定 `ed0ec3b`、R0–R4、R2 per-run、三族 specs 与零 reverse-demo 状态；
+  - I1 显式区分 operator-critical source relation 与 background initializer，修复 passed/failed/not-evaluated 三态报告；
+  - I2 CPU/no-renderer 对原始 forward task10 与三族 reverse tasks 记录 `t=0/1/5/10/20` predicate/contact/pose，step5 是唯一 release checkpoint；
+  - 只有三族 critical relation 在 step5 成立并稳定，才允许 I3 在 GPU3 做一次 task10 settled-init canary，随后三族各 `3/3`；
+  - I4 收尾并 hard stop；即使全部通过也等待 SE(3) 专项审核；
+  - 不得修改 BDDL/region/predicate，不得运行 SE(3)、抓取/demo、Teleop、批量生成、训练、norm、FAST/ZIP、官方 GPU、上传或提交。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 
@@ -57,16 +55,17 @@ R0–R4 已完成并停止：R0 保留 `84c2655` 输入锁及旧 D2 exception；
 24. `AXIS_PI05_TRACK3_PUBLIC_PRIMITIVE_MINING_AND_AUTOGEN_PLAN.md`：S0–S5 已执行；首条 support canary 在 descend 超时后正确停止。独立审核发现 S1 统计和 S3 动态/语言门禁未闭合，转入 support-only SE(3) 最小恢复。
 25. `AXIS_PI05_TRACK3_SUPPORT_AUTOGEN_SE3_RECOVERY_PLAN.md`：G0、S1 v2、typed language 与三族动态运行完成；G1.3 按旧门禁停止。独立审核确认跨 model HDF5 state、proxy predicate 与异量纲 raw proprio settle 使结论无效，G2–G4 未授权，转入 model/state 对齐修复。
 26. `AXIS_PI05_TRACK3_DYNAMIC_GATE_MODEL_STATE_RECONCILIATION_PLAN.md`：D0/D1 完成；D2 唯一 task10 process 因 `TargetZone` telemetry schema 异常而无有效动态结论，D3 未运行，D4 正确停止；转入 validator runtime/进程契约最小恢复。
+27. `AXIS_PI05_TRACK3_NATIVE_REVERSE_VALIDATOR_RECOVERY_PLAN.md`：R1 三族 runtime schema 通过；R2 有效发现 reset 瞬间 task10 full init conjunction 非全真并停止，R3 未运行。后续先校准官方式 5-step stabilization 与 critical/background predicate 语义。
 
 归档不表示旧计划所有尾部阶段都完成；只表示该文件不再是活动授权入口。旧 failure、阈值、hash 和未执行阶段必须继续保留。
 
-当前只执行 validator runtime schema/进程契约、一次 task10 recovery canary，以及通过后最多 9 次 GPU3 非抓取动态验证；不得恢复旧 SE(3)/G2–G4、人工 task19、真实 support canary、批量生成、旧 reverse LoRA/interstep 训练或直接转向 Blackwell。
+当前只执行 init stabilization 语义校准、step5 critical-relation 门禁，以及通过后最多 `1+9` 次 GPU3 非抓取动态验证；不得修改 BDDL、恢复旧 SE(3)/G2–G4、人工 task19、真实 support demo、批量生成、旧 reverse LoRA/interstep 训练或直接转向 Blackwell。
 
 ## 3.1 G0–G1 执行审核与门禁重构
 
 G0 输入锁、S1 v2 分层统计和 S3 typed language 已完成并获批准。S3 动态门禁运行三族各 `3/3` fresh process，共 9 次，并正确按旧门禁停止；但 task10/task19 的 HDF5 `states[0]` 来自与 fresh reverse env 不同的 recorded model，不能作为 goal oracle。旧 robot drift 又混合异量纲字段，且固定 `gripper=-1` 主动改变状态；三族 object/fixture 实际稳定。
 
-审核结论为 `remediation_required`，当前状态改为 `track3_native_reverse_validator_recovery_planned`。D0 输入锁定，D1 CPU/schema 门禁修复后 `15/15`；D2 首次 fresh process 在 `TargetZone.get_geom_state` validator telemetry 缺口处异常，D2 未重跑，D3 `0/9` 未启动。异常后修复方向已核对源代码，但尚缺真实三族 schema probe 和进程级 fail-closed；新计划允许闭合这些门禁并只重跑一次有效 task10 recovery canary。
+审核结论为 `remediation_required`，当前状态改为 `track3_reverse_init_stabilization_semantics_planned`。R1 validator/runtime 门禁已批准；R2 的 t=0 full-conjunction failure 真实有效，但只证明 reset 瞬间 contact/predicate 未全成立。新计划必须先按本地官方 evaluator 的 5 个 zero-action 语义验证 critical source relation，并修正早停时把未执行 gate 错写为 false 的报告问题。
 
 ## 4. 保留但非活动的研究线
 

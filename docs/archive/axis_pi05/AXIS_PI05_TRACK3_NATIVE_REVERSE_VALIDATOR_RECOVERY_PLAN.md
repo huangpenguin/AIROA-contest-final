@@ -1,4 +1,7 @@
-# AXIS Pi0.5 Track 3：Native Reverse Validator 最小恢复计划
+# AXIS Pi0.5 Track 3：Native Reverse Validator 最小恢复计划（已归档）
+
+> 归档日期：2026-09-03（Asia/Tokyo）
+> 归档原因：R0/R1 完成；R2 首次取得有效 task10 native-reset 结果并因 reset 瞬间 reverse initial conjunction 非全真停止，R3 未运行；R4 已收尾。后续授权由 `docs/AXIS_PI05_TRACK3_REVERSE_INIT_STABILIZATION_SEMANTICS_PLAN.md` 取代。
 
 > 制定日期：2026-09-03（Asia/Tokyo）
 > 输入执行 commit：root `84c2655f610bb957b0ad1ec2a952776bf023821e`，nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`

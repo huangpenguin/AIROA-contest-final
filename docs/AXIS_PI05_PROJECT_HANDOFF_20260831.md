@@ -1,12 +1,12 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新审核状态：`track3_native_reverse_dynamic_failed_support_reverse_initial_or_goal`
+> 最新审核状态：`track3_reverse_init_stabilization_semantics_planned`
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_native_reverse_dynamic_failed_support_reverse_initial_or_goal`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_NATIVE_REVERSE_VALIDATOR_RECOVERY_PLAN.md`
+> 当前总状态：`track3_reverse_init_stabilization_semantics_planned`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_REVERSE_INIT_STABILIZATION_SEMANTICS_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -14,7 +14,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3 新 validator 已解决跨 model state 与异量纲 settle 设计；R1 三族真实 no-renderer schema probe 已通过，R2 唯一 task10 recovery canary 在 schema 完整的前提下发现 native reverse initial 未全 true，R3 未启动并已 R4 hard stop。没有 reverse demo，accepted/pending 仍为 `0/0`，不得进入 SE(3)、Teleop 或训练。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3 validator/runtime 已通过；有效 R2 发现 task10 reset 瞬间 full init conjunction 非全真，但 bowl 已位于 plate 正上方，尚未经过 LIBERO evaluator 使用的 5 个 zero-action physics steps。当前先校准 initializer-vs-runtime 与 step5 critical relation，不修改 BDDL，也不进入 SE(3)、Teleop 或训练；reverse demo accepted/pending 仍为 `0/0`。
 
 ## 2. 数据与复现基础
 
@@ -250,14 +250,14 @@ upstream             当前 branch 未设置 upstream
 ## 10. 新 section 的接手顺序
 
 1. 阅读本文件与 `docs/AXIS_PI05_PLAN_INDEX.md`。
-2. 阅读并只执行 `docs/AXIS_PI05_TRACK3_NATIVE_REVERSE_VALIDATOR_RECOVERY_PLAN.md` 的 R0–R3，之后仅做 R4 收尾并 hard stop。
+2. 阅读并只执行 `docs/AXIS_PI05_TRACK3_REVERSE_INIT_STABILIZATION_SEMANTICS_PLAN.md` 的 I0–I4，之后 hard stop。
 3. 将Track1=`0.47`、Track2=`0.33`、Track3=`0`及ZIP `95415a…c5f5a`锁为当前official-score baseline；无上传回执的字段保持conditional provenance。
-4. R0 锁定 `84c2655`、原 D0/D2/D4、旧 G1、v2 specs 与零 reverse-demo 状态，旧异常不得覆盖。
-5. R1 将 predicate truth 与 detail telemetry 分层，异常必须 nonzero return code，并对三个真实 no-renderer reverse env 做 schema probe。
-6. R2 只允许 GPU3 上一次 task10 recovery canary；异常或真实 gate 失败立即停，不得再 retry。
-7. R2 通过后才执行 R3 三族各 `3/3`；代码/spec/threshold 必须保持相同。成功也只停在 `pending_se3_review`，不得进入 SE(3)、demo 或训练。
+4. I0 锁定 `ed0ec3b`、R0–R4、R2 per-run、三族 specs 和零 reverse-demo 状态。
+5. I1 固定 critical/background predicate 分类与 passed/failed/not-evaluated 三态；官方式 stabilization checkpoint 固定 step5。
+6. I2 用 CPU/no-renderer 比较原始 forward task10 与三族 reverse tasks 的 `t=0/1/5/10/20` predicate/contact/pose；critical relation 在 step5 不成立即停。
+7. I2 通过后才允许 I3：GPU3 上一次 task10 settled-init canary，再做三族各 `3/3`。不得修改 BDDL/threshold，成功也只停在 `pending_se3_review`。
 
-当前路径是：R6 FAST ZIP Track1=`0.47`/Track2=`0.33`/Track3=`0`（冻结）→ 公开full-state与20Hz数据（已在本地）→ validator runtime closure + native reverse reset 动态 release → 新审核 → exact-model HDF5 抓取 SE(3) 挖掘 → 一次 support-only canary → 视频人审 → 再决定其余两族、30–60 exact reverse扩充与R6分叉LoRA。Dense 30K为冻结的独立研究线。
+当前路径是：R6 FAST ZIP Track1=`0.47`/Track2=`0.33`/Track3=`0`（冻结）→ 公开full-state与20Hz数据（已在本地）→ step5 init stabilization 语义校准与动态 release → 新审核 → exact-model HDF5 抓取 SE(3) 挖掘 → 一次 support-only canary → 视频人审 → 再决定其余两族、30–60 exact reverse扩充与R6分叉LoRA。Dense 30K为冻结的独立研究线。
 
 ## 19. Dense full-FT allocator fraction recovery 执行结果
 
@@ -546,3 +546,13 @@ R1 使用三个独立 fresh process 和真实 `ControlEnv(has_renderer=false, ha
 R2 在 GPU3 仅执行一次 task10 `recovery_1`。worker returncode=`0`、schema_complete=`true`、reverse goal 全 false，但 native reverse reset 的 reverse initial predicates 未全部为 true，故最终状态为 `track3_native_reverse_dynamic_failed_support_reverse_initial_or_goal`。这不是旧 D2 exception，也不是 settle/SE(3) 结论；settle 与 controlled destruction 因 native initial gate fail closed 未执行。R3 按授权未运行（`0/9`），R4 已停止。
 
 本轮没有 exact/pending/accepted reverse demo，没有 SE(3) 抓取、人工 Teleop、批量生成、训练/norm、FAST/ZIP、官方 GPU、上传或比赛提交。机器证据：`data/reports/axis_libero_30k/track3_native_reverse_validator_recovery/r0_release_lock.json`、`r1_runtime_schema_probe.json`、`r2_task10_recovery_canary.json`、`runs/r2_task10_recovery_run_1.json`、`summary.json`、`R4_CLOSEOUT_REPORT_ZH.md`。等待下一次审核。
+
+## 42. R0–R4 独立审核与 Init Stabilization 授权（2026-09-03）
+
+审核输入 root `ed0ec3bff61c09a213300181959491dd107bf778`、parent `3748c2ebc2a9e5fc66ca90657cf8a4639488f7d7`、nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`。R0/R1、有效单次 R2、R3 `0/9`、hard stop、root/OpenPI clean 与 `LIBERO-plus` dirty preservation 均核对通过；审核状态为 `remediation_required`。
+
+R2 的 7 条 task10 init atoms 中 plate→table region、cream-cheese→table region、bowl→plate 为 false；goal 为 false。bowl/plate XY 完全相同，Z 为 `1.08/0.97 m`，说明 `ObjectBasedSampler` 已放置 bowl，但 reset 瞬间还没有满足运行时 `On` 的 contact 条件。R1 的三族 native reset 都至少有一个 background site relation false。LIBERO 的 `:init` 用于构建 placement samplers，而运行时 `On` 使用另一套 contact/geometry predicate；本地官方 lifelong evaluator 在 set-init 后固定执行 5 个 zero-action physics steps，README 示例执行 10 个。
+
+R2 外层 summary 还把未执行 settle/destruction 错写成 false，并把明确“无抓取”写成 false；下一计划须改成 passed/failed/not-evaluated 三态。旧 R2 保持 immutable，不直接改 BDDL。唯一活动计划 `docs/AXIS_PI05_TRACK3_REVERSE_INIT_STABILIZATION_SEMANTICS_PLAN.md` 先对 original-forward/reverse 做 `t=0/1/5/10/20` 对照，并要求三族 operator-critical source relation 在固定 step5 成立且稳定；通过才允许 GPU3 上一次 settled task10 canary及三族 `3/3`。仍不授权 BDDL 修改、SE(3)、demo、Teleop、训练、FAST/ZIP、官方 GPU、上传或提交。完整审核：`docs/reviews/axis_pi05/TRACK3_NATIVE_VALIDATOR_R0_R4_AUDIT_20260903.md`。
+
+审核后全量测试为 `182 passed, 7 skipped, 23 warnings`。

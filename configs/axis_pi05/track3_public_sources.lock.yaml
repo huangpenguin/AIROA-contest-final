@@ -1,0 +1,61 @@
+schema_version: 1
+policy:
+  purpose: "S0 primary-source verification for Track 3 public primitive mining"
+  forbid_large_downloads_gib: 20
+  no_training_candidates_from_unresolved_license: true
+  no_hidden_track3_details: true
+sources:
+  - id: libero_infinity
+    kind: git
+    url: https://github.com/KE7/libero-infinity.git
+    revision: dc5451ff80efa33ef170350188a6c3457fbd7a81
+    license: MIT
+    license_path: LICENSE
+    evidence_paths:
+      - scripts/generate_reversed_bddls.py
+      - src/libero_infinity/task_reverser.py
+      - docs/task-reversal.md
+    role: reverse_bddl_generator
+  - id: behavior_prompting
+    kind: git
+    url: https://github.com/real-stanford/behavior_prompting.git
+    revision: ec29e62dde999ac3423df7d99a773c1dd28b480e
+    license: MIT
+    license_path: LICENSE
+    evidence_paths:
+      - docs/liberogen.md
+      - behavior_prompting/train_network/scripts/libero/generate_demonstrations.py
+      - behavior_prompting/train_network/scripts/libero/collect_demonstration.py
+      - behavior_prompting/train_network/scripts/libero/create_dataset.py
+    role: scripted_waypoint_motion_planning_20hz
+  - id: libero_upstream
+    kind: git
+    url: https://github.com/Lifelong-Robot-Learning/LIBERO.git
+    revision: 8f1084e3132a39270c3a13ebe37270a43ece2a01
+    license: MIT_code_CC_BY_4_data
+    license_path: LICENSE
+    evidence_paths:
+      - README.md
+      - libero/libero/envs/base_object.py
+    role: public_bddl_hdf5_schema
+  - id: libero_gen_goal_chain
+    kind: huggingface_dataset
+    repo_id: austinpatel/libero_gen_goal_chain_hdf5
+    revision: 5127777ed156e68c0301cf6b08a9fd24c6d14479
+    license: MIT
+    role: generator_reference_only
+    download_policy: metadata_only_in_S0_S1
+  - id: libero_gen_spatial_combination
+    kind: huggingface_dataset
+    repo_id: austinpatel/libero_gen_spatial_combination_hdf5
+    revision: 34503f3b51883acf175247b94dd55b2bdc2e1d96
+    license: MIT
+    role: generator_reference_only
+    download_policy: metadata_only_in_S0_S1
+  - id: libero_plus
+    kind: huggingface_dataset
+    repo_id: lerobot/libero_plus
+    revision: f3f49f426d75030177b18778374005bc12ccd588
+    license: unresolved_at_locked_revision
+    role: local_read_only_reference
+    download_policy: existing_local_payload_only

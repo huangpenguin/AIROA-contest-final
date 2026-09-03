@@ -2,7 +2,7 @@
 
 > 更新日期：2026-09-03（Asia/Tokyo）
 > 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_SUPPORT_AUTOGEN_SE3_RECOVERY_PLAN.md`
-> 当前状态：`track3_support_autogen_se3_recovery_planned`
+> 当前状态：`track3_reverse_semantic_adapter_v2_failed_support_remove`
 > 最新审核：`docs/reviews/axis_pi05/TRACK3_PUBLIC_AUTOGEN_S0_S5_AUDIT_20260903.md`
 
 ## 1. 本轮执行停止点
@@ -57,6 +57,12 @@ S0–S5 已按失败门禁停止；执行边界、S0 source lock、S2 selective 
 归档不表示旧计划所有尾部阶段都完成；只表示该文件不再是活动授权入口。旧 failure、阈值、hash 和未执行阶段必须继续保留。
 
 当前只执行 S1/S3 evidence closure、support 失败根因重建、公开成功 HDF5 的 SE(3) 抓取模板提取与一次 support-only 自动 canary；不得恢复人工 task19、继续 containment/articulation、批量生成、旧 reverse LoRA/interstep 训练或直接转向 Blackwell。
+
+## 3.1 G0–G1 恢复执行停止
+
+G0 输入锁、S1 v2 分层统计和 S3 typed language 已完成。S3 动态门禁运行三族各 `3/3` fresh process，共 9 次，但 support_remove、containment_remove、articulation_close 均未通过完整族门禁：task10/task19 的 forward HDF5 `states[0]` reverse goal 不成立，三族 20-step robot policy-state 漂移也超过门限。受控 destruction 在修正 HDF5 time/qpos offset 后通过，不能抵消上述失败。
+
+当前状态为 `track3_reverse_semantic_adapter_v2_failed_support_remove`。G2 HDF5 alignment/SE(3) 提取、G3 执行器、G4 support retry 均未启动；没有产生 `pending_autogen_v2`，exact/pending/accepted reverse demo 仍为 `0`。详见 `docs/reports/AXIS_PI05_TRACK3_SUPPORT_AUTOGEN_SE3_RECOVERY_G1_CLOSEOUT_20260903.md`。后续必须等待新的审核/计划，不得从本索引自动继续。
 
 ## 4. 保留但非活动的研究线
 

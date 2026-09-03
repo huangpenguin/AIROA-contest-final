@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-03",
-  "status": "track3_support_autogen_se3_recovery_planned",
+  "status": "track3_reverse_semantic_adapter_v2_failed_support_remove",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
@@ -1932,7 +1932,7 @@
     }
   },
   "track3_support_autogen_se3_recovery_authorization": {
-    "status": "track3_support_autogen_se3_recovery_planned",
+    "status": "track3_reverse_semantic_adapter_v2_failed_support_remove",
     "plan": "docs/AXIS_PI05_TRACK3_SUPPORT_AUTOGEN_SE3_RECOVERY_PLAN.md",
     "authorized_phases": ["G0", "G1", "G2", "G3", "G4", "G5_closeout_only"],
     "authorization": {
@@ -1957,5 +1957,64 @@
     "success_stop": "track3_support_autogen_v2_pending_human_video_review",
     "failure_stop": "track3_support_autogen_v2_failed_with_geometry_diagnostics",
     "next_phase_only": "G0_to_G4_support_only_then_G5_closeout_hard_stop"
+  },
+  "track3_support_autogen_se3_recovery_execution": {
+    "status": "track3_reverse_semantic_adapter_v2_failed_support_remove",
+    "plan": "docs/AXIS_PI05_TRACK3_SUPPORT_AUTOGEN_SE3_RECOVERY_PLAN.md",
+    "closeout_report": "docs/reports/AXIS_PI05_TRACK3_SUPPORT_AUTOGEN_SE3_RECOVERY_G1_CLOSEOUT_20260903.md",
+    "completed_phases": ["G0", "G1_s1_accounting_v2", "G1_s3_typed_language", "G1_s3_dynamic_gate"],
+    "stopped_before": ["G2_hdf5_alignment_and_se3_mining", "G2_failed_state_reconstruction", "G3_se3_executor", "G4_support_canary_retry"],
+    "evidence": {
+      "g0_release_lock": "data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g0_release_lock.json",
+      "g1_s1_accounting": "data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s1_accounting_v2.json",
+      "g1_s3_language": "data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s3_language_v2.json",
+      "g1_s3_dynamic": "data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s3_dynamic_gates.json",
+      "v2_catalog_root": "data/manifests/track3_public_primitives_v2"
+    },
+    "accounting": {
+      "task_row_count": 195,
+      "task_identity_sum": 195,
+      "episode_count": 21961,
+      "episode_identity_sum": 21961,
+      "task_exact_reverse_demo": 0,
+      "episode_exact_reverse_demo": 0,
+      "denylist_overlap": 0
+    },
+    "dynamic_gate": {
+      "fresh_process_runs": 9,
+      "family_3_of_3": {
+        "support_remove": false,
+        "containment_remove": false,
+        "articulation_close": false
+      },
+      "failed_families": ["support_remove", "containment_remove", "articulation_close"],
+      "controlled_destruction_false": true,
+      "twenty_step_settle": false,
+      "goal_true_false_controlled": false,
+      "state_layout_qpos_offset": 1
+    },
+    "outputs": {
+      "pending_autogen_v2": 0,
+      "exact_reverse_demo": 0,
+      "accepted_reverse_demo": 0,
+      "support_retry_attempts": 0,
+      "training_started": false,
+      "human_operation": false,
+      "official_gpu_used": false,
+      "fast_or_zip_used": false,
+      "upload_or_submission": false,
+      "libero_plus_dirty_state_modified": false
+    },
+    "verification": {
+      "targeted_tests": "10_passed_2_warnings",
+      "full_tests": "170_passed_7_skipped_23_warnings",
+      "json_parse": "passed",
+      "markdown_paths": "passed",
+      "py_compile": "passed",
+      "git_diff_check": "passed",
+      "root_clean_after_closeout_commit": true,
+      "nested_openpi_clean": true
+    },
+    "hard_stop": "G1 dynamic gate failed; do not resume G2/G3/G4 or any family/training without a new review and plan."
   }
 }

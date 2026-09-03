@@ -1,0 +1,127 @@
+{
+  "created_at_utc": "2026-09-03T11:18:28.659091+00:00",
+  "current_counts": {
+    "accepted": 0,
+    "accepted_reverse_demo": 0,
+    "pending_autogen": 0,
+    "pending_autogen_v2": 0
+  },
+  "forbidden_activity": {
+    "fast_or_zip_used": false,
+    "human_operation": false,
+    "new_external_download_bytes": 0,
+    "official_gpu_used": false,
+    "training_started": false
+  },
+  "gpu_probe": "not_run_g0_cpu_only",
+  "hard_gate": {
+    "counts_zero": true,
+    "forbidden_activity_absent": true,
+    "libero_plus_preserved": true,
+    "nested_openpi_clean": true,
+    "old_hashes_locked": true,
+    "root_clean": true
+  },
+  "immutable_old_evidence": {
+    "S5_AUTOGEN_CANARY_REPORT_ZH.md": {
+      "bytes": 2029,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_autogen/S5_AUTOGEN_CANARY_REPORT_ZH.md",
+      "sha256": "838f145e812bd624fa7fbcd10c51f4019f67fa70c5c5edb8a5db085d0d88f8cf"
+    },
+    "s0_release_lock.json": {
+      "bytes": 12242,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_autogen/s0_release_lock.json",
+      "sha256": "3e1b45e4e967c0bf72d2e889d6318637ba91497c4c002e6df2de4ffeddd7e3d4"
+    },
+    "s0_source_verification.json": {
+      "bytes": 5312,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_autogen/s0_source_verification.json",
+      "sha256": "55672c3e3e68140e72e00958eec5408a6c9296ccd790a04fd84992994c883f6e"
+    },
+    "s1_semantic_mining.json": {
+      "bytes": 1863,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_autogen/s1_semantic_mining.json",
+      "sha256": "b5ecce37d83f46cc8014ce0a1305e8dc4c876c2b5b205ca029805e66545a515e"
+    },
+    "s2_selective_schema_replay.json": {
+      "bytes": 5010,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_autogen/s2_selective_schema_replay.json",
+      "sha256": "967b8a39354160254b02381a41c9eb043dae61583514aed83932c4e9651fd811"
+    },
+    "s3_reverse_adapter.json": {
+      "bytes": 8284,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_autogen/s3_reverse_adapter.json",
+      "sha256": "3d9b5fa606b87edfc49daa5d02d82f17c4b67cf8c49764545e827c308e70af12"
+    },
+    "s5_canary_summary.json": {
+      "bytes": 5198,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_autogen/s5_canary_summary.json",
+      "sha256": "296b645389613033cbe629478aa35a8ad5f5b1b57e59cecc0a85069dfd991e2d"
+    },
+    "support_failure/end_state.npy": {
+      "bytes": 760,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_autogen/diagnostics/support_remove_task_10/end_state.npy",
+      "sha256": "9a0fee92bfb622b45f3348ecd2223da5a79ad0f431ce0e94c3b45d40d91b5d61"
+    },
+    "support_failure/front.mp4": {
+      "bytes": 71121,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_autogen/diagnostics/support_remove_task_10/front.mp4",
+      "sha256": "bcc204f0e8fd3cd1d8f50bd03c06e0ddf496a928c46ca14c49903121ffd5b772"
+    },
+    "support_failure/metadata.json": {
+      "bytes": 3782,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_autogen/diagnostics/support_remove_task_10/metadata.json",
+      "sha256": "f592f2e0b531522cd5c114e6e64ca374e5d8c03e8867ba3bf79fabf9056e7ce3"
+    },
+    "support_failure/start_state.npy": {
+      "bytes": 760,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_autogen/diagnostics/support_remove_task_10/start_state.npy",
+      "sha256": "34e0c70edac11ce668e548c5cca308a9fbd16b64afc8726e8800280c8c82c66d"
+    },
+    "support_failure/trajectory.npz": {
+      "bytes": 83857,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_autogen/diagnostics/support_remove_task_10/trajectory.npz",
+      "sha256": "52cf879fe55a3c02aec33193fd691bdd66770e26f67dcb24b816c80d8c54141d"
+    },
+    "support_failure/wrist.mp4": {
+      "bytes": 123490,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_autogen/diagnostics/support_remove_task_10/wrist.mp4",
+      "sha256": "865bb81a1ea8206614e79d8f16fe562b3e8de31a0cdca43ed65349d0cd6c9d72"
+    }
+  },
+  "input_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "input_nested_openpi_tree": "f1b9e6ce72c01dfa41ce3aab4a59b0ef92b67dc9",
+  "input_root_commit": "8e9883cb748ecf15e5ff1fb988e2707e02dd153e",
+  "input_root_tree": "a46bc36d12734be92f29ff7f992ab6d0ec27d7b5",
+  "libero_plus_dirty_read_only_snapshot": {
+    "modified": false,
+    "policy": "record_only_never_clean_or_touch",
+    "status_porcelain": [
+      "M libero/libero/benchmark/__init__.py",
+      "?? libero/__init__.py",
+      "?? libero/libero/assets",
+      "?? libero/libero/bddl_files/libero_t3",
+      "?? libero/libero/init_files/libero_t3"
+    ]
+  },
+  "nested_openpi_clean": true,
+  "old_v1_immutable": true,
+  "p1_task10_snapshot": {
+    "bytes": 760,
+    "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_public_terminal_recovery/snapshots/task_10/attempt_1/terminal_state.npy",
+    "sha256": "34e0c70edac11ce668e548c5cca308a9fbd16b64afc8726e8800280c8c82c66d"
+  },
+  "public_denylist": {
+    "bytes": 36460,
+    "path": "/home/huang/code/PARC2026_final/data/eval_manifests/axis_pi05_eval_v1/public_t3_holdout.jsonl",
+    "sha256": "64a1124ef17a866e259ba7e8bce96351cd183dff1ebf76c1afbd5694dfe0ec95"
+  },
+  "root_clean": true,
+  "schema_version": "track3_support_autogen_se3_g0_v1",
+  "status": "track3_support_recovery_input_locked",
+  "task10_hdf5": {
+    "bytes": 468246288,
+    "path": "/home/huang/code/PARC2026_final/data/raw/public/libero_official_hdf5/libero_goal/put_the_bowl_on_the_plate_demo.hdf5",
+    "sha256": "e69528b0cf10dfc59b20698e12ec2affc03f3887309034d3eb74cac3ec929406"
+  }
+}

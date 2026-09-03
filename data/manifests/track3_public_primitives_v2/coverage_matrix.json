@@ -1,0 +1,62 @@
+{
+  "denylist_overlap_count": 0,
+  "denylist_sha256": "64a1124ef17a866e259ba7e8bce96351cd183dff1ebf76c1afbd5694dfe0ec95",
+  "deterministic_catalog_hashes": {
+    "episode_catalog": "1c777d20bd84e1f5e0b25d76d0e67c432a98efcfc00352c9c604e3b481c8a6b0",
+    "task_catalog": "2b3c2b7b8915db692bed29b2b12652bd79cf18095e11e9d3f153f0950834a49b"
+  },
+  "episode": {
+    "family_counts": {
+      "articulation_close": 1809,
+      "containment_remove": 7061,
+      "support_remove": 10679
+    },
+    "identity_counts": {
+      "exact_reverse_demo": 0,
+      "generator_reference_only": 2412,
+      "reverse_relevant_primitive": 19549
+    },
+    "identity_sum": 21961,
+    "invalid_rows": [],
+    "row_count": 21961
+  },
+  "episode_count": 21961,
+  "episode_family_counts": {
+    "articulation_close": 1809,
+    "containment_remove": 7061,
+    "support_remove": 10679
+  },
+  "episode_identity_counts": {
+    "exact_reverse_demo": 0,
+    "generator_reference_only": 2412,
+    "reverse_relevant_primitive": 19549
+  },
+  "old_catalogs_immutable": true,
+  "schema_version": "track3_public_primitives_v2",
+  "task": {
+    "family_counts": {
+      "articulation_close": 21,
+      "containment_remove": 46,
+      "support_remove": 88
+    },
+    "identity_counts": {
+      "exact_reverse_demo": 0,
+      "generator_reference_only": 40,
+      "reverse_relevant_primitive": 155
+    },
+    "identity_sum": 195,
+    "invalid_rows": [],
+    "row_count": 195
+  },
+  "task_family_counts": {
+    "articulation_close": 21,
+    "containment_remove": 46,
+    "support_remove": 88
+  },
+  "task_identity_counts": {
+    "exact_reverse_demo": 0,
+    "generator_reference_only": 40,
+    "reverse_relevant_primitive": 155
+  },
+  "task_row_count": 195
+}

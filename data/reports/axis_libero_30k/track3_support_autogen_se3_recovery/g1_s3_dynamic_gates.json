@@ -1,0 +1,718 @@
+{
+  "created_at_utc": "2026-09-03T11:36:55.666638+00:00",
+  "failed_families": [
+    "support_remove",
+    "containment_remove",
+    "articulation_close"
+  ],
+  "family_3_of_3": {
+    "articulation_close": false,
+    "containment_remove": false,
+    "support_remove": false
+  },
+  "fresh_process_runs": [
+    {
+      "controlled_destruction_false": true,
+      "forward_bddl_sha256": "358b7781437e412c67d6a7648c1c28796b6b1bf117a25e61316cb8dfeb940e5b",
+      "forward_init_sha256": "ef3466ffad734754dc40eba1f6f5712e37aa46b9692c595e0da34f16d3a0c668",
+      "forward_initial_state_sha256": "8c4ae412e216181c736f16a73ef8cd3bb8ecbd32e8ae49836e7f8b40eec0516c",
+      "forward_terminal_success": true,
+      "gpu_policy": "physical_gpu3_only",
+      "hard_gate": {
+        "controlled_destruction_false": true,
+        "reverse_goal_false_at_p1": true,
+        "reverse_goal_true_at_forward_initial": false,
+        "reverse_initial_at_p1": true,
+        "settle_fixture_drift": true,
+        "settle_object_drift_m": true,
+        "settle_robot_state_drift": false
+      },
+      "model_hashes": {
+        "controller": {
+          "class": "OperationalSpaceController",
+          "control_dim": 6,
+          "input_max": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "output_max": [
+            0.05,
+            0.05,
+            0.05,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "use_delta": true
+        },
+        "controller_sha256": "2aef5c4fbe3ca0936b4d25db065ecb020c8c2928140bb62e9dfbfd3bad352382",
+        "xml_sha256": "af9ed794b5b2341da7f159025e39d0aed00c550c89949d6165a95ef35e4303c1"
+      },
+      "operator_family": "support_remove",
+      "p1_terminal_state_sha256": "34e0c70edac11ce668e548c5cca308a9fbd16b64afc8726e8800280c8c82c66d",
+      "reverse_bddl_sha256": "575b5fcf0fcbfe78842610035574ddd9d91fd8394a04637eba3b2d9cec17cb6f",
+      "reverse_goal_from_forward_initial": false,
+      "run_index": 1,
+      "settle": {
+        "baseline_fixture_joints": [
+          "akita_black_bowl_1_joint0",
+          "cream_cheese_1_joint0",
+          "flat_stove_1_button",
+          "plate_1_joint0",
+          "wine_bottle_1_joint0",
+          "wooden_cabinet_1_bottom_level",
+          "wooden_cabinet_1_middle_level",
+          "wooden_cabinet_1_top_level"
+        ],
+        "baseline_object_names": [
+          "akita_black_bowl_1",
+          "cream_cheese_1",
+          "plate_1",
+          "wine_bottle_1"
+        ],
+        "baseline_state_sha256": "efb8785ccf808c309e39ea31c33d2716e8151c3c79dc9e7de5f7b99b92601c4f",
+        "fixture_max_abs_qpos_drift": 1.5481181635246255e-08,
+        "object_max_l2_drift_m": 1.3914997329335044e-07,
+        "robot_policy_state_max_abs_drift": 0.13068095167884275,
+        "settle_state_sha256": "5631911deaf6e489e8f03a4ca86a017f3aa8f6d3d17edccfd085303c59afea37",
+        "steps": 20
+      },
+      "start_reverse_goal": false,
+      "status": "failed_gate",
+      "task_index": 10,
+      "terminal_state_sha256": "efb8785ccf808c309e39ea31c33d2716e8151c3c79dc9e7de5f7b99b92601c4f",
+      "worker_returncode": 0
+    },
+    {
+      "controlled_destruction_false": true,
+      "forward_bddl_sha256": "358b7781437e412c67d6a7648c1c28796b6b1bf117a25e61316cb8dfeb940e5b",
+      "forward_init_sha256": "ef3466ffad734754dc40eba1f6f5712e37aa46b9692c595e0da34f16d3a0c668",
+      "forward_initial_state_sha256": "8c4ae412e216181c736f16a73ef8cd3bb8ecbd32e8ae49836e7f8b40eec0516c",
+      "forward_terminal_success": true,
+      "gpu_policy": "physical_gpu3_only",
+      "hard_gate": {
+        "controlled_destruction_false": true,
+        "reverse_goal_false_at_p1": true,
+        "reverse_goal_true_at_forward_initial": false,
+        "reverse_initial_at_p1": true,
+        "settle_fixture_drift": true,
+        "settle_object_drift_m": true,
+        "settle_robot_state_drift": false
+      },
+      "model_hashes": {
+        "controller": {
+          "class": "OperationalSpaceController",
+          "control_dim": 6,
+          "input_max": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "output_max": [
+            0.05,
+            0.05,
+            0.05,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "use_delta": true
+        },
+        "controller_sha256": "2aef5c4fbe3ca0936b4d25db065ecb020c8c2928140bb62e9dfbfd3bad352382",
+        "xml_sha256": "da3ed5a0a25c5d99e1649ea68a977d8557626a73656381571fef6f6a1f7cd3e6"
+      },
+      "operator_family": "support_remove",
+      "p1_terminal_state_sha256": "34e0c70edac11ce668e548c5cca308a9fbd16b64afc8726e8800280c8c82c66d",
+      "reverse_bddl_sha256": "575b5fcf0fcbfe78842610035574ddd9d91fd8394a04637eba3b2d9cec17cb6f",
+      "reverse_goal_from_forward_initial": false,
+      "run_index": 2,
+      "settle": {
+        "baseline_fixture_joints": [
+          "akita_black_bowl_1_joint0",
+          "cream_cheese_1_joint0",
+          "flat_stove_1_button",
+          "plate_1_joint0",
+          "wine_bottle_1_joint0",
+          "wooden_cabinet_1_bottom_level",
+          "wooden_cabinet_1_middle_level",
+          "wooden_cabinet_1_top_level"
+        ],
+        "baseline_object_names": [
+          "akita_black_bowl_1",
+          "cream_cheese_1",
+          "plate_1",
+          "wine_bottle_1"
+        ],
+        "baseline_state_sha256": "efb8785ccf808c309e39ea31c33d2716e8151c3c79dc9e7de5f7b99b92601c4f",
+        "fixture_max_abs_qpos_drift": 1.5481181635246255e-08,
+        "object_max_l2_drift_m": 1.3914997329335044e-07,
+        "robot_policy_state_max_abs_drift": 0.13068095167884275,
+        "settle_state_sha256": "5631911deaf6e489e8f03a4ca86a017f3aa8f6d3d17edccfd085303c59afea37",
+        "steps": 20
+      },
+      "start_reverse_goal": false,
+      "status": "failed_gate",
+      "task_index": 10,
+      "terminal_state_sha256": "efb8785ccf808c309e39ea31c33d2716e8151c3c79dc9e7de5f7b99b92601c4f",
+      "worker_returncode": 0
+    },
+    {
+      "controlled_destruction_false": true,
+      "forward_bddl_sha256": "358b7781437e412c67d6a7648c1c28796b6b1bf117a25e61316cb8dfeb940e5b",
+      "forward_init_sha256": "ef3466ffad734754dc40eba1f6f5712e37aa46b9692c595e0da34f16d3a0c668",
+      "forward_initial_state_sha256": "8c4ae412e216181c736f16a73ef8cd3bb8ecbd32e8ae49836e7f8b40eec0516c",
+      "forward_terminal_success": true,
+      "gpu_policy": "physical_gpu3_only",
+      "hard_gate": {
+        "controlled_destruction_false": true,
+        "reverse_goal_false_at_p1": true,
+        "reverse_goal_true_at_forward_initial": false,
+        "reverse_initial_at_p1": true,
+        "settle_fixture_drift": true,
+        "settle_object_drift_m": true,
+        "settle_robot_state_drift": false
+      },
+      "model_hashes": {
+        "controller": {
+          "class": "OperationalSpaceController",
+          "control_dim": 6,
+          "input_max": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "output_max": [
+            0.05,
+            0.05,
+            0.05,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "use_delta": true
+        },
+        "controller_sha256": "2aef5c4fbe3ca0936b4d25db065ecb020c8c2928140bb62e9dfbfd3bad352382",
+        "xml_sha256": "32ebb30f7d5b65c9d20c1af4e462c726cfbd1cde28f0e100bb0d85f8e2172703"
+      },
+      "operator_family": "support_remove",
+      "p1_terminal_state_sha256": "34e0c70edac11ce668e548c5cca308a9fbd16b64afc8726e8800280c8c82c66d",
+      "reverse_bddl_sha256": "575b5fcf0fcbfe78842610035574ddd9d91fd8394a04637eba3b2d9cec17cb6f",
+      "reverse_goal_from_forward_initial": false,
+      "run_index": 3,
+      "settle": {
+        "baseline_fixture_joints": [
+          "akita_black_bowl_1_joint0",
+          "cream_cheese_1_joint0",
+          "flat_stove_1_button",
+          "plate_1_joint0",
+          "wine_bottle_1_joint0",
+          "wooden_cabinet_1_bottom_level",
+          "wooden_cabinet_1_middle_level",
+          "wooden_cabinet_1_top_level"
+        ],
+        "baseline_object_names": [
+          "akita_black_bowl_1",
+          "cream_cheese_1",
+          "plate_1",
+          "wine_bottle_1"
+        ],
+        "baseline_state_sha256": "efb8785ccf808c309e39ea31c33d2716e8151c3c79dc9e7de5f7b99b92601c4f",
+        "fixture_max_abs_qpos_drift": 1.5481181635246255e-08,
+        "object_max_l2_drift_m": 1.3914997329335044e-07,
+        "robot_policy_state_max_abs_drift": 0.13068095167884275,
+        "settle_state_sha256": "5631911deaf6e489e8f03a4ca86a017f3aa8f6d3d17edccfd085303c59afea37",
+        "steps": 20
+      },
+      "start_reverse_goal": false,
+      "status": "failed_gate",
+      "task_index": 10,
+      "terminal_state_sha256": "efb8785ccf808c309e39ea31c33d2716e8151c3c79dc9e7de5f7b99b92601c4f",
+      "worker_returncode": 0
+    },
+    {
+      "controlled_destruction_false": true,
+      "forward_bddl_sha256": "6298533e7bcfb83e40779a77fda39216e8cd53f22bf1af6388585dad0abb0b50",
+      "forward_init_sha256": "35b19ffab1fe08c6457ebd732c37d04b9bc0d22b7ce7de015986092ddddea151",
+      "forward_initial_state_sha256": "4969ede2d8336a297864dea5996f30e93adb25c8a0956eec381ec7c1e1f4f218",
+      "forward_terminal_success": true,
+      "gpu_policy": "physical_gpu3_only",
+      "hard_gate": {
+        "controlled_destruction_false": true,
+        "reverse_goal_false_at_p1": true,
+        "reverse_goal_true_at_forward_initial": true,
+        "reverse_initial_at_p1": true,
+        "settle_fixture_drift": true,
+        "settle_object_drift_m": true,
+        "settle_robot_state_drift": false
+      },
+      "model_hashes": {
+        "controller": {
+          "class": "OperationalSpaceController",
+          "control_dim": 6,
+          "input_max": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "output_max": [
+            0.05,
+            0.05,
+            0.05,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "use_delta": true
+        },
+        "controller_sha256": "2aef5c4fbe3ca0936b4d25db065ecb020c8c2928140bb62e9dfbfd3bad352382",
+        "xml_sha256": "d663cc44b679c4726f577abb1ba7c9977a9bcf882cc408ed47f0836b9714262a"
+      },
+      "operator_family": "containment_remove",
+      "p1_terminal_state_sha256": "7d3d2547794fef4576672e6f37b666700556f857f1afddf19a8e173139f2d3e8",
+      "reverse_bddl_sha256": "27305e326a53a0b3c70d573066262eadcfcf326de8c8f5a252da34e39581f28d",
+      "reverse_goal_from_forward_initial": true,
+      "run_index": 1,
+      "settle": {
+        "baseline_fixture_joints": [
+          "basket_1_joint0",
+          "bbq_sauce_1_joint0",
+          "butter_1_joint0",
+          "chocolate_pudding_1_joint0",
+          "ketchup_1_joint0",
+          "orange_juice_1_joint0",
+          "salad_dressing_1_joint0"
+        ],
+        "baseline_object_names": [
+          "basket_1",
+          "bbq_sauce_1",
+          "butter_1",
+          "chocolate_pudding_1",
+          "ketchup_1",
+          "orange_juice_1",
+          "salad_dressing_1"
+        ],
+        "baseline_state_sha256": "6ebbf28981de24b6092270f695e518156b2cf8d16173a018e7a9239c627eff18",
+        "fixture_max_abs_qpos_drift": 5.271299889642034e-12,
+        "object_max_l2_drift_m": 1.2014993166128821e-11,
+        "robot_policy_state_max_abs_drift": 0.13886521566072108,
+        "settle_state_sha256": "f3c11f7a669454e630551a23938319b3321f7d6787e147b1ae1f84eba2474df7",
+        "steps": 20
+      },
+      "start_reverse_goal": false,
+      "status": "failed_gate",
+      "task_index": 20,
+      "terminal_state_sha256": "12d3c4171c398479918945617dab6388f3e53a94dba6507449bdc8ee552b7271",
+      "worker_returncode": 0
+    },
+    {
+      "controlled_destruction_false": true,
+      "forward_bddl_sha256": "6298533e7bcfb83e40779a77fda39216e8cd53f22bf1af6388585dad0abb0b50",
+      "forward_init_sha256": "35b19ffab1fe08c6457ebd732c37d04b9bc0d22b7ce7de015986092ddddea151",
+      "forward_initial_state_sha256": "4969ede2d8336a297864dea5996f30e93adb25c8a0956eec381ec7c1e1f4f218",
+      "forward_terminal_success": true,
+      "gpu_policy": "physical_gpu3_only",
+      "hard_gate": {
+        "controlled_destruction_false": true,
+        "reverse_goal_false_at_p1": true,
+        "reverse_goal_true_at_forward_initial": true,
+        "reverse_initial_at_p1": true,
+        "settle_fixture_drift": true,
+        "settle_object_drift_m": true,
+        "settle_robot_state_drift": false
+      },
+      "model_hashes": {
+        "controller": {
+          "class": "OperationalSpaceController",
+          "control_dim": 6,
+          "input_max": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "output_max": [
+            0.05,
+            0.05,
+            0.05,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "use_delta": true
+        },
+        "controller_sha256": "2aef5c4fbe3ca0936b4d25db065ecb020c8c2928140bb62e9dfbfd3bad352382",
+        "xml_sha256": "d663cc44b679c4726f577abb1ba7c9977a9bcf882cc408ed47f0836b9714262a"
+      },
+      "operator_family": "containment_remove",
+      "p1_terminal_state_sha256": "7d3d2547794fef4576672e6f37b666700556f857f1afddf19a8e173139f2d3e8",
+      "reverse_bddl_sha256": "27305e326a53a0b3c70d573066262eadcfcf326de8c8f5a252da34e39581f28d",
+      "reverse_goal_from_forward_initial": true,
+      "run_index": 2,
+      "settle": {
+        "baseline_fixture_joints": [
+          "basket_1_joint0",
+          "bbq_sauce_1_joint0",
+          "butter_1_joint0",
+          "chocolate_pudding_1_joint0",
+          "ketchup_1_joint0",
+          "orange_juice_1_joint0",
+          "salad_dressing_1_joint0"
+        ],
+        "baseline_object_names": [
+          "basket_1",
+          "bbq_sauce_1",
+          "butter_1",
+          "chocolate_pudding_1",
+          "ketchup_1",
+          "orange_juice_1",
+          "salad_dressing_1"
+        ],
+        "baseline_state_sha256": "6ebbf28981de24b6092270f695e518156b2cf8d16173a018e7a9239c627eff18",
+        "fixture_max_abs_qpos_drift": 5.271299889642034e-12,
+        "object_max_l2_drift_m": 1.2014993166128821e-11,
+        "robot_policy_state_max_abs_drift": 0.13886521566072108,
+        "settle_state_sha256": "f3c11f7a669454e630551a23938319b3321f7d6787e147b1ae1f84eba2474df7",
+        "steps": 20
+      },
+      "start_reverse_goal": false,
+      "status": "failed_gate",
+      "task_index": 20,
+      "terminal_state_sha256": "12d3c4171c398479918945617dab6388f3e53a94dba6507449bdc8ee552b7271",
+      "worker_returncode": 0
+    },
+    {
+      "controlled_destruction_false": true,
+      "forward_bddl_sha256": "6298533e7bcfb83e40779a77fda39216e8cd53f22bf1af6388585dad0abb0b50",
+      "forward_init_sha256": "35b19ffab1fe08c6457ebd732c37d04b9bc0d22b7ce7de015986092ddddea151",
+      "forward_initial_state_sha256": "4969ede2d8336a297864dea5996f30e93adb25c8a0956eec381ec7c1e1f4f218",
+      "forward_terminal_success": true,
+      "gpu_policy": "physical_gpu3_only",
+      "hard_gate": {
+        "controlled_destruction_false": true,
+        "reverse_goal_false_at_p1": true,
+        "reverse_goal_true_at_forward_initial": true,
+        "reverse_initial_at_p1": true,
+        "settle_fixture_drift": true,
+        "settle_object_drift_m": true,
+        "settle_robot_state_drift": false
+      },
+      "model_hashes": {
+        "controller": {
+          "class": "OperationalSpaceController",
+          "control_dim": 6,
+          "input_max": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "output_max": [
+            0.05,
+            0.05,
+            0.05,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "use_delta": true
+        },
+        "controller_sha256": "2aef5c4fbe3ca0936b4d25db065ecb020c8c2928140bb62e9dfbfd3bad352382",
+        "xml_sha256": "d663cc44b679c4726f577abb1ba7c9977a9bcf882cc408ed47f0836b9714262a"
+      },
+      "operator_family": "containment_remove",
+      "p1_terminal_state_sha256": "7d3d2547794fef4576672e6f37b666700556f857f1afddf19a8e173139f2d3e8",
+      "reverse_bddl_sha256": "27305e326a53a0b3c70d573066262eadcfcf326de8c8f5a252da34e39581f28d",
+      "reverse_goal_from_forward_initial": true,
+      "run_index": 3,
+      "settle": {
+        "baseline_fixture_joints": [
+          "basket_1_joint0",
+          "bbq_sauce_1_joint0",
+          "butter_1_joint0",
+          "chocolate_pudding_1_joint0",
+          "ketchup_1_joint0",
+          "orange_juice_1_joint0",
+          "salad_dressing_1_joint0"
+        ],
+        "baseline_object_names": [
+          "basket_1",
+          "bbq_sauce_1",
+          "butter_1",
+          "chocolate_pudding_1",
+          "ketchup_1",
+          "orange_juice_1",
+          "salad_dressing_1"
+        ],
+        "baseline_state_sha256": "6ebbf28981de24b6092270f695e518156b2cf8d16173a018e7a9239c627eff18",
+        "fixture_max_abs_qpos_drift": 5.271299889642034e-12,
+        "object_max_l2_drift_m": 1.2014993166128821e-11,
+        "robot_policy_state_max_abs_drift": 0.13886521566072108,
+        "settle_state_sha256": "f3c11f7a669454e630551a23938319b3321f7d6787e147b1ae1f84eba2474df7",
+        "steps": 20
+      },
+      "start_reverse_goal": false,
+      "status": "failed_gate",
+      "task_index": 20,
+      "terminal_state_sha256": "12d3c4171c398479918945617dab6388f3e53a94dba6507449bdc8ee552b7271",
+      "worker_returncode": 0
+    },
+    {
+      "controlled_destruction_false": true,
+      "forward_bddl_sha256": "832ab48ec476807c767e8985666e295700f92d1f8daeae1c34eee1e75293769b",
+      "forward_init_sha256": "977efe1216bee72bb4e9fa9ec4be1bcfe37fb00ece815eac117feba019b34b9f",
+      "forward_initial_state_sha256": "662983d89d2abb8cc80ea6349e252757d6c3b1e19034c28c658a3aea20a027b5",
+      "forward_terminal_success": true,
+      "gpu_policy": "physical_gpu3_only",
+      "hard_gate": {
+        "controlled_destruction_false": true,
+        "reverse_goal_false_at_p1": true,
+        "reverse_goal_true_at_forward_initial": false,
+        "reverse_initial_at_p1": true,
+        "settle_fixture_drift": true,
+        "settle_object_drift_m": true,
+        "settle_robot_state_drift": false
+      },
+      "model_hashes": {
+        "controller": {
+          "class": "OperationalSpaceController",
+          "control_dim": 6,
+          "input_max": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "output_max": [
+            0.05,
+            0.05,
+            0.05,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "use_delta": true
+        },
+        "controller_sha256": "2aef5c4fbe3ca0936b4d25db065ecb020c8c2928140bb62e9dfbfd3bad352382",
+        "xml_sha256": "a578d5f7d5bc5eb54f642c734c4e7398a232e2f1666753aeafe633c81a393a3f"
+      },
+      "operator_family": "articulation_close",
+      "p1_terminal_state_sha256": "0e2ee6afffe27c3ed8811b79a368111562b968ed381f3fb7388c68f2a6b1708e",
+      "reverse_bddl_sha256": "ddfca4566379eb7f18a99ec25d22030e158afb416e321aef4ec10c3c0ae30cad",
+      "reverse_goal_from_forward_initial": false,
+      "run_index": 1,
+      "settle": {
+        "baseline_fixture_joints": [
+          "akita_black_bowl_1_joint0",
+          "cream_cheese_1_joint0",
+          "flat_stove_1_button",
+          "plate_1_joint0",
+          "wine_bottle_1_joint0",
+          "wooden_cabinet_1_bottom_level",
+          "wooden_cabinet_1_middle_level",
+          "wooden_cabinet_1_top_level"
+        ],
+        "baseline_object_names": [
+          "akita_black_bowl_1",
+          "cream_cheese_1",
+          "plate_1",
+          "wine_bottle_1"
+        ],
+        "baseline_state_sha256": "d45afa302d5c022c46044530e0c4d78925c283c844f6207443475da2b594dfeb",
+        "fixture_max_abs_qpos_drift": 1.7468183149960126e-10,
+        "object_max_l2_drift_m": 8.709926868580822e-10,
+        "robot_policy_state_max_abs_drift": 0.5143735875418987,
+        "settle_state_sha256": "9e057f5416b420035ffa86848ade6172228928bca48d00f1fadd8ac9fe5a13ee",
+        "steps": 20
+      },
+      "start_reverse_goal": false,
+      "status": "failed_gate",
+      "task_index": 19,
+      "terminal_state_sha256": "d45afa302d5c022c46044530e0c4d78925c283c844f6207443475da2b594dfeb",
+      "worker_returncode": 0
+    },
+    {
+      "controlled_destruction_false": true,
+      "forward_bddl_sha256": "832ab48ec476807c767e8985666e295700f92d1f8daeae1c34eee1e75293769b",
+      "forward_init_sha256": "977efe1216bee72bb4e9fa9ec4be1bcfe37fb00ece815eac117feba019b34b9f",
+      "forward_initial_state_sha256": "662983d89d2abb8cc80ea6349e252757d6c3b1e19034c28c658a3aea20a027b5",
+      "forward_terminal_success": true,
+      "gpu_policy": "physical_gpu3_only",
+      "hard_gate": {
+        "controlled_destruction_false": true,
+        "reverse_goal_false_at_p1": true,
+        "reverse_goal_true_at_forward_initial": false,
+        "reverse_initial_at_p1": true,
+        "settle_fixture_drift": true,
+        "settle_object_drift_m": true,
+        "settle_robot_state_drift": false
+      },
+      "model_hashes": {
+        "controller": {
+          "class": "OperationalSpaceController",
+          "control_dim": 6,
+          "input_max": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "output_max": [
+            0.05,
+            0.05,
+            0.05,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "use_delta": true
+        },
+        "controller_sha256": "2aef5c4fbe3ca0936b4d25db065ecb020c8c2928140bb62e9dfbfd3bad352382",
+        "xml_sha256": "8c5c16e78c07c2b865dfc64ca627ba0da1550285bd30f1074a551e760c4fa16f"
+      },
+      "operator_family": "articulation_close",
+      "p1_terminal_state_sha256": "0e2ee6afffe27c3ed8811b79a368111562b968ed381f3fb7388c68f2a6b1708e",
+      "reverse_bddl_sha256": "ddfca4566379eb7f18a99ec25d22030e158afb416e321aef4ec10c3c0ae30cad",
+      "reverse_goal_from_forward_initial": false,
+      "run_index": 2,
+      "settle": {
+        "baseline_fixture_joints": [
+          "akita_black_bowl_1_joint0",
+          "cream_cheese_1_joint0",
+          "flat_stove_1_button",
+          "plate_1_joint0",
+          "wine_bottle_1_joint0",
+          "wooden_cabinet_1_bottom_level",
+          "wooden_cabinet_1_middle_level",
+          "wooden_cabinet_1_top_level"
+        ],
+        "baseline_object_names": [
+          "akita_black_bowl_1",
+          "cream_cheese_1",
+          "plate_1",
+          "wine_bottle_1"
+        ],
+        "baseline_state_sha256": "d45afa302d5c022c46044530e0c4d78925c283c844f6207443475da2b594dfeb",
+        "fixture_max_abs_qpos_drift": 1.7468183149960126e-10,
+        "object_max_l2_drift_m": 8.709926868580822e-10,
+        "robot_policy_state_max_abs_drift": 0.5143735875418987,
+        "settle_state_sha256": "9e057f5416b420035ffa86848ade6172228928bca48d00f1fadd8ac9fe5a13ee",
+        "steps": 20
+      },
+      "start_reverse_goal": false,
+      "status": "failed_gate",
+      "task_index": 19,
+      "terminal_state_sha256": "d45afa302d5c022c46044530e0c4d78925c283c844f6207443475da2b594dfeb",
+      "worker_returncode": 0
+    },
+    {
+      "controlled_destruction_false": true,
+      "forward_bddl_sha256": "832ab48ec476807c767e8985666e295700f92d1f8daeae1c34eee1e75293769b",
+      "forward_init_sha256": "977efe1216bee72bb4e9fa9ec4be1bcfe37fb00ece815eac117feba019b34b9f",
+      "forward_initial_state_sha256": "662983d89d2abb8cc80ea6349e252757d6c3b1e19034c28c658a3aea20a027b5",
+      "forward_terminal_success": true,
+      "gpu_policy": "physical_gpu3_only",
+      "hard_gate": {
+        "controlled_destruction_false": true,
+        "reverse_goal_false_at_p1": true,
+        "reverse_goal_true_at_forward_initial": false,
+        "reverse_initial_at_p1": true,
+        "settle_fixture_drift": true,
+        "settle_object_drift_m": true,
+        "settle_robot_state_drift": false
+      },
+      "model_hashes": {
+        "controller": {
+          "class": "OperationalSpaceController",
+          "control_dim": 6,
+          "input_max": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "output_max": [
+            0.05,
+            0.05,
+            0.05,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "use_delta": true
+        },
+        "controller_sha256": "2aef5c4fbe3ca0936b4d25db065ecb020c8c2928140bb62e9dfbfd3bad352382",
+        "xml_sha256": "8780be146d87202258c8e560bdf8694dcffa045f080b48f824677736a82a7ad5"
+      },
+      "operator_family": "articulation_close",
+      "p1_terminal_state_sha256": "0e2ee6afffe27c3ed8811b79a368111562b968ed381f3fb7388c68f2a6b1708e",
+      "reverse_bddl_sha256": "ddfca4566379eb7f18a99ec25d22030e158afb416e321aef4ec10c3c0ae30cad",
+      "reverse_goal_from_forward_initial": false,
+      "run_index": 3,
+      "settle": {
+        "baseline_fixture_joints": [
+          "akita_black_bowl_1_joint0",
+          "cream_cheese_1_joint0",
+          "flat_stove_1_button",
+          "plate_1_joint0",
+          "wine_bottle_1_joint0",
+          "wooden_cabinet_1_bottom_level",
+          "wooden_cabinet_1_middle_level",
+          "wooden_cabinet_1_top_level"
+        ],
+        "baseline_object_names": [
+          "akita_black_bowl_1",
+          "cream_cheese_1",
+          "plate_1",
+          "wine_bottle_1"
+        ],
+        "baseline_state_sha256": "d45afa302d5c022c46044530e0c4d78925c283c844f6207443475da2b594dfeb",
+        "fixture_max_abs_qpos_drift": 1.7468183149960126e-10,
+        "object_max_l2_drift_m": 8.709926868580822e-10,
+        "robot_policy_state_max_abs_drift": 0.5143735875418987,
+        "settle_state_sha256": "9e057f5416b420035ffa86848ade6172228928bca48d00f1fadd8ac9fe5a13ee",
+        "steps": 20
+      },
+      "start_reverse_goal": false,
+      "status": "failed_gate",
+      "task_index": 19,
+      "terminal_state_sha256": "d45afa302d5c022c46044530e0c4d78925c283c844f6207443475da2b594dfeb",
+      "worker_returncode": 0
+    }
+  ],
+  "hard_gate": {
+    "all_families_3_of_3": false,
+    "goal_true_false_controlled": false,
+    "hashes_recorded_each_run": true,
+    "twenty_step_settle": false
+  },
+  "schema_version": "track3_support_recovery_g1_s3_dynamic_v2",
+  "state_layout": {
+    "controlled_destruction_mutation_uses_qpos_offset": true,
+    "hdf5_states_qpos_offset": 1,
+    "hdf5_states_time_scalar_index": 0
+  },
+  "status": "track3_reverse_semantic_adapter_v2_failed_support_remove"
+}

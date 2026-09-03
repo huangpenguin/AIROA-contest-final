@@ -3,7 +3,7 @@
 > 制定日期：2026-09-03（Asia/Tokyo）
 > 输入执行 commit：root `73f675477a41a80241a7549f12f991187ecaaa25`，nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`
 > 审核结论：`remediation_required`
-> 当前状态：`track3_support_autogen_se3_recovery_planned`
+> 当前状态：`track3_reverse_semantic_adapter_v2_failed_support_remove`
 > 唯一授权：执行 G0–G4，最多重新执行 1 条 `support_remove_task_10` canary；随后只做 G5 收尾并 hard stop
 > 不授权：containment/articulation、人工 Teleop、批量生成、训练、norm、FAST/ZIP、官方 GPU、上传或比赛提交
 
@@ -94,6 +94,12 @@ articulation: close the middle drawer of the wooden cabinet
 6. 每次记录 BDDL/XML/controller/state hash，不得只报告 boolean 汇总。
 
 任何一族不是 `3/3`，或受控 true/false 不成立，状态为 `track3_reverse_semantic_adapter_v2_failed_<family>` 并停止；不得进入 G2。
+
+## 3.4 本次执行结果（2026-09-03）
+
+G0、S1 v2 分层统计和 typed language 已完成；S3 动态门禁已用三族各 3 个 fresh process 运行，共 9 次。task10 与 task19 的 forward HDF5 `states[0]` 反向 goal 不成立，三族 20-step robot policy-state 漂移也均超过当前门限；因此状态收窄为 `track3_reverse_semantic_adapter_v2_failed_support_remove`，按本节停止，G2–G4 未执行。
+
+详细证据与本次 hard stop 见 `docs/reports/AXIS_PI05_TRACK3_SUPPORT_AUTOGEN_SE3_RECOVERY_G1_CLOSEOUT_20260903.md` 和 recovery report namespace。不得将 G1 失败自动解释为 support 几何已经修复，也不得自动恢复 HDF5 位姿提取、SE(3) 执行器或 canary。
 
 ## 4. G2：support 失败根因与公开抓取位姿挖掘
 

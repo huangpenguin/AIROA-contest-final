@@ -889,7 +889,7 @@ def run_o10() -> dict[str, Any]:
     selected.extend(sorted((OUT_ROOT / "o2_runs/task10_demo0_attempt3").glob("*.json")))
     selected.extend(sorted((OUT_ROOT / "o2_camera_frames").glob("*.npz")))
     selected.extend(sorted((OUT_ROOT / "o2_runs/task10_demo0_attempt3").glob("*.mp4")))
-    entries = [artifact_entry(path, git(("rev-parse", "HEAD")), schema="o10_release_evidence") for path in selected if path.is_file()]
+    entries = [artifact_entry(path, git(("rev-parse", "HEAD"))) for path in selected if path.is_file()]
     manifest = {"schema_version": "track3_overnight_o10_artifact_manifest_v1", "created_at_utc": now(), "entries_exclude_self": True, "entries": entries, "partial_residue": sorted(path_ref(path) for path in OUT_ROOT.rglob("*.partial"))}
     manifest_path = OUT_ROOT / "o10_artifact_manifest.json"
     write_json(manifest_path, manifest)

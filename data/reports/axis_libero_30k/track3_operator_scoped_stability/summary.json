@@ -1,0 +1,210 @@
+{
+  "closeout_checks": {
+    "full_tests": {
+      "command": [
+        "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests"
+      ],
+      "passed": true,
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "........................................................................ [ 35%]\n.................................ss..................................... [ 71%]\n.............................sss.......................ss                [100%]\n=============================== warnings summary ===============================\n<frozen importlib._bootstrap>:488\n  <frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.MessageMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.\n\n<frozen importlib._bootstrap>:488\n  <frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.ScalarMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.\n\ntests/test_axis_pi05_lora_screen.py: 21 warnings\n  /home/huang/code/PARC2026_final/.venv_axis_pi05/lib/python3.12/site-packages/flax/core/scope.py:959: DeprecationWarning: shape requires ndarray or scalar arguments, got <class 'jax._src.api.ShapeDtypeStruct'> at position 0. In a future JAX release this will be an error.\n    if jnp.shape(val) != jnp.shape(abs_val):\n\ntests/test_t3_bddl_language.py::test_スタブが実物と同じシグネチャである\n  /home/huang/code/PARC2026_final/.venv_axis_pi05/lib/python3.12/site-packages/robosuite/__init__.py:7: DeprecationWarning: The 'warn' method is deprecated, use 'warning' instead\n    ROBOSUITE_DEFAULT_LOGGER.warn(\"No private macro file found!\")\n\ntests/test_t3_bddl_language.py::test_スタブが実物と同じシグネチャである\n  /home/huang/code/PARC2026_final/.venv_axis_pi05/lib/python3.12/site-packages/robosuite/__init__.py:8: DeprecationWarning: The 'warn' method is deprecated, use 'warning' instead\n    ROBOSUITE_DEFAULT_LOGGER.warn(\"It is recommended to use a private macro file\")\n\ntests/test_t3_bddl_language.py::test_スタブが実物と同じシグネチャである\n  /home/huang/code/PARC2026_final/.venv_axis_pi05/lib/python3.12/site-packages/robosuite/__init__.py:9: DeprecationWarning: The 'warn' method is deprecated, use 'warning' instead\n    ROBOSUITE_DEFAULT_LOGGER.warn(\"To setup, run: python {}/scripts/setup_macros.py\".format(robosuite.__path__[0]))\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n194 passed, 7 skipped, 26 warnings in 63.61s (0:01:03)\n"
+    },
+    "git_diff_check": {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "passed": true,
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": ""
+    },
+    "json_parse": {
+      "errors": [],
+      "files": 37,
+      "passed": true
+    },
+    "py_compile": {
+      "command": [
+        "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+        "-m",
+        "py_compile",
+        "/home/huang/code/PARC2026_final/tools/axis_pi05/track3_operator_scoped_stability.py",
+        "/home/huang/code/PARC2026_final/tests/test_track3_operator_scoped_stability.py"
+      ],
+      "passed": true,
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": ""
+    },
+    "targeted_tests": {
+      "command": [
+        "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_track3_operator_scoped_stability.py"
+      ],
+      "passed": true,
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": ".....                                                                    [100%]\n5 passed in 0.04s\n"
+    }
+  },
+  "created_at_utc": "2026-09-04T02:59:54.322347+00:00",
+  "hard_stop": true,
+  "immutable_revalidation": {
+    "immutable_input_checks": {
+      "/home/huang/code/PARC2026_final/LIBERO/libero/libero/bddl_files/libero_goal/open_the_middle_drawer_of_the_cabinet.bddl": true,
+      "/home/huang/code/PARC2026_final/LIBERO/libero/libero/bddl_files/libero_goal/put_the_bowl_on_the_plate.bddl": true,
+      "/home/huang/code/PARC2026_final/LIBERO/libero/libero/bddl_files/libero_object/pick_up_the_orange_juice_and_place_it_in_the_basket.bddl": true,
+      "/home/huang/code/PARC2026_final/LIBERO/libero/libero/envs/env_wrapper.py": true,
+      "/home/huang/code/PARC2026_final/LIBERO/libero/libero/envs/object_states/base_object_states.py": true,
+      "/home/huang/code/PARC2026_final/LIBERO/libero/libero/envs/predicates/__init__.py": true,
+      "/home/huang/code/PARC2026_final/LIBERO/libero/libero/envs/predicates/base_predicates.py": true,
+      "/home/huang/code/PARC2026_final/LIBERO/libero/libero/envs/problems/libero_tabletop_manipulation.py": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_init_stabilization/I4_CLOSEOUT_REPORT_ZH.md": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_init_stabilization/i0_release_lock.json": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_init_stabilization/i1_semantics.json": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_init_stabilization/i2_stabilization_time_series.json": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_init_stabilization/runs/i2_task10_forward_run_1.json": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_init_stabilization/runs/i2_task10_forward_run_2.json": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_init_stabilization/runs/i2_task10_forward_run_3.json": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_init_stabilization/runs/i2_task10_reverse_run_1.json": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_init_stabilization/runs/i2_task10_reverse_run_2.json": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_init_stabilization/runs/i2_task10_reverse_run_3.json": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_init_stabilization/runs/i2_task19_reverse_run_1.json": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_init_stabilization/runs/i2_task19_reverse_run_2.json": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_init_stabilization/runs/i2_task19_reverse_run_3.json": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_init_stabilization/runs/i2_task20_reverse_run_1.json": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_init_stabilization/runs/i2_task20_reverse_run_2.json": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_init_stabilization/runs/i2_task20_reverse_run_3.json": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_init_stabilization/summary.json": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s3_v2_specs/canary_articulation_close_task_19.bddl": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s3_v2_specs/canary_containment_remove_task_20.bddl": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s3_v2_specs/canary_support_remove_task_10.bddl": true,
+      "/home/huang/code/PARC2026_final/docs/AXIS_PI05_TRACK3_OPERATOR_SCOPED_STABILITY_RELEASE_PLAN.md": true,
+      "/home/huang/code/PARC2026_final/docs/reviews/axis_pi05/TRACK3_INIT_STABILIZATION_I0_I4_AUDIT_20260904.md": true,
+      "/home/huang/code/PARC2026_final/tools/axis_pi05/track3_dynamic_gate_reconciliation.py": true,
+      "/home/huang/code/PARC2026_final/tools/axis_pi05/track3_reverse_init_stabilization.py": true
+    },
+    "immutable_input_count": 32,
+    "immutable_inputs_unchanged": true,
+    "j0_status": "track3_operator_scoped_input_locked",
+    "libero_plus_status_record_only": true,
+    "nested_openpi_clean": true,
+    "nested_openpi_commit_unchanged": true,
+    "old_i2_hash_unchanged": true
+  },
+  "j2_outcome": {
+    "failed_runs": [
+      {
+        "failed_gates": [
+          "truth_vector_no_transition"
+        ],
+        "kind": "reverse",
+        "run_index": 1,
+        "task_index": 19
+      }
+    ],
+    "new_forward_controls": {
+      "complete": true,
+      "pass_count": 6,
+      "required": "6/6",
+      "run_reports": [
+        "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task20_forward_run_1.json",
+        "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task20_forward_run_2.json",
+        "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task20_forward_run_3.json",
+        "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task19_forward_run_1.json",
+        "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task19_forward_run_2.json",
+        "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task19_forward_run_3.json"
+      ],
+      "runs": 6
+    },
+    "new_reverse": {
+      "operator_scoped_gate": false,
+      "pass_count": 8,
+      "required": "9/9",
+      "run_reports": [
+        "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task10_reverse_run_1.json",
+        "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task10_reverse_run_2.json",
+        "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task10_reverse_run_3.json",
+        "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task20_reverse_run_1.json",
+        "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task20_reverse_run_2.json",
+        "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task20_reverse_run_3.json",
+        "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task19_reverse_run_1.json",
+        "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task19_reverse_run_2.json",
+        "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task19_reverse_run_3.json"
+      ],
+      "runs": 9
+    },
+    "raw_process_count": 15,
+    "status": "track3_operator_scoped_cpu_release_failed",
+    "worker_exception_count": 0
+  },
+  "next_action": "等待审核；不得进入 J3、SE(3)、demo、Teleop、批量生成或训练",
+  "old_vs_new_gate": {
+    "gpu3_canary": "not_evaluated",
+    "new_operator_scoped_release": "track3_operator_scoped_cpu_release_failed",
+    "old_full_scene_failure_preserved": true,
+    "old_i2_summary_expected_sha256": "e72ae24d27b6edbba37b043a88042191f8a1c7d00c298b812653a1a2ecc17dab",
+    "old_i2_summary_sha256": "e72ae24d27b6edbba37b043a88042191f8a1c7d00c298b812653a1a2ecc17dab",
+    "old_i2_unchanged": true
+  },
+  "phases": {
+    "J0": {
+      "executed": true,
+      "required": true,
+      "state": "passed"
+    },
+    "J1": {
+      "executed": true,
+      "required": true,
+      "state": "passed"
+    },
+    "J2": {
+      "executed": true,
+      "reason": "new_reverse_9_of_9_failed",
+      "required": true,
+      "state": "failed"
+    },
+    "J3": {
+      "executed": false,
+      "reason": "J2 failed 8/9 reverse operator-scoped gate; GPU3 hard stop",
+      "required": false,
+      "state": "not_evaluated"
+    },
+    "J4": {
+      "executed": true,
+      "required": true,
+      "state": "passed"
+    }
+  },
+  "resource_boundary": {
+    "J2_cpu_no_renderer_only": true,
+    "J3_gpu3_touched": false,
+    "accepted_reverse_demo": 0,
+    "demo_generation": false,
+    "fast_or_zip": false,
+    "gpu0_touched": false,
+    "grasp": false,
+    "official_gpu": false,
+    "pending_autogen": 0,
+    "se3": false,
+    "teleop": false,
+    "training_or_norm": false,
+    "upload_or_submission": false
+  },
+  "reverse_demo_counts": {
+    "accepted_reverse_demo": 0,
+    "exact_reverse_demo": 0,
+    "pending_autogen": 0
+  },
+  "schema_version": "track3_operator_scoped_stability_j4_v1",
+  "status": "track3_operator_scoped_cpu_release_failed_truth_vector_transition_task19_run1"
+}

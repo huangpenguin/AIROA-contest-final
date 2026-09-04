@@ -1,11 +1,11 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新审核状态：`track3_operator_scoped_stability_release_planned`
+> 最新审核状态：`track3_operator_scoped_cpu_release_failed_truth_vector_transition_task19_run1`
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_operator_scoped_stability_release_planned`
+> 当前总状态：`track3_operator_scoped_cpu_release_failed_truth_vector_transition_task19_run1`
 > 唯一活动计划：`docs/AXIS_PI05_TRACK3_OPERATOR_SCOPED_STABILITY_RELEASE_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
@@ -14,7 +14,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3 三族 operator-critical source在官方式 step5 已成立并连续至 step20，reverse goal连续为false；旧 full-scene gate的超限主要来自背景物自然沉降，不能解释为reverse init失败。当前先完成operator-scoped动态release，不修改BDDL，也不进入SE(3)、Teleop或训练；reverse demo exact/pending/accepted仍为`0/0/0`。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3 三族 operator-critical source在官方式 step5 已成立并连续至 step20，reverse goal连续为false；旧 full-scene gate的超限主要来自背景物自然沉降，不能解释为reverse init失败。Operator-scoped J0/J1/J2/J4 已完成，但 J2 新 reverse 为 `8/9`，task19 run1 的完整 init truth vector 在固定 step5→20 出现 background predicate 跃迁；因此 J3 GPU3 未执行，当前 hard stop 等待审核，不修改BDDL，也不进入SE(3)、Teleop或训练；reverse demo exact/pending/accepted仍为`0/0/0`。
 
 ## 2. 数据与复现基础
 
@@ -578,3 +578,11 @@ I2 的 named scene stability 未通过：support reverse 最大 object rotation 
 因此旧 `track3_reverse_init_stabilization_failed_named_scene_stability`永久保留为旧合同结果，但不能重标为reverse init失败。旧计划已归档；唯一活动计划为 `docs/AXIS_PI05_TRACK3_OPERATOR_SCOPED_STABILITY_RELEASE_PLAN.md`。J0–J2只做input lock、预注册contract、既有时序复算、9条带完整contact telemetry的新reverse和task20/task19 forward对照；全部通过后J3最多只在GPU3运行一次task10 canary及三族各`3/3` production-like动态验证。J4必须hard stop。
 
 本审核仍不授权BDDL修改、SE(3)、抓取/demo、Teleop、批量生成、LoRA/dense训练、norm、FAST/ZIP、官方GPU、上传或比赛提交。审核记录：`docs/reviews/axis_pi05/TRACK3_INIT_STABILIZATION_I0_I4_AUDIT_20260904.md`。
+
+## 45. Operator-Scoped Stability Release J0–J4 收尾（2026-09-04）
+
+J0/J1 已通过并锁定旧证据与 operator contract。J2.1 对旧 I2 的 9 条 reverse 复算为已保存字段 `9/9` 通过，但历史 contact matrix 为 `not_evaluated`，不能单独释放 J3。J2.2 已真实完成 15 个 CPU/no-renderer fresh processes：reverse `9`、forward `6`。以 step5 为 participant/contact baseline 并修正 goal-false expectation 后，reverse operator gate 为 `8/9`、forward control 为 `6/6`、新 contact matrix 为 `15/15` 完整。
+
+唯一失败为 task19 run1：step5→20 的完整 init predicate truth vector 在 step20 出现 background predicate 跃迁。该结果按固定 gate 记录为失败，没有删背景、改阈值或用 forward 对照反推。J3 因 J2 未达 `9/9` 而为 `not_evaluated`，GPU3 task10 canary、三族 `3/3`、H.264 与 sensitivity probe 均未执行。
+
+J4 已生成 `data/reports/axis_libero_30k/track3_operator_scoped_stability/summary.json` 与 `J4_CLOSEOUT_REPORT_ZH.md`；targeted/full tests、JSON parse、py_compile、diff check 全通过（`194 passed, 7 skipped, 26 warnings`）。旧 I2 hash、旧 full-scene failure、LIBERO-plus 既有 dirty 与 reverse-demo `0/0/0` 保持不变。最终状态：`track3_operator_scoped_cpu_release_failed_truth_vector_transition_task19_run1`；已 hard stop，等待审核，禁止自行重跑 J2、进入 J3、SE(3)、demo、Teleop、批量生成或训练。

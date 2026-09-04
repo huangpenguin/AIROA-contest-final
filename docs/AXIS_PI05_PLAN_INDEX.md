@@ -2,12 +2,14 @@
 
 > 更新日期：2026-09-04（Asia/Tokyo）
 > 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_OPERATOR_SCOPED_STABILITY_RELEASE_PLAN.md`
-> 当前状态：`track3_operator_scoped_stability_release_planned`
+> 当前状态：`track3_operator_scoped_cpu_release_failed_truth_vector_transition_task19_run1`
 > 最新审核：`docs/reviews/axis_pi05/TRACK3_INIT_STABILIZATION_I0_I4_AUDIT_20260904.md`
 
 ## 1. 本轮执行停止点
 
 Init Stabilization I0–I4 已完成并停止。三族 reverse operator-critical source relation在固定 step5 成立并连续到 step20，reverse goal 同窗口连续为 false；I3 因旧 full-scene max gate 未通过而未运行。独立审核确认这个 failure 不能解释为 reverse init 语义失败：task20/task19 的超限值来自无关背景物，task10 是 bowl 在 plate 上接触落稳的自由旋转，9 个 reverse run 的完整 init/goal truth vector 均为零跃迁。
+
+Operator-Scoped Stability Release 的 J0/J1/J2/J4 已完成：J2 新 fresh-process 矩阵为 reverse `8/9`、forward `6/6`，task19 run1 在固定 step5→20 的完整 init truth vector 出现 background predicate 跃迁，因此按 hard stop 不执行 J3。J3 为 `not_evaluated`，GPU3 未使用；J4 全量校验通过并等待审核。
 
 旧 I2 failure 和全场漂移保持 immutable。当前进入operator-scoped remediation：先复算现有证据，再执行带完整contact telemetry的新reverse 9条与forward controls 6条；通过后最多在GPU3执行一次task10 canary与三族各`3/3`。本轮未授权SE(3)、抓取/demo、Teleop、批量生成或训练。
 
@@ -21,8 +23,8 @@ G0/G1 已按失败门禁停止，S1 v2 与 typed language 获批准，三族 `3/
   - J0 锁定 `0dec0b1`、旧 I0–I4/I2 per-run 与 reverse-demo `0/0/0`；
   - J1 预注册 common + family-specific operator-scoped stability contract，不修改旧 I2/BDDL/阈值；
   - J2.1 只读复算现有9 reverse + 3 task10 forward；J2.2执行带完整contact telemetry的新reverse `9`条，并新增task20/task19 forward各`3/3`自然沉降对照；
-  - 只有 9/9 reverse operator-scoped 与全部 CPU/schema/hash gate 通过，才允许 J3 在 GPU3 做一次 task10 canary，随后三族各 `3/3`；
-  - J4 收尾并 hard stop；成功也只到 `pending_se3_review`；
+  - 只有 9/9 reverse operator-scoped 与全部 CPU/schema/hash gate 通过，才允许 J3 在 GPU3 做一次 task10 canary，随后三族各 `3/3`；本轮 J2 为 `8/9`，J3 未执行；
+  - J4 收尾并 hard stop；本轮未到 `pending_se3_review`；
   - 不得修改 BDDL/region/predicate，不得运行 SE(3)、抓取/demo、Teleop、批量生成、训练、norm、FAST/ZIP、官方 GPU、上传或提交。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
@@ -89,6 +91,14 @@ I2 named scene stability 未通过：support reverse 最大 rotation drift 约 `
 独立逐对象复算显示：support 的 `0.0564 rad` 来自 bowl 在 plate 上继续接触落稳，translation仍小于 `1 mm`且 `On` 连续；containment 的 `21.5 mm` 来自背景 salad dressing，orange juice仅约 `5.54e-7 m`；articulation 的超限来自背景 bowl，目标 drawer site/joint约 `1e-7`。9个 reverse runs 的完整 init/goal truth vector在 step5→20 均无跃迁。
 
 旧 I2 failure 和全场诊断永久保留。唯一活动计划改为 `docs/AXIS_PI05_TRACK3_OPERATOR_SCOPED_STABILITY_RELEASE_PLAN.md`：冻结按算子角色划分的稳定性 contract，CPU复算既有证据并执行9条带完整contact telemetry的reverse、6条forward controls；通过后最多在GPU3执行`1+9`次production-like动态验证。仍不授权SE(3)、demo、Teleop、训练或比赛GPU。完整审核见 `docs/reviews/axis_pi05/TRACK3_INIT_STABILIZATION_I0_I4_AUDIT_20260904.md`。
+
+## 3.4 Operator-Scoped J0–J4 执行收尾（2026-09-04）
+
+J0 锁定旧 I2 namespace、BDDL/source、root ancestry 与 nested OpenPI；J1 固定 operator-scoped contract，三族 contact contract、step5 baseline、分维度阈值和 tri-state 语义均通过。J2 复算旧 I2 的 9 条 reverse 与 3 条 task10 forward：旧字段 operator-scoped `9/9` 通过，但历史 contact matrix 明确为 `not_evaluated`，不能单独释放 J3。
+
+J2.2 已真实完成 15 个 CPU/no-renderer fresh processes：9 条 reverse、6 条 forward。修正 step5 baseline 和 goal-false expectation 语义后，reverse 为 `8/9`、forward 为 `6/6`，contact matrix 为 `15/15` 完整。唯一失败是 task19 run1 在 step5→20 的完整 init truth vector 出现 background predicate 跃迁；该结果按固定 gate 记录为失败，没有改阈值、删背景或从 forward 对照反推。
+
+因此 J3 GPU3 task10 canary 与三族 `3/3` 均为 `not_evaluated`，J4 已 hard stop。J4 targeted/full tests、JSON、py_compile、diff check 全部通过；旧 I2 hash 与 reverse-demo `0/0/0` 保持不变。证据位于 `data/reports/axis_libero_30k/track3_operator_scoped_stability/`，等待下一次审核；不得自行进入 SE(3)、demo、Teleop、批量生成或训练。
 
 ## 4. 保留但非活动的研究线
 

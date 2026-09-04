@@ -74,7 +74,7 @@ def test_historical_dynamic_failure_is_preserved_but_new_plan_repairs_validator(
             / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
         ).read_text(encoding="utf-8")
     )
-    assert handoff["status"] == "track3_operator_scoped_stability_release_planned"
+    assert handoff["status"] == "track3_operator_scoped_cpu_release_failed_truth_vector_transition_task19_run1"
     assert handoff["next_plan"].endswith(
         "AXIS_PI05_TRACK3_OPERATOR_SCOPED_STABILITY_RELEASE_PLAN.md"
     )

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-04",
-  "status": "track3_operator_scoped_stability_release_planned",
+  "status": "track3_operator_scoped_cpu_release_failed_truth_vector_transition_task19_run1",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
@@ -2554,5 +2554,18 @@
     "success_stop": "track3_operator_scoped_dynamic_validated_pending_se3_review",
     "failure_stop_prefix": "track3_operator_scoped_",
     "next_phase_only": "J0_to_J4_operator_scoped_stability_then_hard_stop"
+  },
+  "track3_operator_scoped_stability_release_execution": {
+    "status": "track3_operator_scoped_cpu_release_failed_truth_vector_transition_task19_run1",
+    "plan": "docs/AXIS_PI05_TRACK3_OPERATOR_SCOPED_STABILITY_RELEASE_PLAN.md",
+    "execution_input_root_commit": "0dec0b1930a3d2ad9f196febe1aeaabb0c89445d",
+    "execution_input_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "j0": {"status": "track3_operator_scoped_input_locked", "old_i2_sha256": "e72ae24d27b6edbba37b043a88042191f8a1c7d00c298b812653a1a2ecc17dab"},
+    "j1": {"status": "track3_operator_scoped_contract_validated", "contract_core_sha256": "deeb37ef38bbd12467e73d3b2dbe723f80b4b5ed71766d951142db654ecc142f"},
+    "j2": {"status": "track3_operator_scoped_cpu_release_failed", "fresh_processes": 15, "reverse_pass": "8/9", "forward_pass": "6/6", "full_contact_matrix": "15/15", "failed_run": "task19_reverse_run_1", "failed_gate": "truth_vector_no_transition", "old_i2_read_only_reanalysis_reverse_recorded_fields": "9/9", "old_i2_contact_matrix": "not_evaluated"},
+    "j3": {"status": "not_evaluated", "gpu3_task10_canary_runs": 0, "three_family_runs": 0, "reason": "J2 reverse gate failed 8/9"},
+    "j4": {"status": "completed_hard_stop", "summary": "data/reports/axis_libero_30k/track3_operator_scoped_stability/summary.json", "report": "data/reports/axis_libero_30k/track3_operator_scoped_stability/J4_CLOSEOUT_REPORT_ZH.md", "targeted_tests": "5_passed", "full_tests": "194_passed_7_skipped_26_warnings", "json_parse": "passed", "py_compile": "passed", "git_diff_check": "passed"},
+    "resource_boundary": {"gpu0_touched": false, "gpu3_touched": false, "se3": false, "grasp": false, "demo_generation": false, "teleop": false, "training_or_norm": false, "fast_or_zip": false, "official_gpu": false, "upload_or_submission": false, "reverse_demo_counts": {"exact": 0, "pending": 0, "accepted": 0}},
+    "next_action": "等待审核；不得重跑J2或进入J3、SE(3)、demo、Teleop、批量生成或训练"
   }
 }

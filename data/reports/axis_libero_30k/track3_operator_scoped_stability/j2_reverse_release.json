@@ -1,0 +1,1265 @@
+{
+  "hard_gate": {
+    "fresh_process_count": true,
+    "full_contact_matrix_new_runs": true,
+    "new_forward_6_of_6": true,
+    "new_reverse_9_of_9": false,
+    "no_bddl_modification": true,
+    "no_hindsight": true,
+    "old_i2_immutable": true
+  },
+  "new_reverse": {
+    "operator_scoped_gate": false,
+    "pass_count": 8,
+    "required": "9/9",
+    "run_reports": [
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task10_reverse_run_1.json",
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task10_reverse_run_2.json",
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task10_reverse_run_3.json",
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task20_reverse_run_1.json",
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task20_reverse_run_2.json",
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task20_reverse_run_3.json",
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task19_reverse_run_1.json",
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task19_reverse_run_2.json",
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task19_reverse_run_3.json"
+    ],
+    "runs": 9
+  },
+  "runs": [
+    {
+      "corrected_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task10_reverse_run_1.json",
+      "derivation": {
+        "contact_baseline_step": 5,
+        "participant_baseline_step": 5,
+        "raw_checkpoint_shape": "list",
+        "raw_worker_gate_not_used_for_release": true,
+        "source_raw_worker_report": true
+      },
+      "forward_control_gate": {
+        "executed": true,
+        "gates": {
+          "finite_contact": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "scene_names_invariant": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "schema": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "truth_detail": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          }
+        },
+        "required": false,
+        "state": "passed",
+        "status": "passed"
+      },
+      "kind": "reverse",
+      "operator_family": "support_remove",
+      "process_returncode": 0,
+      "reverse_operator_gate": {
+        "executed": true,
+        "gates": {
+          "contact_matrix_and_family_rule": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "critical_source_each_step": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "operator_participant_stability": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "reverse_goal_false_each_step": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "robot_component_stability": {
+            "executed": true,
+            "max_drift": {
+              "arm_joint_qpos_rad": 2.7487272791060803e-13,
+              "arm_joint_qvel_rad_s": 2.5950143333700145e-13,
+              "eef_rotation_rad": 0.0,
+              "eef_translation_m": 3.39318296790129e-14,
+              "gripper_controller_target": 0.0,
+              "gripper_qpos_m": 0.0003251166079293183,
+              "gripper_qvel_m_s": 0.0002852964275235339
+            },
+            "required": true,
+            "state": "passed",
+            "thresholds": {
+              "arm_joint_qpos_rad": 0.002,
+              "arm_joint_qvel_rad_s": 0.02,
+              "eef_rotation_rad": 0.02,
+              "eef_translation_m": 0.002,
+              "fixture_joint_rad_or_m": 0.002,
+              "gripper_qpos_m": 0.002,
+              "gripper_qvel_m_s": 0.02,
+              "object_rotation_rad": 0.02,
+              "object_translation_m": 0.002
+            }
+          },
+          "truth_vector_no_transition": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          }
+        },
+        "participant": {
+          "executed": true,
+          "gated_rotation_rad": {
+            "plate_1": 1.6355964161685158e-05
+          },
+          "gates": {
+            "fixture_joint": true,
+            "participant_rotation_except_exclusions": true,
+            "participant_translation": true
+          },
+          "max_joint_rad_or_m": {},
+          "max_rotation_rad": {
+            "akita_black_bowl_1": 0.05640432455364578,
+            "plate_1": 1.6355964161685158e-05
+          },
+          "max_step": {
+            "akita_black_bowl_1.rotation_rad": 6,
+            "akita_black_bowl_1.translation_m": 7,
+            "plate_1.rotation_rad": 17,
+            "plate_1.translation_m": 20
+          },
+          "max_translation_m": {
+            "akita_black_bowl_1": 0.000997067974683712,
+            "plate_1": 0.00017270807662178543
+          },
+          "passed": true,
+          "rotation_gate_exclusions": [
+            "akita_black_bowl_1"
+          ],
+          "state": "passed"
+        },
+        "required": true,
+        "state": "passed",
+        "status": "passed"
+      },
+      "run_index": 1,
+      "source_raw_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task10_reverse_run_1.json",
+      "status": "passed",
+      "task_index": 10,
+      "worker_returncode_contract": true
+    },
+    {
+      "corrected_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task10_reverse_run_2.json",
+      "derivation": {
+        "contact_baseline_step": 5,
+        "participant_baseline_step": 5,
+        "raw_checkpoint_shape": "list",
+        "raw_worker_gate_not_used_for_release": true,
+        "source_raw_worker_report": true
+      },
+      "forward_control_gate": {
+        "executed": true,
+        "gates": {
+          "finite_contact": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "scene_names_invariant": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "schema": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "truth_detail": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          }
+        },
+        "required": false,
+        "state": "passed",
+        "status": "passed"
+      },
+      "kind": "reverse",
+      "operator_family": "support_remove",
+      "process_returncode": 0,
+      "reverse_operator_gate": {
+        "executed": true,
+        "gates": {
+          "contact_matrix_and_family_rule": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "critical_source_each_step": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "operator_participant_stability": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "reverse_goal_false_each_step": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "robot_component_stability": {
+            "executed": true,
+            "max_drift": {
+              "arm_joint_qpos_rad": 2.7487272788487647e-13,
+              "arm_joint_qvel_rad_s": 2.5950143431118883e-13,
+              "eef_rotation_rad": 0.0,
+              "eef_translation_m": 3.3931829670094714e-14,
+              "gripper_controller_target": 0.0,
+              "gripper_qpos_m": 0.0003251166079293183,
+              "gripper_qvel_m_s": 0.000285296427523534
+            },
+            "required": true,
+            "state": "passed",
+            "thresholds": {
+              "arm_joint_qpos_rad": 0.002,
+              "arm_joint_qvel_rad_s": 0.02,
+              "eef_rotation_rad": 0.02,
+              "eef_translation_m": 0.002,
+              "fixture_joint_rad_or_m": 0.002,
+              "gripper_qpos_m": 0.002,
+              "gripper_qvel_m_s": 0.02,
+              "object_rotation_rad": 0.02,
+              "object_translation_m": 0.002
+            }
+          },
+          "truth_vector_no_transition": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          }
+        },
+        "participant": {
+          "executed": true,
+          "gated_rotation_rad": {
+            "plate_1": 1.6355964161685158e-05
+          },
+          "gates": {
+            "fixture_joint": true,
+            "participant_rotation_except_exclusions": true,
+            "participant_translation": true
+          },
+          "max_joint_rad_or_m": {},
+          "max_rotation_rad": {
+            "akita_black_bowl_1": 0.05640432455364578,
+            "plate_1": 1.6355964161685158e-05
+          },
+          "max_step": {
+            "akita_black_bowl_1.rotation_rad": 6,
+            "akita_black_bowl_1.translation_m": 7,
+            "plate_1.rotation_rad": 18,
+            "plate_1.translation_m": 20
+          },
+          "max_translation_m": {
+            "akita_black_bowl_1": 0.0009970679746837123,
+            "plate_1": 0.00017270807662178543
+          },
+          "passed": true,
+          "rotation_gate_exclusions": [
+            "akita_black_bowl_1"
+          ],
+          "state": "passed"
+        },
+        "required": true,
+        "state": "passed",
+        "status": "passed"
+      },
+      "run_index": 2,
+      "source_raw_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task10_reverse_run_2.json",
+      "status": "passed",
+      "task_index": 10,
+      "worker_returncode_contract": true
+    },
+    {
+      "corrected_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task10_reverse_run_3.json",
+      "derivation": {
+        "contact_baseline_step": 5,
+        "participant_baseline_step": 5,
+        "raw_checkpoint_shape": "list",
+        "raw_worker_gate_not_used_for_release": true,
+        "source_raw_worker_report": true
+      },
+      "forward_control_gate": {
+        "executed": true,
+        "gates": {
+          "finite_contact": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "scene_names_invariant": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "schema": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "truth_detail": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          }
+        },
+        "required": false,
+        "state": "passed",
+        "status": "passed"
+      },
+      "kind": "reverse",
+      "operator_family": "support_remove",
+      "process_returncode": 0,
+      "reverse_operator_gate": {
+        "executed": true,
+        "gates": {
+          "contact_matrix_and_family_rule": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "critical_source_each_step": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "operator_participant_stability": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "reverse_goal_false_each_step": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "robot_component_stability": {
+            "executed": true,
+            "max_drift": {
+              "arm_joint_qpos_rad": 2.7477153248066317e-13,
+              "arm_joint_qvel_rad_s": 2.6023148133160365e-13,
+              "eef_rotation_rad": 0.0,
+              "eef_translation_m": 3.3893826183182565e-14,
+              "gripper_controller_target": 0.0,
+              "gripper_qpos_m": 0.0003251166079293183,
+              "gripper_qvel_m_s": 0.0002852964275235439
+            },
+            "required": true,
+            "state": "passed",
+            "thresholds": {
+              "arm_joint_qpos_rad": 0.002,
+              "arm_joint_qvel_rad_s": 0.02,
+              "eef_rotation_rad": 0.02,
+              "eef_translation_m": 0.002,
+              "fixture_joint_rad_or_m": 0.002,
+              "gripper_qpos_m": 0.002,
+              "gripper_qvel_m_s": 0.02,
+              "object_rotation_rad": 0.02,
+              "object_translation_m": 0.002
+            }
+          },
+          "truth_vector_no_transition": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          }
+        },
+        "participant": {
+          "executed": true,
+          "gated_rotation_rad": {
+            "plate_1": 1.6355964161685158e-05
+          },
+          "gates": {
+            "fixture_joint": true,
+            "participant_rotation_except_exclusions": true,
+            "participant_translation": true
+          },
+          "max_joint_rad_or_m": {},
+          "max_rotation_rad": {
+            "akita_black_bowl_1": 0.05640432455340167,
+            "plate_1": 1.6355964161685158e-05
+          },
+          "max_step": {
+            "akita_black_bowl_1.rotation_rad": 6,
+            "akita_black_bowl_1.translation_m": 7,
+            "plate_1.rotation_rad": 17,
+            "plate_1.translation_m": 20
+          },
+          "max_translation_m": {
+            "akita_black_bowl_1": 0.0009970679747806053,
+            "plate_1": 0.00017270807653385414
+          },
+          "passed": true,
+          "rotation_gate_exclusions": [
+            "akita_black_bowl_1"
+          ],
+          "state": "passed"
+        },
+        "required": true,
+        "state": "passed",
+        "status": "passed"
+      },
+      "run_index": 3,
+      "source_raw_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task10_reverse_run_3.json",
+      "status": "passed",
+      "task_index": 10,
+      "worker_returncode_contract": true
+    },
+    {
+      "corrected_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task20_reverse_run_1.json",
+      "derivation": {
+        "contact_baseline_step": 5,
+        "participant_baseline_step": 5,
+        "raw_checkpoint_shape": "list",
+        "raw_worker_gate_not_used_for_release": true,
+        "source_raw_worker_report": true
+      },
+      "forward_control_gate": {
+        "executed": true,
+        "gates": {
+          "finite_contact": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "scene_names_invariant": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "schema": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "truth_detail": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          }
+        },
+        "required": false,
+        "state": "passed",
+        "status": "passed"
+      },
+      "kind": "reverse",
+      "operator_family": "containment_remove",
+      "process_returncode": 0,
+      "reverse_operator_gate": {
+        "executed": true,
+        "gates": {
+          "contact_matrix_and_family_rule": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "critical_source_each_step": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "operator_participant_stability": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "reverse_goal_false_each_step": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "robot_component_stability": {
+            "executed": true,
+            "max_drift": {
+              "arm_joint_qpos_rad": 2.747715327014948e-13,
+              "arm_joint_qvel_rad_s": 2.602314817185019e-13,
+              "eef_rotation_rad": 0.0,
+              "eef_translation_m": 3.389387166149138e-14,
+              "gripper_controller_target": 0.0,
+              "gripper_qpos_m": 0.0003251166079293183,
+              "gripper_qvel_m_s": 0.0002852964275235441
+            },
+            "required": true,
+            "state": "passed",
+            "thresholds": {
+              "arm_joint_qpos_rad": 0.002,
+              "arm_joint_qvel_rad_s": 0.02,
+              "eef_rotation_rad": 0.02,
+              "eef_translation_m": 0.002,
+              "fixture_joint_rad_or_m": 0.002,
+              "gripper_qpos_m": 0.002,
+              "gripper_qvel_m_s": 0.02,
+              "object_rotation_rad": 0.02,
+              "object_translation_m": 0.002
+            }
+          },
+          "truth_vector_no_transition": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          }
+        },
+        "participant": {
+          "executed": true,
+          "gated_rotation_rad": {
+            "basket_1": 2.5809568279517867e-07,
+            "basket_1_contain_region": 3.111453804049063e-07,
+            "orange_juice_1": 7.300048299977715e-08
+          },
+          "gates": {
+            "fixture_joint": true,
+            "participant_rotation_except_exclusions": true,
+            "participant_translation": true
+          },
+          "max_joint_rad_or_m": {},
+          "max_rotation_rad": {
+            "basket_1": 2.5809568279517867e-07,
+            "basket_1_contain_region": 3.111453804049063e-07,
+            "orange_juice_1": 7.300048299977715e-08
+          },
+          "max_step": {
+            "basket_1.rotation_rad": 8,
+            "basket_1.translation_m": 13,
+            "basket_1_contain_region.rotation_rad": 8,
+            "basket_1_contain_region.translation_m": 15,
+            "orange_juice_1.rotation_rad": 10,
+            "orange_juice_1.translation_m": 12
+          },
+          "max_translation_m": {
+            "basket_1": 3.1292748430990396e-07,
+            "basket_1_contain_region": 3.1332019400411046e-07,
+            "orange_juice_1": 5.535800877215439e-07
+          },
+          "passed": true,
+          "rotation_gate_exclusions": [],
+          "state": "passed"
+        },
+        "required": true,
+        "state": "passed",
+        "status": "passed"
+      },
+      "run_index": 1,
+      "source_raw_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task20_reverse_run_1.json",
+      "status": "passed",
+      "task_index": 20,
+      "worker_returncode_contract": true
+    },
+    {
+      "corrected_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task20_reverse_run_2.json",
+      "derivation": {
+        "contact_baseline_step": 5,
+        "participant_baseline_step": 5,
+        "raw_checkpoint_shape": "list",
+        "raw_worker_gate_not_used_for_release": true,
+        "source_raw_worker_report": true
+      },
+      "forward_control_gate": {
+        "executed": true,
+        "gates": {
+          "finite_contact": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "scene_names_invariant": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "schema": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "truth_detail": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          }
+        },
+        "required": false,
+        "state": "passed",
+        "status": "passed"
+      },
+      "kind": "reverse",
+      "operator_family": "containment_remove",
+      "process_returncode": 0,
+      "reverse_operator_gate": {
+        "executed": true,
+        "gates": {
+          "contact_matrix_and_family_rule": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "critical_source_each_step": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "operator_participant_stability": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "reverse_goal_false_each_step": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "robot_component_stability": {
+            "executed": true,
+            "max_drift": {
+              "arm_joint_qpos_rad": 2.7477152411409857e-13,
+              "arm_joint_qvel_rad_s": 2.6023152675347993e-13,
+              "eef_rotation_rad": 0.0,
+              "eef_translation_m": 3.389387167404909e-14,
+              "gripper_controller_target": 0.0,
+              "gripper_qpos_m": 0.0003251166079293183,
+              "gripper_qvel_m_s": 0.00028529642752354395
+            },
+            "required": true,
+            "state": "passed",
+            "thresholds": {
+              "arm_joint_qpos_rad": 0.002,
+              "arm_joint_qvel_rad_s": 0.02,
+              "eef_rotation_rad": 0.02,
+              "eef_translation_m": 0.002,
+              "fixture_joint_rad_or_m": 0.002,
+              "gripper_qpos_m": 0.002,
+              "gripper_qvel_m_s": 0.02,
+              "object_rotation_rad": 0.02,
+              "object_translation_m": 0.002
+            }
+          },
+          "truth_vector_no_transition": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          }
+        },
+        "participant": {
+          "executed": true,
+          "gated_rotation_rad": {
+            "basket_1": 2.5809568279517867e-07,
+            "basket_1_contain_region": 3.111453804049063e-07,
+            "orange_juice_1": 7.300048299977715e-08
+          },
+          "gates": {
+            "fixture_joint": true,
+            "participant_rotation_except_exclusions": true,
+            "participant_translation": true
+          },
+          "max_joint_rad_or_m": {},
+          "max_rotation_rad": {
+            "basket_1": 2.5809568279517867e-07,
+            "basket_1_contain_region": 3.111453804049063e-07,
+            "orange_juice_1": 7.300048299977715e-08
+          },
+          "max_step": {
+            "basket_1.rotation_rad": 8,
+            "basket_1.translation_m": 13,
+            "basket_1_contain_region.rotation_rad": 8,
+            "basket_1_contain_region.translation_m": 15,
+            "orange_juice_1.rotation_rad": 10,
+            "orange_juice_1.translation_m": 12
+          },
+          "max_translation_m": {
+            "basket_1": 3.129274843090366e-07,
+            "basket_1_contain_region": 3.1332019400411046e-07,
+            "orange_juice_1": 5.535800877372372e-07
+          },
+          "passed": true,
+          "rotation_gate_exclusions": [],
+          "state": "passed"
+        },
+        "required": true,
+        "state": "passed",
+        "status": "passed"
+      },
+      "run_index": 2,
+      "source_raw_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task20_reverse_run_2.json",
+      "status": "passed",
+      "task_index": 20,
+      "worker_returncode_contract": true
+    },
+    {
+      "corrected_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task20_reverse_run_3.json",
+      "derivation": {
+        "contact_baseline_step": 5,
+        "participant_baseline_step": 5,
+        "raw_checkpoint_shape": "list",
+        "raw_worker_gate_not_used_for_release": true,
+        "source_raw_worker_report": true
+      },
+      "forward_control_gate": {
+        "executed": true,
+        "gates": {
+          "finite_contact": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "scene_names_invariant": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "schema": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "truth_detail": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          }
+        },
+        "required": false,
+        "state": "passed",
+        "status": "passed"
+      },
+      "kind": "reverse",
+      "operator_family": "containment_remove",
+      "process_returncode": 0,
+      "reverse_operator_gate": {
+        "executed": true,
+        "gates": {
+          "contact_matrix_and_family_rule": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "critical_source_each_step": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "operator_participant_stability": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "reverse_goal_false_each_step": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "robot_component_stability": {
+            "executed": true,
+            "max_drift": {
+              "arm_joint_qpos_rad": 2.747715268349725e-13,
+              "arm_joint_qvel_rad_s": 2.602315350923425e-13,
+              "eef_rotation_rad": 0.0,
+              "eef_translation_m": 3.3893871706491216e-14,
+              "gripper_controller_target": 0.0,
+              "gripper_qpos_m": 0.0003251166079293183,
+              "gripper_qvel_m_s": 0.0002852964275235442
+            },
+            "required": true,
+            "state": "passed",
+            "thresholds": {
+              "arm_joint_qpos_rad": 0.002,
+              "arm_joint_qvel_rad_s": 0.02,
+              "eef_rotation_rad": 0.02,
+              "eef_translation_m": 0.002,
+              "fixture_joint_rad_or_m": 0.002,
+              "gripper_qpos_m": 0.002,
+              "gripper_qvel_m_s": 0.02,
+              "object_rotation_rad": 0.02,
+              "object_translation_m": 0.002
+            }
+          },
+          "truth_vector_no_transition": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          }
+        },
+        "participant": {
+          "executed": true,
+          "gated_rotation_rad": {
+            "basket_1": 2.5809568279517867e-07,
+            "basket_1_contain_region": 3.111453804049063e-07,
+            "orange_juice_1": 6.664001874625056e-08
+          },
+          "gates": {
+            "fixture_joint": true,
+            "participant_rotation_except_exclusions": true,
+            "participant_translation": true
+          },
+          "max_joint_rad_or_m": {},
+          "max_rotation_rad": {
+            "basket_1": 2.5809568279517867e-07,
+            "basket_1_contain_region": 3.111453804049063e-07,
+            "orange_juice_1": 6.664001874625056e-08
+          },
+          "max_step": {
+            "basket_1.rotation_rad": 8,
+            "basket_1.translation_m": 13,
+            "basket_1_contain_region.rotation_rad": 8,
+            "basket_1_contain_region.translation_m": 15,
+            "orange_juice_1.rotation_rad": 8,
+            "orange_juice_1.translation_m": 12
+          },
+          "max_translation_m": {
+            "basket_1": 3.1292748430990396e-07,
+            "basket_1_contain_region": 3.1332019400410993e-07,
+            "orange_juice_1": 5.535800877224549e-07
+          },
+          "passed": true,
+          "rotation_gate_exclusions": [],
+          "state": "passed"
+        },
+        "required": true,
+        "state": "passed",
+        "status": "passed"
+      },
+      "run_index": 3,
+      "source_raw_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task20_reverse_run_3.json",
+      "status": "passed",
+      "task_index": 20,
+      "worker_returncode_contract": true
+    },
+    {
+      "corrected_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task19_reverse_run_1.json",
+      "derivation": {
+        "contact_baseline_step": 5,
+        "participant_baseline_step": 5,
+        "raw_checkpoint_shape": "list",
+        "raw_worker_gate_not_used_for_release": true,
+        "source_raw_worker_report": true
+      },
+      "forward_control_gate": {
+        "executed": true,
+        "gates": {
+          "finite_contact": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "scene_names_invariant": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "schema": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "truth_detail": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          }
+        },
+        "required": false,
+        "state": "passed",
+        "status": "passed"
+      },
+      "kind": "reverse",
+      "operator_family": "articulation_close",
+      "process_returncode": 0,
+      "reverse_operator_gate": {
+        "executed": true,
+        "gates": {
+          "contact_matrix_and_family_rule": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "critical_source_each_step": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "operator_participant_stability": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "reverse_goal_false_each_step": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "robot_component_stability": {
+            "executed": true,
+            "max_drift": {
+              "arm_joint_qpos_rad": 2.5724317899062693e-13,
+              "arm_joint_qvel_rad_s": 3.1141585654236213e-13,
+              "eef_rotation_rad": 0.0,
+              "eef_translation_m": 3.188505481518244e-14,
+              "gripper_controller_target": 0.0,
+              "gripper_qpos_m": 0.0003251166079291691,
+              "gripper_qvel_m_s": 0.00028529642752372404
+            },
+            "required": true,
+            "state": "passed",
+            "thresholds": {
+              "arm_joint_qpos_rad": 0.002,
+              "arm_joint_qvel_rad_s": 0.02,
+              "eef_rotation_rad": 0.02,
+              "eef_translation_m": 0.002,
+              "fixture_joint_rad_or_m": 0.002,
+              "gripper_qpos_m": 0.002,
+              "gripper_qvel_m_s": 0.02,
+              "object_rotation_rad": 0.02,
+              "object_translation_m": 0.002
+            }
+          },
+          "truth_vector_no_transition": {
+            "executed": true,
+            "required": true,
+            "state": "failed"
+          }
+        },
+        "participant": {
+          "executed": true,
+          "gated_rotation_rad": {
+            "wooden_cabinet_1_cabinet_middle": 0.0,
+            "wooden_cabinet_1_middle_region": 0.0
+          },
+          "gates": {
+            "fixture_joint": true,
+            "participant_rotation_except_exclusions": true,
+            "participant_translation": true
+          },
+          "max_joint_rad_or_m": {
+            "wooden_cabinet_1_middle_level": 3.520291226022376e-07
+          },
+          "max_rotation_rad": {
+            "wooden_cabinet_1_cabinet_middle": 0.0,
+            "wooden_cabinet_1_middle_region": 0.0
+          },
+          "max_step": {
+            "wooden_cabinet_1_cabinet_middle.rotation_rad": 5,
+            "wooden_cabinet_1_cabinet_middle.translation_m": 10,
+            "wooden_cabinet_1_middle_level.joint_rad_or_m": 10,
+            "wooden_cabinet_1_middle_region.rotation_rad": 5,
+            "wooden_cabinet_1_middle_region.translation_m": 10
+          },
+          "max_translation_m": {
+            "wooden_cabinet_1_cabinet_middle": 3.432904331357456e-07,
+            "wooden_cabinet_1_middle_region": 3.432904331357456e-07
+          },
+          "passed": true,
+          "rotation_gate_exclusions": [],
+          "state": "passed"
+        },
+        "required": true,
+        "state": "failed",
+        "status": "failed_gate"
+      },
+      "run_index": 1,
+      "source_raw_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task19_reverse_run_1.json",
+      "status": "passed",
+      "task_index": 19,
+      "worker_returncode_contract": true
+    },
+    {
+      "corrected_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task19_reverse_run_2.json",
+      "derivation": {
+        "contact_baseline_step": 5,
+        "participant_baseline_step": 5,
+        "raw_checkpoint_shape": "list",
+        "raw_worker_gate_not_used_for_release": true,
+        "source_raw_worker_report": true
+      },
+      "forward_control_gate": {
+        "executed": true,
+        "gates": {
+          "finite_contact": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "scene_names_invariant": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "schema": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "truth_detail": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          }
+        },
+        "required": false,
+        "state": "passed",
+        "status": "passed"
+      },
+      "kind": "reverse",
+      "operator_family": "articulation_close",
+      "process_returncode": 0,
+      "reverse_operator_gate": {
+        "executed": true,
+        "gates": {
+          "contact_matrix_and_family_rule": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "critical_source_each_step": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "operator_participant_stability": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "reverse_goal_false_each_step": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "robot_component_stability": {
+            "executed": true,
+            "max_drift": {
+              "arm_joint_qpos_rad": 2.647552216775975e-13,
+              "arm_joint_qvel_rad_s": 2.2045648894459313e-13,
+              "eef_rotation_rad": 0.0,
+              "eef_translation_m": 3.280418728481106e-14,
+              "gripper_controller_target": 0.0,
+              "gripper_qpos_m": 0.00032511660792911706,
+              "gripper_qvel_m_s": 0.00028529642752293317
+            },
+            "required": true,
+            "state": "passed",
+            "thresholds": {
+              "arm_joint_qpos_rad": 0.002,
+              "arm_joint_qvel_rad_s": 0.02,
+              "eef_rotation_rad": 0.02,
+              "eef_translation_m": 0.002,
+              "fixture_joint_rad_or_m": 0.002,
+              "gripper_qpos_m": 0.002,
+              "gripper_qvel_m_s": 0.02,
+              "object_rotation_rad": 0.02,
+              "object_translation_m": 0.002
+            }
+          },
+          "truth_vector_no_transition": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          }
+        },
+        "participant": {
+          "executed": true,
+          "gated_rotation_rad": {
+            "wooden_cabinet_1_cabinet_middle": 0.0,
+            "wooden_cabinet_1_middle_region": 0.0
+          },
+          "gates": {
+            "fixture_joint": true,
+            "participant_rotation_except_exclusions": true,
+            "participant_translation": true
+          },
+          "max_joint_rad_or_m": {
+            "wooden_cabinet_1_middle_level": 1.0149539612924752e-06
+          },
+          "max_rotation_rad": {
+            "wooden_cabinet_1_cabinet_middle": 0.0,
+            "wooden_cabinet_1_middle_region": 0.0
+          },
+          "max_step": {
+            "wooden_cabinet_1_cabinet_middle.rotation_rad": 5,
+            "wooden_cabinet_1_cabinet_middle.translation_m": 20,
+            "wooden_cabinet_1_middle_level.joint_rad_or_m": 20,
+            "wooden_cabinet_1_middle_region.rotation_rad": 5,
+            "wooden_cabinet_1_middle_region.translation_m": 20
+          },
+          "max_translation_m": {
+            "wooden_cabinet_1_cabinet_middle": 9.719226294058192e-07,
+            "wooden_cabinet_1_middle_region": 9.719226294058192e-07
+          },
+          "passed": true,
+          "rotation_gate_exclusions": [],
+          "state": "passed"
+        },
+        "required": true,
+        "state": "passed",
+        "status": "passed"
+      },
+      "run_index": 2,
+      "source_raw_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task19_reverse_run_2.json",
+      "status": "passed",
+      "task_index": 19,
+      "worker_returncode_contract": true
+    },
+    {
+      "corrected_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task19_reverse_run_3.json",
+      "derivation": {
+        "contact_baseline_step": 5,
+        "participant_baseline_step": 5,
+        "raw_checkpoint_shape": "list",
+        "raw_worker_gate_not_used_for_release": true,
+        "source_raw_worker_report": true
+      },
+      "forward_control_gate": {
+        "executed": true,
+        "gates": {
+          "finite_contact": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "scene_names_invariant": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "schema": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "truth_detail": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          }
+        },
+        "required": false,
+        "state": "passed",
+        "status": "passed"
+      },
+      "kind": "reverse",
+      "operator_family": "articulation_close",
+      "process_returncode": 0,
+      "reverse_operator_gate": {
+        "executed": true,
+        "gates": {
+          "contact_matrix_and_family_rule": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "critical_source_each_step": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "operator_participant_stability": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "reverse_goal_false_each_step": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "robot_component_stability": {
+            "executed": true,
+            "max_drift": {
+              "arm_joint_qpos_rad": 2.663036958513832e-13,
+              "arm_joint_qvel_rad_s": 2.588675887866393e-13,
+              "eef_rotation_rad": 0.0,
+              "eef_translation_m": 3.27637685750285e-14,
+              "gripper_controller_target": 0.0,
+              "gripper_qpos_m": 0.00032511660792924543,
+              "gripper_qvel_m_s": 0.00028529642752348665
+            },
+            "required": true,
+            "state": "passed",
+            "thresholds": {
+              "arm_joint_qpos_rad": 0.002,
+              "arm_joint_qvel_rad_s": 0.02,
+              "eef_rotation_rad": 0.02,
+              "eef_translation_m": 0.002,
+              "fixture_joint_rad_or_m": 0.002,
+              "gripper_qpos_m": 0.002,
+              "gripper_qvel_m_s": 0.02,
+              "object_rotation_rad": 0.02,
+              "object_translation_m": 0.002
+            }
+          },
+          "truth_vector_no_transition": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          }
+        },
+        "participant": {
+          "executed": true,
+          "gated_rotation_rad": {
+            "wooden_cabinet_1_cabinet_middle": 0.0,
+            "wooden_cabinet_1_middle_region": 0.0
+          },
+          "gates": {
+            "fixture_joint": true,
+            "participant_rotation_except_exclusions": true,
+            "participant_translation": true
+          },
+          "max_joint_rad_or_m": {
+            "wooden_cabinet_1_middle_level": 4.0479820162531155e-08
+          },
+          "max_rotation_rad": {
+            "wooden_cabinet_1_cabinet_middle": 0.0,
+            "wooden_cabinet_1_middle_region": 0.0
+          },
+          "max_step": {
+            "wooden_cabinet_1_cabinet_middle.rotation_rad": 5,
+            "wooden_cabinet_1_cabinet_middle.translation_m": 20,
+            "wooden_cabinet_1_middle_level.joint_rad_or_m": 20,
+            "wooden_cabinet_1_middle_region.rotation_rad": 5,
+            "wooden_cabinet_1_middle_region.translation_m": 20
+          },
+          "max_translation_m": {
+            "wooden_cabinet_1_cabinet_middle": 3.997377887032805e-08,
+            "wooden_cabinet_1_middle_region": 3.997377887032805e-08
+          },
+          "passed": true,
+          "rotation_gate_exclusions": [],
+          "state": "passed"
+        },
+        "required": true,
+        "state": "passed",
+        "status": "passed"
+      },
+      "run_index": 3,
+      "source_raw_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task19_reverse_run_3.json",
+      "status": "passed",
+      "task_index": 19,
+      "worker_returncode_contract": true
+    }
+  ],
+  "schema_version": "track3_operator_scoped_stability_j2_reverse_v1",
+  "status": "track3_operator_scoped_cpu_release_failed"
+}

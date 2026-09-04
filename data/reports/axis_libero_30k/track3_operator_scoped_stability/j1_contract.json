@@ -1,0 +1,161 @@
+{
+  "contract": {
+    "action": {
+      "controller": "OSC_POSE",
+      "dimension": 7,
+      "gripper": 0.0,
+      "semantics": "zero_increment_hold",
+      "values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "background_policy": "retain_full_translation_rotation_max_and_contact_diagnostics_without_operator_gate_substitution",
+    "common_gates": [
+      "schema",
+      "finite",
+      "truth_detail",
+      "os_returncode",
+      "critical_source_true",
+      "reverse_goal_false",
+      "truth_vector_no_transition",
+      "robot_component_stability",
+      "scene_name_set_finite",
+      "contact_matrix_complete"
+    ],
+    "hdf5_predicate_oracle": false,
+    "no_hindsight_checkpoint_selection": true,
+    "not_evaluated_policy": "unexecuted_or_unrecorded_required_gate_is_not_evaluated_and_fails_closed",
+    "old_full_scene_policy": "immutable_diagnostic_reference_only",
+    "operator_contract": {
+      "10": {
+        "allowed_contact_pairs": [
+          [
+            "akita_black_bowl_1",
+            "plate_1"
+          ]
+        ],
+        "contact_rule": "bowl_plate_present_and_no_bowl_nonplate_contact",
+        "family": "support_remove",
+        "forbidden_contact_subject": "akita_black_bowl_1",
+        "goal_atom": "(On akita_black_bowl_1 main_table_akita_black_bowl_region)",
+        "participant_gate": "subject_translation_and_receiver_translation_rotation",
+        "pose_participants": [
+          "akita_black_bowl_1",
+          "plate_1"
+        ],
+        "receiver": [
+          "plate_1"
+        ],
+        "rotation_gate_exclusions": [
+          "akita_black_bowl_1"
+        ],
+        "source_atom": "(On akita_black_bowl_1 plate_1)",
+        "subject": [
+          "akita_black_bowl_1"
+        ]
+      },
+      "19": {
+        "allowed_contact_pairs": [],
+        "contact_rule": "drawer_has_no_new_background_contact",
+        "family": "articulation_close",
+        "forbidden_contact_subject": "wooden_cabinet_1_cabinet_middle",
+        "goal_atom": "(Close wooden_cabinet_1_middle_region)",
+        "participant_gate": "target_site_rotation_translation_and_joint",
+        "pose_participants": [
+          "wooden_cabinet_1_middle_region"
+        ],
+        "receiver": [],
+        "rotation_gate_exclusions": [],
+        "source_atom": "(Open wooden_cabinet_1_middle_region)",
+        "subject": [
+          "wooden_cabinet_1_middle_region"
+        ],
+        "target_body": "wooden_cabinet_1_cabinet_middle",
+        "target_joint": "wooden_cabinet_1_middle_level"
+      },
+      "20": {
+        "allowed_contact_pairs": [
+          [
+            "orange_juice_1",
+            "basket_1"
+          ]
+        ],
+        "contact_rule": "orange_basket_allowed_and_no_orange_nonbasket_contact",
+        "family": "containment_remove",
+        "forbidden_contact_subject": "orange_juice_1",
+        "goal_atom": "(On orange_juice_1 floor_target_object_region)",
+        "participant_gate": "subject_and_receiver_translation_rotation",
+        "pose_participants": [
+          "orange_juice_1",
+          "basket_1",
+          "basket_1_contain_region"
+        ],
+        "receiver": [
+          "basket_1",
+          "basket_1_contain_region"
+        ],
+        "rotation_gate_exclusions": [],
+        "source_atom": "(In orange_juice_1 basket_1_contain_region)",
+        "subject": [
+          "orange_juice_1"
+        ]
+      }
+    },
+    "release_window": {
+      "end_step": 20,
+      "frequency_hz": 20,
+      "start_step": 5,
+      "steps": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ]
+    },
+    "schema_version": "track3_operator_scoped_stability_j1_contract_core_v1",
+    "thresholds": {
+      "arm_joint_qpos_rad": 0.002,
+      "arm_joint_qvel_rad_s": 0.02,
+      "eef_rotation_rad": 0.02,
+      "eef_translation_m": 0.002,
+      "fixture_joint_rad_or_m": 0.002,
+      "gripper_qpos_m": 0.002,
+      "gripper_qvel_m_s": 0.02,
+      "object_rotation_rad": 0.02,
+      "object_translation_m": 0.002
+    }
+  },
+  "contract_core_sha256": "deeb37ef38bbd12467e73d3b2dbe723f80b4b5ed71766d951142db654ecc142f",
+  "created_at_utc": "2026-09-04T02:30:30.583442+00:00",
+  "hard_gate": {
+    "background_not_operator_gate": true,
+    "contact_contract_pre_registered": true,
+    "fixed_step5_to20": true,
+    "goal_atoms_fixed": true,
+    "source_atoms_fixed": true,
+    "support_bowl_rotation_diagnostic_only": true,
+    "three_families_registered": true,
+    "tri_state_fail_closed": true,
+    "zero_hold_contract": true
+  },
+  "schema_version": "track3_operator_scoped_stability_j1_v1",
+  "status": "track3_operator_scoped_contract_validated"
+}

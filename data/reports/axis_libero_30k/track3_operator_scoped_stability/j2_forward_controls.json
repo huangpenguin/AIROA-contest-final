@@ -1,0 +1,332 @@
+{
+  "new_forward_controls": {
+    "complete": true,
+    "pass_count": 6,
+    "required": "6/6",
+    "run_reports": [
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task20_forward_run_1.json",
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task20_forward_run_2.json",
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task20_forward_run_3.json",
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task19_forward_run_1.json",
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task19_forward_run_2.json",
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task19_forward_run_3.json"
+    ],
+    "runs": 6
+  },
+  "runs": [
+    {
+      "corrected_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task20_forward_run_1.json",
+      "derivation": {
+        "contact_baseline_step": 5,
+        "participant_baseline_step": 5,
+        "raw_checkpoint_shape": "list",
+        "raw_worker_gate_not_used_for_release": true,
+        "source_raw_worker_report": true
+      },
+      "forward_control_gate": {
+        "executed": true,
+        "gates": {
+          "finite_contact": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "scene_names_invariant": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "schema": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "truth_detail": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          }
+        },
+        "required": true,
+        "state": "passed",
+        "status": "passed"
+      },
+      "kind": "forward",
+      "operator_family": "containment_remove",
+      "process_returncode": 0,
+      "reverse_operator_gate": {
+        "executed": false,
+        "required": false,
+        "state": "not_evaluated",
+        "status": "not_required"
+      },
+      "run_index": 1,
+      "source_raw_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task20_forward_run_1.json",
+      "status": "passed",
+      "task_index": 20,
+      "worker_returncode_contract": true
+    },
+    {
+      "corrected_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task20_forward_run_2.json",
+      "derivation": {
+        "contact_baseline_step": 5,
+        "participant_baseline_step": 5,
+        "raw_checkpoint_shape": "list",
+        "raw_worker_gate_not_used_for_release": true,
+        "source_raw_worker_report": true
+      },
+      "forward_control_gate": {
+        "executed": true,
+        "gates": {
+          "finite_contact": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "scene_names_invariant": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "schema": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "truth_detail": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          }
+        },
+        "required": true,
+        "state": "passed",
+        "status": "passed"
+      },
+      "kind": "forward",
+      "operator_family": "containment_remove",
+      "process_returncode": 0,
+      "reverse_operator_gate": {
+        "executed": false,
+        "required": false,
+        "state": "not_evaluated",
+        "status": "not_required"
+      },
+      "run_index": 2,
+      "source_raw_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task20_forward_run_2.json",
+      "status": "passed",
+      "task_index": 20,
+      "worker_returncode_contract": true
+    },
+    {
+      "corrected_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task20_forward_run_3.json",
+      "derivation": {
+        "contact_baseline_step": 5,
+        "participant_baseline_step": 5,
+        "raw_checkpoint_shape": "list",
+        "raw_worker_gate_not_used_for_release": true,
+        "source_raw_worker_report": true
+      },
+      "forward_control_gate": {
+        "executed": true,
+        "gates": {
+          "finite_contact": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "scene_names_invariant": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "schema": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "truth_detail": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          }
+        },
+        "required": true,
+        "state": "passed",
+        "status": "passed"
+      },
+      "kind": "forward",
+      "operator_family": "containment_remove",
+      "process_returncode": 0,
+      "reverse_operator_gate": {
+        "executed": false,
+        "required": false,
+        "state": "not_evaluated",
+        "status": "not_required"
+      },
+      "run_index": 3,
+      "source_raw_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task20_forward_run_3.json",
+      "status": "passed",
+      "task_index": 20,
+      "worker_returncode_contract": true
+    },
+    {
+      "corrected_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task19_forward_run_1.json",
+      "derivation": {
+        "contact_baseline_step": 5,
+        "participant_baseline_step": 5,
+        "raw_checkpoint_shape": "list",
+        "raw_worker_gate_not_used_for_release": true,
+        "source_raw_worker_report": true
+      },
+      "forward_control_gate": {
+        "executed": true,
+        "gates": {
+          "finite_contact": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "scene_names_invariant": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "schema": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "truth_detail": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          }
+        },
+        "required": true,
+        "state": "passed",
+        "status": "passed"
+      },
+      "kind": "forward",
+      "operator_family": "articulation_close",
+      "process_returncode": 0,
+      "reverse_operator_gate": {
+        "executed": false,
+        "required": false,
+        "state": "not_evaluated",
+        "status": "not_required"
+      },
+      "run_index": 1,
+      "source_raw_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task19_forward_run_1.json",
+      "status": "passed",
+      "task_index": 19,
+      "worker_returncode_contract": true
+    },
+    {
+      "corrected_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task19_forward_run_2.json",
+      "derivation": {
+        "contact_baseline_step": 5,
+        "participant_baseline_step": 5,
+        "raw_checkpoint_shape": "list",
+        "raw_worker_gate_not_used_for_release": true,
+        "source_raw_worker_report": true
+      },
+      "forward_control_gate": {
+        "executed": true,
+        "gates": {
+          "finite_contact": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "scene_names_invariant": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "schema": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "truth_detail": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          }
+        },
+        "required": true,
+        "state": "passed",
+        "status": "passed"
+      },
+      "kind": "forward",
+      "operator_family": "articulation_close",
+      "process_returncode": 0,
+      "reverse_operator_gate": {
+        "executed": false,
+        "required": false,
+        "state": "not_evaluated",
+        "status": "not_required"
+      },
+      "run_index": 2,
+      "source_raw_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task19_forward_run_2.json",
+      "status": "passed",
+      "task_index": 19,
+      "worker_returncode_contract": true
+    },
+    {
+      "corrected_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_reanalysis_task19_forward_run_3.json",
+      "derivation": {
+        "contact_baseline_step": 5,
+        "participant_baseline_step": 5,
+        "raw_checkpoint_shape": "list",
+        "raw_worker_gate_not_used_for_release": true,
+        "source_raw_worker_report": true
+      },
+      "forward_control_gate": {
+        "executed": true,
+        "gates": {
+          "finite_contact": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "scene_names_invariant": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "schema": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          },
+          "truth_detail": {
+            "executed": true,
+            "required": true,
+            "state": "passed"
+          }
+        },
+        "required": true,
+        "state": "passed",
+        "status": "passed"
+      },
+      "kind": "forward",
+      "operator_family": "articulation_close",
+      "process_returncode": 0,
+      "reverse_operator_gate": {
+        "executed": false,
+        "required": false,
+        "state": "not_evaluated",
+        "status": "not_required"
+      },
+      "run_index": 3,
+      "source_raw_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task19_forward_run_3.json",
+      "status": "passed",
+      "task_index": 19,
+      "worker_returncode_contract": true
+    }
+  ],
+  "schema_version": "track3_operator_scoped_stability_j2_forward_v1",
+  "status": "passed"
+}

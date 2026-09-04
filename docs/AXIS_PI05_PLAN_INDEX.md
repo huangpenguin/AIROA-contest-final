@@ -1,9 +1,9 @@
 # AXIS Pi0.5 计划索引与审核生命周期
 
 > 更新日期：2026-09-04（Asia/Tokyo）
-> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_BACKGROUND_PREDICATE_CONVERGENCE_RELEASE_PLAN.md`
-> 当前状态：`track3_background_convergence_gpu_failed_task19_canary_hard_stop_waiting_review`
-> 最新审核：`docs/reviews/axis_pi05/TRACK3_OPERATOR_SCOPED_J0_J4_AUDIT_20260904.md`
+> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_MATCHED_TERMINAL_STATE_RELEASE_PLAN.md`
+> 当前状态：`track3_matched_terminal_state_release_planned`
+> 最新审核：`docs/reviews/axis_pi05/TRACK3_BACKGROUND_CONVERGENCE_K0_K4_AUDIT_20260904.md`
 
 ## 1. 本轮执行停止点
 
@@ -11,7 +11,7 @@ Init Stabilization I0–I4 已完成并停止。三族 reverse operator-critical
 
 Operator-Scoped Stability Release的J0/J1/J2/J4已完成并获执行审核；J2新矩阵为reverse`8/9`、forward`6/6`，J3未执行。唯一跃迁已定位为task19 run1的background initializer `(On bowl region)`在step20由false变true；critical `Open`始终true、goal `Close`始终false，物理/contact门禁均通过。这是单调收敛，不是task19语义回退。
 
-旧I2和J2 failure保持immutable。K0已将15个raw worker reports及manifest闭包进Git并完成fresh-checkout hash验证；K1/K2以“critical/goal严格、background init单调非递减”的新合同只读复算通过（reverse`9/9`、forward`6/6`）。K3仅运行一次GPU3 task19 canary即因background `true→false`、renderer/H.264/sensitivity gates未通过而hard stop，三族`3/3`未执行。本轮仍未授权SE(3)、抓取/demo、Teleop、批量生成或训练。
+旧I2和J2 failure保持immutable。K0已将15个raw worker reports及manifest闭包进Git并完成fresh-checkout hash验证；K1/K2以“critical/goal严格、background init单调非递减”的新合同只读复算通过（reverse`9/9`、forward`6/6`）。K3仅运行一次GPU3 task19 canary即hard stop。独立审核确认这是一条混合失败：native reverse init 中 bowl↔middle drawer 从step5起已有约`-6.80 mm`穿透且background `On`在step20退化；renderer wrapper telemetry、H.264临时扩展名和task19 sensitivity mutation另有三个实现缺陷。三族matrix未执行，SE(3)、demo、Teleop和训练仍未授权。
 
 G0/G1 已按失败门禁停止，S1 v2 与 typed language 获批准，三族 `3/3` fresh-process 运行及 hard stop 也真实完成；但 G1.3 的失败结论不能证明 reverse semantics 无效。旧 validator 把 HDF5 `states[0]` 恢复到不同/randomized XML 的 reverse env，以 forward success 冒充 reverse initial predicate 检查，并对包含 joint velocity、EEF quaternion、gripper qpos/qvel 的整段 proprio 使用一个 `0.05` 阈值；20 步 action 还固定发送 `gripper=-1`。相反，三族 object/fixture drift 仅约 `1e-7～1e-11`。
 
@@ -19,13 +19,12 @@ G0/G1 已按失败门禁停止，S1 v2 与 typed language 获批准，三族 `3/
 
 ## 2. 当前计划与停止点
 
-- `AXIS_PI05_TRACK3_BACKGROUND_PREDICATE_CONVERGENCE_RELEASE_PLAN.md`
-  - K0锁定`f969393/bc2419e`并将J2引用的15个raw 21-step reports及manifest显式纳入Git；
-  - K1预注册role-aware monotonic contract：critical source恒true、goal恒false、background initializer只允许单调`false→true`；
-  - K2只读复算15个raw，要求reverse`9/9`、forward`6/6`，不得重跑CPU simulator来替代失败；
-  - K2通过后才允许K3在GPU3做一次task19 remediation canary，随后三族各`3/3`；
-  - K4已收尾并hard stop；成功路径未达成，当前等待审核；
-  - 不得修改 BDDL/region/predicate，不得运行 SE(3)、抓取/demo、Teleop、批量生成、训练、norm、FAST/ZIP、官方 GPU、上传或提交。
+- `AXIS_PI05_TRACK3_MATCHED_TERMINAL_STATE_RELEASE_PLAN.md`
+  - L0锁定K0–K4和三份公开HDF5，并以errata保留K3真实raw语义；
+  - L1只修复wrapper renderer telemetry、H.264 atomic扩展名、task19 close-range sensitivity和contact contract v2；
+  - L2固定使用task10/task20/task19各`demo_0/1/2`的同demo `model_file + terminal full-state`，CPU fresh-process要求三族各`3/3`；
+  - L2通过后L3只在GPU3运行task19/demo_0，L4最多补task10/demo_0与task20/demo_0，共三族各一条camera release；
+  - L5无论成败hard stop；不生成action/demo，不执行SE(3)、Teleop、训练、norm、FAST/ZIP、官方GPU、上传或提交。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 
@@ -64,6 +63,7 @@ G0/G1 已按失败门禁停止，S1 v2 与 typed language 获批准，三族 `3/
 27. `AXIS_PI05_TRACK3_NATIVE_REVERSE_VALIDATOR_RECOVERY_PLAN.md`：R1 三族 runtime schema 通过；R2 有效发现 reset 瞬间 task10 full init conjunction 非全真并停止，R3 未运行。后续先校准官方式 5-step stabilization 与 critical/background predicate 语义。
 28. `AXIS_PI05_TRACK3_REVERSE_INIT_STABILIZATION_SEMANTICS_PLAN.md`：I0–I4完成；step5 critical relation三族通过，但旧 full-scene max stability gate失败，I3未运行。独立审核后转入 operator-scoped release contract。
 29. `AXIS_PI05_TRACK3_OPERATOR_SCOPED_STABILITY_RELEASE_PLAN.md`：J0/J1/J2/J4完成；新reverse`8/9`，唯一失败为task19 background initializer在step20由false变true；J3未运行。独立审核后转入evidence closure与monotonic convergence contract。
+30. `AXIS_PI05_TRACK3_BACKGROUND_PREDICATE_CONVERGENCE_RELEASE_PLAN.md`：K0–K2通过；K3单条task19 GPU3 canary发现native reverse init的drawer↔bowl穿透，同时暴露renderer/H.264/sensitivity工具缺陷；三族matrix未运行，转入exact-model matched terminal-state release。
 
 归档不表示旧计划所有尾部阶段都完成；只表示该文件不再是活动授权入口。旧 failure、阈值、hash 和未执行阶段必须继续保留。
 
@@ -100,6 +100,16 @@ I2 named scene stability 未通过：support reverse 最大 rotation drift 约 `
 15个raw reports的逐atom复算只有一次transition：task19 reverse run1的background initializer `(On akita_black_bowl_1 main_table_akita_black_bowl_region)`在step5–19为false、step20为true。critical `Open`连续true、goal `Close`连续false，drawer/robot/contact全部通过；没有任何critical/goal变化、background `true→false`或回摆。因此旧exact-vector `8/9`有效保留，但不能解释为reverse语义失败。
 
 J2 summaries已经入Git，但15个必要raw reports被ignore，`git ls-files .../runs/*=0`；机器handoff current pointers也仍停在上一轮。唯一活动计划改为`docs/AXIS_PI05_TRACK3_BACKGROUND_PREDICATE_CONVERGENCE_RELEASE_PLAN.md`：K0先完成raw evidence closure，K1冻结background monotonic contract，K2只读复算；通过后K3最多GPU3 `1+9`次，K4 hard stop。完整审核见`docs/reviews/axis_pi05/TRACK3_OPERATOR_SCOPED_J0_J4_AUDIT_20260904.md`。
+
+## 3.5 K0–K4 独立审核与 Matched Terminal-State 授权（2026-09-04）
+
+审核输入root `8490f8dde1148aec0aec4d3d105082b44cfbb286`、K2 frozen `cb8e898640a66e9baf5a587f21d5f44a84494a8e`、nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`。K0 raw closure、K1/K2只读复算、K3单次运行后的hard stop和资源边界获批准；审核结论为`remediation_required`。
+
+K3 raw显示task19 native reverse init在step5已有39个bowl↔middle-drawer geom contacts，最深penetration约`-6.80 mm`，到step20仍有39个且background `On(table region)`由true退为false。旧contact合同把step5已有target↔background pair当作diagnostic，所以physical gate虽显示passed，初态仍不适合直接作为清洗后的训练源。
+
+另外三项是确定的工具缺陷：renderer helper只读wrapper而误报flags；`*.mp4.partial`使ffmpeg无法选择muxer；task19 destruction把qpos由`-0.1464`继续减到`-0.2664`，按public WoodenCabinet阈值仍是Open，raw实际为`true/true/true`。旧K4中文报告写成`true/false/true`不准确，已在新审核报告中以errata纠正但不修改旧证据。
+
+旧计划已归档。新唯一活动计划`docs/AXIS_PI05_TRACK3_MATCHED_TERMINAL_STATE_RELEASE_PLAN.md`先修复观测工具，再固定读取三份公开HDF5中`demo_0/1/2`各自的`model_file + terminal full-state`，做三族各`3/3` exact-model CPU release；通过后GPU3最多运行task19、task10、task20各一条camera canary。即使全通过也只停在`pending_executor_review`，不生成action/demo，不进入SE(3)、Teleop或训练。完整审核见`docs/reviews/axis_pi05/TRACK3_BACKGROUND_CONVERGENCE_K0_K4_AUDIT_20260904.md`。
 
 ## 3.4 Operator-Scoped J0–J4 执行收尾（2026-09-04）
 

@@ -1,12 +1,12 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新审核状态：`track3_background_convergence_gpu_failed_task19_canary_hard_stop_waiting_review`
+> 最新审核状态：`track3_matched_terminal_state_release_planned`
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_background_convergence_gpu_failed_task19_canary_hard_stop_waiting_review`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_BACKGROUND_PREDICATE_CONVERGENCE_RELEASE_PLAN.md`
+> 当前总状态：`track3_matched_terminal_state_release_planned`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_MATCHED_TERMINAL_STATE_RELEASE_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -14,7 +14,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。K0已将15个J2 raw reports闭包进Git并通过fresh-checkout hash验证；K1/K2只读复算为reverse`9/9`、forward`6/6`，同时保留旧exact-vector`8/9`。K3仅执行一次GPU3 task19 canary，因background `true→false`及renderer/H.264/sensitivity gate失败而hard stop，三族matrix未执行；不修改BDDL，也不进入SE(3)、Teleop或训练，reverse demo仍为`0/0/0`。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。K0–K2已闭合并获审核批准；K3单条task19 canary按门禁停止。独立审核确认K3同时包含native reverse init的drawer↔bowl约`-6.80 mm`穿透，以及renderer wrapper、H.264临时扩展名、sensitivity方向三个工具缺陷。下一步改用公开HDF5同demo的exact `model_file + terminal full-state`做三族初态release；reverse demo仍为`0/0/0`，未授权SE(3)、Teleop或训练。
 
 ## 2. 数据与复现基础
 
@@ -250,14 +250,14 @@ upstream             当前 branch 未设置 upstream
 ## 10. 新 section 的接手顺序
 
 1. 阅读本文件与 `docs/AXIS_PI05_PLAN_INDEX.md`。
-2. 阅读并只执行`docs/AXIS_PI05_TRACK3_BACKGROUND_PREDICATE_CONVERGENCE_RELEASE_PLAN.md`的K0–K4，之后hard stop。
+2. 阅读并只执行`docs/AXIS_PI05_TRACK3_MATCHED_TERMINAL_STATE_RELEASE_PLAN.md`的L0–L5，之后hard stop。
 3. 将Track1=`0.47`、Track2=`0.33`、Track3=`0`及ZIP `95415a…c5f5a`锁为当前official-score baseline；无上传回执的字段保持conditional provenance。
-4. K0锁定`f969393/bc2419e`并将15个raw worker reports与manifest显式纳入Git，从fresh checkout验hash。
-5. K1冻结role-aware monotonic contract；旧J exact-vector failure和物理/contact gates保持immutable。
-6. K2只读复算15个raw，禁止重跑CPU simulator替代旧结果；要求reverse`9/9`、forward`6/6`且无background回退。
-7. K2通过后才允许K3：GPU3上一次task19 remediation canary，再做三族各`3/3`。成功也只停在`pending_se3_review`。
+4. L0锁定K0–K4、三份公开HDF5和errata；旧raw evidence保持immutable。
+5. L1只修复renderer/H.264/sensitivity/contact contract工具，不启动simulator或GPU。
+6. L2固定task10/task20/task19各`demo_0/1/2`，每条必须使用同demo的`model_file + terminal full-state`，CPU三族各`3/3`。
+7. L2通过后GPU3最多运行task19/demo_0、task10/demo_0、task20/demo_0三条camera release；成功也只停在`pending_executor_review`。
 
-当前路径是：R6 FAST ZIP Track1=`0.47`/Track2=`0.33`/Track3=`0`（冻结）→ 公开full-state与20Hz数据（已在本地）→ step5 critical semantics（已通过）→ raw evidence closure + monotonic predicate dynamic release → 新审核 → exact-model HDF5抓取SE(3)挖掘 → 一次support-only canary → 视频人审 → 再决定其余两族、30–60 exact reverse扩充与R6分叉LoRA。Dense 30K为冻结的独立研究线。
+当前路径是：R6 FAST ZIP Track1=`0.47`/Track2=`0.33`/Track3=`0`（冻结）→ 公开full-state与20Hz数据（已在本地）→ step5 critical semantics与raw evidence closure（已通过）→ exact-model matched terminal-state清理与camera release → 新审核 → reverse executor/Teleop选择 → 30–60 exact reverse扩充与R6分叉LoRA。Dense 30K为冻结的独立研究线。
 
 ## 19. Dense full-FT allocator fraction recovery 执行结果
 
@@ -604,3 +604,13 @@ K2 只读使用 manifest 内的 raw telemetry，未启动 simulator，结果为 
 K3 按授权仅在 GPU3 执行 1 条 task19 canary；因为 initial background predicate 在 step19→20 出现 `true→false`，renderer schema、两路 H.264 及 direct sensitivity gates 未整体通过，立即停止。worker exception 为 `0`，三族 matrix 为 `not_evaluated`（`0` 次），没有 retry、换 seed 或修复后重跑。K4 已生成 `data/reports/axis_libero_30k/track3_background_predicate_convergence/k4_summary.json` 与 `K4_CLOSEOUT_REPORT_ZH.md`，状态为 `track3_background_convergence_gpu_failed_task19_canary` 并 hard stop。
 
 本轮完整测试为 `201 passed, 7 skipped, 26 warnings`；targeted tests `12 passed`，py_compile、JSON parse、diff check 通过。GPU0/1/2 未触碰，GPU0 外部 PID `1133706` 未触碰；SE(3)、grasp/demo、Teleop、批量生成、训练/norm、FAST/ZIP、官方 GPU、上传/提交均未执行。reverse demo counts 仍为 `exact/pending/accepted = 0/0/0`。等待下一次审核决定后续最小 remediation，当前不得重跑 GPU 或进入 SE(3)。
+
+## 48. K0–K4 独立审核与 Matched Terminal-State 计划（2026-09-04）
+
+独立审核输入root `8490f8dde1148aec0aec4d3d105082b44cfbb286`、K2 frozen `cb8e898640a66e9baf5a587f21d5f44a84494a8e`、nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`。K0的15份raw closure与fresh-checkout、K1/K2只读复算、K3失败后停止和K4资源边界获批准；审核状态为`remediation_required`。
+
+K3 task19 raw canary显示，step5已有39个bowl↔middle-drawer geom contacts，最深penetration约`-0.00680 m`；到step20仍为39个、约`-0.00550 m`，同时bowl的background `On(table region)`由true退为false。旧contact rule把step5已经存在的body pair当作diagnostic，因而physical gate显示passed；本地native reverse-BDDL随机初态不能直接晋升为清洗后的训练源。
+
+三个独立工具缺陷也已确认：renderer flags实际位于wrapper内部，尽管两路camera均为`21/21`仍被误报；ffmpeg目标为`*.mp4.partial`而无法选择muxer；task19 destruction把WoodenCabinet qpos从`-0.1464`继续减到`-0.2664`，根据公开阈值仍为Open，raw sensitivity实际是`true/true/true`。旧K4中文报告中的`true/false/true`不准确，但旧证据不原地修改。
+
+旧计划已归档。新唯一活动计划为`docs/AXIS_PI05_TRACK3_MATCHED_TERMINAL_STATE_RELEASE_PLAN.md`：L0/L1锁定errata并修复工具；L2固定使用三份公开HDF5中task10/task20/task19各`demo_0/1/2`的同demo `model_file + terminal full-state`，要求CPU三族各`3/3`；通过后GPU3最多做三族各一条camera release。L5必须hard stop。当前不授权action/demo、SE(3)、Teleop、训练、FAST/ZIP、官方GPU、上传或比赛提交。审核报告：`docs/reviews/axis_pi05/TRACK3_BACKGROUND_CONVERGENCE_K0_K4_AUDIT_20260904.md`。

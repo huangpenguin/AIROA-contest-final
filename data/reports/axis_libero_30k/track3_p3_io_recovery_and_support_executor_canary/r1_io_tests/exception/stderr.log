@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/huang/code/PARC2026_final/tools/axis_pi05/track3_p3_io_recovery_and_support_executor_canary.py", line 310, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/home/huang/code/PARC2026_final/tools/axis_pi05/track3_p3_io_recovery_and_support_executor_canary.py", line 301, in main
+    return _io_worker(args.io_mode, Path(args.result_output))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/huang/code/PARC2026_final/tools/axis_pi05/track3_p3_io_recovery_and_support_executor_canary.py", line 229, in _io_worker
+    raise RuntimeError("synthetic_worker_exception")
+RuntimeError: synthetic_worker_exception

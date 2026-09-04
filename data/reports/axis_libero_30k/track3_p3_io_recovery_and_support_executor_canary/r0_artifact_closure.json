@@ -1,0 +1,250 @@
+{
+  "audit": "docs/reviews/axis_pi05/TRACK3_START_BUNDLE_P0_P6_AUDIT_20260905.md",
+  "audited_root_commit": "ad2d4ef7d6603e7b0e79a8519155de9cfdefbde2",
+  "created_at_utc": "2026-09-04T15:41:26.861104+00:00",
+  "git_tracking": {
+    "closure_command": [
+      "git",
+      "add",
+      "-f",
+      "--",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/start_states.npz",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/camera_frames/p3_task10_demo0.npz",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/videos/p3_task10_demo0_agentview.mp4",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/videos/p3_task10_demo0_wrist.mp4"
+    ],
+    "closure_returncode": 0,
+    "closure_stderr": "",
+    "required_all_tracked": true,
+    "required_entry_count": 17,
+    "tracked_after_r0": [
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/P0_M0_M5_ERRATA_ZH.md",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/P6_CLOSEOUT_REPORT_ZH.md",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/camera_frames/p3_task10_demo0.npz",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/episode_results.csv",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/p0_release_lock.json",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/p1_validator_contract.json",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/p2_summary.json",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/p3_summary.json",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/p3_task10_demo0.json",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/stage_results.csv",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/start_state_manifest.json",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/start_states.npz",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/task10_demo0_grasp_geometry.json",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/task_results.csv",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/videos/p3_task10_demo0_agentview.mp4",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/videos/p3_task10_demo0_wrist.mp4",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/p6_summary.json"
+    ],
+    "tracked_before_r0": [
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/P0_M0_M5_ERRATA_ZH.md",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/P6_CLOSEOUT_REPORT_ZH.md",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/camera_frames/p3_task10_demo0.npz",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/episode_results.csv",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/p0_release_lock.json",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/p1_validator_contract.json",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/p2_summary.json",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/p3_summary.json",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/p3_task10_demo0.json",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/stage_results.csv",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/start_state_manifest.json",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/start_states.npz",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/task10_demo0_grasp_geometry.json",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/task_results.csv",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/videos/p3_task10_demo0_agentview.mp4",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/videos/p3_task10_demo0_wrist.mp4",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/p6_summary.json"
+    ],
+    "tracked_entry_count": 17
+  },
+  "libero_plus_porcelain": [
+    "M libero/libero/benchmark/__init__.py",
+    "?? libero/__init__.py",
+    "?? libero/libero/assets",
+    "?? libero/libero/bddl_files/libero_t3",
+    "?? libero/libero/init_files/libero_t3"
+  ],
+  "observed_openpi_head": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "observed_root_head": "36d9ee8895a4a14d005dadae064fb289bbc8e9af",
+  "old_manifest": {
+    "declared_entry_count": 17,
+    "entry_validation": {
+      "entry_count": 17,
+      "errors": [],
+      "executed": true,
+      "require_git_tracking": false,
+      "state": "passed"
+    },
+    "existing_hash_exact": true,
+    "old_p6_field_erratum": "entries_exclude_self_and_p6_summary=true is inaccurate; old manifest includes p6_summary and has 17 entries",
+    "old_source_commit_erratum": "6cfda92 is the parent execution commit, not the post-fix tool tree",
+    "path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/artifact_manifest.json"
+  },
+  "openpi_porcelain": [],
+  "p2_read_only_revalidation": {
+    "fixed_grasp_geometry": true,
+    "no_simulator_rerun": true,
+    "npz": {
+      "allow_pickle": false,
+      "errors": [],
+      "executed": true,
+      "keys": [
+        "task10_demo0",
+        "task10_demo1",
+        "task10_demo2",
+        "task19_demo0",
+        "task19_demo1",
+        "task19_demo2",
+        "task20_demo0",
+        "task20_demo1",
+        "task20_demo2"
+      ],
+      "state": "passed"
+    },
+    "summary": {
+      "counts": {
+        "accepted_reverse_demo": 0,
+        "exact_reverse_demo": 0,
+        "pending_autogen": 0
+      },
+      "grasp_geometry_status": "passed",
+      "max_restore_abs_diff": 2.220446049250313e-16,
+      "restore_count": 9,
+      "status": "track3_start_state_bundle_validated_9_of_9",
+      "validated_start_state": 9,
+      "workers": [
+        {
+          "demo_index": 0,
+          "hard_gate_states": {
+            "contact_v3_full_window": "passed",
+            "restore_identity": "passed",
+            "truth": "passed"
+          },
+          "restore_max_abs_diff": 2.220446049250313e-16,
+          "state_sha256": "67fbc8b9c85ff02d1f28f6aa94f8841998b307d8499a7f2f08d6e5bfbb5d2f37",
+          "status": "passed",
+          "task_index": 10
+        },
+        {
+          "demo_index": 1,
+          "hard_gate_states": {
+            "contact_v3_full_window": "passed",
+            "restore_identity": "passed",
+            "truth": "passed"
+          },
+          "restore_max_abs_diff": 0.0,
+          "state_sha256": "990192becfb6931866dd9f19ca157772ad5802726c83cecdf466049eefbe761e",
+          "status": "passed",
+          "task_index": 10
+        },
+        {
+          "demo_index": 2,
+          "hard_gate_states": {
+            "contact_v3_full_window": "passed",
+            "restore_identity": "passed",
+            "truth": "passed"
+          },
+          "restore_max_abs_diff": 0.0,
+          "state_sha256": "517cd33b9f1ab67af61f4a7198ebbeef19cee5e322e42a8296a482711e728b6e",
+          "status": "passed",
+          "task_index": 10
+        },
+        {
+          "demo_index": 0,
+          "hard_gate_states": {
+            "contact_v3_full_window": "passed",
+            "restore_identity": "passed",
+            "truth": "passed"
+          },
+          "restore_max_abs_diff": 0.0,
+          "state_sha256": "0b528671e38121c66b23f4511404fb299eb78f06dc6c39efd6561187d20796f4",
+          "status": "passed",
+          "task_index": 20
+        },
+        {
+          "demo_index": 1,
+          "hard_gate_states": {
+            "contact_v3_full_window": "passed",
+            "restore_identity": "passed",
+            "truth": "passed"
+          },
+          "restore_max_abs_diff": 1.1102230246251565e-16,
+          "state_sha256": "7a04765d62039497dd7e457220cbcd88ef9f843b0c6a373b8ee716f4f33c464c",
+          "status": "passed",
+          "task_index": 20
+        },
+        {
+          "demo_index": 2,
+          "hard_gate_states": {
+            "contact_v3_full_window": "passed",
+            "restore_identity": "passed",
+            "truth": "passed"
+          },
+          "restore_max_abs_diff": 1.1102230246251565e-16,
+          "state_sha256": "567f292aed3197dbf50381511629358940e15a53192b1aedea4b7409847c4303",
+          "status": "passed",
+          "task_index": 20
+        },
+        {
+          "demo_index": 0,
+          "hard_gate_states": {
+            "contact_v3_full_window": "passed",
+            "restore_identity": "passed",
+            "truth": "passed"
+          },
+          "restore_max_abs_diff": 0.0,
+          "state_sha256": "a524e075fb1dc2cb88425471d49dcffff82398f59d73af0a304364b20f7c573a",
+          "status": "passed",
+          "task_index": 19
+        },
+        {
+          "demo_index": 1,
+          "hard_gate_states": {
+            "contact_v3_full_window": "passed",
+            "restore_identity": "passed",
+            "truth": "passed"
+          },
+          "restore_max_abs_diff": 0.0,
+          "state_sha256": "04ee90fb2389e30dd97465294fd7b84316925bb9ce82ab1db26baa283f9e9775",
+          "status": "passed",
+          "task_index": 19
+        },
+        {
+          "demo_index": 2,
+          "hard_gate_states": {
+            "contact_v3_full_window": "passed",
+            "restore_identity": "passed",
+            "truth": "passed"
+          },
+          "restore_max_abs_diff": 0.0,
+          "state_sha256": "e5cf765382a5d62758738addc68f271b3904940369cdc7c2c818169fd9fb9f1e",
+          "status": "passed",
+          "task_index": 19
+        }
+      ]
+    }
+  },
+  "p3_attempt_1_preserved": {
+    "attempt_count": 1,
+    "p6_status": "track3_support_executor_canary_failed_worker_result_publication",
+    "path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/p3_task10_demo0.json",
+    "status": "track3_start_bundle_p3_failed"
+  },
+  "plan": "docs/AXIS_PI05_TRACK3_P3_IO_RECOVERY_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md",
+  "resource_boundary": {
+    "gpu_started": false,
+    "hdf5_or_bddl_modified": false,
+    "old_bytes_modified": false,
+    "simulator_started": false
+  },
+  "root_porcelain": [
+    "A  data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/camera_frames/p3_task10_demo0.npz",
+    "A  data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/start_states.npz",
+    "A  data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/videos/p3_task10_demo0_agentview.mp4",
+    "A  data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/videos/p3_task10_demo0_wrist.mp4",
+    "?? tools/axis_pi05/track3_p3_io_recovery_and_support_executor_canary.py"
+  ],
+  "schema_version": "track3_p3_recovery_r0_v1",
+  "status": "track3_p3_recovery_r0_artifact_closure_passed",
+  "status_reasons": []
+}

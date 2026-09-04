@@ -1,12 +1,12 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新审核状态：`track3_reverse_init_stabilization_failed_named_scene_stability`
+> 最新审核状态：`track3_operator_scoped_stability_release_planned`
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_reverse_init_stabilization_failed_named_scene_stability`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_REVERSE_INIT_STABILIZATION_SEMANTICS_PLAN.md`
+> 当前总状态：`track3_operator_scoped_stability_release_planned`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_OPERATOR_SCOPED_STABILITY_RELEASE_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -14,7 +14,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3 validator/runtime 已通过；有效 R2 发现 task10 reset 瞬间 full init conjunction 非全真，但 bowl 已位于 plate 正上方，尚未经过 LIBERO evaluator 使用的 5 个 zero-action physics steps。当前先校准 initializer-vs-runtime 与 step5 critical relation，不修改 BDDL，也不进入 SE(3)、Teleop 或训练；reverse demo accepted/pending 仍为 `0/0`。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3 三族 operator-critical source在官方式 step5 已成立并连续至 step20，reverse goal连续为false；旧 full-scene gate的超限主要来自背景物自然沉降，不能解释为reverse init失败。当前先完成operator-scoped动态release，不修改BDDL，也不进入SE(3)、Teleop或训练；reverse demo exact/pending/accepted仍为`0/0/0`。
 
 ## 2. 数据与复现基础
 
@@ -250,14 +250,14 @@ upstream             当前 branch 未设置 upstream
 ## 10. 新 section 的接手顺序
 
 1. 阅读本文件与 `docs/AXIS_PI05_PLAN_INDEX.md`。
-2. 阅读并只执行 `docs/AXIS_PI05_TRACK3_REVERSE_INIT_STABILIZATION_SEMANTICS_PLAN.md` 的 I0–I4，之后 hard stop。
+2. 阅读并只执行 `docs/AXIS_PI05_TRACK3_OPERATOR_SCOPED_STABILITY_RELEASE_PLAN.md` 的 J0–J4，之后 hard stop。
 3. 将Track1=`0.47`、Track2=`0.33`、Track3=`0`及ZIP `95415a…c5f5a`锁为当前official-score baseline；无上传回执的字段保持conditional provenance。
-4. I0 锁定 `ed0ec3b`、R0–R4、R2 per-run、三族 specs 和零 reverse-demo 状态。
-5. I1 固定 critical/background predicate 分类与 passed/failed/not-evaluated 三态；官方式 stabilization checkpoint 固定 step5。
-6. I2 用 CPU/no-renderer 比较原始 forward task10 与三族 reverse tasks 的 `t=0/1/5/10/20` predicate/contact/pose；critical relation 在 step5 不成立即停。
-7. I2 通过后才允许 I3：GPU3 上一次 task10 settled-init canary，再做三族各 `3/3`。不得修改 BDDL/threshold，成功也只停在 `pending_se3_review`。
+4. J0 锁定 `0dec0b1`、旧I0–I4/I2 per-run、审核报告和零reverse-demo状态。
+5. J1 在运行新模拟前固定operator-scoped contract；旧full-scene failure与阈值保持immutable。
+6. J2先只读复算9条reverse时序，再执行带完整contact telemetry的新reverse 9条并补task20/task19原生forward各`3/3`对照；不从对照数据生成阈值。
+7. J2通过后才允许J3：GPU3上一次task10 canary，再做三族各`3/3`。不得修改BDDL/contract/threshold，成功也只停在`pending_se3_review`。
 
-当前路径是：R6 FAST ZIP Track1=`0.47`/Track2=`0.33`/Track3=`0`（冻结）→ 公开full-state与20Hz数据（已在本地）→ step5 init stabilization 语义校准与动态 release → 新审核 → exact-model HDF5 抓取 SE(3) 挖掘 → 一次 support-only canary → 视频人审 → 再决定其余两族、30–60 exact reverse扩充与R6分叉LoRA。Dense 30K为冻结的独立研究线。
+当前路径是：R6 FAST ZIP Track1=`0.47`/Track2=`0.33`/Track3=`0`（冻结）→ 公开full-state与20Hz数据（已在本地）→ step5 critical semantics（已通过）→ operator-scoped production-like dynamic release → 新审核 → exact-model HDF5 抓取 SE(3) 挖掘 → 一次 support-only canary → 视频人审 → 再决定其余两族、30–60 exact reverse扩充与R6分叉LoRA。Dense 30K为冻结的独立研究线。
 
 ## 19. Dense full-FT allocator fraction recovery 执行结果
 
@@ -570,3 +570,11 @@ I2 的 named scene stability 未通过：support reverse 最大 object rotation 
 机器证据：`data/reports/axis_libero_30k/track3_reverse_init_stabilization/` 下 `i0_release_lock.json`、`i1_semantics.json`、`i2_stabilization_time_series.json`、`runs/`、`summary.json`、`I4_CLOSEOUT_REPORT_ZH.md`。当前状态：`track3_reverse_init_stabilization_failed_named_scene_stability`；已按 I4 hard stop，等待下一次审核。
 
 最终校验：定向测试 `24 passed`；全量测试 `189 passed, 7 skipped, 23 warnings`；JSON/Markdown/`py_compile`/`git diff --check` 均通过。
+
+## 44. I0–I4 独立审核与 Operator-Scoped Release 计划（2026-09-04）
+
+独立审核批准 `0dec0b1` 对 I0–I4 的执行与 hard stop，但结论为 `remediation_required`。旧 I2 对所有命名 object/site 取 full-scene max：task20 的 `21.5 mm` 来自背景 `salad_dressing_1`，关键 orange juice仅约 `5.54e-7 m`；task19 超限来自背景 bowl，目标 drawer site/joint约 `1e-7`；task10 bowl虽旋转 `0.0564 rad`，但translation小于 `1 mm`、`On`从step5到20连续为真、bowl↔plate contact持续存在。9条reverse run的完整init/goal truth vector均为零跃迁。
+
+因此旧 `track3_reverse_init_stabilization_failed_named_scene_stability`永久保留为旧合同结果，但不能重标为reverse init失败。旧计划已归档；唯一活动计划为 `docs/AXIS_PI05_TRACK3_OPERATOR_SCOPED_STABILITY_RELEASE_PLAN.md`。J0–J2只做input lock、预注册contract、既有时序复算、9条带完整contact telemetry的新reverse和task20/task19 forward对照；全部通过后J3最多只在GPU3运行一次task10 canary及三族各`3/3` production-like动态验证。J4必须hard stop。
+
+本审核仍不授权BDDL修改、SE(3)、抓取/demo、Teleop、批量生成、LoRA/dense训练、norm、FAST/ZIP、官方GPU、上传或比赛提交。审核记录：`docs/reviews/axis_pi05/TRACK3_INIT_STABILIZATION_I0_I4_AUDIT_20260904.md`。

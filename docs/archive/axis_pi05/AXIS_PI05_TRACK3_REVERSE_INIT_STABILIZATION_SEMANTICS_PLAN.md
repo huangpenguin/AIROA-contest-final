@@ -6,6 +6,7 @@
 > 当前状态：`track3_reverse_init_stabilization_semantics_planned`
 > 唯一授权：执行 I0–I4，随后 hard stop
 > 不授权：修改 BDDL/region/predicate、SE(3)、抓取/demo、Teleop、批量生成、训练、norm、FAST/ZIP、官方 GPU、上传或比赛提交
+> 生命周期：I0–I4 已由 `0dec0b1` 执行并按 I2 门禁停止；本文件仅作历史审计，不再授权执行
 
 ## 0. 目标
 

@@ -156,11 +156,11 @@ def test_m0_summary_is_fail_closed_and_machine_handoff_advances_without_losing_e
     handoff = __import__("json").loads(handoff_path.read_text(encoding="utf-8"))
     execution = handoff["dense_fullft_allocator_fraction_recovery_execution"]
     assert handoff["next_plan"].endswith(
-        "AXIS_PI05_TRACK3_REVERSE_INIT_STABILIZATION_SEMANTICS_PLAN.md"
+        "AXIS_PI05_TRACK3_OPERATOR_SCOPED_STABILITY_RELEASE_PLAN.md"
     )
     assert (
         handoff["next_phase_only"]
-        == "I0_to_I4_reverse_init_stabilization_then_hard_stop"
+        == "J0_to_J4_operator_scoped_stability_then_hard_stop"
     )
     autogen = handoff["track3_public_primitive_autogen_planning"]
     assert autogen["accepted_reverse_episode_count"] == 0

@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-04",
-  "status": "track3_reverse_init_stabilization_failed_named_scene_stability",
+  "status": "track3_operator_scoped_stability_release_planned",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
-  "latest_audited_execution_commit": "ed0ec3bff61c09a213300181959491dd107bf778",
-  "latest_audit_input_commit": "ed0ec3bff61c09a213300181959491dd107bf778",
-  "latest_execution_root_commit": "ed0ec3bff61c09a213300181959491dd107bf778",
+  "latest_audited_execution_commit": "0dec0b1930a3d2ad9f196febe1aeaabb0c89445d",
+  "latest_audit_input_commit": "0dec0b1930a3d2ad9f196febe1aeaabb0c89445d",
+  "latest_execution_root_commit": "0dec0b1930a3d2ad9f196febe1aeaabb0c89445d",
   "latest_execution_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
@@ -218,22 +218,19 @@
   },
   "tests": {
     "command": "JAX_PLATFORMS=cpu .venv_axis_pi05/bin/pytest -q tests",
-    "passed": 182,
+    "passed": 189,
     "skipped": 7,
     "warnings": 23,
     "pynvml_is_collection_blocker": false
   },
   "resources": {
     "local_gpu": "4x Tesla V100-PCIE-32GB",
-    "gpu0_external_pid": null,
+    "gpu0_external_pid": 1133706,
     "allowed_local_gpu_ids": [
-      0,
-      1,
-      2,
       3
     ],
     "last_observed_gpu_memory_mib": [
-      5,
+      15957,
       5,
       5,
       5
@@ -253,8 +250,8 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_TRACK3_REVERSE_INIT_STABILIZATION_SEMANTICS_PLAN.md",
-  "next_phase_only": "I0_to_I4_reverse_init_stabilization_then_hard_stop",
+  "next_plan": "docs/AXIS_PI05_TRACK3_OPERATOR_SCOPED_STABILITY_RELEASE_PLAN.md",
+  "next_phase_only": "J0_to_J4_operator_scoped_stability_then_hard_stop",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -2478,5 +2475,84 @@
       "git_diff_check": "passed",
       "full_tests": "189_passed_7_skipped_23_warnings"
     }
+  },
+  "track3_init_stabilization_i0_i4_audit": {
+    "status": "remediation_required",
+    "reviewed_root_commit": "0dec0b1930a3d2ad9f196febe1aeaabb0c89445d",
+    "reviewed_parent_commit": "1a0b387",
+    "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "audit_report": "docs/reviews/axis_pi05/TRACK3_INIT_STABILIZATION_I0_I4_AUDIT_20260904.md",
+    "archived_plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_REVERSE_INIT_STABILIZATION_SEMANTICS_PLAN.md",
+    "execution_approved": true,
+    "old_full_scene_failure_preserved": true,
+    "reverse_semantics_interpretation": "critical_source_and_goal_stable_full_scene_gate_scope_requires_remediation",
+    "i2_summary_sha256": "e72ae24d27b6edbba37b043a88042191f8a1c7d00c298b812653a1a2ecc17dab",
+    "findings": {
+      "reverse_runs": 9,
+      "init_truth_vector_transitions_step5_to20": 0,
+      "goal_truth_vector_transitions_step5_to20": 0,
+      "support": {
+        "full_scene_failure_source": "operator_critical_bowl_contact_settling_rotation",
+        "bowl_max_translation_m": 0.000997067974781,
+        "bowl_max_rotation_rad": 0.0564043245534,
+        "on_continuous": true,
+        "contact_present_continuous": true
+      },
+      "containment": {
+        "full_scene_failure_source": "background_salad_dressing_1",
+        "background_max_translation_m": 0.0215049160334,
+        "orange_juice_max_translation_m": 5.53580088e-7,
+        "contain_region_max_translation_m": 3.13320194e-7,
+        "in_continuous": true
+      },
+      "articulation": {
+        "full_scene_failure_source": "background_akita_black_bowl_1",
+        "background_max_rotation_rad": 0.081059470021,
+        "target_site_max_translation_m": 1.12310214e-7,
+        "target_fixture_joint_max_drift": 1.09211304e-7,
+        "open_continuous": true
+      },
+      "handoff_top_level_tests_was_stale": true
+    },
+    "resource_observation": {
+      "gpu0_external_pid": 1133706,
+      "gpu0_touched": false,
+      "gpu1_to_gpu3_memory_mib": [5, 5, 5]
+    },
+    "verification": {
+      "targeted_tests": "18_passed_2_warnings",
+      "full_tests": "189_passed_7_skipped_23_warnings",
+      "json_parse": "passed",
+      "py_compile": "passed",
+      "git_diff_check": "passed"
+    }
+  },
+  "track3_operator_scoped_stability_authorization": {
+    "status": "track3_operator_scoped_stability_release_planned",
+    "plan": "docs/AXIS_PI05_TRACK3_OPERATOR_SCOPED_STABILITY_RELEASE_PLAN.md",
+    "authorized_phases": ["J0", "J1", "J2", "J3", "J4_closeout"],
+    "authorization": {
+      "existing_i2_read_only_reanalysis": true,
+      "new_reverse_cpu_processes": 9,
+      "new_forward_cpu_processes": 6,
+      "gpu3_task10_canary_max": 1,
+      "gpu3_three_family_release_runs_max": 9,
+      "diagnostic_h264": true,
+      "direct_state_predicate_sensitivity_probe": true,
+      "old_i2_or_threshold_modification": false,
+      "bddl_region_or_predicate_modification": false,
+      "se3_or_grasp_executor": false,
+      "real_reverse_demo_or_pending": false,
+      "human_teleop": false,
+      "batch_generation": false,
+      "lora_or_dense_training": false,
+      "norm_replacement": false,
+      "fast_zip": false,
+      "official_gpu": false,
+      "upload_or_submission": false
+    },
+    "success_stop": "track3_operator_scoped_dynamic_validated_pending_se3_review",
+    "failure_stop_prefix": "track3_operator_scoped_",
+    "next_phase_only": "J0_to_J4_operator_scoped_stability_then_hard_stop"
   }
 }

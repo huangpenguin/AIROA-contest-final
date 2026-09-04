@@ -74,9 +74,9 @@ def test_historical_dynamic_failure_is_preserved_but_new_plan_repairs_validator(
             / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
         ).read_text(encoding="utf-8")
     )
-    assert handoff["status"] == "track3_reverse_init_stabilization_failed_named_scene_stability"
+    assert handoff["status"] == "track3_operator_scoped_stability_release_planned"
     assert handoff["next_plan"].endswith(
-        "AXIS_PI05_TRACK3_REVERSE_INIT_STABILIZATION_SEMANTICS_PLAN.md"
+        "AXIS_PI05_TRACK3_OPERATOR_SCOPED_STABILITY_RELEASE_PLAN.md"
     )
     audit = handoff["track3_support_se3_g0_g1_audit"]
     assert audit["status"] == "remediation_required"
@@ -116,6 +116,21 @@ def test_historical_dynamic_failure_is_preserved_but_new_plan_repairs_validator(
     assert execution["i2"]["fresh_process_runs"] == 12
     assert execution["i3"]["status"] == "not_run_due_to_i2_gate"
     assert execution["resource_boundary"]["gpu3_touched"] is False
+    latest_audit = handoff["track3_init_stabilization_i0_i4_audit"]
+    assert latest_audit["status"] == "remediation_required"
+    assert latest_audit["execution_approved"] is True
+    assert latest_audit["findings"]["init_truth_vector_transitions_step5_to20"] == 0
+    assert latest_audit["findings"]["goal_truth_vector_transitions_step5_to20"] == 0
+    assert latest_audit["findings"]["containment"]["full_scene_failure_source"].startswith(
+        "background_"
+    )
+    operator_scope = handoff["track3_operator_scoped_stability_authorization"]
+    assert operator_scope["authorization"]["new_reverse_cpu_processes"] == 9
+    assert operator_scope["authorization"]["new_forward_cpu_processes"] == 6
+    assert operator_scope["authorization"]["gpu3_task10_canary_max"] == 1
+    assert operator_scope["authorization"]["gpu3_three_family_release_runs_max"] == 9
+    assert operator_scope["authorization"]["se3_or_grasp_executor"] is False
+    assert operator_scope["authorization"]["lora_or_dense_training"] is False
 
 
 def test_predicate_parser_remains_strict() -> None:

@@ -677,6 +677,15 @@ def run_r6() -> dict[str, Any]:
     r2_path = OUT_ROOT / "r2_summary.json"
     if not r2_path.is_file():
         raise FileNotFoundError(r2_path)
+    r1_path = OUT_ROOT / "r1_io_recovery_contract.json"
+    r1_report = strict_json_load(r1_path)
+    clean_intermediate = git(("rev-parse", "ad0a428^{commit}"))
+    clean_tool = subprocess.run(["git", "show", f"{clean_intermediate}:tools/axis_pi05/track3_p3_io_recovery_and_support_executor_canary.py"], cwd=ROOT, capture_output=True, check=False).stdout
+    r1_report["clean_intermediate_commit"] = clean_intermediate
+    r1_report["clean_intermediate_tool_sha256"] = sha256_bytes(clean_tool)
+    r1_report["gpu_stage_source_commit"] = clean_intermediate
+    r1_report["gpu_stage_required_clean_commit_gate"] = True
+    write_json(r1_path, r1_report)
     r3 = run_r3()
     r2 = strict_json_load(r2_path)
     r4 = {"schema_version": "track3_p3_recovery_r4_v1", "status": "not_evaluated", "reason": "r2_task10_not_passed; executor_static_gate_not_authorized_after_hard_stop", "simulator_started": False, "gpu_started": False}

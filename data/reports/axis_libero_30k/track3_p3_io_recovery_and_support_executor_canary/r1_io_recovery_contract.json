@@ -1,5 +1,9 @@
 {
+  "clean_intermediate_commit": "ad0a428c76f2c597109855f4d67f00df78184514",
+  "clean_intermediate_tool_sha256": "46d115b066a2bff5f193d0b1de1a0aaacfc363d70614ae1a62c02cd9bcc01eb4",
   "created_at_utc": "2026-09-04T15:41:36.405244+00:00",
+  "gpu_stage_required_clean_commit_gate": true,
+  "gpu_stage_source_commit": "ad0a428c76f2c597109855f4d67f00df78184514",
   "gpu_started": false,
   "io_tests": {
     "exception": {

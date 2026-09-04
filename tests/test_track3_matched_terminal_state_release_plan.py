@@ -9,12 +9,14 @@ HANDOFF = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_2026
 CANARY = ROOT / "data/reports/axis_libero_30k/track3_background_predicate_convergence/k3_gpu3_release/task19_canary.json"
 
 
-def test_only_the_composed_reverse_start_plan_is_active() -> None:
+def test_only_the_start_bundle_and_support_executor_plan_is_active() -> None:
     handoff = json.loads(HANDOFF.read_text(encoding="utf-8"))
-    assert handoff["status"] == "track3_composed_reverse_start_validated_pending_executor_review"
-    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_COMPOSED_REVERSE_START_STABILIZATION_PLAN.md"
-    assert handoff["next_phase_only"] == "new_reviewed_plan_required_after_M5_hard_stop"
+    assert handoff["status"] == "track3_start_bundle_and_support_executor_canary_planned"
+    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_START_BUNDLE_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md"
+    assert handoff["next_phase_only"] == "P0_to_P6_then_hard_stop"
     assert (ROOT / handoff["next_plan"]).is_file()
+    assert not (ROOT / "docs/AXIS_PI05_TRACK3_COMPOSED_REVERSE_START_STABILIZATION_PLAN.md").exists()
+    assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_COMPOSED_REVERSE_START_STABILIZATION_PLAN.md").is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_MATCHED_TERMINAL_STATE_RELEASE_PLAN.md").exists()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_MATCHED_TERMINAL_STATE_RELEASE_PLAN.md").is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_BACKGROUND_PREDICATE_CONVERGENCE_RELEASE_PLAN.md").exists()
@@ -51,6 +53,8 @@ def test_composed_state_authorization_is_data_source_only_and_bounded() -> None:
     assert historical["status"] == "track3_matched_terminal_state_release_completed_hard_stop"
     assert historical["plan"].startswith("docs/archive/axis_pi05/")
     authorization = handoff["track3_composed_reverse_start_stabilization_authorization"]
+    assert authorization["status"] == "track3_composed_reverse_start_stabilization_completed_and_audited"
+    assert authorization["plan"].startswith("docs/archive/axis_pi05/")
     assert authorization["authorized_phases"] == ["M0", "M1", "M2", "M3", "M4", "M5_closeout"]
     scope = authorization["authorization"]
     assert scope["fixed_demo_ids"] == ["demo_0", "demo_1", "demo_2"]
@@ -65,3 +69,23 @@ def test_composed_state_authorization_is_data_source_only_and_bounded() -> None:
     assert scope["se3_or_grasp_executor"] is False
     assert scope["lora_or_dense_training"] is False
     assert scope["official_gpu"] is False
+
+    audit = handoff["track3_composed_reverse_start_m0_m5_audit"]
+    assert audit["status"] == "remediation_required"
+    assert audit["core_result_approved"] is True
+    assert audit["cpu_start_matrix"] == "9/9"
+    assert audit["gpu3_camera_canaries"] == "3/3"
+    assert audit["user_manual_action_required"] is False
+    assert audit["human_teleop_required"] is False
+
+    next_authorization = handoff["track3_start_bundle_and_support_executor_canary_authorization"]
+    assert next_authorization["authorized_phases"] == ["P0", "P1", "P2", "P3", "P4", "P5", "P6_closeout"]
+    next_scope = next_authorization["authorization"]
+    assert next_scope["materialize_restorable_start_bundles"] == 9
+    assert next_scope["cpu_fresh_restore_matrix_required"] == "9/9"
+    assert next_scope["support_executor_family"] == "task10_demo0_only"
+    assert next_scope["support_generation_attempts_max"] == 1
+    assert next_scope["successful_action_fresh_replays_required"] == "3/3"
+    assert next_scope["human_teleop"] is False
+    assert next_scope["training_or_norm"] is False
+    assert next_scope["official_gpu"] is False

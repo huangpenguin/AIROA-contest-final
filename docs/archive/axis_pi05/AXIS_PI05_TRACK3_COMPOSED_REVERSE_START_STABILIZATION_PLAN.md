@@ -1,4 +1,6 @@
-# AXIS Pi0.5 Track 3：Composed Reverse-Start Stabilization 计划
+# AXIS Pi0.5 Track 3：Composed Reverse-Start Stabilization 计划（已归档）
+
+> 归档日期：2026-09-04（Asia/Tokyo）。M0–M5 已执行并 hard stop；后续授权以计划索引中的唯一活动计划为准。
 
 > 制定日期：2026-09-04（Asia/Tokyo）
 > 审核输入：root closeout `0dc402e2d70e6576c5861a674e0aac04e4427ef0`

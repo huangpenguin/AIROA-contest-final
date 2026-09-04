@@ -1,26 +1,27 @@
 # AXIS Pi0.5 计划索引与审核生命周期
 
 > 更新日期：2026-09-04（Asia/Tokyo）
-> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_COMPOSED_REVERSE_START_STABILIZATION_PLAN.md`
-> 当前状态：`track3_composed_reverse_start_validated_pending_executor_review`
-> 最新审核：`docs/reviews/axis_pi05/TRACK3_MATCHED_TERMINAL_L0_L5_AUDIT_20260904.md`
+> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_START_BUNDLE_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md`
+> 当前状态：`track3_start_bundle_and_support_executor_canary_planned`
+> 最新审核：`docs/reviews/axis_pi05/TRACK3_COMPOSED_REVERSE_START_M0_M5_AUDIT_20260904.md`
 
 ## 1. 本轮执行停止点
 
-Matched Terminal-State L0–L5 已完成并按 L2 门禁停止。9 个 fresh CPU process、raw hash、same-demo model/state identity 与 hard stop 均获批准；task10 `3/3`、task20 `0/3`、task19 `0/3` 是当前 validator 下的真实结果。
+Composed Reverse-Start M0–M5已完成：M2 task20/demo0通过，M3固定CPU matrix为`9/9`，M4三族GPU3 camera canary为`3/3`。核心物理结论获批准，composed state已解决旧success末帧的robot/object residual dynamics。
 
-独立审核确认 9/9 的 forward goal、reverse critical source 和 reverse goal-false 都通过，失败不应解释为 reverse semantics 无效。task20 主要是 success 末帧后 orange juice 继续沉降 `2.09–7.39 mm`；task19 主要是 forward terminal robot继续回稳。9条demo的reward positive suffix都只有一帧，没有post-success dwell。
+独立复核确认9/9 source/goal、stability与restore通过，6段H.264/hash/ffprobe闭合；旧hard gate漏看的burn-in 1–20中demonstrator/unrelated contact也实际均为0。用户不需要Teleop、逐帧看视频或手工选择demo。
 
-`contact_contract_v2` 还把 gripper/robot↔operator contact误归为“无关 background”，与旧计划文字不符。旧 raw/失败状态保持 immutable；下一步用同 demo init robot + terminal scene 的 named composed state消除forward terminal robot残余，并以contact-v3重新验证，不换demo、不调旧阈值。
+当前仍为`remediation_required`：M4未记录计划要求的seed/PID/GPU peak；contact-v3 required gate没有覆盖burn-in；`start_state_candidate=1`只有t0 hash而无可restore vector；run index缺文件hash，handoff仍指向amend前orphan `020d291`。这些均可由agent自动闭合。
 
 ## 2. 当前计划与停止点
 
-- `AXIS_PI05_TRACK3_COMPOSED_REVERSE_START_STABILIZATION_PLAN.md`
-  - M0锁定L0–L5的9条raw与固定HDF5输入；M1按MuJoCo named joint address建立无重叠/无缺口的state ownership ledger和contact-v3；
-  - composed state固定使用同demo terminal scene qpos + 同demo init robot/gripper qpos + 全零qvel，使用7D全零neutral hold；
-  - M2只跑task20/demo0 CPU canary；通过后M3补齐固定9条CPU matrix，不retry、不换demo；
-  - M3为9/9后，M4最多在GPU3运行三族各一条41-frame camera canary；
-  - M5无论成败hard stop；只允许报告namespace中的start-state candidate，不生成reverse demo，不执行SE(3)、Teleop、训练、norm、FAST/ZIP、官方GPU、上传或提交。
+- `AXIS_PI05_TRACK3_START_BUNDLE_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md`
+  - P0/P1锁定M0–M5并修正full-window contact、artifact hash、state bundle与GPU provenance合同；
+  - P2物化9个no-pickle start states并fresh restore `9/9`，同时从task10/demo0公开HDF5提取固定grasp geometry；
+  - P3在GPU3重做三族各一条带seed/PID/peak的provenance canary；
+  - P4只实现task10/demo0、HDF5-grounded、position+orientation闭环SE(3) executor；
+  - P5最多一次自动generation canary，成功才fresh replay `3/3`并产生最多一条`pending_autogen_v3`；
+  - P6 hard stop。不需要用户人工操作，不允许task20/task19 executor、accepted、训练、FAST/ZIP、官方GPU或提交。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 
@@ -61,10 +62,11 @@ Matched Terminal-State L0–L5 已完成并按 L2 门禁停止。9 个 fresh CPU
 29. `AXIS_PI05_TRACK3_OPERATOR_SCOPED_STABILITY_RELEASE_PLAN.md`：J0/J1/J2/J4完成；新reverse`8/9`，唯一失败为task19 background initializer在step20由false变true；J3未运行。独立审核后转入evidence closure与monotonic convergence contract。
 30. `AXIS_PI05_TRACK3_BACKGROUND_PREDICATE_CONVERGENCE_RELEASE_PLAN.md`：K0–K2通过；K3单条task19 GPU3 canary发现native reverse init的drawer↔bowl穿透，同时暴露renderer/H.264/sensitivity工具缺陷；三族matrix未运行，转入exact-model matched terminal-state release。
 31. `AXIS_PI05_TRACK3_MATCHED_TERMINAL_STATE_RELEASE_PLAN.md`：L0/L1通过；L2 exact-model CPU为task10 `3/3`、task20 `0/3`、task19 `0/3`，L3/L4未执行并hard stop。审核确认source/goal 9/9成立、失败来自success末帧动力学和contact-v2角色误标，转入composed reverse-start stabilization。
+32. `AXIS_PI05_TRACK3_COMPOSED_REVERSE_START_STABILIZATION_PLAN.md`：M2 task20 canary、M3 CPU `9/9`与M4 camera `3/3`通过并hard stop。核心state语义/动力学获批准，但M4 provenance、full-window gate和可restore candidate artifact未闭合，转入start bundle与单条自动support executor canary。
 
 归档不表示旧计划所有尾部阶段都完成；只表示该文件不再是活动授权入口。旧 failure、阈值、hash 和未执行阶段必须继续保留。
 
-当前只执行M0/M1输入与state-role contract、M2一条CPU canary、通过后M3固定9条CPU matrix，以及全部通过后最多3条GPU3 camera canary；不得修改BDDL、恢复旧SE(3)/G2–G4、人工Teleop、生成reverse demo、批量合成、旧reverse LoRA/interstep训练或直接转向Blackwell。
+当前只执行P0–P3证据与start-state bundle闭包、P4 task10-only executor实现，以及通过后P5最多一次generation和3次冻结action replay；不得修改BDDL、运行人工Teleop、扩展task20/task19、批量合成、accepted晋升、训练或直接转向Blackwell。
 
 ## 3.1 G0–G1 执行审核与门禁重构
 
@@ -142,7 +144,15 @@ M4 仅使用 GPU3，按 task10→task20→task19 各执行一次 camera canary�
 
 当前状态为 `track3_composed_reverse_start_validated_pending_executor_review`，已 hard stop。`start_state_candidate` 仅有 `1` 条 report-only 记录，`exact/pending/accepted reverse demo = 0/0/0`。没有生成 manipulation action/demo，没有 SE(3)、Teleop、批量生成、训练、norm、FAST/ZIP、官方 GPU、上传或提交；后续必须等待新的审核计划。
 
-机器证据：`data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/summary.json`、`m0_release_lock.json`、`m1_validator_contract.json`、`m2_summary.json`、`m3_summary.json`、`m4_summary.json`、`run_index.json`、`contact_ledger.json` 与 `M5_CLOSEOUT_REPORT_ZH.md`。execution commit 为 `020d291`；nested OpenPI clean；`LIBERO-plus` 既有 dirty 状态仅记录未触碰。
+机器证据：`data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/summary.json`、`m0_release_lock.json`、`m1_validator_contract.json`、`m2_summary.json`、`m3_summary.json`、`m4_summary.json`、`run_index.json`、`contact_ledger.json` 与 `M5_CLOSEOUT_REPORT_ZH.md`。最终amended execution commit为`eef683b`；旧handoff中的`020d291`是reflog可见的amend前orphan。nested OpenPI clean；`LIBERO-plus`既有dirty状态仅记录未触碰。
+
+## 3.9 M0–M5 独立审核与 Start Bundle/Support Executor 授权（2026-09-04）
+
+审核输入root `eef683b0db9629a3d917ea91ebeb46540a34fcb9`。M2/M3的9个CPU start、M4的3个camera canary、6段视频及禁止项获核心批准；12份raw required gates全通过，restore最大误差`2.22e-16`。只读补查的burn-in contact违规为0。
+
+总体仍为`remediation_required`：M4 raw缺seed/PID/GPU peak；contact required gate漏step1–20；report-only candidate只有hash没有state vector；`round_trip...`字段误名、run index缺file hash且handoff使用orphan `020d291`。用户人工操作为`not_required`。
+
+旧计划已归档；唯一活动计划`docs/AXIS_PI05_TRACK3_START_BUNDLE_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md`先闭合上述机器合同并物化9个state，通过后只运行task10/demo0自动SE(3) canary与最多3次replay。成功也只进入`pending_autogen_v3`，不进入accepted或训练。完整审核见`docs/reviews/axis_pi05/TRACK3_COMPOSED_REVERSE_START_M0_M5_AUDIT_20260904.md`。
 
 ## 4. 保留但非活动的研究线
 

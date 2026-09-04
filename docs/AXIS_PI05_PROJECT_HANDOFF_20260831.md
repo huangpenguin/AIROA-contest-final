@@ -5,8 +5,8 @@
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_composed_reverse_start_validated_pending_executor_review`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_COMPOSED_REVERSE_START_STABILIZATION_PLAN.md`
+> 当前总状态：`track3_start_bundle_and_support_executor_canary_planned`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_START_BUNDLE_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -14,7 +14,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Matched Terminal-State L0–L5已按门禁完成：9/9的reverse source/goal语义正确，但task20仍有success末帧后的物体沉降，task19仍有forward terminal robot回稳；contact-v2还把robot/gripper误标为background。下一步只验证same-demo terminal scene + init robot/gripper + zero-qvel的composed reverse start；reverse demo仍为`0/0/0`，未授权SE(3)、Teleop或训练。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Composed reverse start已在固定CPU `9/9`和GPU3 camera `3/3`中通过，核心状态语义/动力学获批准；当前只需自动补齐state bundle、full-window contact与GPU provenance，再尝试一条task10 support executor canary。用户无需Teleop、逐帧验收或手动选demo；reverse demo仍为`0/0/0`。
 
 ## 2. 数据与复现基础
 
@@ -641,4 +641,12 @@ M2 唯一 task20/demo0 fresh CPU canary 通过；M3 固定九条 CPU matrix 为 
 
 M4 仅在 GPU3 执行 task10/demo0、task20/demo0、task19/demo0 各一次 camera canary；GPU3 preflight 为 5 MiB、无 compute process，GPU0/1/2 未触碰。三条均通过，agentview/wrist 每路 `41` 帧、H.264、20 FPS、128×128，均无 `.partial` 残留。M5 full tests 为 `223 passed, 7 skipped, 23 warnings`，JSON parse、py_compile、diff check 和 M0 immutable hash revalidation 全部通过。
 
-当前状态：`track3_composed_reverse_start_validated_pending_executor_review`。execution commit 为 `020d291`。已 hard stop，等待新的审核计划；不得自行进入 operator executor、SE(3)、Teleop、批量生成、训练、norm、FAST/ZIP、官方 GPU、上传或提交。最终证据：`data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/summary.json`、`run_index.json`、`contact_ledger.json`、`M5_CLOSEOUT_REPORT_ZH.md`；root/OpenPI clean，`LIBERO-plus` 既有 dirty 状态未触碰。
+当前状态：`track3_composed_reverse_start_validated_pending_executor_review`。最终amended execution commit为`eef683b`；machine handoff中的`020d291`是amend前orphan。已 hard stop，等待新的审核计划；不得自行进入 operator executor、SE(3)、Teleop、批量生成、训练、norm、FAST/ZIP、官方 GPU、上传或提交。最终证据：`data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/summary.json`、`run_index.json`、`contact_ledger.json`、`M5_CLOSEOUT_REPORT_ZH.md`；root/OpenPI clean，`LIBERO-plus` 既有 dirty 状态未触碰。
+
+## 52. M0–M5 独立审核与自动 Support Executor 授权（2026-09-04）
+
+审核输入root `eef683b0db9629a3d917ea91ebeb46540a34fcb9`、nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`。CPU `9/9`、GPU3 camera `3/3`、6段H.264及hard stop的核心结果获批准；restore最大误差`2.22e-16`。只读复核还确认12个run的burn-in step1–20中demonstrator/unrelated contact均为0。
+
+总体审核为`remediation_required`而非blocked：M4没有记录计划要求的seed/PID/GPU peak，contact required gate漏了burn-in；`start_state_candidate=1`只有t0 hash、没有可恢复vector；`round_trip...`字段实际是composed-vs-init差异，run index缺file hash，machine handoff还引用amend前orphan `020d291`。
+
+这些都是agent可自动修复的工程闭包，不需要用户人工审核视频、Teleop或选择轨迹。旧计划已归档；唯一活动计划为`docs/AXIS_PI05_TRACK3_START_BUNDLE_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md`：P0–P3补齐证据与9-state bundle，P4实现task10/demo0 HDF5-grounded SE(3) executor，P5最多一次generation并在成功后fresh replay `3/3`。成功也只产生最多1条`pending_autogen_v3`，accepted仍为0，不授权task20/task19、训练或官方GPU。完整审核：`docs/reviews/axis_pi05/TRACK3_COMPOSED_REVERSE_START_M0_M5_AUDIT_20260904.md`。

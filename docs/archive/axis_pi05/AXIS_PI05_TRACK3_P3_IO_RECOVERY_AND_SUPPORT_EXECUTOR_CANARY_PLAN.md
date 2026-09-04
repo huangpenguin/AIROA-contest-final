@@ -1,4 +1,6 @@
-# AXIS Pi0.5 Track 3：P3 I/O Recovery 与 Support Executor Canary 计划
+# AXIS Pi0.5 Track 3：P3 I/O Recovery 与 Support Executor Canary 计划（已归档）
+
+> 归档日期：2026-09-05（Asia/Tokyo）。R0–R6 已执行并在 R2 parent provenance assembly 失败后 hard stop；后续授权以计划索引中的唯一活动计划为准。
 
 > 制定日期：2026-09-05（Asia/Tokyo）
 > 审核输入：root `ad2d4ef7d6603e7b0e79a8519155de9cfdefbde2`

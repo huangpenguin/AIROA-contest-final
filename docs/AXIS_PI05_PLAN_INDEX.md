@@ -1,27 +1,28 @@
 # AXIS Pi0.5 计划索引与审核生命周期
 
 > 更新日期：2026-09-05（Asia/Tokyo）
-> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_P3_IO_RECOVERY_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md`
-> 当前状态：`track3_p3_io_recovery_and_support_executor_canary_planned`
-> 最新审核：`docs/reviews/axis_pi05/TRACK3_START_BUNDLE_P0_P6_AUDIT_20260905.md`
+> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_OVERNIGHT_AUTOGEN_LORA_AND_ZIP_PLAN.md`
+> 当前状态：`track3_overnight_autogen_lora_zip_planned`
+> 最新审核：`docs/reviews/axis_pi05/TRACK3_P3_IO_RECOVERY_R0_R6_AUDIT_20260905.md`
 
 ## 1. 本轮执行停止点
 
-Start Bundle P0–P6已完成并在P3首条worker publication失败后hard stop。P2的9-state bundle、fresh restore `9/9`与task10 grasp geometry获批准；P3只产生了媒体，没有有效worker result，不能解释为环境或reverse语义失败。
+P3 I/O Recovery R0–R6已完成并在R2 parent provenance assembly失败后hard stop。旧17/17与新33/33 artifacts全部hash-exact且Git-tracked；task10 attempt2 child的物理、谓词、contact、camera均通过。
 
-独立复核确认本机17个manifest entry均存在且hash/bytes一致，但`start_states.npz`、camera NPZ和两路MP4共4项未被Git跟踪；旧P6的manifest inclusion字段也与实际17项不一致。最终commit包含post-fix文件重定向代码，但pre-fix失败代码没有独立commit provenance。
+parent失败根因已确定：GPU运行所用`ad0a428`调用了尚未定义的`gpu_provenance_gate`，child成功后触发`NameError`。最终`309ccaf`已加入该函数，但尚未真实GPU端到端验证，因此attempt2仍不能计为完整P3通过。
 
-当前审核为`remediation_required`而非blocked。下一步先闭合Git artifacts与独立result-file/timeout合同，再恢复P3；用户不需要Teleop、逐帧看视频或手工选择demo。
+当前审核为`remediation_required`而非blocked。我们仍在Track3逆向数据pipeline的executor前门禁，不在训练阶段；P2/R1无需重做。用户要求今晚长跑，因此新计划在P3修复后可按family独立生成数据、做两卡LoRA、评估并产出本地候选ZIP。
 
 ## 2. 当前计划与停止点
 
-- `AXIS_PI05_TRACK3_P3_IO_RECOVERY_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md`
-  - R0将旧manifest中4个hash-exact本机文件纳入Git并生成17/17 closure；P2不重跑；
-  - R1改为独立原子result JSON，加16MiB stdout压力、300秒deadline及TERM→KILL合同；GPU前先形成clean code commit；
-  - R2只恢复task10/demo0 attempt 2，通过后R3各一次补齐task20/task19；
-  - R4静态验证gripper语义并实现task10-only、HDF5-grounded SE(3) executor；
-  - R5最多一次generation，成功才冻结trace fresh replay `3/3`并产生最多一条`pending_autogen_v3`；
-  - R6 hard stop。不需要用户人工操作，不允许task20/task19 manipulation、accepted、训练、FAST/ZIP、官方GPU或提交。
+- `AXIS_PI05_TRACK3_OVERNIGHT_AUTOGEN_LORA_AND_ZIP_PLAN.md`
+  - O0/O1锁定`309ccaf`并纯函数化parent provenance，增加NameError回归与overnight watchdog；
+  - O2只允许task10 attempt3，再补齐task20/task19 P3；基础设施失败全局停止，family物理失败只关闭对应lane；
+  - O3/O4为support/containment/articulation三族预注册两套HDF5-grounded executor并各跑最多2个pilot；
+  - O5每族最多4条train generation、每条`3/3` replay，demo2永久holdout；
+  - O6使用本地20Hz LIBERO-plus与reverse `80/20`分层混合并重算QUANTILES；
+  - O7两卡L2 LoRA做两个100-step LR screen，winner按门禁续到500/1000；
+  - O8 retention/reverse holdout选优，O9只在有reverse成功时fold/FAST/本地ZIP，O10 hard stop。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 
@@ -64,10 +65,11 @@ Start Bundle P0–P6已完成并在P3首条worker publication失败后hard stop�
 31. `AXIS_PI05_TRACK3_MATCHED_TERMINAL_STATE_RELEASE_PLAN.md`：L0/L1通过；L2 exact-model CPU为task10 `3/3`、task20 `0/3`、task19 `0/3`，L3/L4未执行并hard stop。审核确认source/goal 9/9成立、失败来自success末帧动力学和contact-v2角色误标，转入composed reverse-start stabilization。
 32. `AXIS_PI05_TRACK3_COMPOSED_REVERSE_START_STABILIZATION_PLAN.md`：M2 task20 canary、M3 CPU `9/9`与M4 camera `3/3`通过并hard stop。核心state语义/动力学获批准，但M4 provenance、full-window gate和可restore candidate artifact未闭合，转入start bundle与单条自动support executor canary。
 33. `AXIS_PI05_TRACK3_START_BUNDLE_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md`：P0/P1与P2 `9/9`通过；P3首条task10因stdout管道阻塞在result publication失败并hard stop，P4/P5未执行。审核发现4个manifest artifact未入Git，转入I/O与artifact closure后恢复P3。
+34. `AXIS_PI05_TRACK3_P3_IO_RECOVERY_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md`：R0/R1与artifact closure通过；R2 task10 attempt2 child通过，但GPU source commit缺`gpu_provenance_gate`定义导致parent NameError并hard stop，R3–R5未执行。转入parent纯函数回归和overnight autogen/LoRA流水线。
 
 归档不表示旧计划所有尾部阶段都完成；只表示该文件不再是活动授权入口。旧 failure、阈值、hash 和未执行阶段必须继续保留。
 
-当前只执行R0/R1 artifact与I/O闭包、R2/R3固定P3恢复、R4 task10-only executor静态实现，以及通过后R5最多一次generation和3次冻结action replay；不得修改BDDL、运行人工Teleop、扩展task20/task19 manipulation、批量合成、accepted晋升、训练或直接转向Blackwell。
+当前只执行O0–O10条件流水线；不得修改BDDL、运行人工Teleop、使用GPU0/官方GPU、dense full-FT、无限retry、把失败轨迹入训或自动上传。family失败可以关闭lane继续其他family，但任何共同I/O/provenance/数据污染错误必须全局hard stop。
 
 ## 3.1 G0–G1 执行审核与门禁重构
 
@@ -168,6 +170,14 @@ P3 失败后 task20/task19、P4、P5 均未启动；没有 action、SE(3)、demo
 审核结论为`remediation_required`：旧manifest 17项在本机全部hash exact，但4个NPZ/MP4未被Git跟踪；旧P6的summary exclusion字段错误；P3失败时的pre-fix dirty-worktree工具没有commit，而当前post-fix实现仍缺独立result file与超时终止。P3没有有效worker result，因此不能把失败归因于环境/state。
 
 旧计划已归档；唯一活动计划`docs/AXIS_PI05_TRACK3_P3_IO_RECOVERY_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md`先完成17/17 Git closure与无管道result/timeout压力测试，再只授权一次task10 attempt 2；通过后补齐task20/task19，才允许task10-only executor与一次generation/3次replay。用户人工操作仍为`not_required`。完整审核见`docs/reviews/axis_pi05/TRACK3_START_BUNDLE_P0_P6_AUDIT_20260905.md`。
+
+## 3.12 R0–R6 独立审核与 Overnight Autogen/LoRA 授权（2026-09-05）
+
+审核输入root `309ccafe9e6e2cddd0c9f16db111fc054478eb8b`、GPU source `ad0a428c76f2c597109855f4d67f00df78184514`。旧17/17、新33/33 artifact closure、R1 I/O压力合同、R2仅一次attempt2、child全部物理/camera gate、parent fail-closed与R3–R5未执行获批准。reverse demo仍为`0/0/0`。
+
+失败是确定性parent符号缺失：`ad0a428`中调用`gpu_provenance_gate`但没有定义，`309ccaf`才补入。因start snapshot/UUID/peak不可追溯，attempt2不能升格为P3通过；但无需重做state、R1或回到AXIS init。
+
+旧计划已归档。唯一活动计划`docs/AXIS_PI05_TRACK3_OVERNIGHT_AUTOGEN_LORA_AND_ZIP_PLAN.md`授权最长8–12小时的条件流水线：先修parent并运行attempt3，随后按family独立pilot/generation/replay；有严格machine-accepted数据后才用20Hz LIBERO-plus做`80/20`混合、fresh QUANTILES、R6 L2 LoRA 100/500/1000、本地holdout/retention和FAST候选ZIP。GPU0/官方GPU、dense full-FT与自动提交继续禁止。完整审核见`docs/reviews/axis_pi05/TRACK3_P3_IO_RECOVERY_R0_R6_AUDIT_20260905.md`。
 
 ## 4. 保留但非活动的研究线
 

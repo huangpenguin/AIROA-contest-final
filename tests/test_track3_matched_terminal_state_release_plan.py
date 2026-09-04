@@ -9,12 +9,14 @@ HANDOFF = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_2026
 CANARY = ROOT / "data/reports/axis_libero_30k/track3_background_predicate_convergence/k3_gpu3_release/task19_canary.json"
 
 
-def test_only_the_p3_io_recovery_and_support_executor_plan_is_active() -> None:
+def test_only_the_track3_overnight_plan_is_active() -> None:
     handoff = json.loads(HANDOFF.read_text(encoding="utf-8"))
-    assert handoff["status"] == "track3_p3_io_recovery_and_support_executor_canary_planned"
-    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_P3_IO_RECOVERY_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md"
-    assert handoff["next_phase_only"] == "R0_to_R6_then_hard_stop"
+    assert handoff["status"] == "track3_overnight_autogen_lora_zip_planned"
+    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_OVERNIGHT_AUTOGEN_LORA_AND_ZIP_PLAN.md"
+    assert handoff["next_phase_only"] == "O0_to_O10_then_hard_stop"
     assert (ROOT / handoff["next_plan"]).is_file()
+    assert not (ROOT / "docs/AXIS_PI05_TRACK3_P3_IO_RECOVERY_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md").exists()
+    assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_P3_IO_RECOVERY_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md").is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_START_BUNDLE_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md").exists()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_START_BUNDLE_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md").is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_COMPOSED_REVERSE_START_STABILIZATION_PLAN.md").exists()
@@ -94,6 +96,8 @@ def test_composed_state_authorization_is_data_source_only_and_bounded() -> None:
     assert bundle_audit["user_manual_action_required"] is False
 
     recovery = handoff["track3_p3_io_recovery_and_support_executor_canary_authorization"]
+    assert recovery["status"] == "track3_p3_io_recovery_completed_and_audited"
+    assert recovery["plan"].startswith("docs/archive/axis_pi05/")
     assert recovery["authorized_phases"] == ["R0", "R1", "R2", "R3", "R4", "R5", "R6_closeout"]
     next_scope = recovery["authorization"]
     assert next_scope["rerun_p2"] is False
@@ -106,3 +110,27 @@ def test_composed_state_authorization_is_data_source_only_and_bounded() -> None:
     assert next_scope["human_teleop"] is False
     assert next_scope["training_or_norm"] is False
     assert next_scope["official_gpu"] is False
+
+    p3_audit = handoff["track3_p3_io_recovery_r0_r6_audit"]
+    assert p3_audit["status"] == "remediation_required"
+    assert p3_audit["approved"]["new_artifacts_tracked_hash_exact"] == "33/33"
+    assert p3_audit["approved"]["task10_child_physics_camera"] is True
+    assert p3_audit["gpu_source_has_gpu_provenance_gate_definition"] is False
+    assert p3_audit["final_commit_has_gpu_provenance_gate_definition"] is True
+    assert p3_audit["user_manual_action_required"] is False
+
+    overnight = handoff["track3_overnight_autogen_lora_zip_authorization"]
+    assert overnight["authorized_phases"] == ["O0", "O1", "O2", "O3", "O4", "O5", "O6", "O7", "O8", "O9", "O10_closeout"]
+    scope = overnight["authorization"]
+    assert scope["unattended_runtime_hours_max"] == 12
+    assert scope["task10_p3_attempt_number"] == 3
+    assert scope["profiles_per_family_max"] == 2
+    assert scope["total_train_generations_max"] == 12
+    assert scope["total_replays_max"] == 36
+    assert scope["forward_reverse_sampling"] == [0.8, 0.2]
+    assert scope["initialization"] == "r6_dual_l2_fresh500_r1_step500_params"
+    assert scope["training_gpus"] == [1, 2]
+    assert scope["winner_max_steps"] == 1000
+    assert scope["gpu0"] is False
+    assert scope["official_gpu"] is False
+    assert scope["automatic_upload_or_submission"] is False

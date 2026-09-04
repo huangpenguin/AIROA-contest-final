@@ -2560,6 +2560,7 @@
     "plan": "docs/AXIS_PI05_TRACK3_OPERATOR_SCOPED_STABILITY_RELEASE_PLAN.md",
     "execution_input_root_commit": "0dec0b1930a3d2ad9f196febe1aeaabb0c89445d",
     "execution_input_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "execution_commit": "bc2419e62ff05a9584d1d6033d22b0e55d03a240",
     "j0": {"status": "track3_operator_scoped_input_locked", "old_i2_sha256": "e72ae24d27b6edbba37b043a88042191f8a1c7d00c298b812653a1a2ecc17dab"},
     "j1": {"status": "track3_operator_scoped_contract_validated", "contract_core_sha256": "deeb37ef38bbd12467e73d3b2dbe723f80b4b5ed71766d951142db654ecc142f"},
     "j2": {"status": "track3_operator_scoped_cpu_release_failed", "fresh_processes": 15, "reverse_pass": "8/9", "forward_pass": "6/6", "full_contact_matrix": "15/15", "failed_run": "task19_reverse_run_1", "failed_gate": "truth_vector_no_transition", "old_i2_read_only_reanalysis_reverse_recorded_fields": "9/9", "old_i2_contact_matrix": "not_evaluated"},

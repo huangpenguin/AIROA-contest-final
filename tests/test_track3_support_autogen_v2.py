@@ -74,9 +74,9 @@ def test_historical_dynamic_failure_is_preserved_but_new_plan_repairs_validator(
             / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
         ).read_text(encoding="utf-8")
     )
-    assert handoff["status"] == "track3_operator_scoped_cpu_release_failed_truth_vector_transition_task19_run1"
+    assert handoff["status"] == "track3_background_predicate_convergence_release_planned"
     assert handoff["next_plan"].endswith(
-        "AXIS_PI05_TRACK3_OPERATOR_SCOPED_STABILITY_RELEASE_PLAN.md"
+        "AXIS_PI05_TRACK3_BACKGROUND_PREDICATE_CONVERGENCE_RELEASE_PLAN.md"
     )
     audit = handoff["track3_support_se3_g0_g1_audit"]
     assert audit["status"] == "remediation_required"
@@ -131,6 +131,27 @@ def test_historical_dynamic_failure_is_preserved_but_new_plan_repairs_validator(
     assert operator_scope["authorization"]["gpu3_three_family_release_runs_max"] == 9
     assert operator_scope["authorization"]["se3_or_grasp_executor"] is False
     assert operator_scope["authorization"]["lora_or_dense_training"] is False
+    j_execution = handoff["track3_operator_scoped_stability_release_execution"]
+    assert j_execution["status"] == (
+        "track3_operator_scoped_cpu_release_failed_truth_vector_transition_task19_run1"
+    )
+    assert j_execution["j2"]["reverse_pass"] == "8/9"
+    assert j_execution["j3"]["status"] == "not_evaluated"
+    convergence_audit = handoff["track3_operator_scoped_j0_j4_audit"]
+    assert convergence_audit["status"] == "remediation_required"
+    assert convergence_audit["transition"]["role"] == "background_initializer"
+    assert convergence_audit["transition"]["from"] is False
+    assert convergence_audit["transition"]["to"] is True
+    assert convergence_audit["transition"]["critical_or_goal_transition"] is False
+    assert convergence_audit["evidence_gap"]["raw_worker_reports_expected"] == 15
+    assert convergence_audit["evidence_gap"]["raw_worker_reports_git_tracked"] == 0
+    convergence = handoff["track3_background_predicate_convergence_authorization"]
+    assert convergence["authorization"]["raw_worker_reports_to_track"] == 15
+    assert convergence["authorization"]["new_cpu_simulator_runs"] == 0
+    assert convergence["authorization"]["gpu3_task19_canary_max"] == 1
+    assert convergence["authorization"]["se3_or_grasp_executor"] is False
+    assert convergence["authorization"]["lora_or_dense_training"] is False
+    assert convergence["monotonic_contract"]["true_to_false_allowed"] is False
 
 
 def test_predicate_parser_remains_strict() -> None:

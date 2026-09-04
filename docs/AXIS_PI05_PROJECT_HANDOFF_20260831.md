@@ -1,12 +1,12 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新审核状态：`track3_operator_scoped_cpu_release_failed_truth_vector_transition_task19_run1`
+> 最新审核状态：`track3_background_predicate_convergence_release_planned`
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_operator_scoped_cpu_release_failed_truth_vector_transition_task19_run1`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_OPERATOR_SCOPED_STABILITY_RELEASE_PLAN.md`
+> 当前总状态：`track3_background_predicate_convergence_release_planned`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_BACKGROUND_PREDICATE_CONVERGENCE_RELEASE_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -14,7 +14,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3 三族 operator-critical source在官方式 step5 已成立并连续至 step20，reverse goal连续为false；旧 full-scene gate的超限主要来自背景物自然沉降，不能解释为reverse init失败。Operator-scoped J0/J1/J2/J4 已完成，但 J2 新 reverse 为 `8/9`，task19 run1 的完整 init truth vector 在固定 step5→20 出现 background predicate 跃迁；因此 J3 GPU3 未执行，当前 hard stop 等待审核，不修改BDDL，也不进入SE(3)、Teleop或训练；reverse demo exact/pending/accepted仍为`0/0/0`。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。J2 reverse`8/9`的唯一失败已定位为task19背景initializer在step20从false变true；critical `Open`、goal `Close`、drawer/robot/contact均稳定，没有语义回退。当前先将15个未追踪raw reports闭包进Git，再用background单调收敛合同只读复算；不修改BDDL，也不进入SE(3)、Teleop或训练，reverse demo仍为`0/0/0`。
 
 ## 2. 数据与复现基础
 
@@ -250,14 +250,14 @@ upstream             当前 branch 未设置 upstream
 ## 10. 新 section 的接手顺序
 
 1. 阅读本文件与 `docs/AXIS_PI05_PLAN_INDEX.md`。
-2. 阅读并只执行 `docs/AXIS_PI05_TRACK3_OPERATOR_SCOPED_STABILITY_RELEASE_PLAN.md` 的 J0–J4，之后 hard stop。
+2. 阅读并只执行`docs/AXIS_PI05_TRACK3_BACKGROUND_PREDICATE_CONVERGENCE_RELEASE_PLAN.md`的K0–K4，之后hard stop。
 3. 将Track1=`0.47`、Track2=`0.33`、Track3=`0`及ZIP `95415a…c5f5a`锁为当前official-score baseline；无上传回执的字段保持conditional provenance。
-4. J0 锁定 `0dec0b1`、旧I0–I4/I2 per-run、审核报告和零reverse-demo状态。
-5. J1 在运行新模拟前固定operator-scoped contract；旧full-scene failure与阈值保持immutable。
-6. J2先只读复算9条reverse时序，再执行带完整contact telemetry的新reverse 9条并补task20/task19原生forward各`3/3`对照；不从对照数据生成阈值。
-7. J2通过后才允许J3：GPU3上一次task10 canary，再做三族各`3/3`。不得修改BDDL/contract/threshold，成功也只停在`pending_se3_review`。
+4. K0锁定`f969393/bc2419e`并将15个raw worker reports与manifest显式纳入Git，从fresh checkout验hash。
+5. K1冻结role-aware monotonic contract；旧J exact-vector failure和物理/contact gates保持immutable。
+6. K2只读复算15个raw，禁止重跑CPU simulator替代旧结果；要求reverse`9/9`、forward`6/6`且无background回退。
+7. K2通过后才允许K3：GPU3上一次task19 remediation canary，再做三族各`3/3`。成功也只停在`pending_se3_review`。
 
-当前路径是：R6 FAST ZIP Track1=`0.47`/Track2=`0.33`/Track3=`0`（冻结）→ 公开full-state与20Hz数据（已在本地）→ step5 critical semantics（已通过）→ operator-scoped production-like dynamic release → 新审核 → exact-model HDF5 抓取 SE(3) 挖掘 → 一次 support-only canary → 视频人审 → 再决定其余两族、30–60 exact reverse扩充与R6分叉LoRA。Dense 30K为冻结的独立研究线。
+当前路径是：R6 FAST ZIP Track1=`0.47`/Track2=`0.33`/Track3=`0`（冻结）→ 公开full-state与20Hz数据（已在本地）→ step5 critical semantics（已通过）→ raw evidence closure + monotonic predicate dynamic release → 新审核 → exact-model HDF5抓取SE(3)挖掘 → 一次support-only canary → 视频人审 → 再决定其余两族、30–60 exact reverse扩充与R6分叉LoRA。Dense 30K为冻结的独立研究线。
 
 ## 19. Dense full-FT allocator fraction recovery 执行结果
 
@@ -586,3 +586,11 @@ J0/J1 已通过并锁定旧证据与 operator contract。J2.1 对旧 I2 的 9 �
 唯一失败为 task19 run1：step5→20 的完整 init predicate truth vector 在 step20 出现 background predicate 跃迁。该结果按固定 gate 记录为失败，没有删背景、改阈值或用 forward 对照反推。J3 因 J2 未达 `9/9` 而为 `not_evaluated`，GPU3 task10 canary、三族 `3/3`、H.264 与 sensitivity probe 均未执行。
 
 J4 已生成 `data/reports/axis_libero_30k/track3_operator_scoped_stability/summary.json` 与 `J4_CLOSEOUT_REPORT_ZH.md`；targeted/full tests、JSON parse、py_compile、diff check 全通过（`194 passed, 7 skipped, 26 warnings`）。旧 I2 hash、旧 full-scene failure、LIBERO-plus 既有 dirty 与 reverse-demo `0/0/0` 保持不变。最终状态：`track3_operator_scoped_cpu_release_failed_truth_vector_transition_task19_run1`；execution commit 为 `bc2419e62ff05a9584d1d6033d22b0e55d03a240`；已 hard stop，等待审核，禁止自行重跑 J2、进入 J3、SE(3)、demo、Teleop、批量生成或训练。
+
+## 46. J0–J4 独立审核与 Background Predicate Convergence 计划（2026-09-04）
+
+独立审核批准`bc2419e`/`f969393`对J0–J4的执行与hard stop，但结论为`remediation_required`。逐atom复算15个raw reports只发现一次transition：task19 reverse run1的background initializer `(On akita_black_bowl_1 main_table_akita_black_bowl_region)`在step5–19为false、step20为true。critical `Open`连续true、goal `Close`连续false，drawer site/joint约`1e-7`量级，robot、participant和contact全部通过。其余8个reverse与6个forward没有transition。
+
+该变化是background initializer朝BDDL预期状态单调收敛；旧J1要求完整truth vector绝对不变，因此旧J2`8/9`和hard stop仍然有效且永久保留，但不能解释为task19或reverse start失败。新合同只允许background init最多一次`false→true`，继续禁止`true→false`、回摆、critical source变化和goal变化。
+
+审核还确认：`j2_summary.json`引用的15个raw worker reports（共`16,072,261 bytes`、每条21 steps）和15个corrected reports都被`.gitignore`排除，Git中为0条；summary不能替代逐帧/contact raw证据。机器handoff顶层current commit/tests/next-plan也仍为上一轮值。唯一活动计划`docs/AXIS_PI05_TRACK3_BACKGROUND_PREDICATE_CONVERGENCE_RELEASE_PLAN.md`先做raw evidence closure与fresh-checkout hash验证，再只读复算；通过才允许GPU3 task19 canary和三族`3/3`。仍不授权SE(3)、demo、Teleop、训练或比赛GPU。审核报告：`docs/reviews/axis_pi05/TRACK3_OPERATOR_SCOPED_J0_J4_AUDIT_20260904.md`。

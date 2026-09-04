@@ -1,17 +1,17 @@
 # AXIS Pi0.5 计划索引与审核生命周期
 
 > 更新日期：2026-09-04（Asia/Tokyo）
-> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_OPERATOR_SCOPED_STABILITY_RELEASE_PLAN.md`
-> 当前状态：`track3_operator_scoped_cpu_release_failed_truth_vector_transition_task19_run1`
-> 最新审核：`docs/reviews/axis_pi05/TRACK3_INIT_STABILIZATION_I0_I4_AUDIT_20260904.md`
+> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_BACKGROUND_PREDICATE_CONVERGENCE_RELEASE_PLAN.md`
+> 当前状态：`track3_background_predicate_convergence_release_planned`
+> 最新审核：`docs/reviews/axis_pi05/TRACK3_OPERATOR_SCOPED_J0_J4_AUDIT_20260904.md`
 
 ## 1. 本轮执行停止点
 
 Init Stabilization I0–I4 已完成并停止。三族 reverse operator-critical source relation在固定 step5 成立并连续到 step20，reverse goal 同窗口连续为 false；I3 因旧 full-scene max gate 未通过而未运行。独立审核确认这个 failure 不能解释为 reverse init 语义失败：task20/task19 的超限值来自无关背景物，task10 是 bowl 在 plate 上接触落稳的自由旋转，9 个 reverse run 的完整 init/goal truth vector 均为零跃迁。
 
-Operator-Scoped Stability Release 的 J0/J1/J2/J4 已完成：J2 新 fresh-process 矩阵为 reverse `8/9`、forward `6/6`，task19 run1 在固定 step5→20 的完整 init truth vector 出现 background predicate 跃迁，因此按 hard stop 不执行 J3。J3 为 `not_evaluated`，GPU3 未使用；J4 全量校验通过并等待审核。
+Operator-Scoped Stability Release的J0/J1/J2/J4已完成并获执行审核；J2新矩阵为reverse`8/9`、forward`6/6`，J3未执行。唯一跃迁已定位为task19 run1的background initializer `(On bowl region)`在step20由false变true；critical `Open`始终true、goal `Close`始终false，物理/contact门禁均通过。这是单调收敛，不是task19语义回退。
 
-旧 I2 failure 和全场漂移保持 immutable。当前进入operator-scoped remediation：先复算现有证据，再执行带完整contact telemetry的新reverse 9条与forward controls 6条；通过后最多在GPU3执行一次task10 canary与三族各`3/3`。本轮未授权SE(3)、抓取/demo、Teleop、批量生成或训练。
+旧I2和J2 failure保持immutable。当前先闭包未被Git追踪的15个raw worker reports，再用“critical/goal严格、background init单调非递减”的新合同只读复算；通过后最多在GPU3执行一次task19 canary与三族各`3/3`。本轮未授权SE(3)、抓取/demo、Teleop、批量生成或训练。
 
 G0/G1 已按失败门禁停止，S1 v2 与 typed language 获批准，三族 `3/3` fresh-process 运行及 hard stop 也真实完成；但 G1.3 的失败结论不能证明 reverse semantics 无效。旧 validator 把 HDF5 `states[0]` 恢复到不同/randomized XML 的 reverse env，以 forward success 冒充 reverse initial predicate 检查，并对包含 joint velocity、EEF quaternion、gripper qpos/qvel 的整段 proprio 使用一个 `0.05` 阈值；20 步 action 还固定发送 `gripper=-1`。相反，三族 object/fixture drift 仅约 `1e-7～1e-11`。
 
@@ -19,12 +19,12 @@ G0/G1 已按失败门禁停止，S1 v2 与 typed language 获批准，三族 `3/
 
 ## 2. 唯一活动计划
 
-- `AXIS_PI05_TRACK3_OPERATOR_SCOPED_STABILITY_RELEASE_PLAN.md`
-  - J0 锁定 `0dec0b1`、旧 I0–I4/I2 per-run 与 reverse-demo `0/0/0`；
-  - J1 预注册 common + family-specific operator-scoped stability contract，不修改旧 I2/BDDL/阈值；
-  - J2.1 只读复算现有9 reverse + 3 task10 forward；J2.2执行带完整contact telemetry的新reverse `9`条，并新增task20/task19 forward各`3/3`自然沉降对照；
-  - 只有 9/9 reverse operator-scoped 与全部 CPU/schema/hash gate 通过，才允许 J3 在 GPU3 做一次 task10 canary，随后三族各 `3/3`；本轮 J2 为 `8/9`，J3 未执行；
-  - J4 收尾并 hard stop；本轮未到 `pending_se3_review`；
+- `AXIS_PI05_TRACK3_BACKGROUND_PREDICATE_CONVERGENCE_RELEASE_PLAN.md`
+  - K0锁定`f969393/bc2419e`并将J2引用的15个raw 21-step reports及manifest显式纳入Git；
+  - K1预注册role-aware monotonic contract：critical source恒true、goal恒false、background initializer只允许单调`false→true`；
+  - K2只读复算15个raw，要求reverse`9/9`、forward`6/6`，不得重跑CPU simulator来替代失败；
+  - K2通过后才允许K3在GPU3做一次task19 remediation canary，随后三族各`3/3`；
+  - K4收尾并hard stop；成功也只到`pending_se3_review`；
   - 不得修改 BDDL/region/predicate，不得运行 SE(3)、抓取/demo、Teleop、批量生成、训练、norm、FAST/ZIP、官方 GPU、上传或提交。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
@@ -63,6 +63,7 @@ G0/G1 已按失败门禁停止，S1 v2 与 typed language 获批准，三族 `3/
 26. `AXIS_PI05_TRACK3_DYNAMIC_GATE_MODEL_STATE_RECONCILIATION_PLAN.md`：D0/D1 完成；D2 唯一 task10 process 因 `TargetZone` telemetry schema 异常而无有效动态结论，D3 未运行，D4 正确停止；转入 validator runtime/进程契约最小恢复。
 27. `AXIS_PI05_TRACK3_NATIVE_REVERSE_VALIDATOR_RECOVERY_PLAN.md`：R1 三族 runtime schema 通过；R2 有效发现 reset 瞬间 task10 full init conjunction 非全真并停止，R3 未运行。后续先校准官方式 5-step stabilization 与 critical/background predicate 语义。
 28. `AXIS_PI05_TRACK3_REVERSE_INIT_STABILIZATION_SEMANTICS_PLAN.md`：I0–I4完成；step5 critical relation三族通过，但旧 full-scene max stability gate失败，I3未运行。独立审核后转入 operator-scoped release contract。
+29. `AXIS_PI05_TRACK3_OPERATOR_SCOPED_STABILITY_RELEASE_PLAN.md`：J0/J1/J2/J4完成；新reverse`8/9`，唯一失败为task19 background initializer在step20由false变true；J3未运行。独立审核后转入evidence closure与monotonic convergence contract。
 
 归档不表示旧计划所有尾部阶段都完成；只表示该文件不再是活动授权入口。旧 failure、阈值、hash 和未执行阶段必须继续保留。
 
@@ -91,6 +92,14 @@ I2 named scene stability 未通过：support reverse 最大 rotation drift 约 `
 独立逐对象复算显示：support 的 `0.0564 rad` 来自 bowl 在 plate 上继续接触落稳，translation仍小于 `1 mm`且 `On` 连续；containment 的 `21.5 mm` 来自背景 salad dressing，orange juice仅约 `5.54e-7 m`；articulation 的超限来自背景 bowl，目标 drawer site/joint约 `1e-7`。9个 reverse runs 的完整 init/goal truth vector在 step5→20 均无跃迁。
 
 旧 I2 failure 和全场诊断永久保留。唯一活动计划改为 `docs/AXIS_PI05_TRACK3_OPERATOR_SCOPED_STABILITY_RELEASE_PLAN.md`：冻结按算子角色划分的稳定性 contract，CPU复算既有证据并执行9条带完整contact telemetry的reverse、6条forward controls；通过后最多在GPU3执行`1+9`次production-like动态验证。仍不授权SE(3)、demo、Teleop、训练或比赛GPU。完整审核见 `docs/reviews/axis_pi05/TRACK3_INIT_STABILIZATION_I0_I4_AUDIT_20260904.md`。
+
+## 3.4 J0–J4 独立审核与 Background Convergence 授权（2026-09-04）
+
+审核输入execution `bc2419e62ff05a9584d1d6033d22b0e55d03a240`、record `f969393f3e16dc94985675083d09daa712cc7c04`、nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`。J0/J1/J2/J4执行、15个CPU process、J3`not_evaluated`、资源边界与hard stop获批准；结论为`remediation_required`。
+
+15个raw reports的逐atom复算只有一次transition：task19 reverse run1的background initializer `(On akita_black_bowl_1 main_table_akita_black_bowl_region)`在step5–19为false、step20为true。critical `Open`连续true、goal `Close`连续false，drawer/robot/contact全部通过；没有任何critical/goal变化、background `true→false`或回摆。因此旧exact-vector `8/9`有效保留，但不能解释为reverse语义失败。
+
+J2 summaries已经入Git，但15个必要raw reports被ignore，`git ls-files .../runs/*=0`；机器handoff current pointers也仍停在上一轮。唯一活动计划改为`docs/AXIS_PI05_TRACK3_BACKGROUND_PREDICATE_CONVERGENCE_RELEASE_PLAN.md`：K0先完成raw evidence closure，K1冻结background monotonic contract，K2只读复算；通过后K3最多GPU3 `1+9`次，K4 hard stop。完整审核见`docs/reviews/axis_pi05/TRACK3_OPERATOR_SCOPED_J0_J4_AUDIT_20260904.md`。
 
 ## 3.4 Operator-Scoped J0–J4 执行收尾（2026-09-04）
 

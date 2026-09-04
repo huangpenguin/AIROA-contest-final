@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-04",
-  "status": "track3_operator_scoped_cpu_release_failed_truth_vector_transition_task19_run1",
+  "status": "track3_background_predicate_convergence_release_planned",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
-  "latest_audited_execution_commit": "0dec0b1930a3d2ad9f196febe1aeaabb0c89445d",
-  "latest_audit_input_commit": "0dec0b1930a3d2ad9f196febe1aeaabb0c89445d",
-  "latest_execution_root_commit": "0dec0b1930a3d2ad9f196febe1aeaabb0c89445d",
+  "latest_audited_execution_commit": "f969393f3e16dc94985675083d09daa712cc7c04",
+  "latest_audit_input_commit": "f969393f3e16dc94985675083d09daa712cc7c04",
+  "latest_execution_root_commit": "f969393f3e16dc94985675083d09daa712cc7c04",
   "latest_execution_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
@@ -218,7 +218,7 @@
   },
   "tests": {
     "command": "JAX_PLATFORMS=cpu .venv_axis_pi05/bin/pytest -q tests",
-    "passed": 189,
+    "passed": 194,
     "skipped": 7,
     "warnings": 23,
     "pynvml_is_collection_blocker": false
@@ -230,7 +230,7 @@
       3
     ],
     "last_observed_gpu_memory_mib": [
-      15957,
+      16065,
       5,
       5,
       5
@@ -250,8 +250,8 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_TRACK3_OPERATOR_SCOPED_STABILITY_RELEASE_PLAN.md",
-  "next_phase_only": "J0_to_J4_operator_scoped_stability_then_hard_stop",
+  "next_plan": "docs/AXIS_PI05_TRACK3_BACKGROUND_PREDICATE_CONVERGENCE_RELEASE_PLAN.md",
+  "next_phase_only": "K0_to_K4_background_predicate_convergence_then_hard_stop",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -2568,5 +2568,97 @@
     "j4": {"status": "completed_hard_stop", "summary": "data/reports/axis_libero_30k/track3_operator_scoped_stability/summary.json", "report": "data/reports/axis_libero_30k/track3_operator_scoped_stability/J4_CLOSEOUT_REPORT_ZH.md", "targeted_tests": "5_passed", "full_tests": "194_passed_7_skipped_26_warnings", "json_parse": "passed", "py_compile": "passed", "git_diff_check": "passed"},
     "resource_boundary": {"gpu0_touched": false, "gpu3_touched": false, "se3": false, "grasp": false, "demo_generation": false, "teleop": false, "training_or_norm": false, "fast_or_zip": false, "official_gpu": false, "upload_or_submission": false, "reverse_demo_counts": {"exact": 0, "pending": 0, "accepted": 0}},
     "next_action": "等待审核；不得重跑J2或进入J3、SE(3)、demo、Teleop、批量生成或训练"
+  },
+  "track3_operator_scoped_j0_j4_audit": {
+    "status": "remediation_required",
+    "reviewed_execution_commit": "bc2419e62ff05a9584d1d6033d22b0e55d03a240",
+    "reviewed_record_commit": "f969393f3e16dc94985675083d09daa712cc7c04",
+    "reviewed_parent_commit": "3acbde8046563e3e550f78feaf19ad97cb391b79",
+    "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "audit_report": "docs/reviews/axis_pi05/TRACK3_OPERATOR_SCOPED_J0_J4_AUDIT_20260904.md",
+    "archived_plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_OPERATOR_SCOPED_STABILITY_RELEASE_PLAN.md",
+    "execution_and_hard_stop_approved": true,
+    "old_exact_vector_failure_preserved": true,
+    "transition": {
+      "count": 1,
+      "task_index": 19,
+      "run_index": 1,
+      "section": "initial",
+      "role": "background_initializer",
+      "atom": "(On akita_black_bowl_1 main_table_akita_black_bowl_region)",
+      "step": 20,
+      "from": false,
+      "to": true,
+      "critical_or_goal_transition": false,
+      "background_true_to_false_count": 0,
+      "background_oscillation_count": 0
+    },
+    "failed_run_other_gates": {
+      "critical_source_each_step": "passed",
+      "reverse_goal_false_each_step": "passed",
+      "robot_component_stability": "passed",
+      "operator_participant_stability": "passed",
+      "contact_matrix_and_family_rule": "passed",
+      "target_site_max_translation_m": 3.43290433136e-7,
+      "target_joint_max_drift": 3.52029122602e-7
+    },
+    "evidence_gap": {
+      "raw_worker_reports_expected": 15,
+      "raw_worker_reports_git_tracked": 0,
+      "raw_worker_reports_bytes": 16072261,
+      "raw_checkpoints_each": 21,
+      "corrected_reports_rebuildable": true,
+      "evidence_closure_required_before_gpu": true
+    },
+    "handoff_current_fields_were_stale": true,
+    "resource_observation": {
+      "gpu0_external_pid": 1133706,
+      "gpu0_touched": false,
+      "gpu1_to_gpu3_memory_mib": [5, 5, 5]
+    },
+    "verification": {
+      "targeted_tests": "16_passed_2_warnings",
+      "full_tests": "194_passed_7_skipped_23_warnings",
+      "json_parse": "passed",
+      "py_compile": "passed",
+      "git_diff_check": "passed"
+    }
+  },
+  "track3_background_predicate_convergence_authorization": {
+    "status": "track3_background_predicate_convergence_release_planned",
+    "plan": "docs/AXIS_PI05_TRACK3_BACKGROUND_PREDICATE_CONVERGENCE_RELEASE_PLAN.md",
+    "authorized_phases": ["K0", "K1", "K2", "K3", "K4_closeout"],
+    "authorization": {
+      "raw_worker_reports_to_track": 15,
+      "raw_manifest_and_fresh_checkout_verification": true,
+      "read_only_raw_reanalysis": true,
+      "new_cpu_simulator_runs": 0,
+      "gpu3_task19_canary_max": 1,
+      "gpu3_three_family_release_runs_max": 9,
+      "diagnostic_h264": true,
+      "direct_state_predicate_sensitivity_probe": true,
+      "old_i2_j1_j2_j4_modification": false,
+      "bddl_region_or_predicate_modification": false,
+      "se3_or_grasp_executor": false,
+      "real_reverse_demo_or_pending": false,
+      "human_teleop": false,
+      "batch_generation": false,
+      "lora_or_dense_training": false,
+      "norm_replacement": false,
+      "fast_zip": false,
+      "official_gpu": false,
+      "upload_or_submission": false
+    },
+    "monotonic_contract": {
+      "critical_source": "true_at_every_step",
+      "reverse_goal": "false_at_every_step",
+      "background_initializer": "monotonic_non_decreasing_false_to_true_only",
+      "true_to_false_allowed": false,
+      "oscillation_allowed": false,
+      "physical_and_contact_gates_unchanged": true
+    },
+    "success_stop": "track3_predicate_convergence_dynamic_validated_pending_se3_review",
+    "failure_stop_prefix": "track3_background_convergence_",
+    "next_phase_only": "K0_to_K4_background_predicate_convergence_then_hard_stop"
   }
 }

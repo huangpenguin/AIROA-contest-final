@@ -1,0 +1,214 @@
+{
+  "canonical_sha256": "754d28f3ebb2addb4f2505e1afd772bcf13eef44c0b7b870f857a65638fa8b99",
+  "contact_v3": {
+    "categories": [
+      "intended_receiver_contact",
+      "demonstrator_contact",
+      "unrelated_background_contact",
+      "background_contact"
+    ],
+    "robot_gripper_contact": "demonstrator_contact",
+    "schema_version": "track3_contact_v3",
+    "task10_support_required": true,
+    "task19_receiver_required": false,
+    "task20_in_predicate_oracle": true,
+    "unrelated_operator_background": "hard_fail"
+  },
+  "created_at_utc": "2026-09-04T10:05:09.940872+00:00",
+  "gpu_started": false,
+  "neutral_hold": {
+    "dtype": "float32",
+    "gripper": 0.0,
+    "shape": [
+      7
+    ],
+    "values": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "old_tool_untouched": true,
+  "passed_gate_has_no_failure_reason": true,
+  "plan": "/home/huang/code/PARC2026_final/docs/AXIS_PI05_TRACK3_COMPOSED_REVERSE_START_STABILIZATION_PLAN.md",
+  "schema_version": "track3_composed_reverse_start_m1_v1",
+  "simulator_started": false,
+  "source_articulation_hdf5": {
+    "path": "/home/huang/code/PARC2026_final/data/raw/public/libero_official_hdf5/libero_goal/open_the_middle_drawer_of_the_cabinet_demo.hdf5",
+    "sha256": "20252c7cf98cd7437061f7f200ae7b6cb6219fabbd53b4536dfaa8abda6ab737"
+  },
+  "state_composition": {
+    "free_joint": "7 qpos / 6 qvel mapping",
+    "index_coverage": "exactly_once; overlap/gap/unknown/trailing fail-closed",
+    "source": "same-demo init robot/gripper qpos + same-demo terminal scene qpos + zero qvel",
+    "synthetic_example": {
+      "layout": {
+        "act_offset": 18,
+        "joints": [
+          {
+            "joint_id": 0,
+            "name": "free_object",
+            "ownership": "operator_scene",
+            "qpos_range": [
+              0,
+              7
+            ],
+            "qvel_range": [
+              0,
+              6
+            ],
+            "source": "demo_terminal",
+            "type": 0
+          },
+          {
+            "joint_id": 1,
+            "name": "robot0_joint1",
+            "ownership": "robot_arm",
+            "qpos_range": [
+              7,
+              8
+            ],
+            "qvel_range": [
+              6,
+              7
+            ],
+            "source": "demo_init",
+            "type": 3
+          },
+          {
+            "joint_id": 2,
+            "name": "drawer",
+            "ownership": "background_scene",
+            "qpos_range": [
+              8,
+              9
+            ],
+            "qvel_range": [
+              7,
+              8
+            ],
+            "source": "demo_terminal",
+            "type": 3
+          }
+        ],
+        "na": 2,
+        "nq": 9,
+        "nv": 8,
+        "opaque_state_indices": [
+          0,
+          18,
+          19
+        ],
+        "ownership_counts": {
+          "background_scene": 1,
+          "operator_scene": 1,
+          "receiver_scene": 0,
+          "robot_arm": 1,
+          "robot_gripper": 0
+        },
+        "qpos_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "qpos_offset": 1,
+        "qpos_state_indices": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "qvel_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "qvel_offset": 10,
+        "qvel_state_indices": [
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "schema_version": "track3_composed_state_v1",
+        "state_length": 20
+      },
+      "metadata": {
+        "jnt_dofadr": [
+          0,
+          6,
+          7
+        ],
+        "jnt_qposadr": [
+          0,
+          7,
+          8
+        ],
+        "jnt_type": [
+          0,
+          3,
+          3
+        ],
+        "joint_names": [
+          "free_object",
+          "robot0_joint1",
+          "drawer"
+        ],
+        "joint_ownership": {
+          "drawer": "background_scene",
+          "free_object": "operator_scene",
+          "robot0_joint1": "robot_arm"
+        },
+        "joint_source": {
+          "drawer": "demo_terminal",
+          "free_object": "demo_terminal",
+          "robot0_joint1": "demo_init"
+        },
+        "na": 2,
+        "nq": 9,
+        "nv": 8,
+        "state_length": 20
+      }
+    },
+    "time_and_opaque": "demo_init"
+  },
+  "status": "track3_composed_reverse_start_m1_validator_contract_passed",
+  "strict_thresholds": {
+    "arm_qpos_rad": 0.002,
+    "arm_qvel_rad_s": 0.02,
+    "eef_rotation_rad": 0.02,
+    "eef_translation_m": 0.002,
+    "operator_translation_m": 0.002,
+    "support_subject_rotation": "diagnostic_only"
+  },
+  "tri_state": [
+    "passed",
+    "failed",
+    "not_evaluated"
+  ],
+  "worker_exception_returncode": "nonzero"
+}

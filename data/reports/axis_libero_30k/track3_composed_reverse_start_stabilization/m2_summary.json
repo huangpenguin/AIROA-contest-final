@@ -1,0 +1,23 @@
+{
+  "created_at_utc": "2026-09-04T10:09:42.062690+00:00",
+  "fresh_process_count": 1,
+  "no_dataset_pending_or_accepted_write": true,
+  "result": {
+    "composed_state_sha256": "0b528671e38121c66b23f4511404fb299eb78f06dc6c39efd6561187d20796f4",
+    "demo_id": "demo_0",
+    "failed_gates": [],
+    "family": "containment_remove",
+    "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/runs/m2_task20_demo0.json",
+    "process_returncode": 0,
+    "status": "passed",
+    "task_index": 20,
+    "worker_returncode_contract": true
+  },
+  "schema_version": "track3_composed_reverse_start_m2_v1",
+  "start_state_candidate": {
+    "composed_state_sha256": "0b528671e38121c66b23f4511404fb299eb78f06dc6c39efd6561187d20796f4",
+    "count": 1,
+    "namespace": "report_only"
+  },
+  "status": "track3_composed_reverse_start_cpu_canary_passed_task20_demo0"
+}

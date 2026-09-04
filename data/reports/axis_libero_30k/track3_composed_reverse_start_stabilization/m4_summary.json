@@ -1,0 +1,185 @@
+{
+  "camera_canary_count": 3,
+  "created_at_utc": "2026-09-04T10:21:16.858659+00:00",
+  "fixed_order": [
+    10,
+    20,
+    19
+  ],
+  "gpu3_preflight": {
+    "compute_processes_raw": [],
+    "executed": true,
+    "free_gate": true,
+    "gpus": [
+      {
+        "index": "3",
+        "memory_total_mib": 32768.0,
+        "memory_used_mib": 5.0,
+        "uuid": "GPU-b03055ef-af46-2cf8-7545-c60870f745f5"
+      }
+    ],
+    "process_query_returncode": 0,
+    "query": [
+      "nvidia-smi",
+      "-i",
+      "3",
+      "--query-gpu=index,uuid,memory.used,memory.total",
+      "--format=csv,noheader,nounits"
+    ],
+    "returncode": 0,
+    "stderr": ""
+  },
+  "no_manipulation_action": true,
+  "no_retry_or_demo_change": true,
+  "results": [
+    {
+      "camera_frames": {
+        "agentview_image": 41,
+        "robot0_eye_in_hand_image": 41
+      },
+      "composed_state_sha256": "67fbc8b9c85ff02d1f28f6aa94f8841998b307d8499a7f2f08d6e5bfbb5d2f37",
+      "demo_id": "demo_0",
+      "failed_gates": [],
+      "family": "support_remove",
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/runs/m4_task10_demo0.json",
+      "process_returncode": 0,
+      "status": "passed",
+      "task_index": 10,
+      "videos": {
+        "agentview_image": {
+          "atomic_publish": true,
+          "bytes": 5646,
+          "ffprobe": {
+            "avg_frame_rate": "20/1",
+            "codec_name": "h264",
+            "height": 128,
+            "nb_frames": "41",
+            "width": 128
+          },
+          "fps": "20/1",
+          "frame_count": 41,
+          "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/videos/m4_task10_demo0_agentview.mp4",
+          "sha256": "ca1b71621e8fd7148a24146beaf8be05cb7110a6644aace689a7ae721cf04af8",
+          "temporary_suffix": ".partial.mp4"
+        },
+        "robot0_eye_in_hand_image": {
+          "atomic_publish": true,
+          "bytes": 6435,
+          "ffprobe": {
+            "avg_frame_rate": "20/1",
+            "codec_name": "h264",
+            "height": 128,
+            "nb_frames": "41",
+            "width": 128
+          },
+          "fps": "20/1",
+          "frame_count": 41,
+          "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/videos/m4_task10_demo0_wrist.mp4",
+          "sha256": "b2a23b2f5702ceb718715ae731260a3f6b380e3ce92fa9b32b0da0058fd1548d",
+          "temporary_suffix": ".partial.mp4"
+        }
+      },
+      "worker_returncode_contract": true
+    },
+    {
+      "camera_frames": {
+        "agentview_image": 41,
+        "robot0_eye_in_hand_image": 41
+      },
+      "composed_state_sha256": "0b528671e38121c66b23f4511404fb299eb78f06dc6c39efd6561187d20796f4",
+      "demo_id": "demo_0",
+      "failed_gates": [],
+      "family": "containment_remove",
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/runs/m4_task20_demo0.json",
+      "process_returncode": 0,
+      "status": "passed",
+      "task_index": 20,
+      "videos": {
+        "agentview_image": {
+          "atomic_publish": true,
+          "bytes": 5866,
+          "ffprobe": {
+            "avg_frame_rate": "20/1",
+            "codec_name": "h264",
+            "height": 128,
+            "nb_frames": "41",
+            "width": 128
+          },
+          "fps": "20/1",
+          "frame_count": 41,
+          "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/videos/m4_task20_demo0_agentview.mp4",
+          "sha256": "061dd4c9df647ecac9cb8b9ee2013f2ec48c18ce2e6b94a826d847644e056563",
+          "temporary_suffix": ".partial.mp4"
+        },
+        "robot0_eye_in_hand_image": {
+          "atomic_publish": true,
+          "bytes": 7208,
+          "ffprobe": {
+            "avg_frame_rate": "20/1",
+            "codec_name": "h264",
+            "height": 128,
+            "nb_frames": "41",
+            "width": 128
+          },
+          "fps": "20/1",
+          "frame_count": 41,
+          "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/videos/m4_task20_demo0_wrist.mp4",
+          "sha256": "e9e3a347433ca28ea6ad6cd9184340980593773acce60bdc90d0d9c6192b3e8e",
+          "temporary_suffix": ".partial.mp4"
+        }
+      },
+      "worker_returncode_contract": true
+    },
+    {
+      "camera_frames": {
+        "agentview_image": 41,
+        "robot0_eye_in_hand_image": 41
+      },
+      "composed_state_sha256": "a524e075fb1dc2cb88425471d49dcffff82398f59d73af0a304364b20f7c573a",
+      "demo_id": "demo_0",
+      "failed_gates": [],
+      "family": "articulation_close",
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/runs/m4_task19_demo0.json",
+      "process_returncode": 0,
+      "status": "passed",
+      "task_index": 19,
+      "videos": {
+        "agentview_image": {
+          "atomic_publish": true,
+          "bytes": 5503,
+          "ffprobe": {
+            "avg_frame_rate": "20/1",
+            "codec_name": "h264",
+            "height": 128,
+            "nb_frames": "41",
+            "width": 128
+          },
+          "fps": "20/1",
+          "frame_count": 41,
+          "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/videos/m4_task19_demo0_agentview.mp4",
+          "sha256": "4d7c501d3069c3fdc377553ea0c6bfacc34fcf01817ab36aaac33984060ab3c8",
+          "temporary_suffix": ".partial.mp4"
+        },
+        "robot0_eye_in_hand_image": {
+          "atomic_publish": true,
+          "bytes": 6771,
+          "ffprobe": {
+            "avg_frame_rate": "20/1",
+            "codec_name": "h264",
+            "height": 128,
+            "nb_frames": "41",
+            "width": 128
+          },
+          "fps": "20/1",
+          "frame_count": 41,
+          "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/videos/m4_task19_demo0_wrist.mp4",
+          "sha256": "47422ec3efa01b41f89250285ca2ccc5a1d96031b5d3cbad7cfccf3f1e7b8fd1",
+          "temporary_suffix": ".partial.mp4"
+        }
+      },
+      "worker_returncode_contract": true
+    }
+  ],
+  "schema_version": "track3_composed_reverse_start_m4_v1",
+  "status": "track3_composed_reverse_start_validated_pending_executor_review"
+}

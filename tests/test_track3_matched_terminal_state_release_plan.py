@@ -11,9 +11,9 @@ CANARY = ROOT / "data/reports/axis_libero_30k/track3_background_predicate_conver
 
 def test_only_the_composed_reverse_start_plan_is_active() -> None:
     handoff = json.loads(HANDOFF.read_text(encoding="utf-8"))
-    assert handoff["status"] == "track3_composed_reverse_start_stabilization_planned"
+    assert handoff["status"] == "track3_composed_reverse_start_validated_pending_executor_review"
     assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_COMPOSED_REVERSE_START_STABILIZATION_PLAN.md"
-    assert handoff["next_phase_only"] == "M0_to_M5_then_hard_stop"
+    assert handoff["next_phase_only"] == "new_reviewed_plan_required_after_M5_hard_stop"
     assert (ROOT / handoff["next_plan"]).is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_MATCHED_TERMINAL_STATE_RELEASE_PLAN.md").exists()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_MATCHED_TERMINAL_STATE_RELEASE_PLAN.md").is_file()

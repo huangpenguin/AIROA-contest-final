@@ -5,7 +5,7 @@
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_composed_reverse_start_stabilization_planned`
+> 当前总状态：`track3_composed_reverse_start_validated_pending_executor_review`
 > 唯一活动计划：`docs/AXIS_PI05_TRACK3_COMPOSED_REVERSE_START_STABILIZATION_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
@@ -632,3 +632,13 @@ L5 已按失败门禁 hard stop（execution commit `19cb1ea`）：`exact/pending
 `contact_contract_v2`还把gripper/robot↔operator contact错误归入“无关background”：task20/demo1为约`11.2 µm`的finger↔orange-juice接触，task19/demo2为最大约`0.263 µm`的right-finger↔drawer接触。旧raw与failure保持不变，新contact-v3必须按receiver、robot/gripper、unrelated background分层。
 
 旧计划已归档；唯一活动计划为`docs/AXIS_PI05_TRACK3_COMPOSED_REVERSE_START_STABILIZATION_PLAN.md`。它固定使用同demo terminal scene qpos、同demo init robot/gripper qpos与全零qvel，先运行task20/demo0 CPU canary，通过后补齐9条CPU matrix，全部通过后GPU3最多三族各一条camera canary。M5必须hard stop；只允许report namespace中的start-state candidate，不授权action/demo、SE(3)、Teleop、训练、FAST/ZIP、官方GPU或提交。完整审核见`docs/reviews/axis_pi05/TRACK3_MATCHED_TERMINAL_L0_L5_AUDIT_20260904.md`。
+
+## 51. Composed Reverse-Start M0–M5 执行收尾（2026-09-04）
+
+本轮按唯一活动计划完成 M0–M5。M0 锁定上一轮归档 L0–L5、9 个 raw worker reports、contact ledger、三份公开 HDF5 及固定 demo identity；9/9 的 HDF5 `states[0] == init_state`、model/terminal hash、单帧 positive suffix 与旧失败 gate 分解复核通过。M1 新增纯逻辑 named state-composition、free joint 7-qpos/6-dof 映射、逐 index source bitmap、zero-qvel、neutral hold 和 contact-v3 contract；12 项 targeted tests 通过。
+
+M2 唯一 task20/demo0 fresh CPU canary 通过；M3 固定九条 CPU matrix 为 `9/9`，三族各 `3/3`。每条均使用同 demo terminal scene qpos + 同 demo init robot/gripper qpos + 全零 qvel，reverse source 全程 true、goal 全程 false，raw terminal 与 composed state 的 public forward goal 均为 true，contact-v3 与严格 stability gates 均通过。`start_state_candidate` 只写入 report namespace，未写入 dataset/pending/accepted。
+
+M4 仅在 GPU3 执行 task10/demo0、task20/demo0、task19/demo0 各一次 camera canary；GPU3 preflight 为 5 MiB、无 compute process，GPU0/1/2 未触碰。三条均通过，agentview/wrist 每路 `41` 帧、H.264、20 FPS、128×128，均无 `.partial` 残留。M5 full tests 为 `223 passed, 7 skipped, 23 warnings`，JSON parse、py_compile、diff check 和 M0 immutable hash revalidation 全部通过。
+
+当前状态：`track3_composed_reverse_start_validated_pending_executor_review`。execution commit 为 `020d291`。已 hard stop，等待新的审核计划；不得自行进入 operator executor、SE(3)、Teleop、批量生成、训练、norm、FAST/ZIP、官方 GPU、上传或提交。最终证据：`data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/summary.json`、`run_index.json`、`contact_ledger.json`、`M5_CLOSEOUT_REPORT_ZH.md`；root/OpenPI clean，`LIBERO-plus` 既有 dirty 状态未触碰。

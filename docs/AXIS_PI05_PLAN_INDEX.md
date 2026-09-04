@@ -2,7 +2,7 @@
 
 > 更新日期：2026-09-04（Asia/Tokyo）
 > 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_COMPOSED_REVERSE_START_STABILIZATION_PLAN.md`
-> 当前状态：`track3_composed_reverse_start_stabilization_planned`
+> 当前状态：`track3_composed_reverse_start_validated_pending_executor_review`
 > 最新审核：`docs/reviews/axis_pi05/TRACK3_MATCHED_TERMINAL_L0_L5_AUDIT_20260904.md`
 
 ## 1. 本轮执行停止点
@@ -131,6 +131,18 @@ L5 已按失败门禁 hard stop（execution commit `19cb1ea`）：`exact/pending
 9/9 reverse source成立且goal为false。task20失败主要是success末帧后目标物沉降，task19失败主要是forward terminal robot回稳；9条reward positive suffix均只有一帧。contact-v2把gripper/robot↔operator误标为unrelated background，旧失败保留但不能沿用此角色解释。
 
 旧计划已归档。新唯一活动计划`docs/AXIS_PI05_TRACK3_COMPOSED_REVERSE_START_STABILIZATION_PLAN.md`固定构造same-demo terminal scene + init robot/gripper + zero-qvel state，先task20/demo0 CPU canary，再补齐固定9条CPU matrix；全部通过后GPU3最多三族各一条camera canary。M5 hard stop，不授权action/demo、SE(3)、Teleop、训练或官方GPU。完整审核见`docs/reviews/axis_pi05/TRACK3_MATCHED_TERMINAL_L0_L5_AUDIT_20260904.md`。
+
+## 3.8 Composed Reverse-Start M0–M5 执行收尾（2026-09-04）
+
+本轮按唯一活动计划 `docs/AXIS_PI05_TRACK3_COMPOSED_REVERSE_START_STABILIZATION_PLAN.md` 完成 M0–M5。M0 锁定并复核上一轮 L0–L5、9 条固定 demo 及三份公开 HDF5；M1 新增 named state-composition、逐 index provenance、全零 qvel、neutral 7D hold 与 contact-v3 纯逻辑合约，均通过。
+
+M2 的唯一 task20/demo0 CPU canary 通过；M3 固定九条 fresh CPU matrix 为 `9/9`，三族各 `3/3`。所有 run 均保持 reverse source=true、reverse goal=false，raw terminal 与 composed state 的 public forward goal 均为 true，严格稳定性与 contact-v3 门禁均通过。composition 固定为同 demo terminal scene qpos + 同 demo init robot/gripper qpos + zero qvel，不改 HDF5/BDDL。
+
+M4 仅使用 GPU3，按 task10→task20→task19 各执行一次 camera canary；三条均通过，agentview/wrist 各为 `41` 帧 H.264、20 FPS、原子发布且无 `.partial` 残留。M5 full tests 为 `223 passed, 7 skipped, 23 warnings`，JSON、py_compile、diff check 和 M0 immutable hash revalidation 全部通过。
+
+当前状态为 `track3_composed_reverse_start_validated_pending_executor_review`，已 hard stop。`start_state_candidate` 仅有 `1` 条 report-only 记录，`exact/pending/accepted reverse demo = 0/0/0`。没有生成 manipulation action/demo，没有 SE(3)、Teleop、批量生成、训练、norm、FAST/ZIP、官方 GPU、上传或提交；后续必须等待新的审核计划。
+
+机器证据：`data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/summary.json`、`m0_release_lock.json`、`m1_validator_contract.json`、`m2_summary.json`、`m3_summary.json`、`m4_summary.json`、`run_index.json`、`contact_ledger.json` 与 `M5_CLOSEOUT_REPORT_ZH.md`。execution commit 为 `020d291`；nested OpenPI clean；`LIBERO-plus` 既有 dirty 状态仅记录未触碰。
 
 ## 4. 保留但非活动的研究线
 

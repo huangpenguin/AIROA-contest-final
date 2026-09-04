@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-04",
-  "status": "track3_composed_reverse_start_stabilization_planned",
+  "status": "track3_composed_reverse_start_validated_pending_executor_review",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
   "latest_audited_execution_commit": "19cb1eab9556b6e9e0f8b3f9d4b49fb3893b81a0",
   "latest_audit_input_commit": "0dc402e2d70e6576c5861a674e0aac04e4427ef0",
-  "latest_execution_root_commit": "19cb1ea",
+  "latest_execution_root_commit": "020d291",
   "latest_execution_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
@@ -218,7 +218,7 @@
   },
   "tests": {
     "command": "PYTHONPATH=. JAX_PLATFORMS=cpu .venv_axis_pi05/bin/pytest -q tests",
-    "passed": 211,
+    "passed": 223,
     "skipped": 7,
     "warnings": 23,
     "pynvml_is_collection_blocker": false
@@ -251,7 +251,7 @@
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
   "next_plan": "docs/AXIS_PI05_TRACK3_COMPOSED_REVERSE_START_STABILIZATION_PLAN.md",
-  "next_phase_only": "M0_to_M5_then_hard_stop",
+  "next_phase_only": "new_reviewed_plan_required_after_M5_hard_stop",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -2816,7 +2816,7 @@
     }
   },
   "track3_composed_reverse_start_stabilization_authorization": {
-    "status": "track3_composed_reverse_start_stabilization_planned",
+    "status": "track3_composed_reverse_start_validated_pending_executor_review",
     "plan": "docs/AXIS_PI05_TRACK3_COMPOSED_REVERSE_START_STABILIZATION_PLAN.md",
     "authorized_phases": ["M0", "M1", "M2", "M3", "M4", "M5_closeout"],
     "authorization": {
@@ -2844,6 +2844,21 @@
     },
     "success_stop": "track3_composed_reverse_start_validated_pending_executor_review",
     "failure_stop_prefix": "track3_composed_reverse_start_",
-    "next_phase_only": "M0_to_M5_then_hard_stop"
+    "next_phase_only": "new_reviewed_plan_required_after_M5_hard_stop"
+  },
+  "track3_composed_reverse_start_stabilization_execution": {
+    "status": "track3_composed_reverse_start_validated_pending_executor_review",
+    "execution_commit": "020d291",
+    "plan": "docs/AXIS_PI05_TRACK3_COMPOSED_REVERSE_START_STABILIZATION_PLAN.md",
+    "report_root": "data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization",
+    "m0": {"status": "track3_composed_reverse_start_m0_passed", "report": "data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/m0_release_lock.json", "fixed_demos": "9/9", "immutable_revalidation": "passed"},
+    "m1": {"status": "track3_composed_reverse_start_m1_validator_contract_passed", "report": "data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/m1_validator_contract.json", "targeted_tests": "12 passed", "simulator_started": false, "gpu_started": false},
+    "m2": {"status": "track3_composed_reverse_start_cpu_canary_passed_task20_demo0", "report": "data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/m2_summary.json", "fresh_processes": 1, "start_state_candidate_report_only": 1},
+    "m3": {"status": "track3_composed_reverse_start_cpu_matrix_passed_9_of_9", "report": "data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/m3_summary.json", "fresh_processes": 9, "task10": "3/3", "task20": "3/3", "task19": "3/3", "reverse_demo_counts": [0, 0, 0]},
+    "m4": {"status": "track3_composed_reverse_start_validated_pending_executor_review", "report": "data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/m4_summary.json", "gpu3_camera_canaries": 3, "order": [10, 20, 19], "agentview_and_wrist_frames": "41 each", "h264_20fps": true},
+    "m5": {"status": "hard_stop_waiting_executor_review", "summary": "data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/summary.json", "report": "data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/M5_CLOSEOUT_REPORT_ZH.md", "tests": "223_passed_7_skipped_23_warnings", "json_parse": "passed", "py_compile": "passed", "git_diff_check": "passed"},
+    "counts": {"exact_reverse_demo": 0, "pending_autogen": 0, "accepted_reverse_demo": 0, "start_state_candidate_report_only": 1},
+    "resource_boundary": {"gpu3_only_for_m4": true, "gpu0_touched": false, "gpu1_touched": false, "gpu2_touched": false, "official_gpu": false, "se3": false, "grasp": false, "teleop": false, "action_or_demo_generation": false, "training_or_norm": false, "fast_or_zip": false, "upload_or_submission": false},
+    "next_phase_only": "new_reviewed_plan_required_after_M5_hard_stop"
   }
 }

@@ -4,7 +4,7 @@
 > 审核输入：root closeout `0dc402e2d70e6576c5861a674e0aac04e4427ef0`
 > nested OpenPI：`b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`
 > 审核结论：`remediation_required`
-> 当前状态：`track3_composed_reverse_start_stabilization_planned`
+> 当前状态：`track3_composed_reverse_start_validated_pending_executor_review`
 > 唯一授权：M0–M5；随后 hard stop
 > 不授权：修改公开 HDF5/BDDL、生成 manipulation action 或 reverse demo、SE(3)/grasp、Teleop、批量合成、训练/norm、FAST/ZIP、官方 GPU、上传或比赛提交
 

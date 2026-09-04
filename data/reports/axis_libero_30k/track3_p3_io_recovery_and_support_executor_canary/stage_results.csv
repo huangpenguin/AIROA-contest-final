@@ -1,0 +1,8 @@
+phase,status,reason
+R0,track3_p3_recovery_r0_artifact_closure_passed,
+R1,track3_p3_recovery_r1_result_protocol_passed,
+R2,track3_p3_recovery_task10_failed,parent provenance publication failure after unique worker completion
+R3,not_evaluated,r2_task10_not_passed
+R4,not_evaluated,r2_task10_not_passed; executor_static_gate_not_authorized_after_hard_stop
+R5,not_evaluated,r2_task10_not_passed; generation_and_replay_not_authorized
+R6,hard_stop,"no retry, no pending, no training"

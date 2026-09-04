@@ -1,0 +1,7 @@
+{
+  "gpu_started": false,
+  "reason": "r2_task10_not_passed; executor_static_gate_not_authorized_after_hard_stop",
+  "schema_version": "track3_p3_recovery_r4_v1",
+  "simulator_started": false,
+  "status": "not_evaluated"
+}

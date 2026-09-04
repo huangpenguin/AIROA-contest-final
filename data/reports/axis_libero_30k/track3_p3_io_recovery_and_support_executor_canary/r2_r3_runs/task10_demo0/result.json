@@ -1,0 +1,881 @@
+{
+  "attempt_number": 2,
+  "camera_frames": {
+    "agentview": 41,
+    "wrist": 41
+  },
+  "camera_npz": {
+    "allow_pickle": false,
+    "bytes": 1758862,
+    "dtypes": {
+      "agentview": "uint8",
+      "wrist": "uint8"
+    },
+    "keys": [
+      "agentview",
+      "wrist"
+    ],
+    "path": "data/reports/axis_libero_30k/track3_p3_io_recovery_and_support_executor_canary/camera_frames/r2_task10_demo0.npz",
+    "schema_version": "track3_gpu3_camera_frames_npz_v2",
+    "sha256": "ec9ba4e20beecb355b41015de5f8672e0b5b4ebe38ccab7bee66a4e81aa93377",
+    "shapes": {
+      "agentview": [
+        41,
+        128,
+        128,
+        3
+      ],
+      "wrist": [
+        41,
+        128,
+        128,
+        3
+      ]
+    }
+  },
+  "child_pid": 1406332,
+  "completed_at_utc": "2026-09-04T15:49:08.789040+00:00",
+  "created_at_utc": "2026-09-04T15:48:45.204280+00:00",
+  "demo_index": 0,
+  "family": "support_remove",
+  "fresh_process": true,
+  "hard_gate": {
+    "camera_schema": {
+      "executed": true,
+      "renderer": {
+        "cameras": {
+          "agentview_image": {
+            "dtype": "uint8",
+            "present": true,
+            "shape": [
+              128,
+              128,
+              3
+            ],
+            "uint8": true
+          },
+          "robot0_eye_in_hand_image": {
+            "dtype": "uint8",
+            "present": true,
+            "shape": [
+              128,
+              128,
+              3
+            ],
+            "uint8": true
+          }
+        },
+        "schema_complete": true,
+        "underlying_flags": {
+          "has_offscreen_renderer": true,
+          "has_renderer": false,
+          "use_camera_obs": true
+        },
+        "wrapper_flags": {
+          "has_offscreen_renderer": null,
+          "has_renderer": null,
+          "use_camera_obs": null
+        }
+      },
+      "state": "passed"
+    },
+    "contact_v3_full_window": {
+      "executed": true,
+      "state": "passed",
+      "step_range": [
+        0,
+        40
+      ]
+    },
+    "restore_identity": {
+      "executed": true,
+      "max_abs_diff": 2.220446049250313e-16,
+      "state": "passed"
+    },
+    "truth": {
+      "executed": true,
+      "goal_all_false": true,
+      "source_all_true": true,
+      "state": "passed"
+    }
+  },
+  "mode": "GPU3_EGL_camera",
+  "model_state_identity": {
+    "hdf5_path": "/home/huang/code/PARC2026_final/data/raw/public/libero_official_hdf5/libero_goal/put_the_bowl_on_the_plate_demo.hdf5",
+    "hdf5_sha256": "e69528b0cf10dfc59b20698e12ec2affc03f3887309034d3eb74cac3ec929406",
+    "model_file_sha256": "e9a508e1e98a7bd2631796a4c41476a449fd9821fb45837a27d2ebefd87c8830",
+    "resolved_model_xml_sha256": "d637223bfe311c2ae6daeb0572f0a75528f2613f54eff1ef3acbe540167ea099",
+    "restore_max_abs_diff": 2.220446049250313e-16,
+    "restored_state_sha256": "632509454fd51e0783e2dc208e846c66458eb51578189fa9a9e458c450a97b2c",
+    "same_demo_model_and_state_components": true,
+    "state_bundle_path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/start_states.npz",
+    "state_key": "task10_demo0",
+    "state_sha256": "67fbc8b9c85ff02d1f28f6aa94f8841998b307d8499a7f2f08d6e5bfbb5d2f37"
+  },
+  "provenance": {
+    "env_seed_api": "not_required_for_deterministic_state_restore",
+    "gpu3_only": true,
+    "no_manipulation_action": true,
+    "no_se3_or_grasp": true,
+    "no_teleop": true,
+    "official_gpu": false,
+    "seed_layers": [
+      "parent_registration",
+      "python_random",
+      "numpy_random"
+    ]
+  },
+  "renderer": {
+    "cameras": {
+      "agentview_image": {
+        "dtype": "uint8",
+        "present": true,
+        "shape": [
+          128,
+          128,
+          3
+        ],
+        "uint8": true
+      },
+      "robot0_eye_in_hand_image": {
+        "dtype": "uint8",
+        "present": true,
+        "shape": [
+          128,
+          128,
+          3
+        ],
+        "uint8": true
+      }
+    },
+    "schema_complete": true,
+    "underlying_flags": {
+      "has_offscreen_renderer": true,
+      "has_renderer": false,
+      "use_camera_obs": true
+    },
+    "wrapper_flags": {
+      "has_offscreen_renderer": null,
+      "has_renderer": null,
+      "use_camera_obs": null
+    }
+  },
+  "reverse": {
+    "checkpoint_telemetry": [
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 0
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 1
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 2
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 3
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 4
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 5
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 6
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 7
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 8
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 9
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 10
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 11
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 12
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 13
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 14
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 15
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 16
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 17
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 18
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 19
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 20
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 21
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 22
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 23
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 24
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 25
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 26
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 27
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 28
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 29
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 30
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 31
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 32
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 33
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 34
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 35
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 36
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 37
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 38
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 39
+      },
+      {
+        "contact_counts": {
+          "background_contact": 17,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 3,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "goal_detail_complete": true,
+        "goal_truth_complete": true,
+        "initial_detail_complete": true,
+        "initial_truth_complete": true,
+        "source": true,
+        "state_hash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "step": 40
+      }
+    ],
+    "frame_count": 41,
+    "goal_atom": "(On akita_black_bowl_1 main_table_akita_black_bowl_region)",
+    "hold_action": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "raw_scene_checkpoints_not_emitted_to_stdout": true,
+    "source_atom": "(On akita_black_bowl_1 plate_1)"
+  },
+  "schema_version": "track3_gpu3_camera_canary_v2",
+  "seed": 3100,
+  "status": "passed",
+  "task_index": 10
+}

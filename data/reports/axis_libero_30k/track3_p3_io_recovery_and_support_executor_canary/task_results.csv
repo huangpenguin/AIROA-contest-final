@@ -1,0 +1,4 @@
+task_index,family,camera_phase,status,attempts_started
+10,support_remove,R2,failed_closed,1
+20,containment_remove,R3,not_evaluated,0
+19,articulation_close,R3,not_evaluated,0

@@ -1,0 +1,16 @@
+{
+  "entries": [
+    {
+      "attempt_number": 2,
+      "child_result": "preserved_passed_child_result",
+      "manual_video_review": false,
+      "phase": "R2",
+      "reason": "parent_wrapper_exception_after_unique_worker_completion; required_gpu_provenance_not_published",
+      "report": "data/reports/axis_libero_30k/track3_p3_io_recovery_and_support_executor_canary/r2_task10_demo0_attempt2.json",
+      "stage": "parent_result_assembly",
+      "task_index": 10
+    }
+  ],
+  "schema_version": "track3_p3_recovery_failure_gallery_v1",
+  "status": "failure_diagnostic_only"
+}

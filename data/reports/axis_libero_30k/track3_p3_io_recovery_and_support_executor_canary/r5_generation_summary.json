@@ -1,0 +1,12 @@
+{
+  "accepted_reverse_demo": 0,
+  "exact_reverse_demo": 0,
+  "generation_attempts": 0,
+  "gpu_started": false,
+  "pending_created": false,
+  "reason": "r2_task10_not_passed; generation_and_replay_not_authorized",
+  "replay_attempts": 0,
+  "schema_version": "track3_p3_recovery_r5_v1",
+  "simulator_started": false,
+  "status": "not_evaluated"
+}

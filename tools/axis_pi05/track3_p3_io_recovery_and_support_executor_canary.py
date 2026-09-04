@@ -327,6 +327,17 @@ def _gpu3_snapshot() -> dict[str, Any]:
     return {"timestamp_utc": now(), "returncode": gpu.returncode, "query": gpu_command, "gpus": parsed, "compute_processes": [line.strip() for line in processes.stdout.splitlines() if line.strip()], "process_query_returncode": processes.returncode, "stderr": gpu.stderr[-1000:], "free_gate": gpu.returncode == 0 and len(parsed) == 1 and parsed[0]["memory_used_mib"] <= 1024.0 and not processes.stdout.strip()}
 
 
+def gpu_provenance_gate(record: Mapping[str, Any]) -> dict[str, Any]:
+    required = ("seed", "child_pid", "physical_gpu_uuid", "cuda_visible_devices", "start_snapshot", "end_snapshot", "peak_memory_mib")
+    missing = [key for key in required if key not in record or record.get(key) in (None, "", [])]
+    try:
+        if not math.isfinite(float(record.get("peak_memory_mib"))) or float(record.get("peak_memory_mib")) < 0:
+            missing.append("peak_memory_mib_invalid")
+    except (TypeError, ValueError):
+        missing.append("peak_memory_mib_invalid")
+    return {"executed": True, "state": "passed" if not missing else "failed", "required": True, "required_fields": list(required), "missing": missing, "reason": "gpu_provenance_incomplete" if missing else None}
+
+
 def _camera_npz_atomic(path: Path, frames: Mapping[str, Any]) -> dict[str, Any]:
     import numpy as np
 
@@ -549,6 +560,9 @@ def _r2_r3_gate_inputs() -> tuple[dict[str, Any], dict[str, Any]]:
 
 
 def run_r2() -> dict[str, Any]:
+    summary_path = OUT_ROOT / "r2_summary.json"
+    if summary_path.is_file():
+        return strict_json_load(summary_path)
     r0, r1 = _r2_r3_gate_inputs()
     if r0.get("status") != "track3_p3_recovery_r0_artifact_closure_passed" or r1.get("status") != "track3_p3_recovery_r1_result_protocol_passed":
         result = {"schema_version": "track3_p3_recovery_r2_v1", "status": "not_evaluated", "reason": "r0_or_r1_not_passed", "canary_count": 0, "no_gpu_started": True}
@@ -557,6 +571,24 @@ def run_r2() -> dict[str, Any]:
     preflight = _gpu3_snapshot()
     result: dict[str, Any] = {"schema_version": "track3_p3_recovery_r2_v1", "status": "track3_p3_recovery_r2_gpu3_resource_gate_failed", "created_at_utc": now(), "fixed_task": {"task_index": 10, "demo_index": 0}, "seed": SEEDS[10], "attempt_number": 2, "gpu3_preflight": preflight, "canary_count": 0, "canary": None, "no_retry": True}
     if preflight.get("free_gate"):
+        existing_result_path = OUT_ROOT / "r2_r3_runs/task10_demo0/result.json"
+        if existing_result_path.is_file():
+            child = strict_json_load(existing_result_path)
+            recovered: dict[str, Any] = {"schema_version": "track3_gpu3_camera_canary_parent_v2", "status": "failed_closed", "reason": "parent_wrapper_exception_after_unique_worker_completion; required_gpu_provenance_not_published", "task_index": 10, "demo_index": 0, "family": FAMILY[10], "attempt_number": 2, "seed": SEEDS[10], "parent_pid": os.getpid(), "worker_pid": child.get("child_pid"), "worker_pid_match": None, "process_returncode": None, "timed_out": False, "termination_stage": None, "result_path": path_ref(existing_result_path), "stdout_path": path_ref(OUT_ROOT / "r2_r3_runs/task10_demo0/stdout.log"), "stderr_path": path_ref(OUT_ROOT / "r2_r3_runs/task10_demo0/stderr.log"), "stdout_bytes": (OUT_ROOT / "r2_r3_runs/task10_demo0/stdout.log").stat().st_size, "stderr_bytes": (OUT_ROOT / "r2_r3_runs/task10_demo0/stderr.log").stat().st_size, "result_present": True, "result_error": None, "child_result": child, "gpu_provenance": {"seed": SEEDS[10], "child_pid": child.get("child_pid"), "physical_gpu_uuid": None, "cuda_visible_devices": "3", "start_snapshot": None, "end_snapshot": preflight, "peak_memory_mib": None, "deadline_seconds": IO_DEADLINE_SECONDS, "term_grace_seconds": IO_TERM_GRACE_SECONDS, "timeout_termination_stage": None, "provenance_recovered_after_parent_crash": False}, "gpu_provenance_gate": {"executed": True, "state": "failed", "required": True, "reason": "parent_died_before_provenance_publish", "missing": ["physical_gpu_uuid", "start_snapshot", "peak_memory_mib"]}, "atomic_partial_residue": [path_ref(path) for path in (OUT_ROOT / "r2_r3_runs/task10_demo0").glob("*.partial")], "camera_npz_present": (OUT_ROOT / "camera_frames/r2_task10_demo0.npz").is_file(), "camera_npz": child.get("camera_npz")}
+            try:
+                recovered["videos"] = _publish_camera_videos(recovered, phase="r2")
+                recovered["camera_artifacts_passed"] = True
+            except Exception as exc:
+                recovered["camera_artifacts_passed"] = False
+                recovered["camera_artifact_error"] = {"type": type(exc).__name__, "message": str(exc)}
+            write_json(OUT_ROOT / "r2_task10_demo0_attempt2.json", recovered)
+            result["canary"] = recovered
+            result["canary_count"] = 1
+            result["attempts_started"] = 1
+            result["status"] = "track3_p3_recovery_task10_failed"
+            result["failure_reason"] = "parent_wrapper_exception_after_unique_attempt; no retry permitted"
+            write_json(summary_path, result)
+            return result
         canary = _run_gpu_canary(10, 0, SEEDS[10], attempt_number=2)
         result["canary"] = canary
         result["canary_count"] = 1
@@ -578,7 +610,7 @@ def run_r2() -> dict[str, Any]:
 def run_r3() -> dict[str, Any]:
     r2 = strict_json_load(OUT_ROOT / "r2_summary.json")
     if r2.get("status") != "track3_p3_recovery_task10_passed":
-        result = {"schema_version": "track3_p3_recovery_r3_v1", "status": "not_evaluated", "reason": "r2_task10_not_passed", "canary_count": 0, "no_gpu_started": True}
+        result = {"schema_version": "track3_p3_recovery_r3_v1", "status": "not_evaluated", "reason": "r2_task10_not_passed", "canary_count": 0, "no_additional_gpu_started": True}
         write_json(OUT_ROOT / "r3_summary.json", result)
         return result
     canaries: list[dict[str, Any]] = []
@@ -604,12 +636,98 @@ def run_r3() -> dict[str, Any]:
     return result
 
 
+def _r6_write_csv(name: str, header: Sequence[str], rows: Sequence[Sequence[Any]]) -> Path:
+    import csv
+    import io
+
+    buffer = io.StringIO()
+    writer = csv.writer(buffer, lineterminator="\n")
+    writer.writerow(header)
+    writer.writerows(rows)
+    path = OUT_ROOT / name
+    write_text(path, buffer.getvalue())
+    return path
+
+
+def _r6_ffprobe(path: Path) -> dict[str, Any]:
+    command = ["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=codec_name,width,height,avg_frame_rate,nb_frames", "-of", "json", str(path)]
+    completed = subprocess.run(command, capture_output=True, text=True, check=False)
+    try:
+        stream = json.loads(completed.stdout)["streams"][0]
+        valid = stream.get("codec_name") == "h264" and int(stream.get("nb_frames")) == CANARY_STEPS and str(stream.get("avg_frame_rate")) in {"20/1", "20"}
+    except (KeyError, TypeError, ValueError, json.JSONDecodeError) as exc:
+        stream = {"parse_error": str(exc), "stdout": completed.stdout[-1000:]}
+        valid = False
+    return {"path": path_ref(path), "returncode": completed.returncode, "state": "passed" if completed.returncode == 0 and valid else "failed", "stream": stream}
+
+
+def _r6_run_check(command: Sequence[str]) -> dict[str, Any]:
+    completed = subprocess.run(list(command), cwd=ROOT, capture_output=True, text=True, check=False)
+    return {"command": list(command), "returncode": completed.returncode, "stdout_tail": completed.stdout[-4000:], "stderr_tail": completed.stderr[-4000:]}
+
+
+def _r6_parse_pytest(stdout: str) -> dict[str, Any]:
+    import re
+
+    match = re.search(r"(\d+) passed(?:, (\d+) skipped)?(?:, (\d+) warnings)?", stdout)
+    return {"passed": int(match.group(1)) if match else None, "skipped": int(match.group(2) or 0) if match else None, "warnings": int(match.group(3) or 0) if match else None}
+
+
+def run_r6() -> dict[str, Any]:
+    r2_path = OUT_ROOT / "r2_summary.json"
+    if not r2_path.is_file():
+        raise FileNotFoundError(r2_path)
+    r3 = run_r3()
+    r2 = strict_json_load(r2_path)
+    r4 = {"schema_version": "track3_p3_recovery_r4_v1", "status": "not_evaluated", "reason": "r2_task10_not_passed; executor_static_gate_not_authorized_after_hard_stop", "simulator_started": False, "gpu_started": False}
+    r5 = {"schema_version": "track3_p3_recovery_r5_v1", "status": "not_evaluated", "reason": "r2_task10_not_passed; generation_and_replay_not_authorized", "generation_attempts": 0, "replay_attempts": 0, "pending_created": False, "exact_reverse_demo": 0, "accepted_reverse_demo": 0, "simulator_started": False, "gpu_started": False}
+    write_json(OUT_ROOT / "r4_executor_contract.json", r4)
+    write_json(OUT_ROOT / "r5_generation_summary.json", r5)
+    _r6_write_csv("stage_results.csv", ("phase", "status", "reason"), (("R0", strict_json_load(OUT_ROOT / "r0_artifact_closure.json").get("status"), ""), ("R1", strict_json_load(OUT_ROOT / "r1_io_recovery_contract.json").get("status"), ""), ("R2", r2.get("status"), "parent provenance publication failure after unique worker completion"), ("R3", r3.get("status"), r3.get("reason", "")), ("R4", r4["status"], r4["reason"]), ("R5", r5["status"], r5["reason"]), ("R6", "hard_stop", "no retry, no pending, no training")))
+    _r6_write_csv("task_results.csv", ("task_index", "family", "camera_phase", "status", "attempts_started"), ((10, FAMILY[10], "R2", "failed_closed", 1), (20, FAMILY[20], "R3", "not_evaluated", 0), (19, FAMILY[19], "R3", "not_evaluated", 0)))
+    _r6_write_csv("episode_results.csv", ("task_index", "demo_index", "executor", "generation", "replay", "pending"), ((10, 0, "not_evaluated", "not_evaluated", "not_evaluated", False), (20, 0, "not_evaluated", "not_evaluated", "not_evaluated", False), (19, 0, "not_evaluated", "not_evaluated", "not_evaluated", False)))
+    gallery = {"schema_version": "track3_p3_recovery_failure_gallery_v1", "status": "failure_diagnostic_only", "entries": [{"phase": "R2", "stage": "parent_result_assembly", "task_index": 10, "attempt_number": 2, "reason": "parent_wrapper_exception_after_unique_worker_completion; required_gpu_provenance_not_published", "report": path_ref(OUT_ROOT / "r2_task10_demo0_attempt2.json"), "child_result": "preserved_passed_child_result", "manual_video_review": False}]}
+    write_json(OUT_ROOT / "failure_gallery.json", gallery)
+    closeout = """# Track 3 R0–R6 收尾\n\n状态：`track3_p3_recovery_parent_provenance_failure_hard_stop`。\n\nR0 已完成旧 17 项 evidence closure；R1 已通过独立 atomic result JSON、16 MiB stdout、hang TERM/KILL、malformed/nonzero/exception fail-closed。R2 只启动一次 task10/demo0、seed 3100、attempt 2。child 结果中的 restore、source/goal、contact-v3、camera 41 帧均通过，但 parent wrapper 在发布 GPU provenance 时发生 `NameError`，缺少启动快照、physical UUID 与 peak 显存，故总体按独立 result 合同判定 `failed_closed`。\n\n因此 R3、R4、R5 均未执行；没有 task20/task19 canary、SE(3) executor、generation、replay、pending 或训练。`exact/pending/accepted = 0/0/0`。未修改旧 HDF5/BDDL，未 Teleop，未使用 GPU0/官方 GPU/FAST/ZIP。\n\n本轮 hard stop：如需继续，必须由审核后的新计划修复 parent provenance assembly；本入口不自动恢复或重试 attempt 2。\n"""
+    write_text(OUT_ROOT / "R6_CLOSEOUT_REPORT_ZH.md", closeout)
+    test_pycompile = _r6_run_check([sys.executable, "-m", "py_compile", "tools/axis_pi05/track3_p3_io_recovery_and_support_executor_canary.py", "tests/test_track3_p3_io_recovery_and_support_executor_canary.py"])
+    targeted = _r6_run_check([sys.executable, "-m", "pytest", "-q", "tests/test_track3_p3_io_recovery_and_support_executor_canary.py"])
+    full = _r6_run_check([sys.executable, "-m", "pytest", "-q", "tests"])
+    strict_errors: list[str] = []
+    for path in sorted(OUT_ROOT.rglob("*.json")):
+        if path.relative_to(OUT_ROOT).as_posix() == "r1_io_tests/malformed/result.json":
+            continue
+        try:
+            strict_json_load(path)
+        except Exception as exc:
+            strict_errors.append(f"{path_ref(path)}:{type(exc).__name__}:{exc}")
+    npz_checks: dict[str, Any] = {"old_start_states": validate_npz(OLD_ROOT / "start_states.npz", _old_state_expected())}
+    camera_path = OUT_ROOT / "camera_frames/r2_task10_demo0.npz"
+    try:
+        import numpy as np
+
+        with np.load(camera_path, allow_pickle=False) as archive:
+            camera_checks = {"allow_pickle": False, "keys": sorted(archive.files), "shapes": {key: list(np.asarray(archive[key]).shape) for key in archive.files}, "dtypes": {key: str(np.asarray(archive[key]).dtype) for key in archive.files}, "state": "passed" if sorted(archive.files) == ["agentview", "wrist"] and all(np.asarray(archive[key]).dtype == np.uint8 and np.asarray(archive[key]).shape == (CANARY_STEPS, 128, 128, 3) for key in archive.files) else "failed"}
+    except Exception as exc:
+        camera_checks = {"state": "failed", "error": f"{type(exc).__name__}:{exc}"}
+    npz_checks["r2_camera"] = camera_checks
+    video_checks = [_r6_ffprobe(path) for path in sorted((OUT_ROOT / "videos").glob("r2_*.mp4"))]
+    pending_dir = ROOT / "data/pending_autogen_v3/task10_demo0"
+    summary = {"schema_version": "track3_p3_recovery_r6_v1", "status": "track3_p3_recovery_parent_provenance_failure_hard_stop", "created_at_utc": now(), "plan": relative_path(PLAN), "phase_status": {"R0": strict_json_load(OUT_ROOT / "r0_artifact_closure.json").get("status"), "R1": strict_json_load(OUT_ROOT / "r1_io_recovery_contract.json").get("status"), "R2": r2.get("status"), "R3": r3.get("status"), "R4": r4["status"], "R5": r5["status"], "R6": "hard_stop"}, "counts": {"validated_start_state": 9, "r2_camera_canaries_started": 1, "r3_camera_canaries_started": 0, "executor_attempts": 0, "generation_attempts": 0, "replay_attempts": 0, "successful_replays": 0, "exact_reverse_demo": 0, "pending_autogen": 0, "accepted_reverse_demo": 0}, "r2_parent_failure": {"report": path_ref(OUT_ROOT / "r2_task10_demo0_attempt2.json"), "unique_attempts_started": 1, "no_retry": True, "child_physics_and_camera_result_preserved": True}, "validation": {"strict_json_errors_except_intentional_malformed_fixture": strict_errors, "old_start_states_npz": npz_checks["old_start_states"], "r2_camera_npz": npz_checks["r2_camera"], "videos": video_checks, "py_compile": test_pycompile, "targeted_tests": {**targeted, "pytest_counts": _r6_parse_pytest(targeted["stdout_tail"])}, "full_tests": {**full, "pytest_counts": _r6_parse_pytest(full["stdout_tail"])}, "git_diff_check": _r6_run_check(["git", "diff", "--check"])}, "artifact_manifest": {"path": path_ref(OUT_ROOT / "artifact_manifest.json"), "entries_exclude_self": True, "all_new_output_files_should_be_tracked": True}, "resource_boundary": {"gpu3_only": True, "gpu0_touched": False, "gpu1_touched": False, "gpu2_touched": False, "official_gpu": False, "no_teleop": True, "no_training": True, "no_se3_generation": True, "no_batch_generation": True, "no_fast_or_zip": True, "no_upload": True, "hdf5_or_bddl_modified": False, "old_evidence_modified": False, "pending_directory_created": pending_dir.exists(), "libero_plus_porcelain": porcelain(LIBERO_PLUS)}, "hard_stop": {"executed": True, "status": "hard_stop_waiting_new_reviewed_plan", "no_automatic_resume": True}}
+    write_json(OUT_ROOT / "r6_summary.json", summary)
+    entries = [artifact_entry(path, source_commit=git(("rev-parse", "HEAD"))) for path in sorted(OUT_ROOT.rglob("*")) if path.is_file() and path.name != "artifact_manifest.json" and not path.name.endswith(".partial")]
+    manifest = {"schema_version": "track3_p3_recovery_artifact_manifest_v1", "created_at_utc": now(), "entries_exclude_self": True, "entry_count": len(entries), "entries": entries}
+    write_json(OUT_ROOT / "artifact_manifest.json", manifest)
+    return summary
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--r0", action="store_true")
     parser.add_argument("--r1", action="store_true")
     parser.add_argument("--r2", action="store_true")
     parser.add_argument("--r3", action="store_true")
+    parser.add_argument("--r6", action="store_true")
     parser.add_argument("--io-test-worker", action="store_true")
     parser.add_argument("--p3-worker", action="store_true")
     parser.add_argument("--io-mode")
@@ -628,9 +746,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         if args.task_index not in TASK_ORDER or args.demo_index != 0 or args.seed is None or not args.state_bundle or not args.frames_output or not args.result_output:
             parser.error("p3 worker requires fixed task/demo0, seed, state bundle, frames output and result output")
         return _p3_worker(args.task_index, 0, args.seed, Path(args.state_bundle), Path(args.frames_output), Path(args.result_output))
-    if sum((args.r0, args.r1, args.r2, args.r3)) != 1:
+    if sum((args.r0, args.r1, args.r2, args.r3, args.r6)) != 1:
         parser.error("choose exactly one phase")
-    result = run_r0() if args.r0 else run_r1() if args.r1 else run_r2() if args.r2 else run_r3()
+    result = run_r0() if args.r0 else run_r1() if args.r1 else run_r2() if args.r2 else run_r3() if args.r3 else run_r6()
     print(json.dumps(result, ensure_ascii=False, sort_keys=True))
     return 0 if str(result.get("status", "")).endswith("passed") else 1
 

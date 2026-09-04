@@ -1,0 +1,7 @@
+{
+  "canary_count": 0,
+  "no_additional_gpu_started": true,
+  "reason": "r2_task10_not_passed",
+  "schema_version": "track3_p3_recovery_r3_v1",
+  "status": "not_evaluated"
+}

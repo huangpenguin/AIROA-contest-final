@@ -1,0 +1,456 @@
+{
+  "action_contract": {
+    "action": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "control_freq_hz": 20,
+    "controller": "OSC_POSE",
+    "dimension": 7,
+    "gripper_semantics": "zero_increment_hold"
+  },
+  "checkpoint_contract": {
+    "diagnostic_steps": [
+      0,
+      1,
+      10,
+      20
+    ],
+    "measurement_steps_after_step5": 20,
+    "no_hindsight_checkpoint_selection": true,
+    "official_equivalent_step": 5
+  },
+  "created_at_utc": "2026-09-04T00:35:48.238025+00:00",
+  "critical_relations": {
+    "10": "(On akita_black_bowl_1 plate_1)",
+    "19": "(Open wooden_cabinet_1_middle_region)",
+    "20": "(In orange_juice_1 basket_1_contain_region)"
+  },
+  "forward_reference": {
+    "10": {
+      "bddl_path": "/home/huang/code/PARC2026_final/LIBERO/libero/libero/bddl_files/libero_goal/put_the_bowl_on_the_plate.bddl",
+      "goal": [
+        {
+          "atom": "(On akita_black_bowl_1 plate_1)",
+          "gate_required": false,
+          "role": "operator_critical",
+          "source": "forward_reference",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        }
+      ],
+      "init": [
+        {
+          "atom": "(On wine_bottle_1 main_table_wine_bottle_region)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "forward_reference",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On akita_black_bowl_1 main_table_akita_black_bowl_region)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "forward_reference",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On plate_1 main_table_plate_region)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "forward_reference",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On cream_cheese_1 main_table_cream_cheese_region)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "forward_reference",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On wooden_cabinet_1 main_table_cabinet_region)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "forward_reference",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On flat_stove_1 main_table_stove_region)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "forward_reference",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On wine_rack_1 main_table_wine_rack_region)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "forward_reference",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        }
+      ],
+      "task_index": 10
+    },
+    "19": {
+      "bddl_path": "/home/huang/code/PARC2026_final/LIBERO/libero/libero/bddl_files/libero_goal/open_the_middle_drawer_of_the_cabinet.bddl",
+      "goal": [
+        {
+          "atom": "(Open wooden_cabinet_1_middle_region)",
+          "gate_required": false,
+          "role": "operator_critical",
+          "source": "forward_reference",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        }
+      ],
+      "init": [
+        {
+          "atom": "(On wine_bottle_1 main_table_wine_bottle_region)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "forward_reference",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On akita_black_bowl_1 main_table_akita_black_bowl_region)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "forward_reference",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On plate_1 main_table_plate_region)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "forward_reference",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On cream_cheese_1 main_table_cream_cheese_region)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "forward_reference",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On wooden_cabinet_1 main_table_cabinet_region)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "forward_reference",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On flat_stove_1 main_table_stove_region)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "forward_reference",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On wine_rack_1 main_table_wine_rack_region)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "forward_reference",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        }
+      ],
+      "task_index": 19
+    },
+    "20": {
+      "bddl_path": "/home/huang/code/PARC2026_final/LIBERO/libero/libero/bddl_files/libero_object/pick_up_the_orange_juice_and_place_it_in_the_basket.bddl",
+      "goal": [
+        {
+          "atom": "(In orange_juice_1 basket_1_contain_region)",
+          "gate_required": false,
+          "role": "operator_critical",
+          "source": "forward_reference",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        }
+      ],
+      "init": [
+        {
+          "atom": "(On orange_juice_1 floor_target_object_region)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "forward_reference",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On butter_1 floor_other_object_region_0)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "forward_reference",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On chocolate_pudding_1 floor_other_object_region_1)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "forward_reference",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On bbq_sauce_1 floor_other_object_region_2)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "forward_reference",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On ketchup_1 floor_other_object_region_3)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "forward_reference",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On salad_dressing_1 floor_other_object_region_4)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "forward_reference",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On basket_1 floor_bin_region)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "forward_reference",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        }
+      ],
+      "task_index": 20
+    }
+  },
+  "hard_gate": {
+    "critical_relation_is_fixed": true,
+    "fixed_measurement_window": true,
+    "fixed_step5_checkpoint": true,
+    "goal_critical_relation_is_fixed": true,
+    "required_not_evaluated_fails_closed": true,
+    "three_families_registered": true,
+    "tri_state_contract": true,
+    "zero_action_contract": true
+  },
+  "provenance_contract": {
+    "hdf5_state_used_for_predicate_oracle": false,
+    "no_bddl_or_predicate_modification": true,
+    "no_grasp_or_demo_generation": true
+  },
+  "required_contract": {
+    "background_initializer": "reported truth/detail only; not behavior gate without source contract",
+    "detail": "independent from truth and retained when detail telemetry fails",
+    "reverse_goal_operator_critical": "passed iff native truth is false",
+    "reverse_initial_operator_critical": "passed iff native truth is true",
+    "unexecuted": "not_evaluated; never equivalent to passed"
+  },
+  "reverse": {
+    "10": {
+      "bddl_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s3_v2_specs/canary_support_remove_task_10.bddl",
+      "goal": [
+        {
+          "atom": "(On akita_black_bowl_1 main_table_akita_black_bowl_region)",
+          "gate_required": true,
+          "role": "operator_critical_goal",
+          "source": "reverse",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        }
+      ],
+      "init": [
+        {
+          "atom": "(On wine_bottle_1 main_table_wine_bottle_region)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "reverse",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On plate_1 main_table_plate_region)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "reverse",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On cream_cheese_1 main_table_cream_cheese_region)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "reverse",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On wooden_cabinet_1 main_table_cabinet_region)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "reverse",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On flat_stove_1 main_table_stove_region)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "reverse",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On wine_rack_1 main_table_wine_rack_region)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "reverse",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On akita_black_bowl_1 plate_1)",
+          "gate_required": true,
+          "role": "operator_critical",
+          "source": "reverse",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        }
+      ],
+      "operator_family": "support_remove",
+      "task_index": 10
+    },
+    "19": {
+      "bddl_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s3_v2_specs/canary_articulation_close_task_19.bddl",
+      "goal": [
+        {
+          "atom": "(Close wooden_cabinet_1_middle_region)",
+          "gate_required": true,
+          "role": "operator_critical_goal",
+          "source": "reverse",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        }
+      ],
+      "init": [
+        {
+          "atom": "(On wine_bottle_1 main_table_wine_bottle_region)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "reverse",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On akita_black_bowl_1 main_table_akita_black_bowl_region)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "reverse",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On plate_1 main_table_plate_region)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "reverse",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On cream_cheese_1 main_table_cream_cheese_region)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "reverse",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On wooden_cabinet_1 main_table_cabinet_region)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "reverse",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On flat_stove_1 main_table_stove_region)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "reverse",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On wine_rack_1 main_table_wine_rack_region)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "reverse",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(Open wooden_cabinet_1_middle_region)",
+          "gate_required": true,
+          "role": "operator_critical",
+          "source": "reverse",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        }
+      ],
+      "operator_family": "articulation_close",
+      "task_index": 19
+    },
+    "20": {
+      "bddl_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s3_v2_specs/canary_containment_remove_task_20.bddl",
+      "goal": [
+        {
+          "atom": "(On orange_juice_1 floor_target_object_region)",
+          "gate_required": true,
+          "role": "operator_critical_goal",
+          "source": "reverse",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        }
+      ],
+      "init": [
+        {
+          "atom": "(On butter_1 floor_other_object_region_0)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "reverse",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On chocolate_pudding_1 floor_other_object_region_1)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "reverse",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On bbq_sauce_1 floor_other_object_region_2)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "reverse",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On ketchup_1 floor_other_object_region_3)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "reverse",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On salad_dressing_1 floor_other_object_region_4)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "reverse",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(On basket_1 floor_bin_region)",
+          "gate_required": false,
+          "role": "background_initializer",
+          "source": "reverse",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        },
+        {
+          "atom": "(In orange_juice_1 basket_1_contain_region)",
+          "gate_required": true,
+          "role": "operator_critical",
+          "source": "reverse",
+          "source_contract": "public_forward_to_reverse_operator_mapping"
+        }
+      ],
+      "operator_family": "containment_remove",
+      "task_index": 20
+    }
+  },
+  "schema_version": "track3_reverse_init_stabilization_i1_v1",
+  "status": "track3_reverse_init_stabilization_semantics_validated"
+}

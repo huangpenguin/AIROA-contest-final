@@ -1,0 +1,772 @@
+{
+  "authorization_at_i0": {
+    "gpu3_only_if_i3_authorized": true,
+    "no_batch_generation_or_training": true,
+    "no_bddl_or_predicate_modification": true,
+    "no_demo_or_pending": true,
+    "no_fast_zip_or_upload": true,
+    "no_se3_or_grasp": true,
+    "no_teleop": true,
+    "source_status": "track3_native_reverse_dynamic_failed_support_reverse_initial_or_goal"
+  },
+  "counts_at_i0": {
+    "accepted_reverse_demo": 0,
+    "exact_reverse_demo": 0,
+    "pending_autogen": 0,
+    "pending_autogen_v2": 0
+  },
+  "created_at_utc": "2026-09-04T00:31:14.290023+00:00",
+  "critical_relations": {
+    "10": "(On akita_black_bowl_1 plate_1)",
+    "19": "(Open wooden_cabinet_1_middle_region)",
+    "20": "(In orange_juice_1 basket_1_contain_region)"
+  },
+  "hard_gate": {
+    "all_inputs_exist": true,
+    "counts_zero": true,
+    "input_parent_locked": true,
+    "libero_plus_recorded_without_touch": true,
+    "nested_openpi_locked_clean": true,
+    "no_preexisting_root_changes": true,
+    "old_r2_and_r4_immutable_inputs_locked": true,
+    "r3_zero_locked": true,
+    "root_input_commit_locked": true
+  },
+  "immutable_inputs": {
+    "/home/huang/code/PARC2026_final/LIBERO/libero/libero/bddl_files/libero_goal/open_the_middle_drawer_of_the_cabinet.bddl": {
+      "bytes": 2943,
+      "path": "/home/huang/code/PARC2026_final/LIBERO/libero/libero/bddl_files/libero_goal/open_the_middle_drawer_of_the_cabinet.bddl",
+      "sha256": "832ab48ec476807c767e8985666e295700f92d1f8daeae1c34eee1e75293769b"
+    },
+    "/home/huang/code/PARC2026_final/LIBERO/libero/libero/bddl_files/libero_goal/put_the_bowl_on_the_plate.bddl": {
+      "bytes": 2927,
+      "path": "/home/huang/code/PARC2026_final/LIBERO/libero/libero/bddl_files/libero_goal/put_the_bowl_on_the_plate.bddl",
+      "sha256": "358b7781437e412c67d6a7648c1c28796b6b1bf117a25e61316cb8dfeb940e5b"
+    },
+    "/home/huang/code/PARC2026_final/LIBERO/libero/libero/bddl_files/libero_object/pick_up_the_orange_juice_and_place_it_in_the_basket.bddl": {
+      "bytes": 2132,
+      "path": "/home/huang/code/PARC2026_final/LIBERO/libero/libero/bddl_files/libero_object/pick_up_the_orange_juice_and_place_it_in_the_basket.bddl",
+      "sha256": "6298533e7bcfb83e40779a77fda39216e8cd53f22bf1af6388585dad0abb0b50"
+    },
+    "/home/huang/code/PARC2026_final/LIBERO/libero/libero/envs/env_wrapper.py": {
+      "bytes": 8781,
+      "path": "/home/huang/code/PARC2026_final/LIBERO/libero/libero/envs/env_wrapper.py",
+      "sha256": "a782fb76c9792268d28979474fe72849e1e98ada49c8e997a65359a8d6b6acd0"
+    },
+    "/home/huang/code/PARC2026_final/LIBERO/libero/libero/envs/object_states/base_object_states.py": {
+      "bytes": 8215,
+      "path": "/home/huang/code/PARC2026_final/LIBERO/libero/libero/envs/object_states/base_object_states.py",
+      "sha256": "ca6f53123336b6487bdb4feb02534ddb3a0627a4b847fe89da4460520ef01366"
+    },
+    "/home/huang/code/PARC2026_final/LIBERO/libero/libero/envs/predicates/__init__.py": {
+      "bytes": 888,
+      "path": "/home/huang/code/PARC2026_final/LIBERO/libero/libero/envs/predicates/__init__.py",
+      "sha256": "e059a52d635ae4bdfe0e4bd6f0a0ca9b53a04444b39b53664fffb38d0838679e"
+    },
+    "/home/huang/code/PARC2026_final/LIBERO/libero/libero/envs/predicates/base_predicates.py": {
+      "bytes": 2650,
+      "path": "/home/huang/code/PARC2026_final/LIBERO/libero/libero/envs/predicates/base_predicates.py",
+      "sha256": "319137e95330dbb22a266a8dceb8110f18413c2bf17461550222228c4bc310a1"
+    },
+    "/home/huang/code/PARC2026_final/LIBERO/libero/libero/envs/problems/libero_tabletop_manipulation.py": {
+      "bytes": 8877,
+      "path": "/home/huang/code/PARC2026_final/LIBERO/libero/libero/envs/problems/libero_tabletop_manipulation.py",
+      "sha256": "0defb17c0bbab8f6bd34c021ac15598ea101fe1e48690cb440d4ef92762880fe"
+    },
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json": {
+      "bytes": 102230,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json",
+      "sha256": "f5087f22cb3d5bc5038d949a2894d2339182696a3db2c3b446ede1577ad86d8e"
+    },
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation/D4_CLOSEOUT_REPORT_ZH.md": {
+      "bytes": 1113,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation/D4_CLOSEOUT_REPORT_ZH.md",
+      "sha256": "f5b904dc4310a50cd4fbae8022cf570cf630fd8e6f99e90e127239653d89b18b"
+    },
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation/d2_task10_canary.json": {
+      "bytes": 1675,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation/d2_task10_canary.json",
+      "sha256": "9f4bf4db9c1b369a93068c2c806b9b056feb3cdb6ecaf841a3b05c271bc98ad3"
+    },
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation/runs/d2_task10_canary_run_1.json": {
+      "bytes": 1332,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation/runs/d2_task10_canary_run_1.json",
+      "sha256": "524d8c2979e5711ce934bd468537e519fdf6360e145fdf3ee96520ab340ae321"
+    },
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation/summary.json": {
+      "bytes": 2328,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation/summary.json",
+      "sha256": "6d43dc4c582ed414b28d397bd91c52fcdf1cd3953fc3b1e4f8bda4e927b72218"
+    },
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_native_reverse_validator_recovery/R4_CLOSEOUT_REPORT_ZH.md": {
+      "bytes": 1131,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_native_reverse_validator_recovery/R4_CLOSEOUT_REPORT_ZH.md",
+      "sha256": "07d17dfd0f15d74b5ecc5cf2b2cd6c878ae201181498028211373dab7c9cb249"
+    },
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_native_reverse_validator_recovery/r0_release_lock.json": {
+      "bytes": 7035,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_native_reverse_validator_recovery/r0_release_lock.json",
+      "sha256": "80a1d2555560d2fbe1bf1fd975c1b47993c0c017e6d03c336c2d2671c1764e19"
+    },
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_native_reverse_validator_recovery/r1_runtime_schema_probe.json": {
+      "bytes": 139089,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_native_reverse_validator_recovery/r1_runtime_schema_probe.json",
+      "sha256": "a7cd6881834cb411fe5f6a887402baf8606c554e3518df5169dd44cc01505bda"
+    },
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_native_reverse_validator_recovery/r2_task10_recovery_canary.json": {
+      "bytes": 41284,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_native_reverse_validator_recovery/r2_task10_recovery_canary.json",
+      "sha256": "30bab6f535e6abd166b5d45b08daf8bd3c692bd03515192da56464fafdffa1c4"
+    },
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_native_reverse_validator_recovery/runs/r2_task10_recovery_run_1.json": {
+      "bytes": 35260,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_native_reverse_validator_recovery/runs/r2_task10_recovery_run_1.json",
+      "sha256": "17fb3ad0c6b67425f3072b4631f7c3f25ed88d6e896137e0331e93092849ad52"
+    },
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_native_reverse_validator_recovery/summary.json": {
+      "bytes": 2953,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_native_reverse_validator_recovery/summary.json",
+      "sha256": "28aaf6975a0ed88b3ba9088a54328a043ef1d0fa90b4b213fff8e796bc14f9c8"
+    },
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s3_dynamic_gates.json": {
+      "bytes": 26639,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s3_dynamic_gates.json",
+      "sha256": "b133703c569e922ebcab07c758720554478ea16e5fa30928088855490a291b8a"
+    },
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s3_language_v2.json": {
+      "bytes": 7552,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s3_language_v2.json",
+      "sha256": "53a057669d2a8849ba955437a71357d77318d9e216678d886e64660664d460e7"
+    },
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s3_v2_specs/canary_articulation_close_task_19.bddl": {
+      "bytes": 2995,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s3_v2_specs/canary_articulation_close_task_19.bddl",
+      "sha256": "ddfca4566379eb7f18a99ec25d22030e158afb416e321aef4ec10c3c0ae30cad"
+    },
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s3_v2_specs/canary_containment_remove_task_20.bddl": {
+      "bytes": 2178,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s3_v2_specs/canary_containment_remove_task_20.bddl",
+      "sha256": "27305e326a53a0b3c70d573066262eadcfcf326de8c8f5a252da34e39581f28d"
+    },
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s3_v2_specs/canary_support_remove_task_10.bddl": {
+      "bytes": 2999,
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s3_v2_specs/canary_support_remove_task_10.bddl",
+      "sha256": "575b5fcf0fcbfe78842610035574ddd9d91fd8394a04637eba3b2d9cec17cb6f"
+    },
+    "/home/huang/code/PARC2026_final/pipeline/rollout.py": {
+      "bytes": 15585,
+      "path": "/home/huang/code/PARC2026_final/pipeline/rollout.py",
+      "sha256": "dd03f32c6f88f251ae050219c6eec22a4b9b9b9268c0d485a6fe7408bf05aea4"
+    },
+    "/home/huang/code/PARC2026_final/tests/test_track3_dynamic_gate_reconciliation.py": {
+      "bytes": 6917,
+      "path": "/home/huang/code/PARC2026_final/tests/test_track3_dynamic_gate_reconciliation.py",
+      "sha256": "388d0f58e1f5372e34616ea375cbc1ffef8c29d67c1f0746bca5728d6f56fc8c"
+    },
+    "/home/huang/code/PARC2026_final/tests/test_track3_support_autogen_v2.py": {
+      "bytes": 5119,
+      "path": "/home/huang/code/PARC2026_final/tests/test_track3_support_autogen_v2.py",
+      "sha256": "2a05e821c0da4a12dac8db5a08bf7b753cc1194ad848ca83f88bb23a09308aad"
+    },
+    "/home/huang/code/PARC2026_final/tools/axis_pi05/track3_dynamic_gate_reconciliation.py": {
+      "bytes": 54252,
+      "path": "/home/huang/code/PARC2026_final/tools/axis_pi05/track3_dynamic_gate_reconciliation.py",
+      "sha256": "1d4e12374c3fba7049fc5b86cfa242e5c1ed561a714de6df4e74289ac007b6d8"
+    }
+  },
+  "input_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "input_parent_is_ancestor": true,
+  "input_root_commit": "ed0ec3bff61c09a213300181959491dd107bf778",
+  "input_root_is_ancestor": true,
+  "input_root_parent_commit": "3748c2ebc2a9e5fc66ca90657cf8a4639488f7d7",
+  "libero_plus_dirty_read_only_snapshot": {
+    "path": "/home/huang/code/PARC2026_final/LIBERO-plus",
+    "policy": "record_only_never_clean_or_touch",
+    "status_porcelain": [
+      "M libero/libero/benchmark/__init__.py",
+      "?? libero/__init__.py",
+      "?? libero/libero/assets",
+      "?? libero/libero/bddl_files/libero_t3",
+      "?? libero/libero/init_files/libero_t3"
+    ]
+  },
+  "missing_inputs": [],
+  "nested_openpi_status_porcelain_at_i0": [],
+  "observed_nested_openpi_commit_at_i0": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "observed_root_commit_at_i0": "1a0b387e054ef11b1c787720a9d41ce700e4cba7",
+  "old_r2": {
+    "hard_gate": {
+      "controlled_predicate_restored_true": false,
+      "controlled_predicate_true_to_false": false,
+      "hdf5_state_not_predicate_oracle": true,
+      "model_state_predicate_oracle_reconciled": false,
+      "no_grasp_or_demo_generation": false,
+      "reverse_goal_all_false": true,
+      "reverse_initial_all_true": false,
+      "schema_complete": true,
+      "settle_all_named_fields": false,
+      "worker_returncode_zero": true,
+      "worker_status_passed": false
+    },
+    "must_not_relabel_or_overwrite": true,
+    "native_reset": {
+      "goal": {
+        "all_false": true,
+        "all_true": false,
+        "count": 1,
+        "detail_complete": true,
+        "label": "native_reset_reverse_goal",
+        "predicates": [
+          {
+            "args": [
+              "akita_black_bowl_1",
+              "main_table_akita_black_bowl_region"
+            ],
+            "atom": "(On akita_black_bowl_1 main_table_akita_black_bowl_region)",
+            "detail": {
+              "args": [
+                "akita_black_bowl_1",
+                "main_table_akita_black_bowl_region"
+              ],
+              "contact_information": {
+                "ontop_xy_threshold_m": 0.03,
+                "predicate_contact_is_model_defined": true,
+                "site_contact_is_logical_true": true
+              },
+              "detail_status": "passed",
+              "geometry": [
+                {
+                  "kind": "object",
+                  "name": "akita_black_bowl_1",
+                  "pos_m": [
+                    0.06369702264058819,
+                    -0.024518212377887778,
+                    1.08
+                  ],
+                  "quat": [
+                    0.7071067811865475,
+                    0.0,
+                    0.0,
+                    0.7071067811865476
+                  ]
+                },
+                {
+                  "kind": "site",
+                  "name": "main_table_akita_black_bowl_region",
+                  "pos_m": [
+                    -0.09,
+                    0.0,
+                    0.895
+                  ],
+                  "quat": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                }
+              ],
+              "predicate": "On",
+              "value": false
+            },
+            "detail_status": "passed",
+            "predicate": "On",
+            "truth_status": "passed",
+            "value": false
+          }
+        ],
+        "true_count": 0,
+        "truth_complete": true
+      },
+      "initial": {
+        "all_false": false,
+        "all_true": false,
+        "count": 7,
+        "detail_complete": true,
+        "label": "native_reset_reverse_initial",
+        "predicates": [
+          {
+            "args": [
+              "wine_bottle_1",
+              "main_table_wine_bottle_region"
+            ],
+            "atom": "(On wine_bottle_1 main_table_wine_bottle_region)",
+            "detail": {
+              "args": [
+                "wine_bottle_1",
+                "main_table_wine_bottle_region"
+              ],
+              "contact_information": {
+                "ontop_xy_threshold_m": 0.03,
+                "predicate_contact_is_model_defined": true,
+                "site_contact_is_logical_true": true
+              },
+              "detail_status": "passed",
+              "geometry": [
+                {
+                  "kind": "object",
+                  "name": "wine_bottle_1",
+                  "pos_m": [
+                    -0.2091879221411951,
+                    -0.0456769125122442,
+                    0.97
+                  ],
+                  "quat": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                },
+                {
+                  "kind": "site",
+                  "name": "main_table_wine_bottle_region",
+                  "pos_m": [
+                    -0.2,
+                    -0.05,
+                    0.895
+                  ],
+                  "quat": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                }
+              ],
+              "predicate": "On",
+              "value": true
+            },
+            "detail_status": "passed",
+            "predicate": "On",
+            "truth_status": "passed",
+            "value": true
+          },
+          {
+            "args": [
+              "plate_1",
+              "main_table_plate_region"
+            ],
+            "atom": "(On plate_1 main_table_plate_region)",
+            "detail": {
+              "args": [
+                "plate_1",
+                "main_table_plate_region"
+              ],
+              "contact_information": {
+                "ontop_xy_threshold_m": 0.03,
+                "predicate_contact_is_model_defined": true,
+                "site_contact_is_logical_true": true
+              },
+              "detail_status": "passed",
+              "geometry": [
+                {
+                  "kind": "object",
+                  "name": "plate_1",
+                  "pos_m": [
+                    0.06369702264058819,
+                    -0.024518212377887778,
+                    0.97
+                  ],
+                  "quat": [
+                    0.7071067811865475,
+                    0.0,
+                    0.0,
+                    0.7071067811865476
+                  ]
+                },
+                {
+                  "kind": "site",
+                  "name": "main_table_plate_region",
+                  "pos_m": [
+                    0.05,
+                    -0.02,
+                    0.895
+                  ],
+                  "quat": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                }
+              ],
+              "predicate": "On",
+              "value": false
+            },
+            "detail_status": "passed",
+            "predicate": "On",
+            "truth_status": "passed",
+            "value": false
+          },
+          {
+            "args": [
+              "cream_cheese_1",
+              "main_table_cream_cheese_region"
+            ],
+            "atom": "(On cream_cheese_1 main_table_cream_cheese_region)",
+            "detail": {
+              "args": [
+                "cream_cheese_1",
+                "main_table_cream_cheese_region"
+              ],
+              "contact_information": {
+                "ontop_xy_threshold_m": 0.03,
+                "predicate_contact_is_model_defined": true,
+                "site_contact_is_logical_true": true
+              },
+              "detail_status": "passed",
+              "geometry": [
+                {
+                  "kind": "object",
+                  "name": "cream_cheese_1",
+                  "pos_m": [
+                    -0.0321033436594508,
+                    0.12609031005001495,
+                    0.935
+                  ],
+                  "quat": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                },
+                {
+                  "kind": "site",
+                  "name": "main_table_cream_cheese_region",
+                  "pos_m": [
+                    -0.05,
+                    0.13,
+                    0.895
+                  ],
+                  "quat": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                }
+              ],
+              "predicate": "On",
+              "value": false
+            },
+            "detail_status": "passed",
+            "predicate": "On",
+            "truth_status": "passed",
+            "value": false
+          },
+          {
+            "args": [
+              "wooden_cabinet_1",
+              "main_table_cabinet_region"
+            ],
+            "atom": "(On wooden_cabinet_1 main_table_cabinet_region)",
+            "detail": {
+              "args": [
+                "wooden_cabinet_1",
+                "main_table_cabinet_region"
+              ],
+              "contact_information": {
+                "ontop_xy_threshold_m": 0.03,
+                "predicate_contact_is_model_defined": true,
+                "site_contact_is_logical_true": true
+              },
+              "detail_status": "passed",
+              "geometry": [
+                {
+                  "kind": "object",
+                  "name": "wooden_cabinet_1",
+                  "pos_m": [
+                    0.03327536342714833,
+                    -0.2484185737443628,
+                    0.905
+                  ],
+                  "quat": [
+                    6.123233995736766e-17,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                },
+                {
+                  "kind": "site",
+                  "name": "main_table_cabinet_region",
+                  "pos_m": [
+                    0.03,
+                    -0.24,
+                    0.895
+                  ],
+                  "quat": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                }
+              ],
+              "predicate": "On",
+              "value": true
+            },
+            "detail_status": "passed",
+            "predicate": "On",
+            "truth_status": "passed",
+            "value": true
+          },
+          {
+            "args": [
+              "flat_stove_1",
+              "main_table_stove_region"
+            ],
+            "atom": "(On flat_stove_1 main_table_stove_region)",
+            "detail": {
+              "args": [
+                "flat_stove_1",
+                "main_table_stove_region"
+              ],
+              "contact_information": {
+                "ontop_xy_threshold_m": 0.03,
+                "predicate_contact_is_model_defined": true,
+                "site_contact_is_logical_true": true
+              },
+              "detail_status": "passed",
+              "geometry": [
+                {
+                  "kind": "object",
+                  "name": "flat_stove_1",
+                  "pos_m": [
+                    -0.40169827663391705,
+                    0.20666703191849833,
+                    0.905
+                  ],
+                  "quat": [
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0
+                  ]
+                },
+                {
+                  "kind": "site",
+                  "name": "main_table_stove_region",
+                  "pos_m": [
+                    -0.41000000000000003,
+                    0.21000000000000002,
+                    0.895
+                  ],
+                  "quat": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                }
+              ],
+              "predicate": "On",
+              "value": true
+            },
+            "detail_status": "passed",
+            "predicate": "On",
+            "truth_status": "passed",
+            "value": true
+          },
+          {
+            "args": [
+              "wine_rack_1",
+              "main_table_wine_rack_region"
+            ],
+            "atom": "(On wine_rack_1 main_table_wine_rack_region)",
+            "detail": {
+              "args": [
+                "wine_rack_1",
+                "main_table_wine_rack_region"
+              ],
+              "contact_information": {
+                "ontop_xy_threshold_m": 0.03,
+                "predicate_contact_is_model_defined": true,
+                "site_contact_is_logical_true": true
+              },
+              "detail_status": "passed",
+              "geometry": [
+                {
+                  "kind": "object",
+                  "name": "wine_rack_1",
+                  "pos_m": [
+                    -0.2640013848183822,
+                    -0.25713940771089444,
+                    0.9199999999999999
+                  ],
+                  "quat": [
+                    6.123233995736766e-17,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                },
+                {
+                  "kind": "site",
+                  "name": "main_table_wine_rack_region",
+                  "pos_m": [
+                    -0.26,
+                    -0.26,
+                    0.895
+                  ],
+                  "quat": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                }
+              ],
+              "predicate": "On",
+              "value": true
+            },
+            "detail_status": "passed",
+            "predicate": "On",
+            "truth_status": "passed",
+            "value": true
+          },
+          {
+            "args": [
+              "akita_black_bowl_1",
+              "plate_1"
+            ],
+            "atom": "(On akita_black_bowl_1 plate_1)",
+            "detail": {
+              "args": [
+                "akita_black_bowl_1",
+                "plate_1"
+              ],
+              "contact_information": {
+                "ontop_xy_threshold_m": 0.03,
+                "predicate_contact_is_model_defined": true,
+                "site_contact_is_logical_true": false
+              },
+              "detail_status": "passed",
+              "geometry": [
+                {
+                  "kind": "object",
+                  "name": "akita_black_bowl_1",
+                  "pos_m": [
+                    0.06369702264058819,
+                    -0.024518212377887778,
+                    1.08
+                  ],
+                  "quat": [
+                    0.7071067811865475,
+                    0.0,
+                    0.0,
+                    0.7071067811865476
+                  ]
+                },
+                {
+                  "kind": "object",
+                  "name": "plate_1",
+                  "pos_m": [
+                    0.06369702264058819,
+                    -0.024518212377887778,
+                    0.97
+                  ],
+                  "quat": [
+                    0.7071067811865475,
+                    0.0,
+                    0.0,
+                    0.7071067811865476
+                  ]
+                }
+              ],
+              "predicate": "On",
+              "value": false
+            },
+            "detail_status": "passed",
+            "predicate": "On",
+            "truth_status": "passed",
+            "value": false
+          }
+        ],
+        "true_count": 4,
+        "truth_complete": true
+      }
+    },
+    "report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_native_reverse_validator_recovery/r2_task10_recovery_canary.json",
+    "schema_complete": true,
+    "status": "track3_native_reverse_dynamic_failed_support_reverse_initial_or_goal",
+    "target_resolution": {
+      "hold_action": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "joint_names": [
+        "akita_black_bowl_1_joint0"
+      ],
+      "joint_values": [
+        0.06369702264058819
+      ],
+      "native_state_sha256": "b5cf1908089c1da995615ee918188034a6c12341d67909726a657c795a95706f",
+      "predicate": "On",
+      "references": [
+        {
+          "name": "akita_black_bowl_1",
+          "pose": {
+            "kind": "object",
+            "name": "akita_black_bowl_1",
+            "pos_m": [
+              0.06369702264058819,
+              -0.024518212377887778,
+              1.08
+            ],
+            "quat": [
+              0.7071067811865475,
+              0.0,
+              0.0,
+              0.7071067811865476
+            ]
+          },
+          "state_type": "object"
+        },
+        {
+          "name": "plate_1",
+          "pose": {
+            "kind": "object",
+            "name": "plate_1",
+            "pos_m": [
+              0.06369702264058819,
+              -0.024518212377887778,
+              0.97
+            ],
+            "quat": [
+              0.7071067811865475,
+              0.0,
+              0.0,
+              0.7071067811865476
+            ]
+          },
+          "state_type": "object"
+        }
+      ],
+      "schema_complete": true,
+      "target_atom": "(On akita_black_bowl_1 plate_1)",
+      "task_index": 10
+    },
+    "worker_returncode": 0,
+    "worker_status": "failed_native_predicate"
+  },
+  "old_r2_summary": {
+    "r3_fresh_process_runs": 0,
+    "r3_status": "not_run_due_to_r2_hard_stop",
+    "status": "track3_native_reverse_dynamic_failed_support_reverse_initial_or_goal"
+  },
+  "plan": "/home/huang/code/PARC2026_final/docs/AXIS_PI05_TRACK3_REVERSE_INIT_STABILIZATION_SEMANTICS_PLAN.md",
+  "preexisting_root_status_at_i0": [],
+  "root_status_porcelain_at_i0": [
+    "?? tools/axis_pi05/track3_reverse_init_stabilization.py"
+  ],
+  "schema_version": "track3_reverse_init_stabilization_i0_v1",
+  "status": "track3_reverse_init_stabilization_input_locked"
+}

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_date": "2026-09-03",
-  "status": "track3_reverse_init_stabilization_semantics_planned",
+  "generated_date": "2026-09-04",
+  "status": "track3_reverse_init_stabilization_failed_named_scene_stability",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
@@ -2354,7 +2354,7 @@
     }
   },
   "track3_reverse_init_stabilization_authorization": {
-    "status": "track3_reverse_init_stabilization_semantics_planned",
+    "status": "track3_reverse_init_stabilization_failed_named_scene_stability",
     "plan": "docs/AXIS_PI05_TRACK3_REVERSE_INIT_STABILIZATION_SEMANTICS_PLAN.md",
     "authorized_phases": ["I0", "I1", "I2", "I3", "I4_closeout"],
     "authorization": {
@@ -2379,6 +2379,104 @@
     "success_stop": "track3_reverse_semantics_v2_stabilized_dynamic_validated_pending_se3_review",
     "critical_failure_stop_prefix": "track3_reverse_init_critical_relation_failed_",
     "dynamic_failure_stop_prefix": "track3_reverse_semantics_v2_stabilized_dynamic_failed_",
-    "next_phase_only": "I0_to_I4_reverse_init_stabilization_then_hard_stop"
+    "next_phase_only": "await_next_review_after_i4_hard_stop"
+  },
+  "track3_reverse_init_stabilization_execution": {
+    "status": "track3_reverse_init_stabilization_failed_named_scene_stability",
+    "plan": "docs/AXIS_PI05_TRACK3_REVERSE_INIT_STABILIZATION_SEMANTICS_PLAN.md",
+    "input_root_commit": "ed0ec3bff61c09a213300181959491dd107bf778",
+    "input_parent_commit": "3748c2ebc2a9e5fc66ca90657cf8a4639488f7d7",
+    "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "i0": {
+      "status": "track3_reverse_init_stabilization_input_locked",
+      "report": "data/reports/axis_libero_30k/track3_reverse_init_stabilization/i0_release_lock.json",
+      "immutable_inputs_revalidated": true,
+      "old_r2_immutable": true,
+      "libero_plus_touched": false
+    },
+    "i1": {
+      "status": "track3_reverse_init_stabilization_semantics_validated",
+      "report": "data/reports/axis_libero_30k/track3_reverse_init_stabilization/i1_semantics.json",
+      "operator_critical_background_split": true,
+      "truth_detail_split": true,
+      "tri_state_fail_closed": true,
+      "zero_action_7d_hold": true
+    },
+    "i2": {
+      "status": "track3_reverse_init_stability_failed_named_scene_stability",
+      "report": "data/reports/axis_libero_30k/track3_reverse_init_stabilization/i2_stabilization_time_series.json",
+      "fresh_process_runs": 12,
+      "matrix": {
+        "task10_forward": "3/3",
+        "task10_reverse": "3/3",
+        "task20_reverse": "3/3",
+        "task19_reverse": "3/3"
+      },
+      "schema_finite_detail_returncode": "12/12",
+      "reverse_critical_source_step5_to20": {
+        "support_remove": true,
+        "containment_remove": true,
+        "articulation_close": true
+      },
+      "reverse_goal_false_step5_to20": {
+        "support_remove": true,
+        "containment_remove": true,
+        "articulation_close": true
+      },
+      "named_scene_stability": {
+        "support_remove": false,
+        "containment_remove": false,
+        "articulation_close": false,
+        "support_max_rotation_rad": 0.0564043245534,
+        "containment_max_object_translation_m": 0.0215049160334
+      },
+      "forward_background_false_seen": true,
+      "step5_is_fixed_gate": true,
+      "no_hindsight_checkpoint_substitution": true
+    },
+    "i3": {
+      "status": "not_run_due_to_i2_gate",
+      "task10_canary_runs": 0,
+      "three_family_runs": 0,
+      "settle": "not_evaluated",
+      "controlled_destruction": "not_evaluated"
+    },
+    "i4": {
+      "status": "completed_hard_stop",
+      "summary": "data/reports/axis_libero_30k/track3_reverse_init_stabilization/summary.json",
+      "report": "data/reports/axis_libero_30k/track3_reverse_init_stabilization/I4_CLOSEOUT_REPORT_ZH.md",
+      "hard_stop": true
+    },
+    "counts": {
+      "exact_reverse_demo": 0,
+      "pending_autogen": 0,
+      "accepted_reverse_demo": 0,
+      "se3_grasp_attempts": 0,
+      "training_started": false,
+      "human_operation": false
+    },
+    "resource_boundary": {
+      "cpu_no_renderer_only": true,
+      "gpu3_touched": false,
+      "gpu0_touched": false,
+      "se3": false,
+      "grasp": false,
+      "demo_generation": false,
+      "human_teleop": false,
+      "batch_generation": false,
+      "training_or_norm": false,
+      "fast_or_zip": false,
+      "official_gpu": false,
+      "upload_or_submission": false,
+      "libero_plus_touched": false
+    },
+    "verification": {
+      "i1_targeted_tests": "24_passed",
+      "json_parse": "passed",
+      "py_compile": "passed",
+      "i2_fresh_process_matrix": "12_completed",
+      "git_diff_check": "passed",
+      "full_tests": "189_passed_7_skipped_23_warnings"
+    }
   }
 }

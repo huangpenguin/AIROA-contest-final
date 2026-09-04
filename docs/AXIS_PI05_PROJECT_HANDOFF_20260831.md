@@ -1,11 +1,11 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新审核状态：`track3_reverse_init_stabilization_semantics_planned`
+> 最新审核状态：`track3_reverse_init_stabilization_failed_named_scene_stability`
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_reverse_init_stabilization_semantics_planned`
+> 当前总状态：`track3_reverse_init_stabilization_failed_named_scene_stability`
 > 唯一活动计划：`docs/AXIS_PI05_TRACK3_REVERSE_INIT_STABILIZATION_SEMANTICS_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
@@ -556,3 +556,17 @@ R2 的 7 条 task10 init atoms 中 plate→table region、cream-cheese→table r
 R2 外层 summary 还把未执行 settle/destruction 错写成 false，并把明确“无抓取”写成 false；下一计划须改成 passed/failed/not-evaluated 三态。旧 R2 保持 immutable，不直接改 BDDL。唯一活动计划 `docs/AXIS_PI05_TRACK3_REVERSE_INIT_STABILIZATION_SEMANTICS_PLAN.md` 先对 original-forward/reverse 做 `t=0/1/5/10/20` 对照，并要求三族 operator-critical source relation 在固定 step5 成立且稳定；通过才允许 GPU3 上一次 settled task10 canary及三族 `3/3`。仍不授权 BDDL 修改、SE(3)、demo、Teleop、训练、FAST/ZIP、官方 GPU、上传或提交。完整审核：`docs/reviews/axis_pi05/TRACK3_NATIVE_VALIDATOR_R0_R4_AUDIT_20260903.md`。
 
 审核后全量测试为 `182 passed, 7 skipped, 23 warnings`。
+
+## 43. Init Stabilization I0–I4 执行收尾（2026-09-04）
+
+本轮按唯一活动计划 `docs/AXIS_PI05_TRACK3_REVERSE_INIT_STABILIZATION_SEMANTICS_PLAN.md` 执行。I0 锁定 root `ed0ec3bff61c09a213300181959491dd107bf778`、旧 R2/R4、三族 v2 BDDL/source、nested OpenPI 与 zero reverse-demo counts；I0 immutable input hash 在 I4 重验全部保持，`LIBERO-plus` 仅记录既有 dirty 状态且未触碰。
+
+I1 通过：三族 operator-critical source 固定为 task10 `(On akita_black_bowl_1 plate_1)`、task20 `(In orange_juice_1 basket_1_contain_region)`、task19 `(Open wooden_cabinet_1_middle_region)`；reverse goal relation 单独登记并要求 false。background initializer 逐条保留 truth/detail，不在无 source contract 时升级为 behavior gate；未执行项使用 `not_evaluated`，不再写成 false。
+
+I2 完成 `12/12` 个独立 CPU/no-renderer fresh processes（task10 forward `3/3`、task10 reverse `3/3`、task20 reverse `3/3`、task19 reverse `3/3`）。schema、finite、detail、OS return-code 均通过。三族 reverse critical source 在固定 step5 为 true，step5→20 连续为 true；reverse goals 同窗口连续为 false。task10 forward 对照观察到 background initializer false，支持分层解释。
+
+I2 的 named scene stability 未通过：support reverse 最大 object rotation drift `0.0564 rad`，containment reverse 最大 object translation drift `0.0215 m`，articulation reverse 也有 rotation/translation 超过既有阈值。因此 I3 的 GPU3 task10 canary 与三族 `3/3` 均为 `0` 次；没有 SE(3)、抓取/demo、Teleop、批量生成、训练/norm、FAST/ZIP、官方 GPU、上传或提交。`settle`、`controlled_destruction` 为 `not_evaluated`，不是失败；exact/pending/accepted reverse demo 仍为 `0/0/0`。
+
+机器证据：`data/reports/axis_libero_30k/track3_reverse_init_stabilization/` 下 `i0_release_lock.json`、`i1_semantics.json`、`i2_stabilization_time_series.json`、`runs/`、`summary.json`、`I4_CLOSEOUT_REPORT_ZH.md`。当前状态：`track3_reverse_init_stabilization_failed_named_scene_stability`；已按 I4 hard stop，等待下一次审核。
+
+最终校验：定向测试 `24 passed`；全量测试 `189 passed, 7 skipped, 23 warnings`；JSON/Markdown/`py_compile`/`git diff --check` 均通过。

@@ -74,7 +74,7 @@ def test_historical_dynamic_failure_is_preserved_but_new_plan_repairs_validator(
             / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
         ).read_text(encoding="utf-8")
     )
-    assert handoff["status"] == "track3_reverse_init_stabilization_semantics_planned"
+    assert handoff["status"] == "track3_reverse_init_stabilization_failed_named_scene_stability"
     assert handoff["next_plan"].endswith(
         "AXIS_PI05_TRACK3_REVERSE_INIT_STABILIZATION_SEMANTICS_PLAN.md"
     )
@@ -111,6 +111,11 @@ def test_historical_dynamic_failure_is_preserved_but_new_plan_repairs_validator(
     assert stabilization["authorization"]["bddl_region_or_predicate_modification"] is False
     assert stabilization["authorization"]["se3_or_grasp_executor"] is False
     assert stabilization["authorization"]["lora_or_dense_training"] is False
+    execution = handoff["track3_reverse_init_stabilization_execution"]
+    assert execution["status"] == "track3_reverse_init_stabilization_failed_named_scene_stability"
+    assert execution["i2"]["fresh_process_runs"] == 12
+    assert execution["i3"]["status"] == "not_run_due_to_i2_gate"
+    assert execution["resource_boundary"]["gpu3_touched"] is False
 
 
 def test_predicate_parser_remains_strict() -> None:

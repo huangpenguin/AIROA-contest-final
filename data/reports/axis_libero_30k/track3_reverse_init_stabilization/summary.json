@@ -1,0 +1,186 @@
+{
+  "counts": {
+    "accepted_reverse_demo": 0,
+    "exact_reverse_demo": 0,
+    "pending_autogen": 0
+  },
+  "created_at_utc": "2026-09-04T00:59:47.267720+00:00",
+  "hard_stop": true,
+  "i1": {
+    "hard_gate": {
+      "critical_relation_is_fixed": true,
+      "fixed_measurement_window": true,
+      "fixed_step5_checkpoint": true,
+      "goal_critical_relation_is_fixed": true,
+      "required_not_evaluated_fails_closed": true,
+      "three_families_registered": true,
+      "tri_state_contract": true,
+      "zero_action_contract": true
+    },
+    "report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_init_stabilization/i1_semantics.json",
+    "status": "track3_reverse_init_stabilization_semantics_validated"
+  },
+  "i2": {
+    "family_stability": {
+      "articulation_close": {
+        "max_scene_drift": {
+          "fixture_joint_rad_or_m": 1.0921130311203342e-07,
+          "object_rotation_rad": 0.08105947002095659,
+          "object_translation_m": 0.0037985277940397323
+        },
+        "passed_runs": 0,
+        "runs": 3,
+        "thresholds": {
+          "arm_joint_qpos_rad": 0.002,
+          "arm_joint_qvel_rad_s": 0.02,
+          "eef_rotation_rad": 0.02,
+          "eef_translation_m": 0.002,
+          "fixture_joint_rad_or_m": 0.002,
+          "gripper_qpos_m": 0.002,
+          "gripper_qvel_m_s": 0.02,
+          "object_rotation_rad": 0.02,
+          "object_translation_m": 0.002
+        }
+      },
+      "containment_remove": {
+        "max_scene_drift": {
+          "fixture_joint_rad_or_m": 0.0,
+          "object_rotation_rad": 0.00024168935277938986,
+          "object_translation_m": 0.021504916033411106
+        },
+        "passed_runs": 0,
+        "runs": 3,
+        "thresholds": {
+          "arm_joint_qpos_rad": 0.002,
+          "arm_joint_qvel_rad_s": 0.02,
+          "eef_rotation_rad": 0.02,
+          "eef_translation_m": 0.002,
+          "fixture_joint_rad_or_m": 0.002,
+          "gripper_qpos_m": 0.002,
+          "gripper_qvel_m_s": 0.02,
+          "object_rotation_rad": 0.02,
+          "object_translation_m": 0.002
+        }
+      },
+      "support_remove": {
+        "max_scene_drift": {
+          "fixture_joint_rad_or_m": 0.0,
+          "object_rotation_rad": 0.05640432455340167,
+          "object_translation_m": 0.0009970679747806053
+        },
+        "passed_runs": 0,
+        "runs": 3,
+        "thresholds": {
+          "arm_joint_qpos_rad": 0.002,
+          "arm_joint_qvel_rad_s": 0.02,
+          "eef_rotation_rad": 0.02,
+          "eef_translation_m": 0.002,
+          "fixture_joint_rad_or_m": 0.002,
+          "gripper_qpos_m": 0.002,
+          "gripper_qvel_m_s": 0.02,
+          "object_rotation_rad": 0.02,
+          "object_translation_m": 0.002
+        }
+      }
+    },
+    "forward_background_false_seen": true,
+    "fresh_process_runs": 12,
+    "hard_gate": {
+      "fixed_step5_no_hindsight": true,
+      "forward_background_diagnostic_present": true,
+      "forward_background_not_used_as_reverse_gate": true,
+      "named_stability_thresholds_passed": false,
+      "reverse_critical_source_step5_to20": true,
+      "reverse_goal_step5_to20_false": true,
+      "schema_returncode_finite_complete": true,
+      "twelve_fresh_processes_complete": true
+    },
+    "report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_init_stabilization/i2_stabilization_time_series.json",
+    "status": "track3_reverse_init_stability_failed_named_scene_stability"
+  },
+  "i3": {
+    "controlled_destruction": {
+      "executed": false,
+      "reason": "I3 not authorized after I2 failure",
+      "required": true,
+      "state": "not_evaluated"
+    },
+    "settle": {
+      "executed": false,
+      "reason": "I2 named scene stability failed",
+      "required": true,
+      "state": "not_evaluated"
+    },
+    "status": "not_run_due_to_i2_gate",
+    "task10_canary_runs": 0,
+    "three_family_runs": 0
+  },
+  "input_lock": {
+    "i0_status": "track3_reverse_init_stabilization_input_locked",
+    "immutable_input_checks": {
+      "/home/huang/code/PARC2026_final/LIBERO/libero/libero/bddl_files/libero_goal/open_the_middle_drawer_of_the_cabinet.bddl": true,
+      "/home/huang/code/PARC2026_final/LIBERO/libero/libero/bddl_files/libero_goal/put_the_bowl_on_the_plate.bddl": true,
+      "/home/huang/code/PARC2026_final/LIBERO/libero/libero/bddl_files/libero_object/pick_up_the_orange_juice_and_place_it_in_the_basket.bddl": true,
+      "/home/huang/code/PARC2026_final/LIBERO/libero/libero/envs/env_wrapper.py": true,
+      "/home/huang/code/PARC2026_final/LIBERO/libero/libero/envs/object_states/base_object_states.py": true,
+      "/home/huang/code/PARC2026_final/LIBERO/libero/libero/envs/predicates/__init__.py": true,
+      "/home/huang/code/PARC2026_final/LIBERO/libero/libero/envs/predicates/base_predicates.py": true,
+      "/home/huang/code/PARC2026_final/LIBERO/libero/libero/envs/problems/libero_tabletop_manipulation.py": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json": false,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation/D4_CLOSEOUT_REPORT_ZH.md": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation/d2_task10_canary.json": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation/runs/d2_task10_canary_run_1.json": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation/summary.json": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_native_reverse_validator_recovery/R4_CLOSEOUT_REPORT_ZH.md": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_native_reverse_validator_recovery/r0_release_lock.json": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_native_reverse_validator_recovery/r1_runtime_schema_probe.json": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_native_reverse_validator_recovery/r2_task10_recovery_canary.json": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_native_reverse_validator_recovery/runs/r2_task10_recovery_run_1.json": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_native_reverse_validator_recovery/summary.json": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s3_dynamic_gates.json": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s3_language_v2.json": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s3_v2_specs/canary_articulation_close_task_19.bddl": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s3_v2_specs/canary_containment_remove_task_20.bddl": true,
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s3_v2_specs/canary_support_remove_task_10.bddl": true,
+      "/home/huang/code/PARC2026_final/pipeline/rollout.py": true,
+      "/home/huang/code/PARC2026_final/tests/test_track3_dynamic_gate_reconciliation.py": true,
+      "/home/huang/code/PARC2026_final/tests/test_track3_support_autogen_v2.py": false,
+      "/home/huang/code/PARC2026_final/tools/axis_pi05/track3_dynamic_gate_reconciliation.py": true
+    },
+    "immutable_input_count": 28,
+    "immutable_inputs_unchanged": false,
+    "old_r2_must_not_relabel_or_overwrite": true
+  },
+  "plan": "/home/huang/code/PARC2026_final/docs/AXIS_PI05_TRACK3_REVERSE_INIT_STABILIZATION_SEMANTICS_PLAN.md",
+  "resource_boundary": {
+    "batch_generation": false,
+    "cpu_no_renderer_only": true,
+    "demo_generation": false,
+    "fast_or_zip": false,
+    "gpu0_touched": false,
+    "gpu3_touched": false,
+    "grasp": false,
+    "human_teleop": false,
+    "libero_plus_touched": false,
+    "official_gpu": false,
+    "se3": false,
+    "training_or_norm": false,
+    "upload_or_submission": false
+  },
+  "schema_version": "track3_reverse_init_stabilization_i4_v1",
+  "status": "track3_reverse_init_stabilization_failed_named_scene_stability",
+  "step5_result": {
+    "reverse_goals": "false_at_step5_and_continuous_through_step20",
+    "t0_r2_failure_relabelled": false,
+    "task10_reverse_source": "passed_at_step5_and_continuous_through_step20",
+    "task19_reverse_source": "passed_at_step5_and_continuous_through_step20",
+    "task20_reverse_source": "passed_at_step5_and_continuous_through_step20"
+  },
+  "verification": {
+    "full_tests": "189_passed_7_skipped_23_warnings",
+    "git_diff_check": "passed",
+    "i1_targeted_tests": "24_passed",
+    "json_parse": "passed",
+    "py_compile": "passed"
+  }
+}

@@ -1,4 +1,6 @@
-# AXIS Pi0.5 Track 3：Matched Terminal-State Release 计划
+# AXIS Pi0.5 Track 3：Matched Terminal-State Release 计划（已归档）
+
+> 归档日期：2026-09-04（Asia/Tokyo）。L0–L5 已执行并按 L2 失败门禁停止；后续授权以计划索引中的唯一活动计划为准。
 
 > 制定日期：2026-09-04（Asia/Tokyo）
 > 输入 commit：root `8490f8dde1148aec0aec4d3d105082b44cfbb286`

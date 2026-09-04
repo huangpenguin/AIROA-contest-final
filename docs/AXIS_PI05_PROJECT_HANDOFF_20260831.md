@@ -1,12 +1,12 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新审核状态：`track3_matched_terminal_state_cpu_failed_containment_remove`
+> 最新审核状态：`remediation_required`
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_matched_terminal_state_cpu_failed_containment_remove`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_MATCHED_TERMINAL_STATE_RELEASE_PLAN.md`
+> 当前总状态：`track3_composed_reverse_start_stabilization_planned`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_COMPOSED_REVERSE_START_STABILIZATION_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -14,7 +14,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。K0–K2已闭合并获审核批准；K3单条task19 canary按门禁停止。独立审核确认K3同时包含native reverse init的drawer↔bowl约`-6.80 mm`穿透，以及renderer wrapper、H.264临时扩展名、sensitivity方向三个工具缺陷。下一步改用公开HDF5同demo的exact `model_file + terminal full-state`做三族初态release；reverse demo仍为`0/0/0`，未授权SE(3)、Teleop或训练。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Matched Terminal-State L0–L5已按门禁完成：9/9的reverse source/goal语义正确，但task20仍有success末帧后的物体沉降，task19仍有forward terminal robot回稳；contact-v2还把robot/gripper误标为background。下一步只验证same-demo terminal scene + init robot/gripper + zero-qvel的composed reverse start；reverse demo仍为`0/0/0`，未授权SE(3)、Teleop或训练。
 
 ## 2. 数据与复现基础
 
@@ -622,3 +622,13 @@ L0/L1 已完成：锁定旧 K0–K4、三份公开 HDF5 及固定的 task10/task
 L2 完成 9 个 fresh CPU/no-renderer exact-model processes：task10 `3/3`，task20 `0/3`，task19 `0/3`。task10 三条通过；task20 的 fixed clean gate 因目标物 participant drift 和严格 operator-background contact 未通过，task19 因 robot arm/EEF drift 和严格 operator-background contact 未通过。L3 task19 camera 与 L4 task10/task20 camera 均为 `not_evaluated`，没有触碰 GPU3。
 
 L5 已按失败门禁 hard stop（execution commit `19cb1ea`）：`exact/pending/accepted reverse demo = 0/0/0`；没有生成 action/demo，没有 SE(3)、grasp、Teleop、批量生成、训练/norm、FAST/ZIP、官方 GPU、上传或提交。最终测试 `211 passed, 7 skipped, 26 warnings`，JSON parse、py_compile、diff check 通过；`LIBERO-plus` 原有 dirty 状态未触碰。证据：`data/reports/axis_libero_30k/track3_matched_terminal_state_release/summary.json`、`l2_summary.json`、`contact_ledger.json`、`L5_CLOSEOUT_REPORT_ZH.md`。下一步仅等待审核。
+
+## 50. L0–L5 独立审核与 Composed Reverse-Start 授权（2026-09-04）
+
+审核输入closeout `0dc402e2d70e6576c5861a674e0aac04e4427ef0`、execution `19cb1eab9556b6e9e0f8b3f9d4b49fb3893b81a0`、nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`。9份raw report hash、9个fresh process、L3/L4未执行、禁止项与hard stop获批准；审核结论为`remediation_required`。
+
+9/9均通过same-demo identity、public forward goal、reverse critical source和reverse goal-false，因此task20/task19的`0/3`不是reverse语义失败。task20的orange juice在step5→20继续平移`2.088–7.390 mm`；task19主要是forward terminal robot回稳。全部9条demo的reward positive suffix都只有最后一帧，无法从HDF5选择post-success dwell。
+
+`contact_contract_v2`还把gripper/robot↔operator contact错误归入“无关background”：task20/demo1为约`11.2 µm`的finger↔orange-juice接触，task19/demo2为最大约`0.263 µm`的right-finger↔drawer接触。旧raw与failure保持不变，新contact-v3必须按receiver、robot/gripper、unrelated background分层。
+
+旧计划已归档；唯一活动计划为`docs/AXIS_PI05_TRACK3_COMPOSED_REVERSE_START_STABILIZATION_PLAN.md`。它固定使用同demo terminal scene qpos、同demo init robot/gripper qpos与全零qvel，先运行task20/demo0 CPU canary，通过后补齐9条CPU matrix，全部通过后GPU3最多三族各一条camera canary。M5必须hard stop；只允许report namespace中的start-state candidate，不授权action/demo、SE(3)、Teleop、训练、FAST/ZIP、官方GPU或提交。完整审核见`docs/reviews/axis_pi05/TRACK3_MATCHED_TERMINAL_L0_L5_AUDIT_20260904.md`。

@@ -1,30 +1,26 @@
 # AXIS Pi0.5 计划索引与审核生命周期
 
 > 更新日期：2026-09-04（Asia/Tokyo）
-> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_MATCHED_TERMINAL_STATE_RELEASE_PLAN.md`
-> 当前状态：`track3_matched_terminal_state_cpu_failed_containment_remove`
-> 最新审核：`docs/reviews/axis_pi05/TRACK3_BACKGROUND_CONVERGENCE_K0_K4_AUDIT_20260904.md`
+> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_COMPOSED_REVERSE_START_STABILIZATION_PLAN.md`
+> 当前状态：`track3_composed_reverse_start_stabilization_planned`
+> 最新审核：`docs/reviews/axis_pi05/TRACK3_MATCHED_TERMINAL_L0_L5_AUDIT_20260904.md`
 
 ## 1. 本轮执行停止点
 
-Init Stabilization I0–I4 已完成并停止。三族 reverse operator-critical source relation在固定 step5 成立并连续到 step20，reverse goal 同窗口连续为 false；I3 因旧 full-scene max gate 未通过而未运行。独立审核确认这个 failure 不能解释为 reverse init 语义失败：task20/task19 的超限值来自无关背景物，task10 是 bowl 在 plate 上接触落稳的自由旋转，9 个 reverse run 的完整 init/goal truth vector 均为零跃迁。
+Matched Terminal-State L0–L5 已完成并按 L2 门禁停止。9 个 fresh CPU process、raw hash、same-demo model/state identity 与 hard stop 均获批准；task10 `3/3`、task20 `0/3`、task19 `0/3` 是当前 validator 下的真实结果。
 
-Operator-Scoped Stability Release的J0/J1/J2/J4已完成并获执行审核；J2新矩阵为reverse`8/9`、forward`6/6`，J3未执行。唯一跃迁已定位为task19 run1的background initializer `(On bowl region)`在step20由false变true；critical `Open`始终true、goal `Close`始终false，物理/contact门禁均通过。这是单调收敛，不是task19语义回退。
+独立审核确认 9/9 的 forward goal、reverse critical source 和 reverse goal-false 都通过，失败不应解释为 reverse semantics 无效。task20 主要是 success 末帧后 orange juice 继续沉降 `2.09–7.39 mm`；task19 主要是 forward terminal robot继续回稳。9条demo的reward positive suffix都只有一帧，没有post-success dwell。
 
-旧I2和J2 failure保持immutable。K0已将15个raw worker reports及manifest闭包进Git并完成fresh-checkout hash验证；K1/K2以“critical/goal严格、background init单调非递减”的新合同只读复算通过（reverse`9/9`、forward`6/6`）。K3仅运行一次GPU3 task19 canary即hard stop。独立审核确认这是一条混合失败：native reverse init 中 bowl↔middle drawer 从step5起已有约`-6.80 mm`穿透且background `On`在step20退化；renderer wrapper telemetry、H.264临时扩展名和task19 sensitivity mutation另有三个实现缺陷。三族matrix未执行，SE(3)、demo、Teleop和训练仍未授权。
-
-G0/G1 已按失败门禁停止，S1 v2 与 typed language 获批准，三族 `3/3` fresh-process 运行及 hard stop 也真实完成；但 G1.3 的失败结论不能证明 reverse semantics 无效。旧 validator 把 HDF5 `states[0]` 恢复到不同/randomized XML 的 reverse env，以 forward success 冒充 reverse initial predicate 检查，并对包含 joint velocity、EEF quaternion、gripper qpos/qvel 的整段 proprio 使用一个 `0.05` 阈值；20 步 action 还固定发送 `gripper=-1`。相反，三族 object/fixture drift 仅约 `1e-7～1e-11`。
-
-最新审核仍为 `remediation_required`，但 R2 已取得第一条有效结论：task10 reset 瞬间 7 条 reverse init 中 3 条 false，goal 正确 false；bowl 与 plate XY 完全一致而 Z 相差 `0.11 m`，符合 sampler 已放置但尚未形成 runtime contact。三族 R1 都至少有一个 background init atom=false；本地 LIBERO evaluator 会先执行 5 个零动作物理步。因此当前先校准 initializer-vs-runtime 和 step5 stabilization 语义，不能直接改 BDDL 或宣布 reverse start 无效。证据：`docs/reviews/axis_pi05/TRACK3_NATIVE_VALIDATOR_R0_R4_AUDIT_20260903.md`。
+`contact_contract_v2` 还把 gripper/robot↔operator contact误归为“无关 background”，与旧计划文字不符。旧 raw/失败状态保持 immutable；下一步用同 demo init robot + terminal scene 的 named composed state消除forward terminal robot残余，并以contact-v3重新验证，不换demo、不调旧阈值。
 
 ## 2. 当前计划与停止点
 
-- `AXIS_PI05_TRACK3_MATCHED_TERMINAL_STATE_RELEASE_PLAN.md`
-  - L0锁定K0–K4和三份公开HDF5，并以errata保留K3真实raw语义；
-  - L1只修复wrapper renderer telemetry、H.264 atomic扩展名、task19 close-range sensitivity和contact contract v2；
-  - L2固定使用task10/task20/task19各`demo_0/1/2`的同demo `model_file + terminal full-state`，CPU fresh-process要求三族各`3/3`；
-  - L2通过后L3只在GPU3运行task19/demo_0，L4最多补task10/demo_0与task20/demo_0，共三族各一条camera release；
-  - L5无论成败hard stop；不生成action/demo，不执行SE(3)、Teleop、训练、norm、FAST/ZIP、官方GPU、上传或提交。
+- `AXIS_PI05_TRACK3_COMPOSED_REVERSE_START_STABILIZATION_PLAN.md`
+  - M0锁定L0–L5的9条raw与固定HDF5输入；M1按MuJoCo named joint address建立无重叠/无缺口的state ownership ledger和contact-v3；
+  - composed state固定使用同demo terminal scene qpos + 同demo init robot/gripper qpos + 全零qvel，使用7D全零neutral hold；
+  - M2只跑task20/demo0 CPU canary；通过后M3补齐固定9条CPU matrix，不retry、不换demo；
+  - M3为9/9后，M4最多在GPU3运行三族各一条41-frame camera canary；
+  - M5无论成败hard stop；只允许报告namespace中的start-state candidate，不生成reverse demo，不执行SE(3)、Teleop、训练、norm、FAST/ZIP、官方GPU、上传或提交。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 
@@ -64,10 +60,11 @@ G0/G1 已按失败门禁停止，S1 v2 与 typed language 获批准，三族 `3/
 28. `AXIS_PI05_TRACK3_REVERSE_INIT_STABILIZATION_SEMANTICS_PLAN.md`：I0–I4完成；step5 critical relation三族通过，但旧 full-scene max stability gate失败，I3未运行。独立审核后转入 operator-scoped release contract。
 29. `AXIS_PI05_TRACK3_OPERATOR_SCOPED_STABILITY_RELEASE_PLAN.md`：J0/J1/J2/J4完成；新reverse`8/9`，唯一失败为task19 background initializer在step20由false变true；J3未运行。独立审核后转入evidence closure与monotonic convergence contract。
 30. `AXIS_PI05_TRACK3_BACKGROUND_PREDICATE_CONVERGENCE_RELEASE_PLAN.md`：K0–K2通过；K3单条task19 GPU3 canary发现native reverse init的drawer↔bowl穿透，同时暴露renderer/H.264/sensitivity工具缺陷；三族matrix未运行，转入exact-model matched terminal-state release。
+31. `AXIS_PI05_TRACK3_MATCHED_TERMINAL_STATE_RELEASE_PLAN.md`：L0/L1通过；L2 exact-model CPU为task10 `3/3`、task20 `0/3`、task19 `0/3`，L3/L4未执行并hard stop。审核确认source/goal 9/9成立、失败来自success末帧动力学和contact-v2角色误标，转入composed reverse-start stabilization。
 
 归档不表示旧计划所有尾部阶段都完成；只表示该文件不再是活动授权入口。旧 failure、阈值、hash 和未执行阶段必须继续保留。
 
-当前只执行 init stabilization 语义校准、step5 critical-relation 门禁，以及通过后最多 `1+9` 次 GPU3 非抓取动态验证；不得修改 BDDL、恢复旧 SE(3)/G2–G4、人工 task19、真实 support demo、批量生成、旧 reverse LoRA/interstep 训练或直接转向 Blackwell。
+当前只执行M0/M1输入与state-role contract、M2一条CPU canary、通过后M3固定9条CPU matrix，以及全部通过后最多3条GPU3 camera canary；不得修改BDDL、恢复旧SE(3)/G2–G4、人工Teleop、生成reverse demo、批量合成、旧reverse LoRA/interstep训练或直接转向Blackwell。
 
 ## 3.1 G0–G1 执行审核与门禁重构
 
@@ -126,6 +123,14 @@ L0/L1 已完成：锁定旧 K0–K4、三份公开 HDF5 及固定的 task10/task
 L2 完成 9 个 fresh CPU/no-renderer exact-model processes：task10 `3/3`，task20 `0/3`，task19 `0/3`。task10 三条通过；task20 的 fixed clean gate 因目标物 participant drift 和严格 operator-background contact 未通过，task19 因 robot arm/EEF drift 和严格 operator-background contact 未通过。L3 task19 camera 与 L4 task10/task20 camera 均为 `not_evaluated`，没有触碰 GPU3。
 
 L5 已按失败门禁 hard stop（execution commit `19cb1ea`）：`exact/pending/accepted reverse demo = 0/0/0`；没有生成 action/demo，没有 SE(3)、grasp、Teleop、批量生成、训练/norm、FAST/ZIP、官方 GPU、上传或提交。最终测试 `211 passed, 7 skipped, 26 warnings`，JSON parse、py_compile、diff check 通过；`LIBERO-plus` 原有 dirty 状态未触碰。证据位于 `data/reports/axis_libero_30k/track3_matched_terminal_state_release/`，下一步仅等待审核。
+
+## 3.7 L0–L5 独立审核与 Composed Reverse-Start 授权（2026-09-04）
+
+审核输入closeout `0dc402e2d70e6576c5861a674e0aac04e4427ef0`、execution `19cb1eab9556b6e9e0f8b3f9d4b49fb3893b81a0`。9份raw hash、9个fresh process、L3/L4未执行与hard stop获批准；结论为`remediation_required`。
+
+9/9 reverse source成立且goal为false。task20失败主要是success末帧后目标物沉降，task19失败主要是forward terminal robot回稳；9条reward positive suffix均只有一帧。contact-v2把gripper/robot↔operator误标为unrelated background，旧失败保留但不能沿用此角色解释。
+
+旧计划已归档。新唯一活动计划`docs/AXIS_PI05_TRACK3_COMPOSED_REVERSE_START_STABILIZATION_PLAN.md`固定构造same-demo terminal scene + init robot/gripper + zero-qvel state，先task20/demo0 CPU canary，再补齐固定9条CPU matrix；全部通过后GPU3最多三族各一条camera canary。M5 hard stop，不授权action/demo、SE(3)、Teleop、训练或官方GPU。完整审核见`docs/reviews/axis_pi05/TRACK3_MATCHED_TERMINAL_L0_L5_AUDIT_20260904.md`。
 
 ## 4. 保留但非活动的研究线
 

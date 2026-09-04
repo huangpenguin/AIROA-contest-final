@@ -1,0 +1,8 @@
+stage,status,reason
+P0,track3_start_bundle_p0_passed,
+P1,track3_start_bundle_p1_contract_passed,
+P2,track3_start_state_bundle_validated_9_of_9,
+P3,track3_start_bundle_p3_failed,worker result publication deadlock
+P4,not_evaluated,P3 hard stop
+P5,not_evaluated,P3 hard stop
+P6,executed,hard stop

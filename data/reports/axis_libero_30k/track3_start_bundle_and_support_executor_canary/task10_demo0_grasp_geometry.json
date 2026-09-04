@@ -1,0 +1,170 @@
+{
+  "after_transition": {
+    "eef": {
+      "pos_m": [
+        -0.08990065220128851,
+        0.034328475804509276,
+        0.9302040615125051
+      ],
+      "quat": [
+        -0.7423039575965739,
+        -0.6692540556528399,
+        0.03267729983947019,
+        0.004004697727757677
+      ]
+    },
+    "object": {
+      "kind": "object",
+      "name": "akita_black_bowl_1",
+      "pos_m": [
+        -0.07684965618779657,
+        -0.008989574460502213,
+        0.8984041653006754
+      ],
+      "quat": [
+        0.7071067776358467,
+        -1.26137285124876e-05,
+        -2.295811841622576e-06,
+        0.7071067846210164
+      ]
+    }
+  },
+  "before_transition": {
+    "eef": {
+      "pos_m": [
+        -0.08423431017276653,
+        0.03513456253063223,
+        0.9388763300208237
+      ],
+      "quat": [
+        -0.7405258379743849,
+        -0.671142991969228,
+        0.03410649654931845,
+        0.005031353302976071
+      ]
+    },
+    "object": {
+      "kind": "object",
+      "name": "akita_black_bowl_1",
+      "pos_m": [
+        -0.07684965618779657,
+        -0.008989574460502213,
+        0.8984041653006754
+      ],
+      "quat": [
+        0.7071067776358467,
+        -1.261372851249296e-05,
+        -2.295811841619359e-06,
+        0.7071067846210164
+      ]
+    }
+  },
+  "created_at_utc": "2026-09-04T14:22:27.619741+00:00",
+  "demo_index": 0,
+  "fixed_reverse_destination": "same_demo_init_object_pose",
+  "grasp_frame": {
+    "T_object_inverse_T_eef_quaternion_wxyz": [
+      0.5277180075645447,
+      0.45012933015823364,
+      -0.4963497221469879,
+      0.5220479369163513
+    ],
+    "T_object_inverse_T_eef_translation_m": [
+      -0.013051445366476096,
+      0.03180008664809234,
+      -0.043317775091279216
+    ],
+    "eef_pose": {
+      "pos_m": [
+        -0.08990065220128851,
+        0.034328475804509276,
+        0.9302040615125051
+      ],
+      "quat": [
+        -0.7423039575965739,
+        -0.6692540556528399,
+        0.03267729983947019,
+        0.004004697727757677
+      ]
+    },
+    "object_pose": {
+      "kind": "object",
+      "name": "akita_black_bowl_1",
+      "pos_m": [
+        -0.07684965618779657,
+        -0.008989574460502213,
+        0.8984041653006754
+      ],
+      "quat": [
+        0.7071067776358467,
+        -1.26137285124876e-05,
+        -2.295811841622576e-06,
+        0.7071067846210164
+      ]
+    },
+    "rotation_matrix": [
+      [
+        0.10204078200576347,
+        0.9933196115672984,
+        -0.053887060032422926
+      ],
+      [
+        -0.043154145683998744,
+        -0.04969873192609964,
+        -0.9978315121733581
+      ],
+      [
+        -0.9938437404965977,
+        0.10414494471871247,
+        0.03779456023132295
+      ]
+    ],
+    "state_index": 32
+  },
+  "gripper_transition": {
+    "action_sha256": "bd0d2db2183c6bf19594697176572e0445c1e220465d02a4421ca34eade79758",
+    "action_value": 1.0,
+    "adjacent_state_indices": [
+      31,
+      32
+    ],
+    "index": 32,
+    "previous_action_value": -1.0,
+    "state_sha256": "53744a0e8d43a54196c8e7857c1213e1c5ce2b503e3623e106d32836a88799d7"
+  },
+  "hdf5_path": "/home/huang/code/PARC2026_final/data/raw/public/libero_official_hdf5/libero_goal/put_the_bowl_on_the_plate_demo.hdf5",
+  "hdf5_sha256": "e69528b0cf10dfc59b20698e12ec2affc03f3887309034d3eb74cac3ec929406",
+  "model_file_sha256": "e9a508e1e98a7bd2631796a4c41476a449fd9821fb45837a27d2ebefd87c8830",
+  "no_action_sent": true,
+  "object_init_pose": {
+    "kind": "object",
+    "name": "akita_black_bowl_1",
+    "pos_m": [
+      -0.07684966308439489,
+      -0.00898957193236043,
+      0.8981585151399347
+    ],
+    "quat": [
+      0.7071067776242912,
+      -1.0724537191720448e-05,
+      -1.4310617004723095e-06,
+      0.7071067846660275
+    ]
+  },
+  "object_name": "akita_black_bowl_1",
+  "pregrasp_geometry": {
+    "target_description": "above current bowl along world z before SE(3) descend",
+    "world_z_offset_m": 0.08331777509127922
+  },
+  "process_returncode": 0,
+  "resolved_model_xml_sha256": "d637223bfe311c2ae6daeb0572f0a75528f2613f54eff1ef3acbe540167ea099",
+  "same_model_xml_identity": true,
+  "schema_version": "track3_task10_grasp_geometry_v1",
+  "selection_is_fixed": true,
+  "source_frame": "forward_hdf5_demo0_state_before_first_gripper_minus1_to_plus1",
+  "status": "passed",
+  "stderr_tail": "[robosuite WARNING] No private macro file found! (__init__.py:7)\n[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)\n[robosuite WARNING] To setup, run: python /home/huang/code/PARC2026_final/.venv_axis_pi05/lib/python3.12/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)\n",
+  "stdout_tail": "851, 0.034328475804509276, 0.9302040615125051], \"quat\": [-0.7423039575965739, -0.6692540556528399, 0.03267729983947019, 0.004004697727757677]}, \"object_pose\": {\"kind\": \"object\", \"name\": \"akita_black_bowl_1\", \"pos_m\": [-0.07684965618779657, -0.008989574460502213, 0.8984041653006754], \"quat\": [0.7071067776358467, -1.26137285124876e-05, -2.295811841622576e-06, 0.7071067846210164]}, \"rotation_matrix\": [[0.10204078200576347, 0.9933196115672984, -0.053887060032422926], [-0.043154145683998744, -0.04969873192609964, -0.9978315121733581], [-0.9938437404965977, 0.10414494471871247, 0.03779456023132295]], \"state_index\": 32}, \"gripper_transition\": {\"action_sha256\": \"bd0d2db2183c6bf19594697176572e0445c1e220465d02a4421ca34eade79758\", \"action_value\": 1.0, \"adjacent_state_indices\": [31, 32], \"index\": 32, \"previous_action_value\": -1.0, \"state_sha256\": \"53744a0e8d43a54196c8e7857c1213e1c5ce2b503e3623e106d32836a88799d7\"}, \"hdf5_path\": \"/home/huang/code/PARC2026_final/data/raw/public/libero_official_hdf5/libero_goal/put_the_bowl_on_the_plate_demo.hdf5\", \"hdf5_sha256\": \"e69528b0cf10dfc59b20698e12ec2affc03f3887309034d3eb74cac3ec929406\", \"model_file_sha256\": \"e9a508e1e98a7bd2631796a4c41476a449fd9821fb45837a27d2ebefd87c8830\", \"no_action_sent\": true, \"object_init_pose\": {\"kind\": \"object\", \"name\": \"akita_black_bowl_1\", \"pos_m\": [-0.07684966308439489, -0.00898957193236043, 0.8981585151399347], \"quat\": [0.7071067776242912, -1.0724537191720448e-05, -1.4310617004723095e-06, 0.7071067846660275]}, \"object_name\": \"akita_black_bowl_1\", \"pregrasp_geometry\": {\"target_description\": \"above current bowl along world z before SE(3) descend\", \"world_z_offset_m\": 0.08331777509127922}, \"resolved_model_xml_sha256\": \"d637223bfe311c2ae6daeb0572f0a75528f2613f54eff1ef3acbe540167ea099\", \"same_model_xml_identity\": true, \"schema_version\": \"track3_task10_grasp_geometry_v1\", \"selection_is_fixed\": true, \"source_frame\": \"forward_hdf5_demo0_state_before_first_gripper_minus1_to_plus1\", \"status\": \"passed\", \"task_index\": 10}\n",
+  "task_index": 10,
+  "worker_returncode_contract": true
+}

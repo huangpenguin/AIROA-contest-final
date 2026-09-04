@@ -1,0 +1,10 @@
+task_index,demo_index,p2_restore,p3_camera,executor_or_demo
+10,0,passed,worker_exception,not_evaluated
+10,1,passed,not_evaluated,not_evaluated
+10,2,passed,not_evaluated,not_evaluated
+20,0,passed,not_evaluated,not_evaluated
+20,1,passed,not_evaluated,not_evaluated
+20,2,passed,not_evaluated,not_evaluated
+19,0,passed,not_evaluated,not_evaluated
+19,1,passed,not_evaluated,not_evaluated
+19,2,passed,not_evaluated,not_evaluated

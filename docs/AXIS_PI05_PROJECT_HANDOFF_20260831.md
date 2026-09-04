@@ -5,8 +5,8 @@
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_start_bundle_and_support_executor_canary_planned`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_START_BUNDLE_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md`
+> 当前总状态：`track3_support_executor_canary_failed_worker_result_publication`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_START_BUNDLE_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md`（P6 hard stop，等待新审核计划）
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -650,3 +650,10 @@ M4 仅在 GPU3 执行 task10/demo0、task20/demo0、task19/demo0 各一次 camer
 总体审核为`remediation_required`而非blocked：M4没有记录计划要求的seed/PID/GPU peak，contact required gate漏了burn-in；`start_state_candidate=1`只有t0 hash、没有可恢复vector；`round_trip...`字段实际是composed-vs-init差异，run index缺file hash，machine handoff还引用amend前orphan `020d291`。
 
 这些都是agent可自动修复的工程闭包，不需要用户人工审核视频、Teleop或选择轨迹。旧计划已归档；唯一活动计划为`docs/AXIS_PI05_TRACK3_START_BUNDLE_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md`：P0–P3补齐证据与9-state bundle，P4实现task10/demo0 HDF5-grounded SE(3) executor，P5最多一次generation并在成功后fresh replay `3/3`。成功也只产生最多1条`pending_autogen_v3`，accepted仍为0，不授权task20/task19、训练或官方GPU。完整审核：`docs/reviews/axis_pi05/TRACK3_COMPOSED_REVERSE_START_M0_M5_AUDIT_20260904.md`。
+## 53. Start Bundle / Support Executor P0–P6 执行收尾（2026-09-04）
+
+P0/P1 通过；P2 已物化 9 个 `float64` no-pickle start states，并以 fresh CPU/no-renderer 完成 restore `9/9`；task10/demo0 的固定首次 `-1→+1` gripper transition、相邻 state 与真实 `T_object^-1·T_eef` 几何提取通过。P3 只按固定顺序启动 task10/demo0 一条 GPU3 camera canary，41 帧与两路 H.264/20 FPS/ffprobe 证据已保存。
+
+P3 worker 在写完整 checkpoint JSON 时填满父子 stdout 管道，阻塞于结果发布；该次 canary 已终止并记为 `worker_result_publication` 工具失败。没有重试 task10，也没有启动 task20/task19、P4 或 P5。P6 已完成 manifest、CSV、strict JSON/NPZ/video/py_compile/diff check；targeted `8 passed`，全量 `231 passed, 7 skipped, 23 warnings`。
+
+最终状态：`track3_support_executor_canary_failed_worker_result_publication`。`validated_start_state=9`、`exact/pending/accepted=0/0/0`；没有 action、SE(3) executor、demo、Teleop、训练、norm、FAST/ZIP、官方 GPU、上传或提交。P6 已 hard stop，等待新审核计划；`LIBERO-plus` 既有 dirty 状态未触碰。完整证据位于`data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/`。

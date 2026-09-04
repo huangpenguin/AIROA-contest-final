@@ -1,0 +1,214 @@
+{
+  "artifact_manifest": {
+    "duplicate_key_json": "reject",
+    "npz_allow_pickle": false,
+    "path": "relative_path_only",
+    "required": [
+      "relative_path",
+      "bytes",
+      "sha256",
+      "schema",
+      "source_commit"
+    ]
+  },
+  "atomic_failure_asset": true,
+  "canonical_sha256": "8faa82cf8429d97f447b22e8910b1834a140bca9c1876ffa1a04c22f12951ab1",
+  "contact_v3": {
+    "burn_in_included": true,
+    "demonstrator_contact": "zero_all_41",
+    "required_steps": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40
+    ],
+    "task10_support": "required_all_41",
+    "unrelated_background": "zero_all_41"
+  },
+  "created_at_utc": "2026-09-04T14:11:29.031306+00:00",
+  "executor_action": {
+    "controller": "OSC_POSE",
+    "dtype": "float32",
+    "gripper": [
+      -1.0,
+      1.0
+    ],
+    "neutral_hold": 0.0,
+    "rotation_error": "quaternion_log_shortest_path",
+    "shape": [
+      7
+    ],
+    "translation_rotation": "separately_normalized_and_clipped"
+  },
+  "gpu_provenance": {
+    "gpu3_only": true,
+    "missing_any_fails": true,
+    "required": [
+      "seed",
+      "child_pid",
+      "physical_gpu_uuid",
+      "cuda_visible_devices",
+      "start_snapshot",
+      "end_snapshot",
+      "peak_memory_mib"
+    ]
+  },
+  "gpu_started": false,
+  "old_tool_untouched": true,
+  "plan": "docs/AXIS_PI05_TRACK3_START_BUNDLE_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md",
+  "schema_version": "track3_start_bundle_p1_v1",
+  "simulator_started": false,
+  "state_bundle": {
+    "allow_pickle": false,
+    "dtype": "float64",
+    "expected_keys": [
+      "task10_demo0",
+      "task10_demo1",
+      "task10_demo2",
+      "task20_demo0",
+      "task20_demo1",
+      "task20_demo2",
+      "task19_demo0",
+      "task19_demo1",
+      "task19_demo2"
+    ],
+    "field_rename": "composed_vs_init_max_abs_diff; restore_max_abs_diff remains restore-vs-input",
+    "finite": true,
+    "format": "NPZ",
+    "source_bitmap": "named_composed_state_contract"
+  },
+  "status": "track3_start_bundle_p1_contract_passed",
+  "synthetic_state_layout": {
+    "act_offset": 16,
+    "joints": [
+      {
+        "joint_id": 0,
+        "name": "free",
+        "ownership": "operator_scene",
+        "qpos_range": [
+          0,
+          7
+        ],
+        "qvel_range": [
+          0,
+          6
+        ],
+        "source": "demo_terminal",
+        "type": 0
+      },
+      {
+        "joint_id": 1,
+        "name": "arm",
+        "ownership": "robot_arm",
+        "qpos_range": [
+          7,
+          8
+        ],
+        "qvel_range": [
+          6,
+          7
+        ],
+        "source": "demo_init",
+        "type": 3
+      }
+    ],
+    "na": 0,
+    "nq": 8,
+    "nv": 7,
+    "opaque_state_indices": [
+      0
+    ],
+    "ownership_counts": {
+      "background_scene": 0,
+      "operator_scene": 1,
+      "receiver_scene": 0,
+      "robot_arm": 1,
+      "robot_gripper": 0
+    },
+    "qpos_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "qpos_offset": 1,
+    "qpos_state_indices": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "qvel_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "qvel_offset": 9,
+    "qvel_state_indices": [
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "schema_version": "track3_composed_state_v1",
+    "state_length": 16
+  },
+  "tri_state": [
+    "passed",
+    "failed",
+    "not_evaluated"
+  ],
+  "worker_exception_returncode": "nonzero"
+}

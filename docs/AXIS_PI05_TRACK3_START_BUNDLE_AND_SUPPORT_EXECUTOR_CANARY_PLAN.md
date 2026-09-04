@@ -3,7 +3,7 @@
 > 制定日期：2026-09-04（Asia/Tokyo）
 > 审核输入：root `eef683b0db9629a3d917ea91ebeb46540a34fcb9`
 > nested OpenPI：`b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`
-> 当前状态：`track3_start_bundle_and_support_executor_canary_planned`
+> 当前状态：`track3_support_executor_canary_failed_worker_result_publication`
 > 用户人工操作：`not_required`
 > 唯一授权：P0–P6；随后hard stop
 > 不授权：修改公开HDF5/BDDL、人工Teleop、批量生成、containment/articulation executor、accepted晋升、训练/norm、FAST/ZIP、官方GPU、上传或比赛提交
@@ -66,6 +66,12 @@ data/pending_autogen_v3/                         # 仅P5成功且3/3 replay后�
 - 不要求像素bitwise跨进程一致；dynamics/state hash与predicate/contact contract必须一致。
 
 任何一条失败立即停止后续条目并进入P6。三条通过状态`track3_start_bundle_gpu_provenance_closed_3_of_3`。
+
+## 8. 本轮执行收尾（2026-09-04）
+
+P0、P1、P2 已通过：旧输入未漂移，9 个 `float64` no-pickle start state 已物化并 fresh CPU restore `9/9`，task10/demo0 的固定 HDF5 抓取几何提取通过。P3 只启动了固定顺序第一条 task10/demo0 GPU3 canary；41 帧 camera 与 H.264 失败资产已保存。
+
+P3 worker 在输出完整 checkpoint JSON 时填满父子 stdout 管道，阻塞在结果发布阶段。该次 canary 已终止并记录为 `worker_result_publication` 工具失败；没有重试 task10，也没有启动 task20/task19。P4 与 P5 按 hard stop 为 `not_evaluated`，没有 SE(3) action、demo 或 pending candidate。P6 已完成测试与 artifact closure，当前必须等待新的审核计划。
 
 ## 5. P4：task10 HDF5-grounded SE(3) executor（CPU/code gate）
 

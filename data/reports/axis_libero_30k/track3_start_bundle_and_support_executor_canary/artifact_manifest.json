@@ -1,0 +1,127 @@
+{
+  "created_at_utc": "2026-09-04T14:49:56.968939+00:00",
+  "entries": [
+    {
+      "bytes": 598,
+      "relative_path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/P0_M0_M5_ERRATA_ZH.md",
+      "schema": "md",
+      "sha256": "c4b66d91f8025cd7ab2b79b8744c6291e88b52f3d1f14ac6ddc0e5e173c13436",
+      "source_commit": "6cfda92a619faefa58a4d3b9a539c21d8149caa4"
+    },
+    {
+      "bytes": 1630,
+      "relative_path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/P6_CLOSEOUT_REPORT_ZH.md",
+      "schema": "md",
+      "sha256": "fcc7b090a19f5fa9183f429e25dc38ca19d508a28f382e0241d4151c587f3678",
+      "source_commit": "6cfda92a619faefa58a4d3b9a539c21d8149caa4"
+    },
+    {
+      "bytes": 2600478,
+      "relative_path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/camera_frames/p3_task10_demo0.npz",
+      "schema": "npz",
+      "sha256": "4bb0ed8f910b7ca0c81522079393972c00b18ed2d40e9559fa3b4b659c8ea882",
+      "source_commit": "6cfda92a619faefa58a4d3b9a539c21d8149caa4"
+    },
+    {
+      "bytes": 423,
+      "relative_path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/episode_results.csv",
+      "schema": "csv",
+      "sha256": "bf067fbd13217086559d263027c13ca3f65e75dbd4fde0fa72497940f62ab7ef",
+      "source_commit": "6cfda92a619faefa58a4d3b9a539c21d8149caa4"
+    },
+    {
+      "bytes": 4878659,
+      "relative_path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/p0_release_lock.json",
+      "schema": "track3_start_bundle_p0_v1",
+      "sha256": "24a331c890dc03f2bd92c95fbf45b147964f2b7e200a12af1d5e4c641ff24537",
+      "source_commit": "6cfda92a619faefa58a4d3b9a539c21d8149caa4"
+    },
+    {
+      "bytes": 3870,
+      "relative_path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/p1_validator_contract.json",
+      "schema": "track3_start_bundle_p1_v1",
+      "sha256": "1c73c58361fb7d81d7461215b43a582e2914cecd981d4653b77dbdb2e1961955",
+      "source_commit": "6cfda92a619faefa58a4d3b9a539c21d8149caa4"
+    },
+    {
+      "bytes": 30593895,
+      "relative_path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/p2_summary.json",
+      "schema": "track3_start_bundle_p2_v1",
+      "sha256": "21c9e62235cf7b3bc67824919671bfcf775b04270c360eb6072c093fdee88653",
+      "source_commit": "6cfda92a619faefa58a4d3b9a539c21d8149caa4"
+    },
+    {
+      "bytes": 2158,
+      "relative_path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/p3_summary.json",
+      "schema": "track3_start_bundle_p3_v1",
+      "sha256": "d30197648e71b9e9752f495542c0ce8da96e6191171a5025e04cd60de38df872",
+      "source_commit": "6cfda92a619faefa58a4d3b9a539c21d8149caa4"
+    },
+    {
+      "bytes": 3197,
+      "relative_path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/p3_task10_demo0.json",
+      "schema": "track3_gpu3_camera_canary_v1",
+      "sha256": "ceb6373b8dbdc9e902ce9f615ffeb59e97732a993bd1600462f324bcd68b4196",
+      "source_commit": "6cfda92a619faefa58a4d3b9a539c21d8149caa4"
+    },
+    {
+      "bytes": 294,
+      "relative_path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/stage_results.csv",
+      "schema": "csv",
+      "sha256": "09ff2bef837e959fa1adf7c2ae1179626ab6ea9bd51f9486793ed542eb34642d",
+      "source_commit": "6cfda92a619faefa58a4d3b9a539c21d8149caa4"
+    },
+    {
+      "bytes": 34821,
+      "relative_path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/start_state_manifest.json",
+      "schema": "track3_start_state_manifest_v1",
+      "sha256": "776bba28d3ae735a9579223dadb0a8fbcb1462c918f04a47a6e7882c520f3b51",
+      "source_commit": "6cfda92a619faefa58a4d3b9a539c21d8149caa4"
+    },
+    {
+      "bytes": 5183,
+      "relative_path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/start_states.npz",
+      "schema": "npz",
+      "sha256": "b21a5080bdaeebcc4999b25f1e1bafab5decef1cf78b09a4d3e7b25e95073447",
+      "source_commit": "6cfda92a619faefa58a4d3b9a539c21d8149caa4"
+    },
+    {
+      "bytes": 6795,
+      "relative_path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/task10_demo0_grasp_geometry.json",
+      "schema": "track3_task10_grasp_geometry_v1",
+      "sha256": "fca6e4641feba222f9c6b45924ad7b355a4848632bcc1a24c10174aaf1f2ef0a",
+      "source_commit": "6cfda92a619faefa58a4d3b9a539c21d8149caa4"
+    },
+    {
+      "bytes": 277,
+      "relative_path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/task_results.csv",
+      "schema": "csv",
+      "sha256": "848bec9c55b57aaf327589182358a9619b3179ef6e751cf64890b269e9bf7b22",
+      "source_commit": "6cfda92a619faefa58a4d3b9a539c21d8149caa4"
+    },
+    {
+      "bytes": 5646,
+      "relative_path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/videos/p3_task10_demo0_agentview.mp4",
+      "schema": "mp4",
+      "sha256": "ca1b71621e8fd7148a24146beaf8be05cb7110a6644aace689a7ae721cf04af8",
+      "source_commit": "6cfda92a619faefa58a4d3b9a539c21d8149caa4"
+    },
+    {
+      "bytes": 6435,
+      "relative_path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/videos/p3_task10_demo0_wrist.mp4",
+      "schema": "mp4",
+      "sha256": "b2a23b2f5702ceb718715ae731260a3f6b380e3ce92fa9b32b0da0058fd1548d",
+      "source_commit": "6cfda92a619faefa58a4d3b9a539c21d8149caa4"
+    },
+    {
+      "bytes": 10015,
+      "relative_path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/p6_summary.json",
+      "schema": "track3_start_bundle_p6_v1",
+      "sha256": "980ca8cbbe8230340de8658d088df4bcc47d592fac7df190129693f21b4e0855",
+      "source_commit": "6cfda92a619faefa58a4d3b9a539c21d8149caa4"
+    }
+  ],
+  "schema_version": "track3_artifact_manifest_v1",
+  "self_excluded": true,
+  "status": "complete"
+}

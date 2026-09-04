@@ -1,0 +1,103 @@
+{
+  "attempt_number_for_task10_demo0": 1,
+  "camera_frames_artifact": {
+    "bytes": 2600478,
+    "relative_path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/camera_frames/p3_task10_demo0.npz",
+    "schema": "track3_gpu3_camera_frames_npz_v1",
+    "sha256": "4bb0ed8f910b7ca0c81522079393972c00b18ed2d40e9559fa3b4b659c8ea882",
+    "source_commit": "6cfda92a619faefa58a4d3b9a539c21d8149caa4"
+  },
+  "created_at_utc": "2026-09-04T14:33:32.975971+00:00",
+  "demo_index": 0,
+  "failure_reason": "parent_child_stdout_pipe_deadlock_before_result_json",
+  "failure_stage": "worker_result_publication",
+  "family": "support_remove",
+  "fresh_process": true,
+  "gpu_provenance": {
+    "child_pid": 1387260,
+    "cuda_visible_devices": "3",
+    "end_snapshot": {
+      "compute_processes": [],
+      "free_gate": true,
+      "gpus": [
+        {
+          "index": "3",
+          "memory_total_mib": 32768.0,
+          "memory_used_mib": 5.0,
+          "uuid": "GPU-b03055ef-af46-2cf8-7545-c60870f745f5"
+        }
+      ],
+      "process_query_returncode": 0,
+      "query": [
+        "nvidia-smi",
+        "-i",
+        "3",
+        "--query-gpu=index,uuid,memory.used,memory.total",
+        "--format=csv,noheader,nounits"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "timestamp_utc": "2026-09-04T14:33:33.121309+00:00"
+    },
+    "peak_memory_mib": null,
+    "physical_gpu_uuid": "GPU-b03055ef-af46-2cf8-7545-c60870f745f5",
+    "provenance_incomplete": true,
+    "seed": 3100,
+    "start_snapshot": {
+      "captured": true
+    }
+  },
+  "gpu_provenance_gate": {
+    "executed": true,
+    "missing": [
+      "peak_memory_mib"
+    ],
+    "reason": "worker_result_missing_before_pipe_deadlock",
+    "required": true,
+    "state": "failed"
+  },
+  "mode": "GPU3_EGL_camera",
+  "no_manipulation_action": true,
+  "no_se3_or_grasp": true,
+  "no_task20_or_task19_started": true,
+  "no_teleop": true,
+  "process_terminated_after_no_result": true,
+  "schema_version": "track3_gpu3_camera_canary_v1",
+  "seed": 3100,
+  "status": "worker_exception",
+  "task_index": 10,
+  "videos": {
+    "agentview": {
+      "atomic_publish": true,
+      "bytes": 5646,
+      "ffprobe": {
+        "avg_frame_rate": "20/1",
+        "codec_name": "h264",
+        "height": 128,
+        "nb_frames": "41",
+        "width": 128
+      },
+      "fps": "20/1",
+      "frame_count": 41,
+      "partial_suffix": ".partial",
+      "relative_path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/videos/p3_task10_demo0_agentview.mp4",
+      "sha256": "ca1b71621e8fd7148a24146beaf8be05cb7110a6644aace689a7ae721cf04af8"
+    },
+    "wrist": {
+      "atomic_publish": true,
+      "bytes": 6435,
+      "ffprobe": {
+        "avg_frame_rate": "20/1",
+        "codec_name": "h264",
+        "height": 128,
+        "nb_frames": "41",
+        "width": 128
+      },
+      "fps": "20/1",
+      "frame_count": 41,
+      "partial_suffix": ".partial",
+      "relative_path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/videos/p3_task10_demo0_wrist.mp4",
+      "sha256": "b2a23b2f5702ceb718715ae731260a3f6b380e3ce92fa9b32b0da0058fd1548d"
+    }
+  }
+}

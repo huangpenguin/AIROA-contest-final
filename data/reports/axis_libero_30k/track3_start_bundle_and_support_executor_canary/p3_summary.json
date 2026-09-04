@@ -1,0 +1,72 @@
+{
+  "camera_canary_count": 1,
+  "canaries": [
+    {
+      "failure_stage": "worker_result_publication",
+      "family": "support_remove",
+      "report": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/p3_task10_demo0.json",
+      "status": "worker_exception",
+      "task_index": 10,
+      "videos": {
+        "agentview": {
+          "atomic_publish": true,
+          "bytes": 5646,
+          "ffprobe": {
+            "avg_frame_rate": "20/1",
+            "codec_name": "h264",
+            "height": 128,
+            "nb_frames": "41",
+            "width": 128
+          },
+          "fps": "20/1",
+          "frame_count": 41,
+          "partial_suffix": ".partial",
+          "relative_path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/videos/p3_task10_demo0_agentview.mp4",
+          "sha256": "ca1b71621e8fd7148a24146beaf8be05cb7110a6644aace689a7ae721cf04af8"
+        },
+        "wrist": {
+          "atomic_publish": true,
+          "bytes": 6435,
+          "ffprobe": {
+            "avg_frame_rate": "20/1",
+            "codec_name": "h264",
+            "height": 128,
+            "nb_frames": "41",
+            "width": 128
+          },
+          "fps": "20/1",
+          "frame_count": 41,
+          "partial_suffix": ".partial",
+          "relative_path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/videos/p3_task10_demo0_wrist.mp4",
+          "sha256": "b2a23b2f5702ceb718715ae731260a3f6b380e3ce92fa9b32b0da0058fd1548d"
+        }
+      }
+    }
+  ],
+  "counts": {
+    "accepted_reverse_demo": 0,
+    "exact_reverse_demo": 0,
+    "pending_autogen": 0,
+    "validated_start_state": 9
+  },
+  "created_at_utc": "2026-09-04T14:33:33.122144+00:00",
+  "fixed_order": [
+    10,
+    20,
+    19
+  ],
+  "gpu3_preflight": {
+    "captured_before_deadlock": true,
+    "free_gate": true
+  },
+  "hard_stop_after_first_failure": true,
+  "no_manipulation_action": true,
+  "no_retry_or_demo_change": true,
+  "schema_version": "track3_start_bundle_p3_v1",
+  "seeds": {
+    "10": 3100,
+    "19": 3190,
+    "20": 3200
+  },
+  "status": "track3_start_bundle_p3_failed"
+}

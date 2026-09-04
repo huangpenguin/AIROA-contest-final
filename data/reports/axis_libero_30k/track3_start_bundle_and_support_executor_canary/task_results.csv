@@ -1,0 +1,4 @@
+task_index,family,p2_restore,p3_camera,p4_executor,p5_generation
+10,support_remove,passed,worker_exception,not_evaluated,not_evaluated
+20,containment_remove,passed,not_evaluated,not_evaluated,not_evaluated
+19,articulation_close,passed,not_evaluated,not_evaluated,not_evaluated

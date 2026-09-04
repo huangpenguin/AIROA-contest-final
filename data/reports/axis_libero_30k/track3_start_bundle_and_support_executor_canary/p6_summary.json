@@ -1,0 +1,276 @@
+{
+  "artifact_manifest": {
+    "entries_exclude_self_and_p6_summary": true,
+    "entry_count_before_manifest": 16,
+    "path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/artifact_manifest.json"
+  },
+  "counts": {
+    "accepted_reverse_demo": 0,
+    "exact_reverse_demo": 0,
+    "p3_camera_canaries_started": 1,
+    "p4_executor_attempts": 0,
+    "p5_generation_attempts": 0,
+    "pending_autogen": 0,
+    "successful_replays": 0,
+    "validated_start_state": 9
+  },
+  "created_at_utc": "2026-09-04T14:49:56.809228+00:00",
+  "hard_stop": {
+    "executed": true,
+    "next_authority": "new_reviewed_plan_required",
+    "no_automatic_resume": true,
+    "no_pending": true,
+    "status": "hard_stop_waiting_review"
+  },
+  "p3": {
+    "camera_canary_count": 1,
+    "canaries": [
+      {
+        "failure_stage": "worker_result_publication",
+        "family": "support_remove",
+        "report": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/p3_task10_demo0.json",
+        "status": "worker_exception",
+        "task_index": 10,
+        "videos": {
+          "agentview": {
+            "atomic_publish": true,
+            "bytes": 5646,
+            "ffprobe": {
+              "avg_frame_rate": "20/1",
+              "codec_name": "h264",
+              "height": 128,
+              "nb_frames": "41",
+              "width": 128
+            },
+            "fps": "20/1",
+            "frame_count": 41,
+            "partial_suffix": ".partial",
+            "relative_path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/videos/p3_task10_demo0_agentview.mp4",
+            "sha256": "ca1b71621e8fd7148a24146beaf8be05cb7110a6644aace689a7ae721cf04af8"
+          },
+          "wrist": {
+            "atomic_publish": true,
+            "bytes": 6435,
+            "ffprobe": {
+              "avg_frame_rate": "20/1",
+              "codec_name": "h264",
+              "height": 128,
+              "nb_frames": "41",
+              "width": 128
+            },
+            "fps": "20/1",
+            "frame_count": 41,
+            "partial_suffix": ".partial",
+            "relative_path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/videos/p3_task10_demo0_wrist.mp4",
+            "sha256": "b2a23b2f5702ceb718715ae731260a3f6b380e3ce92fa9b32b0da0058fd1548d"
+          }
+        }
+      }
+    ],
+    "counts": {
+      "accepted_reverse_demo": 0,
+      "exact_reverse_demo": 0,
+      "pending_autogen": 0,
+      "validated_start_state": 9
+    },
+    "created_at_utc": "2026-09-04T14:33:33.122144+00:00",
+    "fixed_order": [
+      10,
+      20,
+      19
+    ],
+    "gpu3_preflight": {
+      "captured_before_deadlock": true,
+      "free_gate": true
+    },
+    "hard_stop_after_first_failure": true,
+    "no_manipulation_action": true,
+    "no_retry_or_demo_change": true,
+    "schema_version": "track3_start_bundle_p3_v1",
+    "seeds": {
+      "10": 3100,
+      "19": 3190,
+      "20": 3200
+    },
+    "status": "track3_start_bundle_p3_failed"
+  },
+  "p4": {
+    "reason": "p3_hard_stop",
+    "status": "not_evaluated"
+  },
+  "p5": {
+    "pending_created": false,
+    "reason": "p3_hard_stop",
+    "status": "not_evaluated"
+  },
+  "phase_status": {
+    "P0": "track3_start_bundle_p0_passed",
+    "P1": "track3_start_bundle_p1_contract_passed",
+    "P2": "track3_start_state_bundle_validated_9_of_9",
+    "P3": "track3_start_bundle_p3_failed",
+    "P4": "not_evaluated",
+    "P5": "not_evaluated",
+    "P6": "hard_stop"
+  },
+  "plan": "docs/AXIS_PI05_TRACK3_START_BUNDLE_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md",
+  "repository_state": {
+    "libero_plus_porcelain": [
+      "M libero/libero/benchmark/__init__.py",
+      "?? libero/__init__.py",
+      "?? libero/libero/assets",
+      "?? libero/libero/bddl_files/libero_t3",
+      "?? libero/libero/init_files/libero_t3"
+    ],
+    "openpi_head": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "openpi_porcelain": [],
+    "root_head_before_commit": "6cfda92a619faefa58a4d3b9a539c21d8149caa4",
+    "root_porcelain_before_commit": [
+      "M data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json",
+      " M docs/AXIS_PI05_PLAN_INDEX.md",
+      " M docs/AXIS_PI05_PROJECT_HANDOFF_20260831.md",
+      " M docs/AXIS_PI05_TRACK3_START_BUNDLE_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md",
+      " M tests/test_dense_fullft_accumulation_lifetime.py",
+      " M tests/test_track3_matched_terminal_state_release_plan.py",
+      " M tests/test_track3_support_autogen_v2.py",
+      "?? tests/test_track3_start_bundle_and_support_executor_canary.py",
+      "?? tools/axis_pi05/track3_start_bundle_and_support_executor_canary.py"
+    ]
+  },
+  "resource_boundary": {
+    "camera_canary_task10_only": true,
+    "fast_or_zip": false,
+    "gpu0_touched": false,
+    "gpu1_touched": false,
+    "gpu2_touched": false,
+    "gpu3_only": true,
+    "hdf5_or_bddl_modified": false,
+    "libero_plus_porcelain": [
+      "M libero/libero/benchmark/__init__.py",
+      "?? libero/__init__.py",
+      "?? libero/libero/assets",
+      "?? libero/libero/bddl_files/libero_t3",
+      "?? libero/libero/init_files/libero_t3"
+    ],
+    "no_manipulation_action": true,
+    "no_se3_or_grasp": true,
+    "no_teleop": true,
+    "official_gpu": false,
+    "old_evidence_modified": false,
+    "partial_residue": [],
+    "pending_directory_created": false,
+    "simulator_used_in_p0_p1": false,
+    "simulator_used_in_p2_p3": true,
+    "training": false,
+    "upload_or_submission": false
+  },
+  "restore_bundle": {
+    "manifest": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/start_state_manifest.json",
+    "npz": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/start_states.npz",
+    "validation": {
+      "allow_pickle": false,
+      "errors": [],
+      "executed": true,
+      "keys": [
+        "task10_demo0",
+        "task10_demo1",
+        "task10_demo2",
+        "task19_demo0",
+        "task19_demo1",
+        "task19_demo2",
+        "task20_demo0",
+        "task20_demo1",
+        "task20_demo2"
+      ],
+      "state": "passed"
+    }
+  },
+  "schema_version": "track3_start_bundle_p6_v1",
+  "status": "track3_support_executor_canary_failed_worker_result_publication",
+  "validation": {
+    "full_tests": {
+      "command": [
+        "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/pytest",
+        "-q",
+        "tests"
+      ],
+      "passed": 231,
+      "returncode": 0,
+      "skipped": 7,
+      "stderr_tail": "",
+      "stdout_tail": "........................................................................ [ 30%]\n.................................ss..................................... [ 60%]\n..................................................................sss... [ 90%]\n....................ss                                                   [100%]\n=============================== warnings summary ===============================\n<frozen importlib._bootstrap>:488\n  <frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.MessageMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.\n\n<frozen importlib._bootstrap>:488\n  <frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.ScalarMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.\n\ntests/test_axis_pi05_lora_screen.py: 21 warnings\n  /home/huang/code/PARC2026_final/.venv_axis_pi05/lib/python3.12/site-packages/flax/core/scope.py:959: DeprecationWarning: shape requires ndarray or scalar arguments, got <class 'jax._src.api.ShapeDtypeStruct'> at position 0. In a future JAX release this will be an error.\n    if jnp.shape(val) != jnp.shape(abs_val):\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n231 passed, 7 skipped, 23 warnings in 61.73s (0:01:01)\n",
+      "warnings": 23
+    },
+    "git_diff_check": {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": ""
+    },
+    "json_strict_parse": {
+      "errors": [],
+      "executed": true,
+      "file_count": 9,
+      "state": "passed"
+    },
+    "old_input_lock": {
+      "entry_count": 32,
+      "errors": [],
+      "executed": true,
+      "state": "passed"
+    },
+    "py_compile": {
+      "command": [
+        "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+        "-m",
+        "py_compile",
+        "/home/huang/code/PARC2026_final/tools/axis_pi05/track3_start_bundle_and_support_executor_canary.py"
+      ],
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": ""
+    },
+    "targeted_tests": {
+      "command": [
+        "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/pytest",
+        "-q",
+        "tests/test_track3_start_bundle_and_support_executor_canary.py"
+      ],
+      "passed": 8,
+      "returncode": 0,
+      "skipped": 0,
+      "stderr_tail": "",
+      "stdout_tail": "........                                                                 [100%]\n8 passed in 0.70s\n",
+      "warnings": 0
+    },
+    "video_ffprobe": [
+      {
+        "path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/videos/p3_task10_demo0_agentview.mp4",
+        "returncode": 0,
+        "state": "passed",
+        "stream": {
+          "avg_frame_rate": "20/1",
+          "codec_name": "h264",
+          "height": 128,
+          "nb_frames": "41",
+          "width": 128
+        }
+      },
+      {
+        "path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/videos/p3_task10_demo0_wrist.mp4",
+        "returncode": 0,
+        "state": "passed",
+        "stream": {
+          "avg_frame_rate": "20/1",
+          "codec_name": "h264",
+          "height": 128,
+          "nb_frames": "41",
+          "width": 128
+        }
+      }
+    ]
+  }
+}

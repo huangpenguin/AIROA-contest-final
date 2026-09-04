@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-04",
-  "status": "track3_start_bundle_and_support_executor_canary_planned",
+  "status": "track3_support_executor_canary_failed_worker_result_publication",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
@@ -251,7 +251,7 @@
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
   "next_plan": "docs/AXIS_PI05_TRACK3_START_BUNDLE_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md",
-  "next_phase_only": "P0_to_P6_then_hard_stop",
+  "next_phase_only": "P6_complete_hard_stop_waiting_new_reviewed_plan",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -2891,7 +2891,7 @@
     "next_plan_approved": true
   },
   "track3_start_bundle_and_support_executor_canary_authorization": {
-    "status": "track3_start_bundle_and_support_executor_canary_planned",
+    "status": "track3_support_executor_canary_failed_worker_result_publication",
     "plan": "docs/AXIS_PI05_TRACK3_START_BUNDLE_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md",
     "audited_input_commit": "eef683b0db9629a3d917ea91ebeb46540a34fcb9",
     "authorized_phases": ["P0", "P1", "P2", "P3", "P4", "P5", "P6_closeout"],
@@ -2916,6 +2916,18 @@
     },
     "success_stop": "track3_support_remove_canary_pending_review",
     "failure_stop_prefix": "track3_start_bundle_or_support_executor_",
-    "next_phase_only": "P0_to_P6_then_hard_stop"
+    "next_phase_only": "P6_complete_hard_stop_waiting_new_reviewed_plan",
+    "execution_closeout": {
+      "status": "track3_support_executor_canary_failed_worker_result_publication",
+      "phase_status": {"P0": "passed", "P1": "passed", "P2": "passed_9_of_9", "P3": "failed_worker_result_publication", "P4": "not_evaluated", "P5": "not_evaluated", "P6": "hard_stop"},
+      "validated_start_state": 9,
+      "camera_canaries_started": 1,
+      "exact_pending_accepted": [0, 0, 0],
+      "pending_created": false,
+      "manual_operation_required": false,
+      "evidence_root": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/",
+      "failure_reason": "parent_child_stdout_pipe_deadlock_before_result_json",
+      "no_retry_after_failure": true
+    }
   }
 }

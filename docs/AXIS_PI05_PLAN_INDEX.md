@@ -2,7 +2,7 @@
 
 > 更新日期：2026-09-04（Asia/Tokyo）
 > 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_START_BUNDLE_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md`
-> 当前状态：`track3_start_bundle_and_support_executor_canary_planned`
+> 当前状态：`track3_support_executor_canary_failed_worker_result_publication`
 > 最新审核：`docs/reviews/axis_pi05/TRACK3_COMPOSED_REVERSE_START_M0_M5_AUDIT_20260904.md`
 
 ## 1. 本轮执行停止点
@@ -153,6 +153,12 @@ M4 仅使用 GPU3，按 task10→task20→task19 各执行一次 camera canary�
 总体仍为`remediation_required`：M4 raw缺seed/PID/GPU peak；contact required gate漏step1–20；report-only candidate只有hash没有state vector；`round_trip...`字段误名、run index缺file hash且handoff使用orphan `020d291`。用户人工操作为`not_required`。
 
 旧计划已归档；唯一活动计划`docs/AXIS_PI05_TRACK3_START_BUNDLE_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md`先闭合上述机器合同并物化9个state，通过后只运行task10/demo0自动SE(3) canary与最多3次replay。成功也只进入`pending_autogen_v3`，不进入accepted或训练。完整审核见`docs/reviews/axis_pi05/TRACK3_COMPOSED_REVERSE_START_M0_M5_AUDIT_20260904.md`。
+
+## 3.10 Start Bundle / Support Executor P0–P6 收尾（2026-09-04）
+
+P0/P1 通过；P2 物化 9 个 no-pickle start state，fresh CPU restore 为 `9/9`，task10/demo0 固定 HDF5 抓取几何提取通过。P3 按固定顺序只启动 task10/demo0 一条 GPU3 camera canary；41 帧与两路 H.264 已封存，但 worker 因完整 checkpoint JSON 填满 stdout 管道而在结果发布阶段阻塞，按 hard stop 终止。修复后的文件重定向/压缩输出工具未在本轮重启 canary。
+
+P3 失败后 task20/task19、P4、P5 均未启动；没有 action、SE(3)、demo、pending、Teleop 或训练。P6 完成 artifact manifest、CSV、strict JSON/NPZ/video/py_compile/diff check；targeted `8 passed`，全量 `231 passed, 7 skipped, 23 warnings`。最终状态 `track3_support_executor_canary_failed_worker_result_publication`，`validated_start_state=9`、`exact/pending/accepted=0/0/0`，已 hard stop 等待新审核计划。证据位于 `data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/`。
 
 ## 4. 保留但非活动的研究线
 

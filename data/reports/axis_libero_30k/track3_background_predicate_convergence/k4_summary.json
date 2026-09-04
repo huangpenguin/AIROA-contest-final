@@ -1,0 +1,72 @@
+{
+  "schema_version": "track3_background_convergence_k4_v1",
+  "status": "track3_background_convergence_gpu_failed_task19_canary",
+  "hard_stop": true,
+  "phases": {
+    "K0": {"state": "passed", "raw_reports": "15/15", "raw_bytes": 16072261, "fresh_checkout": "15/15 hashes matched"},
+    "K1": {"state": "passed", "contract": "critical/goal strict; background false_to_true only"},
+    "K2": {"state": "passed", "reverse": "9/9", "forward": "6/6", "critical_transitions": 0, "goal_transitions": 0, "background_false_to_true": 1, "background_true_to_false": 0, "background_repeated_rise": 0},
+    "K3": {"state": "failed", "task19_canary": "failed", "family_matrix": "not_evaluated", "family_runs": 0},
+    "K4": {"state": "passed", "execution_closed": true}
+  },
+  "old_vs_new": {
+    "old_j2_exact_vector": "8/9",
+    "old_failed_run": "task19_reverse_run_1",
+    "old_failure_preserved": true,
+    "new_k2_monotonic_vector": "9/9",
+    "new_k2_forward_controls": "6/6"
+  },
+  "commits": {
+    "k0_evidence_closure": "00f890a95a159ee0207645b1b66c8d12a2f5644b",
+    "k0_fresh_checkout_record": "52ed3d86faf0019b04c7eda1dae60b7ec1ecda81",
+    "k1_k2_frozen_cpu_release": "cb8e898640a66e9baf5a587f21d5f44a84494a8e",
+    "nested_openpi": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1"
+  },
+  "artifacts": {
+    "raw_manifest_sha256": "4a7e80e8dadf772b5a61062019c345b9e031e045d58419bb9838bc101343bee3",
+    "k0_lock_sha256": "4166bbe7dab45e84a2e8fc6e2d5a2f11ef328a6833c1d5d75f9ebab51b1d10d3",
+    "k1_contract_sha256": "fc672eac87fb561061fb071fe6f9e14f66c36c948ab866931e2540f22b844dbd",
+    "k2_summary_sha256": "7c1e6c6c8e9e837e2207d64b8c446f7c58ee0ae95b61fd6ae833dc352bfa6779",
+    "k2_transition_ledger_sha256": "ba700751833afa0ccb5e6939f98aa32796dbdf3e79f3e43f0838ea69f3076c69",
+    "k3_summary_sha256": "6f1675447a7a014ab03d59bb8f26012a6445a359bf5a52459020484c12934bd3",
+    "k3_task19_canary_sha256": "310ead01be046e925ab2f5babad3161cbe58ed5ec05ebfb9310e2e7540e254b1",
+    "frozen_tool_sha256": "b453366b56e249df65797e1e1b09a0dad399c8a287868481b3fe04817484936d"
+  },
+  "k3_failure": {
+    "worker_exception_count": 0,
+    "process_returncode_contract": true,
+    "background_transition": {"atom": "(On akita_black_bowl_1 main_table_akita_black_bowl_region)", "from_step": 19, "to_step": 20, "from": true, "to": false},
+    "renderer_schema_gate": "failed",
+    "camera_frames": "21/21 each",
+    "h264_agentview": "failed_ffmpeg_partial_extension",
+    "h264_wrist": "failed_ffmpeg_partial_extension",
+    "direct_sensitivity_gate": "failed",
+    "physical_contact_participant_robot": "passed",
+    "reverse_goal_gate": "passed"
+  },
+  "verification": {
+    "targeted_tests": "12 passed",
+    "full_tests": "201 passed, 7 skipped, 26 warnings",
+    "py_compile": "passed",
+    "json_parse": "passed",
+    "git_diff_check": "passed",
+    "old_i2_sha256": "e72ae24d27b6edbba37b043a88042191f8a1c7d00c298b812653a1a2ecc17dab",
+    "reverse_demo_counts": {"exact_reverse_demo": 0, "pending_autogen": 0, "accepted_reverse_demo": 0}
+  },
+  "resource_boundary": {
+    "gpu3_touched": true,
+    "gpu0_touched": false,
+    "gpu1_touched": false,
+    "gpu2_touched": false,
+    "gpu0_external_pid_untouched": 1133706,
+    "se3": false,
+    "grasp": false,
+    "demo_generation": false,
+    "teleop": false,
+    "training_or_norm": false,
+    "fast_or_zip": false,
+    "official_gpu": false,
+    "upload_or_submission": false
+  },
+  "next_action": "等待审核；不得重跑GPU3、进入SE(3)、生成demo或训练"
+}

@@ -2,7 +2,7 @@
 
 > 更新日期：2026-09-04（Asia/Tokyo）
 > 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_BACKGROUND_PREDICATE_CONVERGENCE_RELEASE_PLAN.md`
-> 当前状态：`track3_background_predicate_convergence_release_planned`
+> 当前状态：`track3_background_convergence_gpu_failed_task19_canary_hard_stop_waiting_review`
 > 最新审核：`docs/reviews/axis_pi05/TRACK3_OPERATOR_SCOPED_J0_J4_AUDIT_20260904.md`
 
 ## 1. 本轮执行停止点
@@ -11,20 +11,20 @@ Init Stabilization I0–I4 已完成并停止。三族 reverse operator-critical
 
 Operator-Scoped Stability Release的J0/J1/J2/J4已完成并获执行审核；J2新矩阵为reverse`8/9`、forward`6/6`，J3未执行。唯一跃迁已定位为task19 run1的background initializer `(On bowl region)`在step20由false变true；critical `Open`始终true、goal `Close`始终false，物理/contact门禁均通过。这是单调收敛，不是task19语义回退。
 
-旧I2和J2 failure保持immutable。当前先闭包未被Git追踪的15个raw worker reports，再用“critical/goal严格、background init单调非递减”的新合同只读复算；通过后最多在GPU3执行一次task19 canary与三族各`3/3`。本轮未授权SE(3)、抓取/demo、Teleop、批量生成或训练。
+旧I2和J2 failure保持immutable。K0已将15个raw worker reports及manifest闭包进Git并完成fresh-checkout hash验证；K1/K2以“critical/goal严格、background init单调非递减”的新合同只读复算通过（reverse`9/9`、forward`6/6`）。K3仅运行一次GPU3 task19 canary即因background `true→false`、renderer/H.264/sensitivity gates未通过而hard stop，三族`3/3`未执行。本轮仍未授权SE(3)、抓取/demo、Teleop、批量生成或训练。
 
 G0/G1 已按失败门禁停止，S1 v2 与 typed language 获批准，三族 `3/3` fresh-process 运行及 hard stop 也真实完成；但 G1.3 的失败结论不能证明 reverse semantics 无效。旧 validator 把 HDF5 `states[0]` 恢复到不同/randomized XML 的 reverse env，以 forward success 冒充 reverse initial predicate 检查，并对包含 joint velocity、EEF quaternion、gripper qpos/qvel 的整段 proprio 使用一个 `0.05` 阈值；20 步 action 还固定发送 `gripper=-1`。相反，三族 object/fixture drift 仅约 `1e-7～1e-11`。
 
 最新审核仍为 `remediation_required`，但 R2 已取得第一条有效结论：task10 reset 瞬间 7 条 reverse init 中 3 条 false，goal 正确 false；bowl 与 plate XY 完全一致而 Z 相差 `0.11 m`，符合 sampler 已放置但尚未形成 runtime contact。三族 R1 都至少有一个 background init atom=false；本地 LIBERO evaluator 会先执行 5 个零动作物理步。因此当前先校准 initializer-vs-runtime 和 step5 stabilization 语义，不能直接改 BDDL 或宣布 reverse start 无效。证据：`docs/reviews/axis_pi05/TRACK3_NATIVE_VALIDATOR_R0_R4_AUDIT_20260903.md`。
 
-## 2. 唯一活动计划
+## 2. 当前计划与停止点
 
 - `AXIS_PI05_TRACK3_BACKGROUND_PREDICATE_CONVERGENCE_RELEASE_PLAN.md`
   - K0锁定`f969393/bc2419e`并将J2引用的15个raw 21-step reports及manifest显式纳入Git；
   - K1预注册role-aware monotonic contract：critical source恒true、goal恒false、background initializer只允许单调`false→true`；
   - K2只读复算15个raw，要求reverse`9/9`、forward`6/6`，不得重跑CPU simulator来替代失败；
   - K2通过后才允许K3在GPU3做一次task19 remediation canary，随后三族各`3/3`；
-  - K4收尾并hard stop；成功也只到`pending_se3_review`；
+  - K4已收尾并hard stop；成功路径未达成，当前等待审核；
   - 不得修改 BDDL/region/predicate，不得运行 SE(3)、抓取/demo、Teleop、批量生成、训练、norm、FAST/ZIP、官方 GPU、上传或提交。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。

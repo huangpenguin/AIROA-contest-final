@@ -1,0 +1,75 @@
+{
+  "created_at_utc": "2026-09-04T05:09:32.571915+00:00",
+  "family_matrix": {
+    "10": {
+      "passed": 0,
+      "required": "3/3",
+      "runs": 0
+    },
+    "19": {
+      "passed": 0,
+      "required": "3/3",
+      "runs": 1
+    },
+    "20": {
+      "passed": 0,
+      "required": "3/3",
+      "runs": 0
+    }
+  },
+  "gpu_policy": {
+    "allowed_physical_gpu": 3,
+    "cuda_visible_devices": "3",
+    "gpu0_touched": false,
+    "gpu1_touched": false,
+    "gpu2_touched": false,
+    "mujoco_render_gpu_device_id": 0
+  },
+  "gpu_read_only_snapshot": {
+    "read_only": true,
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "0, GPU-0a004a52-e72d-9b46-0391-9488e841db41, 16099, 69\n1, GPU-dbf876c3-dcaf-054b-ac9d-035e7198ceda, 5, 0\n2, GPU-0cf6b31a-016b-6e71-a7b5-a790922d89ae, 5, 0\n3, GPU-b03055ef-af46-2cf8-7545-c60870f745f5, 5, 0\n"
+  },
+  "hard_gate": {
+    "family_3x3": false,
+    "k2_passed": true,
+    "no_retry": true,
+    "no_seed_change": true,
+    "task19_canary_passed": false,
+    "worker_exception_zero": true
+  },
+  "k1_contract_sha256": "fc672eac87fb561061fb071fe6f9e14f66c36c948ab866931e2540f22b844dbd",
+  "k2_summary_sha256": "7c1e6c6c8e9e837e2207d64b8c446f7c58ee0ae95b61fd6ae833dc352bfa6779",
+  "resource_boundary": {
+    "accepted_reverse_demo": 0,
+    "demo_generation": false,
+    "fast_or_zip": false,
+    "gpu0_touched": false,
+    "gpu1_touched": false,
+    "gpu2_touched": false,
+    "gpu3_touched": true,
+    "grasp": false,
+    "pending_autogen": 0,
+    "se3": false,
+    "training_or_norm": false
+  },
+  "runs": [
+    {
+      "operator_family": "articulation_close",
+      "phase": "task19_canary",
+      "process_returncode": 0,
+      "run_index": 1,
+      "status": "failed_gate",
+      "task_index": 19,
+      "worker_returncode_contract": true
+    }
+  ],
+  "schema_version": "track3_background_convergence_k3_v1",
+  "status": "track3_background_convergence_gpu_failed_task19_canary",
+  "task19_canary": {
+    "passed": false,
+    "report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_background_predicate_convergence/k3_gpu3_release/task19_canary.json",
+    "runs": 1
+  }
+}

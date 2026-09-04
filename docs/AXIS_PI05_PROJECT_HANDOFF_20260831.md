@@ -1,11 +1,11 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新审核状态：`track3_background_predicate_convergence_release_planned`
+> 最新审核状态：`track3_background_convergence_gpu_failed_task19_canary_hard_stop_waiting_review`
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_background_predicate_convergence_release_planned`
+> 当前总状态：`track3_background_convergence_gpu_failed_task19_canary_hard_stop_waiting_review`
 > 唯一活动计划：`docs/AXIS_PI05_TRACK3_BACKGROUND_PREDICATE_CONVERGENCE_RELEASE_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
@@ -14,7 +14,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。J2 reverse`8/9`的唯一失败已定位为task19背景initializer在step20从false变true；critical `Open`、goal `Close`、drawer/robot/contact均稳定，没有语义回退。当前先将15个未追踪raw reports闭包进Git，再用background单调收敛合同只读复算；不修改BDDL，也不进入SE(3)、Teleop或训练，reverse demo仍为`0/0/0`。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。K0已将15个J2 raw reports闭包进Git并通过fresh-checkout hash验证；K1/K2只读复算为reverse`9/9`、forward`6/6`，同时保留旧exact-vector`8/9`。K3仅执行一次GPU3 task19 canary，因background `true→false`及renderer/H.264/sensitivity gate失败而hard stop，三族matrix未执行；不修改BDDL，也不进入SE(3)、Teleop或训练，reverse demo仍为`0/0/0`。
 
 ## 2. 数据与复现基础
 
@@ -594,3 +594,13 @@ J4 已生成 `data/reports/axis_libero_30k/track3_operator_scoped_stability/summ
 该变化是background initializer朝BDDL预期状态单调收敛；旧J1要求完整truth vector绝对不变，因此旧J2`8/9`和hard stop仍然有效且永久保留，但不能解释为task19或reverse start失败。新合同只允许background init最多一次`false→true`，继续禁止`true→false`、回摆、critical source变化和goal变化。
 
 审核还确认：`j2_summary.json`引用的15个raw worker reports（共`16,072,261 bytes`、每条21 steps）和15个corrected reports都被`.gitignore`排除，Git中为0条；summary不能替代逐帧/contact raw证据。机器handoff顶层current commit/tests/next-plan也仍为上一轮值。唯一活动计划`docs/AXIS_PI05_TRACK3_BACKGROUND_PREDICATE_CONVERGENCE_RELEASE_PLAN.md`先做raw evidence closure与fresh-checkout hash验证，再只读复算；通过才允许GPU3 task19 canary和三族`3/3`。仍不授权SE(3)、demo、Teleop、训练或比赛GPU。审核报告：`docs/reviews/axis_pi05/TRACK3_OPERATOR_SCOPED_J0_J4_AUDIT_20260904.md`。
+
+## 47. Background Predicate Convergence K0–K4 收尾（2026-09-04）
+
+K0 已将审核锁定的 15 份 J2 raw worker reports 显式纳入 Git，合计 `16,072,261 bytes`；manifest canonical hash 为 `83a23cb06c2e0d882c70b38bde8104cefc78f4728b67de1b36955fc12f5de2b8`，独立 fresh checkout 验证 `15/15` 文件 bytes/hash 一致。K1 冻结了 critical source 严格 true、reverse goal 严格 false、background initializer 只允许单调 `false→true` 的合同，并保留未知角色、缺失 atom/step、truth/detail 未执行和非 bool 的 fail-closed 规则。
+
+K2 只读使用 manifest 内的 raw telemetry，未启动 simulator，结果为 reverse `9/9`、forward `6/6`；critical/goal transition 均为 `0`，background 允许的 `false→true` 为 `1`，forbidden `true→false` 与回摆均为 `0`。旧 J2 exact-vector `8/9` 与 task19 run1 的原始失败保持 immutable。
+
+K3 按授权仅在 GPU3 执行 1 条 task19 canary；因为 initial background predicate 在 step19→20 出现 `true→false`，renderer schema、两路 H.264 及 direct sensitivity gates 未整体通过，立即停止。worker exception 为 `0`，三族 matrix 为 `not_evaluated`（`0` 次），没有 retry、换 seed 或修复后重跑。K4 已生成 `data/reports/axis_libero_30k/track3_background_predicate_convergence/k4_summary.json` 与 `K4_CLOSEOUT_REPORT_ZH.md`，状态为 `track3_background_convergence_gpu_failed_task19_canary` 并 hard stop。
+
+本轮完整测试为 `201 passed, 7 skipped, 26 warnings`；targeted tests `12 passed`，py_compile、JSON parse、diff check 通过。GPU0/1/2 未触碰，GPU0 外部 PID `1133706` 未触碰；SE(3)、grasp/demo、Teleop、批量生成、训练/norm、FAST/ZIP、官方 GPU、上传/提交均未执行。reverse demo counts 仍为 `exact/pending/accepted = 0/0/0`。等待下一次审核决定后续最小 remediation，当前不得重跑 GPU 或进入 SE(3)。

@@ -4,7 +4,7 @@
 > 输入 commits：root `f969393f3e16dc94985675083d09daa712cc7c04`，execution `bc2419e62ff05a9584d1d6033d22b0e55d03a240`
 > nested OpenPI：`b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`
 > 审核结论：`remediation_required`
-> 当前状态：`track3_background_predicate_convergence_release_planned`
+> 当前状态：`track3_background_convergence_gpu_failed_task19_canary_hard_stop_waiting_review`
 > 唯一授权：执行K0–K4，随后hard stop
 > 不授权：修改BDDL/region/predicate、SE(3)、抓取/demo、Teleop、批量生成、训练/norm、FAST/ZIP、官方GPU、上传或比赛提交
 

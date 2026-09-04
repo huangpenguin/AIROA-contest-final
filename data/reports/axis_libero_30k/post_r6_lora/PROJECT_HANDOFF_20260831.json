@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-04",
-  "status": "track3_background_predicate_convergence_release_planned",
+  "status": "track3_background_convergence_gpu_failed_task19_canary_hard_stop_waiting_review",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
   "latest_audited_execution_commit": "f969393f3e16dc94985675083d09daa712cc7c04",
   "latest_audit_input_commit": "f969393f3e16dc94985675083d09daa712cc7c04",
-  "latest_execution_root_commit": "f969393f3e16dc94985675083d09daa712cc7c04",
+  "latest_execution_root_commit": "cb8e898640a66e9baf5a587f21d5f44a84494a8e",
   "latest_execution_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
@@ -218,9 +218,9 @@
   },
   "tests": {
     "command": "JAX_PLATFORMS=cpu .venv_axis_pi05/bin/pytest -q tests",
-    "passed": 194,
+    "passed": 201,
     "skipped": 7,
-    "warnings": 23,
+    "warnings": 26,
     "pynvml_is_collection_blocker": false
   },
   "resources": {
@@ -251,7 +251,7 @@
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
   "next_plan": "docs/AXIS_PI05_TRACK3_BACKGROUND_PREDICATE_CONVERGENCE_RELEASE_PLAN.md",
-  "next_phase_only": "K0_to_K4_background_predicate_convergence_then_hard_stop",
+  "next_phase_only": "await_next_audit_no_gpu_before_new_plan",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -2659,6 +2659,17 @@
     },
     "success_stop": "track3_predicate_convergence_dynamic_validated_pending_se3_review",
     "failure_stop_prefix": "track3_background_convergence_",
-    "next_phase_only": "K0_to_K4_background_predicate_convergence_then_hard_stop"
+    "next_phase_only": "await_next_audit_no_gpu_before_new_plan"
+  },
+  "track3_background_predicate_convergence_execution": {
+    "status": "track3_background_convergence_gpu_failed_task19_canary",
+    "plan": "docs/AXIS_PI05_TRACK3_BACKGROUND_PREDICATE_CONVERGENCE_RELEASE_PLAN.md",
+    "k0": {"status": "passed", "evidence_closure_commit": "00f890a95a159ee0207645b1b66c8d12a2f5644b", "fresh_checkout_commit": "52ed3d86faf0019b04c7eda1dae60b7ec1ecda81", "raw_reports": "15/15", "raw_bytes": 16072261, "manifest_sha256": "4a7e80e8dadf772b5a61062019c345b9e031e045d58419bb9838bc101343bee3"},
+    "k1": {"status": "passed", "contract_sha256": "fc672eac87fb561061fb071fe6f9e14f66c36c948ab866931e2540f22b844dbd"},
+    "k2": {"status": "passed", "execution_commit": "cb8e898640a66e9baf5a587f21d5f44a84494a8e", "reverse": "9/9", "forward": "6/6", "critical_transitions": 0, "goal_transitions": 0, "background_false_to_true": 1, "background_true_to_false": 0, "background_repeated_rise": 0, "summary_sha256": "7c1e6c6c8e9e837e2207d64b8c446f7c58ee0ae95b61fd6ae833dc352bfa6779"},
+    "k3": {"status": "track3_background_convergence_gpu_failed_task19_canary", "gpu3_task19_canary_runs": 1, "family_matrix_runs": 0, "family_matrix": "not_evaluated", "worker_exception_count": 0, "report": "data/reports/axis_libero_30k/track3_background_predicate_convergence/k3_gpu3_release/task19_canary.json", "summary": "data/reports/axis_libero_30k/track3_background_predicate_convergence/k3_summary.json"},
+    "k4": {"status": "completed_hard_stop", "summary": "data/reports/axis_libero_30k/track3_background_predicate_convergence/k4_summary.json", "report": "data/reports/axis_libero_30k/track3_background_predicate_convergence/K4_CLOSEOUT_REPORT_ZH.md", "targeted_tests": "12_passed", "full_tests": "201_passed_7_skipped_26_warnings", "json_parse": "passed", "py_compile": "passed", "git_diff_check": "passed"},
+    "resource_boundary": {"gpu3_touched": true, "gpu0_touched": false, "gpu1_touched": false, "gpu2_touched": false, "gpu0_external_pid_untouched": 1133706, "se3": false, "grasp": false, "demo_generation": false, "teleop": false, "training_or_norm": false, "fast_or_zip": false, "official_gpu": false, "upload_or_submission": false, "reverse_demo_counts": {"exact": 0, "pending": 0, "accepted": 0}},
+    "next_action": "等待审核；不得重跑GPU、进入SE(3)、生成demo或训练"
   }
 }

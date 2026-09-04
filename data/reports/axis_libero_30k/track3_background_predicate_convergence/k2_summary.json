@@ -1,0 +1,71 @@
+{
+  "created_at_utc": "2026-09-04T05:03:09.214131+00:00",
+  "hard_gate": {
+    "background_repeated_rise_zero": true,
+    "background_true_to_false_zero": true,
+    "critical_transition_zero": true,
+    "forward_6_of_6": true,
+    "goal_transition_zero": true,
+    "k0_manifest_fresh_checkout_15_of_15": true,
+    "old_i2_hash_unchanged": true,
+    "old_j1_hash_unchanged": true,
+    "old_j2_hash_unchanged": true,
+    "old_j4_hash_unchanged": true,
+    "raw_identity_closed": true,
+    "reverse_9_of_9": true,
+    "reverse_demo_counts_zero": true,
+    "worker_exception_zero": true
+  },
+  "k0_raw_manifest_sha256": "4a7e80e8dadf772b5a61062019c345b9e031e045d58419bb9838bc101343bee3",
+  "k1_contract_sha256": "fc672eac87fb561061fb071fe6f9e14f66c36c948ab866931e2540f22b844dbd",
+  "new_forward": {
+    "pass_count": 6,
+    "release": true,
+    "required": "6/6",
+    "runs": 6
+  },
+  "new_reverse": {
+    "pass_count": 9,
+    "release": true,
+    "required": "9/9",
+    "runs": 9
+  },
+  "old_exact_vector": {
+    "failed_run": [
+      {
+        "failed_gates": [
+          "truth_vector_no_transition"
+        ],
+        "kind": "reverse",
+        "run_index": 1,
+        "task_index": 19
+      }
+    ],
+    "required": "8/9",
+    "reverse_pass": 8,
+    "status": "track3_operator_scoped_cpu_release_failed_truth_vector_transition_task19_run1"
+  },
+  "raw_manifest_errors": [],
+  "resource_boundary": {
+    "accepted_reverse_demo": 0,
+    "cpu_no_renderer_only": true,
+    "demo_generation": false,
+    "fast_or_zip": false,
+    "gpu0_touched": false,
+    "gpu3_touched": false,
+    "grasp": false,
+    "pending_autogen": 0,
+    "se3": false,
+    "simulator_started": false,
+    "training_or_norm": false
+  },
+  "schema_version": "track3_background_convergence_k2_v1",
+  "status": "track3_background_convergence_cpu_release_passed",
+  "transition_counts": {
+    "background_false_to_true": 1,
+    "background_repeated_rise": 0,
+    "background_true_to_false": 0,
+    "critical": 0,
+    "goal": 0
+  }
+}

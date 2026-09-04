@@ -1,0 +1,119 @@
+{
+  "contract_canonical_sha256": "e5d37d5d3ef4ceec4a089728817ae42677ddd21c0eaf4e6af13f9739c8feecbb",
+  "created_at_utc": "2026-09-04T05:02:37.455564+00:00",
+  "fail_closed": [
+    "unknown_role",
+    "missing_atom",
+    "duplicate_atom",
+    "atom_order_change",
+    "missing_step",
+    "truth_not_executed",
+    "detail_not_executed",
+    "non_bool_value"
+  ],
+  "hard_gate": {
+    "fail_closed_rules_complete": true,
+    "k0_locked": true,
+    "old_exact_vector_preserved": true,
+    "old_i2_unchanged": true,
+    "reverse_demo_counts_zero": true,
+    "reverse_goal_atoms_fixed": true,
+    "role_rules_complete": true,
+    "source_atoms_fixed": true
+  },
+  "k0_input_lock_sha256": "4166bbe7dab45e84a2e8fc6e2d5a2f11ef328a6833c1d5d75f9ebab51b1d10d3",
+  "old_evidence_policy": {
+    "old_exact_vector_is_read_only": true,
+    "old_i2_immutable": true,
+    "old_j2_failed_run": [
+      19,
+      "reverse",
+      1
+    ],
+    "old_j2_reverse_result": "8/9"
+  },
+  "operator_atoms": {
+    "10": {
+      "family": "support_remove",
+      "reverse_goal_atom": "(On akita_black_bowl_1 main_table_akita_black_bowl_region)",
+      "source_atom": "(On akita_black_bowl_1 plate_1)"
+    },
+    "19": {
+      "family": "articulation_close",
+      "reverse_goal_atom": "(Close wooden_cabinet_1_middle_region)",
+      "source_atom": "(Open wooden_cabinet_1_middle_region)"
+    },
+    "20": {
+      "family": "containment_remove",
+      "reverse_goal_atom": "(On orange_juice_1 floor_target_object_region)",
+      "source_atom": "(In orange_juice_1 basket_1_contain_region)"
+    }
+  },
+  "physical_gates_unchanged": {
+    "contact": "prior_J1_step5_baseline_body_pair_contract",
+    "finite": true,
+    "participant": "prior_J1_operator_participant_thresholds",
+    "robot": "prior_J1_component_thresholds",
+    "scene_names": true
+  },
+  "provenance": {
+    "bddl_modified": false,
+    "hdf5_state_used": false,
+    "raw_reports_in_k1": false,
+    "simulator_in_k1": false
+  },
+  "release_window": {
+    "end_step": 20,
+    "frequency_hz": 20,
+    "start_step": 5,
+    "steps": [
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ]
+  },
+  "resource_boundary": {
+    "cpu_filesystem_only": true,
+    "gpu3_touched": false,
+    "se3": false,
+    "simulator_started": false,
+    "training": false
+  },
+  "roles": {
+    "background": {
+      "allowed_transitions": [
+        "none",
+        "false_to_true"
+      ],
+      "forbidden_transitions": [
+        "true_to_false",
+        "backtracking"
+      ],
+      "max_false_to_true": 1,
+      "role": "background_initializer"
+    },
+    "reverse_goal": {
+      "role": "operator_critical_goal",
+      "strict_value": false
+    },
+    "source": {
+      "role": "operator_critical",
+      "strict_value": true
+    }
+  },
+  "schema_version": "track3_background_convergence_k1_monotonic_contract_v1",
+  "status": "track3_background_convergence_contract_validated"
+}

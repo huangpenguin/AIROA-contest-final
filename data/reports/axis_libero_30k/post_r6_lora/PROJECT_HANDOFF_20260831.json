@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-04",
-  "status": "track3_matched_terminal_state_release_planned",
+  "status": "track3_matched_terminal_state_cpu_failed_containment_remove",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
@@ -218,9 +218,9 @@
   },
   "tests": {
     "command": "JAX_PLATFORMS=cpu .venv_axis_pi05/bin/pytest -q tests",
-    "passed": 204,
+    "passed": 211,
     "skipped": 7,
-    "warnings": 23,
+    "warnings": 26,
     "pynvml_is_collection_blocker": false
   },
   "resources": {
@@ -251,7 +251,7 @@
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
   "next_plan": "docs/AXIS_PI05_TRACK3_MATCHED_TERMINAL_STATE_RELEASE_PLAN.md",
-  "next_phase_only": "L0_to_L5_matched_terminal_state_release_then_hard_stop",
+  "next_phase_only": "await_next_audit_after_l5_hard_stop",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -2728,7 +2728,7 @@
     }
   },
   "track3_matched_terminal_state_release_authorization": {
-    "status": "track3_matched_terminal_state_release_planned",
+    "status": "track3_matched_terminal_state_release_completed_hard_stop",
     "plan": "docs/AXIS_PI05_TRACK3_MATCHED_TERMINAL_STATE_RELEASE_PLAN.md",
     "authorized_phases": ["L0", "L1", "L2", "L3", "L4", "L5_closeout"],
     "authorization": {
@@ -2755,6 +2755,20 @@
     },
     "success_stop": "track3_matched_terminal_state_dynamic_validated_pending_executor_review",
     "failure_stop_prefix": "track3_matched_terminal_state_",
-    "next_phase_only": "L0_to_L5_then_hard_stop"
+    "next_phase_only": "await_next_audit_after_l5_hard_stop"
+  },
+  "track3_matched_terminal_state_release_execution": {
+    "status": "track3_matched_terminal_state_cpu_failed_containment_remove",
+    "plan": "docs/AXIS_PI05_TRACK3_MATCHED_TERMINAL_STATE_RELEASE_PLAN.md",
+    "execution_input_root_commit": "c74f68bfdb2dc429fdc9f405b27ccdcc5167ee1f",
+    "l0": {"status": "track3_matched_terminal_state_input_locked", "report": "data/reports/axis_libero_30k/track3_matched_terminal_state_release/l0_input_lock.json", "fixed_demos": "9/9", "selection": "task10/task20/task19 demo_0/demo_1/demo_2; sustained reward suffix first state"},
+    "l1": {"status": "track3_matched_terminal_state_validator_contract_passed", "report": "data/reports/axis_libero_30k/track3_matched_terminal_state_release/l1_validator_contract.json", "unit_tests": 7, "simulator_started": false, "gpu_started": false},
+    "l2": {"status": "track3_matched_terminal_state_cpu_failed_containment_remove", "report": "data/reports/axis_libero_30k/track3_matched_terminal_state_release/l2_summary.json", "fresh_processes": 9, "task10": "3/3", "task20": "0/3", "task19": "0/3", "task10_failure": null, "task20_failure": "operator participant drift and/or strict operator-background contact", "task19_failure": "robot arm/EEF stability and/or strict operator-background contact"},
+    "l3": {"status": "not_evaluated", "reason": "L2 failed; no GPU3 camera canary"},
+    "l4": {"status": "not_evaluated", "reason": "L2 failed; no GPU3 camera canaries"},
+    "l5": {"status": "completed_hard_stop", "summary": "data/reports/axis_libero_30k/track3_matched_terminal_state_release/summary.json", "report": "data/reports/axis_libero_30k/track3_matched_terminal_state_release/L5_CLOSEOUT_REPORT_ZH.md", "contact_ledger": "data/reports/axis_libero_30k/track3_matched_terminal_state_release/contact_ledger.json", "tests": "211_passed_7_skipped_26_warnings", "json_parse": "passed", "py_compile": "passed", "git_diff_check": "passed"},
+    "counts": {"exact_reverse_demo": 0, "pending_autogen": 0, "accepted_reverse_demo": 0},
+    "resource_boundary": {"cpu_fresh_processes": 9, "gpu3_camera_processes": 0, "gpu0_touched": false, "gpu1_touched": false, "gpu2_touched": false, "official_gpu": false, "se3": false, "grasp": false, "teleop": false, "action_or_demo_generation": false, "training_or_norm": false, "fast_or_zip": false, "upload_or_submission": false},
+    "next_action": "await_next_audit_after_l5_hard_stop"
   }
 }

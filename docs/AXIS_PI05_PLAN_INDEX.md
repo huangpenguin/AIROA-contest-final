@@ -2,7 +2,7 @@
 
 > 更新日期：2026-09-04（Asia/Tokyo）
 > 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_MATCHED_TERMINAL_STATE_RELEASE_PLAN.md`
-> 当前状态：`track3_matched_terminal_state_release_planned`
+> 当前状态：`track3_matched_terminal_state_cpu_failed_containment_remove`
 > 最新审核：`docs/reviews/axis_pi05/TRACK3_BACKGROUND_CONVERGENCE_K0_K4_AUDIT_20260904.md`
 
 ## 1. 本轮执行停止点
@@ -118,6 +118,14 @@ J0 锁定旧 I2 namespace、BDDL/source、root ancestry 与 nested OpenPI；J1 �
 J2.2 已真实完成 15 个 CPU/no-renderer fresh processes：9 条 reverse、6 条 forward。修正 step5 baseline 和 goal-false expectation 语义后，reverse 为 `8/9`、forward 为 `6/6`，contact matrix 为 `15/15` 完整。唯一失败是 task19 run1 在 step5→20 的完整 init truth vector 出现 background predicate 跃迁；该结果按固定 gate 记录为失败，没有改阈值、删背景或从 forward 对照反推。
 
 因此 J3 GPU3 task10 canary 与三族 `3/3` 均为 `not_evaluated`，J4 已 hard stop。J4 targeted/full tests、JSON、py_compile、diff check 全部通过；旧 I2 hash 与 reverse-demo `0/0/0` 保持不变。证据位于 `data/reports/axis_libero_30k/track3_operator_scoped_stability/`，等待下一次审核；不得自行进入 SE(3)、demo、Teleop、批量生成或训练。
+
+## 3.6 Matched Terminal-State L0–L5 收尾（2026-09-04）
+
+L0/L1 已完成：锁定旧 K0–K4、三份公开 HDF5 及固定的 task10/task20/task19 `demo_0/1/2` 选择；每条选择 reward 持续成功后缀的第一份 state。新 validator contract 覆盖 wrapper/underlying renderer flags、`name.partial.mp4` H.264 atomic publish、public WoodenCabinet absolute close midpoint，以及无 baseline grandfather 的 contact v2。L0/L1 没有启动 simulator 或 GPU。
+
+L2 完成 9 个 fresh CPU/no-renderer exact-model processes：task10 `3/3`，task20 `0/3`，task19 `0/3`。task10 三条通过；task20 的 fixed clean gate 因目标物 participant drift 和严格 operator-background contact 未通过，task19 因 robot arm/EEF drift 和严格 operator-background contact 未通过。L3 task19 camera 与 L4 task10/task20 camera 均为 `not_evaluated`，没有触碰 GPU3。
+
+L5 已按失败门禁 hard stop：`exact/pending/accepted reverse demo = 0/0/0`；没有生成 action/demo，没有 SE(3)、grasp、Teleop、批量生成、训练/norm、FAST/ZIP、官方 GPU、上传或提交。最终测试 `211 passed, 7 skipped, 26 warnings`，JSON parse、py_compile、diff check 通过；`LIBERO-plus` 原有 dirty 状态未触碰。证据位于 `data/reports/axis_libero_30k/track3_matched_terminal_state_release/`，下一步仅等待审核。
 
 ## 4. 保留但非活动的研究线
 

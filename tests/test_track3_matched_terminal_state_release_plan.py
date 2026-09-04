@@ -11,9 +11,9 @@ CANARY = ROOT / "data/reports/axis_libero_30k/track3_background_predicate_conver
 
 def test_only_the_matched_terminal_state_plan_is_active() -> None:
     handoff = json.loads(HANDOFF.read_text(encoding="utf-8"))
-    assert handoff["status"] == "track3_matched_terminal_state_release_planned"
+    assert handoff["status"] == "track3_matched_terminal_state_cpu_failed_containment_remove"
     assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_MATCHED_TERMINAL_STATE_RELEASE_PLAN.md"
-    assert handoff["next_phase_only"] == "L0_to_L5_matched_terminal_state_release_then_hard_stop"
+    assert handoff["next_phase_only"] == "await_next_audit_after_l5_hard_stop"
     assert (ROOT / handoff["next_plan"]).is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_BACKGROUND_PREDICATE_CONVERGENCE_RELEASE_PLAN.md").exists()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_BACKGROUND_PREDICATE_CONVERGENCE_RELEASE_PLAN.md").is_file()

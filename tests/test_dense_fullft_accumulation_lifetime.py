@@ -160,7 +160,7 @@ def test_m0_summary_is_fail_closed_and_machine_handoff_advances_without_losing_e
     )
     assert (
         handoff["next_phase_only"]
-        == "L0_to_L5_matched_terminal_state_release_then_hard_stop"
+        == "await_next_audit_after_l5_hard_stop"
     )
     autogen = handoff["track3_public_primitive_autogen_planning"]
     assert autogen["accepted_reverse_episode_count"] == 0

@@ -1,0 +1,113 @@
+{
+  "audit": "/home/huang/code/PARC2026_final/docs/reviews/axis_pi05/TRACK3_BACKGROUND_CONVERGENCE_K0_K4_AUDIT_20260904.md",
+  "camera_canaries": {
+    "L3_task19_demo0": "not_evaluated",
+    "L4_task10_demo0": "not_evaluated",
+    "L4_task20_demo0": "not_evaluated"
+  },
+  "counts": {
+    "accepted_reverse_demo": 0,
+    "exact_reverse_demo": 0,
+    "pending_autogen": 0
+  },
+  "created_at_utc": "2026-09-04T09:26:12.808707+00:00",
+  "evidence": {
+    "contact_ledger": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_matched_terminal_state_release/contact_ledger.json",
+    "demo_manifest": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_matched_terminal_state_release/demo_manifest.json",
+    "l0_demo_manifest": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_matched_terminal_state_release/l0_demo_manifest.json",
+    "l0_errata": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_matched_terminal_state_release/L0_K3_ERRATA_ZH.md",
+    "l0_input_lock": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_matched_terminal_state_release/l0_input_lock.json",
+    "l1_contract": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_matched_terminal_state_release/l1_validator_contract.json",
+    "l2_summary": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_matched_terminal_state_release/l2_summary.json"
+  },
+  "failure_interpretation": "matched terminal-state CPU release did not satisfy the fixed clean gate; this is not an authorization to repair thresholds, swap demos, retry GPU, or modify reverse BDDL",
+  "next_phase_only": "await_next_audit_after_l5_hard_stop",
+  "phases": {
+    "L0": {
+      "report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_matched_terminal_state_release/l0_input_lock.json",
+      "status": "track3_matched_terminal_state_input_locked"
+    },
+    "L1": {
+      "report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_matched_terminal_state_release/l1_validator_contract.json",
+      "status": "track3_matched_terminal_state_validator_contract_passed"
+    },
+    "L2": {
+      "family_3_of_3": {
+        "articulation_close": false,
+        "containment_remove": false,
+        "support_remove": true
+      },
+      "report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_matched_terminal_state_release/l2_summary.json",
+      "status": "track3_matched_terminal_state_cpu_failed_containment_remove"
+    },
+    "L3": {
+      "reason": "L2 failed; GPU3 camera canary not authorized",
+      "status": "not_evaluated"
+    },
+    "L4": {
+      "reason": "L2 failed; GPU3 camera canaries not authorized",
+      "status": "not_evaluated"
+    },
+    "L5": {
+      "status": "completed_hard_stop"
+    }
+  },
+  "plan": "/home/huang/code/PARC2026_final/docs/AXIS_PI05_TRACK3_MATCHED_TERMINAL_STATE_RELEASE_PLAN.md",
+  "resource_boundary": {
+    "action_or_demo_generation": false,
+    "fast_or_zip": false,
+    "gpu0_touched": false,
+    "gpu1_touched": false,
+    "gpu2_touched": false,
+    "gpu3_camera_processes": 0,
+    "grasp": false,
+    "official_gpu": false,
+    "se3": false,
+    "simulator_cpu_processes": 9,
+    "teleop": false,
+    "training_or_norm": false,
+    "upload_or_submission": false
+  },
+  "schema_version": "track3_matched_terminal_state_release_l5_v1",
+  "status": "track3_matched_terminal_state_cpu_failed_containment_remove",
+  "verification": {
+    "git_diff_check": {
+      "status": "passed",
+      "stderr_tail": ""
+    },
+    "json_parse": {
+      "errors": [],
+      "status": "passed"
+    },
+    "libero_plus_porcelain": [
+      "M libero/libero/benchmark/__init__.py",
+      "?? libero/__init__.py",
+      "?? libero/libero/assets",
+      "?? libero/libero/bddl_files/libero_t3",
+      "?? libero/libero/init_files/libero_t3"
+    ],
+    "nested_openpi_porcelain": [],
+    "py_compile": {
+      "status": "passed",
+      "stderr_tail": ""
+    },
+    "root_porcelain_before_final_commit": [
+      "M data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json",
+      " M docs/AXIS_PI05_PLAN_INDEX.md",
+      " M docs/AXIS_PI05_PROJECT_HANDOFF_20260831.md",
+      " M tests/test_dense_fullft_accumulation_lifetime.py",
+      " M tests/test_track3_matched_terminal_state_release_plan.py",
+      " M tests/test_track3_support_autogen_v2.py",
+      "?? tests/test_track3_matched_terminal_state_release.py",
+      "?? tools/axis_pi05/track3_matched_terminal_state_release.py"
+    ],
+    "tests": {
+      "command": "PYTHONPATH=LIBERO-plus:. JAX_PLATFORMS=cpu .venv_axis_pi05/bin/pytest -q tests",
+      "output_tail": "........................................................................ [ 33%]\n.................................ss..................................... [ 66%]\n..............................................sss....................... [ 99%]\nss                                                                       [100%]\n=============================== warnings summary ===============================\n<frozen importlib._bootstrap>:488\n  <frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.MessageMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.\n\n<frozen importlib._bootstrap>:488\n  <frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.ScalarMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.\n\ntests/test_axis_pi05_lora_screen.py: 21 warnings\n  /home/huang/code/PARC2026_final/.venv_axis_pi05/lib/python3.12/site-packages/flax/core/scope.py:959: DeprecationWarning: shape requires ndarray or scalar arguments, got <class 'jax._src.api.ShapeDtypeStruct'> at position 0. In a future JAX release this will be an error.\n    if jnp.shape(val) != jnp.shape(abs_val):\n\ntests/test_t3_bddl_language.py::test_スタブが実物と同じシグネチャである\n  /home/huang/code/PARC2026_final/.venv_axis_pi05/lib/python3.12/site-packages/robosuite/__init__.py:7: DeprecationWarning: The 'warn' method is deprecated, use 'warning' instead\n    ROBOSUITE_DEFAULT_LOGGER.warn(\"No private macro file found!\")\n\ntests/test_t3_bddl_language.py::test_スタブが実物と同じシグネチャである\n  /home/huang/code/PARC2026_final/.venv_axis_pi05/lib/python3.12/site-packages/robosuite/__init__.py:8: DeprecationWarning: The 'warn' method is deprecated, use 'warning' instead\n    ROBOSUITE_DEFAULT_LOGGER.warn(\"It is recommended to use a private macro file\")\n\ntests/test_t3_bddl_language.py::test_スタブが実物と同じシグネチャである\n  /home/huang/code/PARC2026_final/.venv_axis_pi05/lib/python3.12/site-packages/robosuite/__init__.py:9: DeprecationWarning: The 'warn' method is deprecated, use 'warning' instead\n    ROBOSUITE_DEFAULT_LOGGER.warn(\"To setup, run: python {}/scripts/setup_macros.py\".format(robosuite.__path__[0]))\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n211 passed, 7 skipped, 26 warnings in 62.83s (0:01:02)",
+      "passed": 211,
+      "returncode": 0,
+      "skipped": 7,
+      "warnings": 26
+    }
+  }
+}

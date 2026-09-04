@@ -1,11 +1,11 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
-> 最新审核状态：`track3_matched_terminal_state_release_planned`
+> 最新审核状态：`track3_matched_terminal_state_cpu_failed_containment_remove`
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_matched_terminal_state_release_planned`
+> 当前总状态：`track3_matched_terminal_state_cpu_failed_containment_remove`
 > 唯一活动计划：`docs/AXIS_PI05_TRACK3_MATCHED_TERMINAL_STATE_RELEASE_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
@@ -614,3 +614,11 @@ K3 task19 raw canary显示，step5已有39个bowl↔middle-drawer geom contacts�
 三个独立工具缺陷也已确认：renderer flags实际位于wrapper内部，尽管两路camera均为`21/21`仍被误报；ffmpeg目标为`*.mp4.partial`而无法选择muxer；task19 destruction把WoodenCabinet qpos从`-0.1464`继续减到`-0.2664`，根据公开阈值仍为Open，raw sensitivity实际是`true/true/true`。旧K4中文报告中的`true/false/true`不准确，但旧证据不原地修改。
 
 旧计划已归档。新唯一活动计划为`docs/AXIS_PI05_TRACK3_MATCHED_TERMINAL_STATE_RELEASE_PLAN.md`：L0/L1锁定errata并修复工具；L2固定使用三份公开HDF5中task10/task20/task19各`demo_0/1/2`的同demo `model_file + terminal full-state`，要求CPU三族各`3/3`；通过后GPU3最多做三族各一条camera release。L5必须hard stop。当前不授权action/demo、SE(3)、Teleop、训练、FAST/ZIP、官方GPU、上传或比赛提交。审核报告：`docs/reviews/axis_pi05/TRACK3_BACKGROUND_CONVERGENCE_K0_K4_AUDIT_20260904.md`。
+
+## 49. Matched Terminal-State L0–L5 收尾（2026-09-04）
+
+L0/L1 已完成：锁定旧 K0–K4、三份公开 HDF5 及固定的 task10/task20/task19 `demo_0/1/2` 选择；每条选择 reward 持续成功后缀的第一份 state。新 validator contract 覆盖 wrapper/underlying renderer flags、`name.partial.mp4` H.264 atomic publish、public WoodenCabinet absolute close midpoint，以及无 baseline grandfather 的 contact v2。L0/L1 没有启动 simulator 或 GPU。
+
+L2 完成 9 个 fresh CPU/no-renderer exact-model processes：task10 `3/3`，task20 `0/3`，task19 `0/3`。task10 三条通过；task20 的 fixed clean gate 因目标物 participant drift 和严格 operator-background contact 未通过，task19 因 robot arm/EEF drift 和严格 operator-background contact 未通过。L3 task19 camera 与 L4 task10/task20 camera 均为 `not_evaluated`，没有触碰 GPU3。
+
+L5 已按失败门禁 hard stop：`exact/pending/accepted reverse demo = 0/0/0`；没有生成 action/demo，没有 SE(3)、grasp、Teleop、批量生成、训练/norm、FAST/ZIP、官方 GPU、上传或提交。最终测试 `211 passed, 7 skipped, 26 warnings`，JSON parse、py_compile、diff check 通过；`LIBERO-plus` 原有 dirty 状态未触碰。证据：`data/reports/axis_libero_30k/track3_matched_terminal_state_release/summary.json`、`l2_summary.json`、`contact_ledger.json`、`L5_CLOSEOUT_REPORT_ZH.md`。下一步仅等待审核。

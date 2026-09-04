@@ -1,0 +1,386 @@
+{
+  "fixed_selection": [
+    {
+      "actions_dtype": "float64",
+      "actions_shape": [
+        90,
+        7
+      ],
+      "demo_id": "demo_0",
+      "demo_index": 0,
+      "family": "support_remove",
+      "hdf5_bytes": 468246288,
+      "hdf5_path": "/home/huang/code/PARC2026_final/data/raw/public/libero_official_hdf5/libero_goal/put_the_bowl_on_the_plate_demo.hdf5",
+      "hdf5_sha256": "e69528b0cf10dfc59b20698e12ec2affc03f3887309034d3eb74cac3ec929406",
+      "l2_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_matched_terminal_state_release/runs/l2_task10_demo0.json",
+      "l2_status": "passed",
+      "model_file_bytes": 91305,
+      "model_file_sha256": "e9a508e1e98a7bd2631796a4c41476a449fd9821fb45837a27d2ebefd87c8830",
+      "predicate_oracle": "never_hdf5; runtime_only_in_same_demo_model_xml",
+      "rewards_dtype": "uint8",
+      "rewards_shape": [
+        90
+      ],
+      "selection": {
+        "action_index": 89,
+        "alignment": "state_index_equals_action_index",
+        "positive_count": 1,
+        "reward_at_selection": 1.0,
+        "state_index": 89,
+        "suffix_length": 1,
+        "suffix_start_action_index": 89
+      },
+      "states_dtype": "float64",
+      "states_shape": [
+        90,
+        79
+      ],
+      "task_index": 10,
+      "terminal_state_dtype": "float64",
+      "terminal_state_sha256": "f5e437011d7f4eb0f0b0f7da2a15d05ce525d38f4331ab4a8e83db82a87daf89",
+      "terminal_state_shape": [
+        79
+      ]
+    },
+    {
+      "actions_dtype": "float64",
+      "actions_shape": [
+        88,
+        7
+      ],
+      "demo_id": "demo_1",
+      "demo_index": 1,
+      "family": "support_remove",
+      "hdf5_bytes": 468246288,
+      "hdf5_path": "/home/huang/code/PARC2026_final/data/raw/public/libero_official_hdf5/libero_goal/put_the_bowl_on_the_plate_demo.hdf5",
+      "hdf5_sha256": "e69528b0cf10dfc59b20698e12ec2affc03f3887309034d3eb74cac3ec929406",
+      "l2_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_matched_terminal_state_release/runs/l2_task10_demo1.json",
+      "l2_status": "passed",
+      "model_file_bytes": 91306,
+      "model_file_sha256": "94356451194282f92280f23255e60399168dd974d11fb3f45bde07cd64f57f48",
+      "predicate_oracle": "never_hdf5; runtime_only_in_same_demo_model_xml",
+      "rewards_dtype": "uint8",
+      "rewards_shape": [
+        88
+      ],
+      "selection": {
+        "action_index": 87,
+        "alignment": "state_index_equals_action_index",
+        "positive_count": 1,
+        "reward_at_selection": 1.0,
+        "state_index": 87,
+        "suffix_length": 1,
+        "suffix_start_action_index": 87
+      },
+      "states_dtype": "float64",
+      "states_shape": [
+        88,
+        79
+      ],
+      "task_index": 10,
+      "terminal_state_dtype": "float64",
+      "terminal_state_sha256": "3434ff7239d4f151df02926b6fcae8131fdd8470bcc9f83e5194216d4ee13a73",
+      "terminal_state_shape": [
+        79
+      ]
+    },
+    {
+      "actions_dtype": "float64",
+      "actions_shape": [
+        92,
+        7
+      ],
+      "demo_id": "demo_2",
+      "demo_index": 2,
+      "family": "support_remove",
+      "hdf5_bytes": 468246288,
+      "hdf5_path": "/home/huang/code/PARC2026_final/data/raw/public/libero_official_hdf5/libero_goal/put_the_bowl_on_the_plate_demo.hdf5",
+      "hdf5_sha256": "e69528b0cf10dfc59b20698e12ec2affc03f3887309034d3eb74cac3ec929406",
+      "l2_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_matched_terminal_state_release/runs/l2_task10_demo2.json",
+      "l2_status": "passed",
+      "model_file_bytes": 91306,
+      "model_file_sha256": "f887f5a6cd4ebed20a8e4807e412be137ab88c3c5a28cd76e26fcc85c003b913",
+      "predicate_oracle": "never_hdf5; runtime_only_in_same_demo_model_xml",
+      "rewards_dtype": "uint8",
+      "rewards_shape": [
+        92
+      ],
+      "selection": {
+        "action_index": 91,
+        "alignment": "state_index_equals_action_index",
+        "positive_count": 1,
+        "reward_at_selection": 1.0,
+        "state_index": 91,
+        "suffix_length": 1,
+        "suffix_start_action_index": 91
+      },
+      "states_dtype": "float64",
+      "states_shape": [
+        92,
+        79
+      ],
+      "task_index": 10,
+      "terminal_state_dtype": "float64",
+      "terminal_state_sha256": "d07d62ee19b50c55a1667b0045c1a0554b7b08377652e94f29acf5c9cf0c64c8",
+      "terminal_state_shape": [
+        79
+      ]
+    },
+    {
+      "actions_dtype": "float64",
+      "actions_shape": [
+        126,
+        7
+      ],
+      "demo_id": "demo_0",
+      "demo_index": 0,
+      "family": "containment_remove",
+      "hdf5_bytes": 696180446,
+      "hdf5_path": "/home/huang/code/PARC2026_final/data/raw/public/libero_official_hdf5/libero_object/pick_up_the_orange_juice_and_place_it_in_the_basket_demo.hdf5",
+      "hdf5_sha256": "53e40490c62e94c678233eefbfd874a61c93d92c8088f59d426ae6c3fd90d288",
+      "l2_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_matched_terminal_state_release/runs/l2_task20_demo0.json",
+      "l2_status": "failed_gate",
+      "model_file_bytes": 52728,
+      "model_file_sha256": "4e0497a77437ac5846c84c6bea8e08a9af66b11829f8edbe8bc692616a1be723",
+      "predicate_oracle": "never_hdf5; runtime_only_in_same_demo_model_xml",
+      "rewards_dtype": "uint8",
+      "rewards_shape": [
+        126
+      ],
+      "selection": {
+        "action_index": 125,
+        "alignment": "state_index_equals_action_index",
+        "positive_count": 1,
+        "reward_at_selection": 1.0,
+        "state_index": 125,
+        "suffix_length": 1,
+        "suffix_start_action_index": 125
+      },
+      "states_dtype": "float64",
+      "states_shape": [
+        126,
+        110
+      ],
+      "task_index": 20,
+      "terminal_state_dtype": "float64",
+      "terminal_state_sha256": "9259f4a962c234bc2628a108162c8da3d587605bcaff3cbc34fe8ae477e87597",
+      "terminal_state_shape": [
+        110
+      ]
+    },
+    {
+      "actions_dtype": "float64",
+      "actions_shape": [
+        135,
+        7
+      ],
+      "demo_id": "demo_1",
+      "demo_index": 1,
+      "family": "containment_remove",
+      "hdf5_bytes": 696180446,
+      "hdf5_path": "/home/huang/code/PARC2026_final/data/raw/public/libero_official_hdf5/libero_object/pick_up_the_orange_juice_and_place_it_in_the_basket_demo.hdf5",
+      "hdf5_sha256": "53e40490c62e94c678233eefbfd874a61c93d92c8088f59d426ae6c3fd90d288",
+      "l2_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_matched_terminal_state_release/runs/l2_task20_demo1.json",
+      "l2_status": "failed_gate",
+      "model_file_bytes": 52728,
+      "model_file_sha256": "4e0497a77437ac5846c84c6bea8e08a9af66b11829f8edbe8bc692616a1be723",
+      "predicate_oracle": "never_hdf5; runtime_only_in_same_demo_model_xml",
+      "rewards_dtype": "uint8",
+      "rewards_shape": [
+        135
+      ],
+      "selection": {
+        "action_index": 134,
+        "alignment": "state_index_equals_action_index",
+        "positive_count": 1,
+        "reward_at_selection": 1.0,
+        "state_index": 134,
+        "suffix_length": 1,
+        "suffix_start_action_index": 134
+      },
+      "states_dtype": "float64",
+      "states_shape": [
+        135,
+        110
+      ],
+      "task_index": 20,
+      "terminal_state_dtype": "float64",
+      "terminal_state_sha256": "c896e9174ee55abe14f84546eca8ac223aeb5d07a8a2d952d85cde818615a422",
+      "terminal_state_shape": [
+        110
+      ]
+    },
+    {
+      "actions_dtype": "float64",
+      "actions_shape": [
+        132,
+        7
+      ],
+      "demo_id": "demo_2",
+      "demo_index": 2,
+      "family": "containment_remove",
+      "hdf5_bytes": 696180446,
+      "hdf5_path": "/home/huang/code/PARC2026_final/data/raw/public/libero_official_hdf5/libero_object/pick_up_the_orange_juice_and_place_it_in_the_basket_demo.hdf5",
+      "hdf5_sha256": "53e40490c62e94c678233eefbfd874a61c93d92c8088f59d426ae6c3fd90d288",
+      "l2_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_matched_terminal_state_release/runs/l2_task20_demo2.json",
+      "l2_status": "failed_gate",
+      "model_file_bytes": 52728,
+      "model_file_sha256": "4e0497a77437ac5846c84c6bea8e08a9af66b11829f8edbe8bc692616a1be723",
+      "predicate_oracle": "never_hdf5; runtime_only_in_same_demo_model_xml",
+      "rewards_dtype": "uint8",
+      "rewards_shape": [
+        132
+      ],
+      "selection": {
+        "action_index": 131,
+        "alignment": "state_index_equals_action_index",
+        "positive_count": 1,
+        "reward_at_selection": 1.0,
+        "state_index": 131,
+        "suffix_length": 1,
+        "suffix_start_action_index": 131
+      },
+      "states_dtype": "float64",
+      "states_shape": [
+        132,
+        110
+      ],
+      "task_index": 20,
+      "terminal_state_dtype": "float64",
+      "terminal_state_sha256": "e4e21a7af2806dfc895bed333e18c7c816c83a03f23e285ff958bdbbaa35344f",
+      "terminal_state_shape": [
+        110
+      ]
+    },
+    {
+      "actions_dtype": "float64",
+      "actions_shape": [
+        138,
+        7
+      ],
+      "demo_id": "demo_0",
+      "demo_index": 0,
+      "family": "articulation_close",
+      "hdf5_bytes": 702223367,
+      "hdf5_path": "/home/huang/code/PARC2026_final/data/raw/public/libero_official_hdf5/libero_goal/open_the_middle_drawer_of_the_cabinet_demo.hdf5",
+      "hdf5_sha256": "20252c7cf98cd7437061f7f200ae7b6cb6219fabbd53b4536dfaa8abda6ab737",
+      "l2_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_matched_terminal_state_release/runs/l2_task19_demo0.json",
+      "l2_status": "failed_gate",
+      "model_file_bytes": 91305,
+      "model_file_sha256": "ccf958ea89aa0e84e32cb90b99e31faf66f3cd5e33082f7d2a1d4444c4660257",
+      "predicate_oracle": "never_hdf5; runtime_only_in_same_demo_model_xml",
+      "rewards_dtype": "uint8",
+      "rewards_shape": [
+        138
+      ],
+      "selection": {
+        "action_index": 137,
+        "alignment": "state_index_equals_action_index",
+        "positive_count": 1,
+        "reward_at_selection": 1.0,
+        "state_index": 137,
+        "suffix_length": 1,
+        "suffix_start_action_index": 137
+      },
+      "states_dtype": "float64",
+      "states_shape": [
+        138,
+        79
+      ],
+      "task_index": 19,
+      "terminal_state_dtype": "float64",
+      "terminal_state_sha256": "0f712b703a239bdc848721165f44adbb8199b2e352e91caa02048eb61398a446",
+      "terminal_state_shape": [
+        79
+      ]
+    },
+    {
+      "actions_dtype": "float64",
+      "actions_shape": [
+        138,
+        7
+      ],
+      "demo_id": "demo_1",
+      "demo_index": 1,
+      "family": "articulation_close",
+      "hdf5_bytes": 702223367,
+      "hdf5_path": "/home/huang/code/PARC2026_final/data/raw/public/libero_official_hdf5/libero_goal/open_the_middle_drawer_of_the_cabinet_demo.hdf5",
+      "hdf5_sha256": "20252c7cf98cd7437061f7f200ae7b6cb6219fabbd53b4536dfaa8abda6ab737",
+      "l2_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_matched_terminal_state_release/runs/l2_task19_demo1.json",
+      "l2_status": "failed_gate",
+      "model_file_bytes": 91306,
+      "model_file_sha256": "759a959ac18b8eec0bc9efded2a38e958793bf657fa70223e2209bbf437ffe0f",
+      "predicate_oracle": "never_hdf5; runtime_only_in_same_demo_model_xml",
+      "rewards_dtype": "uint8",
+      "rewards_shape": [
+        138
+      ],
+      "selection": {
+        "action_index": 137,
+        "alignment": "state_index_equals_action_index",
+        "positive_count": 1,
+        "reward_at_selection": 1.0,
+        "state_index": 137,
+        "suffix_length": 1,
+        "suffix_start_action_index": 137
+      },
+      "states_dtype": "float64",
+      "states_shape": [
+        138,
+        79
+      ],
+      "task_index": 19,
+      "terminal_state_dtype": "float64",
+      "terminal_state_sha256": "31c3ce71cc4e5e4c89b3d287f0fe3083228e2bd887de1365f59d5b5851c2af0c",
+      "terminal_state_shape": [
+        79
+      ]
+    },
+    {
+      "actions_dtype": "float64",
+      "actions_shape": [
+        151,
+        7
+      ],
+      "demo_id": "demo_2",
+      "demo_index": 2,
+      "family": "articulation_close",
+      "hdf5_bytes": 702223367,
+      "hdf5_path": "/home/huang/code/PARC2026_final/data/raw/public/libero_official_hdf5/libero_goal/open_the_middle_drawer_of_the_cabinet_demo.hdf5",
+      "hdf5_sha256": "20252c7cf98cd7437061f7f200ae7b6cb6219fabbd53b4536dfaa8abda6ab737",
+      "l2_report": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_matched_terminal_state_release/runs/l2_task19_demo2.json",
+      "l2_status": "failed_gate",
+      "model_file_bytes": 91306,
+      "model_file_sha256": "b17b38bb2c2fcafd17391c37be969046dfaa82ed86e9842db114bab94a5f84f2",
+      "predicate_oracle": "never_hdf5; runtime_only_in_same_demo_model_xml",
+      "rewards_dtype": "uint8",
+      "rewards_shape": [
+        151
+      ],
+      "selection": {
+        "action_index": 150,
+        "alignment": "state_index_equals_action_index",
+        "positive_count": 1,
+        "reward_at_selection": 1.0,
+        "state_index": 150,
+        "suffix_length": 1,
+        "suffix_start_action_index": 150
+      },
+      "states_dtype": "float64",
+      "states_shape": [
+        151,
+        79
+      ],
+      "task_index": 19,
+      "terminal_state_dtype": "float64",
+      "terminal_state_sha256": "b95280e38746f45a3e3fa7f9f89b7105bdab63c20a1d00f6452018c2b992753d",
+      "terminal_state_shape": [
+        79
+      ]
+    }
+  ],
+  "gpu_camera_canaries": "not_evaluated_due_l2_failure",
+  "l2_status": "track3_matched_terminal_state_cpu_failed_containment_remove",
+  "schema_version": "track3_matched_terminal_state_demo_closeout_manifest_v1",
+  "selection_rule": null
+}

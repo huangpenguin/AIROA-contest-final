@@ -1,0 +1,65 @@
+{
+  "canonical_sha256": "fca3e8c46f2ac3692529f5d8ee1212e6a5c6d74b40e2586438b4dd86644ab24d",
+  "contact_v2": {
+    "baseline_grandfather": false,
+    "operator_background_contact": "always_fail",
+    "penetration_body_geom_pair_and_duration_recorded": true
+  },
+  "created_at_utc": "2026-09-04T08:55:57.702260+00:00",
+  "drawer_sensitivity": {
+    "close_qpos_midpoint": 0.0025,
+    "metadata": {
+      "close_range": [
+        0.0,
+        0.005
+      ],
+      "close_range_semantics": "public WoodenCabinet.is_close: qpos > min(default_close_ranges)",
+      "open_range": [
+        -0.16,
+        -0.14
+      ],
+      "source": "/home/huang/code/PARC2026_final/LIBERO/libero/libero/envs/objects/articulated_objects.py",
+      "source_sha256": "f5187b0381d69a2a8736c1dcb646e5fa7c138a42950f92e30c21c2efaed52faa"
+    },
+    "sequence": [
+      "Open true / Close false",
+      "set absolute close midpoint without action",
+      "Open false / Close true",
+      "exact state restore",
+      "Open true / Close false"
+    ]
+  },
+  "gpu_started": false,
+  "h264": {
+    "atomic_rename": true,
+    "codec": "h264",
+    "fps": 20,
+    "frame_count_required": "expected",
+    "nonzero_dimensions": true,
+    "temporary_suffix": ".partial.mp4"
+  },
+  "identity": [
+    "seed",
+    "model_file",
+    "terminal_state"
+  ],
+  "passed_gate_has_no_failure_reason": true,
+  "plan": "/home/huang/code/PARC2026_final/docs/AXIS_PI05_TRACK3_MATCHED_TERMINAL_STATE_RELEASE_PLAN.md",
+  "renderer": {
+    "required_camera_keys": [
+      "agentview_image",
+      "robot0_eye_in_hand_image"
+    ],
+    "required_dtype": "uint8",
+    "wrapper_and_underlying_flags": true
+  },
+  "schema_version": "track3_matched_terminal_state_release_l1_v1",
+  "simulator_started": false,
+  "status": "track3_matched_terminal_state_validator_contract_passed",
+  "tri_state": [
+    "passed",
+    "failed",
+    "not_evaluated"
+  ],
+  "worker_exception_returncode": "nonzero"
+}

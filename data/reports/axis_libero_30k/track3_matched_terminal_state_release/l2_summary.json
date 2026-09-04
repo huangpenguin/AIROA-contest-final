@@ -1,0 +1,112 @@
+{
+  "created_at_utc": "2026-09-04T09:14:05.906268+00:00",
+  "family_3_of_3": {
+    "articulation_close": false,
+    "containment_remove": false,
+    "support_remove": true
+  },
+  "fresh_process_count": 9,
+  "hard_gate": {
+    "all_families_3_of_3": false,
+    "all_fixed_demos_run": true,
+    "hdf5_state_used_as_predicate_oracle": false,
+    "no_action_or_demo_generation": true,
+    "worker_exception_returncode_nonzero": true
+  },
+  "mode": "CPU_no_renderer",
+  "next_phase": "L5_closeout_hard_stop",
+  "results": [
+    {
+      "demo_id": "demo_0",
+      "family": "support_remove",
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_matched_terminal_state_release/runs/l2_task10_demo0.json",
+      "process_returncode": 0,
+      "sha256": "150ea68daff9b365dcd5b65e8179e4994cbb794867a7c9a513c42a4961920df0",
+      "status": "passed",
+      "task_index": 10,
+      "worker_returncode_contract": true
+    },
+    {
+      "demo_id": "demo_1",
+      "family": "support_remove",
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_matched_terminal_state_release/runs/l2_task10_demo1.json",
+      "process_returncode": 0,
+      "sha256": "934a3eb97475410958883794715d5a6fcbb78bcf0c63a54fbd3d9713464eb5fe",
+      "status": "passed",
+      "task_index": 10,
+      "worker_returncode_contract": true
+    },
+    {
+      "demo_id": "demo_2",
+      "family": "support_remove",
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_matched_terminal_state_release/runs/l2_task10_demo2.json",
+      "process_returncode": 0,
+      "sha256": "a9c22d7b7a8838f50026733754674748cb1be80a274612e6ff5dd0a9c4553dc5",
+      "status": "passed",
+      "task_index": 10,
+      "worker_returncode_contract": true
+    },
+    {
+      "demo_id": "demo_0",
+      "family": "containment_remove",
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_matched_terminal_state_release/runs/l2_task20_demo0.json",
+      "process_returncode": 0,
+      "sha256": "2911970c95d59f74f384449923bfa6a5f1716155382a66d51a58eee826fbdee7",
+      "status": "failed_gate",
+      "task_index": 20,
+      "worker_returncode_contract": true
+    },
+    {
+      "demo_id": "demo_1",
+      "family": "containment_remove",
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_matched_terminal_state_release/runs/l2_task20_demo1.json",
+      "process_returncode": 0,
+      "sha256": "239a99031350de5f968f82278e859fe7afadc48ffd709eb56d4d703d918a7ae9",
+      "status": "failed_gate",
+      "task_index": 20,
+      "worker_returncode_contract": true
+    },
+    {
+      "demo_id": "demo_2",
+      "family": "containment_remove",
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_matched_terminal_state_release/runs/l2_task20_demo2.json",
+      "process_returncode": 0,
+      "sha256": "e04011459b65a2d3fce8ae5f1339709a26ee908f75d11df89459c070deb2897c",
+      "status": "failed_gate",
+      "task_index": 20,
+      "worker_returncode_contract": true
+    },
+    {
+      "demo_id": "demo_0",
+      "family": "articulation_close",
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_matched_terminal_state_release/runs/l2_task19_demo0.json",
+      "process_returncode": 0,
+      "sha256": "52911e81af514982fbab44b4b1557b55e45e75a92eb0ab4c0f9a709abf1c88f2",
+      "status": "failed_gate",
+      "task_index": 19,
+      "worker_returncode_contract": true
+    },
+    {
+      "demo_id": "demo_1",
+      "family": "articulation_close",
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_matched_terminal_state_release/runs/l2_task19_demo1.json",
+      "process_returncode": 0,
+      "sha256": "cd4db2d919ac88319c91f5af11c68ccb3af9edc7c4fcdcc2ee2b363b7caf8f97",
+      "status": "failed_gate",
+      "task_index": 19,
+      "worker_returncode_contract": true
+    },
+    {
+      "demo_id": "demo_2",
+      "family": "articulation_close",
+      "path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_matched_terminal_state_release/runs/l2_task19_demo2.json",
+      "process_returncode": 0,
+      "sha256": "98c90250e03cf21b4db83b1cf0195c9dd5a9d126d23b1586394ba6f496817ef9",
+      "status": "failed_gate",
+      "task_index": 19,
+      "worker_returncode_contract": true
+    }
+  ],
+  "schema_version": "track3_matched_terminal_state_release_l2_v1",
+  "status": "track3_matched_terminal_state_cpu_failed_containment_remove"
+}

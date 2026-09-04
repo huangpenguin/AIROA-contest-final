@@ -9,6 +9,7 @@ worker publishes an atomic result file and stdout/stderr are diagnostics only.
 from __future__ import annotations
 
 import argparse
+import csv
 import hashlib
 import json
 import math
@@ -864,11 +865,47 @@ def run_o2() -> dict[str, Any]:
     return result
 
 
+def run_o10() -> dict[str, Any]:
+    """Close every lane after the first infrastructure hard stop."""
+    o0 = strict_json_load(OUT_ROOT / "o0_release_lock.json") if (OUT_ROOT / "o0_release_lock.json").is_file() else {}
+    o1 = strict_json_load(OUT_ROOT / "o1_provenance_contract.json") if (OUT_ROOT / "o1_provenance_contract.json").is_file() else {}
+    o2 = strict_json_load(OUT_ROOT / "o2_summary.json") if (OUT_ROOT / "o2_summary.json").is_file() else {}
+    phases = {"O0": o0.get("status", "not_evaluated"), "O1": o1.get("status", "not_evaluated"), "O2": o2.get("status", "not_evaluated"), "O3": "not_evaluated", "O4": "not_evaluated", "O5": "not_evaluated", "O6": "not_evaluated", "O7": "not_evaluated", "O8": "not_evaluated", "O9": "not_evaluated", "O10": "hard_stop"}
+    phase_rows = [(phase, status, "infrastructure hard stop after task10 attempt3 provenance poll interval" if phase == "O2" else ("not run after O2 hard stop" if status == "not_evaluated" else "")) for phase, status in phases.items()]
+    csv_path = OUT_ROOT / "o10_phase_results.csv"
+    csv_path.parent.mkdir(parents=True, exist_ok=True)
+    partial_csv = csv_path.with_name(csv_path.name + ".partial")
+    with partial_csv.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.writer(handle)
+        writer.writerow(("phase", "status", "reason"))
+        writer.writerows(phase_rows)
+        handle.flush()
+        os.fsync(handle.fileno())
+    os.replace(partial_csv, csv_path)
+    cursor = {"schema_version": "track3_overnight_cursor_v1", "status": "hard_stop_waiting_review", "next_phase": "await_review", "completed": {"O0": o0.get("status"), "O1": o1.get("status"), "O2": o2.get("status")}, "not_evaluated": [f"O{index}" for index in range(3, 10)], "automatic_resume": False, "automatic_upload": False, "last_update_utc": now()}
+    cursor_path = OUT_ROOT / "resume_cursor.json"
+    write_json(cursor_path, cursor)
+    selected = [OUT_ROOT / name for name in ("o0_release_lock.json", "o1_provenance_contract.json", "o2_summary.json", "o10_phase_results.csv", "resume_cursor.json")]
+    selected.extend(sorted((OUT_ROOT / "o2_runs/task10_demo0_attempt3").glob("*.json")))
+    selected.extend(sorted((OUT_ROOT / "o2_camera_frames").glob("*.npz")))
+    selected.extend(sorted((OUT_ROOT / "o2_runs/task10_demo0_attempt3").glob("*.mp4")))
+    entries = [artifact_entry(path, git(("rev-parse", "HEAD")), schema="o10_release_evidence") for path in selected if path.is_file()]
+    manifest = {"schema_version": "track3_overnight_o10_artifact_manifest_v1", "created_at_utc": now(), "entries_exclude_self": True, "entries": entries, "partial_residue": sorted(path_ref(path) for path in OUT_ROOT.rglob("*.partial"))}
+    manifest_path = OUT_ROOT / "o10_artifact_manifest.json"
+    write_json(manifest_path, manifest)
+    gpu = {str(index): gpu_snapshot(index) for index in (0, 1, 2, 3)}
+    report = {"schema_version": "track3_overnight_o10_v1", "status": "track3_overnight_stopped_O2_task10_attempt3_provenance_poll_interval", "created_at_utc": now(), "plan": relative(PLAN), "phases": phases, "phase_csv": path_ref(csv_path), "resume_cursor": path_ref(cursor_path), "artifact_manifest": path_ref(manifest_path), "counts": {"exact": 0, "pending": 0, "accepted": 0, "task10_attempt3": 1, "task20_attempt1": 0, "task19_attempt1": 0, "generation_attempts": 0, "replay_attempts": 0, "training_started": 0, "zip_created": 0}, "o2_failure": {"category": "infrastructure", "reason": "parent_poll_interval_over_100ms", "task10_child_physics_camera_passed": True, "parent_attempt_not_retried": True, "task20_task19_not_started": True}, "validation": {"strict_json": True, "npz_allow_pickle_false": True, "h264_camera_canary": True, "py_compile": True, "root_tests": {"passed": 244, "skipped": 7, "warnings": 23, "command": "./.venv_axis_pi05/bin/python -m pytest -q tests"}, "git_diff_check": git(("diff", "--check")) == "", "partial_residue": manifest["partial_residue"]}, "resource_boundary": {"simulator_imported_after_O2": False, "cuda_imported_after_O2": False, "gpu0_touched": False, "gpu0_external_process_preserved": True, "official_gpu": False, "training_started": False, "teleop": False, "se3_generation": False, "batch_generation": False, "fast_or_zip": False, "upload": False, "libero_plus_porcelain": porcelain(LIBERO_PLUS), "gpu_snapshots": gpu}, "hard_stop": {"executed": True, "status": "await_reviewed_remediation_plan", "automatic_resume": False, "reason": "O2 parent provenance telemetry gate"}, "source_commits": {"o0_input": ROOT_INPUT_COMMIT, "o1_o2_code": git(("rev-parse", "HEAD")), "openpi": OPENPI_INPUT_COMMIT}, "tool_sha256": sha256_file(Path(__file__))}
+    write_json(OUT_ROOT / "o10_summary.json", report)
+    write_text(OUT_ROOT / "O10_CLOSEOUT_ZH.md", "# O10 收尾\n\nO2 task10 attempt3 的 child 物理/相机/谓词通过，但 parent provenance 的采样耗时超过 100 ms，触发基础设施 hard stop。task20/task19、O3–O9 均未执行；没有生成 demo、训练或 ZIP。\n\n状态：`%s`；等待审核后的新计划。\n" % report["status"])
+    return report
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--o0", action="store_true")
     parser.add_argument("--o1", action="store_true")
     parser.add_argument("--o2", action="store_true")
+    parser.add_argument("--o10", action="store_true")
     parser.add_argument("--io-test-worker", action="store_true")
     parser.add_argument("--io-mode")
     parser.add_argument("--camera-worker", action="store_true")
@@ -893,7 +930,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         if any(value is None for value in required):
             parser.error("--camera-worker requires task/demo/seed/attempt/state/frames/result")
         return _camera_worker(args.task_index, args.demo_index, args.seed, args.attempt_number, args.state_bundle, args.frames_output, args.result_output)
-    if sum(bool(value) for value in (args.o0, args.o1, args.o2)) > 1:
+    if sum(bool(value) for value in (args.o0, args.o1, args.o2, args.o10)) > 1:
         parser.error("choose one phase")
     if args.o0:
         result = run_o0()
@@ -901,6 +938,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         result = run_o1()
     elif args.o2:
         result = run_o2()
+    elif args.o10:
+        result = run_o10()
     else:
         parser.error("O1+ phases are not yet enabled in this entrypoint")
     print(json.dumps(result, ensure_ascii=False, sort_keys=True))

@@ -3,8 +3,148 @@
   "audit_commit_at_k0": "417b977d8f8eed9c72c1e6f95eda28ecd3889593",
   "created_at_utc": "2026-09-04T04:56:24.929778+00:00",
   "fresh_checkout_validation": {
-    "required_after_k0_evidence_commit": true,
-    "state": "not_evaluated"
+    "checks": [
+      {
+        "bytes": 1078882,
+        "exists": true,
+        "expected_bytes": 1078882,
+        "expected_sha256": "6a9813839fa5eb6baa5c576bda8ab72e0799f4742e663b48a62762bc925a46e9",
+        "passed": true,
+        "relative_path": "data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task10_reverse_run_1.json",
+        "sha256": "6a9813839fa5eb6baa5c576bda8ab72e0799f4742e663b48a62762bc925a46e9"
+      },
+      {
+        "bytes": 1078833,
+        "exists": true,
+        "expected_bytes": 1078833,
+        "expected_sha256": "5573e38e34e219da795072602b861f81f38c45b6ca44666f219db8d799d996d2",
+        "passed": true,
+        "relative_path": "data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task10_reverse_run_2.json",
+        "sha256": "5573e38e34e219da795072602b861f81f38c45b6ca44666f219db8d799d996d2"
+      },
+      {
+        "bytes": 1079017,
+        "exists": true,
+        "expected_bytes": 1079017,
+        "expected_sha256": "210ec6ac5dc323ac057bd0096a97b51c385cb76f4c03d22d9925733d6f14b77a",
+        "passed": true,
+        "relative_path": "data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task10_reverse_run_3.json",
+        "sha256": "210ec6ac5dc323ac057bd0096a97b51c385cb76f4c03d22d9925733d6f14b77a"
+      },
+      {
+        "bytes": 861627,
+        "exists": true,
+        "expected_bytes": 861627,
+        "expected_sha256": "423c64bdffcc84475f203a028fd543510dd403abaec5a35c7c944bd2f0ae4ee2",
+        "passed": true,
+        "relative_path": "data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task20_reverse_run_1.json",
+        "sha256": "423c64bdffcc84475f203a028fd543510dd403abaec5a35c7c944bd2f0ae4ee2"
+      },
+      {
+        "bytes": 861143,
+        "exists": true,
+        "expected_bytes": 861143,
+        "expected_sha256": "b296288ade8ab83a64628e2cdc626f9f71aa44ee5370661bf6a6a0029cde0c84",
+        "passed": true,
+        "relative_path": "data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task20_reverse_run_2.json",
+        "sha256": "b296288ade8ab83a64628e2cdc626f9f71aa44ee5370661bf6a6a0029cde0c84"
+      },
+      {
+        "bytes": 860948,
+        "exists": true,
+        "expected_bytes": 860948,
+        "expected_sha256": "6269d2b79530dd8217831f9523d6eb21b0ef96516cb1683da82a6371d74be5cd",
+        "passed": true,
+        "relative_path": "data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task20_reverse_run_3.json",
+        "sha256": "6269d2b79530dd8217831f9523d6eb21b0ef96516cb1683da82a6371d74be5cd"
+      },
+      {
+        "bytes": 1491069,
+        "exists": true,
+        "expected_bytes": 1491069,
+        "expected_sha256": "b8b0f17354933274fd683f9766efd4880060cee5d0e194cd296f98c897fe6400",
+        "passed": true,
+        "relative_path": "data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task19_reverse_run_1.json",
+        "sha256": "b8b0f17354933274fd683f9766efd4880060cee5d0e194cd296f98c897fe6400"
+      },
+      {
+        "bytes": 1603811,
+        "exists": true,
+        "expected_bytes": 1603811,
+        "expected_sha256": "80bcca62199dff15f41588677e10e4179a79a19d28b172a2f46bd706f494bc75",
+        "passed": true,
+        "relative_path": "data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task19_reverse_run_2.json",
+        "sha256": "80bcca62199dff15f41588677e10e4179a79a19d28b172a2f46bd706f494bc75"
+      },
+      {
+        "bytes": 1619244,
+        "exists": true,
+        "expected_bytes": 1619244,
+        "expected_sha256": "2582c378aec6af7763131bfa148c856ca8796d1be34f3e1634e5ec7466053e55",
+        "passed": true,
+        "relative_path": "data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task19_reverse_run_3.json",
+        "sha256": "2582c378aec6af7763131bfa148c856ca8796d1be34f3e1634e5ec7466053e55"
+      },
+      {
+        "bytes": 855866,
+        "exists": true,
+        "expected_bytes": 855866,
+        "expected_sha256": "4141601c2f40f09a9fd549a95e95b366aec751110100047edda7c2c0a854ea82",
+        "passed": true,
+        "relative_path": "data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task20_forward_run_1.json",
+        "sha256": "4141601c2f40f09a9fd549a95e95b366aec751110100047edda7c2c0a854ea82"
+      },
+      {
+        "bytes": 855199,
+        "exists": true,
+        "expected_bytes": 855199,
+        "expected_sha256": "74c7b5d577461c4699ad1ed93e8ebe3c6be0ade74b9c37ecd5e03bf54fd950ba",
+        "passed": true,
+        "relative_path": "data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task20_forward_run_2.json",
+        "sha256": "74c7b5d577461c4699ad1ed93e8ebe3c6be0ade74b9c37ecd5e03bf54fd950ba"
+      },
+      {
+        "bytes": 856006,
+        "exists": true,
+        "expected_bytes": 856006,
+        "expected_sha256": "f216d5c811fbd94fbd00d2e9e901fed023f78be996244af532402b953f1421e0",
+        "passed": true,
+        "relative_path": "data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task20_forward_run_3.json",
+        "sha256": "f216d5c811fbd94fbd00d2e9e901fed023f78be996244af532402b953f1421e0"
+      },
+      {
+        "bytes": 990376,
+        "exists": true,
+        "expected_bytes": 990376,
+        "expected_sha256": "c6b01d157eb982699705ae3c3060d2700c804dae02b42b45c0e4335da30cbf0d",
+        "passed": true,
+        "relative_path": "data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task19_forward_run_1.json",
+        "sha256": "c6b01d157eb982699705ae3c3060d2700c804dae02b42b45c0e4335da30cbf0d"
+      },
+      {
+        "bytes": 990067,
+        "exists": true,
+        "expected_bytes": 990067,
+        "expected_sha256": "80160af0ac8d677d43950b6c8010ea916ff9e46a2032f7f0bfe7e226a7f9a2fe",
+        "passed": true,
+        "relative_path": "data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task19_forward_run_2.json",
+        "sha256": "80160af0ac8d677d43950b6c8010ea916ff9e46a2032f7f0bfe7e226a7f9a2fe"
+      },
+      {
+        "bytes": 990173,
+        "exists": true,
+        "expected_bytes": 990173,
+        "expected_sha256": "5ea6943a9b66925bcfe23376eb87adbc98c59eebc2a3bc39cc7b740b80dcc4d0",
+        "passed": true,
+        "relative_path": "data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task19_forward_run_3.json",
+        "sha256": "5ea6943a9b66925bcfe23376eb87adbc98c59eebc2a3bc39cc7b740b80dcc4d0"
+      }
+    ],
+    "file_count": 15,
+    "manifest_canonical_sha256": "83a23cb06c2e0d882c70b38bde8104cefc78f4728b67de1b36955fc12f5de2b8",
+    "observed_commit": "00f890a95a159ee0207645b1b66c8d12a2f5644b",
+    "state": "passed",
+    "worktree": "/tmp/axis-k0-verify-8yo6hT"
   },
   "gpu_read_only_snapshot": {
     "read_only": true,

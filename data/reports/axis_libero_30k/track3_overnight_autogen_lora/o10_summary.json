@@ -1,0 +1,179 @@
+{
+  "artifact_manifest": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o10_artifact_manifest.json",
+  "counts": {
+    "accepted": 0,
+    "exact": 0,
+    "generation_attempts": 0,
+    "pending": 0,
+    "replay_attempts": 0,
+    "task10_attempt3": 1,
+    "task19_attempt1": 0,
+    "task20_attempt1": 0,
+    "training_started": 0,
+    "zip_created": 0
+  },
+  "created_at_utc": "2026-09-04T16:56:20.571498+00:00",
+  "hard_stop": {
+    "automatic_resume": false,
+    "executed": true,
+    "reason": "O2 parent provenance telemetry gate",
+    "status": "await_reviewed_remediation_plan"
+  },
+  "o2_failure": {
+    "category": "infrastructure",
+    "parent_attempt_not_retried": true,
+    "reason": "parent_poll_interval_over_100ms",
+    "task10_child_physics_camera_passed": true,
+    "task20_task19_not_started": true
+  },
+  "phase_csv": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o10_phase_results.csv",
+  "phases": {
+    "O0": "track3_overnight_o0_passed",
+    "O1": "track3_overnight_o1_provenance_watchdog_passed",
+    "O10": "hard_stop",
+    "O2": "track3_overnight_stopped_O2_task10_attempt3_failure",
+    "O3": "not_evaluated",
+    "O4": "not_evaluated",
+    "O5": "not_evaluated",
+    "O6": "not_evaluated",
+    "O7": "not_evaluated",
+    "O8": "not_evaluated",
+    "O9": "not_evaluated"
+  },
+  "plan": "docs/AXIS_PI05_TRACK3_OVERNIGHT_AUTOGEN_LORA_AND_ZIP_PLAN.md",
+  "resource_boundary": {
+    "batch_generation": false,
+    "cuda_imported_after_O2": false,
+    "fast_or_zip": false,
+    "gpu0_external_process_preserved": true,
+    "gpu0_touched": false,
+    "gpu_snapshots": {
+      "0": {
+        "compute_processes": [
+          "1133706, /mnt/home/moriyama/workspace/ros2_project/mmdetection/.venv-yolo26/bin/python, 16510"
+        ],
+        "free_gate": false,
+        "gpus": [
+          {
+            "index": "0",
+            "memory_total_mib": 32768.0,
+            "memory_used_mib": 16547.0,
+            "uuid": "GPU-0a004a52-e72d-9b46-0391-9488e841db41"
+          }
+        ],
+        "process_query_returncode": 0,
+        "query": [
+          "nvidia-smi",
+          "-i",
+          "0",
+          "--query-gpu=index,uuid,memory.used,memory.total",
+          "--format=csv,noheader,nounits"
+        ],
+        "returncode": 0,
+        "timestamp_utc": "2026-09-04T16:56:20.188010+00:00"
+      },
+      "1": {
+        "compute_processes": [],
+        "free_gate": true,
+        "gpus": [
+          {
+            "index": "1",
+            "memory_total_mib": 32768.0,
+            "memory_used_mib": 5.0,
+            "uuid": "GPU-dbf876c3-dcaf-054b-ac9d-035e7198ceda"
+          }
+        ],
+        "process_query_returncode": 0,
+        "query": [
+          "nvidia-smi",
+          "-i",
+          "1",
+          "--query-gpu=index,uuid,memory.used,memory.total",
+          "--format=csv,noheader,nounits"
+        ],
+        "returncode": 0,
+        "timestamp_utc": "2026-09-04T16:56:20.320414+00:00"
+      },
+      "2": {
+        "compute_processes": [],
+        "free_gate": true,
+        "gpus": [
+          {
+            "index": "2",
+            "memory_total_mib": 32768.0,
+            "memory_used_mib": 5.0,
+            "uuid": "GPU-0cf6b31a-016b-6e71-a7b5-a790922d89ae"
+          }
+        ],
+        "process_query_returncode": 0,
+        "query": [
+          "nvidia-smi",
+          "-i",
+          "2",
+          "--query-gpu=index,uuid,memory.used,memory.total",
+          "--format=csv,noheader,nounits"
+        ],
+        "returncode": 0,
+        "timestamp_utc": "2026-09-04T16:56:20.442669+00:00"
+      },
+      "3": {
+        "compute_processes": [],
+        "free_gate": true,
+        "gpus": [
+          {
+            "index": "3",
+            "memory_total_mib": 32768.0,
+            "memory_used_mib": 5.0,
+            "uuid": "GPU-b03055ef-af46-2cf8-7545-c60870f745f5"
+          }
+        ],
+        "process_query_returncode": 0,
+        "query": [
+          "nvidia-smi",
+          "-i",
+          "3",
+          "--query-gpu=index,uuid,memory.used,memory.total",
+          "--format=csv,noheader,nounits"
+        ],
+        "returncode": 0,
+        "timestamp_utc": "2026-09-04T16:56:20.571453+00:00"
+      }
+    },
+    "libero_plus_porcelain": [
+      "M libero/libero/benchmark/__init__.py",
+      "?? libero/__init__.py",
+      "?? libero/libero/assets",
+      "?? libero/libero/bddl_files/libero_t3",
+      "?? libero/libero/init_files/libero_t3"
+    ],
+    "official_gpu": false,
+    "se3_generation": false,
+    "simulator_imported_after_O2": false,
+    "teleop": false,
+    "training_started": false,
+    "upload": false
+  },
+  "resume_cursor": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/resume_cursor.json",
+  "schema_version": "track3_overnight_o10_v1",
+  "source_commits": {
+    "o0_input": "309ccafe9e6e2cddd0c9f16db111fc054478eb8b",
+    "o1_o2_code": "e132bc240e809e79b83fac7528526dd82cd97703",
+    "openpi": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1"
+  },
+  "status": "track3_overnight_stopped_O2_task10_attempt3_provenance_poll_interval",
+  "tool_sha256": "ec53d5e4782b87ea169a8ebf1d3f74a6969a43e470b158e1033d00a5e675e161",
+  "validation": {
+    "git_diff_check": true,
+    "h264_camera_canary": true,
+    "npz_allow_pickle_false": true,
+    "partial_residue": [],
+    "py_compile": true,
+    "root_tests": {
+      "command": "./.venv_axis_pi05/bin/python -m pytest -q tests",
+      "passed": 244,
+      "skipped": 7,
+      "warnings": 23
+    },
+    "strict_json": true
+  }
+}

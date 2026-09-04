@@ -1,0 +1,1660 @@
+{
+  "assembly_cases": {
+    "complete": {
+      "category": "success",
+      "child_result": {
+        "child_pid": 222,
+        "seed": 3100,
+        "status": "passed"
+      },
+      "gpu_provenance_gate": {
+        "executed": true,
+        "missing": [],
+        "reason": null,
+        "required": true,
+        "required_fields": [
+          "seed",
+          "parent_pid",
+          "child_pid",
+          "child_result_pid",
+          "physical_gpu_uuid",
+          "cuda_visible_devices",
+          "start_snapshot",
+          "end_snapshot",
+          "peak_memory_mib",
+          "parent_poll_count",
+          "parent_poll_interval_max_ms",
+          "deadline_seconds",
+          "term_grace_seconds",
+          "process_returncode",
+          "timed_out"
+        ],
+        "state": "passed"
+      },
+      "process_record": {
+        "child_pid": 222,
+        "child_result_pid": 222,
+        "cuda_visible_devices": "3",
+        "deadline_seconds": 300.0,
+        "end_snapshot": {
+          "gpus": []
+        },
+        "parent_pid": 111,
+        "parent_poll_count": 1,
+        "parent_poll_interval_max_ms": 0.1,
+        "peak_memory_mib": 1.0,
+        "physical_gpu_uuid": "GPU-synthetic",
+        "process_returncode": 0,
+        "seed": 3100,
+        "start_snapshot": {
+          "gpus": []
+        },
+        "term_grace_seconds": 10.0,
+        "timed_out": false
+      },
+      "reason": null,
+      "schema_version": "track3_parent_result_v1",
+      "status": "passed"
+    },
+    "gate_name_error": {
+      "category": "infrastructure",
+      "child_result": {
+        "child_pid": 222,
+        "seed": 3100,
+        "status": "passed"
+      },
+      "gpu_provenance_gate": {
+        "executed": false,
+        "missing": [
+          "callable_gate"
+        ],
+        "reason": "gate_exception",
+        "required": true,
+        "state": "failed"
+      },
+      "process_record": {
+        "child_pid": 222,
+        "child_result_pid": 222,
+        "cuda_visible_devices": "3",
+        "deadline_seconds": 300.0,
+        "end_snapshot": {
+          "gpus": []
+        },
+        "parent_pid": 111,
+        "parent_poll_count": 1,
+        "parent_poll_interval_max_ms": 0.1,
+        "peak_memory_mib": 1.0,
+        "physical_gpu_uuid": "GPU-synthetic",
+        "process_returncode": 0,
+        "seed": 3100,
+        "start_snapshot": {
+          "gpus": []
+        },
+        "term_grace_seconds": 10.0,
+        "timed_out": false
+      },
+      "reason": "provenance_gate_exception:NameError:gpu_provenance_gate",
+      "schema_version": "track3_parent_result_v1",
+      "status": "failed_closed"
+    },
+    "gate_not_callable": {
+      "category": "infrastructure",
+      "child_result": {
+        "child_pid": 222,
+        "seed": 3100,
+        "status": "passed"
+      },
+      "gpu_provenance_gate": {
+        "executed": false,
+        "missing": [
+          "callable_gate"
+        ],
+        "reason": "gate_exception",
+        "required": true,
+        "state": "failed"
+      },
+      "process_record": {
+        "child_pid": 222,
+        "child_result_pid": 222,
+        "cuda_visible_devices": "3",
+        "deadline_seconds": 300.0,
+        "end_snapshot": {
+          "gpus": []
+        },
+        "parent_pid": 111,
+        "parent_poll_count": 1,
+        "parent_poll_interval_max_ms": 0.1,
+        "peak_memory_mib": 1.0,
+        "physical_gpu_uuid": "GPU-synthetic",
+        "process_returncode": 0,
+        "seed": 3100,
+        "start_snapshot": {
+          "gpus": []
+        },
+        "term_grace_seconds": 10.0,
+        "timed_out": false
+      },
+      "reason": "provenance_gate_exception:TypeError:gpu_provenance_gate_not_callable",
+      "schema_version": "track3_parent_result_v1",
+      "status": "failed_closed"
+    },
+    "malformed_child": {
+      "category": "infrastructure",
+      "child_result": null,
+      "process_record": {
+        "child_pid": 222,
+        "child_result_pid": 222,
+        "cuda_visible_devices": "3",
+        "deadline_seconds": 300.0,
+        "end_snapshot": {
+          "gpus": []
+        },
+        "parent_pid": 111,
+        "parent_poll_count": 1,
+        "parent_poll_interval_max_ms": 0.1,
+        "peak_memory_mib": 1.0,
+        "physical_gpu_uuid": "GPU-synthetic",
+        "process_returncode": 0,
+        "seed": 3100,
+        "start_snapshot": {
+          "gpus": []
+        },
+        "term_grace_seconds": 10.0,
+        "timed_out": false
+      },
+      "reason": "malformed_child_result",
+      "schema_version": "track3_parent_result_v1",
+      "status": "failed_closed"
+    },
+    "missing_child_pid": {
+      "category": "infrastructure",
+      "child_result": {
+        "child_pid": 222,
+        "seed": 3100,
+        "status": "passed"
+      },
+      "gpu_provenance_gate": {
+        "executed": true,
+        "missing": [
+          "child_pid"
+        ],
+        "reason": "gpu_provenance_incomplete",
+        "required": true,
+        "required_fields": [
+          "seed",
+          "parent_pid",
+          "child_pid",
+          "child_result_pid",
+          "physical_gpu_uuid",
+          "cuda_visible_devices",
+          "start_snapshot",
+          "end_snapshot",
+          "peak_memory_mib",
+          "parent_poll_count",
+          "parent_poll_interval_max_ms",
+          "deadline_seconds",
+          "term_grace_seconds",
+          "process_returncode",
+          "timed_out"
+        ],
+        "state": "failed"
+      },
+      "process_record": {
+        "child_result_pid": 222,
+        "cuda_visible_devices": "3",
+        "deadline_seconds": 300.0,
+        "end_snapshot": {
+          "gpus": []
+        },
+        "parent_pid": 111,
+        "parent_poll_count": 1,
+        "parent_poll_interval_max_ms": 0.1,
+        "peak_memory_mib": 1.0,
+        "physical_gpu_uuid": "GPU-synthetic",
+        "process_returncode": 0,
+        "seed": 3100,
+        "start_snapshot": {
+          "gpus": []
+        },
+        "term_grace_seconds": 10.0,
+        "timed_out": false
+      },
+      "reason": "gpu_provenance_gate_failed",
+      "schema_version": "track3_parent_result_v1",
+      "status": "failed_closed"
+    },
+    "missing_child_result_pid": {
+      "category": "infrastructure",
+      "child_result": {
+        "child_pid": 222,
+        "seed": 3100,
+        "status": "passed"
+      },
+      "gpu_provenance_gate": {
+        "executed": true,
+        "missing": [
+          "child_result_pid"
+        ],
+        "reason": "gpu_provenance_incomplete",
+        "required": true,
+        "required_fields": [
+          "seed",
+          "parent_pid",
+          "child_pid",
+          "child_result_pid",
+          "physical_gpu_uuid",
+          "cuda_visible_devices",
+          "start_snapshot",
+          "end_snapshot",
+          "peak_memory_mib",
+          "parent_poll_count",
+          "parent_poll_interval_max_ms",
+          "deadline_seconds",
+          "term_grace_seconds",
+          "process_returncode",
+          "timed_out"
+        ],
+        "state": "failed"
+      },
+      "process_record": {
+        "child_pid": 222,
+        "cuda_visible_devices": "3",
+        "deadline_seconds": 300.0,
+        "end_snapshot": {
+          "gpus": []
+        },
+        "parent_pid": 111,
+        "parent_poll_count": 1,
+        "parent_poll_interval_max_ms": 0.1,
+        "peak_memory_mib": 1.0,
+        "physical_gpu_uuid": "GPU-synthetic",
+        "process_returncode": 0,
+        "seed": 3100,
+        "start_snapshot": {
+          "gpus": []
+        },
+        "term_grace_seconds": 10.0,
+        "timed_out": false
+      },
+      "reason": "gpu_provenance_gate_failed",
+      "schema_version": "track3_parent_result_v1",
+      "status": "failed_closed"
+    },
+    "missing_cuda_visible_devices": {
+      "category": "infrastructure",
+      "child_result": {
+        "child_pid": 222,
+        "seed": 3100,
+        "status": "passed"
+      },
+      "gpu_provenance_gate": {
+        "executed": true,
+        "missing": [
+          "cuda_visible_devices"
+        ],
+        "reason": "gpu_provenance_incomplete",
+        "required": true,
+        "required_fields": [
+          "seed",
+          "parent_pid",
+          "child_pid",
+          "child_result_pid",
+          "physical_gpu_uuid",
+          "cuda_visible_devices",
+          "start_snapshot",
+          "end_snapshot",
+          "peak_memory_mib",
+          "parent_poll_count",
+          "parent_poll_interval_max_ms",
+          "deadline_seconds",
+          "term_grace_seconds",
+          "process_returncode",
+          "timed_out"
+        ],
+        "state": "failed"
+      },
+      "process_record": {
+        "child_pid": 222,
+        "child_result_pid": 222,
+        "deadline_seconds": 300.0,
+        "end_snapshot": {
+          "gpus": []
+        },
+        "parent_pid": 111,
+        "parent_poll_count": 1,
+        "parent_poll_interval_max_ms": 0.1,
+        "peak_memory_mib": 1.0,
+        "physical_gpu_uuid": "GPU-synthetic",
+        "process_returncode": 0,
+        "seed": 3100,
+        "start_snapshot": {
+          "gpus": []
+        },
+        "term_grace_seconds": 10.0,
+        "timed_out": false
+      },
+      "reason": "gpu_provenance_gate_failed",
+      "schema_version": "track3_parent_result_v1",
+      "status": "failed_closed"
+    },
+    "missing_deadline_seconds": {
+      "category": "infrastructure",
+      "child_result": {
+        "child_pid": 222,
+        "seed": 3100,
+        "status": "passed"
+      },
+      "gpu_provenance_gate": {
+        "executed": true,
+        "missing": [
+          "deadline_seconds",
+          "deadline_contract"
+        ],
+        "reason": "gpu_provenance_incomplete",
+        "required": true,
+        "required_fields": [
+          "seed",
+          "parent_pid",
+          "child_pid",
+          "child_result_pid",
+          "physical_gpu_uuid",
+          "cuda_visible_devices",
+          "start_snapshot",
+          "end_snapshot",
+          "peak_memory_mib",
+          "parent_poll_count",
+          "parent_poll_interval_max_ms",
+          "deadline_seconds",
+          "term_grace_seconds",
+          "process_returncode",
+          "timed_out"
+        ],
+        "state": "failed"
+      },
+      "process_record": {
+        "child_pid": 222,
+        "child_result_pid": 222,
+        "cuda_visible_devices": "3",
+        "end_snapshot": {
+          "gpus": []
+        },
+        "parent_pid": 111,
+        "parent_poll_count": 1,
+        "parent_poll_interval_max_ms": 0.1,
+        "peak_memory_mib": 1.0,
+        "physical_gpu_uuid": "GPU-synthetic",
+        "process_returncode": 0,
+        "seed": 3100,
+        "start_snapshot": {
+          "gpus": []
+        },
+        "term_grace_seconds": 10.0,
+        "timed_out": false
+      },
+      "reason": "gpu_provenance_gate_failed",
+      "schema_version": "track3_parent_result_v1",
+      "status": "failed_closed"
+    },
+    "missing_end_snapshot": {
+      "category": "infrastructure",
+      "child_result": {
+        "child_pid": 222,
+        "seed": 3100,
+        "status": "passed"
+      },
+      "gpu_provenance_gate": {
+        "executed": true,
+        "missing": [
+          "end_snapshot"
+        ],
+        "reason": "gpu_provenance_incomplete",
+        "required": true,
+        "required_fields": [
+          "seed",
+          "parent_pid",
+          "child_pid",
+          "child_result_pid",
+          "physical_gpu_uuid",
+          "cuda_visible_devices",
+          "start_snapshot",
+          "end_snapshot",
+          "peak_memory_mib",
+          "parent_poll_count",
+          "parent_poll_interval_max_ms",
+          "deadline_seconds",
+          "term_grace_seconds",
+          "process_returncode",
+          "timed_out"
+        ],
+        "state": "failed"
+      },
+      "process_record": {
+        "child_pid": 222,
+        "child_result_pid": 222,
+        "cuda_visible_devices": "3",
+        "deadline_seconds": 300.0,
+        "parent_pid": 111,
+        "parent_poll_count": 1,
+        "parent_poll_interval_max_ms": 0.1,
+        "peak_memory_mib": 1.0,
+        "physical_gpu_uuid": "GPU-synthetic",
+        "process_returncode": 0,
+        "seed": 3100,
+        "start_snapshot": {
+          "gpus": []
+        },
+        "term_grace_seconds": 10.0,
+        "timed_out": false
+      },
+      "reason": "gpu_provenance_gate_failed",
+      "schema_version": "track3_parent_result_v1",
+      "status": "failed_closed"
+    },
+    "missing_parent_pid": {
+      "category": "infrastructure",
+      "child_result": {
+        "child_pid": 222,
+        "seed": 3100,
+        "status": "passed"
+      },
+      "gpu_provenance_gate": {
+        "executed": true,
+        "missing": [
+          "parent_pid"
+        ],
+        "reason": "gpu_provenance_incomplete",
+        "required": true,
+        "required_fields": [
+          "seed",
+          "parent_pid",
+          "child_pid",
+          "child_result_pid",
+          "physical_gpu_uuid",
+          "cuda_visible_devices",
+          "start_snapshot",
+          "end_snapshot",
+          "peak_memory_mib",
+          "parent_poll_count",
+          "parent_poll_interval_max_ms",
+          "deadline_seconds",
+          "term_grace_seconds",
+          "process_returncode",
+          "timed_out"
+        ],
+        "state": "failed"
+      },
+      "process_record": {
+        "child_pid": 222,
+        "child_result_pid": 222,
+        "cuda_visible_devices": "3",
+        "deadline_seconds": 300.0,
+        "end_snapshot": {
+          "gpus": []
+        },
+        "parent_poll_count": 1,
+        "parent_poll_interval_max_ms": 0.1,
+        "peak_memory_mib": 1.0,
+        "physical_gpu_uuid": "GPU-synthetic",
+        "process_returncode": 0,
+        "seed": 3100,
+        "start_snapshot": {
+          "gpus": []
+        },
+        "term_grace_seconds": 10.0,
+        "timed_out": false
+      },
+      "reason": "gpu_provenance_gate_failed",
+      "schema_version": "track3_parent_result_v1",
+      "status": "failed_closed"
+    },
+    "missing_parent_poll_count": {
+      "category": "infrastructure",
+      "child_result": {
+        "child_pid": 222,
+        "seed": 3100,
+        "status": "passed"
+      },
+      "gpu_provenance_gate": {
+        "executed": true,
+        "missing": [
+          "parent_poll_count"
+        ],
+        "reason": "gpu_provenance_incomplete",
+        "required": true,
+        "required_fields": [
+          "seed",
+          "parent_pid",
+          "child_pid",
+          "child_result_pid",
+          "physical_gpu_uuid",
+          "cuda_visible_devices",
+          "start_snapshot",
+          "end_snapshot",
+          "peak_memory_mib",
+          "parent_poll_count",
+          "parent_poll_interval_max_ms",
+          "deadline_seconds",
+          "term_grace_seconds",
+          "process_returncode",
+          "timed_out"
+        ],
+        "state": "failed"
+      },
+      "process_record": {
+        "child_pid": 222,
+        "child_result_pid": 222,
+        "cuda_visible_devices": "3",
+        "deadline_seconds": 300.0,
+        "end_snapshot": {
+          "gpus": []
+        },
+        "parent_pid": 111,
+        "parent_poll_interval_max_ms": 0.1,
+        "peak_memory_mib": 1.0,
+        "physical_gpu_uuid": "GPU-synthetic",
+        "process_returncode": 0,
+        "seed": 3100,
+        "start_snapshot": {
+          "gpus": []
+        },
+        "term_grace_seconds": 10.0,
+        "timed_out": false
+      },
+      "reason": "gpu_provenance_gate_failed",
+      "schema_version": "track3_parent_result_v1",
+      "status": "failed_closed"
+    },
+    "missing_parent_poll_interval_max_ms": {
+      "category": "infrastructure",
+      "child_result": {
+        "child_pid": 222,
+        "seed": 3100,
+        "status": "passed"
+      },
+      "gpu_provenance_gate": {
+        "executed": true,
+        "missing": [
+          "parent_poll_interval_max_ms"
+        ],
+        "reason": "gpu_provenance_incomplete",
+        "required": true,
+        "required_fields": [
+          "seed",
+          "parent_pid",
+          "child_pid",
+          "child_result_pid",
+          "physical_gpu_uuid",
+          "cuda_visible_devices",
+          "start_snapshot",
+          "end_snapshot",
+          "peak_memory_mib",
+          "parent_poll_count",
+          "parent_poll_interval_max_ms",
+          "deadline_seconds",
+          "term_grace_seconds",
+          "process_returncode",
+          "timed_out"
+        ],
+        "state": "failed"
+      },
+      "process_record": {
+        "child_pid": 222,
+        "child_result_pid": 222,
+        "cuda_visible_devices": "3",
+        "deadline_seconds": 300.0,
+        "end_snapshot": {
+          "gpus": []
+        },
+        "parent_pid": 111,
+        "parent_poll_count": 1,
+        "peak_memory_mib": 1.0,
+        "physical_gpu_uuid": "GPU-synthetic",
+        "process_returncode": 0,
+        "seed": 3100,
+        "start_snapshot": {
+          "gpus": []
+        },
+        "term_grace_seconds": 10.0,
+        "timed_out": false
+      },
+      "reason": "gpu_provenance_gate_failed",
+      "schema_version": "track3_parent_result_v1",
+      "status": "failed_closed"
+    },
+    "missing_peak_memory_mib": {
+      "category": "infrastructure",
+      "child_result": {
+        "child_pid": 222,
+        "seed": 3100,
+        "status": "passed"
+      },
+      "gpu_provenance_gate": {
+        "executed": true,
+        "missing": [
+          "peak_memory_mib"
+        ],
+        "reason": "gpu_provenance_incomplete",
+        "required": true,
+        "required_fields": [
+          "seed",
+          "parent_pid",
+          "child_pid",
+          "child_result_pid",
+          "physical_gpu_uuid",
+          "cuda_visible_devices",
+          "start_snapshot",
+          "end_snapshot",
+          "peak_memory_mib",
+          "parent_poll_count",
+          "parent_poll_interval_max_ms",
+          "deadline_seconds",
+          "term_grace_seconds",
+          "process_returncode",
+          "timed_out"
+        ],
+        "state": "failed"
+      },
+      "process_record": {
+        "child_pid": 222,
+        "child_result_pid": 222,
+        "cuda_visible_devices": "3",
+        "deadline_seconds": 300.0,
+        "end_snapshot": {
+          "gpus": []
+        },
+        "parent_pid": 111,
+        "parent_poll_count": 1,
+        "parent_poll_interval_max_ms": 0.1,
+        "physical_gpu_uuid": "GPU-synthetic",
+        "process_returncode": 0,
+        "seed": 3100,
+        "start_snapshot": {
+          "gpus": []
+        },
+        "term_grace_seconds": 10.0,
+        "timed_out": false
+      },
+      "reason": "gpu_provenance_gate_failed",
+      "schema_version": "track3_parent_result_v1",
+      "status": "failed_closed"
+    },
+    "missing_physical_gpu_uuid": {
+      "category": "infrastructure",
+      "child_result": {
+        "child_pid": 222,
+        "seed": 3100,
+        "status": "passed"
+      },
+      "gpu_provenance_gate": {
+        "executed": true,
+        "missing": [
+          "physical_gpu_uuid"
+        ],
+        "reason": "gpu_provenance_incomplete",
+        "required": true,
+        "required_fields": [
+          "seed",
+          "parent_pid",
+          "child_pid",
+          "child_result_pid",
+          "physical_gpu_uuid",
+          "cuda_visible_devices",
+          "start_snapshot",
+          "end_snapshot",
+          "peak_memory_mib",
+          "parent_poll_count",
+          "parent_poll_interval_max_ms",
+          "deadline_seconds",
+          "term_grace_seconds",
+          "process_returncode",
+          "timed_out"
+        ],
+        "state": "failed"
+      },
+      "process_record": {
+        "child_pid": 222,
+        "child_result_pid": 222,
+        "cuda_visible_devices": "3",
+        "deadline_seconds": 300.0,
+        "end_snapshot": {
+          "gpus": []
+        },
+        "parent_pid": 111,
+        "parent_poll_count": 1,
+        "parent_poll_interval_max_ms": 0.1,
+        "peak_memory_mib": 1.0,
+        "process_returncode": 0,
+        "seed": 3100,
+        "start_snapshot": {
+          "gpus": []
+        },
+        "term_grace_seconds": 10.0,
+        "timed_out": false
+      },
+      "reason": "gpu_provenance_gate_failed",
+      "schema_version": "track3_parent_result_v1",
+      "status": "failed_closed"
+    },
+    "missing_process_returncode": {
+      "category": "infrastructure",
+      "child_result": {
+        "child_pid": 222,
+        "seed": 3100,
+        "status": "passed"
+      },
+      "gpu_provenance_gate": {
+        "executed": true,
+        "missing": [
+          "process_returncode"
+        ],
+        "reason": "gpu_provenance_incomplete",
+        "required": true,
+        "required_fields": [
+          "seed",
+          "parent_pid",
+          "child_pid",
+          "child_result_pid",
+          "physical_gpu_uuid",
+          "cuda_visible_devices",
+          "start_snapshot",
+          "end_snapshot",
+          "peak_memory_mib",
+          "parent_poll_count",
+          "parent_poll_interval_max_ms",
+          "deadline_seconds",
+          "term_grace_seconds",
+          "process_returncode",
+          "timed_out"
+        ],
+        "state": "failed"
+      },
+      "process_record": {
+        "child_pid": 222,
+        "child_result_pid": 222,
+        "cuda_visible_devices": "3",
+        "deadline_seconds": 300.0,
+        "end_snapshot": {
+          "gpus": []
+        },
+        "parent_pid": 111,
+        "parent_poll_count": 1,
+        "parent_poll_interval_max_ms": 0.1,
+        "peak_memory_mib": 1.0,
+        "physical_gpu_uuid": "GPU-synthetic",
+        "seed": 3100,
+        "start_snapshot": {
+          "gpus": []
+        },
+        "term_grace_seconds": 10.0,
+        "timed_out": false
+      },
+      "reason": "gpu_provenance_gate_failed",
+      "schema_version": "track3_parent_result_v1",
+      "status": "failed_closed"
+    },
+    "missing_seed": {
+      "category": "infrastructure",
+      "child_result": {
+        "child_pid": 222,
+        "seed": 3100,
+        "status": "passed"
+      },
+      "gpu_provenance_gate": {
+        "executed": true,
+        "missing": [
+          "seed"
+        ],
+        "reason": "gpu_provenance_incomplete",
+        "required": true,
+        "required_fields": [
+          "seed",
+          "parent_pid",
+          "child_pid",
+          "child_result_pid",
+          "physical_gpu_uuid",
+          "cuda_visible_devices",
+          "start_snapshot",
+          "end_snapshot",
+          "peak_memory_mib",
+          "parent_poll_count",
+          "parent_poll_interval_max_ms",
+          "deadline_seconds",
+          "term_grace_seconds",
+          "process_returncode",
+          "timed_out"
+        ],
+        "state": "failed"
+      },
+      "process_record": {
+        "child_pid": 222,
+        "child_result_pid": 222,
+        "cuda_visible_devices": "3",
+        "deadline_seconds": 300.0,
+        "end_snapshot": {
+          "gpus": []
+        },
+        "parent_pid": 111,
+        "parent_poll_count": 1,
+        "parent_poll_interval_max_ms": 0.1,
+        "peak_memory_mib": 1.0,
+        "physical_gpu_uuid": "GPU-synthetic",
+        "process_returncode": 0,
+        "start_snapshot": {
+          "gpus": []
+        },
+        "term_grace_seconds": 10.0,
+        "timed_out": false
+      },
+      "reason": "gpu_provenance_gate_failed",
+      "schema_version": "track3_parent_result_v1",
+      "status": "failed_closed"
+    },
+    "missing_start_snapshot": {
+      "category": "infrastructure",
+      "child_result": {
+        "child_pid": 222,
+        "seed": 3100,
+        "status": "passed"
+      },
+      "gpu_provenance_gate": {
+        "executed": true,
+        "missing": [
+          "start_snapshot"
+        ],
+        "reason": "gpu_provenance_incomplete",
+        "required": true,
+        "required_fields": [
+          "seed",
+          "parent_pid",
+          "child_pid",
+          "child_result_pid",
+          "physical_gpu_uuid",
+          "cuda_visible_devices",
+          "start_snapshot",
+          "end_snapshot",
+          "peak_memory_mib",
+          "parent_poll_count",
+          "parent_poll_interval_max_ms",
+          "deadline_seconds",
+          "term_grace_seconds",
+          "process_returncode",
+          "timed_out"
+        ],
+        "state": "failed"
+      },
+      "process_record": {
+        "child_pid": 222,
+        "child_result_pid": 222,
+        "cuda_visible_devices": "3",
+        "deadline_seconds": 300.0,
+        "end_snapshot": {
+          "gpus": []
+        },
+        "parent_pid": 111,
+        "parent_poll_count": 1,
+        "parent_poll_interval_max_ms": 0.1,
+        "peak_memory_mib": 1.0,
+        "physical_gpu_uuid": "GPU-synthetic",
+        "process_returncode": 0,
+        "seed": 3100,
+        "term_grace_seconds": 10.0,
+        "timed_out": false
+      },
+      "reason": "gpu_provenance_gate_failed",
+      "schema_version": "track3_parent_result_v1",
+      "status": "failed_closed"
+    },
+    "missing_term_grace_seconds": {
+      "category": "infrastructure",
+      "child_result": {
+        "child_pid": 222,
+        "seed": 3100,
+        "status": "passed"
+      },
+      "gpu_provenance_gate": {
+        "executed": true,
+        "missing": [
+          "term_grace_seconds",
+          "term_grace_contract"
+        ],
+        "reason": "gpu_provenance_incomplete",
+        "required": true,
+        "required_fields": [
+          "seed",
+          "parent_pid",
+          "child_pid",
+          "child_result_pid",
+          "physical_gpu_uuid",
+          "cuda_visible_devices",
+          "start_snapshot",
+          "end_snapshot",
+          "peak_memory_mib",
+          "parent_poll_count",
+          "parent_poll_interval_max_ms",
+          "deadline_seconds",
+          "term_grace_seconds",
+          "process_returncode",
+          "timed_out"
+        ],
+        "state": "failed"
+      },
+      "process_record": {
+        "child_pid": 222,
+        "child_result_pid": 222,
+        "cuda_visible_devices": "3",
+        "deadline_seconds": 300.0,
+        "end_snapshot": {
+          "gpus": []
+        },
+        "parent_pid": 111,
+        "parent_poll_count": 1,
+        "parent_poll_interval_max_ms": 0.1,
+        "peak_memory_mib": 1.0,
+        "physical_gpu_uuid": "GPU-synthetic",
+        "process_returncode": 0,
+        "seed": 3100,
+        "start_snapshot": {
+          "gpus": []
+        },
+        "timed_out": false
+      },
+      "reason": "gpu_provenance_gate_failed",
+      "schema_version": "track3_parent_result_v1",
+      "status": "failed_closed"
+    },
+    "missing_timed_out": {
+      "category": "infrastructure",
+      "child_result": {
+        "child_pid": 222,
+        "seed": 3100,
+        "status": "passed"
+      },
+      "gpu_provenance_gate": {
+        "executed": true,
+        "missing": [
+          "timed_out"
+        ],
+        "reason": "gpu_provenance_incomplete",
+        "required": true,
+        "required_fields": [
+          "seed",
+          "parent_pid",
+          "child_pid",
+          "child_result_pid",
+          "physical_gpu_uuid",
+          "cuda_visible_devices",
+          "start_snapshot",
+          "end_snapshot",
+          "peak_memory_mib",
+          "parent_poll_count",
+          "parent_poll_interval_max_ms",
+          "deadline_seconds",
+          "term_grace_seconds",
+          "process_returncode",
+          "timed_out"
+        ],
+        "state": "failed"
+      },
+      "process_record": {
+        "child_pid": 222,
+        "child_result_pid": 222,
+        "cuda_visible_devices": "3",
+        "deadline_seconds": 300.0,
+        "end_snapshot": {
+          "gpus": []
+        },
+        "parent_pid": 111,
+        "parent_poll_count": 1,
+        "parent_poll_interval_max_ms": 0.1,
+        "peak_memory_mib": 1.0,
+        "physical_gpu_uuid": "GPU-synthetic",
+        "process_returncode": 0,
+        "seed": 3100,
+        "start_snapshot": {
+          "gpus": []
+        },
+        "term_grace_seconds": 10.0
+      },
+      "reason": "gpu_provenance_gate_failed",
+      "schema_version": "track3_parent_result_v1",
+      "status": "failed_closed"
+    },
+    "pid_mismatch": {
+      "category": "infrastructure",
+      "child_result": {
+        "child_pid": 222,
+        "seed": 3100,
+        "status": "passed"
+      },
+      "gpu_provenance_gate": {
+        "executed": true,
+        "missing": [
+          "child_pid_mismatch"
+        ],
+        "reason": "gpu_provenance_incomplete",
+        "required": true,
+        "required_fields": [
+          "seed",
+          "parent_pid",
+          "child_pid",
+          "child_result_pid",
+          "physical_gpu_uuid",
+          "cuda_visible_devices",
+          "start_snapshot",
+          "end_snapshot",
+          "peak_memory_mib",
+          "parent_poll_count",
+          "parent_poll_interval_max_ms",
+          "deadline_seconds",
+          "term_grace_seconds",
+          "process_returncode",
+          "timed_out"
+        ],
+        "state": "failed"
+      },
+      "process_record": {
+        "child_pid": 222,
+        "child_result_pid": 223,
+        "cuda_visible_devices": "3",
+        "deadline_seconds": 300.0,
+        "end_snapshot": {
+          "gpus": []
+        },
+        "parent_pid": 111,
+        "parent_poll_count": 1,
+        "parent_poll_interval_max_ms": 0.1,
+        "peak_memory_mib": 1.0,
+        "physical_gpu_uuid": "GPU-synthetic",
+        "process_returncode": 0,
+        "seed": 3100,
+        "start_snapshot": {
+          "gpus": []
+        },
+        "term_grace_seconds": 10.0,
+        "timed_out": false
+      },
+      "reason": "gpu_provenance_gate_failed",
+      "schema_version": "track3_parent_result_v1",
+      "status": "failed_closed"
+    }
+  },
+  "created_at_utc": "2026-09-04T16:53:11.562116+00:00",
+  "gpu_started": false,
+  "io_checks": {
+    "duplicate_identity_skipped": true,
+    "hang_term_then_kill_fail_closed": true,
+    "large_stdout_no_deadlock": true,
+    "malformed_result_fail_closed": true,
+    "nonzero_exit_fail_closed": true,
+    "partial_residue_empty": true,
+    "two_infrastructure_errors_global_stop": true,
+    "worker_exception_fail_closed": true
+  },
+  "io_tests": {
+    "exception": {
+      "atomic_partial_residue": [],
+      "category": "infrastructure",
+      "child_result": null,
+      "child_result_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o1_io_tests/exception/child_result.json",
+      "deadline_seconds": 10.0,
+      "identity": "synthetic:exception",
+      "parent_result": {
+        "category": "infrastructure",
+        "child_result": null,
+        "process_record": {
+          "child_pid": 1416871,
+          "child_result_pid": null,
+          "cuda_visible_devices": "cpu-only",
+          "deadline_seconds": 10.0,
+          "end_snapshot": {
+            "synthetic": true
+          },
+          "parent_pid": 1416866,
+          "parent_poll_count": 2,
+          "parent_poll_interval_max_ms": 0.0026300549507141113,
+          "peak_memory_mib": 0.0,
+          "physical_gpu_uuid": "synthetic-cpu",
+          "process_returncode": 1,
+          "seed": 0,
+          "start_snapshot": {
+            "synthetic": true
+          },
+          "synthetic_test": true,
+          "term_grace_seconds": 1.0,
+          "timed_out": false,
+          "timeout_termination_stage": null
+        },
+        "reason": "malformed_child_result",
+        "schema_version": "track3_parent_result_v1",
+        "status": "failed_closed"
+      },
+      "phase": "O1.synthetic_io",
+      "poll_count": 2,
+      "poll_interval_max_ms": 0.0026300549507141113,
+      "process_returncode": 1,
+      "result_error": null,
+      "schema_version": "track3_supervisor_result_v1",
+      "status": "failed_closed",
+      "stderr_bytes": 481,
+      "stderr_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o1_io_tests/exception/stderr.log",
+      "stdout_bytes": 0,
+      "stdout_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o1_io_tests/exception/stdout.log",
+      "term_grace_seconds": 1.0,
+      "termination_stage": null,
+      "timed_out": false,
+      "worker_pid": 1416871
+    },
+    "hang": {
+      "atomic_partial_residue": [],
+      "category": "infrastructure",
+      "child_result": null,
+      "child_result_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o1_io_tests/hang/child_result.json",
+      "deadline_seconds": 0.2,
+      "identity": "synthetic:hang",
+      "parent_result": {
+        "category": "infrastructure",
+        "child_result": null,
+        "process_record": {
+          "child_pid": 1416868,
+          "child_result_pid": null,
+          "cuda_visible_devices": "cpu-only",
+          "deadline_seconds": 0.2,
+          "end_snapshot": {
+            "synthetic": true
+          },
+          "parent_pid": 1416866,
+          "parent_poll_count": 3,
+          "parent_poll_interval_max_ms": 0.002500019036233425,
+          "peak_memory_mib": 0.0,
+          "physical_gpu_uuid": "synthetic-cpu",
+          "process_returncode": -15,
+          "seed": 0,
+          "start_snapshot": {
+            "synthetic": true
+          },
+          "synthetic_test": true,
+          "term_grace_seconds": 0.1,
+          "timed_out": true,
+          "timeout_termination_stage": "TERM"
+        },
+        "reason": "malformed_child_result",
+        "schema_version": "track3_parent_result_v1",
+        "status": "failed_closed"
+      },
+      "phase": "O1.synthetic_io",
+      "poll_count": 3,
+      "poll_interval_max_ms": 0.002500019036233425,
+      "process_returncode": -15,
+      "result_error": null,
+      "schema_version": "track3_supervisor_result_v1",
+      "status": "timeout_terminated",
+      "stderr_bytes": 0,
+      "stderr_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o1_io_tests/hang/stderr.log",
+      "stdout_bytes": 11,
+      "stdout_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o1_io_tests/hang/stdout.log",
+      "term_grace_seconds": 0.1,
+      "termination_stage": "TERM",
+      "timed_out": true,
+      "worker_pid": 1416868
+    },
+    "large": {
+      "atomic_partial_residue": [],
+      "category": "success",
+      "child_result": {
+        "child_pid": 1416867,
+        "created_at_utc": "2026-09-04T16:53:10.497646+00:00",
+        "mode": "large",
+        "schema_version": "track3_overnight_io_test_v1",
+        "seed": 1,
+        "status": "passed",
+        "worker_pid": 1416867
+      },
+      "child_result_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o1_io_tests/large/child_result.json",
+      "deadline_seconds": 10.0,
+      "identity": "synthetic:large",
+      "parent_result": {
+        "category": "success",
+        "child_result": {
+          "child_pid": 1416867,
+          "created_at_utc": "2026-09-04T16:53:10.497646+00:00",
+          "mode": "large",
+          "schema_version": "track3_overnight_io_test_v1",
+          "seed": 1,
+          "status": "passed",
+          "worker_pid": 1416867
+        },
+        "gpu_provenance_gate": {
+          "executed": true,
+          "missing": [],
+          "reason": null,
+          "required": true,
+          "required_fields": [
+            "seed",
+            "parent_pid",
+            "child_pid",
+            "child_result_pid",
+            "physical_gpu_uuid",
+            "cuda_visible_devices",
+            "start_snapshot",
+            "end_snapshot",
+            "peak_memory_mib",
+            "parent_poll_count",
+            "parent_poll_interval_max_ms",
+            "deadline_seconds",
+            "term_grace_seconds",
+            "process_returncode",
+            "timed_out"
+          ],
+          "state": "passed"
+        },
+        "process_record": {
+          "child_pid": 1416867,
+          "child_result_pid": 1416867,
+          "cuda_visible_devices": "cpu-only",
+          "deadline_seconds": 10.0,
+          "end_snapshot": {
+            "synthetic": true
+          },
+          "parent_pid": 1416866,
+          "parent_poll_count": 2,
+          "parent_poll_interval_max_ms": 0.0036410056054592133,
+          "peak_memory_mib": 0.0,
+          "physical_gpu_uuid": "synthetic-cpu",
+          "process_returncode": 0,
+          "seed": 1,
+          "start_snapshot": {
+            "synthetic": true
+          },
+          "synthetic_test": true,
+          "term_grace_seconds": 1.0,
+          "timed_out": false,
+          "timeout_termination_stage": null
+        },
+        "reason": null,
+        "schema_version": "track3_parent_result_v1",
+        "status": "passed"
+      },
+      "phase": "O1.synthetic_io",
+      "poll_count": 2,
+      "poll_interval_max_ms": 0.0036410056054592133,
+      "process_returncode": 0,
+      "result_error": null,
+      "schema_version": "track3_supervisor_result_v1",
+      "status": "passed",
+      "stderr_bytes": 0,
+      "stderr_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o1_io_tests/large/stderr.log",
+      "stdout_bytes": 16777216,
+      "stdout_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o1_io_tests/large/stdout.log",
+      "term_grace_seconds": 1.0,
+      "termination_stage": null,
+      "timed_out": false,
+      "worker_pid": 1416867
+    },
+    "malformed": {
+      "atomic_partial_residue": [],
+      "category": "infrastructure",
+      "child_result": null,
+      "child_result_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o1_io_tests/malformed/child_result.json",
+      "deadline_seconds": 10.0,
+      "identity": "synthetic:malformed",
+      "parent_result": {
+        "category": "infrastructure",
+        "child_result": null,
+        "process_record": {
+          "child_pid": 1416869,
+          "child_result_pid": null,
+          "cuda_visible_devices": "cpu-only",
+          "deadline_seconds": 10.0,
+          "end_snapshot": {
+            "synthetic": true
+          },
+          "parent_pid": 1416866,
+          "parent_poll_count": 1,
+          "parent_poll_interval_max_ms": 0.0011440133675932884,
+          "peak_memory_mib": 0.0,
+          "physical_gpu_uuid": "synthetic-cpu",
+          "process_returncode": 0,
+          "seed": 0,
+          "start_snapshot": {
+            "synthetic": true
+          },
+          "synthetic_test": true,
+          "term_grace_seconds": 1.0,
+          "timed_out": false,
+          "timeout_termination_stage": null
+        },
+        "reason": "malformed_child_result",
+        "schema_version": "track3_parent_result_v1",
+        "status": "failed_closed"
+      },
+      "phase": "O1.synthetic_io",
+      "poll_count": 1,
+      "poll_interval_max_ms": 0.0011440133675932884,
+      "process_returncode": 0,
+      "result_error": "JSONDecodeError:Expecting property name enclosed in double quotes: line 1 column 2 (char 1)",
+      "schema_version": "track3_supervisor_result_v1",
+      "status": "failed_closed",
+      "stderr_bytes": 0,
+      "stderr_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o1_io_tests/malformed/stderr.log",
+      "stdout_bytes": 0,
+      "stdout_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o1_io_tests/malformed/stdout.log",
+      "term_grace_seconds": 1.0,
+      "termination_stage": null,
+      "timed_out": false,
+      "worker_pid": 1416869
+    },
+    "nonzero": {
+      "atomic_partial_residue": [],
+      "category": "infrastructure",
+      "child_result": {
+        "child_pid": 1416870,
+        "mode": "nonzero",
+        "schema_version": "track3_overnight_io_test_v1",
+        "seed": 1,
+        "status": "worker_exception",
+        "worker_pid": 1416870
+      },
+      "child_result_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o1_io_tests/nonzero/child_result.json",
+      "deadline_seconds": 10.0,
+      "identity": "synthetic:nonzero",
+      "parent_result": {
+        "category": "infrastructure",
+        "child_result": {
+          "child_pid": 1416870,
+          "mode": "nonzero",
+          "schema_version": "track3_overnight_io_test_v1",
+          "seed": 1,
+          "status": "worker_exception",
+          "worker_pid": 1416870
+        },
+        "gpu_provenance_gate": {
+          "executed": true,
+          "missing": [
+            "process_returncode"
+          ],
+          "reason": "gpu_provenance_incomplete",
+          "required": true,
+          "required_fields": [
+            "seed",
+            "parent_pid",
+            "child_pid",
+            "child_result_pid",
+            "physical_gpu_uuid",
+            "cuda_visible_devices",
+            "start_snapshot",
+            "end_snapshot",
+            "peak_memory_mib",
+            "parent_poll_count",
+            "parent_poll_interval_max_ms",
+            "deadline_seconds",
+            "term_grace_seconds",
+            "process_returncode",
+            "timed_out"
+          ],
+          "state": "failed"
+        },
+        "process_record": {
+          "child_pid": 1416870,
+          "child_result_pid": 1416870,
+          "cuda_visible_devices": "cpu-only",
+          "deadline_seconds": 10.0,
+          "end_snapshot": {
+            "synthetic": true
+          },
+          "parent_pid": 1416866,
+          "parent_poll_count": 1,
+          "parent_poll_interval_max_ms": 0.0008329516276717186,
+          "peak_memory_mib": 0.0,
+          "physical_gpu_uuid": "synthetic-cpu",
+          "process_returncode": 7,
+          "seed": 1,
+          "start_snapshot": {
+            "synthetic": true
+          },
+          "synthetic_test": true,
+          "term_grace_seconds": 1.0,
+          "timed_out": false,
+          "timeout_termination_stage": null
+        },
+        "reason": "child_status:worker_exception",
+        "schema_version": "track3_parent_result_v1",
+        "status": "failed_closed"
+      },
+      "phase": "O1.synthetic_io",
+      "poll_count": 1,
+      "poll_interval_max_ms": 0.0008329516276717186,
+      "process_returncode": 7,
+      "result_error": null,
+      "schema_version": "track3_supervisor_result_v1",
+      "status": "failed_closed",
+      "stderr_bytes": 0,
+      "stderr_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o1_io_tests/nonzero/stderr.log",
+      "stdout_bytes": 0,
+      "stdout_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o1_io_tests/nonzero/stdout.log",
+      "term_grace_seconds": 1.0,
+      "termination_stage": null,
+      "timed_out": false,
+      "worker_pid": 1416870
+    }
+  },
+  "plan": "docs/AXIS_PI05_TRACK3_OVERNIGHT_AUTOGEN_LORA_AND_ZIP_PLAN.md",
+  "protocol_checks": {
+    "all_missing_fail_closed": true,
+    "complete_passes": true,
+    "gate_name_error_fail_closed": true,
+    "gate_not_callable_fail_closed": true,
+    "malformed_fail_closed": true,
+    "pid_mismatch_fail_closed": true
+  },
+  "provenance_contract": {
+    "deadline_seconds": 300.0,
+    "missing_or_malformed_fail_closed": true,
+    "poll_interval_max_ms": 100.0,
+    "required_fields": [
+      "seed",
+      "parent_pid",
+      "child_pid",
+      "child_result_pid",
+      "physical_gpu_uuid",
+      "cuda_visible_devices",
+      "start_snapshot",
+      "end_snapshot",
+      "peak_memory_mib",
+      "parent_poll_count",
+      "parent_poll_interval_max_ms",
+      "deadline_seconds",
+      "term_grace_seconds",
+      "process_returncode",
+      "timed_out"
+    ],
+    "result_transport": "independent_atomic_json_file",
+    "stdout_stderr": "diagnostics_only",
+    "term_grace_seconds": 10.0
+  },
+  "resource_boundary": {
+    "cuda_imported": false,
+    "gpu0_touched": false,
+    "official_gpu": false,
+    "se3_generation_started": false,
+    "simulator_imported": false,
+    "training_started": false
+  },
+  "resume_cursor": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o1_io_tests/resume_cursor.json",
+  "root_head": "f8affb076380b81830b307cfaa1c3c4b5e06667b",
+  "schema_version": "track3_overnight_o1_v1",
+  "sequence_tests": {
+    "blocked": {
+      "category": "global_stop",
+      "identity": "synthetic:large",
+      "phase": "O1.synthetic_io",
+      "schema_version": "track3_supervisor_result_v1",
+      "status": "skipped_global_stop"
+    },
+    "first": {
+      "atomic_partial_residue": [],
+      "category": "infrastructure",
+      "child_result": {
+        "child_pid": 1416872,
+        "mode": "nonzero",
+        "schema_version": "track3_overnight_io_test_v1",
+        "seed": 1,
+        "status": "worker_exception",
+        "worker_pid": 1416872
+      },
+      "child_result_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o1_io_tests/sequence_1/child_result.json",
+      "deadline_seconds": 2.0,
+      "identity": "synthetic:nonzero",
+      "parent_result": {
+        "category": "infrastructure",
+        "child_result": {
+          "child_pid": 1416872,
+          "mode": "nonzero",
+          "schema_version": "track3_overnight_io_test_v1",
+          "seed": 1,
+          "status": "worker_exception",
+          "worker_pid": 1416872
+        },
+        "gpu_provenance_gate": {
+          "executed": true,
+          "missing": [
+            "process_returncode"
+          ],
+          "reason": "gpu_provenance_incomplete",
+          "required": true,
+          "required_fields": [
+            "seed",
+            "parent_pid",
+            "child_pid",
+            "child_result_pid",
+            "physical_gpu_uuid",
+            "cuda_visible_devices",
+            "start_snapshot",
+            "end_snapshot",
+            "peak_memory_mib",
+            "parent_poll_count",
+            "parent_poll_interval_max_ms",
+            "deadline_seconds",
+            "term_grace_seconds",
+            "process_returncode",
+            "timed_out"
+          ],
+          "state": "failed"
+        },
+        "process_record": {
+          "child_pid": 1416872,
+          "child_result_pid": 1416872,
+          "cuda_visible_devices": "cpu-only",
+          "deadline_seconds": 2.0,
+          "end_snapshot": {
+            "synthetic": true
+          },
+          "parent_pid": 1416866,
+          "parent_poll_count": 1,
+          "parent_poll_interval_max_ms": 0.0013700919225811958,
+          "peak_memory_mib": 0.0,
+          "physical_gpu_uuid": "synthetic-cpu",
+          "process_returncode": 7,
+          "seed": 1,
+          "start_snapshot": {
+            "synthetic": true
+          },
+          "synthetic_test": true,
+          "term_grace_seconds": 0.2,
+          "timed_out": false,
+          "timeout_termination_stage": null
+        },
+        "reason": "child_status:worker_exception",
+        "schema_version": "track3_parent_result_v1",
+        "status": "failed_closed"
+      },
+      "phase": "O1.synthetic_io",
+      "poll_count": 1,
+      "poll_interval_max_ms": 0.0013700919225811958,
+      "process_returncode": 7,
+      "result_error": null,
+      "schema_version": "track3_supervisor_result_v1",
+      "status": "failed_closed",
+      "stderr_bytes": 0,
+      "stderr_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o1_io_tests/sequence_1/stderr.log",
+      "stdout_bytes": 0,
+      "stdout_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o1_io_tests/sequence_1/stdout.log",
+      "term_grace_seconds": 0.2,
+      "termination_stage": null,
+      "timed_out": false,
+      "worker_pid": 1416872
+    },
+    "second": {
+      "atomic_partial_residue": [],
+      "category": "infrastructure",
+      "child_result": null,
+      "child_result_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o1_io_tests/sequence_2/child_result.json",
+      "deadline_seconds": 2.0,
+      "identity": "synthetic:exception",
+      "parent_result": {
+        "category": "infrastructure",
+        "child_result": null,
+        "process_record": {
+          "child_pid": 1416873,
+          "child_result_pid": null,
+          "cuda_visible_devices": "cpu-only",
+          "deadline_seconds": 2.0,
+          "end_snapshot": {
+            "synthetic": true
+          },
+          "parent_pid": 1416866,
+          "parent_poll_count": 2,
+          "parent_poll_interval_max_ms": 0.002856017090380192,
+          "peak_memory_mib": 0.0,
+          "physical_gpu_uuid": "synthetic-cpu",
+          "process_returncode": 1,
+          "seed": 0,
+          "start_snapshot": {
+            "synthetic": true
+          },
+          "synthetic_test": true,
+          "term_grace_seconds": 0.2,
+          "timed_out": false,
+          "timeout_termination_stage": null
+        },
+        "reason": "malformed_child_result",
+        "schema_version": "track3_parent_result_v1",
+        "status": "failed_closed"
+      },
+      "phase": "O1.synthetic_io",
+      "poll_count": 2,
+      "poll_interval_max_ms": 0.002856017090380192,
+      "process_returncode": 1,
+      "result_error": null,
+      "schema_version": "track3_supervisor_result_v1",
+      "status": "failed_closed",
+      "stderr_bytes": 481,
+      "stderr_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o1_io_tests/sequence_2/stderr.log",
+      "stdout_bytes": 0,
+      "stdout_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o1_io_tests/sequence_2/stdout.log",
+      "term_grace_seconds": 0.2,
+      "termination_stage": null,
+      "timed_out": false,
+      "worker_pid": 1416873
+    }
+  },
+  "simulator_started": false,
+  "source_o0": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o0_release_lock.json",
+  "status": "track3_overnight_o1_provenance_watchdog_passed",
+  "tests": {
+    "all_missing_fail_closed": true,
+    "complete_passes": true,
+    "duplicate_identity_skipped": true,
+    "gate_name_error_fail_closed": true,
+    "gate_not_callable_fail_closed": true,
+    "hang_term_then_kill_fail_closed": true,
+    "large_stdout_no_deadlock": true,
+    "malformed_fail_closed": true,
+    "malformed_result_fail_closed": true,
+    "nonzero_exit_fail_closed": true,
+    "partial_residue_empty": true,
+    "pid_mismatch_fail_closed": true,
+    "two_infrastructure_errors_global_stop": true,
+    "worker_exception_fail_closed": true
+  },
+  "tool_sha256": "04aaf89802994c93d67191fb42962d42fb71b4b978411e4dbadb24af1d9ec01b"
+}

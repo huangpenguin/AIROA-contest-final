@@ -1,0 +1,68 @@
+{
+  "created_at_utc": "2026-09-04T16:56:20.058565+00:00",
+  "entries": [
+    {
+      "bytes": 9126,
+      "relative_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o0_release_lock.json",
+      "sha256": "25ddad75c56db50b0212889ff2a764a6df13185002c80301768305950e8aeec2",
+      "source_commit": "e132bc240e809e79b83fac7528526dd82cd97703"
+    },
+    {
+      "bytes": 49887,
+      "relative_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o1_provenance_contract.json",
+      "sha256": "3b967b63c620bcf6e3f869aacb7718c8ea2aa4a378423f77c0500785500273f6",
+      "source_commit": "e132bc240e809e79b83fac7528526dd82cd97703"
+    },
+    {
+      "bytes": 56956,
+      "relative_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o2_summary.json",
+      "sha256": "1eb3f86da21203619d7f65d6a717c6d738b6540b8db36d870654dbb9143fbca7",
+      "source_commit": "e132bc240e809e79b83fac7528526dd82cd97703"
+    },
+    {
+      "bytes": 564,
+      "relative_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o10_phase_results.csv",
+      "sha256": "ad4f84c9d715d6a6f22a0e37ed56b613d8d771134fae45c327ad8dc45dfeccc5",
+      "source_commit": "e132bc240e809e79b83fac7528526dd82cd97703"
+    },
+    {
+      "bytes": 521,
+      "relative_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/resume_cursor.json",
+      "sha256": "6a826f617490421abb341eff86ce6680f2373fb7055c71a1f13f98b2155737e8",
+      "source_commit": "e132bc240e809e79b83fac7528526dd82cd97703"
+    },
+    {
+      "bytes": 18579,
+      "relative_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o2_runs/task10_demo0_attempt3/child_result.json",
+      "sha256": "115160ba8474300725b8e9f0324451c161544a57c8daf15898b1c11611d447cb",
+      "source_commit": "e132bc240e809e79b83fac7528526dd82cd97703"
+    },
+    {
+      "bytes": 49786,
+      "relative_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o2_runs/task10_demo0_attempt3/parent_result.json",
+      "sha256": "e0a3cdd7bfc204bb4ae071df3338a26b4733fe321139a650d0904d4bd03940e1",
+      "source_commit": "e132bc240e809e79b83fac7528526dd82cd97703"
+    },
+    {
+      "bytes": 1758862,
+      "relative_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o2_camera_frames/task10_demo0_attempt3.npz",
+      "sha256": "ec9ba4e20beecb355b41015de5f8672e0b5b4ebe38ccab7bee66a4e81aa93377",
+      "source_commit": "e132bc240e809e79b83fac7528526dd82cd97703"
+    },
+    {
+      "bytes": 5646,
+      "relative_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o2_runs/task10_demo0_attempt3/agentview.mp4",
+      "sha256": "ca1b71621e8fd7148a24146beaf8be05cb7110a6644aace689a7ae721cf04af8",
+      "source_commit": "e132bc240e809e79b83fac7528526dd82cd97703"
+    },
+    {
+      "bytes": 6435,
+      "relative_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o2_runs/task10_demo0_attempt3/wrist.mp4",
+      "sha256": "b2a23b2f5702ceb718715ae731260a3f6b380e3ce92fa9b32b0da0058fd1548d",
+      "source_commit": "e132bc240e809e79b83fac7528526dd82cd97703"
+    }
+  ],
+  "entries_exclude_self": true,
+  "partial_residue": [],
+  "schema_version": "track3_overnight_o10_artifact_manifest_v1"
+}

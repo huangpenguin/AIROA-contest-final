@@ -1,0 +1,1724 @@
+{
+  "canaries": [
+    {
+      "atomic_partial_residue": [],
+      "attempt_number": 3,
+      "camera_artifacts_passed": true,
+      "camera_npz": {
+        "allow_pickle": false,
+        "errors": [],
+        "keys": [
+          "agentview",
+          "wrist"
+        ],
+        "path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o2_camera_frames/task10_demo0_attempt3.npz",
+        "shapes": {
+          "agentview": [
+            41,
+            128,
+            128,
+            3
+          ],
+          "wrist": [
+            41,
+            128,
+            128,
+            3
+          ]
+        },
+        "state": "passed"
+      },
+      "category": "infrastructure",
+      "child_result": {
+        "attempt_number": 3,
+        "camera_frames": {
+          "agentview": 41,
+          "wrist": 41
+        },
+        "camera_npz": {
+          "allow_pickle": false,
+          "bytes": 1758862,
+          "dtypes": {
+            "agentview": "uint8",
+            "wrist": "uint8"
+          },
+          "keys": [
+            "agentview",
+            "wrist"
+          ],
+          "path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o2_camera_frames/task10_demo0_attempt3.npz",
+          "schema_version": "track3_gpu3_camera_frames_npz_v2",
+          "sha256": "ec9ba4e20beecb355b41015de5f8672e0b5b4ebe38ccab7bee66a4e81aa93377",
+          "shapes": {
+            "agentview": [
+              41,
+              128,
+              128,
+              3
+            ],
+            "wrist": [
+              41,
+              128,
+              128,
+              3
+            ]
+          }
+        },
+        "child_pid": 1416920,
+        "completed_at_utc": "2026-09-04T16:53:51.306376+00:00",
+        "created_at_utc": "2026-09-04T16:53:26.946916+00:00",
+        "demo_index": 0,
+        "family": "support_remove",
+        "fresh_process": true,
+        "hard_gate": {
+          "camera_schema": {
+            "executed": true,
+            "renderer": {
+              "cameras": {
+                "agentview_image": {
+                  "dtype": "uint8",
+                  "present": true,
+                  "shape": [
+                    128,
+                    128,
+                    3
+                  ],
+                  "uint8": true
+                },
+                "robot0_eye_in_hand_image": {
+                  "dtype": "uint8",
+                  "present": true,
+                  "shape": [
+                    128,
+                    128,
+                    3
+                  ],
+                  "uint8": true
+                }
+              },
+              "schema_complete": true,
+              "underlying_flags": {
+                "has_offscreen_renderer": true,
+                "has_renderer": false,
+                "use_camera_obs": true
+              },
+              "wrapper_flags": {
+                "has_offscreen_renderer": null,
+                "has_renderer": null,
+                "use_camera_obs": null
+              }
+            },
+            "state": "passed"
+          },
+          "contact_v3_full_window": {
+            "executed": true,
+            "state": "passed",
+            "step_range": [
+              0,
+              40
+            ]
+          },
+          "restore_identity": {
+            "executed": true,
+            "max_abs_diff": 2.220446049250313e-16,
+            "state": "passed"
+          },
+          "truth": {
+            "executed": true,
+            "goal_all_false": true,
+            "source_all_true": true,
+            "state": "passed"
+          }
+        },
+        "mode": "GPU3_EGL_camera",
+        "model_state_identity": {
+          "hdf5_path": "/home/huang/code/PARC2026_final/data/raw/public/libero_official_hdf5/libero_goal/put_the_bowl_on_the_plate_demo.hdf5",
+          "hdf5_sha256": "e69528b0cf10dfc59b20698e12ec2affc03f3887309034d3eb74cac3ec929406",
+          "model_file_sha256": "e9a508e1e98a7bd2631796a4c41476a449fd9821fb45837a27d2ebefd87c8830",
+          "resolved_model_xml_sha256": "d637223bfe311c2ae6daeb0572f0a75528f2613f54eff1ef3acbe540167ea099",
+          "restore_max_abs_diff": 2.220446049250313e-16,
+          "restored_state_sha256": "632509454fd51e0783e2dc208e846c66458eb51578189fa9a9e458c450a97b2c",
+          "same_demo_model_and_state_components": true,
+          "state_bundle_path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/start_states.npz",
+          "state_key": "task10_demo0",
+          "state_sha256": "67fbc8b9c85ff02d1f28f6aa94f8841998b307d8499a7f2f08d6e5bfbb5d2f37"
+        },
+        "provenance": {
+          "gpu3_only": true,
+          "no_manipulation_action": true,
+          "no_se3_or_grasp": true,
+          "no_teleop": true,
+          "official_gpu": false,
+          "seed_layers": [
+            "parent_registration",
+            "python_random",
+            "numpy_random"
+          ]
+        },
+        "renderer": {
+          "cameras": {
+            "agentview_image": {
+              "dtype": "uint8",
+              "present": true,
+              "shape": [
+                128,
+                128,
+                3
+              ],
+              "uint8": true
+            },
+            "robot0_eye_in_hand_image": {
+              "dtype": "uint8",
+              "present": true,
+              "shape": [
+                128,
+                128,
+                3
+              ],
+              "uint8": true
+            }
+          },
+          "schema_complete": true,
+          "underlying_flags": {
+            "has_offscreen_renderer": true,
+            "has_renderer": false,
+            "use_camera_obs": true
+          },
+          "wrapper_flags": {
+            "has_offscreen_renderer": null,
+            "has_renderer": null,
+            "use_camera_obs": null
+          }
+        },
+        "reverse": {
+          "checkpoint_telemetry": [
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 0
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 1
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 2
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 3
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 4
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 5
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 6
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 7
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 8
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 9
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 10
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 11
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 12
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 13
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 14
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 15
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 16
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 17
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 18
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 19
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 20
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 21
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 22
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 23
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 24
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 25
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 26
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 27
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 28
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 29
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 30
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 31
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 32
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 33
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 34
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 35
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 36
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 37
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 38
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 39
+            },
+            {
+              "contact_counts": {
+                "background_contact": 17,
+                "demonstrator_contact": 0,
+                "intended_receiver_contact": 3,
+                "unrelated_background_contact": 0
+              },
+              "contact_state": "passed",
+              "goal": false,
+              "source": true,
+              "state_hash": "",
+              "step": 40
+            }
+          ],
+          "frame_count": 41,
+          "goal_atom": "(On akita_black_bowl_1 main_table_akita_black_bowl_region)",
+          "hold_action": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "source_atom": "(On akita_black_bowl_1 plate_1)"
+        },
+        "schema_version": "track3_gpu3_camera_canary_v3",
+        "seed": 3100,
+        "status": "passed",
+        "task_index": 10
+      },
+      "child_result_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o2_runs/task10_demo0_attempt3/child_result.json",
+      "demo_index": 0,
+      "family": "support_remove",
+      "gpu_provenance": {
+        "child_pid": 1416920,
+        "child_result_pid": 1416920,
+        "cuda_visible_devices": "3",
+        "deadline_seconds": 300.0,
+        "end_snapshot": {
+          "compute_processes": [],
+          "free_gate": true,
+          "gpus": [
+            {
+              "index": "3",
+              "memory_total_mib": 32768.0,
+              "memory_used_mib": 5.0,
+              "uuid": "GPU-b03055ef-af46-2cf8-7545-c60870f745f5"
+            }
+          ],
+          "process_query_returncode": 0,
+          "query": [
+            "nvidia-smi",
+            "-i",
+            "3",
+            "--query-gpu=index,uuid,memory.used,memory.total",
+            "--format=csv,noheader,nounits"
+          ],
+          "returncode": 0,
+          "timestamp_utc": "2026-09-04T16:53:52.255368+00:00"
+        },
+        "parent_pid": 1416912,
+        "parent_poll_count": 113,
+        "parent_poll_interval_max_ms": 148.45660293940455,
+        "peak_memory_mib": 459.0,
+        "physical_gpu_uuid": "GPU-b03055ef-af46-2cf8-7545-c60870f745f5",
+        "process_returncode": 0,
+        "seed": 3100,
+        "start_snapshot": {
+          "compute_processes": [],
+          "free_gate": true,
+          "gpus": [
+            {
+              "index": "3",
+              "memory_total_mib": 32768.0,
+              "memory_used_mib": 5.0,
+              "uuid": "GPU-b03055ef-af46-2cf8-7545-c60870f745f5"
+            }
+          ],
+          "process_query_returncode": 0,
+          "query": [
+            "nvidia-smi",
+            "-i",
+            "3",
+            "--query-gpu=index,uuid,memory.used,memory.total",
+            "--format=csv,noheader,nounits"
+          ],
+          "returncode": 0,
+          "timestamp_utc": "2026-09-04T16:53:26.727088+00:00"
+        },
+        "term_grace_seconds": 10.0,
+        "timed_out": false,
+        "timeout_termination_stage": null
+      },
+      "gpu_provenance_gate": {
+        "executed": true,
+        "missing": [
+          "parent_poll_interval_over_100ms"
+        ],
+        "reason": "gpu_provenance_incomplete",
+        "required": true,
+        "required_fields": [
+          "seed",
+          "parent_pid",
+          "child_pid",
+          "child_result_pid",
+          "physical_gpu_uuid",
+          "cuda_visible_devices",
+          "start_snapshot",
+          "end_snapshot",
+          "peak_memory_mib",
+          "parent_poll_count",
+          "parent_poll_interval_max_ms",
+          "deadline_seconds",
+          "term_grace_seconds",
+          "process_returncode",
+          "timed_out"
+        ],
+        "state": "failed"
+      },
+      "model_state_identity": {
+        "hdf5_path": "/home/huang/code/PARC2026_final/data/raw/public/libero_official_hdf5/libero_goal/put_the_bowl_on_the_plate_demo.hdf5",
+        "hdf5_sha256": "e69528b0cf10dfc59b20698e12ec2affc03f3887309034d3eb74cac3ec929406",
+        "model_file_sha256": "e9a508e1e98a7bd2631796a4c41476a449fd9821fb45837a27d2ebefd87c8830",
+        "resolved_model_xml_sha256": "d637223bfe311c2ae6daeb0572f0a75528f2613f54eff1ef3acbe540167ea099",
+        "restore_max_abs_diff": 2.220446049250313e-16,
+        "restored_state_sha256": "632509454fd51e0783e2dc208e846c66458eb51578189fa9a9e458c450a97b2c",
+        "same_demo_model_and_state_components": true,
+        "state_bundle_path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/start_states.npz",
+        "state_key": "task10_demo0",
+        "state_sha256": "67fbc8b9c85ff02d1f28f6aa94f8841998b307d8499a7f2f08d6e5bfbb5d2f37"
+      },
+      "parent_assembly": {
+        "category": "infrastructure",
+        "child_result": {
+          "attempt_number": 3,
+          "camera_frames": {
+            "agentview": 41,
+            "wrist": 41
+          },
+          "camera_npz": {
+            "allow_pickle": false,
+            "bytes": 1758862,
+            "dtypes": {
+              "agentview": "uint8",
+              "wrist": "uint8"
+            },
+            "keys": [
+              "agentview",
+              "wrist"
+            ],
+            "path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o2_camera_frames/task10_demo0_attempt3.npz",
+            "schema_version": "track3_gpu3_camera_frames_npz_v2",
+            "sha256": "ec9ba4e20beecb355b41015de5f8672e0b5b4ebe38ccab7bee66a4e81aa93377",
+            "shapes": {
+              "agentview": [
+                41,
+                128,
+                128,
+                3
+              ],
+              "wrist": [
+                41,
+                128,
+                128,
+                3
+              ]
+            }
+          },
+          "child_pid": 1416920,
+          "completed_at_utc": "2026-09-04T16:53:51.306376+00:00",
+          "created_at_utc": "2026-09-04T16:53:26.946916+00:00",
+          "demo_index": 0,
+          "family": "support_remove",
+          "fresh_process": true,
+          "hard_gate": {
+            "camera_schema": {
+              "executed": true,
+              "renderer": {
+                "cameras": {
+                  "agentview_image": {
+                    "dtype": "uint8",
+                    "present": true,
+                    "shape": [
+                      128,
+                      128,
+                      3
+                    ],
+                    "uint8": true
+                  },
+                  "robot0_eye_in_hand_image": {
+                    "dtype": "uint8",
+                    "present": true,
+                    "shape": [
+                      128,
+                      128,
+                      3
+                    ],
+                    "uint8": true
+                  }
+                },
+                "schema_complete": true,
+                "underlying_flags": {
+                  "has_offscreen_renderer": true,
+                  "has_renderer": false,
+                  "use_camera_obs": true
+                },
+                "wrapper_flags": {
+                  "has_offscreen_renderer": null,
+                  "has_renderer": null,
+                  "use_camera_obs": null
+                }
+              },
+              "state": "passed"
+            },
+            "contact_v3_full_window": {
+              "executed": true,
+              "state": "passed",
+              "step_range": [
+                0,
+                40
+              ]
+            },
+            "restore_identity": {
+              "executed": true,
+              "max_abs_diff": 2.220446049250313e-16,
+              "state": "passed"
+            },
+            "truth": {
+              "executed": true,
+              "goal_all_false": true,
+              "source_all_true": true,
+              "state": "passed"
+            }
+          },
+          "mode": "GPU3_EGL_camera",
+          "model_state_identity": {
+            "hdf5_path": "/home/huang/code/PARC2026_final/data/raw/public/libero_official_hdf5/libero_goal/put_the_bowl_on_the_plate_demo.hdf5",
+            "hdf5_sha256": "e69528b0cf10dfc59b20698e12ec2affc03f3887309034d3eb74cac3ec929406",
+            "model_file_sha256": "e9a508e1e98a7bd2631796a4c41476a449fd9821fb45837a27d2ebefd87c8830",
+            "resolved_model_xml_sha256": "d637223bfe311c2ae6daeb0572f0a75528f2613f54eff1ef3acbe540167ea099",
+            "restore_max_abs_diff": 2.220446049250313e-16,
+            "restored_state_sha256": "632509454fd51e0783e2dc208e846c66458eb51578189fa9a9e458c450a97b2c",
+            "same_demo_model_and_state_components": true,
+            "state_bundle_path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/start_states.npz",
+            "state_key": "task10_demo0",
+            "state_sha256": "67fbc8b9c85ff02d1f28f6aa94f8841998b307d8499a7f2f08d6e5bfbb5d2f37"
+          },
+          "provenance": {
+            "gpu3_only": true,
+            "no_manipulation_action": true,
+            "no_se3_or_grasp": true,
+            "no_teleop": true,
+            "official_gpu": false,
+            "seed_layers": [
+              "parent_registration",
+              "python_random",
+              "numpy_random"
+            ]
+          },
+          "renderer": {
+            "cameras": {
+              "agentview_image": {
+                "dtype": "uint8",
+                "present": true,
+                "shape": [
+                  128,
+                  128,
+                  3
+                ],
+                "uint8": true
+              },
+              "robot0_eye_in_hand_image": {
+                "dtype": "uint8",
+                "present": true,
+                "shape": [
+                  128,
+                  128,
+                  3
+                ],
+                "uint8": true
+              }
+            },
+            "schema_complete": true,
+            "underlying_flags": {
+              "has_offscreen_renderer": true,
+              "has_renderer": false,
+              "use_camera_obs": true
+            },
+            "wrapper_flags": {
+              "has_offscreen_renderer": null,
+              "has_renderer": null,
+              "use_camera_obs": null
+            }
+          },
+          "reverse": {
+            "checkpoint_telemetry": [
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 0
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 1
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 2
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 3
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 4
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 5
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 6
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 7
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 8
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 9
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 10
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 11
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 12
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 13
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 14
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 15
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 16
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 17
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 18
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 19
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 20
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 21
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 22
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 23
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 24
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 25
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 26
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 27
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 28
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 29
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 30
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 31
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 32
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 33
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 34
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 35
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 36
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 37
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 38
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 39
+              },
+              {
+                "contact_counts": {
+                  "background_contact": 17,
+                  "demonstrator_contact": 0,
+                  "intended_receiver_contact": 3,
+                  "unrelated_background_contact": 0
+                },
+                "contact_state": "passed",
+                "goal": false,
+                "source": true,
+                "state_hash": "",
+                "step": 40
+              }
+            ],
+            "frame_count": 41,
+            "goal_atom": "(On akita_black_bowl_1 main_table_akita_black_bowl_region)",
+            "hold_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "source_atom": "(On akita_black_bowl_1 plate_1)"
+          },
+          "schema_version": "track3_gpu3_camera_canary_v3",
+          "seed": 3100,
+          "status": "passed",
+          "task_index": 10
+        },
+        "gpu_provenance_gate": {
+          "executed": true,
+          "missing": [
+            "parent_poll_interval_over_100ms"
+          ],
+          "reason": "gpu_provenance_incomplete",
+          "required": true,
+          "required_fields": [
+            "seed",
+            "parent_pid",
+            "child_pid",
+            "child_result_pid",
+            "physical_gpu_uuid",
+            "cuda_visible_devices",
+            "start_snapshot",
+            "end_snapshot",
+            "peak_memory_mib",
+            "parent_poll_count",
+            "parent_poll_interval_max_ms",
+            "deadline_seconds",
+            "term_grace_seconds",
+            "process_returncode",
+            "timed_out"
+          ],
+          "state": "failed"
+        },
+        "process_record": {
+          "child_pid": 1416920,
+          "child_result_pid": 1416920,
+          "cuda_visible_devices": "3",
+          "deadline_seconds": 300.0,
+          "end_snapshot": {
+            "compute_processes": [],
+            "free_gate": true,
+            "gpus": [
+              {
+                "index": "3",
+                "memory_total_mib": 32768.0,
+                "memory_used_mib": 5.0,
+                "uuid": "GPU-b03055ef-af46-2cf8-7545-c60870f745f5"
+              }
+            ],
+            "process_query_returncode": 0,
+            "query": [
+              "nvidia-smi",
+              "-i",
+              "3",
+              "--query-gpu=index,uuid,memory.used,memory.total",
+              "--format=csv,noheader,nounits"
+            ],
+            "returncode": 0,
+            "timestamp_utc": "2026-09-04T16:53:52.255368+00:00"
+          },
+          "parent_pid": 1416912,
+          "parent_poll_count": 113,
+          "parent_poll_interval_max_ms": 148.45660293940455,
+          "peak_memory_mib": 459.0,
+          "physical_gpu_uuid": "GPU-b03055ef-af46-2cf8-7545-c60870f745f5",
+          "process_returncode": 0,
+          "seed": 3100,
+          "start_snapshot": {
+            "compute_processes": [],
+            "free_gate": true,
+            "gpus": [
+              {
+                "index": "3",
+                "memory_total_mib": 32768.0,
+                "memory_used_mib": 5.0,
+                "uuid": "GPU-b03055ef-af46-2cf8-7545-c60870f745f5"
+              }
+            ],
+            "process_query_returncode": 0,
+            "query": [
+              "nvidia-smi",
+              "-i",
+              "3",
+              "--query-gpu=index,uuid,memory.used,memory.total",
+              "--format=csv,noheader,nounits"
+            ],
+            "returncode": 0,
+            "timestamp_utc": "2026-09-04T16:53:26.727088+00:00"
+          },
+          "term_grace_seconds": 10.0,
+          "timed_out": false,
+          "timeout_termination_stage": null
+        },
+        "reason": "gpu_provenance_gate_failed",
+        "schema_version": "track3_parent_result_v1",
+        "status": "failed_closed"
+      },
+      "parent_pid": 1416912,
+      "phase": "O2",
+      "process_returncode": 0,
+      "resource_boundary": {
+        "gpu0_touched": false,
+        "gpu1_touched": false,
+        "gpu2_touched": false,
+        "gpu3_only": true,
+        "no_teleop": true,
+        "no_training": true,
+        "official_gpu": false
+      },
+      "schema_version": "track3_gpu3_camera_parent_v3",
+      "seed": 3100,
+      "status": "failed_closed",
+      "stderr_bytes": 316,
+      "stderr_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o2_runs/task10_demo0_attempt3/stderr.log",
+      "stdout_bytes": 0,
+      "stdout_path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o2_runs/task10_demo0_attempt3/stdout.log",
+      "task_index": 10,
+      "termination_stage": null,
+      "timed_out": false,
+      "videos": {
+        "agentview": {
+          "atomic_publish": true,
+          "bytes": 5646,
+          "ffprobe": {
+            "avg_frame_rate": "20/1",
+            "codec_name": "h264",
+            "height": 128,
+            "nb_frames": "41",
+            "width": 128
+          },
+          "fps": "20/1",
+          "frame_count": 41,
+          "path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o2_runs/task10_demo0_attempt3/agentview.mp4",
+          "sha256": "ca1b71621e8fd7148a24146beaf8be05cb7110a6644aace689a7ae721cf04af8"
+        },
+        "wrist": {
+          "atomic_publish": true,
+          "bytes": 6435,
+          "ffprobe": {
+            "avg_frame_rate": "20/1",
+            "codec_name": "h264",
+            "height": 128,
+            "nb_frames": "41",
+            "width": 128
+          },
+          "fps": "20/1",
+          "frame_count": 41,
+          "path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o2_runs/task10_demo0_attempt3/wrist.mp4",
+          "sha256": "b2a23b2f5702ceb718715ae731260a3f6b380e3ce92fa9b32b0da0058fd1548d"
+        }
+      },
+      "worker_pid": 1416920,
+      "worker_pid_match": true
+    }
+  ],
+  "counts": {
+    "task10_attempt3": 1,
+    "task19_attempt1": 0,
+    "task20_attempt1": 0
+  },
+  "gpu3_only": true,
+  "hard_stop": true,
+  "no_task10_attempt4": true,
+  "schema_version": "track3_overnight_o2_v1",
+  "simulator_started": true,
+  "status": "track3_overnight_stopped_O2_task10_attempt3_failure"
+}

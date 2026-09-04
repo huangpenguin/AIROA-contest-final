@@ -1,0 +1,22 @@
+{
+  "automatic_resume": false,
+  "automatic_upload": false,
+  "completed": {
+    "O0": "track3_overnight_o0_passed",
+    "O1": "track3_overnight_o1_provenance_watchdog_passed",
+    "O2": "track3_overnight_stopped_O2_task10_attempt3_failure"
+  },
+  "last_update_utc": "2026-09-04T16:56:19.995912+00:00",
+  "next_phase": "await_review",
+  "not_evaluated": [
+    "O3",
+    "O4",
+    "O5",
+    "O6",
+    "O7",
+    "O8",
+    "O9"
+  ],
+  "schema_version": "track3_overnight_cursor_v1",
+  "status": "hard_stop_waiting_review"
+}

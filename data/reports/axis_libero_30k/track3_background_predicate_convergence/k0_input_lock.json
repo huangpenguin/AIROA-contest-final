@@ -1,0 +1,118 @@
+{
+  "audit": "/home/huang/code/PARC2026_final/docs/reviews/axis_pi05/TRACK3_OPERATOR_SCOPED_J0_J4_AUDIT_20260904.md",
+  "audit_commit_at_k0": "417b977d8f8eed9c72c1e6f95eda28ecd3889593",
+  "created_at_utc": "2026-09-04T04:56:24.929778+00:00",
+  "fresh_checkout_validation": {
+    "required_after_k0_evidence_commit": true,
+    "state": "not_evaluated"
+  },
+  "gpu_read_only_snapshot": {
+    "read_only": true,
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "0, GPU-0a004a52-e72d-9b46-0391-9488e841db41, 16099, 88\n1, GPU-dbf876c3-dcaf-054b-ac9d-035e7198ceda, 5, 0\n2, GPU-0cf6b31a-016b-6e71-a7b5-a790922d89ae, 5, 0\n3, GPU-b03055ef-af46-2cf8-7545-c60870f745f5, 5, 0\n"
+  },
+  "hard_gate": {
+    "audit_commit_locked": true,
+    "audit_parent_is_ancestor": true,
+    "execution_commit_is_ancestor": true,
+    "input_files_exist": true,
+    "nested_openpi_locked_and_clean": true,
+    "old_i2_hash_locked": true,
+    "prior_j3_not_evaluated": true,
+    "raw_identity_and_schema_closed": true,
+    "reverse_demo_counts_zero": true,
+    "root_input_commit_is_ancestor": true,
+    "root_preexisting_changes_absent": true
+  },
+  "input_audit_parent": "3acbde8046563e3e550f78feaf19ad97cb391b79",
+  "input_execution_commit": "bc2419e62ff05a9584d1d6033d22b0e55d03a240",
+  "input_root_commit": "f969393f3e16dc94985675083d09daa712cc7c04",
+  "libero_plus_dirty_read_only": [
+    "M libero/libero/benchmark/__init__.py",
+    "?? libero/__init__.py",
+    "?? libero/libero/assets",
+    "?? libero/libero/bddl_files/libero_t3",
+    "?? libero/libero/init_files/libero_t3"
+  ],
+  "locked_inputs": {
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/j0_release_lock.json": {
+      "bytes": 10930,
+      "sha256": "141f41f728bca4504f12881820bf452bbc30abbf987aedac94f96c59843307cc"
+    },
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/j1_contract.json": {
+      "bytes": 4806,
+      "sha256": "b2b61930bc552c630e22d93a4b6610b59f1cd2c688b9ccef4e605400f8e5e2fe"
+    },
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/j2_forward_controls.json": {
+      "bytes": 11129,
+      "sha256": "baf008e1009acd3afe660d866564aaedfbd20373262b38cca1168de003a33648"
+    },
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/j2_reverse_release.json": {
+      "bytes": 43348,
+      "sha256": "cb6b978724c6018a3114e0e91a060e9ed63796804e86ac6c42a56949bb4240ec"
+    },
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/j2_summary.json": {
+      "bytes": 57162,
+      "sha256": "5e4bc547d07f42fdc4e099b2d838727390bd43269310ba430a8b5b9681aa5013"
+    },
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operator_scoped_stability/summary.json": {
+      "bytes": 13266,
+      "sha256": "4d299bd57be18b5f41a0f1d5f762b7209ddfd0eed92f34d1f5fb37ce5febd7bf"
+    },
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_init_stabilization/i2_stabilization_time_series.json": {
+      "bytes": 8290401,
+      "sha256": "e72ae24d27b6edbba37b043a88042191f8a1c7d00c298b812653a1a2ecc17dab"
+    },
+    "/home/huang/code/PARC2026_final/docs/AXIS_PI05_TRACK3_BACKGROUND_PREDICATE_CONVERGENCE_RELEASE_PLAN.md": {
+      "bytes": 7241,
+      "sha256": "192247e9b1cfc9c917d516c6e7022623cb8c80b38c0c705aa330bed255043040"
+    },
+    "/home/huang/code/PARC2026_final/docs/reviews/axis_pi05/TRACK3_OPERATOR_SCOPED_J0_J4_AUDIT_20260904.md": {
+      "bytes": 4754,
+      "sha256": "1a6959e4746435d371096c07d6d20c1fcc9ddcddb936ea30fde250b40a7648eb"
+    }
+  },
+  "missing_inputs": [],
+  "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "old_i2_sha256": "e72ae24d27b6edbba37b043a88042191f8a1c7d00c298b812653a1a2ecc17dab",
+  "plan": "/home/huang/code/PARC2026_final/docs/AXIS_PI05_TRACK3_BACKGROUND_PREDICATE_CONVERGENCE_RELEASE_PLAN.md",
+  "preexisting_root_status_at_k0": [],
+  "prior_j2_exact_vector": {
+    "failed_run": [
+      {
+        "failed_gates": [
+          "truth_vector_no_transition"
+        ],
+        "kind": "reverse",
+        "run_index": 1,
+        "task_index": 19
+      }
+    ],
+    "reverse_pass": 8,
+    "status": "track3_operator_scoped_cpu_release_failed"
+  },
+  "prior_j2_summary_sha256": "5e4bc547d07f42fdc4e099b2d838727390bd43269310ba430a8b5b9681aa5013",
+  "prior_j3": {
+    "reason": "J2 failed 8/9 reverse operator-scoped gate; GPU3 hard stop",
+    "state": "not_evaluated"
+  },
+  "prior_j4_summary_sha256": "4d299bd57be18b5f41a0f1d5f762b7209ddfd0eed92f34d1f5fb37ce5febd7bf",
+  "raw_bytes_total": 16072261,
+  "raw_errors": [],
+  "raw_manifest": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_background_predicate_convergence/k0_raw_manifest.json",
+  "raw_manifest_canonical_sha256": "83a23cb06c2e0d882c70b38bde8104cefc78f4728b67de1b36955fc12f5de2b8",
+  "raw_report_count": 15,
+  "resource_boundary": {
+    "cpu_filesystem_only": true,
+    "gpu_touched": false,
+    "raw_reports_only": true,
+    "se3": false,
+    "training": false
+  },
+  "root_status_at_k0": [
+    "?? tools/axis_pi05/track3_background_predicate_convergence.py"
+  ],
+  "schema_version": "track3_background_convergence_k0_v1",
+  "status": "track3_background_convergence_input_locked"
+}

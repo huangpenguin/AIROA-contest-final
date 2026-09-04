@@ -1,0 +1,641 @@
+{
+  "created_at_utc": "2026-09-04T04:56:24.747064+00:00",
+  "expected_identity_set": [
+    [
+      10,
+      "reverse",
+      1
+    ],
+    [
+      10,
+      "reverse",
+      2
+    ],
+    [
+      10,
+      "reverse",
+      3
+    ],
+    [
+      19,
+      "forward",
+      1
+    ],
+    [
+      19,
+      "forward",
+      2
+    ],
+    [
+      19,
+      "forward",
+      3
+    ],
+    [
+      19,
+      "reverse",
+      1
+    ],
+    [
+      19,
+      "reverse",
+      2
+    ],
+    [
+      19,
+      "reverse",
+      3
+    ],
+    [
+      20,
+      "forward",
+      1
+    ],
+    [
+      20,
+      "forward",
+      2
+    ],
+    [
+      20,
+      "forward",
+      3
+    ],
+    [
+      20,
+      "reverse",
+      1
+    ],
+    [
+      20,
+      "reverse",
+      2
+    ],
+    [
+      20,
+      "reverse",
+      3
+    ]
+  ],
+  "identity_set": [
+    [
+      10,
+      "reverse",
+      1
+    ],
+    [
+      10,
+      "reverse",
+      2
+    ],
+    [
+      10,
+      "reverse",
+      3
+    ],
+    [
+      19,
+      "forward",
+      1
+    ],
+    [
+      19,
+      "forward",
+      2
+    ],
+    [
+      19,
+      "forward",
+      3
+    ],
+    [
+      19,
+      "reverse",
+      1
+    ],
+    [
+      19,
+      "reverse",
+      2
+    ],
+    [
+      19,
+      "reverse",
+      3
+    ],
+    [
+      20,
+      "forward",
+      1
+    ],
+    [
+      20,
+      "forward",
+      2
+    ],
+    [
+      20,
+      "forward",
+      3
+    ],
+    [
+      20,
+      "reverse",
+      1
+    ],
+    [
+      20,
+      "reverse",
+      2
+    ],
+    [
+      20,
+      "reverse",
+      3
+    ]
+  ],
+  "manifest_canonical_sha256": "83a23cb06c2e0d882c70b38bde8104cefc78f4728b67de1b36955fc12f5de2b8",
+  "raw_reports": [
+    {
+      "bytes": 1078882,
+      "checkpoint_steps": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "kind": "reverse",
+      "native_reset_state_sha256": "f3160d730f8cf3b3d499c8898bf7e882ae59d6c3b9b8d798187c19a28526fe10",
+      "relative_path": "data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task10_reverse_run_1.json",
+      "run_index": 1,
+      "sha256": "6a9813839fa5eb6baa5c576bda8ab72e0799f4742e663b48a62762bc925a46e9",
+      "task_index": 10
+    },
+    {
+      "bytes": 1078833,
+      "checkpoint_steps": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "kind": "reverse",
+      "native_reset_state_sha256": "5547e6a5668af56cc9aa27a0b202994e62fc069f217f9138debf464ccd99cae9",
+      "relative_path": "data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task10_reverse_run_2.json",
+      "run_index": 2,
+      "sha256": "5573e38e34e219da795072602b861f81f38c45b6ca44666f219db8d799d996d2",
+      "task_index": 10
+    },
+    {
+      "bytes": 1079017,
+      "checkpoint_steps": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "kind": "reverse",
+      "native_reset_state_sha256": "5a7cf2764f1dcae4fde462cd896a3998b6e9459118310b3ba2c17015c1887641",
+      "relative_path": "data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task10_reverse_run_3.json",
+      "run_index": 3,
+      "sha256": "210ec6ac5dc323ac057bd0096a97b51c385cb76f4c03d22d9925733d6f14b77a",
+      "task_index": 10
+    },
+    {
+      "bytes": 861627,
+      "checkpoint_steps": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "kind": "reverse",
+      "native_reset_state_sha256": "018d3416da91a61dcef3ea668173dd4360c6177132ec4dd7603b769ce22a6ebf",
+      "relative_path": "data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task20_reverse_run_1.json",
+      "run_index": 1,
+      "sha256": "423c64bdffcc84475f203a028fd543510dd403abaec5a35c7c944bd2f0ae4ee2",
+      "task_index": 20
+    },
+    {
+      "bytes": 861143,
+      "checkpoint_steps": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "kind": "reverse",
+      "native_reset_state_sha256": "fd1cbcde113e3bab21bfbafce281be5a649bfe1e115d1ac8ee70fc642e5bbabd",
+      "relative_path": "data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task20_reverse_run_2.json",
+      "run_index": 2,
+      "sha256": "b296288ade8ab83a64628e2cdc626f9f71aa44ee5370661bf6a6a0029cde0c84",
+      "task_index": 20
+    },
+    {
+      "bytes": 860948,
+      "checkpoint_steps": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "kind": "reverse",
+      "native_reset_state_sha256": "511235606524438245c4884c456dd1b13ef1d994350169282c9fc9bc5c2a3cba",
+      "relative_path": "data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task20_reverse_run_3.json",
+      "run_index": 3,
+      "sha256": "6269d2b79530dd8217831f9523d6eb21b0ef96516cb1683da82a6371d74be5cd",
+      "task_index": 20
+    },
+    {
+      "bytes": 1491069,
+      "checkpoint_steps": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "kind": "reverse",
+      "native_reset_state_sha256": "31d1bd32d8b84115d107b15b97807723e362298f01e14d19cacdba803d640cf0",
+      "relative_path": "data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task19_reverse_run_1.json",
+      "run_index": 1,
+      "sha256": "b8b0f17354933274fd683f9766efd4880060cee5d0e194cd296f98c897fe6400",
+      "task_index": 19
+    },
+    {
+      "bytes": 1603811,
+      "checkpoint_steps": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "kind": "reverse",
+      "native_reset_state_sha256": "b4fdd8e4ffd51544cad7716eb107b440c177be3334e255fe941949d7af723904",
+      "relative_path": "data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task19_reverse_run_2.json",
+      "run_index": 2,
+      "sha256": "80bcca62199dff15f41588677e10e4179a79a19d28b172a2f46bd706f494bc75",
+      "task_index": 19
+    },
+    {
+      "bytes": 1619244,
+      "checkpoint_steps": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "kind": "reverse",
+      "native_reset_state_sha256": "bc198906b48a3c68cf2a5431663f97db5c16c3b99da2bc3e6a4a824328b1f338",
+      "relative_path": "data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task19_reverse_run_3.json",
+      "run_index": 3,
+      "sha256": "2582c378aec6af7763131bfa148c856ca8796d1be34f3e1634e5ec7466053e55",
+      "task_index": 19
+    },
+    {
+      "bytes": 855866,
+      "checkpoint_steps": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "kind": "forward",
+      "native_reset_state_sha256": "57e6a2b86aa78705cea27599077862795e17b43b59a6ac1183cd903c07f37ca4",
+      "relative_path": "data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task20_forward_run_1.json",
+      "run_index": 1,
+      "sha256": "4141601c2f40f09a9fd549a95e95b366aec751110100047edda7c2c0a854ea82",
+      "task_index": 20
+    },
+    {
+      "bytes": 855199,
+      "checkpoint_steps": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "kind": "forward",
+      "native_reset_state_sha256": "57bd0c689acfd55f5e7128cdf2c30ee7db13e5cb87520e32d35dc0c6add9b6c4",
+      "relative_path": "data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task20_forward_run_2.json",
+      "run_index": 2,
+      "sha256": "74c7b5d577461c4699ad1ed93e8ebe3c6be0ade74b9c37ecd5e03bf54fd950ba",
+      "task_index": 20
+    },
+    {
+      "bytes": 856006,
+      "checkpoint_steps": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "kind": "forward",
+      "native_reset_state_sha256": "f14734a2c6f5eafca6407aa989675b2ac8dcea4d894817c384f67c979f6b5f90",
+      "relative_path": "data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task20_forward_run_3.json",
+      "run_index": 3,
+      "sha256": "f216d5c811fbd94fbd00d2e9e901fed023f78be996244af532402b953f1421e0",
+      "task_index": 20
+    },
+    {
+      "bytes": 990376,
+      "checkpoint_steps": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "kind": "forward",
+      "native_reset_state_sha256": "0f297c824221623f46b75cfb7007b31fee59336b4e64e9c638a2a86134a775ed",
+      "relative_path": "data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task19_forward_run_1.json",
+      "run_index": 1,
+      "sha256": "c6b01d157eb982699705ae3c3060d2700c804dae02b42b45c0e4335da30cbf0d",
+      "task_index": 19
+    },
+    {
+      "bytes": 990067,
+      "checkpoint_steps": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "kind": "forward",
+      "native_reset_state_sha256": "77bda25de85fbf37b43e88d26609db9f9f467037b23c26219b6d1b0af3a51855",
+      "relative_path": "data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task19_forward_run_2.json",
+      "run_index": 2,
+      "sha256": "80160af0ac8d677d43950b6c8010ea916ff9e46a2032f7f0bfe7e226a7f9a2fe",
+      "task_index": 19
+    },
+    {
+      "bytes": 990173,
+      "checkpoint_steps": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "kind": "forward",
+      "native_reset_state_sha256": "86c3af6a7a0b79555b8b5c6e618f3acb68768ffeea09fa5426cac4a360cd097e",
+      "relative_path": "data/reports/axis_libero_30k/track3_operator_scoped_stability/runs/j2_task19_forward_run_3.json",
+      "run_index": 3,
+      "sha256": "5ea6943a9b66925bcfe23376eb87adbc98c59eebc2a3bc39cc7b740b80dcc4d0",
+      "task_index": 19
+    }
+  ],
+  "schema_version": "track3_background_convergence_k0_raw_manifest_v1"
+}

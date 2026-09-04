@@ -9,12 +9,14 @@ HANDOFF = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_2026
 CANARY = ROOT / "data/reports/axis_libero_30k/track3_background_predicate_convergence/k3_gpu3_release/task19_canary.json"
 
 
-def test_only_the_start_bundle_and_support_executor_plan_is_active() -> None:
+def test_only_the_p3_io_recovery_and_support_executor_plan_is_active() -> None:
     handoff = json.loads(HANDOFF.read_text(encoding="utf-8"))
-    assert handoff["status"] == "track3_support_executor_canary_failed_worker_result_publication"
-    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_START_BUNDLE_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md"
-    assert handoff["next_phase_only"] == "P6_complete_hard_stop_waiting_new_reviewed_plan"
+    assert handoff["status"] == "track3_p3_io_recovery_and_support_executor_canary_planned"
+    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_P3_IO_RECOVERY_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md"
+    assert handoff["next_phase_only"] == "R0_to_R6_then_hard_stop"
     assert (ROOT / handoff["next_plan"]).is_file()
+    assert not (ROOT / "docs/AXIS_PI05_TRACK3_START_BUNDLE_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md").exists()
+    assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_START_BUNDLE_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md").is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_COMPOSED_REVERSE_START_STABILIZATION_PLAN.md").exists()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_COMPOSED_REVERSE_START_STABILIZATION_PLAN.md").is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_MATCHED_TERMINAL_STATE_RELEASE_PLAN.md").exists()
@@ -78,14 +80,29 @@ def test_composed_state_authorization_is_data_source_only_and_bounded() -> None:
     assert audit["user_manual_action_required"] is False
     assert audit["human_teleop_required"] is False
 
-    next_authorization = handoff["track3_start_bundle_and_support_executor_canary_authorization"]
-    assert next_authorization["authorized_phases"] == ["P0", "P1", "P2", "P3", "P4", "P5", "P6_closeout"]
-    next_scope = next_authorization["authorization"]
-    assert next_scope["materialize_restorable_start_bundles"] == 9
-    assert next_scope["cpu_fresh_restore_matrix_required"] == "9/9"
-    assert next_scope["support_executor_family"] == "task10_demo0_only"
-    assert next_scope["support_generation_attempts_max"] == 1
-    assert next_scope["successful_action_fresh_replays_required"] == "3/3"
+    bundle_authorization = handoff["track3_start_bundle_and_support_executor_canary_authorization"]
+    assert bundle_authorization["status"] == "track3_start_bundle_and_support_executor_completed_and_audited"
+    assert bundle_authorization["plan"].startswith("docs/archive/axis_pi05/")
+    assert bundle_authorization["authorized_phases"] == ["P0", "P1", "P2", "P3", "P4", "P5", "P6_closeout"]
+
+    bundle_audit = handoff["track3_start_bundle_p0_p6_audit"]
+    assert bundle_audit["status"] == "remediation_required"
+    assert bundle_audit["approved"]["p2_fresh_cpu_restore"] == "9/9"
+    assert bundle_audit["artifact_manifest_entries"] == 17
+    assert bundle_audit["artifact_entries_not_git_tracked"] == 4
+    assert bundle_audit["valid_p3_worker_results"] == 0
+    assert bundle_audit["user_manual_action_required"] is False
+
+    recovery = handoff["track3_p3_io_recovery_and_support_executor_canary_authorization"]
+    assert recovery["authorized_phases"] == ["R0", "R1", "R2", "R3", "R4", "R5", "R6_closeout"]
+    next_scope = recovery["authorization"]
+    assert next_scope["rerun_p2"] is False
+    assert next_scope["git_track_existing_hash_exact_artifacts"] == 4
+    assert next_scope["atomic_result_file_required"] is True
+    assert next_scope["stdout_stress_bytes_min"] == 16 * 1024 * 1024
+    assert next_scope["worker_deadline_seconds"] == 300
+    assert next_scope["p3_task10_recovery_attempts_max"] == 1
+    assert next_scope["p3_remaining_camera_processes_max"] == 2
     assert next_scope["human_teleop"] is False
     assert next_scope["training_or_norm"] is False
     assert next_scope["official_gpu"] is False

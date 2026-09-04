@@ -1,4 +1,6 @@
-# AXIS Pi0.5 Track 3：Start-State Bundle 与自动 Support Executor Canary 计划
+# AXIS Pi0.5 Track 3：Start-State Bundle 与自动 Support Executor Canary 计划（已归档）
+
+> 归档日期：2026-09-05（Asia/Tokyo）。P0–P6 已执行并在 P3 首条 worker result publication 失败后 hard stop；后续授权以计划索引中的唯一活动计划为准。
 
 > 制定日期：2026-09-04（Asia/Tokyo）
 > 审核输入：root `eef683b0db9629a3d917ea91ebeb46540a34fcb9`

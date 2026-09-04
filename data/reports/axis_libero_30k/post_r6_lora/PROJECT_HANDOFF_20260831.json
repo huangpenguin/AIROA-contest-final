@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
-  "generated_date": "2026-09-04",
-  "status": "track3_support_executor_canary_failed_worker_result_publication",
+  "generated_date": "2026-09-05",
+  "status": "track3_p3_io_recovery_and_support_executor_canary_planned",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
-  "latest_audited_execution_commit": "eef683b0db9629a3d917ea91ebeb46540a34fcb9",
-  "latest_audit_input_commit": "eef683b0db9629a3d917ea91ebeb46540a34fcb9",
-  "latest_execution_root_commit": "eef683b0db9629a3d917ea91ebeb46540a34fcb9",
+  "latest_audited_execution_commit": "ad2d4ef7d6603e7b0e79a8519155de9cfdefbde2",
+  "latest_audit_input_commit": "ad2d4ef7d6603e7b0e79a8519155de9cfdefbde2",
+  "latest_execution_root_commit": "ad2d4ef7d6603e7b0e79a8519155de9cfdefbde2",
   "latest_execution_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
@@ -230,7 +230,7 @@
       3
     ],
     "last_observed_gpu_memory_mib": [
-      16423,
+      16493,
       5,
       5,
       5
@@ -250,8 +250,8 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_TRACK3_START_BUNDLE_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md",
-  "next_phase_only": "P6_complete_hard_stop_waiting_new_reviewed_plan",
+  "next_plan": "docs/AXIS_PI05_TRACK3_P3_IO_RECOVERY_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md",
+  "next_phase_only": "R0_to_R6_then_hard_stop",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -2891,8 +2891,8 @@
     "next_plan_approved": true
   },
   "track3_start_bundle_and_support_executor_canary_authorization": {
-    "status": "track3_support_executor_canary_failed_worker_result_publication",
-    "plan": "docs/AXIS_PI05_TRACK3_START_BUNDLE_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md",
+    "status": "track3_start_bundle_and_support_executor_completed_and_audited",
+    "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_START_BUNDLE_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md",
     "audited_input_commit": "eef683b0db9629a3d917ea91ebeb46540a34fcb9",
     "authorized_phases": ["P0", "P1", "P2", "P3", "P4", "P5", "P6_closeout"],
     "authorization": {
@@ -2916,7 +2916,7 @@
     },
     "success_stop": "track3_support_remove_canary_pending_review",
     "failure_stop_prefix": "track3_start_bundle_or_support_executor_",
-    "next_phase_only": "P6_complete_hard_stop_waiting_new_reviewed_plan",
+    "next_phase_only": "superseded_by_p3_io_recovery_and_support_executor_plan",
     "execution_closeout": {
       "status": "track3_support_executor_canary_failed_worker_result_publication",
       "phase_status": {"P0": "passed", "P1": "passed", "P2": "passed_9_of_9", "P3": "failed_worker_result_publication", "P4": "not_evaluated", "P5": "not_evaluated", "P6": "hard_stop"},
@@ -2929,5 +2929,74 @@
       "failure_reason": "parent_child_stdout_pipe_deadlock_before_result_json",
       "no_retry_after_failure": true
     }
+  },
+  "track3_start_bundle_p0_p6_audit": {
+    "status": "remediation_required",
+    "audited_execution_commit": "ad2d4ef7d6603e7b0e79a8519155de9cfdefbde2",
+    "audit_report": "docs/reviews/axis_pi05/TRACK3_START_BUNDLE_P0_P6_AUDIT_20260905.md",
+    "approved": {
+      "p0_p1": true,
+      "p2_state_bundle_keys": "9/9",
+      "p2_fresh_cpu_restore": "9/9",
+      "p2_max_restore_abs_diff": 2.220446049250313e-16,
+      "task10_grasp_geometry": true,
+      "hard_stop_after_first_p3_failure": true,
+      "p4_p5_not_evaluated": true,
+      "exact_pending_accepted": [0, 0, 0]
+    },
+    "p3_interpretation": "tool_result_publication_failure_not_environment_or_reverse_semantics_failure",
+    "valid_p3_worker_results": 0,
+    "artifact_manifest_entries": 17,
+    "artifact_entries_existing_and_hash_exact": 17,
+    "artifact_entries_not_git_tracked": 4,
+    "untracked_artifacts": [
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/start_states.npz",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/camera_frames/p3_task10_demo0.npz",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/videos/p3_task10_demo0_agentview.mp4",
+      "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/videos/p3_task10_demo0_wrist.mp4"
+    ],
+    "findings": [
+      "four_hash_exact_manifest_artifacts_are_not_git_tracked",
+      "p6_summary_inclusion_metadata_disagrees_with_17_entry_manifest",
+      "pre_fix_dirty_worktree_tool_version_has_no_commit_provenance",
+      "post_fix_worker_needs_atomic_result_file_and_timeout_stress_tests",
+      "future_reports_must_not_duplicate_multi_megabyte_raw_telemetry"
+    ],
+    "user_manual_action_required": false,
+    "next_plan_approved": true
+  },
+  "track3_p3_io_recovery_and_support_executor_canary_authorization": {
+    "status": "track3_p3_io_recovery_and_support_executor_canary_planned",
+    "plan": "docs/AXIS_PI05_TRACK3_P3_IO_RECOVERY_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md",
+    "audited_input_commit": "ad2d4ef7d6603e7b0e79a8519155de9cfdefbde2",
+    "authorized_phases": ["R0", "R1", "R2", "R3", "R4", "R5", "R6_closeout"],
+    "authorization": {
+      "user_manual_action": false,
+      "rerun_p2": false,
+      "git_track_existing_hash_exact_artifacts": 4,
+      "atomic_result_file_required": true,
+      "stdout_stress_bytes_min": 16777216,
+      "worker_deadline_seconds": 300,
+      "term_grace_seconds": 10,
+      "clean_intermediate_commit_before_gpu": true,
+      "p3_task10_recovery_attempts_max": 1,
+      "p3_remaining_camera_processes_max": 2,
+      "support_executor_family": "task10_demo0_only",
+      "support_generation_attempts_max": 1,
+      "successful_action_fresh_replays_required": "3/3",
+      "pending_autogen_v3_max": 1,
+      "accepted_reverse_demo": false,
+      "human_teleop": false,
+      "manual_video_review_or_selection": false,
+      "task20_or_task19_manipulation": false,
+      "batch_generation": false,
+      "training_or_norm": false,
+      "fast_or_zip": false,
+      "official_gpu": false,
+      "upload_or_submission": false
+    },
+    "success_stop": "track3_support_pending_autogen_v3_ready_for_audit",
+    "failure_stop_prefix": "track3_p3_io_recovery_or_support_executor_",
+    "next_phase_only": "R0_to_R6_then_hard_stop"
   }
 }

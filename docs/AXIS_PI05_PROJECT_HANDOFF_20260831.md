@@ -5,8 +5,8 @@
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_support_executor_canary_failed_worker_result_publication`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_START_BUNDLE_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md`（P6 hard stop，等待新审核计划）
+> 当前总状态：`track3_p3_io_recovery_and_support_executor_canary_planned`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_P3_IO_RECOVERY_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -14,7 +14,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Composed reverse start已在固定CPU `9/9`和GPU3 camera `3/3`中通过，核心状态语义/动力学获批准；当前只需自动补齐state bundle、full-window contact与GPU provenance，再尝试一条task10 support executor canary。用户无需Teleop、逐帧验收或手动选demo；reverse demo仍为`0/0/0`。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3的9-state bundle与CPU restore `9/9`已获批准；P3首条只因worker result publication工具失败，没有环境/语义结论。当前先闭合4个未入Gitartifact和无管道result/timeout合同，再恢复P3并尝试task10-only executor。用户无需Teleop、逐帧验收或手动选demo；reverse demo仍为`0/0/0`。
 
 ## 2. 数据与复现基础
 
@@ -657,3 +657,13 @@ P0/P1 通过；P2 已物化 9 个 `float64` no-pickle start states，并以 fres
 P3 worker 在写完整 checkpoint JSON 时填满父子 stdout 管道，阻塞于结果发布；该次 canary 已终止并记为 `worker_result_publication` 工具失败。没有重试 task10，也没有启动 task20/task19、P4 或 P5。P6 已完成 manifest、CSV、strict JSON/NPZ/video/py_compile/diff check；targeted `8 passed`，全量 `231 passed, 7 skipped, 23 warnings`。
 
 最终状态：`track3_support_executor_canary_failed_worker_result_publication`。`validated_start_state=9`、`exact/pending/accepted=0/0/0`；没有 action、SE(3) executor、demo、Teleop、训练、norm、FAST/ZIP、官方 GPU、上传或提交。P6 已 hard stop，等待新审核计划；`LIBERO-plus` 既有 dirty 状态未触碰。完整证据位于`data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/`。
+
+## 54. P0–P6 独立审核与 P3 I/O Recovery 计划（2026-09-05）
+
+独立审核输入root `ad2d4ef7d6603e7b0e79a8519155de9cfdefbde2`、nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`。P0/P1与P2的9个`float64[79]`state获批准：NPZ no-pickle、shape/dtype/finite/hash为`9/9`，fresh CPU restore与truth/contact gates均为`9/9`，最大误差`2.22e-16`。P3只启动task10一次并在错误后停止；P4/P5没有执行，禁止项与`0/0/0`计数成立。
+
+审核结论为`remediation_required`。旧artifact manifest的17项在本机全部存在且hash/bytes exact，但`start_states.npz`、task10 camera NPZ和两路MP4共4项受ignore且未入Git；P6 summary还错误声称排除自身。P3 stdout deadlock解释可信，但失败时的pre-fix dirty-worktree工具没有commit provenance，当前post-fix代码也尚未通过大输出/timeout验证，所以task10没有有效的P3 worker result。
+
+旧计划已归档。唯一活动计划为`docs/AXIS_PI05_TRACK3_P3_IO_RECOVERY_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md`：R0/R1完成17/17 Git closure、独立原子result JSON、16MiB stdout压力与300秒超时终止；形成clean commit后R2只允许task10 attempt 2，通过才补齐task20/task19。P3新证据`3/3`后才实现task10-only SE(3)，并最多运行一次generation与冻结trace replay `3/3`。全过程不需要用户Teleop、视频选择或人工轨迹审核，也不授权训练、官方GPU或提交。
+
+审核报告：`docs/reviews/axis_pi05/TRACK3_START_BUNDLE_P0_P6_AUDIT_20260905.md`。

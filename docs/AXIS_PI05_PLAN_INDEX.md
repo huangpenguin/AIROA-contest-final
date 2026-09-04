@@ -1,27 +1,27 @@
 # AXIS Pi0.5 计划索引与审核生命周期
 
-> 更新日期：2026-09-04（Asia/Tokyo）
-> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_START_BUNDLE_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md`
-> 当前状态：`track3_support_executor_canary_failed_worker_result_publication`
-> 最新审核：`docs/reviews/axis_pi05/TRACK3_COMPOSED_REVERSE_START_M0_M5_AUDIT_20260904.md`
+> 更新日期：2026-09-05（Asia/Tokyo）
+> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_P3_IO_RECOVERY_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md`
+> 当前状态：`track3_p3_io_recovery_and_support_executor_canary_planned`
+> 最新审核：`docs/reviews/axis_pi05/TRACK3_START_BUNDLE_P0_P6_AUDIT_20260905.md`
 
 ## 1. 本轮执行停止点
 
-Composed Reverse-Start M0–M5已完成：M2 task20/demo0通过，M3固定CPU matrix为`9/9`，M4三族GPU3 camera canary为`3/3`。核心物理结论获批准，composed state已解决旧success末帧的robot/object residual dynamics。
+Start Bundle P0–P6已完成并在P3首条worker publication失败后hard stop。P2的9-state bundle、fresh restore `9/9`与task10 grasp geometry获批准；P3只产生了媒体，没有有效worker result，不能解释为环境或reverse语义失败。
 
-独立复核确认9/9 source/goal、stability与restore通过，6段H.264/hash/ffprobe闭合；旧hard gate漏看的burn-in 1–20中demonstrator/unrelated contact也实际均为0。用户不需要Teleop、逐帧看视频或手工选择demo。
+独立复核确认本机17个manifest entry均存在且hash/bytes一致，但`start_states.npz`、camera NPZ和两路MP4共4项未被Git跟踪；旧P6的manifest inclusion字段也与实际17项不一致。最终commit包含post-fix文件重定向代码，但pre-fix失败代码没有独立commit provenance。
 
-当前仍为`remediation_required`：M4未记录计划要求的seed/PID/GPU peak；contact-v3 required gate没有覆盖burn-in；`start_state_candidate=1`只有t0 hash而无可restore vector；run index缺文件hash，handoff仍指向amend前orphan `020d291`。这些均可由agent自动闭合。
+当前审核为`remediation_required`而非blocked。下一步先闭合Git artifacts与独立result-file/timeout合同，再恢复P3；用户不需要Teleop、逐帧看视频或手工选择demo。
 
 ## 2. 当前计划与停止点
 
-- `AXIS_PI05_TRACK3_START_BUNDLE_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md`
-  - P0/P1锁定M0–M5并修正full-window contact、artifact hash、state bundle与GPU provenance合同；
-  - P2物化9个no-pickle start states并fresh restore `9/9`，同时从task10/demo0公开HDF5提取固定grasp geometry；
-  - P3在GPU3重做三族各一条带seed/PID/peak的provenance canary；
-  - P4只实现task10/demo0、HDF5-grounded、position+orientation闭环SE(3) executor；
-  - P5最多一次自动generation canary，成功才fresh replay `3/3`并产生最多一条`pending_autogen_v3`；
-  - P6 hard stop。不需要用户人工操作，不允许task20/task19 executor、accepted、训练、FAST/ZIP、官方GPU或提交。
+- `AXIS_PI05_TRACK3_P3_IO_RECOVERY_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md`
+  - R0将旧manifest中4个hash-exact本机文件纳入Git并生成17/17 closure；P2不重跑；
+  - R1改为独立原子result JSON，加16MiB stdout压力、300秒deadline及TERM→KILL合同；GPU前先形成clean code commit；
+  - R2只恢复task10/demo0 attempt 2，通过后R3各一次补齐task20/task19；
+  - R4静态验证gripper语义并实现task10-only、HDF5-grounded SE(3) executor；
+  - R5最多一次generation，成功才冻结trace fresh replay `3/3`并产生最多一条`pending_autogen_v3`；
+  - R6 hard stop。不需要用户人工操作，不允许task20/task19 manipulation、accepted、训练、FAST/ZIP、官方GPU或提交。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 
@@ -63,10 +63,11 @@ Composed Reverse-Start M0–M5已完成：M2 task20/demo0通过，M3固定CPU ma
 30. `AXIS_PI05_TRACK3_BACKGROUND_PREDICATE_CONVERGENCE_RELEASE_PLAN.md`：K0–K2通过；K3单条task19 GPU3 canary发现native reverse init的drawer↔bowl穿透，同时暴露renderer/H.264/sensitivity工具缺陷；三族matrix未运行，转入exact-model matched terminal-state release。
 31. `AXIS_PI05_TRACK3_MATCHED_TERMINAL_STATE_RELEASE_PLAN.md`：L0/L1通过；L2 exact-model CPU为task10 `3/3`、task20 `0/3`、task19 `0/3`，L3/L4未执行并hard stop。审核确认source/goal 9/9成立、失败来自success末帧动力学和contact-v2角色误标，转入composed reverse-start stabilization。
 32. `AXIS_PI05_TRACK3_COMPOSED_REVERSE_START_STABILIZATION_PLAN.md`：M2 task20 canary、M3 CPU `9/9`与M4 camera `3/3`通过并hard stop。核心state语义/动力学获批准，但M4 provenance、full-window gate和可restore candidate artifact未闭合，转入start bundle与单条自动support executor canary。
+33. `AXIS_PI05_TRACK3_START_BUNDLE_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md`：P0/P1与P2 `9/9`通过；P3首条task10因stdout管道阻塞在result publication失败并hard stop，P4/P5未执行。审核发现4个manifest artifact未入Git，转入I/O与artifact closure后恢复P3。
 
 归档不表示旧计划所有尾部阶段都完成；只表示该文件不再是活动授权入口。旧 failure、阈值、hash 和未执行阶段必须继续保留。
 
-当前只执行P0–P3证据与start-state bundle闭包、P4 task10-only executor实现，以及通过后P5最多一次generation和3次冻结action replay；不得修改BDDL、运行人工Teleop、扩展task20/task19、批量合成、accepted晋升、训练或直接转向Blackwell。
+当前只执行R0/R1 artifact与I/O闭包、R2/R3固定P3恢复、R4 task10-only executor静态实现，以及通过后R5最多一次generation和3次冻结action replay；不得修改BDDL、运行人工Teleop、扩展task20/task19 manipulation、批量合成、accepted晋升、训练或直接转向Blackwell。
 
 ## 3.1 G0–G1 执行审核与门禁重构
 
@@ -159,6 +160,14 @@ M4 仅使用 GPU3，按 task10→task20→task19 各执行一次 camera canary�
 P0/P1 通过；P2 物化 9 个 no-pickle start state，fresh CPU restore 为 `9/9`，task10/demo0 固定 HDF5 抓取几何提取通过。P3 按固定顺序只启动 task10/demo0 一条 GPU3 camera canary；41 帧与两路 H.264 已封存，但 worker 因完整 checkpoint JSON 填满 stdout 管道而在结果发布阶段阻塞，按 hard stop 终止。修复后的文件重定向/压缩输出工具未在本轮重启 canary。
 
 P3 失败后 task20/task19、P4、P5 均未启动；没有 action、SE(3)、demo、pending、Teleop 或训练。P6 完成 artifact manifest、CSV、strict JSON/NPZ/video/py_compile/diff check；targeted `8 passed`，全量 `231 passed, 7 skipped, 23 warnings`。最终状态 `track3_support_executor_canary_failed_worker_result_publication`，`validated_start_state=9`、`exact/pending/accepted=0/0/0`，已 hard stop 等待新审核计划。证据位于 `data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/`。
+
+## 3.11 P0–P6 独立审核与 P3 I/O Recovery 授权（2026-09-05）
+
+审核输入root `ad2d4ef7d6603e7b0e79a8519155de9cfdefbde2`。P0/P1、P2的9-state no-pickle bundle、fresh CPU restore `9/9`、grasp geometry、P3首错即停与全部禁止项获批准。最大restore误差`2.22e-16`；P4/P5真实未执行，reverse demo仍为`0/0/0`。
+
+审核结论为`remediation_required`：旧manifest 17项在本机全部hash exact，但4个NPZ/MP4未被Git跟踪；旧P6的summary exclusion字段错误；P3失败时的pre-fix dirty-worktree工具没有commit，而当前post-fix实现仍缺独立result file与超时终止。P3没有有效worker result，因此不能把失败归因于环境/state。
+
+旧计划已归档；唯一活动计划`docs/AXIS_PI05_TRACK3_P3_IO_RECOVERY_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md`先完成17/17 Git closure与无管道result/timeout压力测试，再只授权一次task10 attempt 2；通过后补齐task20/task19，才允许task10-only executor与一次generation/3次replay。用户人工操作仍为`not_required`。完整审核见`docs/reviews/axis_pi05/TRACK3_START_BUNDLE_P0_P6_AUDIT_20260905.md`。
 
 ## 4. 保留但非活动的研究线
 

@@ -3,6 +3,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import numpy as np
+
 from tools.axis_pi05 import track3_overnight_autogen_lora_and_zip as tool
 
 
@@ -61,3 +63,15 @@ def test_o1_cpu_contract_report_passes_without_simulator_or_gpu() -> None:
     assert report["gpu_started"] is False
     assert all(report["tests"].values())
 
+
+def test_o2_camera_schema_is_strict_and_no_pickle(tmp_path: Path) -> None:
+    path = tmp_path / "camera.npz"
+    with path.open("wb") as handle:
+        np.savez_compressed(handle, agentview=np.zeros((41, 128, 128, 3), dtype=np.uint8), wrist=np.ones((41, 128, 128, 3), dtype=np.uint8))
+    result = tool._validate_camera_npz(path)
+    assert result["state"] == "passed"
+    assert result["allow_pickle"] is False
+    bad = tmp_path / "bad.npz"
+    with bad.open("wb") as handle:
+        np.savez_compressed(handle, agentview=np.zeros((40, 128, 128, 3), dtype=np.uint8), wrist=np.zeros((41, 128, 128, 3), dtype=np.uint8))
+    assert tool._validate_camera_npz(bad)["state"] == "failed"

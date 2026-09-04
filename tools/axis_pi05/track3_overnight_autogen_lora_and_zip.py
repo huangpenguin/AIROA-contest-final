@@ -579,12 +579,305 @@ def gate_name_error(record: Mapping[str, Any]) -> Mapping[str, Any]:
     raise NameError("gpu_provenance_gate")
 
 
+# ---------------------------------------------------------------------------
+# O2: the only GPU3 camera canary lane.  Runtime imports stay inside the
+# child.  The parent owns all provenance and never parses stdout as data.
+
+
+CONTROL_FREQ_HZ = 20
+
+
+def _camera_npz_atomic(path: Path, frames: Mapping[str, Any]) -> dict[str, Any]:
+    import numpy as np
+
+    arrays = {key: np.asarray(value, dtype=np.uint8) for key, value in frames.items()}
+    if set(arrays) != {"agentview", "wrist"} or any(array.ndim != 4 or array.shape[0] != CANARY_STEPS or array.shape[-1] != 3 for array in arrays.values()):
+        raise ValueError("camera_schema_requires_two_41_frame_rgb_uint8_arrays")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    partial = path.with_name(path.name + ".partial")
+    partial.unlink(missing_ok=True)
+    with partial.open("wb") as handle:
+        np.savez_compressed(handle, **arrays)
+        handle.flush()
+        os.fsync(handle.fileno())
+    os.replace(partial, path)
+    return {"path": path_ref(path), "bytes": path.stat().st_size, "sha256": sha256_file(path), "schema_version": "track3_gpu3_camera_frames_npz_v2", "allow_pickle": False, "keys": sorted(arrays), "shapes": {key: list(array.shape) for key, array in arrays.items()}, "dtypes": {key: str(array.dtype) for key, array in arrays.items()}}
+
+
+def _predicate_value(block: Mapping[str, Any], atom: str) -> bool | None:
+    for row in block.get("predicates", []):
+        if row.get("atom") == atom:
+            value = row.get("value")
+            return value if isinstance(value, bool) else None
+    return None
+
+
+def _camera_worker(task: int, demo: int, seed: int, attempt_number: int, state_bundle: Path, frames_path: Path, result_path: Path) -> int:
+    import random
+    import traceback
+
+    import numpy as np
+
+    started = now()
+    env = None
+    result: dict[str, Any]
+    try:
+        if task not in TASK_ORDER or demo != 0:
+            raise ValueError("o2_fixed_task_order_and_demo0_only")
+        random.seed(seed)
+        np.random.seed(seed)
+        from tools.axis_pi05 import track3_composed_reverse_start_stabilization as composed
+        from tools.axis_pi05 import track3_dynamic_gate_reconciliation as dynamic
+        from tools.axis_pi05 import track3_operator_scoped_stability as prior
+        from tools.axis_pi05 import track3_reverse_init_stabilization as base
+
+        composed._configure_public_env(gpu=True)
+        manifest, model_bytes, _init, _terminal, _info = composed._demo_arrays(task, demo)
+        with np.load(state_bundle, allow_pickle=False) as archive:
+            state_key = f"task{task}_demo{demo}"
+            if state_key not in archive.files:
+                raise KeyError(f"missing_state_key:{state_key}")
+            state = np.asarray(archive[state_key], dtype=np.float64).copy()
+        resolved_xml, resolution = composed._resolve_model_xml(model_bytes)
+        kwargs = {"control_freq": CONTROL_FREQ_HZ, "use_camera_obs": True, "has_renderer": False, "has_offscreen_renderer": True, "render_gpu_device_id": 0, "camera_names": ["agentview", "robot0_eye_in_hand"], "camera_heights": 128, "camera_widths": 128}
+        ControlEnv = __import__("libero.libero.envs.env_wrapper", fromlist=["ControlEnv"]).ControlEnv
+        env = ControlEnv(bddl_file_name=str(base.REVERSE_BDDL[task]), **kwargs)
+        env.reset()
+        env.reset_from_xml_string(resolved_xml)
+        env.set_init_state(state)
+        restored = np.asarray(env.get_sim_state(), dtype=np.float64).copy()
+        restore_diff = float(np.max(np.abs(restored - state)))
+        dynamic.controller_reset_sequence(dynamic._controller(env), env.sim)
+        initial_atoms = base.public_predicates(base.REVERSE_BDDL[task], "init")
+        goal_atoms = base.public_predicates(base.REVERSE_BDDL[task], "goal")
+        frames: dict[str, list[Any]] = {"agentview": [], "wrist": []}
+        telemetry: list[dict[str, Any]] = []
+        for step in range(CANARY_STEPS):
+            if step:
+                env.step(composed.neutral_hold())
+            observation = env.env._get_observations()
+            sample = prior._runtime_sample(env, dynamic, task, "reverse", step, initial_atoms, goal_atoms)
+            contact = composed.contact_v3(task, sample.get("contact_matrix", {}))
+            telemetry.append({"step": int(sample.get("step", step)), "source": _predicate_value(sample.get("initial", {}), SOURCE_ATOM[task]), "goal": _predicate_value(sample.get("goal", {}), GOAL_ATOM[task]), "contact": contact, "state_hash": str(sample.get("state", {}).get("state_sha256", ""))})
+            for output_key, observation_key in (("agentview", "agentview_image"), ("wrist", "robot0_eye_in_hand_image")):
+                image = np.asarray(observation.get(observation_key))
+                if image.dtype != np.uint8 or image.ndim != 3 or image.shape[-1] != 3:
+                    raise ValueError(f"invalid_camera_schema:{observation_key}:{list(image.shape)}")
+                frames[output_key].append(image.copy())
+        # Use the established compact runtime representation from the prior
+        # release module so truth/detail fields remain auditable.
+        compact = []
+        for step, sample in enumerate(telemetry):
+            compact.append({"step": step, "source": sample["source"], "goal": sample["goal"], "contact_state": sample["contact"].get("state"), "contact_counts": sample["contact"].get("counts", {}), "state_hash": sample["state_hash"]})
+        source_values = [row["source"] for row in compact]
+        goal_values = [row["goal"] for row in compact]
+        complete = [row["step"] for row in compact] == list(range(CANARY_STEPS))
+        truth_passed = complete and all(value is True for value in source_values) and all(value is False for value in goal_values)
+        contact_passed = all(row["contact_state"] == "passed" and not row["contact_counts"].get("demonstrator_contact", 0) and not row["contact_counts"].get("unrelated_background_contact", 0) for row in compact)
+        if task == 10:
+            contact_passed = contact_passed and all(row["contact_counts"].get("intended_receiver_contact", 0) > 0 for row in compact)
+        camera_manifest = _camera_npz_atomic(frames_path, frames)
+        renderer = composed._renderer_schema(env, env.env._get_observations())
+        gates = {"restore_identity": {"executed": True, "state": "passed" if restore_diff <= 1e-12 else "failed", "max_abs_diff": restore_diff}, "truth": {"executed": complete, "state": "passed" if truth_passed else "failed", "source_all_true": all(value is True for value in source_values), "goal_all_false": all(value is False for value in goal_values)}, "contact_v3_full_window": {"executed": complete, "state": "passed" if contact_passed else "failed", "step_range": [0, CANARY_STEPS - 1]}, "camera_schema": {"executed": True, "state": "passed" if renderer.get("schema_complete") else "failed", "renderer": renderer}}
+        status = "passed" if all(gate.get("state") == "passed" for gate in gates.values()) else "failed_gate"
+        result = {"schema_version": "track3_gpu3_camera_canary_v3", "status": status, "created_at_utc": started, "completed_at_utc": now(), "task_index": task, "demo_index": demo, "family": FAMILY[task], "attempt_number": attempt_number, "fresh_process": True, "mode": "GPU3_EGL_camera", "seed": seed, "child_pid": os.getpid(), "model_state_identity": {"hdf5_path": manifest["hdf5_path"], "hdf5_sha256": manifest["hdf5_sha256"], "model_file_sha256": manifest["model_file_sha256"], "resolved_model_xml_sha256": resolution["resolved_sha256"], "state_bundle_path": path_ref(state_bundle), "state_key": state_key, "state_sha256": sha256_bytes(state.tobytes()), "restored_state_sha256": sha256_bytes(restored.tobytes()), "restore_max_abs_diff": restore_diff, "same_demo_model_and_state_components": True}, "reverse": {"source_atom": SOURCE_ATOM[task], "goal_atom": GOAL_ATOM[task], "checkpoint_telemetry": compact, "hold_action": composed.neutral_hold().tolist(), "frame_count": CANARY_STEPS}, "renderer": renderer, "camera_frames": {key: len(value) for key, value in frames.items()}, "camera_npz": camera_manifest, "hard_gate": gates, "provenance": {"seed_layers": ["parent_registration", "python_random", "numpy_random"], "no_manipulation_action": True, "no_se3_or_grasp": True, "no_teleop": True, "gpu3_only": True, "official_gpu": False}}
+    except Exception as exc:
+        result = {"schema_version": "track3_gpu3_camera_canary_v3", "status": "worker_exception", "created_at_utc": started, "completed_at_utc": now(), "task_index": task, "demo_index": demo, "family": FAMILY.get(task), "attempt_number": attempt_number, "fresh_process": True, "mode": "GPU3_EGL_camera", "seed": seed, "child_pid": os.getpid(), "error": {"type": type(exc).__name__, "message": str(exc), "traceback": traceback.format_exc()}}
+    finally:
+        if env is not None:
+            try:
+                env.close()
+            except Exception:
+                pass
+    write_json(result_path, result)
+    return 0 if result.get("status") == "passed" else 1
+
+
+def _encode_h264(path: Path, frames: Any) -> dict[str, Any]:
+    import numpy as np
+
+    images = np.asarray(frames, dtype=np.uint8)
+    if images.ndim != 4 or images.shape[0] != CANARY_STEPS or images.shape[-1] != 3:
+        raise ValueError(f"invalid_video_frames:{list(images.shape)}")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    partial = path.with_name(path.stem + ".partial" + path.suffix)
+    partial.unlink(missing_ok=True)
+    command = ["ffmpeg", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{images.shape[2]}x{images.shape[1]}", "-r", str(CONTROL_FREQ_HZ), "-i", "-", "-an", "-c:v", "libx264", "-pix_fmt", "yuv420p", "-movflags", "+faststart", str(partial)]
+    encoded = subprocess.run(command, input=images.tobytes(), capture_output=True, check=False)
+    if encoded.returncode != 0 or not partial.is_file() or partial.stat().st_size == 0:
+        partial.unlink(missing_ok=True)
+        raise RuntimeError(f"ffmpeg_failed:{encoded.returncode}:{encoded.stderr.decode(errors='replace')[-1000:]}")
+    probe = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=codec_name,width,height,avg_frame_rate,nb_frames", "-of", "json", str(partial)], capture_output=True, text=True, check=False)
+    try:
+        stream = json.loads(probe.stdout)["streams"][0]
+        valid = stream.get("codec_name") == "h264" and int(stream["nb_frames"]) == CANARY_STEPS and str(stream.get("avg_frame_rate")) in {"20/1", "20"}
+    except (KeyError, TypeError, ValueError, json.JSONDecodeError) as exc:
+        stream = {"parse_error": str(exc), "stdout": probe.stdout[-1000:]}
+        valid = False
+    if probe.returncode != 0 or not valid:
+        partial.unlink(missing_ok=True)
+        raise RuntimeError(f"ffprobe_failed:{probe.returncode}:{stream}")
+    os.replace(partial, path)
+    return {"path": path_ref(path), "bytes": path.stat().st_size, "sha256": sha256_file(path), "ffprobe": stream, "frame_count": CANARY_STEPS, "fps": "20/1", "atomic_publish": True}
+
+
+def _validate_camera_npz(path: Path) -> dict[str, Any]:
+    import numpy as np
+
+    errors: list[str] = []
+    keys: list[str] = []
+    shapes: dict[str, Any] = {}
+    try:
+        with np.load(path, allow_pickle=False) as archive:
+            keys = sorted(archive.files)
+            for key in ("agentview", "wrist"):
+                if key not in archive.files:
+                    errors.append(f"missing:{key}")
+                    continue
+                array = np.asarray(archive[key])
+                shapes[key] = list(array.shape)
+                if array.dtype != np.uint8 or array.ndim != 4 or list(array.shape) != [CANARY_STEPS, 128, 128, 3]:
+                    errors.append(f"schema:{key}:{list(array.shape)}:{array.dtype}")
+    except Exception as exc:
+        errors.append(f"npz:{type(exc).__name__}:{exc}")
+    return {"state": "passed" if not errors and keys == ["agentview", "wrist"] else "failed", "path": path_ref(path), "keys": keys, "shapes": shapes, "allow_pickle": False, "errors": errors}
+
+
+def _run_gpu3_camera_canary(task: int, *, demo: int, seed: int, attempt_number: int) -> dict[str, Any]:
+    if task == 10 and attempt_number != 3:
+        raise ValueError("o2_task10_must_be_attempt3")
+    if task != 10 and attempt_number != 1:
+        raise ValueError("o2_non_task10_must_be_attempt1")
+    run_root = OUT_ROOT / "o2_runs" / f"task{task}_demo{demo}_attempt{attempt_number}"
+    if run_root.exists():
+        raise RuntimeError(f"o2_unique_attempt_already_exists:{run_root}")
+    run_root.mkdir(parents=True, exist_ok=False)
+    child_result_path = run_root / "child_result.json"
+    parent_result_path = run_root / "parent_result.json"
+    stdout_path = run_root / "stdout.log"
+    stderr_path = run_root / "stderr.log"
+    frames_path = OUT_ROOT / "o2_camera_frames" / f"task{task}_demo{demo}_attempt{attempt_number}.npz"
+    if frames_path.exists() or frames_path.with_name(frames_path.name + ".partial").exists():
+        raise RuntimeError(f"o2_camera_artifact_already_exists:{frames_path}")
+    state_bundle = OLD_START_BUNDLE / "start_states.npz"
+    command = [sys.executable, "-m", MODULE, "--camera-worker", "--task-index", str(task), "--demo-index", str(demo), "--seed", str(seed), "--attempt-number", str(attempt_number), "--state-bundle", str(state_bundle), "--frames-output", str(frames_path), "--result-output", str(child_result_path)]
+    environment = {**os.environ, "PYTHONPATH": f"{ROOT / 'LIBERO'}:{ROOT}", "MUJOCO_GL": "egl", "CUDA_VISIBLE_DEVICES": "3", "MUJOCO_EGL_DEVICE_ID": "3", "JAX_PLATFORMS": "cpu"}
+    before = gpu_snapshot(3)
+    if not before.get("free_gate"):
+        result = {"schema_version": "track3_gpu3_camera_parent_v3", "status": "failed_closed", "category": "infrastructure", "reason": "gpu3_not_free_before_spawn", "task_index": task, "attempt_number": attempt_number, "start_snapshot": before}
+        write_json(parent_result_path, result)
+        return result
+    started = time.monotonic()
+    timed_out = False
+    termination_stage = None
+    poll_count = 0
+    poll_intervals_ms: list[float] = []
+    snapshots: list[dict[str, Any]] = []
+    with stdout_path.open("wb") as stdout_handle, stderr_path.open("wb") as stderr_handle:
+        process = subprocess.Popen(command, cwd=ROOT, env=environment, stdout=stdout_handle, stderr=stderr_handle, start_new_session=True)
+        while process.poll() is None:
+            sample_started = time.monotonic()
+            snapshots.append(gpu_snapshot(3))
+            poll_count += 1
+            poll_intervals_ms.append((time.monotonic() - sample_started) * 1000.0)
+            if time.monotonic() - started >= IO_DEADLINE_SECONDS:
+                timed_out = True
+                termination_stage = _terminate_process_group(process, term_grace_seconds=TERM_GRACE_SECONDS)
+                break
+            time.sleep(max(0.0, min(POLL_INTERVAL_SECONDS, IO_DEADLINE_SECONDS - (time.monotonic() - started))))
+        process.wait()
+    after = gpu_snapshot(3)
+    snapshots.append(after)
+    child_result = None
+    result_error = None
+    if child_result_path.is_file():
+        try:
+            value = strict_json_load(child_result_path)
+            if isinstance(value, dict):
+                child_result = value
+            else:
+                result_error = "child_result_not_object"
+        except Exception as exc:
+            result_error = f"{type(exc).__name__}:{exc}"
+    memory_values = [float(row["gpus"][0]["memory_used_mib"]) for row in snapshots if row.get("gpus")]
+    process_record = {"seed": seed, "parent_pid": os.getpid(), "child_pid": process.pid, "child_result_pid": (child_result or {}).get("child_pid"), "physical_gpu_uuid": (before.get("gpus") or [{}])[0].get("uuid"), "cuda_visible_devices": "3", "start_snapshot": before, "end_snapshot": after, "peak_memory_mib": max(memory_values, default=-1.0), "parent_poll_count": max(1, poll_count), "parent_poll_interval_max_ms": max(poll_intervals_ms, default=0.0), "deadline_seconds": IO_DEADLINE_SECONDS, "term_grace_seconds": TERM_GRACE_SECONDS, "process_returncode": process.returncode, "timed_out": timed_out, "timeout_termination_stage": termination_stage}
+    assembled = assemble_parent_result(child_result, process_record)
+    camera_npz = _validate_camera_npz(frames_path) if frames_path.is_file() else {"state": "failed", "path": path_ref(frames_path), "errors": ["missing"]}
+    videos: dict[str, Any] = {}
+    if child_result and child_result.get("status") == "passed" and camera_npz["state"] == "passed":
+        try:
+            import numpy as np
+
+            with np.load(frames_path, allow_pickle=False) as archive:
+                for key in ("agentview", "wrist"):
+                    videos[key] = _encode_h264(run_root / f"{key}.mp4", archive[key])
+        except Exception as exc:
+            videos = {"error": f"{type(exc).__name__}:{exc}"}
+    camera_passed = camera_npz["state"] == "passed" and set(videos) == {"agentview", "wrist"} and all(isinstance(value, Mapping) and value.get("ffprobe", {}).get("codec_name") == "h264" and value.get("frame_count") == CANARY_STEPS and value.get("fps") == "20/1" for value in videos.values())
+    status = "passed" if assembled.get("status") == "passed" and camera_passed else ("family_failed" if assembled.get("category") == "family_failure" else ("timeout_terminated" if timed_out else "failed_closed"))
+    result = {"schema_version": "track3_gpu3_camera_parent_v3", "status": status, "category": "success" if status == "passed" else assembled.get("category", "infrastructure"), "phase": "O2", "task_index": task, "demo_index": demo, "family": FAMILY[task], "attempt_number": attempt_number, "seed": seed, "parent_pid": os.getpid(), "worker_pid": process.pid, "worker_pid_match": process_record["child_pid"] == process_record["child_result_pid"], "process_returncode": process.returncode, "timed_out": timed_out, "termination_stage": termination_stage, "child_result": child_result, "child_result_path": path_ref(child_result_path), "parent_assembly": assembled, "gpu_provenance": process_record, "gpu_provenance_gate": assembled.get("gpu_provenance_gate"), "camera_npz": camera_npz, "videos": videos, "camera_artifacts_passed": camera_passed, "stdout_path": path_ref(stdout_path), "stderr_path": path_ref(stderr_path), "stdout_bytes": stdout_path.stat().st_size, "stderr_bytes": stderr_path.stat().st_size, "atomic_partial_residue": sorted(path_ref(item) for item in run_root.glob("*.partial")), "model_state_identity": (child_result or {}).get("model_state_identity"), "resource_boundary": {"gpu3_only": True, "gpu0_touched": False, "gpu1_touched": False, "gpu2_touched": False, "official_gpu": False, "no_teleop": True, "no_training": True}}
+    write_json(parent_result_path, result)
+    return result
+
+
+def _o2_manifest() -> dict[str, Any]:
+    entries: list[dict[str, Any]] = []
+    root = OUT_ROOT / "o2_runs"
+    for item in sorted(root.rglob("*")) if root.is_dir() else []:
+        if item.is_file() and not item.name.endswith(".partial"):
+            entries.append(artifact_entry(item, git(("rev-parse", "HEAD")), schema="o2_artifact"))
+    frame_root = OUT_ROOT / "o2_camera_frames"
+    for item in sorted(frame_root.glob("*.npz")) if frame_root.is_dir() else []:
+        entries.append(artifact_entry(item, git(("rev-parse", "HEAD")), schema="camera_npz"))
+    manifest = {"schema_version": "track3_overnight_o2_artifact_manifest_v1", "created_at_utc": now(), "entries": entries, "entries_exclude_self": True}
+    write_json(OUT_ROOT / "o2_artifact_manifest.json", manifest)
+    return {"path": path_ref(OUT_ROOT / "o2_artifact_manifest.json"), "entry_count": len(entries), "state": "passed" if all((ROOT / entry["relative_path"]).is_file() and sha256_file(ROOT / entry["relative_path"]) == entry["sha256"] for entry in entries) else "failed", "entries": entries}
+
+
+def run_o2() -> dict[str, Any]:
+    o1_path = OUT_ROOT / "o1_provenance_contract.json"
+    current = git(("rev-parse", "HEAD"))
+    o1_report = strict_json_load(o1_path) if o1_path.is_file() else {}
+    if not o1_path.is_file() or o1_report.get("status") != "track3_overnight_o1_provenance_watchdog_passed" or o1_report.get("root_head") != current or porcelain():
+        result = {"schema_version": "track3_overnight_o2_v1", "status": "not_evaluated", "reason": "o1_clean_intermediate_not_locked", "simulator_started": False, "gpu_started": False}
+        write_json(OUT_ROOT / "o2_summary.json", result)
+        return result
+    canaries: list[dict[str, Any]] = []
+    task10 = _run_gpu3_camera_canary(10, demo=0, seed=SEEDS[10], attempt_number=3)
+    canaries.append(task10)
+    if task10.get("status") != "passed":
+        result = {"schema_version": "track3_overnight_o2_v1", "status": "track3_overnight_stopped_O2_task10_attempt3_failure", "hard_stop": True, "canaries": canaries, "counts": {"task10_attempt3": 1, "task20_attempt1": 0, "task19_attempt1": 0}, "no_task10_attempt4": True, "simulator_started": True, "gpu3_only": True}
+        write_json(OUT_ROOT / "o2_summary.json", result)
+        return result
+    for task in (20, 19):
+        canary = _run_gpu3_camera_canary(task, demo=0, seed=SEEDS[task], attempt_number=1)
+        canaries.append(canary)
+        if canary.get("category") == "infrastructure":
+            result = {"schema_version": "track3_overnight_o2_v1", "status": f"track3_overnight_stopped_O2_task{task}_infrastructure_failure", "hard_stop": True, "canaries": canaries, "no_retry": True, "simulator_started": True, "gpu3_only": True}
+            write_json(OUT_ROOT / "o2_summary.json", result)
+            return result
+    manifest = _o2_manifest()
+    passed = all(row.get("status") == "passed" for row in canaries)
+    released = [row["family"] for row in canaries if row.get("status") == "passed"]
+    result = {"schema_version": "track3_overnight_o2_v1", "status": "track3_overnight_o2_camera_canaries_passed" if passed else ("track3_overnight_o2_partial_family_release" if released else "track3_overnight_stopped_O2_no_family_release"), "hard_stop": False, "canaries": canaries, "released_families": released, "counts": {"task10_attempt3": 1, "task20_attempt1": 1, "task19_attempt1": 1}, "artifact_manifest": manifest, "source_commit": current, "tool_sha256": sha256_file(Path(__file__)), "resource_boundary": {"gpu3_only": True, "gpu0_touched": False, "gpu1_touched": False, "gpu2_touched": False, "official_gpu": False, "no_training": True, "no_se3_generation": True}}
+    write_json(OUT_ROOT / "o2_summary.json", result)
+    return result
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--o0", action="store_true")
     parser.add_argument("--o1", action="store_true")
+    parser.add_argument("--o2", action="store_true")
     parser.add_argument("--io-test-worker", action="store_true")
     parser.add_argument("--io-mode")
+    parser.add_argument("--camera-worker", action="store_true")
+    parser.add_argument("--task-index", type=int)
+    parser.add_argument("--demo-index", type=int)
+    parser.add_argument("--seed", type=int)
+    parser.add_argument("--attempt-number", type=int)
+    parser.add_argument("--state-bundle", type=Path)
+    parser.add_argument("--frames-output", type=Path)
     parser.add_argument("--result-output", type=Path)
     args = parser.parse_args(argv)
     if args.io_test_worker:
@@ -595,12 +888,19 @@ def main(argv: Sequence[str] | None = None) -> int:
         except Exception:
             traceback.print_exc(file=sys.stderr)
             return 1
-    if args.o0 and args.o1:
+    if args.camera_worker:
+        required = (args.task_index, args.demo_index, args.seed, args.attempt_number, args.state_bundle, args.frames_output, args.result_output)
+        if any(value is None for value in required):
+            parser.error("--camera-worker requires task/demo/seed/attempt/state/frames/result")
+        return _camera_worker(args.task_index, args.demo_index, args.seed, args.attempt_number, args.state_bundle, args.frames_output, args.result_output)
+    if sum(bool(value) for value in (args.o0, args.o1, args.o2)) > 1:
         parser.error("choose one phase")
     if args.o0:
         result = run_o0()
     elif args.o1:
         result = run_o1()
+    elif args.o2:
+        result = run_o2()
     else:
         parser.error("O1+ phases are not yet enabled in this entrypoint")
     print(json.dumps(result, ensure_ascii=False, sort_keys=True))

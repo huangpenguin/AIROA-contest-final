@@ -33,7 +33,7 @@ If these disagree, stop mutation, audit the discrepancy and repair the handoff i
 
 - Repository: `/home/huang/code/PARC2026_final`
 - Branch: `codex/axis-pi05-audit-remediation`; no upstream recorded.
-- Memory input HEAD: `b16211b8c7ddab8e0c867bf7ccb4a3e37b9bf3af`.
+- Memory input HEAD: `d643e105830ac93622169a53198e2f3373f7b658`.
 - Latest audited execution: `64a0d31c3b2864562887044bad7ef8b522a213db` (Y0–Y2 execution evidence is now derived from this input).
 - Nested OpenPI: `third_party/axis_openpi` at `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`, clean at review.
 - `LIBERO-plus` has pre-existing dirty files. They belong to the user/project and must not be reset, cleaned, overwritten or silently committed.

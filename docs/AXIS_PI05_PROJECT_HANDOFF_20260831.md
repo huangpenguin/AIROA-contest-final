@@ -763,7 +763,7 @@ X13 manifest为13项，全部Git-tracked且bytes/SHA exact；14个JSON strict、
 
 ## 65. Runtime Preflight Y0–Y2 执行收尾（2026-09-06）
 
-Y0首次运行因进程扫描误计当前launcher且GPU0历史外部PID已退出而保留为失败证据；修正后Y0复核通过。新的锁定文件记录X/W历史证据、三份公开HDF5、start-state bundle、R6 raw/folded checkpoint/norm的逐文件bytes/SHA，并记录复核时GPU0无compute app、未被本任务触碰，GPU1–3空闲。最终clean release commit为`b16211bc7e48ec96ae8b89b9edf88462e73d3078`。
+Y0首次运行因进程扫描误计当前launcher且GPU0历史外部PID已退出而保留为失败证据；修正后Y0复核通过。新的锁定文件记录X/W历史证据、三份公开HDF5、start-state bundle、R6 raw/folded checkpoint/norm的逐文件bytes/SHA，并记录复核时GPU0无compute app、未被本任务触碰，GPU1–3空闲。代码clean release commit为`b16211bc7e48ec96ae8b89b9edf88462e73d3078`，最终交接闭包提交为`d643e105830ac93622169a53198e2f3373f7b658`。
 
 Y1通过canonical `track3_composed_reverse_start_stabilization._configure_public_env` fresh subprocess smoke；阶段合同固定为close→lift连续demonstrator contact、lift后object-follow/source-release、transport、place、release；progress window在首个失败完整窗口产生`stage_stall:<stage>`并停止；atomic heartbeat、真实launcher identity与`failed_gate` return 0 / `worker_exception` return 1分类均通过。Y3 worker/supervisor已实现但未执行。
 

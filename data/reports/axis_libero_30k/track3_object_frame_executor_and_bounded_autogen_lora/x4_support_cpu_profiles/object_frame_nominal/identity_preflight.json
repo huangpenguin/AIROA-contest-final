@@ -1,0 +1,57 @@
+{
+  "called_by_launcher": true,
+  "command": [
+    "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+    "-m",
+    "tools.axis_pi05.track3_object_frame_executor_and_bounded_autogen_lora",
+    "--x4-worker",
+    "--profile",
+    "object_frame_nominal",
+    "--result-output",
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_object_frame_executor_and_bounded_autogen_lora/x4_support_cpu_profiles/object_frame_nominal/child_result.json"
+  ],
+  "cuda_visible_devices": "",
+  "identity": {
+    "checks": {
+      "command_exact": true,
+      "cuda_visible_devices": true,
+      "cursor_inactive": true,
+      "gpu_policy": true,
+      "openpi_head": true,
+      "pid_inactive": true,
+      "root_clean": true,
+      "root_commit": true,
+      "tool_sha256": true
+    },
+    "errors": [],
+    "expected_command": [
+      "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+      "-m",
+      "tools.axis_pi05.track3_object_frame_executor_and_bounded_autogen_lora",
+      "--x4-worker",
+      "--profile",
+      "object_frame_nominal",
+      "--result-output",
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_object_frame_executor_and_bounded_autogen_lora/x4_support_cpu_profiles/object_frame_nominal/child_result.json"
+    ],
+    "expected_root_commit": "ce86e724dddf300406465d6986577199d39cc19b",
+    "gpu_policy": "cpu_no_renderer",
+    "observed_command": [
+      "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+      "-m",
+      "tools.axis_pi05.track3_object_frame_executor_and_bounded_autogen_lora",
+      "--x4-worker",
+      "--profile",
+      "object_frame_nominal",
+      "--result-output",
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_object_frame_executor_and_bounded_autogen_lora/x4_support_cpu_profiles/object_frame_nominal/child_result.json"
+    ],
+    "observed_root_commit": "ce86e724dddf300406465d6986577199d39cc19b",
+    "root_commit_relation": "exact",
+    "state": "passed"
+  },
+  "phase": "X4",
+  "root_commit": "ce86e724dddf300406465d6986577199d39cc19b",
+  "schema_version": "track3_object_frame_identity_v1",
+  "tool_sha256": "61db03552c9f6be282f06819e1bace072c28ec09778e44a00bfd127c545c5285"
+}

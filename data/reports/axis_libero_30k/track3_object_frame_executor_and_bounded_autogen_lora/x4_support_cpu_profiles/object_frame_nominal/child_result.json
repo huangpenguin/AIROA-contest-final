@@ -1,0 +1,41 @@
+{
+  "child_pid": 1479704,
+  "completed_at_utc": "2026-09-05T08:20:44.081440+00:00",
+  "created_at_utc": "2026-09-05T08:20:40.964297+00:00",
+  "demo_index": 0,
+  "error": {
+    "message": "module 'tools.axis_pi05.track3_reverse_init_stabilization' has no attribute '_configure_public_env'",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/huang/code/PARC2026_final/tools/axis_pi05/track3_object_frame_executor_and_bounded_autogen_lora.py\", line 512, in _worker_profile\n    base._configure_public_env(gpu=False)\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: module 'tools.axis_pi05.track3_reverse_init_stabilization' has no attribute '_configure_public_env'\n",
+    "type": "AttributeError"
+  },
+  "family": "support_remove",
+  "mode": "CPU_no_renderer",
+  "profile": {
+    "name": "object_frame_nominal",
+    "profile_reason": "W4_existing_budget_and_tolerance_with_X2_semantics",
+    "rotation_clip_rad": 0.12,
+    "rotation_tolerance_rad": 0.03,
+    "stable_ticks": 4,
+    "stage_budgets": [
+      150,
+      120,
+      35,
+      150,
+      180,
+      120,
+      35,
+      80
+    ],
+    "step_budget": 900,
+    "translation_clip_m": 0.05,
+    "translation_tolerance_m": 0.012
+  },
+  "resource_boundary": {
+    "gpu0_touched": false,
+    "official_gpu": false
+  },
+  "schema_version": "track3_object_frame_x4_worker_v1",
+  "status": "worker_exception",
+  "task_index": 10,
+  "training_eligible": false
+}

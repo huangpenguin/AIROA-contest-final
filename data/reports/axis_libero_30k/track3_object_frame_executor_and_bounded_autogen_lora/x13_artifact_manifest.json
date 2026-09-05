@@ -1,0 +1,71 @@
+{
+  "entries": [
+    {
+      "bytes": 632,
+      "relative_path": "data/reports/axis_libero_30k/track3_object_frame_executor_and_bounded_autogen_lora/resume_cursor.json",
+      "sha256": "29be9f083465480a26914c05cb65f836806b7df7723db2977ab6f992feb70584"
+    },
+    {
+      "bytes": 330,
+      "relative_path": "data/reports/axis_libero_30k/track3_object_frame_executor_and_bounded_autogen_lora/supervisor_closeout.json",
+      "sha256": "969c79c6433db47a0b47698c7f6d2bd1ab60965221f754b7bd06e799b479f085"
+    },
+    {
+      "bytes": 3655,
+      "relative_path": "data/reports/axis_libero_30k/track3_object_frame_executor_and_bounded_autogen_lora/x0_input_lock.json",
+      "sha256": "3ad257cf44b4745abf5647eef5ae753ba08e80dc39f1e1d6ea7db809257cf75b"
+    },
+    {
+      "bytes": 1374,
+      "relative_path": "data/reports/axis_libero_30k/track3_object_frame_executor_and_bounded_autogen_lora/x13_closeout.json",
+      "sha256": "aff7ea3feffa2a895f4ba22ebdda1599345d4b8a671352c5f9b6947994968f3d"
+    },
+    {
+      "bytes": 333,
+      "relative_path": "data/reports/axis_libero_30k/track3_object_frame_executor_and_bounded_autogen_lora/x13_phase_status.csv",
+      "sha256": "0108b4febb8d44beb50b8866d14c96d1e1111c663491bc56eda434c8707ecd7d"
+    },
+    {
+      "bytes": 2506,
+      "relative_path": "data/reports/axis_libero_30k/track3_object_frame_executor_and_bounded_autogen_lora/x1_derived_errata_finalizer.json",
+      "sha256": "d3636522cfd51f5a1afae94e213d2591a021fa5629db0a830210cff4ce2239a0"
+    },
+    {
+      "bytes": 4807,
+      "relative_path": "data/reports/axis_libero_30k/track3_object_frame_executor_and_bounded_autogen_lora/x2_executor_supervisor_contract.json",
+      "sha256": "9a388a49a4d55fe744ed55690b7fa4648f8c2e9c64500143894c03434db49bac"
+    },
+    {
+      "bytes": 11290,
+      "relative_path": "data/reports/axis_libero_30k/track3_object_frame_executor_and_bounded_autogen_lora/x3_clean_release.json",
+      "sha256": "8d9136b4b6f41022eacb2440b9e28106e6c807cca3411de82faf2bff906465d8"
+    },
+    {
+      "bytes": 8104,
+      "relative_path": "data/reports/axis_libero_30k/track3_object_frame_executor_and_bounded_autogen_lora/x4_summary.json",
+      "sha256": "c79b1f0b5af4104eb765b4f7ae25d034bf95a9103770ceeb46c71b210bd47312"
+    },
+    {
+      "bytes": 1430,
+      "relative_path": "data/reports/axis_libero_30k/track3_object_frame_executor_and_bounded_autogen_lora/x4_support_cpu_profiles/object_frame_nominal/child_result.json",
+      "sha256": "92d478c4a23d2fa82aac14aa730ff0296284977c31bc37b1304623d7eaaad9f4"
+    },
+    {
+      "bytes": 397,
+      "relative_path": "data/reports/axis_libero_30k/track3_object_frame_executor_and_bounded_autogen_lora/x4_support_cpu_profiles/object_frame_nominal/heartbeat.json",
+      "sha256": "98dbe1f777f5bbd8cc7f81973f758ac3a6593e1daad8dc5fc005da97fbc40c53"
+    },
+    {
+      "bytes": 2229,
+      "relative_path": "data/reports/axis_libero_30k/track3_object_frame_executor_and_bounded_autogen_lora/x4_support_cpu_profiles/object_frame_nominal/identity_preflight.json",
+      "sha256": "68a45f6835b71452b907d432e1f3930a27c4cf708a04ac2c95c5f65d7d8cf23b"
+    },
+    {
+      "bytes": 6305,
+      "relative_path": "data/reports/axis_libero_30k/track3_object_frame_executor_and_bounded_autogen_lora/x4_support_cpu_profiles/object_frame_nominal/parent_result.json",
+      "sha256": "6376a1fb0f51402dca8c68ca4747762bd291a126db778dc01eb5ac36d12e74a2"
+    }
+  ],
+  "entries_exclude_self_and_final_validation": true,
+  "schema_version": "track3_object_frame_x13_manifest_v1"
+}

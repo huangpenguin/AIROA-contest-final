@@ -1,0 +1,9 @@
+{
+  "active": false,
+  "automatic_resume": false,
+  "pid": 1479842,
+  "root_commit": "ce86e724dddf300406465d6986577199d39cc19b",
+  "schema_version": "track3_object_frame_supervisor_closeout_v1",
+  "status": "track3_object_frame_x13_hard_stop",
+  "tool_sha256": "61db03552c9f6be282f06819e1bace072c28ec09778e44a00bfd127c545c5285"
+}

@@ -1,0 +1,12 @@
+{
+  "count": 2,
+  "created_at_utc": "2026-09-05T08:20:44.339670+00:00",
+  "identity_state": "passed",
+  "phase": "X4",
+  "pid": 1479695,
+  "profile": "object_frame_nominal",
+  "root_commit": "ce86e724dddf300406465d6986577199d39cc19b",
+  "schema_version": "track3_object_frame_heartbeat_v1",
+  "state": "final",
+  "tool_sha256": "61db03552c9f6be282f06819e1bace072c28ec09778e44a00bfd127c545c5285"
+}

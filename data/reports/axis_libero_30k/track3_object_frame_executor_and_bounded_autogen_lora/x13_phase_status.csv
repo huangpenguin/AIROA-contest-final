@@ -1,0 +1,15 @@
+phase,status
+X0,track3_object_frame_x0_passed
+X1,track3_object_frame_x1_passed
+X2,track3_object_frame_x2_passed
+X3,track3_object_frame_x3_ready
+X4,track3_object_frame_x4_completed
+X5,not_evaluated
+X6,not_evaluated
+X7,not_evaluated
+X8,not_evaluated
+X9,not_evaluated
+X10,not_evaluated
+X11,not_evaluated
+X12,not_evaluated
+X13,hard_stop

@@ -1,0 +1,30 @@
+{
+  "created_at_utc": "2026-09-05T08:22:18.224278+00:00",
+  "finalizer_order_completed": true,
+  "schema_version": "track3_object_frame_x13_final_validation_v1",
+  "validation": {
+    "csv_lf": true,
+    "final_validation_excluded_from_manifest": true,
+    "git_diff_check": true,
+    "json_errors": [],
+    "manifest_entry_count": 13,
+    "manifest_exact": {
+      "entries": 13,
+      "exact": true,
+      "mismatches": []
+    },
+    "npy_allow_pickle_false": true,
+    "npy_errors": [],
+    "npz_allow_pickle_false": true,
+    "npz_errors": [],
+    "openpi_porcelain": [],
+    "partial_residue": [],
+    "py_compile": true,
+    "root_tests": {
+      "returncode": 0,
+      "tail": "........................................................................ [ 26%]\n.................................ss..................................... [ 53%]\n........................................................................ [ 80%]\n.......................sss.......................ss                      [100%]\n=============================== warnings summary ===============================\n<frozen importlib._bootstrap>:488\n  <frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.MessageMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.\n\n<frozen importlib._bootstrap>:488\n  <frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.ScalarMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.\n\ntests/test_axis_pi05_lora_screen.py: 21 warnings\n  /home/huang/code/PARC2026_final/.venv_axis_pi05/lib/python3.12/site-packages/flax/core/scope.py:959: DeprecationWarning: shape requires ndarray or scalar arguments, got <class 'jax._src.api.ShapeDtypeStruct'> at position 0. In a future JAX release this will be an error.\n    if jnp.shape(val) != jnp.shape(abs_val):\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n260 passed, 7 skipped, 23 warnings in 70.95s (0:01:10)\n"
+    },
+    "source_porcelain": [],
+    "strict_json": true
+  }
+}

@@ -1,5 +1,7 @@
 # AXIS Pi0.5 Track 3：Support Release Anchor 与 OSC Scale 恢复计划
 
+> 归档说明（2026-09-05）：W0–W3内部检查通过；W4唯一CPU/no-renderer canary正常发布`family_failure`并在transport预算耗尽后停止，W5未执行，W6 hard stop。独立审核保留该结果，但发现destination object→EEF组合、acquisition stage prerequisite、progress-window stall、active cursor与finalization顺序尚未闭合；后续授权由`AXIS_PI05_TRACK3_OBJECT_FRAME_EXECUTOR_AND_BOUNDED_AUTOGEN_LORA_PLAN.md`取代。
+
 > 制定日期：2026-09-05（Asia/Tokyo）
 > 审核输入：root `11483623b7710430a197231b8ed0662c4813c12d`
 > nested OpenPI：`b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`

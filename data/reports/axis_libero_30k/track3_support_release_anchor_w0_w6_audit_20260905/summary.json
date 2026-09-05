@@ -1,0 +1,47 @@
+{
+  "approved": {
+    "exact_pending_accepted": [
+      0,
+      0,
+      0
+    ],
+    "final_json_strict": "14/14",
+    "hard_stop": true,
+    "manifest_git_tracked_hash_exact": "17/17",
+    "no_partial": true,
+    "w0_immutable_hashes": "15/15",
+    "w1_release_anchor_contact": "3/1/0",
+    "w1_release_transition_index": 76,
+    "w4_parent_category": "family_failure",
+    "w4_process_returncode": 0,
+    "w4_total_action_frames": 252,
+    "w4_transport_frames": 180,
+    "w5": "not_evaluated"
+  },
+  "audit_input_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "audit_input_root_commit": "2997c6f5d8c5b05345d74e0e0c4b96698def727e",
+  "audit_report": "docs/reviews/axis_pi05/TRACK3_SUPPORT_RELEASE_ANCHOR_W0_W6_AUDIT_20260905.md",
+  "findings": {
+    "active_cursor_written_during_w4": false,
+    "contact_completion_state": "failed",
+    "destination_eef_orientation_error_rad": 1.8164252213793237,
+    "destination_eef_position_error_m": 0.08171218629122215,
+    "final_validation_ran_after_all_w6_artifacts": false,
+    "goal_trace_alignment": "t0_plus_252_post_step_values_for_252_actions",
+    "intended_object_frame_nominal_result": "not_evaluated",
+    "progress_window_stall_implemented": false,
+    "source_true_samples": "253/253",
+    "stage_timeout": "transport"
+  },
+  "next_plan": "docs/AXIS_PI05_TRACK3_OBJECT_FRAME_EXECUTOR_AND_BOUNDED_AUTOGEN_LORA_PLAN.md",
+  "status": "remediation_required",
+  "user_manual_action_required": false,
+  "verification": {
+    "full_tests": "257_passed_7_skipped_23_warnings",
+    "git_diff_check": "passed",
+    "known_intentional_malformed_json_fixtures": 1,
+    "py_compile": "passed",
+    "strict_json_excluding_intentional_malformed_fixture": "312/312",
+    "targeted_tests": "21_passed_2_warnings"
+  }
+}

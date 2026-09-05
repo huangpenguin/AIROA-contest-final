@@ -6,8 +6,8 @@
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_support_release_anchor_and_osc_scale_recovery_planned`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_SUPPORT_RELEASE_ANCHOR_AND_OSC_SCALE_RECOVERY_PLAN.md`
+> 当前总状态：`track3_object_frame_executor_and_bounded_autogen_lora_planned`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_OBJECT_FRAME_EXECUTOR_AND_BOUNDED_AUTOGEN_LORA_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -15,7 +15,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3 corrected task10 canary已排除旧quaternion/video/process分类错误，但仍暴露OSC rotation physical scale、release-side HDF5 grasp anchor、stage-dependent三态和launcher identity缺口。下一计划先CPU闭合这些合同并运行一次no-renderer完整canary；只有通过才允许一次GPU3 camera canary，不进入其他family、generation或训练，用户无需Teleop。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3 task10 CPU canary已闭合release-side anchor与OSC scale，但W4没有把destination object pose继续组合成EEF target，也在acquisition未成立时进入transport。新计划先修object-frame/stage/supervisor合同，再在同一条件链内继续三族bounded generation、LoRA、holdout与本地ZIP；用户无需Teleop或中途逐阶段审核。
 
 ## 2. 数据与复现基础
 
@@ -726,3 +726,19 @@ V1的`xyzw`修正确实有效，但action builder把`rotation_clip=0.12 rad`直�
 V4在approach 150帧后translation error仍为`0.104612 m`，后续contact/place阶段没有执行，所以contact completion与same-demo destination必须修正为`not_evaluated`。`launch_identity_gate`/`heartbeat_due`也没有进入真实V4 launcher，parent缺root/tool identity。
 
 旧计划已归档。唯一活动计划`docs/AXIS_PI05_TRACK3_SUPPORT_RELEASE_ANCHOR_AND_OSC_SCALE_RECOVERY_PLAN.md`执行W0–W6：先CPU闭合release-side HDF5 anchor、真实OSC scale、stage-dependent三态和supervisor；clean commit后仅一次CPU/no-renderer完整task10 canary，通过才允许一次GPU3 camera canary，然后hard stop。conservative、task20/task19、demo/generation、训练和ZIP均不授权。审核报告：`docs/reviews/axis_pi05/TRACK3_J5_EXECUTOR_RECOVERY_V0_V5_AUDIT_20260905.md`。
+
+## 61. Support Release-Anchor W0–W6 执行收尾（2026-09-05）
+
+最终execution commit为`2997c6f5d8c5b05345d74e0e0c4b96698def727e`，W4 clean source为`1ec308a26e2fad306b221197ab9041d1b7633346`。W0复核15项immutable hash、旧V5 `19/19`、root/OpenPI与GPU边界；W1锁定task10/demo0 close/release=`32/76`、release-side state75 contact=`3/1/0`；W2确认controller output=`0.05 m / 0.5 rad`和`0.12 rad→0.24`normalized mapping；W3形成clean release。
+
+W4仅运行一次CPU/no-renderer、seed3121。worker正常发布`failed_gate`且return 0，parent分类`family_failure`，无timeout。trajectory为252步：approach41、descend12、close4、lift15、transport180；transport耗尽预算，末帧误差`0.0191271 m / 0.442809 rad`。source为`253/253 true`，goal为`253/253 false`，contact completion failed。W5=`not_evaluated`，没有启动GPU3。
+
+W6最终manifest为17项，全部Git-tracked且bytes/SHA exact；14个final JSON严格duplicate-key parse通过，NPZ/NPY no-pickle finite、CSV LF、无partial。执行记录的全量测试为`257 passed, 7 skipped, 23 warnings`。GPU0外部PID保留，GPU1–3释放；没有generation/replay、Teleop、训练/norm、FAST/ZIP、官方GPU、上传或提交；计数`exact/pending/accepted=0/0/0`。已hard stop等待审核。
+
+## 62. W0–W6 独立审核与 Object-Frame/Bounded Autogen 计划（2026-09-05）
+
+审核唯一结论为`remediation_required`。W0/W1/OSC scale、W4真实family failure、W5未执行、W6 artifact closure与资源/禁止项获批准；但intended object-frame nominal profile仍为`not_evaluated`。
+
+W4在grasp侧正确使用`T_world^object·T_object^eef`，到transport/place却把state0 bowl pose直接当EEF target。按冻结anchor复算，current place target与正确组合相差`0.0817122 m / 1.816425 rad`。同时source全程true且contact completion failed，执行器仍越过acquisition barrier进入transport；旧transport timeout保留，但不能当作唯一根因。progress-window stall未实现，运行中全局cursor未置active，W6验证又早于最终closeout/manifest写入。
+
+旧计划已归档。唯一活动计划为`docs/AXIS_PI05_TRACK3_OBJECT_FRAME_EXECUTOR_AND_BOUNDED_AUTOGEN_LORA_PLAN.md`：X0–X3修复object→EEF、phase prerequisite/contact、stall、active cursor和finalizer；X4–X7按family隔离执行support/task20/task19 bounded profiles；X8最多12条generation/36次replay；严格accepted数据通过后，X9–X12才进入20Hz `80/20` mixture/fresh QUANTILES、R6 L2 LoRA 100/500/1000、reverse/C20与本地FAST ZIP。任何分支X13 hard stop，不使用GPU0/官方GPU，不Teleop、不自动上传或提交。审核报告：`docs/reviews/axis_pi05/TRACK3_SUPPORT_RELEASE_ANCHOR_W0_W6_AUDIT_20260905.md`。

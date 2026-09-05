@@ -9,12 +9,14 @@ HANDOFF = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_2026
 CANARY = ROOT / "data/reports/axis_libero_30k/track3_background_predicate_convergence/k3_gpu3_release/task19_canary.json"
 
 
-def test_only_the_track3_support_release_anchor_scale_plan_is_active() -> None:
+def test_only_the_track3_object_frame_bounded_autogen_plan_is_active() -> None:
     handoff = json.loads(HANDOFF.read_text(encoding="utf-8"))
-    assert handoff["status"] == "track3_support_release_anchor_and_osc_scale_recovery_planned"
-    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_SUPPORT_RELEASE_ANCHOR_AND_OSC_SCALE_RECOVERY_PLAN.md"
-    assert handoff["next_phase_only"] == "W0_to_W6_then_hard_stop"
+    assert handoff["status"] == "track3_object_frame_executor_and_bounded_autogen_lora_planned"
+    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_OBJECT_FRAME_EXECUTOR_AND_BOUNDED_AUTOGEN_LORA_PLAN.md"
+    assert handoff["next_phase_only"] == "X0_to_X13_then_hard_stop"
     assert (ROOT / handoff["next_plan"]).is_file()
+    assert not (ROOT / "docs/AXIS_PI05_TRACK3_SUPPORT_RELEASE_ANCHOR_AND_OSC_SCALE_RECOVERY_PLAN.md").exists()
+    assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_SUPPORT_RELEASE_ANCHOR_AND_OSC_SCALE_RECOVERY_PLAN.md").is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_J5_EXECUTOR_CONTRACT_AND_ATOMIC_VIDEO_RECOVERY_PLAN.md").exists()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_J5_EXECUTOR_CONTRACT_AND_ATOMIC_VIDEO_RECOVERY_PLAN.md").is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_PROVENANCE_JITTER_RECOVERY_AND_OVERNIGHT_CONTINUATION_PLAN.md").exists()
@@ -230,7 +232,8 @@ def test_composed_state_authorization_is_data_source_only_and_bounded() -> None:
     assert audit["findings"]["intended_corrected_nominal_profile_result"] == "not_evaluated"
 
     next_recovery = handoff["track3_support_release_anchor_and_osc_scale_recovery_authorization"]
-    assert next_recovery["status"] == "track3_support_release_anchor_and_osc_scale_recovery_planned"
+    assert next_recovery["status"] == "track3_support_release_anchor_and_osc_scale_recovery_completed_and_audited"
+    assert next_recovery["plan"].startswith("docs/archive/axis_pi05/")
     assert next_recovery["authorized_phases"] == ["W0", "W1", "W2", "W3", "W4", "W5", "W6_closeout"]
     next_scope = next_recovery["authorization"]
     assert next_scope["reverse_acquisition_anchor_index"] == 75
@@ -242,3 +245,40 @@ def test_composed_state_authorization_is_data_source_only_and_bounded() -> None:
     assert next_scope["task20_or_task19_manipulation"] is False
     assert next_scope["training_or_norm"] is False
     assert next_scope["gpu0"] is False
+    assert next_recovery["execution"]["final_commit"] == "2997c6f5d8c5b05345d74e0e0c4b96698def727e"
+    assert next_recovery["execution"]["w4_parent_category"] == "family_failure"
+    assert next_recovery["execution"]["w4_transport_frames"] == 180
+    assert next_recovery["execution"]["w5"] == "not_evaluated"
+    assert next_recovery["execution"]["manifest_git_tracked_hash_exact"] == "17/17"
+
+    audit = handoff["track3_support_release_anchor_w0_w6_audit"]
+    assert audit["status"] == "remediation_required"
+    assert (ROOT / audit["audit_report"]).is_file()
+    assert (ROOT / audit["audit_summary"]).is_file()
+    assert audit["approved"]["w0_immutable_hashes"] == "15/15"
+    assert audit["approved"]["manifest_git_tracked_hash_exact"] == "17/17"
+    assert audit["findings"]["destination_object_to_eef_transform_applied"] is False
+    assert audit["findings"]["destination_eef_position_error_m"] == 0.08171218629122215
+    assert audit["findings"]["acquisition_barrier_before_transport"] is False
+    assert audit["findings"]["intended_object_frame_nominal_result"] == "not_evaluated"
+
+    authorization = handoff["track3_object_frame_executor_and_bounded_autogen_lora_authorization"]
+    assert authorization["status"] == "track3_object_frame_executor_and_bounded_autogen_lora_planned"
+    assert authorization["plan"] == handoff["next_plan"]
+    assert authorization["authorized_phases"] == ["X0", "X1", "X2", "X3", "X4", "X5", "X6", "X7", "X8", "X9", "X10", "X11", "X12", "X13_closeout"]
+    scope = authorization["authorization"]
+    assert scope["object_to_eef_destination_transform"] is True
+    assert scope["phase_scoped_contact_and_acquisition_barrier"] is True
+    assert scope["active_cursor_single_instance_supervisor"] is True
+    assert scope["support_cpu_profiles_max"] == 2
+    assert scope["support_gpu3_camera_canaries_max"] == 2
+    assert scope["task20_task19_cpu_profiles_max_total"] == 4
+    assert scope["task20_task19_gpu3_camera_canaries_max_total"] == 4
+    assert scope["total_train_generations_max"] == 12
+    assert scope["total_fresh_replays_max"] == 36
+    assert scope["forward_reverse_sampling"] == [0.8, 0.2]
+    assert scope["training_gpus"] == [1, 2]
+    assert scope["winner_max_steps"] == 1000
+    assert scope["gpu0"] is False
+    assert scope["official_gpu"] is False
+    assert scope["automatic_upload_or_submission"] is False

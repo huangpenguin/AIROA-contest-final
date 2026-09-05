@@ -1,0 +1,40 @@
+{
+  "counts": {
+    "accepted_reverse_demo": 0,
+    "exact_reverse_demo": 0,
+    "pending_autogen": 0
+  },
+  "created_at_utc": "2026-09-05T02:29:03.686411+00:00",
+  "hard_stop": {
+    "executed": true,
+    "next_authority": "reviewed_plan_required",
+    "no_fast_or_zip": true,
+    "no_training": true,
+    "no_upload_or_submission": true,
+    "task10_attempt4": "forbidden"
+  },
+  "phase_status": {
+    "J0": "track3_jitter_j0_passed",
+    "J1": "track3_jitter_j1_passed",
+    "J10": "not_evaluated",
+    "J2": "track3_jitter_j2_support_remove_released",
+    "J3": "track3_jitter_j3_all_families_passed",
+    "J4": "track3_jitter_j4_executor_contract_passed",
+    "J5": "track3_jitter_stopped_J5_infrastructure_failure",
+    "J6": "not_evaluated",
+    "J7": "not_evaluated",
+    "J8": "not_evaluated",
+    "J9": "not_evaluated"
+  },
+  "reason": "no_family_release",
+  "reason_phase": "J5",
+  "resource_boundary": {
+    "gpu0_touched": false,
+    "libero_plus_untouched": true,
+    "no_teleop": true,
+    "no_training": true,
+    "official_gpu": false
+  },
+  "schema_version": "track3_jitter_j11_v1",
+  "status": "track3_jitter_recovery_stopped_J5_no_family_release"
+}

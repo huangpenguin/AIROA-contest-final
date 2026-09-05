@@ -1,0 +1,1380 @@
+{
+  "attempt_budget": 6,
+  "attempts_used": 1,
+  "counts": {
+    "accepted_reverse_demo": 0,
+    "family_failures": 0,
+    "infrastructure_failures": 1,
+    "pending_autogen": 0,
+    "pilot_passed": 0
+  },
+  "created_at_utc": "2026-09-05T02:29:03.679752+00:00",
+  "generation_profiles": {},
+  "pilots": [
+    {
+      "artifact_partial_residue": [],
+      "attempt_number": 1,
+      "camera": {
+        "errors": [
+          "RuntimeError:j5_ffmpeg_failed:234:[AVFormatContext @ 0x63b87fc2b200] Unable to choose an output format for '/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_jitter_recovery/j5_pilots/task10_demo0_nominal_attempt1/agentview.mp4.partial'; use a standard extension for the filename or specify the format manually.\n[out#0 @ 0x63b87fc2a640] Error initializing the muxer for /home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_jitter_recovery/j5_pilots/task10_demo0_nominal_attempt1/agentview.mp4.partial: Invalid argument\nError opening output file /home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_jitter_recovery/j5_pilots/task10_demo0_nominal_attempt1/agentview.mp4.partial.\nError opening output files: Invalid argument\n"
+        ],
+        "state": "failed"
+      },
+      "camera_artifacts_passed": false,
+      "category": "infrastructure",
+      "child_result": {
+        "artifacts": {
+          "end_state": "data/reports/axis_libero_30k/track3_jitter_recovery/j5_pilots/task10_demo0_nominal_attempt1/end_state.npy",
+          "frames": "data/reports/axis_libero_30k/track3_jitter_recovery/j5_pilots/task10_demo0_nominal_attempt1/frames.npz",
+          "start_state": "data/reports/axis_libero_30k/track3_jitter_recovery/j5_pilots/task10_demo0_nominal_attempt1/start_state.npy",
+          "trajectory": "data/reports/axis_libero_30k/track3_jitter_recovery/j5_pilots/task10_demo0_nominal_attempt1/trajectory.npz"
+        },
+        "attempt_number": 1,
+        "completed_at_utc": "2026-09-05T02:29:02.428166+00:00",
+        "created_at_utc": "2026-09-05T02:28:11.549319+00:00",
+        "demo_index": 0,
+        "executor": {
+          "action_dim": 7,
+          "controller": "OSC_POSE",
+          "family_object": "akita_black_bowl_1",
+          "goal_atom": "['(On akita_black_bowl_1 main_table_akita_black_bowl_region)']",
+          "hdf5_reference": {
+            "demo_index": 0,
+            "ee_ori_axisangle": [
+              3.0962988781460936,
+              -0.1681780321636898,
+              -0.0735228741307732
+            ],
+            "eef_pose_forward": {
+              "pos_m": [
+                -0.08990065220128851,
+                0.034328475804509276,
+                0.9302040615125051
+              ],
+              "quat": [
+                -0.7423039575965739,
+                -0.6692540556528399,
+                0.03267729983947019,
+                0.004004697727757677
+              ]
+            },
+            "eef_quaternion_wxyz": [
+              0.9980493599299629,
+              -0.05420987571321,
+              -0.02369908731497048,
+              0.019927814204949906
+            ],
+            "hdf5_path": "data/raw/public/libero_official_hdf5/libero_goal/put_the_bowl_on_the_plate_demo.hdf5",
+            "hdf5_sha256": "e69528b0cf10dfc59b20698e12ec2affc03f3887309034d3eb74cac3ec929406",
+            "object_inverse_eef_quaternion_wxyz": [
+              0.5277180075645447,
+              0.45012933015823364,
+              -0.4963497221469879,
+              0.5220479369163513
+            ],
+            "object_inverse_eef_translation_m": [
+              -0.013051445366476096,
+              0.03180008664809234,
+              -0.043317775091279216
+            ],
+            "object_name": "akita_black_bowl_1",
+            "object_pose_forward": {
+              "kind": "object",
+              "name": "akita_black_bowl_1",
+              "pos_m": [
+                -0.07684965618779657,
+                -0.008989574460502213,
+                0.8984041653006754
+              ],
+              "quat": [
+                0.7071067776358467,
+                -1.26137285124876e-05,
+                -2.295811841622576e-06,
+                0.7071067846210164
+              ]
+            },
+            "same_model_xml": true,
+            "state_index": 32
+          },
+          "profile": {
+            "rotation_clip_rad": 0.12,
+            "rotation_tolerance_rad": 0.03,
+            "stable_ticks": 4,
+            "step_budget": 900,
+            "translation_clip_m": 0.05,
+            "translation_tolerance_m": 0.012
+          },
+          "source_atom": "['(On wine_bottle_1 main_table_wine_bottle_region)', '(On plate_1 main_table_plate_region)', '(On cream_cheese_1 main_table_cream_cheese_region)', '(On wooden_cabinet_1 main_table_cabinet_region)', '(On flat_stove_1 main_table_stove_region)', '(On wine_rack_1 main_table_wine_rack_region)', '(On akita_black_bowl_1 plate_1)']"
+        },
+        "failure_reason": "stage_timeout:approach_grasp",
+        "family": "support_remove",
+        "fresh_process": true,
+        "identity": "generator_reference_only",
+        "model_state_identity": {
+          "hdf5_path": "/home/huang/code/PARC2026_final/data/raw/public/libero_official_hdf5/libero_goal/put_the_bowl_on_the_plate_demo.hdf5",
+          "hdf5_sha256": "e69528b0cf10dfc59b20698e12ec2affc03f3887309034d3eb74cac3ec929406",
+          "model_file_sha256": "e9a508e1e98a7bd2631796a4c41476a449fd9821fb45837a27d2ebefd87c8830",
+          "resolved_model_xml_sha256": "d637223bfe311c2ae6daeb0572f0a75528f2613f54eff1ef3acbe540167ea099",
+          "same_demo_model_and_state_components": true,
+          "start_state_sha256": "f5b4d5dd93a42cd133994d23eaeae0bc21bcdc970ba6c03e15a5c37f0928b9b3",
+          "state_key": "task10_demo0"
+        },
+        "phase": "J5",
+        "profile_name": "nominal",
+        "resource_boundary": {
+          "gpu0_touched": false,
+          "gpu1_touched": false,
+          "gpu2_touched": false,
+          "gpu3_only": true,
+          "no_teleop": true,
+          "official_gpu": false,
+          "training_eligible": false
+        },
+        "reverse": {
+          "camera_frames": {
+            "agentview": 180,
+            "wrist": 180
+          },
+          "contact_ledger": [
+            {
+              "min_contact_dist": -2.0245994093926812e-05,
+              "ncon": 20,
+              "step": 0
+            },
+            {
+              "min_contact_dist": -2.0245825830134264e-05,
+              "ncon": 20,
+              "step": 1
+            },
+            {
+              "min_contact_dist": -2.024577825270995e-05,
+              "ncon": 20,
+              "step": 2
+            },
+            {
+              "min_contact_dist": -2.024576321715696e-05,
+              "ncon": 20,
+              "step": 3
+            },
+            {
+              "min_contact_dist": -2.0245756957175008e-05,
+              "ncon": 20,
+              "step": 4
+            },
+            {
+              "min_contact_dist": -2.0245753064010788e-05,
+              "ncon": 20,
+              "step": 5
+            },
+            {
+              "min_contact_dist": -2.0245749809100016e-05,
+              "ncon": 20,
+              "step": 6
+            },
+            {
+              "min_contact_dist": -2.024574672648816e-05,
+              "ncon": 20,
+              "step": 7
+            },
+            {
+              "min_contact_dist": -2.024574369017862e-05,
+              "ncon": 20,
+              "step": 8
+            },
+            {
+              "min_contact_dist": -2.0245740666699312e-05,
+              "ncon": 20,
+              "step": 9
+            },
+            {
+              "min_contact_dist": -2.0245737646067824e-05,
+              "ncon": 20,
+              "step": 10
+            },
+            {
+              "min_contact_dist": -2.024573462674833e-05,
+              "ncon": 20,
+              "step": 11
+            },
+            {
+              "min_contact_dist": -2.0245731607569726e-05,
+              "ncon": 20,
+              "step": 12
+            },
+            {
+              "min_contact_dist": -2.0245728588499327e-05,
+              "ncon": 20,
+              "step": 13
+            },
+            {
+              "min_contact_dist": -2.024572556949566e-05,
+              "ncon": 20,
+              "step": 14
+            },
+            {
+              "min_contact_dist": -2.0245722550390783e-05,
+              "ncon": 20,
+              "step": 15
+            },
+            {
+              "min_contact_dist": -2.0245719531341254e-05,
+              "ncon": 20,
+              "step": 16
+            },
+            {
+              "min_contact_dist": -2.0245716512349947e-05,
+              "ncon": 20,
+              "step": 17
+            },
+            {
+              "min_contact_dist": -2.0245713493294347e-05,
+              "ncon": 20,
+              "step": 18
+            },
+            {
+              "min_contact_dist": -2.02457104742465e-05,
+              "ncon": 20,
+              "step": 19
+            },
+            {
+              "min_contact_dist": -2.0245707455137502e-05,
+              "ncon": 20,
+              "step": 20
+            },
+            {
+              "min_contact_dist": -2.024570443609025e-05,
+              "ncon": 20,
+              "step": 21
+            },
+            {
+              "min_contact_dist": -2.024570141704159e-05,
+              "ncon": 20,
+              "step": 22
+            },
+            {
+              "min_contact_dist": -0.0036928557661210512,
+              "ncon": 59,
+              "step": 23
+            },
+            {
+              "min_contact_dist": -0.00337429240592992,
+              "ncon": 43,
+              "step": 24
+            },
+            {
+              "min_contact_dist": -0.002183141634394041,
+              "ncon": 34,
+              "step": 25
+            },
+            {
+              "min_contact_dist": -0.0021494623042309074,
+              "ncon": 30,
+              "step": 26
+            },
+            {
+              "min_contact_dist": -0.0021400160677900095,
+              "ncon": 25,
+              "step": 27
+            },
+            {
+              "min_contact_dist": -0.0006082951950667354,
+              "ncon": 18,
+              "step": 28
+            },
+            {
+              "min_contact_dist": -6.992033816077825e-05,
+              "ncon": 17,
+              "step": 29
+            },
+            {
+              "min_contact_dist": -3.0281813554172005e-05,
+              "ncon": 18,
+              "step": 30
+            },
+            {
+              "min_contact_dist": -4.066982634141382e-05,
+              "ncon": 18,
+              "step": 31
+            },
+            {
+              "min_contact_dist": -3.814032377564246e-05,
+              "ncon": 19,
+              "step": 32
+            },
+            {
+              "min_contact_dist": -0.0031732352614551,
+              "ncon": 26,
+              "step": 33
+            },
+            {
+              "min_contact_dist": -0.005959519062658055,
+              "ncon": 31,
+              "step": 34
+            },
+            {
+              "min_contact_dist": -0.004529024794247398,
+              "ncon": 27,
+              "step": 35
+            },
+            {
+              "min_contact_dist": -0.0030817326787160293,
+              "ncon": 24,
+              "step": 36
+            },
+            {
+              "min_contact_dist": -0.0026850477018784034,
+              "ncon": 24,
+              "step": 37
+            },
+            {
+              "min_contact_dist": -0.00320389148326384,
+              "ncon": 25,
+              "step": 38
+            },
+            {
+              "min_contact_dist": -0.00415107013534079,
+              "ncon": 26,
+              "step": 39
+            },
+            {
+              "min_contact_dist": -0.004453988064826273,
+              "ncon": 25,
+              "step": 40
+            },
+            {
+              "min_contact_dist": -0.0032440352826577745,
+              "ncon": 23,
+              "step": 41
+            },
+            {
+              "min_contact_dist": -0.0006729473902090839,
+              "ncon": 19,
+              "step": 42
+            },
+            {
+              "min_contact_dist": -0.0006453301193998107,
+              "ncon": 19,
+              "step": 43
+            },
+            {
+              "min_contact_dist": -0.0006170300654570453,
+              "ncon": 19,
+              "step": 44
+            },
+            {
+              "min_contact_dist": -0.000589907714995886,
+              "ncon": 19,
+              "step": 45
+            },
+            {
+              "min_contact_dist": -0.0005639823783858463,
+              "ncon": 19,
+              "step": 46
+            },
+            {
+              "min_contact_dist": -0.0007377047991430942,
+              "ncon": 15,
+              "step": 47
+            },
+            {
+              "min_contact_dist": -0.0007052651891263258,
+              "ncon": 18,
+              "step": 48
+            },
+            {
+              "min_contact_dist": -0.0006742089311859434,
+              "ncon": 18,
+              "step": 49
+            },
+            {
+              "min_contact_dist": -0.0006445055315709974,
+              "ncon": 18,
+              "step": 50
+            },
+            {
+              "min_contact_dist": -0.004874800820386349,
+              "ncon": 29,
+              "step": 51
+            },
+            {
+              "min_contact_dist": -0.0019089123389347887,
+              "ncon": 25,
+              "step": 52
+            },
+            {
+              "min_contact_dist": -0.001168245699284684,
+              "ncon": 19,
+              "step": 53
+            },
+            {
+              "min_contact_dist": -0.0011237976678779137,
+              "ncon": 20,
+              "step": 54
+            },
+            {
+              "min_contact_dist": -0.0010802398851418905,
+              "ncon": 19,
+              "step": 55
+            },
+            {
+              "min_contact_dist": -0.0010381328413864351,
+              "ncon": 16,
+              "step": 56
+            },
+            {
+              "min_contact_dist": -0.002550843894640741,
+              "ncon": 24,
+              "step": 57
+            },
+            {
+              "min_contact_dist": -0.0011125623077422539,
+              "ncon": 23,
+              "step": 58
+            },
+            {
+              "min_contact_dist": -0.0009208965668989332,
+              "ncon": 21,
+              "step": 59
+            },
+            {
+              "min_contact_dist": -0.0014540397418941198,
+              "ncon": 22,
+              "step": 60
+            },
+            {
+              "min_contact_dist": -0.0030827681988495298,
+              "ncon": 29,
+              "step": 61
+            },
+            {
+              "min_contact_dist": -0.0022336941891307337,
+              "ncon": 20,
+              "step": 62
+            },
+            {
+              "min_contact_dist": -0.0023249314154862887,
+              "ncon": 20,
+              "step": 63
+            },
+            {
+              "min_contact_dist": -0.0009904566650240747,
+              "ncon": 17,
+              "step": 64
+            },
+            {
+              "min_contact_dist": -0.00025115200952162235,
+              "ncon": 16,
+              "step": 65
+            },
+            {
+              "min_contact_dist": -9.411850176180292e-05,
+              "ncon": 10,
+              "step": 66
+            },
+            {
+              "min_contact_dist": -0.0006055052019565521,
+              "ncon": 12,
+              "step": 67
+            },
+            {
+              "min_contact_dist": -0.00012160971991922911,
+              "ncon": 12,
+              "step": 68
+            },
+            {
+              "min_contact_dist": -6.248237907769571e-05,
+              "ncon": 18,
+              "step": 69
+            },
+            {
+              "min_contact_dist": -5.1835361478384464e-05,
+              "ncon": 15,
+              "step": 70
+            },
+            {
+              "min_contact_dist": -4.612563262696401e-05,
+              "ncon": 16,
+              "step": 71
+            },
+            {
+              "min_contact_dist": -4.4147136291104293e-05,
+              "ncon": 15,
+              "step": 72
+            },
+            {
+              "min_contact_dist": -4.3046412765040606e-05,
+              "ncon": 16,
+              "step": 73
+            },
+            {
+              "min_contact_dist": -4.238415578096226e-05,
+              "ncon": 16,
+              "step": 74
+            },
+            {
+              "min_contact_dist": -4.227870482593463e-05,
+              "ncon": 16,
+              "step": 75
+            },
+            {
+              "min_contact_dist": -0.00016198274938733042,
+              "ncon": 17,
+              "step": 76
+            },
+            {
+              "min_contact_dist": -4.227603943945924e-05,
+              "ncon": 17,
+              "step": 77
+            },
+            {
+              "min_contact_dist": -4.227604662639236e-05,
+              "ncon": 17,
+              "step": 78
+            },
+            {
+              "min_contact_dist": -4.227605888058877e-05,
+              "ncon": 16,
+              "step": 79
+            },
+            {
+              "min_contact_dist": -4.227605315844878e-05,
+              "ncon": 16,
+              "step": 80
+            },
+            {
+              "min_contact_dist": -4.227603750181139e-05,
+              "ncon": 16,
+              "step": 81
+            },
+            {
+              "min_contact_dist": -4.227601782326657e-05,
+              "ncon": 16,
+              "step": 82
+            },
+            {
+              "min_contact_dist": -0.00034887309331394845,
+              "ncon": 17,
+              "step": 83
+            },
+            {
+              "min_contact_dist": -4.22759751036308e-05,
+              "ncon": 16,
+              "step": 84
+            },
+            {
+              "min_contact_dist": -4.2275953347758305e-05,
+              "ncon": 16,
+              "step": 85
+            },
+            {
+              "min_contact_dist": -4.2275931543459217e-05,
+              "ncon": 16,
+              "step": 86
+            },
+            {
+              "min_contact_dist": -0.0006078027858770428,
+              "ncon": 17,
+              "step": 87
+            },
+            {
+              "min_contact_dist": -4.2275887900485e-05,
+              "ncon": 16,
+              "step": 88
+            },
+            {
+              "min_contact_dist": -4.227586607549115e-05,
+              "ncon": 16,
+              "step": 89
+            },
+            {
+              "min_contact_dist": -4.227584424999043e-05,
+              "ncon": 16,
+              "step": 90
+            },
+            {
+              "min_contact_dist": -4.2275822424467434e-05,
+              "ncon": 16,
+              "step": 91
+            },
+            {
+              "min_contact_dist": -4.227580059905329e-05,
+              "ncon": 16,
+              "step": 92
+            },
+            {
+              "min_contact_dist": -4.227577877372729e-05,
+              "ncon": 16,
+              "step": 93
+            },
+            {
+              "min_contact_dist": -4.2275756948354675e-05,
+              "ncon": 16,
+              "step": 94
+            },
+            {
+              "min_contact_dist": -4.2275735122981515e-05,
+              "ncon": 16,
+              "step": 95
+            },
+            {
+              "min_contact_dist": -4.227571329749977e-05,
+              "ncon": 16,
+              "step": 96
+            },
+            {
+              "min_contact_dist": -4.22756914719082e-05,
+              "ncon": 16,
+              "step": 97
+            },
+            {
+              "min_contact_dist": -4.227566964637116e-05,
+              "ncon": 16,
+              "step": 98
+            },
+            {
+              "min_contact_dist": -4.227564782089218e-05,
+              "ncon": 16,
+              "step": 99
+            },
+            {
+              "min_contact_dist": -4.2275625995355525e-05,
+              "ncon": 16,
+              "step": 100
+            },
+            {
+              "min_contact_dist": -4.227560416976292e-05,
+              "ncon": 16,
+              "step": 101
+            },
+            {
+              "min_contact_dist": -4.227558234422323e-05,
+              "ncon": 16,
+              "step": 102
+            },
+            {
+              "min_contact_dist": -4.227556051874029e-05,
+              "ncon": 16,
+              "step": 103
+            },
+            {
+              "min_contact_dist": -4.227553869315029e-05,
+              "ncon": 16,
+              "step": 104
+            },
+            {
+              "min_contact_dist": -4.2275516867617646e-05,
+              "ncon": 16,
+              "step": 105
+            },
+            {
+              "min_contact_dist": -4.22754950420779e-05,
+              "ncon": 16,
+              "step": 106
+            },
+            {
+              "min_contact_dist": -4.227547321654162e-05,
+              "ncon": 16,
+              "step": 107
+            },
+            {
+              "min_contact_dist": -4.227545139100095e-05,
+              "ncon": 16,
+              "step": 108
+            },
+            {
+              "min_contact_dist": -4.2275429565468954e-05,
+              "ncon": 16,
+              "step": 109
+            },
+            {
+              "min_contact_dist": -4.2275407739987645e-05,
+              "ncon": 16,
+              "step": 110
+            },
+            {
+              "min_contact_dist": -4.2275385914394825e-05,
+              "ncon": 16,
+              "step": 111
+            },
+            {
+              "min_contact_dist": -4.227536408885513e-05,
+              "ncon": 16,
+              "step": 112
+            },
+            {
+              "min_contact_dist": -4.22753422633246e-05,
+              "ncon": 16,
+              "step": 113
+            },
+            {
+              "min_contact_dist": -4.227532043778507e-05,
+              "ncon": 16,
+              "step": 114
+            },
+            {
+              "min_contact_dist": -4.227529861225058e-05,
+              "ncon": 16,
+              "step": 115
+            },
+            {
+              "min_contact_dist": -4.2275276786711156e-05,
+              "ncon": 16,
+              "step": 116
+            },
+            {
+              "min_contact_dist": -4.2275254961177805e-05,
+              "ncon": 16,
+              "step": 117
+            },
+            {
+              "min_contact_dist": -4.227523313557973e-05,
+              "ncon": 16,
+              "step": 118
+            },
+            {
+              "min_contact_dist": -4.227521131010449e-05,
+              "ncon": 16,
+              "step": 119
+            },
+            {
+              "min_contact_dist": -4.227518948451048e-05,
+              "ncon": 16,
+              "step": 120
+            },
+            {
+              "min_contact_dist": -4.227516765902575e-05,
+              "ncon": 16,
+              "step": 121
+            },
+            {
+              "min_contact_dist": -4.227514583343456e-05,
+              "ncon": 16,
+              "step": 122
+            },
+            {
+              "min_contact_dist": -4.2275124007899745e-05,
+              "ncon": 16,
+              "step": 123
+            },
+            {
+              "min_contact_dist": -4.2275102182364984e-05,
+              "ncon": 16,
+              "step": 124
+            },
+            {
+              "min_contact_dist": -4.2275080356828163e-05,
+              "ncon": 16,
+              "step": 125
+            },
+            {
+              "min_contact_dist": -4.227505853129145e-05,
+              "ncon": 16,
+              "step": 126
+            },
+            {
+              "min_contact_dist": -4.227503670575311e-05,
+              "ncon": 16,
+              "step": 127
+            },
+            {
+              "min_contact_dist": -4.2275014880216455e-05,
+              "ncon": 16,
+              "step": 128
+            },
+            {
+              "min_contact_dist": -4.2274993054624015e-05,
+              "ncon": 16,
+              "step": 129
+            },
+            {
+              "min_contact_dist": -4.2274971229088224e-05,
+              "ncon": 16,
+              "step": 130
+            },
+            {
+              "min_contact_dist": -4.227494940355108e-05,
+              "ncon": 16,
+              "step": 131
+            },
+            {
+              "min_contact_dist": -4.22749275780135e-05,
+              "ncon": 16,
+              "step": 132
+            },
+            {
+              "min_contact_dist": -4.2274905752481666e-05,
+              "ncon": 16,
+              "step": 133
+            },
+            {
+              "min_contact_dist": -4.2274883926943544e-05,
+              "ncon": 16,
+              "step": 134
+            },
+            {
+              "min_contact_dist": -4.2274862101353e-05,
+              "ncon": 16,
+              "step": 135
+            },
+            {
+              "min_contact_dist": -4.227484027586806e-05,
+              "ncon": 16,
+              "step": 136
+            },
+            {
+              "min_contact_dist": -4.227481845027952e-05,
+              "ncon": 16,
+              "step": 137
+            },
+            {
+              "min_contact_dist": -4.227479662473918e-05,
+              "ncon": 16,
+              "step": 138
+            },
+            {
+              "min_contact_dist": -4.2274774799204527e-05,
+              "ncon": 16,
+              "step": 139
+            },
+            {
+              "min_contact_dist": -4.227475297366386e-05,
+              "ncon": 16,
+              "step": 140
+            },
+            {
+              "min_contact_dist": -4.227473114812861e-05,
+              "ncon": 16,
+              "step": 141
+            },
+            {
+              "min_contact_dist": -4.2274709322538716e-05,
+              "ncon": 16,
+              "step": 142
+            },
+            {
+              "min_contact_dist": -0.0006349861686684534,
+              "ncon": 17,
+              "step": 143
+            },
+            {
+              "min_contact_dist": -4.227466567146822e-05,
+              "ncon": 16,
+              "step": 144
+            },
+            {
+              "min_contact_dist": -4.227464384593113e-05,
+              "ncon": 16,
+              "step": 145
+            },
+            {
+              "min_contact_dist": -4.227462202033701e-05,
+              "ncon": 16,
+              "step": 146
+            },
+            {
+              "min_contact_dist": -4.227460019479764e-05,
+              "ncon": 16,
+              "step": 147
+            },
+            {
+              "min_contact_dist": -4.227457836926532e-05,
+              "ncon": 16,
+              "step": 148
+            },
+            {
+              "min_contact_dist": -4.22745565437311e-05,
+              "ncon": 16,
+              "step": 149
+            },
+            {
+              "min_contact_dist": -4.227453471819005e-05,
+              "ncon": 16,
+              "step": 150
+            },
+            {
+              "min_contact_dist": -4.227451289259685e-05,
+              "ncon": 16,
+              "step": 151
+            },
+            {
+              "min_contact_dist": -4.227449106706258e-05,
+              "ncon": 16,
+              "step": 152
+            },
+            {
+              "min_contact_dist": -4.227446924147236e-05,
+              "ncon": 16,
+              "step": 153
+            },
+            {
+              "min_contact_dist": -4.22744474159904e-05,
+              "ncon": 16,
+              "step": 154
+            },
+            {
+              "min_contact_dist": -4.227442559039926e-05,
+              "ncon": 16,
+              "step": 155
+            },
+            {
+              "min_contact_dist": -4.227440376486228e-05,
+              "ncon": 16,
+              "step": 156
+            },
+            {
+              "min_contact_dist": -4.2274381939326434e-05,
+              "ncon": 16,
+              "step": 157
+            },
+            {
+              "min_contact_dist": -4.2274360113737463e-05,
+              "ncon": 16,
+              "step": 158
+            },
+            {
+              "min_contact_dist": -4.227433828820341e-05,
+              "ncon": 16,
+              "step": 159
+            },
+            {
+              "min_contact_dist": -4.227431646266561e-05,
+              "ncon": 16,
+              "step": 160
+            },
+            {
+              "min_contact_dist": -4.2274294637128465e-05,
+              "ncon": 16,
+              "step": 161
+            },
+            {
+              "min_contact_dist": -4.2274272811534995e-05,
+              "ncon": 16,
+              "step": 162
+            },
+            {
+              "min_contact_dist": -4.2274250985999964e-05,
+              "ncon": 16,
+              "step": 163
+            },
+            {
+              "min_contact_dist": -4.227422916046466e-05,
+              "ncon": 16,
+              "step": 164
+            },
+            {
+              "min_contact_dist": -4.2274207334872275e-05,
+              "ncon": 16,
+              "step": 165
+            },
+            {
+              "min_contact_dist": -4.227418550933453e-05,
+              "ncon": 16,
+              "step": 166
+            },
+            {
+              "min_contact_dist": -4.2274163683795436e-05,
+              "ncon": 16,
+              "step": 167
+            },
+            {
+              "min_contact_dist": -4.2274141858208796e-05,
+              "ncon": 16,
+              "step": 168
+            },
+            {
+              "min_contact_dist": -4.22741200326736e-05,
+              "ncon": 16,
+              "step": 169
+            },
+            {
+              "min_contact_dist": -4.2274098207134396e-05,
+              "ncon": 16,
+              "step": 170
+            },
+            {
+              "min_contact_dist": -4.227407638160056e-05,
+              "ncon": 16,
+              "step": 171
+            },
+            {
+              "min_contact_dist": -4.227405455600633e-05,
+              "ncon": 16,
+              "step": 172
+            },
+            {
+              "min_contact_dist": -4.227403273047341e-05,
+              "ncon": 16,
+              "step": 173
+            },
+            {
+              "min_contact_dist": -4.227401090493838e-05,
+              "ncon": 16,
+              "step": 174
+            },
+            {
+              "min_contact_dist": -4.2273989079345505e-05,
+              "ncon": 16,
+              "step": 175
+            },
+            {
+              "min_contact_dist": -4.227396725380711e-05,
+              "ncon": 16,
+              "step": 176
+            },
+            {
+              "min_contact_dist": -4.2273945428214184e-05,
+              "ncon": 16,
+              "step": 177
+            },
+            {
+              "min_contact_dist": -4.227392360268132e-05,
+              "ncon": 16,
+              "step": 178
+            },
+            {
+              "min_contact_dist": -4.2273901777142495e-05,
+              "ncon": 16,
+              "step": 179
+            }
+          ],
+          "final_goal": false,
+          "frame_count": 180,
+          "goal_trace": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "initial_goal": false,
+          "stage_results": [
+            {
+              "frames": 180,
+              "last_rotation_error_rad": 3.126052229586576,
+              "last_translation_error_m": 0.015306215321572132,
+              "reached": false,
+              "stage": "approach_grasp",
+              "step_budget": 180
+            }
+          ]
+        },
+        "reverse_instruction": "Remove the black bowl from the plate and place it on the table region where it started.",
+        "schema_version": "track3_jitter_j5_worker_v1",
+        "seed": 3101,
+        "status": "failed_gate",
+        "task_index": 10
+      },
+      "child_result_path": "data/reports/axis_libero_30k/track3_jitter_recovery/j5_pilots/task10_demo0_nominal_attempt1/child_result.json",
+      "demo_index": 0,
+      "family": "support_remove",
+      "gpu_provenance": {
+        "child_elapsed_ms": 51920.07648595609,
+        "child_pid": 1439551,
+        "child_result_pid": 1439551,
+        "cuda_visible_devices": "3",
+        "deadline_seconds": 300.0,
+        "end_snapshot": {
+          "compute_processes": [],
+          "free_gate": true,
+          "gpus": [
+            {
+              "index": "3",
+              "memory_total_mib": 32768.0,
+              "memory_used_mib": 5.0,
+              "uuid": "GPU-b03055ef-af46-2cf8-7545-c60870f745f5"
+            }
+          ],
+          "process_query_returncode": 0,
+          "returncode": 0,
+          "timestamp_utc": "2026-09-05T02:29:03.236676+00:00"
+        },
+        "gpu_query_latency_ms": {
+          "count": 230,
+          "max_ms": 152.2935020038858,
+          "mean_ms": 125.99099741226225,
+          "min_ms": 112.4094040133059,
+          "p50_ms": 124.81467693578452,
+          "p95_ms": 138.76499503385276,
+          "p99_ms": 144.57255403976887,
+          "status": "measured"
+        },
+        "heartbeat_gap_ms": {
+          "count": 229,
+          "max_ms": 252.44459905661643,
+          "mean_ms": 226.08886931425033,
+          "min_ms": 212.52675296273082,
+          "p50_ms": 225.0024350360036,
+          "p95_ms": 238.71777404565364,
+          "p99_ms": 244.7659419849515,
+          "status": "measured"
+        },
+        "parent_pid": 1439545,
+        "peak_memory_mib": 459.0,
+        "physical_gpu_uuid": "GPU-b03055ef-af46-2cf8-7545-c60870f745f5",
+        "process_returncode": 1,
+        "sampling_coverage_count": 230,
+        "seed": 3101,
+        "start_snapshot": {
+          "compute_processes": [],
+          "free_gate": true,
+          "gpus": [
+            {
+              "index": "3",
+              "memory_total_mib": 32768.0,
+              "memory_used_mib": 5.0,
+              "uuid": "GPU-b03055ef-af46-2cf8-7545-c60870f745f5"
+            }
+          ],
+          "process_query_returncode": 0,
+          "returncode": 0,
+          "timestamp_utc": "2026-09-05T02:28:11.318428+00:00"
+        },
+        "supervisor_elapsed_ms": 51920.07648595609,
+        "term_grace_seconds": 10.0,
+        "timed_out": false
+      },
+      "parent_pid": 1439545,
+      "phase": "J5",
+      "process_returncode": 1,
+      "profile_name": "nominal",
+      "resource_boundary": {
+        "gpu0_touched": false,
+        "gpu1_touched": false,
+        "gpu2_touched": false,
+        "gpu3_only": true,
+        "no_teleop": true,
+        "official_gpu": false,
+        "training_eligible": false
+      },
+      "result_error": null,
+      "schema_version": "track3_jitter_j5_parent_v1",
+      "seed": 3101,
+      "status": "failed_closed",
+      "stderr_path": "data/reports/axis_libero_30k/track3_jitter_recovery/j5_pilots/task10_demo0_nominal_attempt1/stderr.log",
+      "stdout_path": "data/reports/axis_libero_30k/track3_jitter_recovery/j5_pilots/task10_demo0_nominal_attempt1/stdout.log",
+      "task_index": 10,
+      "telemetry_v2_gate": {
+        "errors": [
+          "process_returncode"
+        ],
+        "heartbeat_gap_threshold_ms": 2000.0,
+        "missing": [],
+        "query_latency_is_warning_only": true,
+        "required_fields": [
+          "seed",
+          "parent_pid",
+          "child_pid",
+          "child_result_pid",
+          "physical_gpu_uuid",
+          "cuda_visible_devices",
+          "start_snapshot",
+          "end_snapshot",
+          "peak_memory_mib",
+          "deadline_seconds",
+          "term_grace_seconds",
+          "process_returncode",
+          "timed_out",
+          "gpu_query_latency_ms",
+          "heartbeat_gap_ms",
+          "supervisor_elapsed_ms",
+          "child_elapsed_ms",
+          "sampling_coverage_count"
+        ],
+        "state": "failed",
+        "warnings": []
+      },
+      "termination_stage": null,
+      "timed_out": false,
+      "videos": {},
+      "worker_pid": 1439551,
+      "worker_pid_match": true
+    }
+  ],
+  "plan": "docs/AXIS_PI05_TRACK3_PROVENANCE_JITTER_RECOVERY_AND_OVERNIGHT_CONTINUATION_PLAN.md",
+  "released_families": [],
+  "resource_boundary": {
+    "gpu0_touched": false,
+    "gpu3_only": true,
+    "no_fast_or_zip": true,
+    "no_training": true,
+    "official_gpu": false
+  },
+  "schema_version": "track3_jitter_j5_v1",
+  "status": "track3_jitter_stopped_J5_infrastructure_failure",
+  "task10_attempt4": "forbidden"
+}

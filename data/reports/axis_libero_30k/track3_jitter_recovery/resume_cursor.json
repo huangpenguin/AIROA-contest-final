@@ -1,23 +1,44 @@
 {
-  "active": false,
-  "completed": [
-    "J0",
-    "J1"
-  ],
-  "last_heartbeat_utc": "2026-09-05T02:27:11.145952+00:00",
-  "next_phase": "J2",
-  "not_evaluated": [
-    "J2",
-    "J3",
-    "J4",
-    "J5",
-    "J6",
-    "J7",
-    "J8",
-    "J9",
-    "J10",
-    "J11"
-  ],
-  "schema_version": "track3_jitter_cursor_v2",
-  "status": "j1_passed"
+  "commit": "3a5641956770fa74faaed20f12832489d7f257b7",
+  "counts": {
+    "accepted_reverse_demo": 0,
+    "exact_reverse_demo": 0,
+    "pending_autogen": 0
+  },
+  "created_at_utc": "2026-09-05T02:29:03.686411+00:00",
+  "hard_stop": {
+    "executed": true,
+    "next_authority": "reviewed_plan_required",
+    "no_fast_or_zip": true,
+    "no_training": true,
+    "no_upload_or_submission": true,
+    "task10_attempt4": "forbidden"
+  },
+  "last_heartbeat_utc": "2026-09-05T02:29:03.760875+00:00",
+  "phase_status": {
+    "J0": "track3_jitter_j0_passed",
+    "J1": "track3_jitter_j1_passed",
+    "J10": "not_evaluated",
+    "J2": "track3_jitter_j2_support_remove_released",
+    "J3": "track3_jitter_j3_all_families_passed",
+    "J4": "track3_jitter_j4_executor_contract_passed",
+    "J5": "track3_jitter_stopped_J5_infrastructure_failure",
+    "J6": "not_evaluated",
+    "J7": "not_evaluated",
+    "J8": "not_evaluated",
+    "J9": "not_evaluated"
+  },
+  "reason": "no_family_release",
+  "reason_phase": "J5",
+  "resource_boundary": {
+    "gpu0_touched": false,
+    "libero_plus_untouched": true,
+    "no_teleop": true,
+    "no_training": true,
+    "official_gpu": false
+  },
+  "schema_version": "track3_jitter_j11_v1",
+  "status": "track3_jitter_recovery_stopped_J5_no_family_release",
+  "supervisor_pid": 1439545,
+  "tool_sha256": "984210fb05e92d56d6e953293d47f0fd3064ea242fbed5e2eebb625cfea24bbc"
 }

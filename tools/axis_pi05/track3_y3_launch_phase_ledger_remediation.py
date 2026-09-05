@@ -689,6 +689,8 @@ def _validate_namespace() -> dict[str, Any]:
 
 
 def _z4() -> dict[str, Any]:
+    import numpy as np
+
     OUT.mkdir(parents=True, exist_ok=True)
     upstream = {"z0": strict_json(Z0_REPORT) if Z0_REPORT.is_file() else {}, "z1": strict_json(Z1_REPORT) if Z1_REPORT.is_file() else {}, "z2": strict_json(Z2_REPORT) if Z2_REPORT.is_file() else {}, "z3": strict_json(Z3_REPORT) if Z3_REPORT.is_file() else {}}
     upstream_ok = all(upstream[name].get("status", "").endswith("passed") for name in ("z0", "z1", "z2", "z3"))

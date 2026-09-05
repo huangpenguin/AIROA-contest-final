@@ -48,6 +48,7 @@ CURSOR = OUT / "resume_cursor.json"
 HEARTBEAT = OUT / "heartbeat.json"
 PID_FILE = OUT / "supervisor.pid"
 Z1_SENTINEL = OUT / "z1_smoke" / "worker_result.json"
+IDENTITY_NOTE_REF = "refs/notes/axis-pi05-track3-z4-source-identity"
 
 Y_OUT = ROOT / "data/reports/axis_libero_30k/track3_runtime_preflight_and_bounded_continuation"
 Y0_REPORT = Y_OUT / "y0_recheck_input_lock.json"
@@ -305,6 +306,27 @@ def identity_gate(observed: Mapping[str, Any], frozen: Mapping[str, Any], *, exp
     checks = {"root_commit_exact": observed.get("root_commit") == frozen.get("root_commit"), "tool_sha256_exact": observed.get("tool_sha256") == frozen.get("tool_sha256"), "openpi_commit_exact": observed.get("openpi_commit") == frozen.get("openpi_commit"), "source_clean": observed.get("source_porcelain") == [], "command_exact": list(observed.get("command", [])) == expected_command, "cuda_visible_devices_exact": observed.get("cuda_visible_devices", "") == expected_cuda_visible_devices, "gpu_policy_allowed": observed.get("gpu_policy") in {"cpu_no_renderer", "gpu3_camera_only"}, "libero_plus_snapshot_exact": observed.get("libero_plus_porcelain") == frozen.get("libero_plus_porcelain", observed.get("libero_plus_porcelain"))}
     errors = [key for key, value in checks.items() if not value]
     return {"state": "passed" if not errors else "failed", "checks": checks, "errors": errors, "frozen_root_commit": frozen.get("root_commit"), "frozen_tool_sha256": frozen.get("tool_sha256"), "frozen_openpi_commit": frozen.get("openpi_commit"), "frozen_command": expected_command}
+
+
+def read_frozen_identity_note(repo: Path = ROOT) -> dict[str, Any] | None:
+    """Read the identity frozen after the clean release commit.
+
+    A launcher must fail closed when this note is absent; it may not replace
+    the expected values with the current HEAD or current tool hash.
+    """
+    result = subprocess.run(["git", "-C", str(repo), "notes", f"--ref={IDENTITY_NOTE_REF}", "show", "HEAD"], capture_output=True, text=True, check=False)
+    if result.returncode != 0 or not result.stdout.strip():
+        return None
+    try:
+        value = json.loads(result.stdout)
+    except json.JSONDecodeError:
+        return None
+    return value if isinstance(value, dict) else None
+
+
+def identity_note_payload(repo: Path = ROOT, *, command: Sequence[str], gpu_policy: str = "cpu_no_renderer") -> dict[str, Any]:
+    """Build a note payload from a clean commit, never from a worker result."""
+    return {"schema_version": "track3_z4_source_identity_v1", "root_commit": git(("rev-parse", "HEAD"), repo), "tool_sha256": sha256_file(Path(__file__)), "openpi_commit": git(("rev-parse", "HEAD"), OPENPI), "command": list(command), "cuda_visible_devices": "" if gpu_policy == "cpu_no_renderer" else "3", "gpu_policy": gpu_policy, "source_porcelain": source_porcelain(repo), "libero_plus_porcelain": porcelain(LIBERO_PLUS)}
 
 
 def classify_worker_result(returncode: int | None, child: Mapping[str, Any] | None, *, timed_out: bool = False) -> dict[str, Any]:
@@ -705,7 +727,7 @@ def _z4() -> dict[str, Any]:
     write_json(Z4_REPORT, report)
     manifest_entries = []
     for path in sorted(OUT.rglob("*")):
-        if not path.is_file() or path in {Z4_REPORT, Z4_MANIFEST, Z4_VALIDATION, Z4_CLOSEOUT} or path.name.endswith(".partial") or path.suffix == ".log":
+        if not path.is_file() or path in {Z4_MANIFEST, Z4_VALIDATION, Z4_CLOSEOUT} or path.name.endswith(".partial") or path.suffix == ".log":
             continue
         manifest_entries.append({"relative_path": rel(path), "bytes": path.stat().st_size, "sha256": sha256_file(path)})
     write_json(Z4_MANIFEST, {"schema_version": "track3_z4_manifest_v1", "entries_excluded": [rel(Z4_REPORT), rel(Z4_MANIFEST), rel(Z4_VALIDATION), rel(Z4_CLOSEOUT)], "entries": manifest_entries})

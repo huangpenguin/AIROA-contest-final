@@ -431,7 +431,7 @@ def _complete_ledger_fixture(*, destination_ok: bool = True, release_ok: bool = 
             gates = {"goal_continuity": gate(True, release_ok, reason=None if release_ok else "goal_false")}
         else:
             gates = {"pose_stable": gate(True, True)}
-        failure = None if all(value["state"] == "passed" for value in gates.values()) else next((value.get("reason") for value in gates.values() if value.get("state") == "failed"), "stage_gate_failed")
+        failure = None if all(value["state"] == "passed" for value in gates.values()) else next((value.get("reason") or "stage_gate_failed" for value in gates.values() if value.get("state") == "failed"), "stage_gate_failed")
         ledger.finish(stage, frame_end=frame, stable_window=[frame - 2, frame - 1, frame], gates=gates, failure_reason=failure)
         if failure:
             break

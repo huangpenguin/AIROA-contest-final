@@ -353,7 +353,7 @@ def read_frozen_identity_note(repo: Path = ROOT) -> dict[str, Any] | None:
 
 def identity_note_payload(repo: Path = ROOT, *, command: Sequence[str], gpu_policy: str = "cpu_no_renderer") -> dict[str, Any]:
     """Build a note payload from a clean commit, never from a worker result."""
-    return {"schema_version": "track3_z4_source_identity_v1", "root_commit": git(("rev-parse", "HEAD"), repo), "tool_sha256": sha256_file(Path(__file__)), "openpi_commit": git(("rev-parse", "HEAD"), OPENPI), "command": list(command), "cuda_visible_devices": "" if gpu_policy == "cpu_no_renderer" else "3", "gpu_policy": gpu_policy, "source_porcelain": source_porcelain(repo), "libero_plus_porcelain": porcelain(LIBERO_PLUS)}
+    return {"schema_version": "track3_z_source_identity_v1", "root_commit": git(("rev-parse", "HEAD"), repo), "tool_sha256": sha256_file(Path(__file__)), "openpi_commit": git(("rev-parse", "HEAD"), OPENPI), "command": list(command), "cuda_visible_devices": "" if gpu_policy == "cpu_no_renderer" else "3", "gpu_policy": gpu_policy, "source_porcelain": source_porcelain(repo), "libero_plus_porcelain": porcelain(LIBERO_PLUS)}
 
 
 def classify_worker_result(returncode: int | None, child: Mapping[str, Any] | None, *, timed_out: bool = False) -> dict[str, Any]:

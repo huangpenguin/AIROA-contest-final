@@ -1,0 +1,181 @@
+{
+  "checks": {
+    "conservative_profile_frozen": true,
+    "identity_pass": true,
+    "identity_rejects_mismatch": true,
+    "nominal_profile_frozen": true,
+    "object_frame_compose_position": true,
+    "object_frame_compose_q_sign": true,
+    "progress_window_fail": true,
+    "progress_window_pass": true,
+    "tri_state_not_evaluated": true
+  },
+  "created_at_utc": "2026-09-05T08:18:32.619484+00:00",
+  "identity_fixture": {
+    "pass": {
+      "checks": {
+        "command_exact": true,
+        "cuda_visible_devices": true,
+        "cursor_inactive": true,
+        "gpu_policy": true,
+        "openpi_head": true,
+        "pid_inactive": true,
+        "root_clean": true,
+        "root_commit": true,
+        "tool_sha256": true
+      },
+      "errors": [],
+      "expected_command": [
+        "worker"
+      ],
+      "expected_root_commit": "a",
+      "gpu_policy": "cpu_no_renderer",
+      "observed_command": [
+        "worker"
+      ],
+      "observed_root_commit": "a",
+      "root_commit_relation": "exact",
+      "state": "passed"
+    },
+    "reject": {
+      "checks": {
+        "command_exact": false,
+        "cuda_visible_devices": false,
+        "cursor_inactive": false,
+        "gpu_policy": true,
+        "openpi_head": true,
+        "pid_inactive": false,
+        "root_clean": false,
+        "root_commit": false,
+        "tool_sha256": true
+      },
+      "errors": [
+        "root_commit",
+        "root_clean",
+        "pid_inactive",
+        "cursor_inactive",
+        "command_exact",
+        "cuda_visible_devices"
+      ],
+      "expected_command": [
+        "worker"
+      ],
+      "expected_root_commit": "a",
+      "gpu_policy": "cpu_no_renderer",
+      "observed_command": [
+        "worker",
+        "wrong"
+      ],
+      "observed_root_commit": "b",
+      "root_commit_relation": "exact",
+      "state": "failed"
+    }
+  },
+  "object_frame": {
+    "formula": "T_world_object_des * T_object_eef_anchor",
+    "quaternion_convention": "xyzw",
+    "transport_offset_frame": "desired_object_pose_before_composition"
+  },
+  "physical_scale": {
+    "controller_output_rotation_rad": 0.5,
+    "controller_output_translation_m": 0.05,
+    "normalized_rotation_norm_at_clip": 0.24,
+    "rotation_clip_rad": 0.12,
+    "translation_clip_m": 0.05
+  },
+  "profiles": {
+    "conservative": {
+      "name": "object_frame_conservative",
+      "profile_reason": "only_allowed_after_nominal_family_failure",
+      "rotation_clip_rad": 0.06,
+      "rotation_tolerance_rad": 0.03,
+      "stable_ticks": 6,
+      "stage_budgets": [
+        200,
+        160,
+        50,
+        200,
+        260,
+        160,
+        50,
+        120
+      ],
+      "step_budget": 1250,
+      "translation_clip_m": 0.025,
+      "translation_tolerance_m": 0.012
+    },
+    "nominal": {
+      "name": "object_frame_nominal",
+      "profile_reason": "W4_existing_budget_and_tolerance_with_X2_semantics",
+      "rotation_clip_rad": 0.12,
+      "rotation_tolerance_rad": 0.03,
+      "stable_ticks": 4,
+      "stage_budgets": [
+        150,
+        120,
+        35,
+        150,
+        180,
+        120,
+        35,
+        80
+      ],
+      "step_budget": 900,
+      "translation_clip_m": 0.05,
+      "translation_tolerance_m": 0.012
+    }
+  },
+  "progress_fixtures": {
+    "fail": {
+      "baseline_error": 1.0,
+      "current_error": 0.97,
+      "executed": true,
+      "improvement": 0.030000000000000027,
+      "min_improvement": 0.5,
+      "required": true,
+      "samples": 4,
+      "state": "failed",
+      "window": 4
+    },
+    "not_evaluated": {
+      "executed": false,
+      "reason": "downstream_stage_not_entered",
+      "required": true,
+      "state": "not_evaluated"
+    },
+    "pass": {
+      "baseline_error": 1.0,
+      "current_error": 0.4,
+      "executed": true,
+      "improvement": 0.6,
+      "min_improvement": 0.5,
+      "required": true,
+      "samples": 4,
+      "state": "passed",
+      "window": 4
+    }
+  },
+  "resource_boundary": {
+    "generation": false,
+    "gpu_started": false,
+    "simulator_started": false,
+    "training": false,
+    "zip": false
+  },
+  "schema_version": "track3_object_frame_x2_executor_supervisor_contract_v1",
+  "stage_contract": {
+    "approach_to_descend": "pose_stable",
+    "close_to_lift": "continuous_demonstrator_contact",
+    "lift_to_transport": "object_follow_and_source_release",
+    "place_to_release": "destination_and_goal_continuity",
+    "unentered_gate": "not_evaluated"
+  },
+  "status": "track3_object_frame_x2_passed",
+  "supervisor_contract": {
+    "cursor": "atomic active=true before worker and inactive after producer close",
+    "heartbeat_interval_seconds": 900.0,
+    "identity": "commit/tool/OpenPI/command/CUDA/GPU policy",
+    "result_transport": "independent_atomic_json_file",
+    "termination": "TERM_then_KILL"
+  }
+}

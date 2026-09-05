@@ -1,0 +1,84 @@
+{
+  "checks": {
+    "history_contact_completion_failed": true,
+    "history_downstream_not_retroactively_passed": true,
+    "history_source_all_true": true,
+    "old_target_reproduces_audit_position_error": true,
+    "old_target_reproduces_audit_rotation_error": true,
+    "trajectory_alignment_n_nplus1": true
+  },
+  "created_at_utc": "2026-09-05T08:18:24.491999+00:00",
+  "destination_transform": {
+    "anchor_source": "W1_state75_release_side",
+    "desired_object_pose_source": "W1_state0_same_demo_bowl_pose",
+    "expected_eef_position_m": [
+      -0.09212732490075308,
+      0.0434092668848339,
+      0.8923486793522427
+    ],
+    "expected_eef_quaternion_xyzw": [
+      -0.6846775458597673,
+      -0.6565673578160552,
+      0.25651938157804177,
+      -0.18529373902188273
+    ],
+    "formula": "T_world_object_des * T_object_eef_anchor",
+    "old_target_position_error_m": 0.08171218629122215,
+    "old_target_position_m": [
+      -0.07684966308439489,
+      -0.00898957193236043,
+      0.9531585151399348
+    ],
+    "old_target_quaternion_xyzw": [
+      0.7071067776242912,
+      -1.0724537191720448e-05,
+      -1.4310617004723095e-06,
+      0.7071067846660275
+    ],
+    "old_target_reconstruction": "W4 source formula; place stage was not entered",
+    "old_target_rotation_error_rad": 1.8164252213793237
+  },
+  "finalizer_contract": [
+    "producer_close_and_fsync",
+    "phase_summary_and_csv",
+    "inactive_cursor_and_supervisor_closeout",
+    "manifest",
+    "strict_hash_npz_video_csv_validation",
+    "targeted_full_tests",
+    "final_validation_report",
+    "clean_commit"
+  ],
+  "history": {
+    "contact_completion": {
+      "executed": true,
+      "reason": "contact_completion_absent",
+      "required": true,
+      "state": "failed"
+    },
+    "same_demo_destination": {
+      "executed": false,
+      "reason": "place_stage_not_entered",
+      "required": true,
+      "state": "not_evaluated"
+    },
+    "source_samples": 253
+  },
+  "resource_boundary": {
+    "generation": false,
+    "gpu_started": false,
+    "historical_w4_untouched": true,
+    "simulator_started": false,
+    "training": false,
+    "zip": false
+  },
+  "schema_version": "track3_object_frame_x1_errata_finalizer_v1",
+  "status": "track3_object_frame_x1_passed",
+  "trajectory_schema": {
+    "actions_states_alignment": "N",
+    "old_action_count": 252,
+    "old_goal_trace_count": 253,
+    "old_state_count": 252,
+    "predicate_trace_alignment": "t0_then_post_step",
+    "predicate_trace_length": "N+1"
+  }
+}

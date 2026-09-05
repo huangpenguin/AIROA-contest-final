@@ -470,9 +470,9 @@ def run_w1() -> dict[str, Any]:
             "model_identity": resolution["source_sha256"] == manifest["model_file_sha256"],
             "close_transition_exact": close_transitions == [32],
             "release_transition_exact": release_transitions == [76],
-            "release_anchor_index": anchor["index"] == 75 and actions[75, 6] > 0 and actions[76, 6] < 0,
+            "release_anchor_index": bool(anchor["index"] == 75 and actions[75, 6] > 0 and actions[76, 6] < 0),
             "release_anchor_contact_exact": anchor["contact"]["counts"] == {"background_contact": 17, "demonstrator_contact": 3, "intended_receiver_contact": 1, "unrelated_background_contact": 0},
-            "series_finite": all(math.isfinite(value) for row in series for value in row["relative_pose"]["translation_m"] + row["relative_pose"]["quaternion_xyzw"]),
+            "series_finite": bool(all(math.isfinite(value) for row in series for value in row["relative_pose"]["translation_m"] + row["relative_pose"]["quaternion_xyzw"])),
             "terminal_state_selected": int(demo_info["selection"]["state_index"]) in snapshots,
         }
         result = {

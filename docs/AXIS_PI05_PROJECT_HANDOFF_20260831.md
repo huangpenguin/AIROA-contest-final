@@ -6,8 +6,8 @@
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_object_frame_executor_and_bounded_autogen_lora_planned`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_OBJECT_FRAME_EXECUTOR_AND_BOUNDED_AUTOGEN_LORA_PLAN.md`
+> 当前总状态：`track3_runtime_preflight_and_bounded_continuation_planned`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_RUNTIME_PREFLIGHT_AND_BOUNDED_CONTINUATION_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -15,7 +15,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3 task10 CPU canary已闭合release-side anchor与OSC scale，但W4没有把destination object pose继续组合成EEF target，也在acquisition未成立时进入transport。新计划先修object-frame/stage/supervisor合同，再在同一条件链内继续三族bounded generation、LoRA、holdout与本地ZIP；用户无需Teleop或中途逐阶段审核。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3 object-frame数学与hard-stop闭包已有进展，但X4 worker在0 physics step时因缺失runtime helper停止，且审计发现stall、close/lift/source-release顺序、周期heartbeat与完整input lock尚未闭合。新计划先完成runtime preflight和执行合同，再在同一条件链内继续三族bounded generation、LoRA、holdout与本地ZIP；用户无需Teleop或中途逐阶段审核。
 
 ## 2. 数据与复现基础
 
@@ -742,3 +742,19 @@ W6最终manifest为17项，全部Git-tracked且bytes/SHA exact；14个final JSON
 W4在grasp侧正确使用`T_world^object·T_object^eef`，到transport/place却把state0 bowl pose直接当EEF target。按冻结anchor复算，current place target与正确组合相差`0.0817122 m / 1.816425 rad`。同时source全程true且contact completion failed，执行器仍越过acquisition barrier进入transport；旧transport timeout保留，但不能当作唯一根因。progress-window stall未实现，运行中全局cursor未置active，W6验证又早于最终closeout/manifest写入。
 
 旧计划已归档。唯一活动计划为`docs/AXIS_PI05_TRACK3_OBJECT_FRAME_EXECUTOR_AND_BOUNDED_AUTOGEN_LORA_PLAN.md`：X0–X3修复object→EEF、phase prerequisite/contact、stall、active cursor和finalizer；X4–X7按family隔离执行support/task20/task19 bounded profiles；X8最多12条generation/36次replay；严格accepted数据通过后，X9–X12才进入20Hz `80/20` mixture/fresh QUANTILES、R6 L2 LoRA 100/500/1000、reverse/C20与本地FAST ZIP。任何分支X13 hard stop，不使用GPU0/官方GPU，不Teleop、不自动上传或提交。审核报告：`docs/reviews/axis_pi05/TRACK3_SUPPORT_RELEASE_ANCHOR_W0_W6_AUDIT_20260905.md`。
+
+## 63. Object-Frame X0–X13 执行收尾（2026-09-05）
+
+最终execution commit为`64a0d31c3b2864562887044bad7ef8b522a213db`，X4 clean source为`ce86e724dddf300406465d6986577199d39cc19b`。X0–X3写出object→EEF、tri-state、progress fixture、supervisor identity与derived W4 replay报告，并在进入X4前形成clean commit。
+
+X4只启动task10/demo0、seed3121、`object_frame_nominal`的一个CPU/no-renderer worker。identity gate通过；worker在`ControlEnv`导入/构造和任何`env.step`之前调用不存在的`track3_reverse_init_stabilization._configure_public_env`，发布`worker_exception`并return 1。parent正确分类`infrastructure`并全局停止；conservative、GPU3、task20/task19、generation/replay、mixture/norm、LoRA、评估与ZIP均未运行，X5–X12=`not_evaluated`。
+
+X13 manifest为13项，全部Git-tracked且bytes/SHA exact；14个JSON strict、CSV LF、无partial，执行记录与独立复跑均为`260 passed, 7 skipped, 23 warnings`。`exact/pending/accepted=0/0/0`。GPU0外部PID保留，GPU1–3释放；root/OpenPI clean，LIBERO-plus既有dirty未触碰。已hard stop，不自动恢复。
+
+## 64. X0–X13 独立审核与 Runtime-Preflight Continuation（2026-09-05）
+
+审核唯一结论为`remediation_required`。X4确定性infrastructure分类、0 physics step、X5–X12未执行、X13 artifact closure、资源边界和禁止项成立；object-frame数学与三态fixture可作为后续输入保留。
+
+但X0没有记录计划要求的W4 trajectory、state bundle、三份public HDF5、R6 checkpoint/norm完整immutable inventory。X2的worker只记录progress window而不在failure时产生stall/早停；又在close后、lift前错误要求source已释放，和冻结的close→lift contact、lift→transport source-release阶段合同相反。运行期symbol smoke与长run周期heartbeat也缺失。X13未记录其承诺的manifest自身/final-validation checkout-stable hash。
+
+旧X计划已归档。唯一活动计划为`docs/AXIS_PI05_TRACK3_RUNTIME_PREFLIGHT_AND_BOUNDED_CONTINUATION_PLAN.md`：Y0–Y2先完成全量input lock、runtime symbol/阶段/stall/heartbeat/finalizer补救与clean release；通过后Y3才以新identity执行一次同task/demo/seed nominal物理canary。后续Y4–Y12仍是family隔离、最多12条generation/36次replay、20Hz `80/20` mixture/fresh QUANTILES、R6 L2 LoRA 100/500/1000、独立复验和条件式本地FAST ZIP；Y13在任何分支hard stop。生命周期更新后的最终全量测试为`261 passed, 7 skipped, 23 warnings`。审核报告：`docs/reviews/axis_pi05/TRACK3_OBJECT_FRAME_X0_X13_AUDIT_20260905.md`。

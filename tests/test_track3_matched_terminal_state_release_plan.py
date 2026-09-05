@@ -9,12 +9,14 @@ HANDOFF = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_2026
 CANARY = ROOT / "data/reports/axis_libero_30k/track3_background_predicate_convergence/k3_gpu3_release/task19_canary.json"
 
 
-def test_only_the_track3_object_frame_bounded_autogen_plan_is_active() -> None:
+def test_only_the_track3_runtime_preflight_bounded_continuation_plan_is_active() -> None:
     handoff = json.loads(HANDOFF.read_text(encoding="utf-8"))
-    assert handoff["status"] == "track3_object_frame_executor_and_bounded_autogen_lora_planned"
-    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_OBJECT_FRAME_EXECUTOR_AND_BOUNDED_AUTOGEN_LORA_PLAN.md"
-    assert handoff["next_phase_only"] == "X0_to_X13_then_hard_stop"
+    assert handoff["status"] == "track3_runtime_preflight_and_bounded_continuation_planned"
+    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_RUNTIME_PREFLIGHT_AND_BOUNDED_CONTINUATION_PLAN.md"
+    assert handoff["next_phase_only"] == "Y0_to_Y13_then_hard_stop"
     assert (ROOT / handoff["next_plan"]).is_file()
+    assert not (ROOT / "docs/AXIS_PI05_TRACK3_OBJECT_FRAME_EXECUTOR_AND_BOUNDED_AUTOGEN_LORA_PLAN.md").exists()
+    assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_OBJECT_FRAME_EXECUTOR_AND_BOUNDED_AUTOGEN_LORA_PLAN.md").is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_SUPPORT_RELEASE_ANCHOR_AND_OSC_SCALE_RECOVERY_PLAN.md").exists()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_SUPPORT_RELEASE_ANCHOR_AND_OSC_SCALE_RECOVERY_PLAN.md").is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_J5_EXECUTOR_CONTRACT_AND_ATOMIC_VIDEO_RECOVERY_PLAN.md").exists()
@@ -263,8 +265,8 @@ def test_composed_state_authorization_is_data_source_only_and_bounded() -> None:
     assert audit["findings"]["intended_object_frame_nominal_result"] == "not_evaluated"
 
     authorization = handoff["track3_object_frame_executor_and_bounded_autogen_lora_authorization"]
-    assert authorization["status"] == "track3_object_frame_executor_and_bounded_autogen_lora_planned"
-    assert authorization["plan"] == handoff["next_plan"]
+    assert authorization["status"] == "track3_object_frame_executor_and_bounded_autogen_lora_completed_and_audited"
+    assert authorization["plan"].startswith("docs/archive/axis_pi05/")
     assert authorization["authorized_phases"] == ["X0", "X1", "X2", "X3", "X4", "X5", "X6", "X7", "X8", "X9", "X10", "X11", "X12", "X13_closeout"]
     scope = authorization["authorization"]
     assert scope["object_to_eef_destination_transform"] is True

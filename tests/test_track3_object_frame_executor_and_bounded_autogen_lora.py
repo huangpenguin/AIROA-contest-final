@@ -1,6 +1,12 @@
 from __future__ import annotations
 
+import json
+from pathlib import Path
+
 from tools.axis_pi05 import track3_object_frame_executor_and_bounded_autogen_lora as tool
+
+
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_object_frame_composition_uses_object_to_eef_anchor() -> None:
@@ -22,3 +28,57 @@ def test_unentered_gate_is_not_evaluated() -> None:
     result = tool.gate(False, None, reason="stage_not_entered")
     assert result["executed"] is False
     assert result["state"] == "not_evaluated"
+
+
+def test_x0_x13_audit_archives_x_and_releases_exactly_one_y_plan() -> None:
+    handoff = json.loads(
+        (
+            ROOT
+            / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert handoff["status"] == "track3_runtime_preflight_and_bounded_continuation_planned"
+    assert handoff["next_plan"] == (
+        "docs/AXIS_PI05_TRACK3_RUNTIME_PREFLIGHT_AND_BOUNDED_CONTINUATION_PLAN.md"
+    )
+    assert handoff["next_phase_only"] == "Y0_to_Y13_then_hard_stop"
+    assert (ROOT / handoff["next_plan"]).is_file()
+    assert not (
+        ROOT
+        / "docs/AXIS_PI05_TRACK3_OBJECT_FRAME_EXECUTOR_AND_BOUNDED_AUTOGEN_LORA_PLAN.md"
+    ).exists()
+    assert (
+        ROOT
+        / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_OBJECT_FRAME_EXECUTOR_AND_BOUNDED_AUTOGEN_LORA_PLAN.md"
+    ).is_file()
+
+    old = handoff["track3_object_frame_executor_and_bounded_autogen_lora_authorization"]
+    assert old["status"] == "track3_object_frame_executor_and_bounded_autogen_lora_completed_and_audited"
+    assert old["execution"]["x4_parent_category"] == "infrastructure"
+    assert old["execution"]["x4_physics_steps"] == 0
+    assert old["execution"]["x5_to_x12"] == "not_evaluated"
+
+    audit = handoff["track3_object_frame_x0_x13_audit"]
+    assert audit["status"] == "remediation_required"
+    assert (ROOT / audit["audit_report"]).is_file()
+    assert (ROOT / audit["audit_summary"]).is_file()
+    assert audit["verified"]["manifest_git_tracked_hash_exact"] == "13/13"
+    assert audit["findings"]["runtime_dependency_preflight_complete"] is False
+    assert audit["findings"]["progress_window_enforced"] is False
+    assert audit["findings"]["source_release_gate_phase"] == "incorrectly_at_close_before_lift"
+
+    next_authorization = handoff["track3_runtime_preflight_and_bounded_continuation_authorization"]
+    assert next_authorization["status"] == "track3_runtime_preflight_and_bounded_continuation_planned"
+    assert next_authorization["plan"] == handoff["next_plan"]
+    assert next_authorization["authorized_phases"] == [
+        "Y0", "Y1", "Y2", "Y3", "Y4", "Y5", "Y6", "Y7", "Y8", "Y9", "Y10", "Y11", "Y12", "Y13_closeout"
+    ]
+    scope = next_authorization["authorization"]
+    assert scope["runtime_symbol_and_startup_smoke"] is True
+    assert scope["phase_correct_contact_and_source_release"] is True
+    assert scope["progress_window_stall_enforced"] is True
+    assert scope["total_train_generations_max"] == 12
+    assert scope["total_fresh_replays_max"] == 36
+    assert scope["gpu0"] is False
+    assert scope["official_gpu"] is False
+    assert scope["automatic_upload_or_submission"] is False

@@ -2,29 +2,29 @@
 
 > 更新日期：2026-09-05（Asia/Tokyo）
 > 跨session入口：先完整读取根目录`AGENTS.md`与`MEMORY.md`，再读取本索引、handoff、machine JSON、唯一活动计划和最新审核；先查live PID/cursor，禁止重复启动。
-> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_OBJECT_FRAME_EXECUTOR_AND_BOUNDED_AUTOGEN_LORA_PLAN.md`
-> 当前状态：`track3_object_frame_executor_and_bounded_autogen_lora_planned`
-> 最新审核：`docs/reviews/axis_pi05/TRACK3_SUPPORT_RELEASE_ANCHOR_W0_W6_AUDIT_20260905.md`
+> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_RUNTIME_PREFLIGHT_AND_BOUNDED_CONTINUATION_PLAN.md`
+> 当前状态：`track3_runtime_preflight_and_bounded_continuation_planned`
+> 最新审核：`docs/reviews/axis_pi05/TRACK3_OBJECT_FRAME_X0_X13_AUDIT_20260905.md`
 
 ## 1. 本轮执行停止点
 
-W0–W6按授权停止：W0的15项input hash、W1 release-side index75 anchor与W2 OSC scale内部检查通过，W3形成clean release。W4只运行task10/demo0、seed3121一次CPU/no-renderer canary；worker正常发布`failed_gate`并return 0，parent正确分类`family_failure`。252步依次为`41/12/4/15/180`，在transport耗尽预算。W5=`not_evaluated`，W6 hard stop；最终manifest `17/17` Git-tracked/hash exact，`exact/pending/accepted=0/0/0`。
+X0–X13按授权停止：X0–X3形成derived/object-frame、tri-state、identity与clean-release报告；X4只启动task10/demo0、seed3121的nominal CPU worker。worker在创建`ControlEnv`或执行physics step前调用不存在的`base._configure_public_env`，发布`worker_exception`并return 1；parent正确分类`infrastructure`并全局停止。conservative、GPU3、其他family、generation/replay、训练和ZIP均为`not_evaluated`，`exact/pending/accepted=0/0/0`。
 
-独立审核批准W1的close/release transition=`32/76`、state75 contact=`3/1/0`、controller output=`0.05 m / 0.5 rad`和`0.12 rad→0.24`normalized scale。但W4在destination侧把same-demo init bowl pose直接当作EEF target，没有继续组合release-side `T_object^-1·T_eef`；exact destination差异为`0.0817122 m / 1.816425 rad`。
+X13 manifest `13/13` Git-tracked/bytes/SHA exact，14个JSON strict，CSV LF且无partial；独立复跑为`260 passed, 7 skipped, 23 warnings`。root/OpenPI clean，LIBERO-plus既有dirty未改，GPU0外部PID保留且GPU1–3空闲。
 
-W4的source为`253/253 true`且`contact_completion=failed`，却仍按EEF tolerance把close/lift标为reached并进入transport；历史transport timeout有效，但earliest semantic failure是acquisition未成立。progress-window stall没有实现，全局cursor在W4期间没有置active，W6验证又发生在最终closeout/manifest写入前。最终产物由本审核独立复核通过，但这些合同仍需修复。
+独立审核同时确认X0未记录计划要求的完整immutable inventory；X2只记录progress window但不据失败早停，把source release错误放在close后而不是lift后，并缺少运行期symbol smoke与周期heartbeat。X13也没有兑现manifest自身/final-validation的checkout-stable hash字段。
 
-当前审核唯一结论为`remediation_required`。新计划一次性授权X0–X13条件链：先修object-frame/acquisition/stall/cursor/finalizer，再按family隔离继续support双profile、task20/task19、最多12条generation/36次replay、20Hz `80/20` mixture、R6 L2 LoRA 100/500/1000、holdout/retention和条件式本地ZIP；任意分支最终hard stop，不自动上传/提交。
+当前审核唯一结论为`remediation_required`。新计划一次性授权Y0–Y13条件链：先完成全量input lock、runtime symbol/阶段/stall/heartbeat/finalizer补救和clean release，再以新identity执行一次真实nominal CPU canary；通过门禁后才继续family pilots、最多12条generation/36次replay、20Hz `80/20` mixture、R6 L2 LoRA 100/500/1000、独立复验与条件式本地ZIP。任意分支最终hard stop，不自动上传/提交。
 
 ## 2. 当前计划与停止点
 
-- `AXIS_PI05_TRACK3_OBJECT_FRAME_EXECUTOR_AND_BOUNDED_AUTOGEN_LORA_PLAN.md`
-  - X0–X3锁定`2997c6f`并闭合object→EEF、stage prerequisite、phase contact、progress stall、active cursor与post-finalization validation；
-  - X4–X5对task10最多两个CPU profile和每个CPU成功profile各一次GPU3 camera release，结果后不调参；
-  - X6–X7从公开HDF5冻结task20/task19合同，各族最多两个CPU profile和每个CPU成功profile各一次GPU3 camera canary，family/profile failure隔离；
-  - X8最多12条generation/36次fresh replay，只有严格`3/3`才machine-accepted；
-  - X9–X12仅在数据门禁通过后执行20Hz `80/20` mixture/fresh QUANTILES、两卡R6 L2 LoRA、reverse/C20选择与条件式本地FAST ZIP；
-  - X13统一收尾并hard stop。GPU0、官方GPU、Teleop、dense full-FT、自动上传/提交均不授权。
+- `AXIS_PI05_TRACK3_RUNTIME_PREFLIGHT_AND_BOUNDED_CONTINUATION_PLAN.md`
+  - Y0–Y2锁定`64a0d31`与全部上游资产，修复runtime symbol、close/lift/source-release顺序、stall真实早停、周期heartbeat和finalizer自哈希，形成clean release；
+  - Y3–Y4只在新namespace中运行一次nominal CPU物理canary；正常family failure才允许conservative，CPU成功profile才允许一次GPU3 camera release；
+  - Y5–Y6从公开HDF5冻结task20/task19合同并运行有界CPU/GPU3 pilots，family/profile failure隔离；
+  - Y7最多12条generation/36次fresh replay，只有严格`3/3`才machine-accepted；
+  - Y8–Y12仅在数据门禁通过后执行20Hz `80/20` mixture/fresh QUANTILES、两卡R6 L2 LoRA、reverse/C20选择、独立复验与条件式本地FAST ZIP；
+  - Y13统一收尾并hard stop。GPU0、官方GPU、Teleop、dense full-FT、自动上传/提交均不授权。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 
@@ -72,10 +72,11 @@ W4的source为`253/253 true`且`contact_completion=failed`，却仍按EEF tolera
 36. `AXIS_PI05_TRACK3_PROVENANCE_JITTER_RECOVERY_AND_OVERNIGHT_CONTINUATION_PLAN.md`：J0–J3核心释放成立；J4 executor合同与J5 quaternion约定不完整，首条task10 nominal另遇MP4原子扩展名错误并在J5 hard stop。J6–J10未执行；转入support-only executor/atomic-video最小恢复。
 37. `AXIS_PI05_TRACK3_J5_EXECUTOR_CONTRACT_AND_ATOMIC_VIDEO_RECOVERY_PLAN.md`：V0–V3工程闭包与V4单次运行/V5 hard stop成立；审核发现OSC rotation物理scale、release-side HDF5 anchor、stage-dependent三态和实际supervisor仍未闭合，转入CPU-first最小恢复。
 38. `AXIS_PI05_TRACK3_SUPPORT_RELEASE_ANCHOR_AND_OSC_SCALE_RECOVERY_PLAN.md`：W0–W3内部检查与W4单次CPU family failure/W6 hard stop成立；审核发现destination object→EEF组合、acquisition barrier、progress stall、active cursor和final validation顺序仍未闭合，转入一次性bounded autogen/LoRA条件链。
+39. `AXIS_PI05_TRACK3_OBJECT_FRAME_EXECUTOR_AND_BOUNDED_AUTOGEN_LORA_PLAN.md`：X0–X3内部报告与X13 closure成立；X4在0 physics step时因不存在的runtime helper发生infrastructure hard stop。审核另发现完整input lock、stall执行、阶段门禁、周期heartbeat与finalizer自哈希仍未闭合，转入runtime preflight后再恢复bounded continuation。
 
 归档不表示旧计划所有尾部阶段都完成；只表示该文件不再是活动授权入口。旧 failure、阈值、hash 和未执行阶段必须继续保留。
 
-当前只执行X0–X13条件链；不得修改历史证据/公开HDF5/BDDL、人工Teleop、使用GPU0/官方GPU、dense full-FT、失败/partial/holdout轨迹入训、超过1000 optimizer steps或自动上传/提交。每个profile/start identity只执行一次，共享基础设施失败全局停止，正常family failure只关闭该lane；所有分支最终X13 hard stop。
+当前只执行Y0–Y13条件链；不得修改历史证据/公开HDF5/BDDL、人工Teleop、使用GPU0/官方GPU、dense full-FT、失败/partial/holdout轨迹入训、超过1000 optimizer steps或自动上传/提交。每个profile/start identity只执行一次，共享基础设施失败全局停止，正常family failure只关闭该lane；所有分支最终Y13 hard stop。
 
 ## 3.1 G0–G1 执行审核与门禁重构
 

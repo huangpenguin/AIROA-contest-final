@@ -1,0 +1,45 @@
+{
+  "audit_report": "docs/reviews/axis_pi05/TRACK3_OBJECT_FRAME_X0_X13_AUDIT_20260905.md",
+  "audited_execution_commit": "64a0d31c3b2864562887044bad7ef8b522a213db",
+  "created_at_utc": "2026-09-05T08:56:22.170132+00:00",
+  "execution_source_commit": "ce86e724dddf300406465d6986577199d39cc19b",
+  "historical_reports_rewritten": false,
+  "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "next_plan": "docs/AXIS_PI05_TRACK3_RUNTIME_PREFLIGHT_AND_BOUNDED_CONTINUATION_PLAN.md",
+  "schema_version": "track3_object_frame_x0_x13_audit_v1",
+  "status": "remediation_required",
+  "verified": {
+    "exact_pending_accepted": [
+      0,
+      0,
+      0
+    ],
+    "gpu0_external_process_preserved": true,
+    "gpu1_to_gpu3_released": true,
+    "libero_plus_dirty_preserved": true,
+    "manifest_git_tracked_hash_exact": "13/13",
+    "no_control_env_constructed": true,
+    "no_generation_replay_training_or_zip": true,
+    "root_and_openpi_clean": true,
+    "strict_json": "14/14",
+    "tests_reproduced": "260_passed_7_skipped_23_warnings",
+    "x4_category": "infrastructure",
+    "x4_child_status": "worker_exception",
+    "x4_physics_steps": 0,
+    "x5_to_x12": "not_evaluated",
+    "x13_hard_stop": true
+  },
+  "findings": {
+    "final_validation_sha256_independent": "e7512442d4c88e69fb215ffa27168c60d90df08a0d564fb2c59fb7afec984bd8",
+    "finalizer_self_hashes_recorded_by_execution": false,
+    "periodic_heartbeat_implemented": false,
+    "progress_window_enforced": false,
+    "runtime_dependency_preflight_complete": false,
+    "source_release_gate_phase": "incorrectly_at_close_before_lift",
+    "x0_full_immutable_inventory_complete": false,
+    "x13_manifest_sha256_independent": "ce4a815669c691015855c51a6d4c9627f7094e557e3b1c2fed881cd8f274a3a4",
+    "x4_exception": "AttributeError_missing_track3_reverse_init_stabilization._configure_public_env",
+    "x4_simulator_dependencies_imported": true
+  },
+  "user_manual_action_required": false
+}

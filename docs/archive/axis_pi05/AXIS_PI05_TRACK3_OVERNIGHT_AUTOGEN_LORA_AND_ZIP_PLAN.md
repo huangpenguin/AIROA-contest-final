@@ -1,5 +1,7 @@
 # AXIS Pi0.5 Track 3：Overnight Autogen、LoRA 与候选 ZIP 计划
 
+> 归档说明（2026-09-05）：O0/O1通过；O2只运行task10/demo0 attempt3。child物理、谓词、相机全部通过，但旧合同把单次`nvidia-smi`查询耗时`148.4566 ms`误作采样间隔，并以`100 ms`硬阈值停止。O3–O9未执行。后续授权由`AXIS_PI05_TRACK3_PROVENANCE_JITTER_RECOVERY_AND_OVERNIGHT_CONTINUATION_PLAN.md`取代。
+
 > 制定日期：2026-09-05（Asia/Tokyo）
 > 审核输入：root `309ccafe9e6e2cddd0c9f16db111fc054478eb8b`
 > nested OpenPI：`b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`

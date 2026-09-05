@@ -9,12 +9,14 @@ HANDOFF = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_2026
 CANARY = ROOT / "data/reports/axis_libero_30k/track3_background_predicate_convergence/k3_gpu3_release/task19_canary.json"
 
 
-def test_only_the_track3_overnight_plan_is_active() -> None:
+def test_only_the_track3_jitter_recovery_plan_is_active() -> None:
     handoff = json.loads(HANDOFF.read_text(encoding="utf-8"))
-    assert handoff["status"] == "track3_overnight_autogen_lora_zip_planned"
-    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_OVERNIGHT_AUTOGEN_LORA_AND_ZIP_PLAN.md"
-    assert handoff["next_phase_only"] == "O0_to_O10_then_hard_stop"
+    assert handoff["status"] == "track3_provenance_jitter_recovery_and_overnight_continuation_planned"
+    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_PROVENANCE_JITTER_RECOVERY_AND_OVERNIGHT_CONTINUATION_PLAN.md"
+    assert handoff["next_phase_only"] == "J0_to_J11_then_hard_stop"
     assert (ROOT / handoff["next_plan"]).is_file()
+    assert not (ROOT / "docs/AXIS_PI05_TRACK3_OVERNIGHT_AUTOGEN_LORA_AND_ZIP_PLAN.md").exists()
+    assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_OVERNIGHT_AUTOGEN_LORA_AND_ZIP_PLAN.md").is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_P3_IO_RECOVERY_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md").exists()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_P3_IO_RECOVERY_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md").is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_START_BUNDLE_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md").exists()
@@ -120,6 +122,8 @@ def test_composed_state_authorization_is_data_source_only_and_bounded() -> None:
     assert p3_audit["user_manual_action_required"] is False
 
     overnight = handoff["track3_overnight_autogen_lora_zip_authorization"]
+    assert overnight["status"] == "track3_overnight_autogen_lora_zip_completed_and_audited"
+    assert overnight["plan"].startswith("docs/archive/axis_pi05/")
     assert overnight["authorized_phases"] == ["O0", "O1", "O2", "O3", "O4", "O5", "O6", "O7", "O8", "O9", "O10_closeout"]
     scope = overnight["authorization"]
     assert scope["unattended_runtime_hours_max"] == 12
@@ -134,3 +138,37 @@ def test_composed_state_authorization_is_data_source_only_and_bounded() -> None:
     assert scope["gpu0"] is False
     assert scope["official_gpu"] is False
     assert scope["automatic_upload_or_submission"] is False
+
+    execution = overnight["execution"]
+    assert execution["task10_attempt3_child_status"] == "passed"
+    assert execution["task10_attempt3_parent_status"] == "failed_closed"
+    assert execution["task10_attempt3_parent_poll_count"] == 113
+    assert execution["o3_o9"] == "not_evaluated"
+
+    audit = handoff["track3_overnight_o0_o2_audit"]
+    assert audit["status"] == "remediation_required"
+    assert audit["approved"]["task10_child_physics_camera"] is True
+    assert audit["approved"]["process_returncode"] == 0
+    assert audit["approved"]["timed_out"] is False
+    assert audit["old_o10_manifest_entries"] == 10
+    assert audit["old_o10_manifest_hash_matches"] == 9
+    assert audit["task10_attempt4_authorized"] is False
+    assert audit["user_manual_action_required"] is False
+
+    continuation = handoff["track3_provenance_jitter_recovery_and_overnight_continuation_authorization"]
+    assert continuation["authorized_phases"] == ["J0", "J1", "J2", "J3", "J4", "J5", "J6", "J7", "J8", "J9", "J10", "J11_closeout"]
+    next_scope = continuation["authorization"]
+    assert next_scope["persistent_supervisor"] == "setsid_single_instance_pidfile_atomic_cursor"
+    assert next_scope["heartbeat_minutes"] == 15
+    assert next_scope["task10_attempt3_derived_reanalysis"] is True
+    assert next_scope["task10_attempt4"] is False
+    assert next_scope["gpu_query_latency_hard_gate"] is False
+    assert next_scope["heartbeat_gap_max_ms"] == 2000
+    assert next_scope["checkout_stable_manifest_required"] is True
+    assert next_scope["total_train_generations_max"] == 12
+    assert next_scope["total_replays_max"] == 36
+    assert next_scope["training_gpus"] == [1, 2]
+    assert next_scope["winner_max_steps"] == 1000
+    assert next_scope["gpu0"] is False
+    assert next_scope["official_gpu"] is False
+    assert next_scope["automatic_upload_or_submission"] is False

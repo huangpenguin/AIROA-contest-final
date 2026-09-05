@@ -74,9 +74,9 @@ def test_historical_dynamic_failure_is_preserved_but_new_plan_repairs_validator(
             / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
         ).read_text(encoding="utf-8")
     )
-    assert handoff["status"] == "track3_overnight_autogen_lora_zip_planned"
+    assert handoff["status"] == "track3_provenance_jitter_recovery_and_overnight_continuation_planned"
     assert handoff["next_plan"].endswith(
-        "AXIS_PI05_TRACK3_OVERNIGHT_AUTOGEN_LORA_AND_ZIP_PLAN.md"
+        "AXIS_PI05_TRACK3_PROVENANCE_JITTER_RECOVERY_AND_OVERNIGHT_CONTINUATION_PLAN.md"
     )
     audit = handoff["track3_support_se3_g0_g1_audit"]
     assert audit["status"] == "remediation_required"

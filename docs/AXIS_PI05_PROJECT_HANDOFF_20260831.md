@@ -5,8 +5,8 @@
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_overnight_autogen_lora_zip_planned`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_OVERNIGHT_AUTOGEN_LORA_AND_ZIP_PLAN.md`
+> 当前总状态：`track3_provenance_jitter_recovery_and_overnight_continuation_planned`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_PROVENANCE_JITTER_RECOVERY_AND_OVERNIGHT_CONTINUATION_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -14,7 +14,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3 9-state/R1 I/O已闭合，task10 attempt2 child物理与camera通过；仅parent因缺失`gpu_provenance_gate`定义而失败。今晚计划从R6继续，依次恢复P3、按三族独立生成/回放、20Hz混合LoRA、holdout/retention选优并在有逆向成功时生成本地FAST ZIP；不回到AXIS init，用户无需Teleop或值守。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3 task10 attempt3的child物理/camera及parent核心provenance已闭合；旧O2只因把148.46ms GPU query latency误作100ms heartbeat hard gate而停止。下一计划在CPU修复telemetry与CSV hash后只读升格attempt3，再按三族独立生成/回放、20Hz混合LoRA、holdout/retention选优并在有逆向成功时生成本地FAST ZIP；不回到AXIS init，不重跑task10，用户无需Teleop或值守。
 
 ## 2. 数据与复现基础
 
@@ -677,3 +677,17 @@ parent失败原因已精确定位：`ad0a428`中的`_run_gpu_canary()`调用`gpu
 旧计划已归档；唯一活动计划为`docs/AXIS_PI05_TRACK3_OVERNIGHT_AUTOGEN_LORA_AND_ZIP_PLAN.md`。O0/O1先纯函数化parent assembly并做NameError/watchdog回归，O2只给task10 attempt3一次机会；随后三族executor按独立lane最多两个冻结profile。严格generation与`3/3` replay产生数据后，使用本地20Hz LIBERO-plus按forward/reverse=`80/20`重算QUANTILES，从R6 step500继续两卡L2 LoRA，先两个100-step LR screen，再按reverse holdout与C20遗忘门禁续到500/1000，最后条件式fold/FAST/本地ZIP。
 
 该计划预计上限8–12小时，允许无人值守和原子resume；共同基础设施错误全局停止，单family物理失败只关闭该lane。GPU0、官方GPU、dense full-FT、失败轨迹入训、自动上传/提交均不授权。审核报告：`docs/reviews/axis_pi05/TRACK3_P3_IO_RECOVERY_R0_R6_AUDIT_20260905.md`。
+
+## 56. Overnight O0–O2 审核与 Provenance Jitter 续跑计划（2026-09-05）
+
+审核输入root `8c0d296f1dfedb0c777040a733b6f9e352234111`。O0/O1通过；O2只运行task10/demo0 attempt3一次。child restore/truth/contact-v3/camera均passed，restore误差`2.22e-16`；两路相机均41帧、20 FPS H.264。parent完整记录seed3100、PID一致、GPU3 UUID、start/end snapshot、峰值459 MiB、113次采样、return code0与无timeout。
+
+旧parent仍按合同failed_closed，因为`parent_poll_interval_max_ms=148.45660293940455`超过100ms。代码审计确认该字段计时包围同步`gpu_snapshot/nvidia-smi`调用，实际是query latency，不是heartbeat interval；因此它只能成为performance warning，不能否定完整provenance或task10物理结果。历史parent/O2/O10不得改写，下一轮用derived reanalysis升格。
+
+同时发现旧O10 manifest 10项中CSV一项hash不稳定：manifest记录CRLF SHA `ad4f84c9...`，Git检出LF SHA `c39b4d30...`。下一轮固定CSV LF并在新namespace生成checkout-stable closure；旧manifest保留。
+
+独立复跑全量测试为`244 passed, 7 skipped, 23 warnings`。O3–O9未执行，reverse demo仍为`0/0/0`，没有训练/FAST/ZIP/官方GPU/上传。root/OpenPI clean，GPU0外部进程保留，GPU1–3空闲。
+
+旧计划已归档。唯一活动计划为`docs/AXIS_PI05_TRACK3_PROVENANCE_JITTER_RECOVERY_AND_OVERNIGHT_CONTINUATION_PLAN.md`：J0/J1修telemetry v2与LF manifest，J2只读释放attempt3且禁止attempt4；之后J3–J10连续执行task20/task19、family executor、最多12条generation/36次replay、20Hz 80/20 mixture、R6 L2 LoRA 100/500/1000、reverse/C20评估与条件式本地FAST ZIP，J11 hard stop。用户无需人工中途审核；自动上传/比赛提交不授权。
+
+审核报告：`docs/reviews/axis_pi05/TRACK3_OVERNIGHT_O0_O2_AUDIT_20260905.md`。

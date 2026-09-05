@@ -523,7 +523,7 @@ def _v4_worker(frames_path: Path, result_path: Path) -> int:
         os.replace(V4_ROOT / "trajectory.npz.partial", V4_ROOT / "trajectory.npz")
         write_npy_atomic(V4_ROOT / "start_state.npy", start_state)
         write_npy_atomic(V4_ROOT / "end_state.npy", np.asarray(env.get_sim_state(), dtype=np.float64))
-        result = {"schema_version": "track3_j5_v4_worker_v1", "status": status, "created_at_utc": started, "completed_at_utc": now(), "child_pid": os.getpid(), "task_index": task, "demo_index": demo, "seed": V4_SEED, "attempt_number": 1, "profile": "nominal", "fresh_process": True, "quaternion_convention": "xyzw", "model_state_identity": {"hdf5_path": manifest["hdf5_path"], "hdf5_sha256": manifest["hdf5_sha256"], "model_file_sha256": manifest["model_file_sha256"], "resolved_model_xml_sha256": resolution["resolved_sha256"], "state_key": state_key, "start_state_sha256": sha256_file(V4_ROOT / "start_state.npy"), "same_demo_model_and_state_components": True}, "reverse_instruction": "Move the bowl from the plate back to its original table position.", "executor": {"controller": "OSC_POSE", "action_dim": 7, "profile": PROFILE, "relative_grasp_pose_xyzw": {"translation_m": relative_pos.tolist(), "quaternion_xyzw": relative_quat}, "target_quaternion_xyzw": grasp_quat}, "reverse": {"initial_goal": bool(goal_values[0]) if goal_values else None, "final_goal": final_success, "source_values": source_values, "goal_values": goal_values, "goal_trace_encoding": {"not_evaluated": -1, "false": 0, "true": 1}, "stage_results": stage_results, "frame_count": len(actions), "action_saturation_count": int(sum(saturated)), "max_penetration_m": max_penetration, "max_unrelated_movement_m": max_unrelated_movement, "contacts_v3_samples": contact_rows}, "hard_gate": gates, "artifacts": {"trajectory": rel(V4_ROOT / "trajectory.npz"), "start_state": rel(V4_ROOT / "start_state.npy"), "end_state": rel(V4_ROOT / "end_state.npy"), "frames": rel(frames_path)}, "training_eligible": False, "pending_autogen": False, "resource_boundary": {"gpu3_only": True, "gpu0_touched": False, "gpu1_touched": False, "gpu2_touched": False, "official_gpu": False, "no_teleop": True, "no_training": True}}
+        result = {"schema_version": "track3_j5_v4_worker_v1", "status": status, "created_at_utc": started, "completed_at_utc": now(), "child_pid": os.getpid(), "task_index": task, "demo_index": demo, "seed": V4_SEED, "attempt_number": 1, "profile": "nominal", "fresh_process": True, "quaternion_convention": "xyzw", "model_state_identity": {"hdf5_path": manifest["hdf5_path"], "hdf5_sha256": manifest["hdf5_sha256"], "model_file_sha256": manifest["model_file_sha256"], "resolved_model_xml_sha256": resolution["resolved_sha256"], "state_key": state_key, "start_state_sha256": sha256_file(V4_ROOT / "start_state.npy"), "same_demo_model_and_state_components": True}, "reverse_instruction": "Move the bowl from the plate back to its original table position.", "executor": {"controller": "OSC_POSE", "action_dim": 7, "profile": PROFILE, "relative_grasp_pose_xyzw": {"translation_m": relative_pos.tolist(), "quaternion_xyzw": relative_quat}, "target_quaternion_xyzw": grasp_quat}, "reverse": {"initial_goal": bool(goal_values[0]) if goal_values else None, "final_goal": final_success, "source_values": source_values, "goal_values": goal_values, "goal_trace_encoding": {"not_evaluated": -1, "false": 0, "true": 1}, "stage_results": stage_results, "frame_count": len(actions), "action_saturation_count": int(sum(saturated)), "max_penetration_m": max_penetration, "max_unrelated_movement_m": max_unrelated_movement, "contacts_v3_samples": contact_rows}, "failure_reason": failure_reason, "hard_gate": gates, "artifacts": {"trajectory": rel(V4_ROOT / "trajectory.npz"), "start_state": rel(V4_ROOT / "start_state.npy"), "end_state": rel(V4_ROOT / "end_state.npy"), "frames": rel(frames_path)}, "training_eligible": False, "pending_autogen": False, "resource_boundary": {"gpu3_only": True, "gpu0_touched": False, "gpu1_touched": False, "gpu2_touched": False, "official_gpu": False, "no_teleop": True, "no_training": True}}
     except Exception as exc:
         result = {"schema_version": "track3_j5_v4_worker_v1", "status": "worker_exception", "created_at_utc": started, "completed_at_utc": now(), "child_pid": os.getpid(), "task_index": 10, "demo_index": 0, "seed": V4_SEED, "attempt_number": 1, "profile": "nominal", "fresh_process": True, "error": {"type": type(exc).__name__, "message": str(exc), "traceback": traceback.format_exc()}, "training_eligible": False, "resource_boundary": {"gpu3_only": True, "gpu0_touched": False, "official_gpu": False}}
     finally:
@@ -562,6 +562,24 @@ def _v4_encode(path: Path, frames: Any) -> dict[str, Any]:
         partial.unlink(missing_ok=True); raise RuntimeError(f"v4_ffprobe_failed:{probe}")
     os.replace(partial, path)
     return {"path": rel(path), "bytes": path.stat().st_size, "sha256": sha256_file(path), "ffprobe": probe, "frame_count": int(images.shape[0]), "atomic_publish": True}
+
+
+def _v4_first_error(record: Mapping[str, Any]) -> dict[str, Any] | None:
+    """Return a stable closeout reason, including for an older V4 record."""
+    existing = record.get("first_error")
+    if isinstance(existing, Mapping) and existing.get("reason"):
+        return dict(existing)
+    child = record.get("child_result")
+    if isinstance(child, Mapping):
+        if child.get("failure_reason"):
+            return {"phase": "V4", "category": record.get("category"), "reason": child["failure_reason"]}
+        gates = child.get("hard_gate", {})
+        failed = [name for name, gate in gates.items() if isinstance(gate, Mapping) and gate.get("state") == "failed"]
+        if failed:
+            return {"phase": "V4", "category": record.get("category"), "reason": "failed_gates:" + ",".join(failed)}
+    if isinstance(existing, Mapping):
+        return dict(existing)
+    return None
 
 
 def run_v4() -> dict[str, Any]:
@@ -603,7 +621,7 @@ def run_v4() -> dict[str, Any]:
     if category == "success": status = "track3_j5_corrected_support_nominal_passed_pending_expansion_review"
     elif category == "family_failure": status = "track3_j5_corrected_support_nominal_failed_gate_pending_review"
     else: status = "track3_j5_executor_recovery_stopped_V4_infrastructure_failure"
-    result = {"schema_version": "track3_j5_v4_parent_v1", "status": status, "category": category, "created_at_utc": now(), "task_index": 10, "demo_index": 0, "family": "support_remove", "profile": "nominal", "seed": V4_SEED, "attempt_number": 1, "child_status": child_status, "child_result_path": rel(child_path), "worker_pid": process.pid, "worker_pid_match": process.pid == (child or {}).get("child_pid", process.pid), "process_returncode": process.returncode, "timed_out": timed_out, "termination_stage": termination_stage, "gpu_provenance": telemetry, "telemetry_v2_gate": telemetry_gate, "camera": {"state": camera_state, "errors": camera_errors, "videos": videos}, "child_result": child, "resource_boundary": {"gpu3_only": True, "gpu0_touched": False, "official_gpu": False, "conservative": False, "other_family": False, "generation": False, "training": False, "zip": False, "task10_attempt4": "forbidden"}, "first_error": {"phase": "V4" if category == "infrastructure" else None, "category": category, "reason": camera_errors[0] if camera_errors else (child or {}).get("failure_reason")}}
+    result = {"schema_version": "track3_j5_v4_parent_v1", "status": status, "category": category, "created_at_utc": now(), "task_index": 10, "demo_index": 0, "family": "support_remove", "profile": "nominal", "seed": V4_SEED, "attempt_number": 1, "child_status": child_status, "child_result_path": rel(child_path), "worker_pid": process.pid, "worker_pid_match": process.pid == (child or {}).get("child_pid", process.pid), "process_returncode": process.returncode, "timed_out": timed_out, "termination_stage": termination_stage, "gpu_provenance": telemetry, "telemetry_v2_gate": telemetry_gate, "camera": {"state": camera_state, "errors": camera_errors, "videos": videos}, "child_result": child, "resource_boundary": {"gpu3_only": True, "gpu0_touched": False, "official_gpu": False, "conservative": False, "other_family": False, "generation": False, "training": False, "zip": False, "task10_attempt4": "forbidden"}, "first_error": {"phase": "V4" if category == "infrastructure" else None, "category": category, "reason": camera_errors[0] if camera_errors else (child or {}).get("failure_reason") or (child or {}).get("error", {}).get("message")}}
     write_json(V4_RESULT, result)
     return result
 
@@ -614,13 +632,14 @@ def run_v5() -> dict[str, Any]:
         result = {"schema_version": "track3_j5_v5_closeout_v1", "status": "track3_j5_executor_recovery_stopped_V5_missing_v4", "first_error": {"phase": "V5", "category": "infrastructure", "reason": "v4_missing"}}
     else:
         category = v4.get("category"); status = v4.get("status", "")
-        result = {"schema_version": "track3_j5_v5_closeout_v1", "status": "track3_j5_executor_recovery_stopped_V5_hard_stop", "created_at_utc": now(), "upstream": {"phase": "V4", "status": status, "category": category, "first_error": v4.get("first_error")}, "phase_status": {"V0": "track3_j5_v0_passed", "V1": "track3_j5_v1_support_contract_passed", "V2": "track3_j5_v2_passed", "V3": "track3_j5_v3_clean_release_ready", "V4": status, "V5": "hard_stop"}, "counts": {"exact_reverse_demo": 0, "pending_autogen": 0, "accepted_reverse_demo": 0}, "hard_stop": {"executed": True, "propagates_upstream_first_error": True, "conservative": False, "other_family": False, "generation": False, "replay": False, "training": False, "norm": False, "fast": False, "zip": False, "upload": False, "task10_attempt4": "forbidden", "next_authority": "new_reviewed_plan_required"}, "resource_boundary": {"gpu0_touched": False, "official_gpu": False, "no_teleop": True, "no_training": True, "libero_plus_untouched": True}}
+        result = {"schema_version": "track3_j5_v5_closeout_v1", "status": "track3_j5_executor_recovery_stopped_V5_hard_stop", "created_at_utc": now(), "upstream": {"phase": "V4", "status": status, "category": category, "first_error": _v4_first_error(v4)}, "phase_status": {"V0": "track3_j5_v0_passed", "V1": "track3_j5_v1_support_contract_passed", "V2": "track3_j5_v2_passed", "V3": "track3_j5_v3_clean_release_ready", "V4": status, "V5": "hard_stop"}, "counts": {"exact_reverse_demo": 0, "pending_autogen": 0, "accepted_reverse_demo": 0}, "hard_stop": {"executed": True, "propagates_upstream_first_error": True, "conservative": False, "other_family": False, "generation": False, "replay": False, "training": False, "norm": False, "fast": False, "zip": False, "upload": False, "task10_attempt4": "forbidden", "next_authority": "new_reviewed_plan_required"}, "resource_boundary": {"gpu0_touched": False, "official_gpu": False, "no_teleop": True, "no_training": True, "libero_plus_untouched": True}}
     write_json(OUT / "v5_closeout.json", result)
     write_text(OUT / "v5_phase_status.csv", "phase,status\n" + "\n".join(f"{key},{value}" for key, value in result.get("phase_status", {}).items()) + "\n")
-    manifest = final_manifest(OUT, manifest_name="v5_artifact_manifest.json")
-    write_json(OUT / "v5_artifact_manifest.json", manifest)
     write_json(OUT / "resume_cursor.json", {"schema_version": "track3_j5_recovery_cursor_v1", "status": "hard_stop", "active": False, "next_phase": "review", "last_heartbeat_utc": now(), "v4_status": v4.get("status")})
     write_json(OUT / "supervisor_closeout.json", {"schema_version": "track3_j5_recovery_supervisor_v1", "status": result["status"], "upstream": result.get("upstream"), "pid": os.getpid(), "commit": git(("rev-parse", "HEAD")), "tool_sha256": sha256_file(Path(__file__))})
+    # All closeout artifacts exist before the final manifest is computed.
+    manifest = final_manifest(OUT, manifest_name="v5_artifact_manifest.json")
+    write_json(OUT / "v5_artifact_manifest.json", manifest)
     return result
 
 

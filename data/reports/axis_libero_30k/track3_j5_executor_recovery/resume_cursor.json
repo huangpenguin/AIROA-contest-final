@@ -1,0 +1,8 @@
+{
+  "active": false,
+  "last_heartbeat_utc": "2026-09-05T03:44:53.855977+00:00",
+  "next_phase": "review",
+  "schema_version": "track3_j5_recovery_cursor_v1",
+  "status": "hard_stop",
+  "v4_status": "track3_j5_corrected_support_nominal_failed_gate_pending_review"
+}

@@ -1,0 +1,50 @@
+{
+  "counts": {
+    "accepted_reverse_demo": 0,
+    "exact_reverse_demo": 0,
+    "pending_autogen": 0
+  },
+  "created_at_utc": "2026-09-05T03:44:53.855102+00:00",
+  "hard_stop": {
+    "conservative": false,
+    "executed": true,
+    "fast": false,
+    "generation": false,
+    "next_authority": "new_reviewed_plan_required",
+    "norm": false,
+    "other_family": false,
+    "propagates_upstream_first_error": true,
+    "replay": false,
+    "task10_attempt4": "forbidden",
+    "training": false,
+    "upload": false,
+    "zip": false
+  },
+  "phase_status": {
+    "V0": "track3_j5_v0_passed",
+    "V1": "track3_j5_v1_support_contract_passed",
+    "V2": "track3_j5_v2_passed",
+    "V3": "track3_j5_v3_clean_release_ready",
+    "V4": "track3_j5_corrected_support_nominal_failed_gate_pending_review",
+    "V5": "hard_stop"
+  },
+  "resource_boundary": {
+    "gpu0_touched": false,
+    "libero_plus_untouched": true,
+    "no_teleop": true,
+    "no_training": true,
+    "official_gpu": false
+  },
+  "schema_version": "track3_j5_v5_closeout_v1",
+  "status": "track3_j5_executor_recovery_stopped_V5_hard_stop",
+  "upstream": {
+    "category": "family_failure",
+    "first_error": {
+      "category": "family_failure",
+      "phase": "V4",
+      "reason": "failed_gates:contact_v3,same_demo_init_pose,source_goal,stall"
+    },
+    "phase": "V4",
+    "status": "track3_j5_corrected_support_nominal_failed_gate_pending_review"
+  }
+}

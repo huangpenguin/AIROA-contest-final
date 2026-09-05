@@ -1,0 +1,102 @@
+{
+  "entries": [
+    {
+      "bytes": 47804,
+      "relative_path": "data/reports/axis_libero_30k/track3_j5_executor_recovery/old_nominal_videos/agentview.mp4",
+      "sha256": "e59acde130aa1ae456db1f79d6f516234e26146bff2e1e31da3c42e4f127c9e2"
+    },
+    {
+      "bytes": 61667,
+      "relative_path": "data/reports/axis_libero_30k/track3_j5_executor_recovery/old_nominal_videos/wrist.mp4",
+      "sha256": "8d41898bb5f2dd26a923ebb15326166574d9a05e2d92a71425b5ce953a746ba3"
+    },
+    {
+      "bytes": 266,
+      "relative_path": "data/reports/axis_libero_30k/track3_j5_executor_recovery/resume_cursor.json",
+      "sha256": "096b53b9c55cb248aa0dee5f5774507cff8bf7dff3077d7dd91af6568ccfb776"
+    },
+    {
+      "bytes": 600,
+      "relative_path": "data/reports/axis_libero_30k/track3_j5_executor_recovery/supervisor_closeout.json",
+      "sha256": "75feadd3edbe4e2f5153e744d3a9aa25b3dbee5bdd4a33ba792b04b81f80407b"
+    },
+    {
+      "bytes": 7915,
+      "relative_path": "data/reports/axis_libero_30k/track3_j5_executor_recovery/v0_input_lock.json",
+      "sha256": "e839a8345c11d2253c44caecb2df4831f307854e4f82764bedb90df53fbf58df"
+    },
+    {
+      "bytes": 2338,
+      "relative_path": "data/reports/axis_libero_30k/track3_j5_executor_recovery/v1_executor_contract.json",
+      "sha256": "fbe3c87e00c62c722368816b6f6052cbd1803602776d04e9f89c154d66b1575e"
+    },
+    {
+      "bytes": 3626,
+      "relative_path": "data/reports/axis_libero_30k/track3_j5_executor_recovery/v2_derived_old_nominal_errata.json",
+      "sha256": "e837ac62a48bab20b327e6503ddc879f7a1256de3dda7872a774320cf2cd0d5d"
+    },
+    {
+      "bytes": 1504,
+      "relative_path": "data/reports/axis_libero_30k/track3_j5_executor_recovery/v3_artifact_manifest.json",
+      "sha256": "dcb212b4322a0760bb37f5df9789517759f693fd3b50c632c95c0c87c5823ccb"
+    },
+    {
+      "bytes": 1536,
+      "relative_path": "data/reports/axis_libero_30k/track3_j5_executor_recovery/v3_clean_release.json",
+      "sha256": "f676d33fc76b319010da25959354e58abf90f9f69ea52c879817ef9c86218a29"
+    },
+    {
+      "bytes": 26099,
+      "relative_path": "data/reports/axis_libero_30k/track3_j5_executor_recovery/v4_corrected_task10_demo0_nominal/agentview.mp4",
+      "sha256": "85027ab6c054d0145fd4398ca742ec566c6b267147985690544ce559e9789280"
+    },
+    {
+      "bytes": 1262607,
+      "relative_path": "data/reports/axis_libero_30k/track3_j5_executor_recovery/v4_corrected_task10_demo0_nominal/child_result.json",
+      "sha256": "21efad017066433296b18232e603292ede7cd695f8401563c3f4381cb1b6e072"
+    },
+    {
+      "bytes": 760,
+      "relative_path": "data/reports/axis_libero_30k/track3_j5_executor_recovery/v4_corrected_task10_demo0_nominal/end_state.npy",
+      "sha256": "58ecf193d3b57a7ef3ae874790aff5bb9e054011b24a8b28a6a1856c226a56ed"
+    },
+    {
+      "bytes": 6230849,
+      "relative_path": "data/reports/axis_libero_30k/track3_j5_executor_recovery/v4_corrected_task10_demo0_nominal/frames.npz",
+      "sha256": "211751e0bfe73a454bd3612f7c8e277146435561fb07f2e05acf13c54f3e4a79"
+    },
+    {
+      "bytes": 1352056,
+      "relative_path": "data/reports/axis_libero_30k/track3_j5_executor_recovery/v4_corrected_task10_demo0_nominal/parent_result.json",
+      "sha256": "839b16a6320d4b28e6cc8c84c4aeb17a18c9c5a8dd7e58c48c967a5057373408"
+    },
+    {
+      "bytes": 760,
+      "relative_path": "data/reports/axis_libero_30k/track3_j5_executor_recovery/v4_corrected_task10_demo0_nominal/start_state.npy",
+      "sha256": "f5b4d5dd93a42cd133994d23eaeae0bc21bcdc970ba6c03e15a5c37f0928b9b3"
+    },
+    {
+      "bytes": 90903,
+      "relative_path": "data/reports/axis_libero_30k/track3_j5_executor_recovery/v4_corrected_task10_demo0_nominal/trajectory.npz",
+      "sha256": "7fa6f964e0cbd93ea8dd961769e767b41d8d6cc3fcfbc5410e2321362669ed2e"
+    },
+    {
+      "bytes": 33084,
+      "relative_path": "data/reports/axis_libero_30k/track3_j5_executor_recovery/v4_corrected_task10_demo0_nominal/wrist.mp4",
+      "sha256": "28b9c77aee5c57eba296a6591575a0ba7cd92df4e3b6de5b32dc47c21bde1f03"
+    },
+    {
+      "bytes": 1421,
+      "relative_path": "data/reports/axis_libero_30k/track3_j5_executor_recovery/v5_closeout.json",
+      "sha256": "9ff5701b0cfbd9168869de2f2ba325b092406087f0fcd21b0c409d59208b9f32"
+    },
+    {
+      "bytes": 214,
+      "relative_path": "data/reports/axis_libero_30k/track3_j5_executor_recovery/v5_phase_status.csv",
+      "sha256": "b93e040858418904e11d3daa68c787ed6b615ceb1d4955469978335e5644619d"
+    }
+  ],
+  "entries_exclude_self": true,
+  "logs_and_pid_excluded": true,
+  "schema_version": "track3_j5_final_manifest_v1"
+}

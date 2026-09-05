@@ -1,0 +1,17 @@
+{
+  "commit": "1b704405fa918b5237a50a1219d4a26b61c293de",
+  "pid": 1451905,
+  "schema_version": "track3_j5_recovery_supervisor_v1",
+  "status": "track3_j5_executor_recovery_stopped_V5_hard_stop",
+  "tool_sha256": "eb6993d3d5cb78430bdacb2c4d02eed950bb5dd96041a0f5ef66b01c1c661189",
+  "upstream": {
+    "category": "family_failure",
+    "first_error": {
+      "category": "family_failure",
+      "phase": "V4",
+      "reason": "failed_gates:contact_v3,same_demo_init_pose,source_goal,stall"
+    },
+    "phase": "V4",
+    "status": "track3_j5_corrected_support_nominal_failed_gate_pending_review"
+  }
+}

@@ -1,0 +1,7 @@
+phase,status
+V0,track3_j5_v0_passed
+V1,track3_j5_v1_support_contract_passed
+V2,track3_j5_v2_passed
+V3,track3_j5_v3_clean_release_ready
+V4,track3_j5_corrected_support_nominal_failed_gate_pending_review
+V5,hard_stop

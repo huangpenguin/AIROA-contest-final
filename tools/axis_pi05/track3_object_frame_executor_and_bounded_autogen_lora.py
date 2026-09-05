@@ -315,16 +315,17 @@ def _x1() -> dict[str, Any]:
     import numpy as np
 
     w1 = strict_json(W1_REPORT)
+    state0 = w1["state_anchors"]["state0"]["bowl"]
+    relative = w1["reverse_acquisition_anchor"]["relative_pose_xyzw"]
     with np.load(W4_TRAJECTORY, allow_pickle=False) as archive:
-        phases = [str(value) for value in archive["phase"].tolist()]
-        place_indices = [index for index, phase in enumerate(phases) if phase == "place_same_demo_init_pose"]
-        old_position = archive["target_position_m"][place_indices[0]].astype(float).tolist() if place_indices else []
-        old_quaternion = archive["target_quaternion_xyzw"][place_indices[0]].astype(float).tolist() if place_indices else []
         action_count = int(archive["actions"].shape[0])
         state_count = int(archive["states"].shape[0])
         goal_trace_count = int(archive["goal_trace"].shape[0])
-    state0 = w1["state_anchors"]["state0"]["bowl"]
-    relative = w1["reverse_acquisition_anchor"]["relative_pose_xyzw"]
+    # W4 stopped before the place stage, so reconstruct its registered target
+    # from the old source formula instead of fabricating an absent trajectory
+    # row: state0 object position + fixed z offset and object quaternion.
+    old_position = [float(state0["pos_m"][0]), float(state0["pos_m"][1]), float(state0["pos_m"][2]) + 0.055]
+    old_quaternion = [float(item) for item in state0["quat"]]
     expected = compose_object_to_eef(state0, relative)
     old_position_error = vector_norm([old_position[index] - expected["pos_m"][index] for index in range(3)]) if old_position else float("inf")
     old_rotation_error = qgeo(old_quaternion, expected["quat"]) if old_quaternion else float("inf")
@@ -343,7 +344,7 @@ def _x1() -> dict[str, Any]:
         "created_at_utc": now(),
         "checks": checks,
         "history": {"source_samples": len(w4_child.get("reverse", {}).get("source_values", [])), "contact_completion": w4_child.get("hard_gate", {}).get("contact_completion"), "same_demo_destination": w4_child.get("hard_gate", {}).get("same_demo_destination")},
-        "destination_transform": {"formula": "T_world_object_des * T_object_eef_anchor", "anchor_source": "W1_state75_release_side", "desired_object_pose_source": "W1_state0_same_demo_bowl_pose", "expected_eef_position_m": expected["pos_m"], "expected_eef_quaternion_xyzw": expected["quat"], "old_target_position_m": old_position, "old_target_quaternion_xyzw": old_quaternion, "old_target_position_error_m": old_position_error, "old_target_rotation_error_rad": old_rotation_error},
+        "destination_transform": {"formula": "T_world_object_des * T_object_eef_anchor", "anchor_source": "W1_state75_release_side", "desired_object_pose_source": "W1_state0_same_demo_bowl_pose", "expected_eef_position_m": expected["pos_m"], "expected_eef_quaternion_xyzw": expected["quat"], "old_target_reconstruction": "W4 source formula; place stage was not entered", "old_target_position_m": old_position, "old_target_quaternion_xyzw": old_quaternion, "old_target_position_error_m": old_position_error, "old_target_rotation_error_rad": old_rotation_error},
         "trajectory_schema": {"actions_states_alignment": "N", "predicate_trace_alignment": "t0_then_post_step", "predicate_trace_length": "N+1", "old_action_count": action_count, "old_state_count": state_count, "old_goal_trace_count": goal_trace_count},
         "finalizer_contract": ["producer_close_and_fsync", "phase_summary_and_csv", "inactive_cursor_and_supervisor_closeout", "manifest", "strict_hash_npz_video_csv_validation", "targeted_full_tests", "final_validation_report", "clean_commit"],
         "resource_boundary": {"simulator_started": False, "gpu_started": False, "generation": False, "training": False, "zip": False, "historical_w4_untouched": True},

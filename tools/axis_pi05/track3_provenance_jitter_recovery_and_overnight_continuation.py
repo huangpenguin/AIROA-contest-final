@@ -46,6 +46,11 @@ QUERY_P99_WARNING_MS = 500.0
 TASK_ORDER = (10, 20, 19)
 SEEDS = {10: 3100, 20: 3200, 19: 3190}
 FAMILY = {10: "support_remove", 20: "containment_remove", 19: "articulation_close"}
+REVERSE_INSTRUCTIONS = {
+    "support_remove": "Remove the black bowl from the plate and place it on the table region where it started.",
+    "containment_remove": "Take the orange juice out of the basket and place it on the floor target area.",
+    "articulation_close": "Close the middle drawer of the wooden cabinet.",
+}
 
 
 def now() -> str:
@@ -541,7 +546,10 @@ def osc_pose_action(translation: Sequence[float], rotation: Sequence[float], gri
         translation_values = [item * tclip / tnorm for item in translation_values]
     if rnorm > rclip:
         rotation_values = [item * rclip / rnorm for item in rotation_values]
-    value = translation_values + rotation_values + [1.0 if float(gripper) >= 0 else -1.0]
+    # Robosuite's OSC_POSE controller consumes normalized translation and
+    # rotation deltas.  Keep the physical clips separate, then normalize each
+    # block independently before constructing the 7D action.
+    value = [item / tclip for item in translation_values] + [item / rclip for item in rotation_values] + [1.0 if float(gripper) >= 0 else -1.0]
     if len(value) != 7 or not all(math.isfinite(item) for item in value):
         raise ValueError("invalid_7d_osc_pose_action")
     return value
@@ -591,7 +599,7 @@ def run_j4() -> dict[str, Any]:
             family_status[FAMILY[task]] = "closed_hdf5_exception"
     profiles = {family: {name: {**value, "profile_name": name, "frozen_before_gpu": True} for name, value in PROFILE_CONTRACT.items()} for family in FAMILY.values()}
     tests = {"all_profiles_have_se3_clip": all("rotation_clip_rad" in profile and profile["rotation_clip_rad"] > 0 for family in profiles.values() for profile in family.values()), "action_builder_shape": len(osc_pose_action([0, 0, 0], [0, 0, 0], -1, PROFILE_CONTRACT["nominal"])) == 7, "quaternion_log_identity_zero": max(abs(value) for value in quaternion_log_error([1, 0, 0, 0], [1, 0, 0, 0])) == 0.0, "all_executed_family_proofs_present": all(value in {"released", "closed_no_hdf5_proof", "closed_hdf5_exception"} for value in family_status.values())}
-    report = {"schema_version": "track3_jitter_j4_v2", "status": "track3_jitter_j4_executor_contract_passed" if all(tests.values()) else "track3_jitter_stopped_J4_contract_failure", "created_at_utc": now(), "plan": relative(PLAN), "source_j3": relative(OUT_ROOT / "j3_summary.json"), "families": family_status, "hdf5_extractions": extractions, "profiles": profiles, "executor_contract": {"controller": "OSC_POSE", "action_dim": 7, "translation_rotation_separately_clipped": True, "rotation_error": "quaternion_log_shortest_path", "gripper_values": [-1.0, 1.0], "step_budget_is_frozen": True, "contact_contract": "v3 intended receiver + demonstrator + unrelated background", "unrelated_movement_gate_m": 0.002, "stall_timeout_gate": True, "hidden_task_special_case": False}, "tests": tests, "task10_attempt4": "forbidden", "simulator_imported": False, "cuda_imported": False, "source_commit": git(("rev-parse", "HEAD")), "tool_sha256": sha256_file(Path(__file__))}
+    report = {"schema_version": "track3_jitter_j4_v2", "status": "track3_jitter_j4_executor_contract_passed" if all(tests.values()) else "track3_jitter_stopped_J4_contract_failure", "created_at_utc": now(), "plan": relative(PLAN), "source_j3": relative(OUT_ROOT / "j3_summary.json"), "families": family_status, "hdf5_extractions": extractions, "profiles": profiles, "reverse_instructions": REVERSE_INSTRUCTIONS, "executor_contract": {"controller": "OSC_POSE", "action_dim": 7, "translation_rotation_separately_clipped": True, "normalized_translation_rotation_input": True, "rotation_error": "quaternion_log_shortest_path", "gripper_values": [-1.0, 1.0], "step_budget_is_frozen": True, "contact_contract": "v3 intended receiver + demonstrator + unrelated background", "unrelated_movement_gate_m": 0.002, "stall_timeout_gate": True, "hidden_task_special_case": False}, "tests": tests, "task10_attempt4": "forbidden", "simulator_imported": False, "cuda_imported": False, "source_commit": git(("rev-parse", "HEAD")), "tool_sha256": sha256_file(Path(__file__))}
     write_json(OUT_ROOT / "j4_executor_contract.json", report)
     return report
 

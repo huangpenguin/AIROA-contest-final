@@ -48,8 +48,8 @@ def test_se3_quaternion_log_and_action_builder_are_finite_and_separate() -> None
     assert abs(error[2]) > 3.0
     action = tool.osc_pose_action([1.0, 0.0, 0.0], [0.0, 0.0, 1.0], -1, tool.PROFILE_CONTRACT["nominal"])
     assert len(action) == 7
-    assert abs(action[0] - 0.05) < 1e-12
-    assert abs(action[5] - 0.12) < 1e-12
+    assert abs(action[0] - 1.0) < 1e-12
+    assert abs(action[5] - 1.0) < 1e-12
     assert action[6] == -1.0
 
 

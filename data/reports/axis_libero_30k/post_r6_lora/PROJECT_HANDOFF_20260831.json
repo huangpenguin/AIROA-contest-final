@@ -7,7 +7,7 @@
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
   "latest_audited_execution_commit": "64a0d31c3b2864562887044bad7ef8b522a213db",
   "latest_audit_input_commit": "64a0d31c3b2864562887044bad7ef8b522a213db",
-  "latest_execution_root_commit": "64a0d31c3b2864562887044bad7ef8b522a213db",
+  "latest_execution_root_commit": "b16211bc7e48ec96ae8b89b9edf88462e73d3078",
   "latest_execution_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
@@ -3613,6 +3613,7 @@
     "plan": "docs/AXIS_PI05_TRACK3_RUNTIME_PREFLIGHT_AND_BOUNDED_CONTINUATION_PLAN.md",
     "input_execution_commit": "64a0d31c3b2864562887044bad7ef8b522a213db",
     "root_head_before_commit": "a223bc1f352a1e65e0d196ed4b0dfde0fc089660",
+    "clean_release_commit": "b16211bc7e48ec96ae8b89b9edf88462e73d3078",
     "y0": {
       "status": "passed",
       "report": "data/reports/axis_libero_30k/track3_runtime_preflight_and_bounded_continuation/y0_recheck_input_lock.json",

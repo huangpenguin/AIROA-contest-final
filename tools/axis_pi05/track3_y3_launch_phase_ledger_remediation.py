@@ -506,7 +506,7 @@ def _z0() -> dict[str, Any]:
     closeout = strict_json(Y2_CLOSEOUT)
     root_head = git(("rev-parse", "HEAD"))
     inventory_rows = _input_inventory()
-    y2_json = [path for path in Y_OUT.rglob("*.json") if path != Y2_VALIDATION]
+    y2_json = list(Y_OUT.rglob("*.json"))
     y2_strict = all(strict_json(path) is not None for path in y2_json)
     gpu = {str(index): _gpu_state(index) for index in range(4)}
     checks = {
@@ -527,6 +527,10 @@ def _z0() -> dict[str, Any]:
         "disk_available": os.statvfs(ROOT).f_bavail * os.statvfs(ROOT).f_frsize > 10 * 1024**3,
     }
     result = {"schema_version": "track3_z0_input_lock_v1", "status": "track3_z0_passed" if all(checks.values()) else "track3_z_stopped_Z0_input_lock_failure", "created_at_utc": now(), "plan": rel(PLAN), "audit": rel(AUDIT), "locked_input_commit": INPUT_COMMIT, "observed_root_head": root_head, "input_inventory": inventory_rows, "input_inventory_count": len(inventory_rows), "checks": checks, "y2_manifest": {"path": rel(Y2_MANIFEST), **_verify_manifest(Y2_MANIFEST)}, "y2_self_hashes": _self_hash_check(closeout), "gpu": gpu, "libero_plus_porcelain": porcelain(LIBERO_PLUS), "resource_boundary": {"simulator_created": False, "env_step_called": False, "cuda_initialized": False, "gpu0_touched": False, "official_gpu": False, "physics": False, "generation": False, "training": False, "zip": False}, "historical_evidence_rewritten": False, "counts": closeout.get("counts")}
+    if Z0_REPORT.is_file():
+        prior = strict_json(Z0_REPORT)
+        if prior.get("status") != "track3_z0_passed":
+            write_json(OUT / "z0_attempt1_input_lock_failure.json", prior)
     write_json(Z0_REPORT, result)
     return result
 

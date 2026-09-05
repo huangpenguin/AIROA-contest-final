@@ -1,0 +1,92 @@
+{
+  "entries": [
+    {
+      "bytes": 291,
+      "relative_path": "data/reports/axis_libero_30k/track3_support_release_anchor_osc_scale_recovery/resume_cursor.json",
+      "sha256": "3333895dc2809948dafab5b253543ae0492f0c590848f220f629ab493ae7ba8a"
+    },
+    {
+      "bytes": 349,
+      "relative_path": "data/reports/axis_libero_30k/track3_support_release_anchor_osc_scale_recovery/supervisor_closeout.json",
+      "sha256": "30953812bcc968f7ee370a5f1bba6890c1eeb21d14ac28ba705036eee349cc02"
+    },
+    {
+      "bytes": 6597,
+      "relative_path": "data/reports/axis_libero_30k/track3_support_release_anchor_osc_scale_recovery/w0_input_lock.json",
+      "sha256": "5ac2ede4dbc4dfd2dbe3c04c99fd9c9a1a1bddae89345a848f7b2a97a392f2b9"
+    },
+    {
+      "bytes": 198425,
+      "relative_path": "data/reports/axis_libero_30k/track3_support_release_anchor_osc_scale_recovery/w1_release_anchor.json",
+      "sha256": "98e78e8c8ed45c252912df466e45e52e5b97c474198ff69001357db8d8eca58a"
+    },
+    {
+      "bytes": 1559,
+      "relative_path": "data/reports/axis_libero_30k/track3_support_release_anchor_osc_scale_recovery/w2_osc_scale_contract.json",
+      "sha256": "651433c48014d6cf0638be72499891cbfb3d8bc329227aeddb2703fbf979a866"
+    },
+    {
+      "bytes": 5476,
+      "relative_path": "data/reports/axis_libero_30k/track3_support_release_anchor_osc_scale_recovery/w3_clean_release.json",
+      "sha256": "ae5230ff531b04b0cfc1502c18bb8f0f827718e3d2db20807f18246cd23a3d09"
+    },
+    {
+      "bytes": 371,
+      "relative_path": "data/reports/axis_libero_30k/track3_support_release_anchor_osc_scale_recovery/w3_heartbeat_probe.json",
+      "sha256": "59a93f5f2d25100e60a8d8649266d111552272c3f354f627d49a6760d71e7833"
+    },
+    {
+      "bytes": 13228,
+      "relative_path": "data/reports/axis_libero_30k/track3_support_release_anchor_osc_scale_recovery/w4_cpu_task10_demo0_nominal/child_result.json",
+      "sha256": "da233361a2792236d36129a5a4e2990d4f1f5ce2f8cd24737baa00f2c59c0e81"
+    },
+    {
+      "bytes": 760,
+      "relative_path": "data/reports/axis_libero_30k/track3_support_release_anchor_osc_scale_recovery/w4_cpu_task10_demo0_nominal/end_state.npy",
+      "sha256": "f9e95b511f4e41111da7d02ee3f35d3c75f5a77eb1e30194de53a6b633cae31d"
+    },
+    {
+      "bytes": 366,
+      "relative_path": "data/reports/axis_libero_30k/track3_support_release_anchor_osc_scale_recovery/w4_cpu_task10_demo0_nominal/heartbeat.json",
+      "sha256": "394ab5b0ae5d53901bb109e83d8635f6f5214a20fb76ea0eb5738c1d6bc80fab"
+    },
+    {
+      "bytes": 2116,
+      "relative_path": "data/reports/axis_libero_30k/track3_support_release_anchor_osc_scale_recovery/w4_cpu_task10_demo0_nominal/identity_preflight.json",
+      "sha256": "980dae94a3005e3868f37e3356ea2554d94ee1770606d5980147aa4faf6062c3"
+    },
+    {
+      "bytes": 19144,
+      "relative_path": "data/reports/axis_libero_30k/track3_support_release_anchor_osc_scale_recovery/w4_cpu_task10_demo0_nominal/parent_result.json",
+      "sha256": "f368d11b1f3dabf283a49cb7e1dee017c30c2c091e44a0c8b10606f58eebe947"
+    },
+    {
+      "bytes": 760,
+      "relative_path": "data/reports/axis_libero_30k/track3_support_release_anchor_osc_scale_recovery/w4_cpu_task10_demo0_nominal/start_state.npy",
+      "sha256": "f5b4d5dd93a42cd133994d23eaeae0bc21bcdc970ba6c03e15a5c37f0928b9b3"
+    },
+    {
+      "bytes": 130261,
+      "relative_path": "data/reports/axis_libero_30k/track3_support_release_anchor_osc_scale_recovery/w4_cpu_task10_demo0_nominal/trajectory.npz",
+      "sha256": "f717f1d9a14701b492c657357d5fd27e8c58dd4a303a686470549e05b10c5a27"
+    },
+    {
+      "bytes": 398,
+      "relative_path": "data/reports/axis_libero_30k/track3_support_release_anchor_osc_scale_recovery/w5_gpu3_not_evaluated.json",
+      "sha256": "b47a444cb741fde6819ee7914721bd79c4b7739b4ff82e9cd177f3f3cccba85e"
+    },
+    {
+      "bytes": 4947,
+      "relative_path": "data/reports/axis_libero_30k/track3_support_release_anchor_osc_scale_recovery/w6_closeout.json",
+      "sha256": "3f03bd1bd06e842e7ca65984e9b15ae69af5464d0939f2cbdf8a1616d6bae2df"
+    },
+    {
+      "bytes": 284,
+      "relative_path": "data/reports/axis_libero_30k/track3_support_release_anchor_osc_scale_recovery/w6_phase_status.csv",
+      "sha256": "5e62823ebb338163873cf7345f16bf7108593b21327e8ffc1345d4e1df3608a8"
+    }
+  ],
+  "entries_exclude_self": true,
+  "logs_pid_partial_excluded": true,
+  "schema_version": "track3_support_release_final_manifest_v1"
+}

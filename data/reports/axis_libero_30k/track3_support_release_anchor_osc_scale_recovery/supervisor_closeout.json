@@ -1,0 +1,9 @@
+{
+  "active": false,
+  "automatic_resume": false,
+  "pid": 1464748,
+  "root_commit": "1ec308a26e2fad306b221197ab9041d1b7633346",
+  "schema_version": "track3_support_release_supervisor_closeout_v1",
+  "status": "track3_support_release_anchor_scaled_W6_hard_stop",
+  "tool_sha256": "00d0ce3145c91b7ea61430133c16420eba37040b3fb654c04709e864ddba8f25"
+}

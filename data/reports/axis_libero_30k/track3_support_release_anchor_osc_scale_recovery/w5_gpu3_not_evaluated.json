@@ -1,0 +1,15 @@
+{
+  "phase": "W5",
+  "reason": "w4_cpu_canary_not_passed",
+  "resource_boundary": {
+    "gpu0_touched": false,
+    "gpu3_started": false,
+    "official_gpu": false
+  },
+  "schema_version": "track3_support_w5_gpu3_parent_v1",
+  "status": "not_evaluated",
+  "upstream": {
+    "category": "family_failure",
+    "status": "track3_support_release_anchor_scaled_nominal_failed_gate_pending_review"
+  }
+}

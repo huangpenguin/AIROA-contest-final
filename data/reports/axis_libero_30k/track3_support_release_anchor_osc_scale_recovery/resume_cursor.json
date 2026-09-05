@@ -1,0 +1,12 @@
+{
+  "active": false,
+  "counts": {
+    "accepted_reverse_demo": 0,
+    "exact_reverse_demo": 0,
+    "pending_autogen": 0
+  },
+  "last_update_utc": "2026-09-05T05:13:47.129040+00:00",
+  "next_phase": "review",
+  "schema_version": "track3_support_release_cursor_v1",
+  "status": "hard_stop"
+}

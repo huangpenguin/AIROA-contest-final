@@ -1,0 +1,133 @@
+{
+  "counts": {
+    "accepted_reverse_demo": 0,
+    "exact_reverse_demo": 0,
+    "pending_autogen": 0
+  },
+  "created_at_utc": "2026-09-05T05:13:47.086125+00:00",
+  "gpu": {
+    "0": {
+      "compute_processes": [
+        "1133706, /mnt/home/moriyama/workspace/ros2_project/mmdetection/.venv-yolo26/bin/python, 14440"
+      ],
+      "free": false,
+      "gpus": [
+        {
+          "index": "0",
+          "memory_total_mib": 32768.0,
+          "memory_used_mib": 14479.0,
+          "uuid": "GPU-0a004a52-e72d-9b46-0391-9488e841db41"
+        }
+      ],
+      "returncode": 0,
+      "timestamp_utc": "2026-09-05T05:13:46.739433+00:00"
+    },
+    "1": {
+      "compute_processes": [],
+      "free": true,
+      "gpus": [
+        {
+          "index": "1",
+          "memory_total_mib": 32768.0,
+          "memory_used_mib": 5.0,
+          "uuid": "GPU-dbf876c3-dcaf-054b-ac9d-035e7198ceda"
+        }
+      ],
+      "returncode": 0,
+      "timestamp_utc": "2026-09-05T05:13:46.855111+00:00"
+    },
+    "2": {
+      "compute_processes": [],
+      "free": true,
+      "gpus": [
+        {
+          "index": "2",
+          "memory_total_mib": 32768.0,
+          "memory_used_mib": 5.0,
+          "uuid": "GPU-0cf6b31a-016b-6e71-a7b5-a790922d89ae"
+        }
+      ],
+      "returncode": 0,
+      "timestamp_utc": "2026-09-05T05:13:46.970722+00:00"
+    },
+    "3": {
+      "compute_processes": [],
+      "free": true,
+      "gpus": [
+        {
+          "index": "3",
+          "memory_total_mib": 32768.0,
+          "memory_used_mib": 5.0,
+          "uuid": "GPU-b03055ef-af46-2cf8-7545-c60870f745f5"
+        }
+      ],
+      "returncode": 0,
+      "timestamp_utc": "2026-09-05T05:13:47.086073+00:00"
+    }
+  },
+  "hard_stop": {
+    "conservative": false,
+    "executed": true,
+    "generation": false,
+    "next_authority": "new_reviewed_plan_required",
+    "other_family": false,
+    "replay": false,
+    "training": false,
+    "upload": false,
+    "zip": false
+  },
+  "phase_status": {
+    "W0": "track3_support_release_w0_passed",
+    "W1": "track3_support_release_w1_anchor_passed",
+    "W2": "track3_support_release_w2_osc_scale_passed",
+    "W3": "track3_support_release_w3_clean_ready",
+    "W4": "track3_support_release_anchor_scaled_nominal_failed_gate_pending_review",
+    "W5": "not_evaluated",
+    "W6": "hard_stop"
+  },
+  "resource_boundary": {
+    "gpu0_external_process_preserved": true,
+    "gpu0_touched": false,
+    "gpu1_to_gpu3_released": true,
+    "libero_plus_untouched": true,
+    "no_generation": true,
+    "no_teleop": true,
+    "no_training": true,
+    "no_zip": true,
+    "official_gpu": false
+  },
+  "schema_version": "track3_support_w6_closeout_v1",
+  "status": "track3_support_release_anchor_scaled_W6_hard_stop",
+  "upstream": {
+    "W4": {
+      "category": "family_failure",
+      "first_error": {
+        "category": "family_failure",
+        "phase": "W4",
+        "reason": "stage_timeout:transport"
+      },
+      "status": "track3_support_release_anchor_scaled_nominal_failed_gate_pending_review"
+    },
+    "W5": {
+      "category": null,
+      "reason": "w4_cpu_canary_not_passed",
+      "status": "not_evaluated"
+    }
+  },
+  "validation": {
+    "csv_lf": true,
+    "git_diff_check": true,
+    "json_errors": [],
+    "npy_allow_pickle_false": true,
+    "npy_errors": [],
+    "npz_allow_pickle_false": true,
+    "npz_errors": [],
+    "partial_residue": [],
+    "py_compile": true,
+    "root_tests": {
+      "returncode": 0,
+      "tail": "........................................................................ [ 27%]\n.................................ss..................................... [ 54%]\n........................................................................ [ 81%]\n....................sss.......................ss                         [100%]\n=============================== warnings summary ===============================\n<frozen importlib._bootstrap>:488\n  <frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.MessageMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.\n\n<frozen importlib._bootstrap>:488\n  <frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.ScalarMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.\n\ntests/test_axis_pi05_lora_screen.py: 21 warnings\n  /home/huang/code/PARC2026_final/.venv_axis_pi05/lib/python3.12/site-packages/flax/core/scope.py:959: DeprecationWarning: shape requires ndarray or scalar arguments, got <class 'jax._src.api.ShapeDtypeStruct'> at position 0. In a future JAX release this will be an error.\n    if jnp.shape(val) != jnp.shape(abs_val):\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n257 passed, 7 skipped, 23 warnings in 72.13s (0:01:12)\n"
+    },
+    "strict_json": true
+  }
+}

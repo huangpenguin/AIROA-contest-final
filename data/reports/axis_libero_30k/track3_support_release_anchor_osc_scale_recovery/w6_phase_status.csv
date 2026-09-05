@@ -1,0 +1,8 @@
+phase,status
+W0,track3_support_release_w0_passed
+W1,track3_support_release_w1_anchor_passed
+W2,track3_support_release_w2_osc_scale_passed
+W3,track3_support_release_w3_clean_ready
+W4,track3_support_release_anchor_scaled_nominal_failed_gate_pending_review
+W5,not_evaluated
+W6,hard_stop

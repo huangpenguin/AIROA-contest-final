@@ -1,0 +1,52 @@
+{
+  "called_by_launcher": true,
+  "command": [
+    "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+    "-m",
+    "tools.axis_pi05.track3_support_release_anchor_and_osc_scale_recovery",
+    "--w4-worker",
+    "--result-output",
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_release_anchor_osc_scale_recovery/w4_cpu_task10_demo0_nominal/child_result.json"
+  ],
+  "cuda_visible_devices": "",
+  "identity": {
+    "checks": {
+      "command_exact": true,
+      "cuda_visible_devices": true,
+      "cursor_inactive": true,
+      "gpu_policy": true,
+      "openpi_head": true,
+      "pid_inactive": true,
+      "root_clean": true,
+      "root_commit": true,
+      "tool_sha256": true
+    },
+    "errors": [],
+    "expected_command": [
+      "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+      "-m",
+      "tools.axis_pi05.track3_support_release_anchor_and_osc_scale_recovery",
+      "--w4-worker",
+      "--result-output",
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_release_anchor_osc_scale_recovery/w4_cpu_task10_demo0_nominal/child_result.json"
+    ],
+    "expected_root_commit": "a7a4de49871ca646b943aeeae34b2590d8207219",
+    "gpu_policy": "cpu_no_renderer",
+    "observed_command": [
+      "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+      "-m",
+      "tools.axis_pi05.track3_support_release_anchor_and_osc_scale_recovery",
+      "--w4-worker",
+      "--result-output",
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_release_anchor_osc_scale_recovery/w4_cpu_task10_demo0_nominal/child_result.json"
+    ],
+    "observed_root_commit": "1ec308a26e2fad306b221197ab9041d1b7633346",
+    "root_commit_relation": "locked_ancestor_evidence_descendant",
+    "state": "passed"
+  },
+  "openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "phase": "w4",
+  "root_commit": "1ec308a26e2fad306b221197ab9041d1b7633346",
+  "schema_version": "track3_support_supervisor_identity_v1",
+  "tool_sha256": "00d0ce3145c91b7ea61430133c16420eba37040b3fb654c04709e864ddba8f25"
+}

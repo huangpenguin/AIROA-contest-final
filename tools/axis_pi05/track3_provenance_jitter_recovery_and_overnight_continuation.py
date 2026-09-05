@@ -18,6 +18,7 @@ import signal
 import subprocess
 import sys
 import time
+import traceback
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Mapping, Sequence
@@ -35,6 +36,11 @@ R6_RAW = ROOT / "outputs/axis_pi05/axis_libero_lora_screen/L2_action_lora_heads/
 R6_FOLDED = ROOT / "outputs/axis_pi05/axis_libero_lora_folded/r6_dual_l2_fresh500_r1_step500/model.safetensors"
 MODULE = "tools.axis_pi05.track3_provenance_jitter_recovery_and_overnight_continuation"
 OLD_MODULE = "tools.axis_pi05.track3_overnight_autogen_lora_and_zip"
+S3_SUMMARY = ROOT / "data/reports/axis_libero_30k/track3_public_autogen/s3_reverse_adapter.json"
+START_BUNDLE = ROOT / "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/start_states.npz"
+J5_ROOT = OUT_ROOT / "j5_pilots"
+J6_ROOT = OUT_ROOT / "j6_generation_replay"
+GENERATED_ROOT = ROOT / "data/generated/track3_reverse_autogen_v2"
 ROOT_INPUT_COMMIT = "8c0d296f1dfedb0c777040a733b6f9e352234111"
 OPENPI_INPUT_COMMIT = "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1"
 GPU3 = 3
@@ -464,7 +470,7 @@ def _pid_is_this_supervisor(pid: int) -> bool:
 
 
 def run_supervisor() -> dict[str, Any]:
-    """Single-instance, SSH-independent supervisor for the J3 lane."""
+    """Single-instance, SSH-independent supervisor for the J3--J11 lane."""
     OUT_ROOT.mkdir(parents=True, exist_ok=True)
     pid_path = OUT_ROOT / "supervisor.pid"
     if pid_path.exists():
@@ -479,8 +485,33 @@ def run_supervisor() -> dict[str, Any]:
     cursor_path = OUT_ROOT / "resume_cursor.json"
     write_json(cursor_path, {"schema_version": "track3_jitter_cursor_v2", "status": "active", "pid": os.getpid(), "commit": git(("rev-parse", "HEAD")), "tool_sha256": sha256_file(Path(__file__)), "last_heartbeat_utc": now(), "next_phase": "J3"})
     try:
-        j3 = run_j3()
-        final = {"schema_version": "track3_jitter_supervisor_v1", "status": "completed_J3", "j3_status": j3.get("status"), "last_heartbeat_utc": now(), "pid": os.getpid(), "commit": git(("rev-parse", "HEAD")), "tool_sha256": sha256_file(Path(__file__)), "next_phase": "J4" if j3.get("released_families") else "J11"}
+        existing_j11 = OUT_ROOT / "j11_closeout.json"
+        if existing_j11.is_file():
+            return strict_json_load(existing_j11)
+        j3_path = OUT_ROOT / "j3_summary.json"
+        j3 = strict_json_load(j3_path) if j3_path.is_file() else run_j3()
+        if not j3.get("released_families"):
+            final = run_j11("J3", "no_family_release")
+        else:
+            j4_path = OUT_ROOT / "j4_executor_contract.json"
+            j4 = strict_json_load(j4_path) if j4_path.is_file() else run_j4()
+            if j4.get("status") != "track3_jitter_j4_executor_contract_passed":
+                final = run_j11("J4", "executor_contract_failure")
+            else:
+                j5_path = OUT_ROOT / "j5_pilot_summary.json"
+                j5 = strict_json_load(j5_path) if j5_path.is_file() else run_j5()
+                if not j5.get("generation_profiles"):
+                    final = run_j11("J5", "no_family_release")
+                else:
+                    j6_path = OUT_ROOT / "j6_generation_replay_summary.json"
+                    j6 = strict_json_load(j6_path) if j6_path.is_file() else run_j6()
+                    if j6.get("status") != "track3_jitter_j6_release_for_j7":
+                        final = run_j11("J6", "insufficient_machine_acceptance")
+                    else:
+                        # J7--J10 are only entered after machine acceptance;
+                        # their implementation is deliberately fail-closed.
+                        final = run_j11("J7", "downstream_training_gate_not_implemented")
+        final = {"schema_version": "track3_jitter_supervisor_v2", **final, "supervisor_pid": os.getpid(), "last_heartbeat_utc": now(), "commit": git(("rev-parse", "HEAD")), "tool_sha256": sha256_file(Path(__file__))}
         write_json(cursor_path, final)
         write_json(OUT_ROOT / "supervisor_closeout.json", final)
         return final
@@ -604,6 +635,494 @@ def run_j4() -> dict[str, Any]:
     return report
 
 
+# ---------------------------------------------------------------------------
+# J5/J6: bounded SE(3) executor and fresh replay.  Runtime imports stay in
+# these child functions so J0--J2 remain simulator/CUDA-free.
+
+
+def _spec_for_task(task: int) -> dict[str, Any]:
+    summary = strict_json_load(S3_SUMMARY)
+    return next(row for row in summary["specs"] if int(row["task_index"]) == int(task))
+
+
+def _quat_mul_values(left: Sequence[float], right: Sequence[float]) -> list[float]:
+    lw, lx, ly, lz = _quat_normalize(left)
+    rw, rx, ry, rz = _quat_normalize(right)
+    return [lw * rw - lx * rx - ly * ry - lz * rz, lw * rx + lx * rw + ly * rz - lz * ry, lw * ry - lx * rz + ly * rw + lz * rx, lw * rz + lx * ry - ly * rx + lz * rw]
+
+
+def _j5_hdf5_reference(task: int, demo: int, model_bytes: bytes, resolved_xml: str) -> dict[str, Any]:
+    """Extract one fixed HDF5 EEF orientation and object-relative grasp pose."""
+    import h5py
+    import numpy as np
+
+    with h5py.File(HDF5_INPUTS[task], "r") as handle:
+        group = handle["data"][f"demo_{demo}"]
+        actions = np.asarray(group["actions"], dtype=np.float64)
+        states = np.asarray(group["states"], dtype=np.float64)
+        ee_ori = np.asarray(group["obs"]["ee_ori"], dtype=np.float64)
+        signs = actions[:, 6]
+        flip = next((index for index in range(1, len(signs)) if signs[index - 1] < 0 and signs[index] > 0), None)
+        index = int(flip if flip is not None else int(np.argmax(np.linalg.norm(actions[:, :3], axis=1))))
+        axis_angle = ee_ori[index].reshape(3)
+        if not np.isfinite(axis_angle).all():
+            raise ValueError("hdf5_eef_orientation_nonfinite")
+    import robosuite
+    from robosuite.utils.transform_utils import axisangle2quat, mat2quat, quat2mat
+    from tools.axis_pi05 import track3_composed_reverse_start_stabilization as composed
+    from tools.axis_pi05 import track3_dynamic_gate_reconciliation as dynamic
+    from libero.libero.envs.env_wrapper import ControlEnv
+
+    forward = None
+    try:
+        forward = ControlEnv(bddl_file_name=str(composed.FORWARD_BDDL[task]), control_freq=20, use_camera_obs=False, has_renderer=False, has_offscreen_renderer=False)
+        forward.reset()
+        forward.reset_from_xml_string(resolved_xml)
+        forward.set_init_state(states[index])
+        dynamic.controller_reset_sequence(dynamic._controller(forward), forward.sim)
+        reference = {"hdf5_path": relative(HDF5_INPUTS[task]), "hdf5_sha256": sha256_file(HDF5_INPUTS[task]), "demo_index": demo, "state_index": index, "ee_ori_axisangle": axis_angle.tolist(), "eef_quaternion_wxyz": np.asarray(axisangle2quat(axis_angle), dtype=np.float64).tolist()}
+        if task in (10, 20):
+            object_name = "akita_black_bowl_1" if task == 10 else "orange_juice_1"
+            object_pose = dynamic._object_or_site_pose(forward, object_name)
+            robot = dynamic._robot_metrics(forward)
+            if object_pose is None:
+                raise ValueError(f"hdf5_reference_object_missing:{object_name}")
+            object_pos = np.asarray(object_pose["pos_m"], dtype=np.float64)
+            object_rot = np.asarray(quat2mat(object_pose["quat"]), dtype=np.float64)
+            eef_pos = np.asarray(robot["eef_translation_m"], dtype=np.float64)
+            eef_rot = np.asarray(quat2mat(robot["eef_quaternion"]), dtype=np.float64)
+            relative_pos = object_rot.T @ (eef_pos - object_pos)
+            relative_quat = np.asarray(mat2quat(object_rot.T @ eef_rot), dtype=np.float64)
+            reference.update({"object_name": object_name, "object_pose_forward": object_pose, "eef_pose_forward": {"pos_m": eef_pos.tolist(), "quat": robot["eef_quaternion"]}, "object_inverse_eef_translation_m": relative_pos.tolist(), "object_inverse_eef_quaternion_wxyz": relative_quat.tolist(), "same_model_xml": True})
+        else:
+            robot = dynamic._robot_metrics(forward)
+            reference.update({"fixture_direction": "HDF5 EEF path and nonzero action direction", "eef_pose_forward": {"pos_m": robot["eef_translation_m"], "quat": robot["eef_quaternion"]}, "same_model_xml": True})
+        return reference
+    finally:
+        if forward is not None:
+            try:
+                forward.close()
+            except Exception:
+                pass
+
+
+def _j5_pose_from_reference(env: Any, task: int, reference: Mapping[str, Any], obs: Mapping[str, Any]) -> tuple[Any, Any]:
+    import numpy as np
+    from tools.axis_pi05 import track3_dynamic_gate_reconciliation as dynamic
+
+    if task in (10, 20):
+        pose = dynamic._object_or_site_pose(env, str(reference["object_name"]))
+        if pose is None:
+            raise RuntimeError("reverse_object_pose_missing")
+        object_pos = np.asarray(pose["pos_m"], dtype=np.float64)
+        object_quat = np.asarray(pose["quat"], dtype=np.float64)
+        object_rot = np.asarray(__import__("robosuite").utils.transform_utils.quat2mat(object_quat), dtype=np.float64)
+        relative_pos = np.asarray(reference["object_inverse_eef_translation_m"], dtype=np.float64)
+        target_pos = object_pos + object_rot @ relative_pos
+        target_quat = _quat_mul_values(object_quat, reference["object_inverse_eef_quaternion_wxyz"])
+        return target_pos, target_quat
+    robot = dynamic._robot_metrics(env)
+    return np.asarray(robot["eef_translation_m"], dtype=np.float64), list(robot["eef_quaternion"])
+
+
+def _j5_worker(task: int, demo: int, seed: int, attempt_number: int, profile_name: str, state_bundle: Path, frames_path: Path, result_path: Path) -> int:
+    import numpy as np
+
+    started = now()
+    env = forward = None
+    profile = PROFILE_CONTRACT[profile_name]
+    run_root = result_path.parent
+    trajectory_path = run_root / "trajectory.npz"
+    start_path = run_root / "start_state.npy"
+    end_path = run_root / "end_state.npy"
+    try:
+        from tools.axis_pi05 import track3_composed_reverse_start_stabilization as composed
+        from tools.axis_pi05 import track3_dynamic_gate_reconciliation as dynamic
+        from tools.axis_pi05 import track3_operator_scoped_stability as prior
+        from tools.axis_pi05 import track3_reverse_init_stabilization as base
+        from libero.libero.envs.env_wrapper import ControlEnv
+
+        np.random.seed(seed)
+        spec = _spec_for_task(task)
+        manifest, model_bytes, _init_state, _terminal_state, _demo_info = composed._demo_arrays(task, demo)
+        resolved_xml, resolution = composed._resolve_model_xml(model_bytes)
+        with np.load(state_bundle, allow_pickle=False) as archive:
+            state_key = f"task{task}_demo{demo}"
+            if state_key not in archive.files:
+                raise KeyError(f"missing_start_state:{state_key}")
+            start_state = np.asarray(archive[state_key], dtype=np.float64).copy()
+        reference = _j5_hdf5_reference(task, demo, model_bytes, resolved_xml)
+        kwargs = {"control_freq": 20, "use_camera_obs": True, "has_renderer": False, "has_offscreen_renderer": True, "render_gpu_device_id": 0, "camera_names": ["agentview", "robot0_eye_in_hand"], "camera_heights": 128, "camera_widths": 128}
+        env = ControlEnv(bddl_file_name=str(base.REVERSE_BDDL[task]), **kwargs)
+        env.reset()
+        env.reset_from_xml_string(resolved_xml)
+        env.set_init_state(start_state)
+        dynamic.controller_reset_sequence(dynamic._controller(env), env.sim)
+        initial_atoms = base.public_predicates(base.REVERSE_BDDL[task], "init")
+        goal_atoms = base.public_predicates(base.REVERSE_BDDL[task], "goal")
+        initial_goal = bool(env.check_success())
+        target_pos, target_quat = _j5_pose_from_reference(env, task, reference, env.env._get_observations())
+        if task == 10:
+            region = "main_table_akita_black_bowl_region"
+            object_name = "akita_black_bowl_1"
+            site_target = lambda: np.asarray(env.sim.data.site_xpos[env.sim.model.site_name2id(region)], dtype=np.float64).copy()
+            object_target = lambda: _j5_pose_from_reference(env, task, reference, env.env._get_observations())[0]
+            stages = [("approach_grasp", -1.0, lambda: object_target() + np.array([0, 0, 0.09]), 180), ("descend_grasp", -1.0, object_target, 140), ("close_gripper", 1.0, object_target, 45), ("lift", 1.0, lambda: object_target() + np.array([0, 0, 0.15]), 180), ("transport", 1.0, lambda: site_target() + np.array([0, 0, 0.14]), 220), ("place", 1.0, lambda: site_target() + np.array([0, 0, 0.055]), 140), ("release", -1.0, lambda: site_target() + np.array([0, 0, 0.055]), 40), ("retreat", -1.0, lambda: site_target() + np.array([0, 0, 0.16]), 90)]
+            family_object = object_name
+        elif task == 20:
+            region = "floor_target_object_region"
+            object_name = "orange_juice_1"
+            site_target = lambda: np.asarray(env.sim.data.site_xpos[env.sim.model.site_name2id(region)], dtype=np.float64).copy()
+            object_target = lambda: _j5_pose_from_reference(env, task, reference, env.env._get_observations())[0]
+            stages = [("approach_grasp", -1.0, lambda: object_target() + np.array([0, 0, 0.10]), 200), ("descend_grasp", -1.0, object_target, 160), ("close_gripper", 1.0, object_target, 50), ("lift", 1.0, lambda: object_target() + np.array([0, 0, 0.17]), 190), ("transport", 1.0, lambda: site_target() + np.array([0, 0, 0.14]), 240), ("place", 1.0, lambda: site_target() + np.array([0, 0, 0.075]), 150), ("release", -1.0, lambda: site_target() + np.array([0, 0, 0.075]), 45), ("retreat", -1.0, lambda: site_target() + np.array([0, 0, 0.18]), 100)]
+            family_object = object_name
+        else:
+            region = "wooden_cabinet_1_middle_region"
+            site_target = lambda: np.asarray(env.sim.data.site_xpos[env.sim.model.site_name2id(region)], dtype=np.float64).copy()
+            stages = [("approach_handle", -1.0, lambda: site_target() + np.array([0, -0.012, 0.012]), 200), ("close_gripper", 1.0, lambda: site_target() + np.array([0, -0.012, 0.012]), 50), ("close_drawer", 1.0, lambda: site_target() + np.array([0, -0.20, 0.0]), 300), ("hold_closed", 1.0, lambda: site_target() + np.array([0, -0.20, 0.0]), 50)]
+            family_object = "wooden_cabinet_1_middle_region"
+
+        actions: list[Any] = []
+        states: list[Any] = []
+        policy_states: list[Any] = []
+        phases: list[str] = []
+        rewards: list[float] = []
+        dones: list[bool] = []
+        eef_translation_errors: list[float] = []
+        eef_rotation_errors: list[float] = []
+        saturated: list[bool] = []
+        contacts: list[dict[str, Any]] = []
+        goal_trace: list[bool] = []
+        front: list[Any] = []
+        wrist: list[Any] = []
+        stage_results: list[dict[str, Any]] = []
+        failure_reason = None
+        for stage_name, gripper, target_fn, budget in stages:
+            stable = 0
+            stage_start = len(actions)
+            last_t = float("inf")
+            last_r = float("inf")
+            for _local in range(min(int(budget), int(profile["step_budget"]))):
+                observation = env.env._get_observations()
+                current = dynamic._robot_metrics(env)
+                target = np.asarray(target_fn(), dtype=np.float64).reshape(3)
+                translation = target - np.asarray(current["eef_translation_m"], dtype=np.float64)
+                rotation = quaternion_log_error(target_quat, current["eef_quaternion"])
+                action = np.asarray(osc_pose_action(translation, rotation, gripper, profile), dtype=np.float32)
+                tnorm = float(np.linalg.norm(translation))
+                rnorm = float(np.linalg.norm(rotation))
+                clipping = tnorm > float(profile["translation_clip_m"]) or rnorm > float(profile["rotation_clip_rad"])
+                obs_after, reward, done, _info = env.step(action)
+                observation = obs_after if isinstance(obs_after, Mapping) else env.env._get_observations()
+                image_front = np.asarray(observation["agentview_image"], dtype=np.uint8)
+                image_wrist = np.asarray(observation["robot0_eye_in_hand_image"], dtype=np.uint8)
+                if image_front.ndim != 3 or image_front.shape[-1] != 3 or image_wrist.ndim != 3 or image_wrist.shape[-1] != 3:
+                    raise ValueError("invalid_camera_frame_schema")
+                actions.append(action.copy())
+                states.append(np.asarray(env.get_sim_state(), dtype=np.float64).copy())
+                policy = np.asarray(observation["robot0_proprio-state"], dtype=np.float32).reshape(-1)
+                if not np.isfinite(policy).all():
+                    raise ValueError("policy_state_nonfinite")
+                policy_states.append(policy.copy())
+                front.append(image_front.copy()); wrist.append(image_wrist.copy())
+                phases.append(stage_name); rewards.append(float(reward)); dones.append(bool(done))
+                eef_translation_errors.append(tnorm); eef_rotation_errors.append(rnorm); saturated.append(bool(clipping))
+                min_dist = min((float(env.sim.data.contact[index].dist) for index in range(int(env.sim.data.ncon))), default=float("inf"))
+                contacts.append({"step": len(actions) - 1, "ncon": int(env.sim.data.ncon), "min_contact_dist": min_dist})
+                goal = bool(env.check_success()); goal_trace.append(goal)
+                last_t, last_r = tnorm, rnorm
+                if tnorm <= float(profile["translation_tolerance_m"]) and rnorm <= float(profile["rotation_tolerance_rad"]):
+                    stable += 1
+                else:
+                    stable = 0
+                if stable >= int(profile["stable_ticks"]):
+                    break
+                if done:
+                    break
+            reached = stable >= int(profile["stable_ticks"])
+            stage_results.append({"stage": stage_name, "frames": len(actions) - stage_start, "reached": reached, "last_translation_error_m": last_t, "last_rotation_error_rad": last_r, "step_budget": budget})
+            if not reached:
+                failure_reason = f"stage_timeout:{stage_name}"
+                break
+        final_success = bool(env.check_success())
+        if not initial_goal and failure_reason is None and final_success:
+            status = "passed"
+        else:
+            status = "failed_gate"
+            if initial_goal:
+                failure_reason = "reverse_goal_true_at_start"
+            elif failure_reason is None:
+                failure_reason = "reverse_goal_false_at_end"
+        start_path.parent.mkdir(parents=True, exist_ok=True)
+        np.save(start_path, start_state)
+        end_state = np.asarray(env.get_sim_state(), dtype=np.float64).copy()
+        np.save(end_path, end_state)
+        with frames_path.with_name(frames_path.name + ".partial").open("wb") as handle:
+            np.savez_compressed(handle, agentview=np.asarray(front, dtype=np.uint8), wrist=np.asarray(wrist, dtype=np.uint8))
+            handle.flush(); os.fsync(handle.fileno())
+        os.replace(frames_path.with_name(frames_path.name + ".partial"), frames_path)
+        with trajectory_path.with_name(trajectory_path.name + ".partial").open("wb") as handle:
+            np.savez_compressed(handle, actions=np.asarray(actions, dtype=np.float32), states=np.asarray(states, dtype=np.float64), policy_states=np.asarray(policy_states, dtype=np.float32), phase=np.asarray(phases, dtype="U64"), rewards=np.asarray(rewards, dtype=np.float32), dones=np.asarray(dones, dtype=np.bool_), eef_translation_error_m=np.asarray(eef_translation_errors, dtype=np.float32), eef_rotation_error_rad=np.asarray(eef_rotation_errors, dtype=np.float32), action_saturated=np.asarray(saturated, dtype=np.bool_), goal_trace=np.asarray(goal_trace, dtype=np.bool_), contact_ncon=np.asarray([row["ncon"] for row in contacts], dtype=np.int32))
+            handle.flush(); os.fsync(handle.fileno())
+        os.replace(trajectory_path.with_name(trajectory_path.name + ".partial"), trajectory_path)
+        result = {"schema_version": "track3_jitter_j5_worker_v1", "status": status, "created_at_utc": started, "completed_at_utc": now(), "phase": "J5", "task_index": task, "demo_index": demo, "family": FAMILY[task], "seed": seed, "attempt_number": attempt_number, "profile_name": profile_name, "fresh_process": True, "model_state_identity": {"hdf5_path": manifest["hdf5_path"], "hdf5_sha256": manifest["hdf5_sha256"], "model_file_sha256": manifest["model_file_sha256"], "resolved_model_xml_sha256": resolution["resolved_sha256"], "state_key": state_key, "start_state_sha256": sha256_file(start_path), "same_demo_model_and_state_components": True}, "reverse_instruction": REVERSE_INSTRUCTIONS[FAMILY[task]], "identity": "generator_reference_only" if status != "passed" else "pending_autogen_v3", "executor": {"controller": "OSC_POSE", "action_dim": 7, "profile": profile, "hdf5_reference": reference, "source_atom": str(initial_atoms), "goal_atom": str(goal_atoms), "family_object": family_object}, "reverse": {"initial_goal": initial_goal, "final_goal": final_success, "goal_trace": goal_trace, "stage_results": stage_results, "contact_ledger": contacts, "frame_count": len(actions), "camera_frames": {"agentview": len(front), "wrist": len(wrist)}}, "failure_reason": failure_reason, "artifacts": {"trajectory": relative(trajectory_path), "start_state": relative(start_path), "end_state": relative(end_path), "frames": relative(frames_path)}, "resource_boundary": {"gpu3_only": True, "gpu0_touched": False, "gpu1_touched": False, "gpu2_touched": False, "official_gpu": False, "training_eligible": False, "no_teleop": True}}
+    except Exception as exc:
+        result = {"schema_version": "track3_jitter_j5_worker_v1", "status": "worker_exception", "created_at_utc": started, "completed_at_utc": now(), "phase": "J5", "task_index": task, "demo_index": demo, "family": FAMILY.get(task), "seed": seed, "attempt_number": attempt_number, "profile_name": profile_name, "fresh_process": True, "error": {"type": type(exc).__name__, "message": str(exc), "traceback": traceback.format_exc()}, "resource_boundary": {"gpu3_only": True, "gpu0_touched": False, "training_eligible": False}}
+    finally:
+        for item in (env, forward):
+            if item is not None:
+                try:
+                    item.close()
+                except Exception:
+                    pass
+    write_json(result_path, result)
+    return 0 if result.get("status") == "passed" else 1
+
+
+def _encode_j5_video(path: Path, frames: Any) -> dict[str, Any]:
+    import numpy as np
+
+    images = np.asarray(frames, dtype=np.uint8)
+    if images.ndim != 4 or images.shape[0] == 0 or images.shape[-1] != 3:
+        raise ValueError(f"invalid_j5_video_frames:{list(images.shape)}")
+    partial = path.with_name(path.name + ".partial")
+    encoded = subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{images.shape[2]}x{images.shape[1]}", "-r", "20", "-i", "-", "-an", "-c:v", "libx264", "-pix_fmt", "yuv420p", "-movflags", "+faststart", str(partial)], input=images.tobytes(), capture_output=True, check=False)
+    if encoded.returncode != 0 or not partial.is_file() or partial.stat().st_size == 0:
+        partial.unlink(missing_ok=True)
+        raise RuntimeError(f"j5_ffmpeg_failed:{encoded.returncode}:{encoded.stderr.decode(errors='replace')[-1000:]}")
+    probe = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=codec_name,avg_frame_rate,nb_frames", "-of", "json", str(partial)], capture_output=True, text=True, check=False)
+    stream = json.loads(probe.stdout)["streams"][0]
+    if probe.returncode != 0 or stream.get("codec_name") != "h264" or int(stream.get("nb_frames", -1)) != int(images.shape[0]) or str(stream.get("avg_frame_rate")) not in {"20/1", "20"}:
+        partial.unlink(missing_ok=True)
+        raise RuntimeError(f"j5_ffprobe_contract_failed:{stream}")
+    os.replace(partial, path)
+    return {"path": relative(path), "bytes": path.stat().st_size, "sha256": sha256_file(path), "ffprobe": stream, "frame_count": int(images.shape[0]), "fps": "20/1", "atomic_publish": True}
+
+
+def _run_j5_canary(task: int, demo: int, profile_name: str, attempt_number: int, *, phase: str = "J5") -> dict[str, Any]:
+    root = (J5_ROOT if phase == "J5" else J6_ROOT) / f"task{task}_demo{demo}_{profile_name}_attempt{attempt_number}"
+    if root.exists():
+        raise RuntimeError(f"j5_unique_attempt_already_exists:{root}")
+    root.mkdir(parents=True, exist_ok=False)
+    child_path = root / "child_result.json"
+    parent_path = root / "parent_result.json"
+    frames_path = root / "frames.npz"
+    stdout_path = root / "stdout.log"
+    stderr_path = root / "stderr.log"
+    command = [sys.executable, "-m", MODULE, "--j5-worker", "--task-index", str(task), "--demo-index", str(demo), "--seed", str(SEEDS[task] + demo * 100 + attempt_number), "--attempt-number", str(attempt_number), "--profile", profile_name, "--state-bundle", str(START_BUNDLE), "--frames-output", str(frames_path), "--result-output", str(child_path)]
+    environment = {**os.environ, "PYTHONPATH": f"{ROOT / 'LIBERO'}:{ROOT}", "MUJOCO_GL": "egl", "CUDA_VISIBLE_DEVICES": "3", "MUJOCO_EGL_DEVICE_ID": "3", "JAX_PLATFORMS": "cpu"}
+    before = gpu_snapshot(GPU3)
+    if not before.get("free_gate"):
+        result = {"schema_version": "track3_jitter_j5_parent_v1", "status": "failed_closed", "category": "infrastructure", "phase": phase, "task_index": task, "demo_index": demo, "profile_name": profile_name, "reason": "gpu3_not_free_before_spawn", "start_snapshot": before}
+        write_json(parent_path, result)
+        return result
+    started = time.monotonic(); query_latency: list[float] = []; heartbeat_times: list[float] = []; snapshots: list[dict[str, Any]] = []; timed_out = False; termination_stage = None
+    with stdout_path.open("wb") as stdout_handle, stderr_path.open("wb") as stderr_handle:
+        process = subprocess.Popen(command, cwd=ROOT, env=environment, stdout=stdout_handle, stderr=stderr_handle, start_new_session=True)
+        while process.poll() is None:
+            tick = time.monotonic(); snapshots.append(gpu_snapshot(GPU3)); query_latency.append((time.monotonic() - tick) * 1000.0); heartbeat_times.append(time.monotonic())
+            if time.monotonic() - started >= DEADLINE_SECONDS:
+                timed_out = True; termination_stage = _terminate_group(process); break
+            time.sleep(0.1)
+        process.wait()
+    tick = time.monotonic(); after = gpu_snapshot(GPU3); query_latency.append((time.monotonic() - tick) * 1000.0); heartbeat_times.append(time.monotonic()); snapshots.append(after)
+    child = None; result_error = None
+    if child_path.is_file():
+        try:
+            loaded = strict_json_load(child_path)
+            child = loaded if isinstance(loaded, dict) else None
+            if child is None: result_error = "child_result_not_object"
+        except Exception as exc:
+            result_error = f"{type(exc).__name__}:{exc}"
+    gaps = [(heartbeat_times[index] - heartbeat_times[index - 1]) * 1000.0 for index in range(1, len(heartbeat_times))]
+    elapsed = (time.monotonic() - started) * 1000.0
+    telemetry = {"seed": SEEDS[task] + demo * 100 + attempt_number, "parent_pid": os.getpid(), "child_pid": process.pid, "child_result_pid": (child or {}).get("child_pid", process.pid), "physical_gpu_uuid": (before.get("gpus") or [{}])[0].get("uuid"), "cuda_visible_devices": "3", "start_snapshot": before, "end_snapshot": after, "peak_memory_mib": max((float(row["gpus"][0]["memory_used_mib"]) for row in snapshots if row.get("gpus")), default=-1.0), "deadline_seconds": DEADLINE_SECONDS, "term_grace_seconds": TERM_GRACE_SECONDS, "process_returncode": process.returncode, "timed_out": timed_out, "gpu_query_latency_ms": _stats(query_latency), "heartbeat_gap_ms": _stats(gaps), "supervisor_elapsed_ms": elapsed, "child_elapsed_ms": elapsed, "sampling_coverage_count": len(snapshots)}
+    telemetry_gate = telemetry_v2_gate(telemetry)
+    videos: dict[str, Any] = {}; camera = {"state": "failed", "errors": ["missing_frames"]}
+    try:
+        import numpy as np
+        with np.load(frames_path, allow_pickle=False) as archive:
+            videos["agentview"] = _encode_j5_video(root / "agentview.mp4", archive["agentview"])
+            videos["wrist"] = _encode_j5_video(root / "wrist.mp4", archive["wrist"])
+            camera = {"state": "passed", "keys": sorted(archive.files), "frame_count": int(np.asarray(archive["agentview"]).shape[0]), "shapes": {key: list(np.asarray(archive[key]).shape) for key in archive.files}}
+    except Exception as exc:
+        camera = {"state": "failed", "errors": [f"{type(exc).__name__}:{exc}"]}
+    child_status = (child or {}).get("status")
+    camera_passed = camera.get("state") == "passed" and set(videos) == {"agentview", "wrist"}
+    if telemetry_gate["state"] != "passed" or timed_out or process.returncode != 0 and child_status == "worker_exception":
+        category = "infrastructure"; status = "failed_closed"
+    elif child_status == "failed_gate" and telemetry_gate["state"] == "passed":
+        category = "family_failure"; status = "family_failed"
+    elif child_status == "passed" and telemetry_gate["state"] == "passed" and camera_passed:
+        category = "success"; status = "passed"
+    else:
+        category = "infrastructure"; status = "failed_closed"
+    result = {"schema_version": "track3_jitter_j5_parent_v1", "status": status, "category": category, "phase": phase, "task_index": task, "demo_index": demo, "family": FAMILY[task], "profile_name": profile_name, "attempt_number": attempt_number, "seed": telemetry["seed"], "parent_pid": os.getpid(), "worker_pid": process.pid, "worker_pid_match": process.pid == (child or {}).get("child_pid", process.pid), "process_returncode": process.returncode, "timed_out": timed_out, "termination_stage": termination_stage, "child_result": child, "child_result_path": relative(child_path), "result_error": result_error, "gpu_provenance": telemetry, "telemetry_v2_gate": telemetry_gate, "camera": camera, "videos": videos, "camera_artifacts_passed": camera_passed, "stdout_path": relative(stdout_path), "stderr_path": relative(stderr_path), "artifact_partial_residue": [relative(path) for path in root.rglob("*.partial")], "resource_boundary": {"gpu3_only": True, "gpu0_touched": False, "gpu1_touched": False, "gpu2_touched": False, "official_gpu": False, "no_teleop": True, "training_eligible": False}}
+    write_json(parent_path, result)
+    return result
+
+
+def run_j5() -> dict[str, Any]:
+    j4 = strict_json_load(OUT_ROOT / "j4_executor_contract.json") if (OUT_ROOT / "j4_executor_contract.json").is_file() else {}
+    if j4.get("status") != "track3_jitter_j4_executor_contract_passed":
+        result = {"schema_version": "track3_jitter_j5_v1", "status": "not_evaluated", "reason": "j4_not_passed", "task10_attempt4": "forbidden"}
+        write_json(OUT_ROOT / "j5_pilot_summary.json", result); return result
+    pilots: list[dict[str, Any]] = []; generation_profiles: dict[str, str] = {}; infrastructure_failure = None
+    for task in TASK_ORDER:
+        family = FAMILY[task]
+        if j4.get("families", {}).get(family) != "released":
+            continue
+        family_success = None
+        for attempt, profile_name in enumerate(("nominal", "conservative"), start=1):
+            row = _run_j5_canary(task, demo=0, profile_name=profile_name, attempt_number=attempt)
+            pilots.append(row)
+            if row.get("status") == "passed":
+                family_success = profile_name; generation_profiles[family] = profile_name; break
+            if row.get("category") == "infrastructure":
+                infrastructure_failure = row; break
+        if infrastructure_failure is not None:
+            break
+    if infrastructure_failure is not None:
+        status = "track3_jitter_stopped_J5_infrastructure_failure"
+    elif generation_profiles:
+        status = "track3_jitter_j5_partial_family_release" if len(generation_profiles) < len([family for family in FAMILY.values() if j4.get("families", {}).get(family) == "released"]) else "track3_jitter_j5_all_families_released"
+    else:
+        status = "track3_jitter_stopped_J5_no_family_release"
+    result = {"schema_version": "track3_jitter_j5_v1", "status": status, "created_at_utc": now(), "plan": relative(PLAN), "pilots": pilots, "generation_profiles": generation_profiles, "released_families": sorted(generation_profiles), "attempt_budget": 6, "attempts_used": len(pilots), "task10_attempt4": "forbidden", "counts": {"pilot_passed": sum(row.get("status") == "passed" for row in pilots), "family_failures": sum(row.get("category") == "family_failure" for row in pilots), "infrastructure_failures": sum(row.get("category") == "infrastructure" for row in pilots), "pending_autogen": 0, "accepted_reverse_demo": 0}, "resource_boundary": {"gpu3_only": True, "gpu0_touched": False, "official_gpu": False, "no_training": True, "no_fast_or_zip": True}}
+    write_json(OUT_ROOT / "j5_pilot_summary.json", result)
+    return result
+
+
+def _j6_replay_worker(asset_dir: Path, run_index: int, result_path: Path) -> int:
+    import numpy as np
+    started = now(); env = None
+    try:
+        from tools.axis_pi05 import track3_composed_reverse_start_stabilization as composed
+        from tools.axis_pi05 import track3_dynamic_gate_reconciliation as dynamic
+        from tools.axis_pi05 import track3_reverse_init_stabilization as base
+        from libero.libero.envs.env_wrapper import ControlEnv
+        metadata = strict_json_load(asset_dir / "child_result.json")
+        task = int(metadata["task_index"]); demo = int(metadata["demo_index"])
+        manifest, model_bytes, _init, _terminal, _info = composed._demo_arrays(task, demo)
+        xml, resolution = composed._resolve_model_xml(model_bytes)
+        start = np.asarray(np.load(asset_dir / "start_state.npy"), dtype=np.float64)
+        actions = np.asarray(np.load(asset_dir / "trajectory.npz", allow_pickle=False)["actions"], dtype=np.float32)
+        env = ControlEnv(bddl_file_name=str(base.REVERSE_BDDL[task]), control_freq=20, use_camera_obs=False, has_renderer=False, has_offscreen_renderer=False)
+        env.reset(); env.reset_from_xml_string(xml); env.set_init_state(start); dynamic.controller_reset_sequence(dynamic._controller(env), env.sim)
+        start_goal = bool(env.check_success())
+        for action in actions:
+            if action.shape != (7,) or not np.isfinite(action).all() or float(action[-1]) not in {-1.0, 1.0}:
+                raise ValueError("replay_action_contract")
+            env.step(action)
+        end_goal = bool(env.check_success())
+        result = {"schema_version": "track3_jitter_j6_replay_worker_v1", "status": "passed" if not start_goal and end_goal else "failed_predicate", "created_at_utc": started, "completed_at_utc": now(), "run_index": run_index, "task_index": task, "demo_index": demo, "frame_count": len(actions), "start_goal": start_goal, "end_goal": end_goal, "model_file_sha256": manifest["model_file_sha256"], "resolved_model_xml_sha256": resolution["resolved_sha256"], "fresh_process": True, "gpu3_only": True}
+    except Exception as exc:
+        result = {"schema_version": "track3_jitter_j6_replay_worker_v1", "status": "worker_exception", "created_at_utc": started, "completed_at_utc": now(), "run_index": run_index, "error": {"type": type(exc).__name__, "message": str(exc), "traceback": traceback.format_exc()}}
+    finally:
+        if env is not None:
+            try: env.close()
+            except Exception: pass
+    write_json(result_path, result)
+    return 0 if result.get("status") == "passed" else 1
+
+
+def _fresh_replay(asset_dir: Path) -> dict[str, Any]:
+    runs: list[dict[str, Any]] = []
+    for run_index in range(1, 4):
+        result_path = asset_dir / f"replay_{run_index}.json"
+        env = {**os.environ, "PYTHONPATH": f"{ROOT / 'LIBERO'}:{ROOT}", "MUJOCO_GL": "egl", "CUDA_VISIBLE_DEVICES": "3", "MUJOCO_EGL_DEVICE_ID": "3", "JAX_PLATFORMS": "cpu"}
+        command = [sys.executable, "-m", MODULE, "--j6-replay-worker", "--asset-dir", str(asset_dir), "--run-index", str(run_index), "--result-output", str(result_path)]
+        try:
+            completed = subprocess.run(command, cwd=ROOT, env=env, capture_output=True, text=True, timeout=DEADLINE_SECONDS + TERM_GRACE_SECONDS, check=False)
+            value = strict_json_load(result_path) if result_path.is_file() else {"status": "worker_no_result", "stdout_tail": completed.stdout[-1000:], "stderr_tail": completed.stderr[-1000:]}
+            value["worker_returncode"] = completed.returncode
+        except subprocess.TimeoutExpired:
+            value = {"status": "timeout_terminated", "worker_returncode": None}
+        runs.append(value)
+        if value.get("status") != "passed": break
+    passed = sum(row.get("status") == "passed" for row in runs)
+    return {"schema_version": "track3_jitter_j6_replay_v1", "status": "replay_3_of_3_passed" if passed == 3 else "replay_failed", "required_runs": 3, "passed_runs": passed, "runs": runs}
+
+
+def _promote_accepted(pilot: Mapping[str, Any], source_dir: Path, ordinal: int) -> Path:
+    import shutil
+    target = GENERATED_ROOT / "accepted" / f"{FAMILY[int(pilot['task_index'])]}_task{int(pilot['task_index'])}_demo{int(pilot['demo_index'])}_v3_{ordinal:02d}"
+    if target.exists():
+        raise FileExistsError(target)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copytree(source_dir, target)
+    metadata_path = target / "child_result.json"
+    metadata = strict_json_load(metadata_path)
+    metadata["identity"] = "pending_autogen_v3"
+    metadata["status"] = "machine_accepted"
+    metadata["training_eligible"] = False
+    write_json(metadata_path, metadata)
+    return target
+
+
+def run_j6() -> dict[str, Any]:
+    j5 = strict_json_load(OUT_ROOT / "j5_pilot_summary.json") if (OUT_ROOT / "j5_pilot_summary.json").is_file() else {}
+    if not str(j5.get("status", "")).startswith("track3_jitter_j5_") or not j5.get("generation_profiles"):
+        result = {"schema_version": "track3_jitter_j6_v1", "status": "not_evaluated", "reason": "j5_no_release", "not_evaluated_downstream": ["J7", "J8", "J9", "J10"]}
+        write_json(OUT_ROOT / "j6_generation_replay_summary.json", result); return result
+    accepted: list[dict[str, Any]] = []; attempts: list[dict[str, Any]] = []
+    for family, profile_name in j5["generation_profiles"].items():
+        task = next(task for task in TASK_ORDER if FAMILY[task] == family)
+        pilot = next(row for row in j5["pilots"] if row.get("task_index") == task and row.get("status") == "passed")
+        pilot_dir = Path(str((pilot.get("child_result") or {}).get("artifacts", {}).get("trajectory", ""))).parent
+        # The worker paths are relative to ROOT; derive the run directory from
+        # the child result path rather than trusting a user-provided location.
+        pilot_dir = ROOT / Path(str(pilot["child_result_path"])).parent
+        replay = _fresh_replay(pilot_dir)
+        attempts.append({"task_index": task, "demo_index": 0, "profile_name": profile_name, "source": "J5_pilot", "replay": replay})
+        if replay.get("status") == "replay_3_of_3_passed":
+            target = _promote_accepted(pilot["child_result"], pilot_dir, len(accepted) + 1)
+            accepted.append({"task_index": task, "demo_index": 0, "family": family, "profile_name": profile_name, "asset_dir": relative(target), "replay": replay})
+        if len(accepted) >= 12:
+            break
+        # The second bounded train start is demo1; demo2 remains holdout.
+        generated = _run_j5_canary(task, demo=1, profile_name=profile_name, attempt_number=1, phase="J6")
+        attempts.append({"task_index": task, "demo_index": 1, "profile_name": profile_name, "source": "J6_generation", "generation": generated})
+        if generated.get("status") == "passed":
+            asset_dir = ROOT / Path(str(generated["child_result_path"])).parent
+            replay = _fresh_replay(asset_dir)
+            attempts[-1]["replay"] = replay
+            if replay.get("status") == "replay_3_of_3_passed":
+                target = _promote_accepted(generated["child_result"], asset_dir, len(accepted) + 1)
+                accepted.append({"task_index": task, "demo_index": 1, "family": family, "profile_name": profile_name, "asset_dir": relative(target), "replay": replay})
+    per_family = {family: sum(row["family"] == family for row in accepted) for family in j5.get("generation_profiles", {})}
+    status = "track3_jitter_j6_release_for_j7" if any(value >= 2 for value in per_family.values()) else "track3_jitter_stopped_J6_insufficient_machine_acceptance"
+    result = {"schema_version": "track3_jitter_j6_v1", "status": status, "created_at_utc": now(), "attempt_budget": 12, "attempts": attempts, "accepted": accepted, "per_family_accepted": per_family, "counts": {"generation_attempts": len(attempts), "fresh_replay_runs": sum(len(row.get("replay", {}).get("runs", [])) for row in attempts), "machine_accepted": len(accepted), "pending_autogen": len(accepted)}, "not_evaluated_downstream": [] if status == "track3_jitter_j6_release_for_j7" else ["J7", "J8", "J9", "J10"]}
+    write_json(OUT_ROOT / "j6_generation_replay_summary.json", result)
+    return result
+
+
+def run_j11(reason_phase: str, reason: str) -> dict[str, Any]:
+    phase_files = {"J0": "j0_input_lock.json", "J1": "j1_telemetry_v2_contract.json", "J2": "j2_derived_attempt3_release.json", "J3": "j3_summary.json", "J4": "j4_executor_contract.json", "J5": "j5_pilot_summary.json", "J6": "j6_generation_replay_summary.json"}
+    phase_status: dict[str, Any] = {}
+    for phase, filename in phase_files.items():
+        path = OUT_ROOT / filename
+        if path.is_file():
+            try: phase_status[phase] = strict_json_load(path).get("status")
+            except Exception as exc: phase_status[phase] = f"unreadable:{type(exc).__name__}"
+        else:
+            phase_status[phase] = "not_evaluated"
+    phase_status.update({phase: "not_evaluated" for phase in ("J7", "J8", "J9", "J10")})
+    summary = {"schema_version": "track3_jitter_j11_v1", "status": f"track3_jitter_recovery_stopped_{reason_phase}_{reason}", "created_at_utc": now(), "phase_status": phase_status, "reason_phase": reason_phase, "reason": reason, "counts": {"exact_reverse_demo": 0, "pending_autogen": 0, "accepted_reverse_demo": 0}, "hard_stop": {"executed": True, "no_training": True, "no_fast_or_zip": True, "no_upload_or_submission": True, "task10_attempt4": "forbidden", "next_authority": "reviewed_plan_required"}, "resource_boundary": {"gpu0_touched": False, "official_gpu": False, "no_teleop": True, "no_training": True, "libero_plus_untouched": True}}
+    write_json(OUT_ROOT / "j11_closeout.json", summary)
+    rows = ["phase,status\n"] + [f"{phase},{status}\n" for phase, status in phase_status.items()]
+    write_text(OUT_ROOT / "j11_phase_status.csv", "".join(rows))
+    entries = []
+    for path in sorted(OUT_ROOT.rglob("*")):
+        if path.is_file() and not path.name.endswith(".partial") and path.name != "j11_artifact_manifest.json":
+            entries.append({"relative_path": relative(path), "bytes": path.stat().st_size, "sha256": sha256_file(path)})
+    manifest = {"schema_version": "track3_jitter_j11_artifact_manifest_v1", "entries_exclude_self": True, "created_at_utc": now(), "entries": entries}
+    write_json(OUT_ROOT / "j11_artifact_manifest.json", manifest)
+    cursor = {"schema_version": "track3_jitter_cursor_v2", "status": "hard_stop", "active": False, "completed": [phase for phase, status in phase_status.items() if status != "not_evaluated"], "not_evaluated": [phase for phase, status in phase_status.items() if status == "not_evaluated"], "next_phase": "review", "last_heartbeat_utc": now()}
+    write_json(OUT_ROOT / "resume_cursor.json", cursor)
+    return summary
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--j0", action="store_true")
@@ -613,6 +1132,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--j4", action="store_true")
     parser.add_argument("--supervisor", action="store_true")
     parser.add_argument("--j3-worker", action="store_true")
+    parser.add_argument("--j5-worker", action="store_true")
+    parser.add_argument("--j6-replay-worker", action="store_true")
     parser.add_argument("--task-index", type=int)
     parser.add_argument("--demo-index", type=int)
     parser.add_argument("--seed", type=int)
@@ -620,12 +1141,24 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--state-bundle", type=Path)
     parser.add_argument("--frames-output", type=Path)
     parser.add_argument("--result-output", type=Path)
+    parser.add_argument("--profile")
+    parser.add_argument("--asset-dir", type=Path)
+    parser.add_argument("--run-index", type=int)
     args = parser.parse_args(argv)
     if args.j3_worker:
         required = (args.task_index, args.demo_index, args.seed, args.attempt_number, args.state_bundle, args.frames_output, args.result_output)
         if any(value is None for value in required):
             parser.error("--j3-worker requires task/demo/seed/attempt/state/frames/result")
         return _j3_worker(args.task_index, args.demo_index, args.seed, args.attempt_number, args.state_bundle, args.frames_output, args.result_output)
+    if args.j5_worker:
+        required = (args.task_index, args.demo_index, args.seed, args.attempt_number, args.profile, args.state_bundle, args.frames_output, args.result_output)
+        if any(value is None for value in required) or args.profile not in PROFILE_CONTRACT:
+            parser.error("--j5-worker requires task/demo/seed/attempt/profile/state/frames/result")
+        return _j5_worker(args.task_index, args.demo_index, args.seed, args.attempt_number, args.profile, args.state_bundle, args.frames_output, args.result_output)
+    if args.j6_replay_worker:
+        if args.asset_dir is None or args.run_index is None or args.result_output is None:
+            parser.error("--j6-replay-worker requires asset-dir/run-index/result")
+        return _j6_replay_worker(args.asset_dir, args.run_index, args.result_output)
     if args.supervisor:
         result = run_supervisor()
         print(json.dumps(result, ensure_ascii=False, sort_keys=True))

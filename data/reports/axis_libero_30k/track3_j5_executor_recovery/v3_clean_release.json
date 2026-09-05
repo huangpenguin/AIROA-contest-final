@@ -1,0 +1,57 @@
+{
+  "checks": {
+    "csv_lf": true,
+    "diff_check": true,
+    "npz_allow_pickle_false": true,
+    "py_compile": true,
+    "strict_json": true,
+    "v0": true,
+    "v1": true,
+    "v2": true,
+    "videos": true
+  },
+  "created_at_utc": "2026-09-05T03:29:03.794076+00:00",
+  "gpu3_preflight": {
+    "compute_processes": [],
+    "free": true,
+    "gpus": [
+      {
+        "index": "3",
+        "memory_total_mib": 32768.0,
+        "memory_used_mib": 5.0,
+        "uuid": "GPU-b03055ef-af46-2cf8-7545-c60870f745f5"
+      }
+    ],
+    "returncode": 0,
+    "timestamp_utc": "2026-09-05T03:29:03.993428+00:00"
+  },
+  "libero_plus_porcelain": [
+    "M libero/libero/benchmark/__init__.py",
+    "?? libero/__init__.py",
+    "?? libero/libero/assets",
+    "?? libero/libero/bddl_files/libero_t3",
+    "?? libero/libero/init_files/libero_t3"
+  ],
+  "manifest_policy": {
+    "all_entries_must_be_git_tracked": true,
+    "close_artifacts_before_manifest": true,
+    "exclude_logs_and_pid": true,
+    "exclude_self": true
+  },
+  "openpi_head": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "schema_version": "track3_j5_v3_clean_release_v1",
+  "source_commit": "8d15c2a4b8e3490d5868f345359029a2f6fc6baa",
+  "status": "track3_j5_v3_clean_release_ready",
+  "tool_sha256": "e2e9ed50192a9cfe94bc21ee378ec1b206d368c5b6eb212064d471e4342a5baf",
+  "v4_authorized": true,
+  "v4_scope": {
+    "conservative": false,
+    "demo": 0,
+    "gpu": 3,
+    "max_runs": 1,
+    "other_families": false,
+    "profile": "nominal",
+    "seed": 3111,
+    "task": 10
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "entries": [
+    {
+      "bytes": 47804,
+      "relative_path": "data/reports/axis_libero_30k/track3_j5_executor_recovery/old_nominal_videos/agentview.mp4",
+      "sha256": "e59acde130aa1ae456db1f79d6f516234e26146bff2e1e31da3c42e4f127c9e2"
+    },
+    {
+      "bytes": 61667,
+      "relative_path": "data/reports/axis_libero_30k/track3_j5_executor_recovery/old_nominal_videos/wrist.mp4",
+      "sha256": "8d41898bb5f2dd26a923ebb15326166574d9a05e2d92a71425b5ce953a746ba3"
+    },
+    {
+      "bytes": 7915,
+      "relative_path": "data/reports/axis_libero_30k/track3_j5_executor_recovery/v0_input_lock.json",
+      "sha256": "87e641f9f85c858437146c2953abf987ffc336debf02c868ca6e8279ca790d40"
+    },
+    {
+      "bytes": 2338,
+      "relative_path": "data/reports/axis_libero_30k/track3_j5_executor_recovery/v1_executor_contract.json",
+      "sha256": "f84bf4327775db8bc1f9fbf4c3de8ad481d0683cd2ea13f119be0b1332cfd83e"
+    },
+    {
+      "bytes": 3626,
+      "relative_path": "data/reports/axis_libero_30k/track3_j5_executor_recovery/v2_derived_old_nominal_errata.json",
+      "sha256": "44cda8ca2862c5bf23d5c1a13cf4f3f5e9888acdbc0ca9b81c179fde1fd68527"
+    },
+    {
+      "bytes": 1536,
+      "relative_path": "data/reports/axis_libero_30k/track3_j5_executor_recovery/v3_clean_release.json",
+      "sha256": "cac5ef0e77c90c55846db6718ff59eac5a9757ece7c9edeeb59efbe6b175b369"
+    }
+  ],
+  "entries_exclude_self": true,
+  "logs_and_pid_excluded": true,
+  "schema_version": "track3_j5_final_manifest_v1"
+}

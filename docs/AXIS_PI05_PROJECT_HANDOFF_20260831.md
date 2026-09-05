@@ -6,8 +6,8 @@
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_j5_executor_contract_and_atomic_video_recovery_planned`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_J5_EXECUTOR_CONTRACT_AND_ATOMIC_VIDEO_RECOVERY_PLAN.md`
+> 当前总状态：`track3_support_release_anchor_and_osc_scale_recovery_planned`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_SUPPORT_RELEASE_ANCHOR_AND_OSC_SCALE_RECOVERY_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -15,7 +15,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3 task10/20/19的P3 camera/provenance已闭合，但首次task10 manipulation pilot暴露Robosuite quaternion `xyzw`被按`wxyz`处理、`*.mp4.partial`、child return-code分类、J11映射和manifest finalization缺陷。下一计划只做support executor/基础设施最小恢复并运行一次corrected task10 nominal GPU3 canary；不进入其他family、generation或训练，用户无需Teleop。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3 corrected task10 canary已排除旧quaternion/video/process分类错误，但仍暴露OSC rotation physical scale、release-side HDF5 grasp anchor、stage-dependent三态和launcher identity缺口。下一计划先CPU闭合这些合同并运行一次no-renderer完整canary；只有通过才允许一次GPU3 camera canary，不进入其他family、generation或训练，用户无需Teleop。
 
 ## 2. 数据与复现基础
 
@@ -708,3 +708,21 @@ J6–J10均为`not_evaluated`，`exact/pending/accepted=0/0/0`。没有training�
 审核还确认：J4未证明same-demo init target、object-follow、task19 joint direction或实际contact/stall/unrelated gates；J1 launcher没有实现宣称的dirty/commit/tool校验和周期heartbeat；旧J3/J11 manifests分别有`5/21`与`4/37`项因cursor/log/PID finalization顺序而漂移，J3 core entries为`14/14`、J11 core execution entries为`25/25` exact。
 
 旧计划已归档。新唯一活动计划`docs/AXIS_PI05_TRACK3_J5_EXECUTOR_CONTRACT_AND_ATOMIC_VIDEO_RECOVERY_PLAN.md`执行V0–V5：CPU统一`xyzw`、support HDF5与hard-gate合同、原子MP4、进程分类、J11传播、supervisor和manifest；离线重编码旧180帧并写derived errata；形成clean commit后仅GPU3运行一次corrected task10/demo0 nominal canary，然后hard stop。task20/task19 manipulation、conservative、J6 generation/replay、训练与ZIP均未授权。审核报告：`docs/reviews/axis_pi05/TRACK3_JITTER_J0_J5_AUDIT_20260905.md`。
+
+## 59. J5 Executor Recovery V0–V5 执行停止点（2026-09-05）
+
+执行HEAD为`11483623b7710430a197231b8ed0662c4813c12d`，V4 clean release commit为`1b704405fa918b5237a50a1219d4a26b61c293de`。V0锁定18项immutable input；V1完成explicit `xyzw`单点pose重构；V2离线原子编码旧nominal两路180帧H.264；V3形成clean commit。
+
+V4只在GPU3执行task10/demo0 nominal、seed3111一次。worker PID `1450749`正常发布`failed_gate`并return 0；parent正确分类`family_failure`。GPU3 UUID、159次telemetry、459 MiB峰值、无timeout及两路150帧H.264均通过。轨迹停在`approach_grasp`，没有进入后续抓取、搬运或放置阶段。
+
+V5 hard stop；最终manifest为`19/19` Git-tracked/hash exact。全量测试`256 passed, 7 skipped, 23 warnings`；GPU1–3释放，GPU0外部PID保留，root/OpenPI clean，`LIBERO-plus`既有dirty未改。没有retry、conservative、其他family、demo/generation、Teleop、训练/norm、FAST/ZIP、上传或提交；`exact/pending/accepted=0/0/0`。
+
+## 60. V0–V5 独立审核与 Release-Anchor/OSC-Scale 计划（2026-09-05）
+
+审核唯一结论为`remediation_required`。V0/V2/V3核心、V4单次运行的observed `family_failure`分类、V5 hard stop、manifest和禁止项获批准；但“已执行正确nominal profile”不获批准。
+
+V1的`xyzw`修正确实有效，但action builder把`rotation_clip=0.12 rad`直接归一到`±1`，本地OSC runtime则将`±1`映射到`±0.5 rad`，实际旋转增益约`4.1667×`。V1只使用forward close transition index32；独立exact-model restore确认release transition为76，release前index75有`3/1/0` demonstrator/receiver/unrelated contacts，而index32→75 object-relative pose漂移为`0.0387545 m / 0.600317 rad`。
+
+V4在approach 150帧后translation error仍为`0.104612 m`，后续contact/place阶段没有执行，所以contact completion与same-demo destination必须修正为`not_evaluated`。`launch_identity_gate`/`heartbeat_due`也没有进入真实V4 launcher，parent缺root/tool identity。
+
+旧计划已归档。唯一活动计划`docs/AXIS_PI05_TRACK3_SUPPORT_RELEASE_ANCHOR_AND_OSC_SCALE_RECOVERY_PLAN.md`执行W0–W6：先CPU闭合release-side HDF5 anchor、真实OSC scale、stage-dependent三态和supervisor；clean commit后仅一次CPU/no-renderer完整task10 canary，通过才允许一次GPU3 camera canary，然后hard stop。conservative、task20/task19、demo/generation、训练和ZIP均不授权。审核报告：`docs/reviews/axis_pi05/TRACK3_J5_EXECUTOR_RECOVERY_V0_V5_AUDIT_20260905.md`。

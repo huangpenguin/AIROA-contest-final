@@ -1,0 +1,58 @@
+{
+  "audit_report": "docs/reviews/axis_pi05/TRACK3_J5_EXECUTOR_RECOVERY_V0_V5_AUDIT_20260905.md",
+  "audited_execution_commit": "11483623b7710430a197231b8ed0662c4813c12d",
+  "clean_v4_release_commit": "1b704405fa918b5237a50a1219d4a26b61c293de",
+  "execution_approved": {
+    "exact_pending_accepted": [
+      0,
+      0,
+      0
+    ],
+    "gpu0_external_process_preserved": true,
+    "hard_stop": true,
+    "manifest_hash_exact": "19/19",
+    "manifest_git_tracked": "19/19",
+    "no_conservative_other_family_generation_training_or_zip": true,
+    "offline_videos": "2/2_h264_180_frames_20fps",
+    "root_and_openpi_clean": true,
+    "v0_hashes": "18/18",
+    "v4_camera": "2/2_h264_150_frames_20fps",
+    "v4_category": "family_failure",
+    "v4_process_returncode": 0,
+    "v4_telemetry": "passed",
+    "v4_unique_workers": 1
+  },
+  "findings": {
+    "corrected_nominal_profile_result": "not_evaluated",
+    "hdf5_close_transition_index": 32,
+    "hdf5_release_side_contact_counts_index75": {
+      "demonstrator_contact": 3,
+      "intended_receiver_contact": 1,
+      "unrelated_background_contact": 0
+    },
+    "hdf5_release_transition_index": 76,
+    "index32_to_index75_relative_pose_drift_m": 0.038754514210142026,
+    "index32_to_index75_relative_pose_drift_rad": 0.6003170154660136,
+    "launch_identity_gate_called_by_v4": false,
+    "osc_action_input_max": 1.0,
+    "osc_declared_rotation_clip_rad": 0.12,
+    "osc_rotation_gain_vs_declared_profile": 4.166666666666667,
+    "osc_runtime_rotation_output_max_rad": 0.5,
+    "release_side_hdf5_anchor_proved_by_v1": false,
+    "same_demo_init_pose_gate_corrected_state": "not_evaluated",
+    "support_contact_completion_gate_corrected_state": "not_evaluated",
+    "v4_action_saturated_frames": "150/150",
+    "v4_approach_final_rotation_error_rad": 0.046458752910739844,
+    "v4_approach_final_translation_error_m": 0.1046119973422798,
+    "v4_approach_min_translation_error_m": 0.07181409001350403,
+    "v4_parent_records_root_commit_and_tool_sha256": false
+  },
+  "historical_reports_rewritten": false,
+  "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "next_plan": "docs/AXIS_PI05_TRACK3_SUPPORT_RELEASE_ANCHOR_AND_OSC_SCALE_RECOVERY_PLAN.md",
+  "next_plan_approved": true,
+  "schema_version": "track3_j5_executor_recovery_v0_v5_audit_v1",
+  "status": "remediation_required",
+  "tests_reproduced": "256_passed_7_skipped_23_warnings",
+  "user_manual_action_required": false
+}

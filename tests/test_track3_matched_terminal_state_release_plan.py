@@ -9,12 +9,14 @@ HANDOFF = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_2026
 CANARY = ROOT / "data/reports/axis_libero_30k/track3_background_predicate_convergence/k3_gpu3_release/task19_canary.json"
 
 
-def test_only_the_track3_j5_executor_recovery_plan_is_active() -> None:
+def test_only_the_track3_support_release_anchor_scale_plan_is_active() -> None:
     handoff = json.loads(HANDOFF.read_text(encoding="utf-8"))
-    assert handoff["status"] == "track3_j5_executor_contract_and_atomic_video_recovery_planned"
-    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_J5_EXECUTOR_CONTRACT_AND_ATOMIC_VIDEO_RECOVERY_PLAN.md"
-    assert handoff["next_phase_only"] == "V0_to_V5_then_hard_stop"
+    assert handoff["status"] == "track3_support_release_anchor_and_osc_scale_recovery_planned"
+    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_SUPPORT_RELEASE_ANCHOR_AND_OSC_SCALE_RECOVERY_PLAN.md"
+    assert handoff["next_phase_only"] == "W0_to_W6_then_hard_stop"
     assert (ROOT / handoff["next_plan"]).is_file()
+    assert not (ROOT / "docs/AXIS_PI05_TRACK3_J5_EXECUTOR_CONTRACT_AND_ATOMIC_VIDEO_RECOVERY_PLAN.md").exists()
+    assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_J5_EXECUTOR_CONTRACT_AND_ATOMIC_VIDEO_RECOVERY_PLAN.md").is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_PROVENANCE_JITTER_RECOVERY_AND_OVERNIGHT_CONTINUATION_PLAN.md").exists()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_PROVENANCE_JITTER_RECOVERY_AND_OVERNIGHT_CONTINUATION_PLAN.md").is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_OVERNIGHT_AUTOGEN_LORA_AND_ZIP_PLAN.md").exists()
@@ -197,7 +199,8 @@ def test_composed_state_authorization_is_data_source_only_and_bounded() -> None:
     assert j5_audit["findings"]["j11_manifest_hash_or_bytes_mismatches"] == "4/37"
 
     recovery = handoff["track3_j5_executor_contract_and_atomic_video_recovery_authorization"]
-    assert recovery["status"] == "track3_j5_executor_contract_and_atomic_video_recovery_planned"
+    assert recovery["status"] == "track3_j5_executor_contract_and_atomic_video_recovery_completed_and_audited"
+    assert recovery["plan"].startswith("docs/archive/axis_pi05/")
     assert recovery["authorized_phases"] == ["V0", "V1", "V2", "V3", "V4", "V5_closeout"]
     scope = recovery["authorization"]
     assert scope["quaternion_convention"] == "explicit_xyzw"
@@ -208,3 +211,34 @@ def test_composed_state_authorization_is_data_source_only_and_bounded() -> None:
     assert scope["training_or_norm"] is False
     assert scope["gpu0"] is False
     assert scope["automatic_upload_or_submission"] is False
+    execution = recovery["execution"]
+    assert execution["final_commit"] == "11483623b7710430a197231b8ed0662c4813c12d"
+    assert execution["v4_unique_workers"] == 1
+    assert execution["v4_parent_category"] == "family_failure"
+    assert execution["manifest_hash_exact"] == "19/19"
+    assert execution["exact_pending_accepted"] == [0, 0, 0]
+
+    audit = handoff["track3_j5_executor_recovery_v0_v5_audit"]
+    assert audit["status"] == "remediation_required"
+    assert (ROOT / audit["audit_report"]).is_file()
+    assert (ROOT / audit["audit_summary"]).is_file()
+    assert audit["approved"]["manifest_git_tracked_hash_exact"] == "19/19"
+    assert audit["findings"]["explicit_xyzw_fixed"] is True
+    assert audit["findings"]["rotation_gain_vs_declared_profile"] == 0.5 / 0.12
+    assert audit["findings"]["hdf5_release_transition_index"] == 76
+    assert audit["findings"]["contact_completion_corrected_state"] == "not_evaluated"
+    assert audit["findings"]["intended_corrected_nominal_profile_result"] == "not_evaluated"
+
+    next_recovery = handoff["track3_support_release_anchor_and_osc_scale_recovery_authorization"]
+    assert next_recovery["status"] == "track3_support_release_anchor_and_osc_scale_recovery_planned"
+    assert next_recovery["authorized_phases"] == ["W0", "W1", "W2", "W3", "W4", "W5", "W6_closeout"]
+    next_scope = next_recovery["authorization"]
+    assert next_scope["reverse_acquisition_anchor_index"] == 75
+    assert next_scope["controller_rotation_output_max_rad"] == 0.5
+    assert next_scope["physical_rotation_clip_rad"] == 0.12
+    assert next_scope["cpu_no_renderer_full_canaries_max"] == 1
+    assert next_scope["gpu3_camera_canaries_max_after_cpu_pass"] == 1
+    assert next_scope["support_conservative_profile"] is False
+    assert next_scope["task20_or_task19_manipulation"] is False
+    assert next_scope["training_or_norm"] is False
+    assert next_scope["gpu0"] is False

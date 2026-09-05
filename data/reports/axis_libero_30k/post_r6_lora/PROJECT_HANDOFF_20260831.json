@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-05",
-  "status": "track3_j5_executor_contract_and_atomic_video_recovery_planned",
+  "status": "track3_support_release_anchor_and_osc_scale_recovery_planned",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
-  "latest_audited_execution_commit": "7ae488b4475169ac1cc3b586158454639e6a2be9",
-  "latest_audit_input_commit": "7ae488b4475169ac1cc3b586158454639e6a2be9",
-  "latest_execution_root_commit": "7ae488b4475169ac1cc3b586158454639e6a2be9",
+  "latest_audited_execution_commit": "11483623b7710430a197231b8ed0662c4813c12d",
+  "latest_audit_input_commit": "11483623b7710430a197231b8ed0662c4813c12d",
+  "latest_execution_root_commit": "11483623b7710430a197231b8ed0662c4813c12d",
   "latest_execution_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
@@ -225,7 +225,7 @@
   },
   "tests": {
     "command": "PYTHONPATH=. JAX_PLATFORMS=cpu .venv_axis_pi05/bin/pytest -q tests",
-    "passed": 250,
+    "passed": 256,
     "skipped": 7,
     "warnings": 23,
     "pynvml_is_collection_blocker": false
@@ -239,7 +239,7 @@
       3
     ],
     "last_observed_gpu_memory_mib": [
-      14343,
+      14413,
       5,
       5,
       5
@@ -259,8 +259,8 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_TRACK3_J5_EXECUTOR_CONTRACT_AND_ATOMIC_VIDEO_RECOVERY_PLAN.md",
-  "next_phase_only": "V0_to_V5_then_hard_stop",
+  "next_plan": "docs/AXIS_PI05_TRACK3_SUPPORT_RELEASE_ANCHOR_AND_OSC_SCALE_RECOVERY_PLAN.md",
+  "next_phase_only": "W0_to_W6_then_hard_stop",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -3291,8 +3291,8 @@
     "next_plan_approved": true
   },
   "track3_j5_executor_contract_and_atomic_video_recovery_authorization": {
-    "status": "track3_j5_executor_contract_and_atomic_video_recovery_planned",
-    "plan": "docs/AXIS_PI05_TRACK3_J5_EXECUTOR_CONTRACT_AND_ATOMIC_VIDEO_RECOVERY_PLAN.md",
+    "status": "track3_j5_executor_contract_and_atomic_video_recovery_completed_and_audited",
+    "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_J5_EXECUTOR_CONTRACT_AND_ATOMIC_VIDEO_RECOVERY_PLAN.md",
     "audited_input_commit": "7ae488b4475169ac1cc3b586158454639e6a2be9",
     "authorized_phases": ["V0", "V1", "V2", "V3", "V4", "V5_closeout"],
     "authorization": {
@@ -3344,6 +3344,119 @@
     ],
     "allowed_success_stop": "track3_j5_corrected_support_nominal_passed_pending_expansion_review",
     "allowed_family_failure_stop": "track3_j5_corrected_support_nominal_failed_gate_pending_review",
-    "next_phase_only": "V0_to_V5_then_hard_stop"
+    "next_phase_only": "superseded_by_track3_support_release_anchor_and_osc_scale_recovery_plan",
+    "execution": {
+      "final_commit": "11483623b7710430a197231b8ed0662c4813c12d",
+      "v4_clean_release_commit": "1b704405fa918b5237a50a1219d4a26b61c293de",
+      "status": "track3_j5_executor_recovery_stopped_V5_hard_stop",
+      "phase_status": {
+        "V0": "passed",
+        "V1": "passed_with_audit_findings",
+        "V2": "passed",
+        "V3": "clean_release_ready",
+        "V4": "family_failure",
+        "V5": "hard_stop"
+      },
+      "v4_unique_workers": 1,
+      "v4_seed": 3111,
+      "v4_frames": 150,
+      "v4_process_returncode": 0,
+      "v4_parent_category": "family_failure",
+      "v4_camera": "2/2_h264_150_frames_20fps",
+      "manifest_hash_exact": "19/19",
+      "exact_pending_accepted": [0, 0, 0],
+      "conservative_other_family_generation_training_zip": "not_evaluated",
+      "tests": "256_passed_7_skipped_23_warnings"
+    }
+  },
+  "track3_j5_executor_recovery_v0_v5_audit": {
+    "status": "remediation_required",
+    "audited_execution_commit": "11483623b7710430a197231b8ed0662c4813c12d",
+    "clean_v4_release_commit": "1b704405fa918b5237a50a1219d4a26b61c293de",
+    "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "audit_report": "docs/reviews/axis_pi05/TRACK3_J5_EXECUTOR_RECOVERY_V0_V5_AUDIT_20260905.md",
+    "audit_summary": "data/reports/axis_libero_30k/track3_j5_executor_recovery_audit_20260905/summary.json",
+    "approved": {
+      "v0_hashes": "18/18",
+      "offline_videos": "2/2_h264_180_frames_20fps",
+      "v4_unique_workers": 1,
+      "v4_observed_category": "family_failure",
+      "v4_process_returncode": 0,
+      "v4_telemetry_and_camera": true,
+      "v5_hard_stop": true,
+      "manifest_git_tracked_hash_exact": "19/19",
+      "exact_pending_accepted": [0, 0, 0],
+      "root_and_openpi_clean": true,
+      "libero_plus_dirty_preserved": true,
+      "gpu0_external_process_preserved": true,
+      "tests_reproduced": "256_passed_7_skipped_23_warnings"
+    },
+    "findings": {
+      "explicit_xyzw_fixed": true,
+      "osc_rotation_output_max_rad": 0.5,
+      "declared_rotation_clip_rad": 0.12,
+      "rotation_gain_vs_declared_profile": 4.166666666666667,
+      "hdf5_close_transition_index": 32,
+      "hdf5_release_transition_index": 76,
+      "release_anchor_index75_contact_counts": [3, 1, 0],
+      "index32_to_index75_relative_pose_drift_m": 0.038754514210142026,
+      "index32_to_index75_relative_pose_drift_rad": 0.6003170154660136,
+      "contact_completion_corrected_state": "not_evaluated",
+      "same_demo_destination_corrected_state": "not_evaluated",
+      "launch_identity_called_by_v4": false,
+      "v4_parent_root_tool_identity_present": false,
+      "intended_corrected_nominal_profile_result": "not_evaluated"
+    },
+    "historical_reports_rewritten": false,
+    "user_manual_action_required": false,
+    "next_plan_approved": true
+  },
+  "track3_support_release_anchor_and_osc_scale_recovery_authorization": {
+    "status": "track3_support_release_anchor_and_osc_scale_recovery_planned",
+    "plan": "docs/AXIS_PI05_TRACK3_SUPPORT_RELEASE_ANCHOR_AND_OSC_SCALE_RECOVERY_PLAN.md",
+    "audited_input_commit": "11483623b7710430a197231b8ed0662c4813c12d",
+    "authorized_phases": ["W0", "W1", "W2", "W3", "W4", "W5", "W6_closeout"],
+    "authorization": {
+      "user_manual_action": false,
+      "historical_evidence_rewrite": false,
+      "task10_p3_attempt4": false,
+      "hdf5_close_transition_index": 32,
+      "hdf5_release_transition_index": 76,
+      "reverse_acquisition_anchor_index": 75,
+      "release_anchor_contact_required": true,
+      "controller_input_max": 1.0,
+      "controller_translation_output_max_m": 0.05,
+      "controller_rotation_output_max_rad": 0.5,
+      "physical_translation_clip_m": 0.05,
+      "physical_rotation_clip_rad": 0.12,
+      "stage_dependent_tri_state": true,
+      "persistent_supervisor_and_launch_identity": true,
+      "cpu_no_renderer_full_canaries_max": 1,
+      "cpu_canary_seed": 3121,
+      "gpu3_camera_canaries_max_after_cpu_pass": 1,
+      "support_conservative_profile": false,
+      "task20_or_task19_manipulation": false,
+      "pending_or_accepted_demo": false,
+      "batch_generation_or_replay": false,
+      "training_or_norm": false,
+      "fast_or_zip": false,
+      "gpu0": false,
+      "official_gpu": false,
+      "dense_full_ft": false,
+      "human_teleop": false,
+      "automatic_upload_or_submission": false
+    },
+    "global_stop_conditions": [
+      "immutable_input_or_artifact_hash_drift",
+      "release_anchor_contact_or_pose_failure",
+      "osc_scale_or_tri_state_contract_failure",
+      "dirty_source_or_launch_identity_failure",
+      "cpu_canary_family_or_infrastructure_failure",
+      "gpu3_not_free_or_gpu_provenance_failure",
+      "manifest_checkout_failure"
+    ],
+    "allowed_success_stop": "track3_support_release_anchor_scaled_nominal_passed_pending_generation_review",
+    "allowed_family_failure_stop": "track3_support_release_anchor_scaled_nominal_failed_gate_pending_review",
+    "next_phase_only": "W0_to_W6_then_hard_stop"
   }
 }

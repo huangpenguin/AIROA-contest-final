@@ -1,6 +1,7 @@
 # AXIS Pi0.5 计划索引与审核生命周期
 
 > 更新日期：2026-09-05（Asia/Tokyo）
+> 跨session入口：先完整读取根目录`AGENTS.md`与`MEMORY.md`，再读取本索引、handoff、machine JSON、唯一活动计划和最新审核；先查live PID/cursor，禁止重复启动。
 > 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_PROVENANCE_JITTER_RECOVERY_AND_OVERNIGHT_CONTINUATION_PLAN.md`
 > 当前状态：`track3_provenance_jitter_recovery_and_overnight_continuation_planned`
 > 最新审核：`docs/reviews/axis_pi05/TRACK3_OVERNIGHT_O0_O2_AUDIT_20260905.md`

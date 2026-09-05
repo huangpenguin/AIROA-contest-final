@@ -12,6 +12,13 @@
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
   "branch_has_upstream": false,
+  "session_entrypoint": {
+    "instructions": "AGENTS.md",
+    "project_memory": "MEMORY.md",
+    "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
+    "markdown_handoff": "docs/AXIS_PI05_PROJECT_HANDOFF_20260831.md",
+    "rule": "read_all_then_check_live_pid_cursor_and_git_before_any_mutation"
+  },
   "nested_openpi_commit": "b58aff0",
   "dataset": {
     "path": "data/raw/hf/physical-intelligence/libero",

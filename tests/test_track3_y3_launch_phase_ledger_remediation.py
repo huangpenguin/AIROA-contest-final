@@ -44,6 +44,17 @@ def test_worker_dispatch_rejects_unknown_duplicate_and_missing_args(tmp_path: Pa
     assert subprocess.run(base + ["--result-output", str(result_path), "--result-output", str(result_path)], cwd=ROOT, capture_output=True, check=False).returncode == 2
 
 
+def test_z5_dispatch_contract_and_profile_are_cpu_first(tmp_path: Path) -> None:
+    result_path = tmp_path / "result.json"
+    base = [sys.executable, "-m", tool.MODULE, "--z5-worker"]
+    assert subprocess.run(base, cwd=ROOT, capture_output=True, check=False).returncode == 2
+    assert subprocess.run(base + ["--result-output", str(result_path), "--unknown"], cwd=ROOT, capture_output=True, check=False).returncode == 2
+    assert subprocess.run(base + ["--result-output", str(result_path), "--result-output", str(result_path)], cwd=ROOT, capture_output=True, check=False).returncode == 2
+    assert tool.Z5_PROFILE["rotation_output_scale_rad"] == 0.5
+    assert tool.Z5_PROFILE["rotation_clip_rad"] == 0.12
+    assert tool.Z5_PROFILE["name"] == "object_frame_nominal"
+
+
 def test_failed_gate_and_worker_exception_are_distinct() -> None:
     assert tool.classify_worker_result(0, {"status": "failed_gate"})["category"] == "family_failure"
     assert tool.classify_worker_result(1, {"status": "worker_exception"})["category"] == "infrastructure"

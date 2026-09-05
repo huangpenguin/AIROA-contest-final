@@ -10,7 +10,7 @@
     "v2": true,
     "videos": true
   },
-  "created_at_utc": "2026-09-05T03:29:03.794076+00:00",
+  "created_at_utc": "2026-09-05T03:41:20.137537+00:00",
   "gpu3_preflight": {
     "compute_processes": [],
     "free": true,
@@ -23,7 +23,7 @@
       }
     ],
     "returncode": 0,
-    "timestamp_utc": "2026-09-05T03:29:03.993428+00:00"
+    "timestamp_utc": "2026-09-05T03:41:20.338655+00:00"
   },
   "libero_plus_porcelain": [
     "M libero/libero/benchmark/__init__.py",
@@ -40,9 +40,9 @@
   },
   "openpi_head": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
   "schema_version": "track3_j5_v3_clean_release_v1",
-  "source_commit": "8d15c2a4b8e3490d5868f345359029a2f6fc6baa",
+  "source_commit": "0b17f663b3f64ba3547ac044fb17fd18f4bbed6a",
   "status": "track3_j5_v3_clean_release_ready",
-  "tool_sha256": "e2e9ed50192a9cfe94bc21ee378ec1b206d368c5b6eb212064d471e4342a5baf",
+  "tool_sha256": "e56453061913020e007ec973bb052f73a32b91d5787748cc2fc52b20c63554cd",
   "v4_authorized": true,
   "v4_scope": {
     "conservative": false,

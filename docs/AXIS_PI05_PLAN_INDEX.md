@@ -3,12 +3,12 @@
 > 更新日期：2026-09-06（Asia/Tokyo）
 > 跨session入口：先完整读取根目录`AGENTS.md`与`MEMORY.md`，再读取本索引、handoff、machine JSON、唯一活动计划和最新审核；先查live PID/cursor，禁止重复启动。
 > 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md`
-> 当前状态：`track3_z4_prephysics_release_ready_pending_clean_commit`
+> 当前状态：`track3_z4_prephysics_release_ready_for_z5`
 > 最新审核：`docs/reviews/axis_pi05/TRACK3_RUNTIME_PREFLIGHT_Y0_Y2_AUDIT_20260906.md`
 
 ## 1. 本轮执行停止点
 
-Z0–Z4 已在新 namespace 完成 CPU/code-only 执行：Z0 锁定 45/45 输入与资源边界；Z1 exact child argv、原子结果、16 MiB stdout 和 return-code 分类回归通过；Z2 显式 frozen source identity 与真实 dirty fail-closed 通过；Z3 阶段 ledger、stall/acquisition barrier 与 destination 数值门禁通过；Z4 三份 HDF5/model/state no-physics resolution、strict JSON/NPY/NPZ/CSV、py_compile、定向 8 tests 与全量 280 tests 通过。当前等待 clean release commit 与 post-commit identity note；Z5–Z14 仍为 `not_evaluated`，没有 physics、GPU、generation、replay、训练或 ZIP。
+Z0–Z4 已在新 namespace 完成 CPU/code-only 执行：Z0 锁定 45/45 输入与资源边界；Z1 exact child argv、原子结果、16 MiB stdout 和 return-code 分类回归通过；Z2 显式 frozen source identity 与真实 dirty fail-closed 通过；Z3 阶段 ledger、stall/acquisition barrier 与 destination 数值门禁通过；Z4 三份 HDF5/model/state no-physics resolution、strict JSON/NPY/NPZ/CSV、py_compile、定向 8 tests 与全量 280 tests 通过，并已形成 clean source release。post-commit frozen identity note 待写入后，Z5 才可启动；Z5–Z14 仍为 `not_evaluated`，没有 physics、GPU、generation、replay、训练或 ZIP。
 
 Y0–Y2按授权停止：Y0复核inventory 45/45 bytes/SHA exact；Y2 namespace 10项全部Git-tracked，9个JSON strict、6-entry manifest exact、3项self hash exact。历史Y0 launcher误计与Y2 source-dirty失败均保留。独立复跑为`271 passed, 7 skipped, 23 warnings`，`exact/pending/accepted=0/0/0`。
 

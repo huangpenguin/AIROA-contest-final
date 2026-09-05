@@ -3,7 +3,7 @@
 > 制定日期：2026-09-06（Asia/Tokyo）
 > 审核输入：root `882958c8b863585b13f10f22445d4aa4a42b2d56`
 > nested OpenPI：`b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`
-> 当前状态：`track3_z4_prephysics_release_ready_pending_clean_commit`
+> 当前状态：`track3_z4_prephysics_release_ready_for_z5`
 > 唯一授权链：`Z0_to_Z14_then_hard_stop`
 > 用户人工操作：`not_required`
 > 执行上限：18小时；单一supervisor可原子resume，禁止第二实例、无限retry和结果后调参

@@ -84,7 +84,7 @@ def test_z0_z4_execution_evidence_is_closed_before_z5() -> None:
     handoff = json.loads((ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json").read_text(encoding="utf-8"))
     execution = handoff["track3_y3_launch_phase_ledger_remediation_execution"]
     assert execution["phase_status"]["Z0"] == "passed"
-    assert execution["phase_status"]["Z4"] == "passed_pending_clean_commit"
+    assert execution["phase_status"]["Z4"] == "passed_clean_release"
     assert all(execution["phase_status"][f"Z{i}"] == "not_evaluated" for i in range(5, 15))
     assert execution["counts"] == {"exact_reverse_demo": 0, "pending_autogen": 0, "accepted_reverse_demo": 0}
     assert all((ROOT / value).is_file() for value in execution["reports"].values())

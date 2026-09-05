@@ -6,7 +6,7 @@
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_y3_launch_phase_ledger_remediation_planned`
+> 当前总状态：`track3_z4_prephysics_release_ready_for_z5`
 > 唯一活动计划：`docs/AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
@@ -781,6 +781,6 @@ Y2 finalizer写入inactive cursor、LF phase CSV、manifest与checkout-stable ma
 
 Z0–Z4 在新 namespace `data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/` 完成。Z0 复核锁定审核输入 HEAD `56cdffa` 的 descendant、45/45 bytes/SHA、Y2 manifest `6/6`、Y2 self hash `3/3`、9 个 JSON strict、`exact/pending/accepted=0/0/0` 与 GPU/dirty 边界。Z1 以 fresh subprocess 实际接受 `--z1-worker --result-output <absolute>`，拒绝缺失/重复/未知参数，16 MiB stdout、atomic result、TERM→KILL 与 return-code 分类回归通过。Z2 只接受显式 frozen identity；真实源码 dirty、commit drift、命令/工具/OpenPI/CUDA drift 均 fail-closed，临时 Git 仓库验证无永久 dirty whitelist。
 
-Z3 将 contact completion 冻结在 `close_gripper` stable window、object-follow/source-release 固定由 `lift` window 提供；stage failure 触发 acquisition barrier，后续 gate 为 `not_evaluated`；destination 同时检查 object 与 EEF 的平移/旋转数值误差，release 后接触解除不会重写 close。Z4 对 task10/task20/task19 的公开 HDF5/model/state 做 no-physics resolution，`physics_steps=0`；strict JSON、NPY/NPZ no-pickle/finite、LF CSV、py_compile、定向 `8 passed` 与全量 `280 passed, 7 skipped, 23 warnings` 通过。Z4 closeout 为 `track3_z4_passed_pending_clean_commit`，manifest `11` entries exact，尚待最终 clean commit 后写入 frozen source identity note。
+Z3 将 contact completion 冻结在 `close_gripper` stable window、object-follow/source-release 固定由 `lift` window 提供；stage failure 触发 acquisition barrier，后续 gate 为 `not_evaluated`；destination 同时检查 object 与 EEF 的平移/旋转数值误差，release 后接触解除不会重写 close。Z4 对 task10/task20/task19 的公开 HDF5/model/state 做 no-physics resolution，`physics_steps=0`；strict JSON、NPY/NPZ no-pickle/finite、LF CSV、py_compile、定向 `8 passed` 与全量 `280 passed, 7 skipped, 23 warnings` 通过，并已形成 clean source release。manifest `11` entries exact；source identity 将以 post-commit Git note 冻结后释放 Z5。
 
 Z5–Z14 保持 `not_evaluated`，reverse demo 仍为 `exact/pending/accepted=0/0/0`；没有 ControlEnv、env.step、GPU、生成、replay、训练、norm、FAST、ZIP、上传或提交。GPU0 未触碰，LIBERO-plus 既有 dirty 未改。

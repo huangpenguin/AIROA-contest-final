@@ -546,11 +546,24 @@ def _self_hash_check(closeout: Mapping[str, Any]) -> dict[str, Any]:
 def _active_track3_processes() -> list[str]:
     rows = []
     current_pid = os.getpid()
-    for line in subprocess.run(["ps", "-eo", "pid=,cmd="], capture_output=True, text=True, check=False).stdout.splitlines():
-        fields = line.strip().split(None, 1)
-        if not fields or not fields[0].isdigit() or int(fields[0]) == current_pid:
+    process_rows = subprocess.run(["ps", "-eo", "pid=,ppid=,cmd="], capture_output=True, text=True, check=False).stdout.splitlines()
+    parent_map: dict[int, int] = {}
+    for line in process_rows:
+        fields = line.strip().split(None, 2)
+        if len(fields) >= 2 and fields[0].isdigit() and fields[1].isdigit():
+            parent_map[int(fields[0])] = int(fields[1])
+    ancestors = {current_pid}
+    cursor = current_pid
+    while (parent := parent_map.get(cursor)) is not None and parent not in ancestors:
+        if parent is None:
+            break
+        ancestors.add(parent)
+        cursor = parent
+    for line in process_rows:
+        fields = line.strip().split(None, 2)
+        if len(fields) < 3 or not fields[0].isdigit() or int(fields[0]) in ancestors:
             continue
-        lowered = line.lower()
+        lowered = fields[2].lower()
         if any(token in lowered for token in ("track3_", "axis_pi05", "autogen", "supervisor")) and "rg -i" not in lowered:
             rows.append(line.strip())
     return rows

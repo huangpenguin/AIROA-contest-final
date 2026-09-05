@@ -10,7 +10,7 @@
     "other_gpu3_free": true,
     "required_artifacts": true
   },
-  "created_at_utc": "2026-09-05T03:26:20.551751+00:00",
+  "created_at_utc": "2026-09-05T03:39:11.824470+00:00",
   "gpu0": {
     "compute_processes": [
       "1133706, /mnt/home/moriyama/workspace/ros2_project/mmdetection/.venv-yolo26/bin/python, 14340"
@@ -25,7 +25,7 @@
       }
     ],
     "returncode": 0,
-    "timestamp_utc": "2026-09-05T03:26:20.162746+00:00"
+    "timestamp_utc": "2026-09-05T03:39:11.398865+00:00"
   },
   "gpu1_to_gpu3": {
     "1": {
@@ -40,7 +40,7 @@
         }
       ],
       "returncode": 0,
-      "timestamp_utc": "2026-09-05T03:26:20.302996+00:00"
+      "timestamp_utc": "2026-09-05T03:39:11.535589+00:00"
     },
     "2": {
       "compute_processes": [],
@@ -54,7 +54,7 @@
         }
       ],
       "returncode": 0,
-      "timestamp_utc": "2026-09-05T03:26:20.424993+00:00"
+      "timestamp_utc": "2026-09-05T03:39:11.681373+00:00"
     },
     "3": {
       "compute_processes": [],
@@ -68,7 +68,7 @@
         }
       ],
       "returncode": 0,
-      "timestamp_utc": "2026-09-05T03:26:20.544084+00:00"
+      "timestamp_utc": "2026-09-05T03:39:11.812346+00:00"
     }
   },
   "hashes": {
@@ -187,7 +187,7 @@
     "training": false,
     "zip": false
   },
-  "root_head": "db621e7f859f05b5c7a3304cc843eba26d588756",
+  "root_head": "c99a98f73d24b9cee493b48902c5e65c55c215f7",
   "schema_version": "track3_j5_v0_input_lock_v1",
   "status": "track3_j5_v0_passed"
 }

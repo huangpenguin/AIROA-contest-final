@@ -3,7 +3,7 @@
     "gate_rad": 1e-05,
     "reconstruction_error_rad": 2.2696772533249593e-07
   },
-  "created_at_utc": "2026-09-05T03:26:25.138175+00:00",
+  "created_at_utc": "2026-09-05T03:39:42.343192+00:00",
   "offline_frames": {
     "shapes": {
       "agentview": [

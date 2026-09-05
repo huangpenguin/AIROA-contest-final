@@ -95,6 +95,20 @@ def write_text(path: Path, value: str) -> None:
     os.replace(partial, path)
 
 
+def write_npy_atomic(path: Path, value: Any) -> None:
+    """Publish a NumPy state file only after the complete bytes are durable."""
+    import numpy as np
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    partial = path.with_name(path.name + ".partial")
+    partial.unlink(missing_ok=True)
+    with partial.open("wb") as handle:
+        np.save(handle, np.asarray(value), allow_pickle=False)
+        handle.flush()
+        os.fsync(handle.fileno())
+    os.replace(partial, path)
+
+
 def git(args: Sequence[str], repo: Path = ROOT) -> str:
     return subprocess.run(["git", "-C", str(repo), *args], capture_output=True, text=True, check=False).stdout.strip()
 
@@ -342,15 +356,290 @@ def run_v3() -> dict[str, Any]:
     return result
 
 
+# ---------------------------------------------------------------------------
+# V4: one corrected task10/demo0 nominal canary.  This is intentionally not
+# shared with the historical J5 worker: its quaternion boundary is explicit
+# xyzw from input through controller error and compose operations.
+
+
+V4_ROOT = OUT / "v4_corrected_task10_demo0_nominal"
+V4_RESULT = V4_ROOT / "parent_result.json"
+V4_CHILD = V4_ROOT / "child_result.json"
+V4_FRAMES = V4_ROOT / "frames.npz"
+V4_SEED = 3111
+
+
+def _v4_stats(values: Sequence[float]) -> dict[str, Any]:
+    if not values:
+        return {"status": "measured", "count": 0, "min_ms": None, "p50_ms": None, "p95_ms": None, "p99_ms": None, "max_ms": None, "mean_ms": None}
+    ordered = sorted(float(item) for item in values)
+    pick = lambda fraction: ordered[min(len(ordered) - 1, max(0, math.ceil(fraction * len(ordered)) - 1))]
+    return {"status": "measured", "count": len(ordered), "min_ms": ordered[0], "p50_ms": pick(.50), "p95_ms": pick(.95), "p99_ms": pick(.99), "max_ms": ordered[-1], "mean_ms": sum(ordered) / len(ordered)}
+
+
+def _v4_telemetry_gate(record: Mapping[str, Any]) -> dict[str, Any]:
+    errors = []
+    if record.get("process_returncode") not in {0}: errors.append("process_returncode")
+    if record.get("timed_out") is not False: errors.append("timed_out")
+    if record.get("child_pid") != record.get("child_result_pid"): errors.append("child_pid_mismatch")
+    if not record.get("physical_gpu_uuid") or record.get("cuda_visible_devices") != "3": errors.append("gpu_mapping")
+    for key in ("start_snapshot", "end_snapshot"):
+        if record.get(key, {}).get("returncode") != 0 or not record.get(key, {}).get("gpus"):
+            errors.append(f"{key}_query")
+    gap = record.get("heartbeat_gap_ms", {})
+    if gap.get("status") != "measured" or gap.get("max_ms") is None or float(gap["max_ms"]) > 2000.0:
+        errors.append("heartbeat_gap")
+    if float(record.get("child_elapsed_ms", 0.0)) > 5000.0 and int(record.get("sampling_coverage_count", 0)) < 5:
+        errors.append("sampling_coverage")
+    return {"state": "passed" if not errors else "failed", "errors": errors, "heartbeat_gap_max_ms": 2000.0, "query_latency_is_diagnostic": True}
+
+
+def _v4_gate(executed: bool, passed: bool | None, reason: str | None = None, **details: Any) -> dict[str, Any]:
+    result = {"executed": bool(executed), "state": "not_evaluated" if not executed else ("passed" if passed is True else "failed"), "required": True, **details}
+    if reason is not None: result["reason"] = reason
+    return result
+
+
+def _v4_worker(frames_path: Path, result_path: Path) -> int:
+    import numpy as np
+
+    started = now(); env = None
+    try:
+        from libero.libero.envs.env_wrapper import ControlEnv
+        from tools.axis_pi05 import track3_composed_reverse_start_stabilization as composed
+        from tools.axis_pi05 import track3_dynamic_gate_reconciliation as dynamic
+        from tools.axis_pi05 import track3_operator_scoped_stability as prior
+        from tools.axis_pi05 import track3_reverse_init_stabilization as base
+
+        task = 10; demo = 0
+        manifest, model_bytes, _init, _terminal, _info = composed._demo_arrays(task, demo)
+        resolved_xml, resolution = composed._resolve_model_xml(model_bytes)
+        with np.load(STATE_BUNDLE, allow_pickle=False) as archive:
+            state_key = "task10_demo0"
+            start_state = np.asarray(archive[state_key], dtype=np.float64).copy()
+        geometry = strict_json_load(OLD_GEOMETRY)
+        reverse_bddl = base.REVERSE_BDDL[task]
+        kwargs = {"control_freq": 20, "use_camera_obs": True, "has_renderer": False, "has_offscreen_renderer": True, "render_gpu_device_id": 0, "camera_names": ["agentview", "robot0_eye_in_hand"], "camera_heights": 128, "camera_widths": 128}
+        env = ControlEnv(bddl_file_name=str(reverse_bddl), **kwargs)
+        env.reset(); env.reset_from_xml_string(resolved_xml); env.set_init_state(start_state)
+        dynamic.controller_reset_sequence(dynamic._controller(env), env.sim)
+        initial_atoms = base.public_predicates(reverse_bddl, "init")
+        goal_atoms = base.public_predicates(reverse_bddl, "goal")
+        bowl = "akita_black_bowl_1"; region = "main_table_akita_black_bowl_region"
+        object_pose = dynamic._object_or_site_pose(env, bowl)
+        if object_pose is None:
+            raise RuntimeError("task10_bowl_pose_missing")
+        object_pos = np.asarray(object_pose["pos_m"], dtype=np.float64)
+        object_quat = quat_xyzw_normalize(object_pose["quat"])
+        relative_pos = np.asarray(geometry["grasp_frame"]["T_object_inverse_T_eef_translation_m"], dtype=np.float64)
+        relative_quat = quat_xyzw_normalize(geometry["grasp_frame"]["T_object_inverse_T_eef_quaternion_wxyz"])
+        from robosuite.utils.transform_utils import quat2mat
+        grasp_pos = object_pos + np.asarray(quat2mat(object_quat), dtype=np.float64) @ relative_pos
+        grasp_quat = quat_xyzw_mul(object_quat, relative_quat)
+        init_pose = geometry["object_init_pose"]
+        init_object_pos = np.asarray(init_pose["pos_m"], dtype=np.float64)
+        source_atom = "(On akita_black_bowl_1 plate_1)"; goal_atom = "(On akita_black_bowl_1 main_table_akita_black_bowl_region)"
+        samples: list[dict[str, Any]] = []; actions: list[Any] = []; states: list[Any] = []; policy_states: list[Any] = []; phases: list[str] = []; rewards: list[float] = []; dones: list[bool] = []; t_errors: list[float] = []; r_errors: list[float] = []; saturated: list[bool] = []; front: list[Any] = []; wrist: list[Any] = []; stage_results: list[dict[str, Any]] = []
+        baseline_scene: dict[str, Any] | None = None; max_unrelated_movement = 0.0; unrelated_names: set[str] = set(); max_penetration = 0.0
+
+        def observe(step: int, observation: Mapping[str, Any] | None = None) -> None:
+            nonlocal baseline_scene, max_unrelated_movement, max_penetration
+            sample = prior._runtime_sample(env, dynamic, task, "reverse", step, initial_atoms, goal_atoms)
+            sample["contacts_v3"] = composed.contact_v3(task, sample["contact_matrix"])
+            samples.append(sample)
+            scene = sample.get("scene", {}).get("object_and_site_poses", {})
+            if baseline_scene is None:
+                baseline_scene = scene
+                unrelated_names.update(set(scene) - {bowl, "plate_1", region})
+            for name in unrelated_names:
+                if name in scene and name in baseline_scene:
+                    movement = float(np.linalg.norm(np.asarray(scene[name]["pos_m"], dtype=np.float64) - np.asarray(baseline_scene[name]["pos_m"], dtype=np.float64)))
+                    max_unrelated_movement = max(max_unrelated_movement, movement)
+            for row in sample.get("contact_matrix", {}).get("contacts", []):
+                distance = float(row.get("distance_m", 0.0))
+                max_penetration = max(max_penetration, max(0.0, -distance))
+            if observation is not None:
+                agent = np.asarray(observation["agentview_image"], dtype=np.uint8); wrist_image = np.asarray(observation["robot0_eye_in_hand_image"], dtype=np.uint8)
+                if agent.shape != (128, 128, 3) or wrist_image.shape != (128, 128, 3):
+                    raise ValueError("camera_schema")
+                front.append(agent.copy()); wrist.append(wrist_image.copy())
+
+        # The initial semantic sample is intentionally camera-free.  Camera
+        # frames are one-to-one with post-action states below; this prevents
+        # an unpaired reset frame from failing the complete camera gate.
+        observe(0)
+        site = np.asarray(env.sim.data.site_xpos[env.sim.model.site_name2id(region)], dtype=np.float64).copy()
+        stages = [("approach_grasp", -1.0, lambda: grasp_pos + np.array([0.0, 0.0, 0.09]), 150), ("descend_grasp", -1.0, lambda: grasp_pos, 120), ("close_gripper", 1.0, lambda: grasp_pos, 35), ("lift", 1.0, lambda: grasp_pos + np.array([0.0, 0.0, 0.14]), 150), ("transport", 1.0, lambda: init_object_pos + np.array([0.0, 0.0, 0.12]), 180), ("place_same_demo_init_pose", 1.0, lambda: init_object_pos + np.array([0.0, 0.0, 0.055]), 120), ("release", -1.0, lambda: init_object_pos + np.array([0.0, 0.0, 0.055]), 35), ("retreat", -1.0, lambda: init_object_pos + np.array([0.0, 0.0, 0.16]), 80)]
+        total_budget = sum(row[3] for row in stages); failure_reason = None
+        for stage_name, gripper, target_fn, budget in stages:
+            stable = 0; stage_start = len(actions); last_t = float("inf"); last_r = float("inf")
+            for _local in range(budget):
+                obs = env.env._get_observations(); current = dynamic._robot_metrics(env)
+                target = np.asarray(target_fn(), dtype=np.float64)
+                translation = target - np.asarray(current["eef_translation_m"], dtype=np.float64)
+                rotation = quaternion_log_error_xyzw(grasp_quat, current["eef_quaternion"])
+                action = np.asarray(osc_pose_action_xyzw(translation, rotation, gripper, PROFILE), dtype=np.float32)
+                tnorm = float(np.linalg.norm(translation)); rnorm = float(np.linalg.norm(rotation)); saturated.append(tnorm > PROFILE["translation_clip_m"] or rnorm > PROFILE["rotation_clip_rad"])
+                obs_after, reward, done, _info = env.step(action); obs_after = obs_after if isinstance(obs_after, Mapping) else env.env._get_observations()
+                actions.append(action.copy()); states.append(np.asarray(env.get_sim_state(), dtype=np.float64).copy()); policy = np.asarray(obs_after["robot0_proprio-state"], dtype=np.float32).reshape(-1); policy_states.append(policy.copy()); phases.append(stage_name); rewards.append(float(reward)); dones.append(bool(done)); t_errors.append(tnorm); r_errors.append(rnorm)
+                observe(len(actions), obs_after); last_t, last_r = tnorm, rnorm
+                if tnorm <= PROFILE["translation_tolerance_m"] and rnorm <= PROFILE["rotation_tolerance_rad"]: stable += 1
+                else: stable = 0
+                if stable >= PROFILE["stable_ticks"]: break
+                if done: break
+            reached = stable >= PROFILE["stable_ticks"]; stage_results.append({"stage": stage_name, "frames": len(actions) - stage_start, "reached": reached, "last_translation_error_m": last_t, "last_rotation_error_rad": last_r, "budget": budget})
+            if not reached:
+                failure_reason = f"stage_timeout:{stage_name}"; break
+        final_success = bool(env.check_success())
+        source_values = []
+        goal_values = []
+        for sample in samples:
+            source_values.append(next((row.get("value") for row in sample.get("initial", {}).get("predicates", []) if row.get("atom") == source_atom), None))
+            goal_values.append(next((row.get("value") for row in sample.get("goal", {}).get("predicates", []) if row.get("atom") == goal_atom), None))
+        source_goal_gate = _v4_gate(bool(samples), source_values[0] is True and goal_values[0] is False and final_success and goal_values[-1] is True, source_values=source_values, goal_values=goal_values, source_atom=source_atom, goal_atom=goal_atom)
+        finite_gate = _v4_gate(bool(actions), bool(np.isfinite(np.asarray(actions)).all() and np.isfinite(np.asarray(states)).all() and np.isfinite(np.asarray(policy_states)).all()), action_shape=list(np.asarray(actions).shape), state_shape=list(np.asarray(states).shape))
+        contact_rows = [sample.get("contacts_v3", {}) for sample in samples]
+        intended = [row for row in contact_rows if row.get("counts", {}).get("intended_receiver_contact", 0) > 0]
+        demonstrator = [row for row in contact_rows if row.get("counts", {}).get("demonstrator_contact", 0) > 0]
+        unrelated = [row for row in contact_rows if row.get("counts", {}).get("unrelated_background_contact", 0) > 0]
+        contact_gate = _v4_gate(bool(contact_rows), bool(intended and demonstrator and not unrelated), intended_receiver_samples=len(intended), demonstrator_samples=len(demonstrator), unrelated_background_samples=len(unrelated), full_contact_window=True)
+        stall_gate = _v4_gate(bool(stage_results), failure_reason is None and len(actions) <= total_budget, failure_reason=failure_reason, total_step_budget=total_budget, used_steps=len(actions))
+        target_gate = _v4_gate(bool(samples), bool(samples and max(float(np.linalg.norm(np.asarray(sample.get("scene", {}).get("object_and_site_poses", {}).get(bowl, {}).get("pos_m", [999, 999, 999]), dtype=np.float64) - init_object_pos)) for sample in samples[-10:]) <= PROFILE["translation_tolerance_m"]), same_demo_init_pose=init_object_pos.tolist(), max_unrelated_movement_m=max_unrelated_movement)
+        unrelated_gate = _v4_gate(bool(samples), max_unrelated_movement <= 0.002, max_unrelated_movement_m=max_unrelated_movement, threshold_m=0.002, excluded=[bowl, "plate_1", region])
+        collision_gate = _v4_gate(bool(samples), max_penetration <= 0.01, max_penetration_m=max_penetration, threshold_m=0.01)
+        camera_gate = _v4_gate(bool(front) and bool(wrist), len(front) == len(actions) and len(wrist) == len(actions), frame_count=len(front), expected_action_frames=len(actions))
+        gates = {"source_goal": source_goal_gate, "finite": finite_gate, "same_demo_init_pose": target_gate, "contact_v3": contact_gate, "stall": stall_gate, "unrelated_movement": unrelated_gate, "collision": collision_gate, "camera": camera_gate}
+        passed = all(row.get("state") == "passed" for row in gates.values())
+        status = "passed" if passed else "failed_gate"
+        with frames_path.with_name(frames_path.name + ".partial").open("wb") as handle:
+            np.savez_compressed(handle, agentview=np.asarray(front, dtype=np.uint8), wrist=np.asarray(wrist, dtype=np.uint8)); handle.flush(); os.fsync(handle.fileno())
+        os.replace(frames_path.with_name(frames_path.name + ".partial"), frames_path)
+        # Encode tri-state predicate telemetry without object arrays so every
+        # consumer can reopen the artifact with allow_pickle=False:
+        # -1=not_evaluated, 0=false, 1=true.
+        goal_trace = np.asarray([-1 if value is None else int(bool(value)) for value in goal_values], dtype=np.int8)
+        with (V4_ROOT / "trajectory.npz.partial").open("wb") as handle:
+            np.savez_compressed(handle, actions=np.asarray(actions, dtype=np.float32), states=np.asarray(states, dtype=np.float64), policy_states=np.asarray(policy_states, dtype=np.float32), phase=np.asarray(phases, dtype="U64"), rewards=np.asarray(rewards, dtype=np.float32), dones=np.asarray(dones, dtype=np.bool_), eef_translation_error_m=np.asarray(t_errors, dtype=np.float32), eef_rotation_error_rad=np.asarray(r_errors, dtype=np.float32), action_saturated=np.asarray(saturated, dtype=np.bool_), goal_trace=goal_trace); handle.flush(); os.fsync(handle.fileno())
+        os.replace(V4_ROOT / "trajectory.npz.partial", V4_ROOT / "trajectory.npz")
+        write_npy_atomic(V4_ROOT / "start_state.npy", start_state)
+        write_npy_atomic(V4_ROOT / "end_state.npy", np.asarray(env.get_sim_state(), dtype=np.float64))
+        result = {"schema_version": "track3_j5_v4_worker_v1", "status": status, "created_at_utc": started, "completed_at_utc": now(), "child_pid": os.getpid(), "task_index": task, "demo_index": demo, "seed": V4_SEED, "attempt_number": 1, "profile": "nominal", "fresh_process": True, "quaternion_convention": "xyzw", "model_state_identity": {"hdf5_path": manifest["hdf5_path"], "hdf5_sha256": manifest["hdf5_sha256"], "model_file_sha256": manifest["model_file_sha256"], "resolved_model_xml_sha256": resolution["resolved_sha256"], "state_key": state_key, "start_state_sha256": sha256_file(V4_ROOT / "start_state.npy"), "same_demo_model_and_state_components": True}, "reverse_instruction": "Move the bowl from the plate back to its original table position.", "executor": {"controller": "OSC_POSE", "action_dim": 7, "profile": PROFILE, "relative_grasp_pose_xyzw": {"translation_m": relative_pos.tolist(), "quaternion_xyzw": relative_quat}, "target_quaternion_xyzw": grasp_quat}, "reverse": {"initial_goal": bool(goal_values[0]) if goal_values else None, "final_goal": final_success, "source_values": source_values, "goal_values": goal_values, "goal_trace_encoding": {"not_evaluated": -1, "false": 0, "true": 1}, "stage_results": stage_results, "frame_count": len(actions), "action_saturation_count": int(sum(saturated)), "max_penetration_m": max_penetration, "max_unrelated_movement_m": max_unrelated_movement, "contacts_v3_samples": contact_rows}, "hard_gate": gates, "artifacts": {"trajectory": rel(V4_ROOT / "trajectory.npz"), "start_state": rel(V4_ROOT / "start_state.npy"), "end_state": rel(V4_ROOT / "end_state.npy"), "frames": rel(frames_path)}, "training_eligible": False, "pending_autogen": False, "resource_boundary": {"gpu3_only": True, "gpu0_touched": False, "gpu1_touched": False, "gpu2_touched": False, "official_gpu": False, "no_teleop": True, "no_training": True}}
+    except Exception as exc:
+        result = {"schema_version": "track3_j5_v4_worker_v1", "status": "worker_exception", "created_at_utc": started, "completed_at_utc": now(), "child_pid": os.getpid(), "task_index": 10, "demo_index": 0, "seed": V4_SEED, "attempt_number": 1, "profile": "nominal", "fresh_process": True, "error": {"type": type(exc).__name__, "message": str(exc), "traceback": traceback.format_exc()}, "training_eligible": False, "resource_boundary": {"gpu3_only": True, "gpu0_touched": False, "official_gpu": False}}
+    finally:
+        if env is not None:
+            try: env.close()
+            except Exception: pass
+    write_json(result_path, result)
+    return valid_failed_gate_exit(str(result.get("status")), publication_ok=True, exception=result.get("status") == "worker_exception")
+
+
+def _v4_terminate(process: subprocess.Popen[Any]) -> str:
+    try:
+        os.killpg(process.pid, 15)
+    except (ProcessLookupError, PermissionError):
+        process.terminate()
+    try:
+        process.wait(timeout=TERM_GRACE_SECONDS); return "TERM"
+    except subprocess.TimeoutExpired:
+        try: os.killpg(process.pid, 9)
+        except (ProcessLookupError, PermissionError): process.kill()
+        process.wait(timeout=TERM_GRACE_SECONDS); return "TERM_then_KILL"
+
+
+def _v4_encode(path: Path, frames: Any) -> dict[str, Any]:
+    import numpy as np
+    images = np.asarray(frames, dtype=np.uint8)
+    if images.ndim != 4 or images.shape[1:] != (128, 128, 3) or images.shape[0] == 0:
+        raise ValueError("v4_camera_frame_schema")
+    partial = path.with_name(path.stem + ".partial" + path.suffix)
+    partial.unlink(missing_ok=True)
+    encoded = subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", "128x128", "-r", "20", "-i", "-", "-an", "-c:v", "libx264", "-pix_fmt", "yuv420p", "-movflags", "+faststart", str(partial)], input=images.tobytes(), capture_output=True, check=False)
+    if encoded.returncode != 0 or not partial.is_file():
+        partial.unlink(missing_ok=True); raise RuntimeError(f"v4_ffmpeg_failed:{encoded.returncode}")
+    probe = _ffprobe_video(partial, int(images.shape[0]))
+    if probe["state"] != "passed":
+        partial.unlink(missing_ok=True); raise RuntimeError(f"v4_ffprobe_failed:{probe}")
+    os.replace(partial, path)
+    return {"path": rel(path), "bytes": path.stat().st_size, "sha256": sha256_file(path), "ffprobe": probe, "frame_count": int(images.shape[0]), "atomic_publish": True}
+
+
+def run_v4() -> dict[str, Any]:
+    v3 = strict_json_load(OUT / "v3_clean_release.json") if (OUT / "v3_clean_release.json").is_file() else {}
+    if v3.get("status") != "track3_j5_v3_clean_release_ready":
+        result = {"schema_version": "track3_j5_v4_parent_v1", "status": "track3_j5_executor_recovery_stopped_V4_v3_not_ready", "category": "infrastructure"}; write_json(V4_RESULT, result); return result
+    V4_ROOT.mkdir(parents=True, exist_ok=False)
+    child_path = V4_CHILD; frames_path = V4_FRAMES; stdout_path = V4_ROOT / "stdout.log"; stderr_path = V4_ROOT / "stderr.log"
+    before = gpu_snapshot(3)
+    if not before.get("free"):
+        result = {"schema_version": "track3_j5_v4_parent_v1", "status": "track3_j5_executor_recovery_stopped_V4_gpu3_not_free", "category": "infrastructure", "start_snapshot": before}; write_json(V4_RESULT, result); return result
+    command = [sys.executable, "-m", MODULE, "--v4-worker", "--frames-output", str(frames_path), "--result-output", str(child_path)]
+    environment = {**os.environ, "PYTHONPATH": f"{ROOT / 'LIBERO'}:{ROOT}", "MUJOCO_GL": "egl", "CUDA_VISIBLE_DEVICES": "3", "MUJOCO_EGL_DEVICE_ID": "3", "JAX_PLATFORMS": "cpu"}
+    started = time.monotonic(); latencies: list[float] = []; heartbeats: list[float] = []; snapshots: list[dict[str, Any]] = []; timed_out = False; termination_stage = None
+    with stdout_path.open("wb") as stdout_handle, stderr_path.open("wb") as stderr_handle:
+        process = subprocess.Popen(command, cwd=ROOT, env=environment, stdout=stdout_handle, stderr=stderr_handle, start_new_session=True)
+        while process.poll() is None:
+            tick = time.monotonic(); snapshots.append(gpu_snapshot(3)); latencies.append((time.monotonic() - tick) * 1000.0); heartbeats.append(time.monotonic())
+            if time.monotonic() - started >= DEADLINE_SECONDS:
+                timed_out = True; termination_stage = _v4_terminate(process); break
+            time.sleep(0.1)
+        process.wait()
+    tick = time.monotonic(); after = gpu_snapshot(3); latencies.append((time.monotonic() - tick) * 1000.0); heartbeats.append(time.monotonic()); snapshots.append(after)
+    child = strict_json_load(child_path) if child_path.is_file() else None
+    elapsed = (time.monotonic() - started) * 1000.0; gaps = [(heartbeats[index] - heartbeats[index - 1]) * 1000.0 for index in range(1, len(heartbeats))]
+    telemetry = {"seed": V4_SEED, "parent_pid": os.getpid(), "child_pid": process.pid, "child_result_pid": (child or {}).get("child_pid", process.pid), "physical_gpu_uuid": (before.get("gpus") or [{}])[0].get("uuid"), "cuda_visible_devices": "3", "start_snapshot": before, "end_snapshot": after, "peak_memory_mib": max((float(row["gpus"][0]["memory_used_mib"]) for row in snapshots if row.get("gpus")), default=-1.0), "deadline_seconds": DEADLINE_SECONDS, "term_grace_seconds": TERM_GRACE_SECONDS, "process_returncode": process.returncode, "timed_out": timed_out, "gpu_query_latency_ms": _v4_stats(latencies), "heartbeat_gap_ms": _v4_stats(gaps), "supervisor_elapsed_ms": elapsed, "child_elapsed_ms": elapsed, "sampling_coverage_count": len(snapshots)}
+    telemetry_gate = _v4_telemetry_gate(telemetry)
+    child_status = (child or {}).get("status")
+    videos: dict[str, Any] = {}; camera_state = "failed"; camera_errors: list[str] = []
+    try:
+        import numpy as np
+        with np.load(frames_path, allow_pickle=False) as archive:
+            videos["agentview"] = _v4_encode(V4_ROOT / "agentview.mp4", archive["agentview"])
+            videos["wrist"] = _v4_encode(V4_ROOT / "wrist.mp4", archive["wrist"])
+            camera_state = "passed"
+    except Exception as exc:
+        camera_errors.append(f"{type(exc).__name__}:{exc}")
+    category = parent_category(child_status=child_status, process_returncode=process.returncode, telemetry_state=telemetry_gate["state"], camera_state=camera_state, result_error=None if child is not None else "child_result_missing")
+    if category == "success": status = "track3_j5_corrected_support_nominal_passed_pending_expansion_review"
+    elif category == "family_failure": status = "track3_j5_corrected_support_nominal_failed_gate_pending_review"
+    else: status = "track3_j5_executor_recovery_stopped_V4_infrastructure_failure"
+    result = {"schema_version": "track3_j5_v4_parent_v1", "status": status, "category": category, "created_at_utc": now(), "task_index": 10, "demo_index": 0, "family": "support_remove", "profile": "nominal", "seed": V4_SEED, "attempt_number": 1, "child_status": child_status, "child_result_path": rel(child_path), "worker_pid": process.pid, "worker_pid_match": process.pid == (child or {}).get("child_pid", process.pid), "process_returncode": process.returncode, "timed_out": timed_out, "termination_stage": termination_stage, "gpu_provenance": telemetry, "telemetry_v2_gate": telemetry_gate, "camera": {"state": camera_state, "errors": camera_errors, "videos": videos}, "child_result": child, "resource_boundary": {"gpu3_only": True, "gpu0_touched": False, "official_gpu": False, "conservative": False, "other_family": False, "generation": False, "training": False, "zip": False, "task10_attempt4": "forbidden"}, "first_error": {"phase": "V4" if category == "infrastructure" else None, "category": category, "reason": camera_errors[0] if camera_errors else (child or {}).get("failure_reason")}}
+    write_json(V4_RESULT, result)
+    return result
+
+
+def run_v5() -> dict[str, Any]:
+    v4 = strict_json_load(V4_RESULT) if V4_RESULT.is_file() else {}
+    if not v4:
+        result = {"schema_version": "track3_j5_v5_closeout_v1", "status": "track3_j5_executor_recovery_stopped_V5_missing_v4", "first_error": {"phase": "V5", "category": "infrastructure", "reason": "v4_missing"}}
+    else:
+        category = v4.get("category"); status = v4.get("status", "")
+        result = {"schema_version": "track3_j5_v5_closeout_v1", "status": "track3_j5_executor_recovery_stopped_V5_hard_stop", "created_at_utc": now(), "upstream": {"phase": "V4", "status": status, "category": category, "first_error": v4.get("first_error")}, "phase_status": {"V0": "track3_j5_v0_passed", "V1": "track3_j5_v1_support_contract_passed", "V2": "track3_j5_v2_passed", "V3": "track3_j5_v3_clean_release_ready", "V4": status, "V5": "hard_stop"}, "counts": {"exact_reverse_demo": 0, "pending_autogen": 0, "accepted_reverse_demo": 0}, "hard_stop": {"executed": True, "propagates_upstream_first_error": True, "conservative": False, "other_family": False, "generation": False, "replay": False, "training": False, "norm": False, "fast": False, "zip": False, "upload": False, "task10_attempt4": "forbidden", "next_authority": "new_reviewed_plan_required"}, "resource_boundary": {"gpu0_touched": False, "official_gpu": False, "no_teleop": True, "no_training": True, "libero_plus_untouched": True}}
+    write_json(OUT / "v5_closeout.json", result)
+    write_text(OUT / "v5_phase_status.csv", "phase,status\n" + "\n".join(f"{key},{value}" for key, value in result.get("phase_status", {}).items()) + "\n")
+    manifest = final_manifest(OUT, manifest_name="v5_artifact_manifest.json")
+    write_json(OUT / "v5_artifact_manifest.json", manifest)
+    write_json(OUT / "resume_cursor.json", {"schema_version": "track3_j5_recovery_cursor_v1", "status": "hard_stop", "active": False, "next_phase": "review", "last_heartbeat_utc": now(), "v4_status": v4.get("status")})
+    write_json(OUT / "supervisor_closeout.json", {"schema_version": "track3_j5_recovery_supervisor_v1", "status": result["status"], "upstream": result.get("upstream"), "pid": os.getpid(), "commit": git(("rev-parse", "HEAD")), "tool_sha256": sha256_file(Path(__file__))})
+    return result
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
-    for phase in ("v0", "v1", "v2", "v3"):
+    for phase in ("v0", "v1", "v2", "v3", "v4", "v5"):
         parser.add_argument(f"--{phase}", action="store_true")
+    parser.add_argument("--v4-worker", action="store_true")
+    parser.add_argument("--frames-output", type=Path)
+    parser.add_argument("--result-output", type=Path)
     args = parser.parse_args(argv)
-    selected = [phase for phase in ("v0", "v1", "v2", "v3") if getattr(args, phase)]
+    if args.v4_worker:
+        if args.frames_output is None or args.result_output is None:
+            parser.error("--v4-worker requires frames-output/result-output")
+        return _v4_worker(args.frames_output, args.result_output)
+    selected = [phase for phase in ("v0", "v1", "v2", "v3", "v4", "v5") if getattr(args, phase)]
     if len(selected) != 1:
-        parser.error("select exactly one CPU phase V0/V1/V2/V3")
-    result = {"v0": run_v0, "v1": run_v1, "v2": run_v2, "v3": run_v3}[selected[0]]()
+        parser.error("select exactly one phase V0/V1/V2/V3/V4/V5")
+    result = {"v0": run_v0, "v1": run_v1, "v2": run_v2, "v3": run_v3, "v4": run_v4, "v5": run_v5}[selected[0]]()
     print(json.dumps(result, ensure_ascii=False, sort_keys=True))
     return 0 if "passed" in str(result.get("status", "")) or "ready" in str(result.get("status", "")) else 1
 

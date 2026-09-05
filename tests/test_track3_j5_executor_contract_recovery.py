@@ -7,6 +7,7 @@ import numpy as np
 import pytest
 
 from tools.axis_pi05 import track3_j5_executor_contract_and_atomic_video_recovery as tool
+from tools.axis_pi05 import track3_support_release_anchor_and_osc_scale_recovery as release_tool
 
 
 def test_xyzw_quaternion_sign_and_shortest_log_contract() -> None:
@@ -70,3 +71,27 @@ def test_v4_v5_artifacts_are_recoverable_and_closeout_propagates_reason() -> Non
     assert "data/reports/axis_libero_30k/track3_j5_executor_recovery/resume_cursor.json" in paths
     assert "data/reports/axis_libero_30k/track3_j5_executor_recovery/supervisor_closeout.json" in paths
     assert not any(path.endswith(".partial") or path.endswith(".log") for path in paths)
+
+
+def test_release_anchor_scale_and_tri_state_contracts() -> None:
+    command = ["python", "-m", release_tool.MODULE, "--w4-worker"]
+    action = release_tool.osc_action_scaled([0.05, 0.0, 0.0], [0.12, 0.0, 0.0], -1.0)
+    assert action["action"] == [1.0, 0.0, 0.0, 0.24, 0.0, 0.0, -1.0]
+    assert action["controller_clip"] is False
+    assert release_tool.gate(False, None)["state"] == "not_evaluated"
+    assert release_tool.supervisor_identity_gate(
+        expected_commit="c",
+        observed_commit="c",
+        expected_tool_sha256="t",
+        observed_tool_sha256="t",
+        expected_openpi="o",
+        observed_openpi="o",
+        dirty=False,
+        pid_active=False,
+        cursor_active=False,
+        expected_command=command,
+        observed_command=command,
+        expected_cuda_visible_devices="",
+        observed_cuda_visible_devices="",
+        gpu_policy="cpu_no_renderer",
+    )["state"] == "passed"

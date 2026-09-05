@@ -58,6 +58,7 @@ Z14_PHASE_CSV = OUT / "z14_phase_status.csv"
 Z14_FINAL_VALIDATION = OUT / "z14_final_validation.json"
 Z14_MANIFEST = OUT / "z14_artifact_manifest.json"
 Z14_CLOSEOUT = OUT / "z14_closeout.json"
+Z14_CURSOR = OUT / "z14_cursor.json"
 IDENTITY_NOTE_REF = "refs/notes/axis-pi05-track3-z5-source-identity"
 
 Y_OUT = ROOT / "data/reports/axis_libero_30k/track3_runtime_preflight_and_bounded_continuation"
@@ -188,7 +189,14 @@ def porcelain(repo: Path = ROOT) -> list[str]:
 
 
 def _status_path(line: str) -> str:
-    value = line[3:].strip()
+    # ``git(...).strip()`` removes the leading porcelain-column space from a
+    # single status line, so accept both `` M path`` and ``M path`` forms.
+    if len(line) >= 3 and line[2] == " ":
+        value = line[3:].strip()
+    elif len(line) >= 2 and line[1] == " ":
+        value = line[2:].strip()
+    else:
+        value = line.strip()
     if " -> " in value:
         value = value.rsplit(" -> ", 1)[-1]
     return value.strip('"')
@@ -747,7 +755,8 @@ def _validate_namespace() -> dict[str, Any]:
             else:
                 with np.load(path, allow_pickle=False) as archive:
                     for name in archive.files:
-                        if not np.isfinite(np.asarray(archive[name], dtype=np.float64)).all():
+                        values = np.asarray(archive[name])
+                        if values.dtype.kind in "fiu" and not np.isfinite(values.astype(np.float64, copy=False)).all():
                             np_errors.append(f"nonfinite:{rel(path)}:{name}")
         except Exception as exc:
             np_errors.append(f"numpy:{rel(path)}:{type(exc).__name__}:{exc}")
@@ -1119,7 +1128,7 @@ def _z14() -> dict[str, Any]:
     write_json(Z5_POSTMORTEM, postmortem)
     phase_rows = ["phase,status", "Z0,passed", "Z1,passed", "Z2,passed", "Z3,passed", "Z4,passed_clean_release", "Z5,track3_runtime_stopped_Z5_infrastructure_failure", *[f"Z{i},not_evaluated" for i in range(6, 14)], "Z14,hard_stop"]
     write_text(Z14_PHASE_CSV, "\n".join(phase_rows) + "\n")
-    write_cursor(active=False, phase="Z14", command=[sys.executable, "-m", MODULE, "--z14"], status="hard_stop")
+    write_json(Z14_CURSOR, cursor_record(active=False, phase="Z14", command=[sys.executable, "-m", MODULE, "--z14"], status="hard_stop"))
     entries = []
     excluded = {Z4_MANIFEST, Z4_VALIDATION, Z4_CLOSEOUT, Z14_MANIFEST, Z14_FINAL_VALIDATION, Z14_CLOSEOUT}
     for path in sorted(OUT.rglob("*")):

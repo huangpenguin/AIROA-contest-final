@@ -3755,7 +3755,7 @@
     "next_plan_approved": true
   },
   "track3_y3_launch_phase_ledger_remediation_authorization": {
-    "status": "track3_z4_prephysics_release_ready_for_z5",
+    "status": "track3_z14_hard_stop_pending_review",
     "plan": "docs/AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md",
     "audited_input_commit": "882958c8b863585b13f10f22445d4aa4a42b2d56",
     "authorized_phases": ["Z0", "Z1", "Z2", "Z3", "Z4", "Z5", "Z6", "Z7", "Z8", "Z9", "Z10", "Z11", "Z12", "Z13", "Z14_closeout"],

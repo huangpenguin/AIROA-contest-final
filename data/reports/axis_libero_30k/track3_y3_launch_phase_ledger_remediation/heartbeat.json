@@ -1,0 +1,9 @@
+{
+  "count": 1,
+  "created_at_utc": "2026-09-05T18:54:46.206863+00:00",
+  "interval_seconds": 900.0,
+  "phase": "Z4",
+  "pid": 1524535,
+  "schema_version": "track3_z_heartbeat_v1",
+  "state": "final"
+}

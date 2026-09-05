@@ -37,7 +37,7 @@ def test_x0_x13_audit_archives_x_and_releases_exactly_one_y_plan() -> None:
             / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
         ).read_text(encoding="utf-8")
     )
-    assert handoff["status"] == "track3_y3_launch_phase_ledger_remediation_planned"
+    assert handoff["status"] == "track3_z4_prephysics_release_ready_pending_clean_commit"
     assert handoff["next_plan"] == (
         "docs/AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md"
     )

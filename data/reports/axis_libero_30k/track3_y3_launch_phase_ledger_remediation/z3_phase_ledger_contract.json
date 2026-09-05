@@ -1,0 +1,832 @@
+{
+  "cases": {
+    "close_contact_failure": {
+      "close_gate_owner": "close_gripper",
+      "destination_numeric": {
+        "executed": false,
+        "gate": "destination_numeric",
+        "owner_stage": "place_same_demo_init_pose",
+        "reason": "stage_not_entered",
+        "required": true,
+        "state": "not_evaluated"
+      },
+      "gates": {
+        "contact_completion": {
+          "executed": true,
+          "frozen_frame_span": [
+            10,
+            15
+          ],
+          "frozen_stable_window": [
+            13,
+            14,
+            15
+          ],
+          "gate": "contact_completion",
+          "owner_stage": "close_gripper",
+          "reason": "contact_missing",
+          "required": true,
+          "state": "failed"
+        },
+        "destination_numeric": {
+          "executed": false,
+          "gate": "destination_numeric",
+          "owner_stage": "place_same_demo_init_pose",
+          "reason": "stage_not_entered",
+          "required": true,
+          "state": "not_evaluated"
+        },
+        "goal_continuity": {
+          "executed": false,
+          "gate": "goal_continuity",
+          "owner_stage": "release",
+          "reason": "stage_not_entered",
+          "required": true,
+          "state": "not_evaluated"
+        },
+        "object_follow": {
+          "executed": false,
+          "gate": "object_follow",
+          "owner_stage": "lift",
+          "reason": "stage_not_entered",
+          "required": true,
+          "state": "not_evaluated"
+        },
+        "source_release": {
+          "executed": false,
+          "gate": "source_release",
+          "owner_stage": "lift",
+          "reason": "stage_not_entered",
+          "required": true,
+          "state": "not_evaluated"
+        },
+        "transport_safe": {
+          "executed": false,
+          "gate": "transport_safe",
+          "owner_stage": "transport",
+          "reason": "stage_not_entered",
+          "required": true,
+          "state": "not_evaluated"
+        }
+      },
+      "lift_gate_owner": "lift",
+      "passed": false,
+      "release_contact_does_not_rewrite_close": false,
+      "source_release_gate_owner": "lift"
+    },
+    "complete_success": {
+      "close_gate_owner": "close_gripper",
+      "destination_numeric": {
+        "eef_position_error_m": 0.001,
+        "eef_rotation_error_rad": 0.002,
+        "executed": true,
+        "frozen_frame_span": [
+          25,
+          30
+        ],
+        "frozen_stable_window": [
+          28,
+          29,
+          30
+        ],
+        "gate": "destination_numeric",
+        "object_position_error_m": 0.001,
+        "object_rotation_error_rad": 0.002,
+        "owner_stage": "place_same_demo_init_pose",
+        "position_tolerance_m": 0.012,
+        "required": true,
+        "rotation_tolerance_rad": 0.03,
+        "state": "passed"
+      },
+      "gates": {
+        "contact_completion": {
+          "executed": true,
+          "frozen_frame_span": [
+            10,
+            15
+          ],
+          "frozen_stable_window": [
+            13,
+            14,
+            15
+          ],
+          "gate": "contact_completion",
+          "owner_stage": "close_gripper",
+          "required": true,
+          "state": "passed"
+        },
+        "destination_numeric": {
+          "eef_position_error_m": 0.001,
+          "eef_rotation_error_rad": 0.002,
+          "executed": true,
+          "frozen_frame_span": [
+            25,
+            30
+          ],
+          "frozen_stable_window": [
+            28,
+            29,
+            30
+          ],
+          "gate": "destination_numeric",
+          "object_position_error_m": 0.001,
+          "object_rotation_error_rad": 0.002,
+          "owner_stage": "place_same_demo_init_pose",
+          "position_tolerance_m": 0.012,
+          "required": true,
+          "rotation_tolerance_rad": 0.03,
+          "state": "passed"
+        },
+        "goal_continuity": {
+          "executed": true,
+          "frozen_frame_span": [
+            30,
+            35
+          ],
+          "frozen_stable_window": [
+            33,
+            34,
+            35
+          ],
+          "gate": "goal_continuity",
+          "owner_stage": "release",
+          "required": true,
+          "state": "passed"
+        },
+        "object_follow": {
+          "executed": true,
+          "frozen_frame_span": [
+            15,
+            20
+          ],
+          "frozen_stable_window": [
+            18,
+            19,
+            20
+          ],
+          "gate": "object_follow",
+          "owner_stage": "lift",
+          "required": true,
+          "state": "passed"
+        },
+        "source_release": {
+          "executed": true,
+          "frozen_frame_span": [
+            15,
+            20
+          ],
+          "frozen_stable_window": [
+            18,
+            19,
+            20
+          ],
+          "gate": "source_release",
+          "owner_stage": "lift",
+          "required": true,
+          "state": "passed"
+        },
+        "transport_safe": {
+          "executed": true,
+          "frozen_frame_span": [
+            20,
+            25
+          ],
+          "frozen_stable_window": [
+            23,
+            24,
+            25
+          ],
+          "gate": "transport_safe",
+          "owner_stage": "transport",
+          "required": true,
+          "state": "passed"
+        }
+      },
+      "lift_gate_owner": "lift",
+      "passed": true,
+      "release_contact_does_not_rewrite_close": true,
+      "source_release_gate_owner": "lift"
+    },
+    "lift_follow_failure": {
+      "close_gate_owner": "close_gripper",
+      "destination_numeric": {
+        "executed": false,
+        "gate": "destination_numeric",
+        "owner_stage": "place_same_demo_init_pose",
+        "reason": "stage_not_entered",
+        "required": true,
+        "state": "not_evaluated"
+      },
+      "gates": {
+        "contact_completion": {
+          "executed": true,
+          "frozen_frame_span": [
+            10,
+            15
+          ],
+          "frozen_stable_window": [
+            13,
+            14,
+            15
+          ],
+          "gate": "contact_completion",
+          "owner_stage": "close_gripper",
+          "required": true,
+          "state": "passed"
+        },
+        "destination_numeric": {
+          "executed": false,
+          "gate": "destination_numeric",
+          "owner_stage": "place_same_demo_init_pose",
+          "reason": "stage_not_entered",
+          "required": true,
+          "state": "not_evaluated"
+        },
+        "goal_continuity": {
+          "executed": false,
+          "gate": "goal_continuity",
+          "owner_stage": "release",
+          "reason": "stage_not_entered",
+          "required": true,
+          "state": "not_evaluated"
+        },
+        "object_follow": {
+          "executed": true,
+          "frozen_frame_span": [
+            15,
+            20
+          ],
+          "frozen_stable_window": [
+            18,
+            19,
+            20
+          ],
+          "gate": "object_follow",
+          "owner_stage": "lift",
+          "required": true,
+          "state": "failed"
+        },
+        "source_release": {
+          "executed": true,
+          "frozen_frame_span": [
+            15,
+            20
+          ],
+          "frozen_stable_window": [
+            18,
+            19,
+            20
+          ],
+          "gate": "source_release",
+          "owner_stage": "lift",
+          "required": true,
+          "state": "passed"
+        },
+        "transport_safe": {
+          "executed": false,
+          "gate": "transport_safe",
+          "owner_stage": "transport",
+          "reason": "stage_not_entered",
+          "required": true,
+          "state": "not_evaluated"
+        }
+      },
+      "lift_gate_owner": "lift",
+      "passed": false,
+      "release_contact_does_not_rewrite_close": false,
+      "source_release_gate_owner": "lift"
+    },
+    "place_destination_deviation": {
+      "close_gate_owner": "close_gripper",
+      "destination_numeric": {
+        "eef_position_error_m": 0.02,
+        "eef_rotation_error_rad": 0.04,
+        "executed": true,
+        "frozen_frame_span": [
+          25,
+          30
+        ],
+        "frozen_stable_window": [
+          28,
+          29,
+          30
+        ],
+        "gate": "destination_numeric",
+        "object_position_error_m": 0.02,
+        "object_rotation_error_rad": 0.04,
+        "owner_stage": "place_same_demo_init_pose",
+        "position_tolerance_m": 0.012,
+        "reason": "destination_numeric_error",
+        "required": true,
+        "rotation_tolerance_rad": 0.03,
+        "state": "failed"
+      },
+      "gates": {
+        "contact_completion": {
+          "executed": true,
+          "frozen_frame_span": [
+            10,
+            15
+          ],
+          "frozen_stable_window": [
+            13,
+            14,
+            15
+          ],
+          "gate": "contact_completion",
+          "owner_stage": "close_gripper",
+          "required": true,
+          "state": "passed"
+        },
+        "destination_numeric": {
+          "eef_position_error_m": 0.02,
+          "eef_rotation_error_rad": 0.04,
+          "executed": true,
+          "frozen_frame_span": [
+            25,
+            30
+          ],
+          "frozen_stable_window": [
+            28,
+            29,
+            30
+          ],
+          "gate": "destination_numeric",
+          "object_position_error_m": 0.02,
+          "object_rotation_error_rad": 0.04,
+          "owner_stage": "place_same_demo_init_pose",
+          "position_tolerance_m": 0.012,
+          "reason": "destination_numeric_error",
+          "required": true,
+          "rotation_tolerance_rad": 0.03,
+          "state": "failed"
+        },
+        "goal_continuity": {
+          "executed": false,
+          "gate": "goal_continuity",
+          "owner_stage": "release",
+          "reason": "stage_not_entered",
+          "required": true,
+          "state": "not_evaluated"
+        },
+        "object_follow": {
+          "executed": true,
+          "frozen_frame_span": [
+            15,
+            20
+          ],
+          "frozen_stable_window": [
+            18,
+            19,
+            20
+          ],
+          "gate": "object_follow",
+          "owner_stage": "lift",
+          "required": true,
+          "state": "passed"
+        },
+        "source_release": {
+          "executed": true,
+          "frozen_frame_span": [
+            15,
+            20
+          ],
+          "frozen_stable_window": [
+            18,
+            19,
+            20
+          ],
+          "gate": "source_release",
+          "owner_stage": "lift",
+          "required": true,
+          "state": "passed"
+        },
+        "transport_safe": {
+          "executed": true,
+          "frozen_frame_span": [
+            20,
+            25
+          ],
+          "frozen_stable_window": [
+            23,
+            24,
+            25
+          ],
+          "gate": "transport_safe",
+          "owner_stage": "transport",
+          "required": true,
+          "state": "passed"
+        }
+      },
+      "lift_gate_owner": "lift",
+      "passed": false,
+      "release_contact_does_not_rewrite_close": false,
+      "source_release_gate_owner": "lift"
+    },
+    "release_goal_failure": {
+      "close_gate_owner": "close_gripper",
+      "destination_numeric": {
+        "eef_position_error_m": 0.001,
+        "eef_rotation_error_rad": 0.002,
+        "executed": true,
+        "frozen_frame_span": [
+          25,
+          30
+        ],
+        "frozen_stable_window": [
+          28,
+          29,
+          30
+        ],
+        "gate": "destination_numeric",
+        "object_position_error_m": 0.001,
+        "object_rotation_error_rad": 0.002,
+        "owner_stage": "place_same_demo_init_pose",
+        "position_tolerance_m": 0.012,
+        "required": true,
+        "rotation_tolerance_rad": 0.03,
+        "state": "passed"
+      },
+      "gates": {
+        "contact_completion": {
+          "executed": true,
+          "frozen_frame_span": [
+            10,
+            15
+          ],
+          "frozen_stable_window": [
+            13,
+            14,
+            15
+          ],
+          "gate": "contact_completion",
+          "owner_stage": "close_gripper",
+          "required": true,
+          "state": "passed"
+        },
+        "destination_numeric": {
+          "eef_position_error_m": 0.001,
+          "eef_rotation_error_rad": 0.002,
+          "executed": true,
+          "frozen_frame_span": [
+            25,
+            30
+          ],
+          "frozen_stable_window": [
+            28,
+            29,
+            30
+          ],
+          "gate": "destination_numeric",
+          "object_position_error_m": 0.001,
+          "object_rotation_error_rad": 0.002,
+          "owner_stage": "place_same_demo_init_pose",
+          "position_tolerance_m": 0.012,
+          "required": true,
+          "rotation_tolerance_rad": 0.03,
+          "state": "passed"
+        },
+        "goal_continuity": {
+          "executed": true,
+          "frozen_frame_span": [
+            30,
+            35
+          ],
+          "frozen_stable_window": [
+            33,
+            34,
+            35
+          ],
+          "gate": "goal_continuity",
+          "owner_stage": "release",
+          "reason": "goal_false",
+          "required": true,
+          "state": "failed"
+        },
+        "object_follow": {
+          "executed": true,
+          "frozen_frame_span": [
+            15,
+            20
+          ],
+          "frozen_stable_window": [
+            18,
+            19,
+            20
+          ],
+          "gate": "object_follow",
+          "owner_stage": "lift",
+          "required": true,
+          "state": "passed"
+        },
+        "source_release": {
+          "executed": true,
+          "frozen_frame_span": [
+            15,
+            20
+          ],
+          "frozen_stable_window": [
+            18,
+            19,
+            20
+          ],
+          "gate": "source_release",
+          "owner_stage": "lift",
+          "required": true,
+          "state": "passed"
+        },
+        "transport_safe": {
+          "executed": true,
+          "frozen_frame_span": [
+            20,
+            25
+          ],
+          "frozen_stable_window": [
+            23,
+            24,
+            25
+          ],
+          "gate": "transport_safe",
+          "owner_stage": "transport",
+          "required": true,
+          "state": "passed"
+        }
+      },
+      "lift_gate_owner": "lift",
+      "passed": false,
+      "release_contact_does_not_rewrite_close": true,
+      "source_release_gate_owner": "lift"
+    },
+    "source_release_failure": {
+      "close_gate_owner": "close_gripper",
+      "destination_numeric": {
+        "executed": false,
+        "gate": "destination_numeric",
+        "owner_stage": "place_same_demo_init_pose",
+        "reason": "stage_not_entered",
+        "required": true,
+        "state": "not_evaluated"
+      },
+      "gates": {
+        "contact_completion": {
+          "executed": true,
+          "frozen_frame_span": [
+            10,
+            15
+          ],
+          "frozen_stable_window": [
+            13,
+            14,
+            15
+          ],
+          "gate": "contact_completion",
+          "owner_stage": "close_gripper",
+          "required": true,
+          "state": "passed"
+        },
+        "destination_numeric": {
+          "executed": false,
+          "gate": "destination_numeric",
+          "owner_stage": "place_same_demo_init_pose",
+          "reason": "stage_not_entered",
+          "required": true,
+          "state": "not_evaluated"
+        },
+        "goal_continuity": {
+          "executed": false,
+          "gate": "goal_continuity",
+          "owner_stage": "release",
+          "reason": "stage_not_entered",
+          "required": true,
+          "state": "not_evaluated"
+        },
+        "object_follow": {
+          "executed": true,
+          "frozen_frame_span": [
+            15,
+            20
+          ],
+          "frozen_stable_window": [
+            18,
+            19,
+            20
+          ],
+          "gate": "object_follow",
+          "owner_stage": "lift",
+          "required": true,
+          "state": "passed"
+        },
+        "source_release": {
+          "executed": true,
+          "frozen_frame_span": [
+            15,
+            20
+          ],
+          "frozen_stable_window": [
+            18,
+            19,
+            20
+          ],
+          "gate": "source_release",
+          "owner_stage": "lift",
+          "required": true,
+          "state": "failed"
+        },
+        "transport_safe": {
+          "executed": false,
+          "gate": "transport_safe",
+          "owner_stage": "transport",
+          "reason": "stage_not_entered",
+          "required": true,
+          "state": "not_evaluated"
+        }
+      },
+      "lift_gate_owner": "lift",
+      "passed": false,
+      "release_contact_does_not_rewrite_close": false,
+      "source_release_gate_owner": "lift"
+    },
+    "transport_stall": {
+      "close_gate_owner": "close_gripper",
+      "destination_numeric": {
+        "executed": false,
+        "gate": "destination_numeric",
+        "owner_stage": "place_same_demo_init_pose",
+        "reason": "stage_not_entered",
+        "required": true,
+        "state": "not_evaluated"
+      },
+      "gates": {
+        "contact_completion": {
+          "executed": true,
+          "frozen_frame_span": [
+            10,
+            15
+          ],
+          "frozen_stable_window": [
+            13,
+            14,
+            15
+          ],
+          "gate": "contact_completion",
+          "owner_stage": "close_gripper",
+          "required": true,
+          "state": "passed"
+        },
+        "destination_numeric": {
+          "executed": false,
+          "gate": "destination_numeric",
+          "owner_stage": "place_same_demo_init_pose",
+          "reason": "stage_not_entered",
+          "required": true,
+          "state": "not_evaluated"
+        },
+        "goal_continuity": {
+          "executed": false,
+          "gate": "goal_continuity",
+          "owner_stage": "release",
+          "reason": "stage_not_entered",
+          "required": true,
+          "state": "not_evaluated"
+        },
+        "object_follow": {
+          "executed": true,
+          "frozen_frame_span": [
+            15,
+            20
+          ],
+          "frozen_stable_window": [
+            18,
+            19,
+            20
+          ],
+          "gate": "object_follow",
+          "owner_stage": "lift",
+          "required": true,
+          "state": "passed"
+        },
+        "source_release": {
+          "executed": true,
+          "frozen_frame_span": [
+            15,
+            20
+          ],
+          "frozen_stable_window": [
+            18,
+            19,
+            20
+          ],
+          "gate": "source_release",
+          "owner_stage": "lift",
+          "required": true,
+          "state": "passed"
+        },
+        "transport_safe": {
+          "executed": true,
+          "frozen_frame_span": [
+            20,
+            25
+          ],
+          "frozen_stable_window": [
+            23,
+            24,
+            25
+          ],
+          "gate": "transport_safe",
+          "owner_stage": "transport",
+          "reason": "stage_stall",
+          "required": true,
+          "state": "failed"
+        }
+      },
+      "lift_gate_owner": "lift",
+      "passed": false,
+      "release_contact_does_not_rewrite_close": false,
+      "source_release_gate_owner": "lift"
+    }
+  },
+  "checks": {
+    "close_failure_is_frozen": true,
+    "complete_success_passes": true,
+    "destination_numeric_failure": true,
+    "lift_failure_is_frozen": true,
+    "release_does_not_rewrite_close": true,
+    "release_goal_failure": true,
+    "source_release_comes_from_lift": true,
+    "stall_early_stop": true,
+    "transport_stall_recorded": true
+  },
+  "contract": {
+    "acquisition_barrier_stops_downstream": true,
+    "destination_requires_object_and_eef_numeric_pose_errors": true,
+    "later_samples_cannot_rewrite_prior_gate": true,
+    "source_release_observed_at_lift": true,
+    "stage_close_freezes_before_lift": true,
+    "unentered_is_not_evaluated": true
+  },
+  "created_at_utc": "2026-09-05T18:40:12.503688+00:00",
+  "gate_ownership": {
+    "contact_completion": "close_gripper",
+    "destination_numeric": "place_same_demo_init_pose",
+    "goal_continuity": "release",
+    "object_follow": "lift",
+    "source_release": "lift",
+    "transport_safe": "transport"
+  },
+  "schema_version": "track3_z3_phase_ledger_contract_v1",
+  "stage_order": [
+    "approach_grasp",
+    "descend_grasp",
+    "close_gripper",
+    "lift",
+    "transport",
+    "place_same_demo_init_pose",
+    "release",
+    "retreat"
+  ],
+  "stall_fixture": {
+    "failure_reason": "stage_stall",
+    "records": [
+      {
+        "executed": false,
+        "grace": 1,
+        "reason": "window_not_full_or_grace",
+        "required": true,
+        "samples": 1,
+        "state": "not_evaluated",
+        "window": 3
+      },
+      {
+        "executed": false,
+        "grace": 1,
+        "reason": "window_not_full_or_grace",
+        "required": true,
+        "samples": 2,
+        "state": "not_evaluated",
+        "window": 3
+      },
+      {
+        "baseline_error": 1.0,
+        "current_error": 0.6,
+        "executed": true,
+        "improvement": 0.4,
+        "min_improvement": 0.05,
+        "required": true,
+        "state": "passed"
+      },
+      {
+        "baseline_error": 0.8,
+        "current_error": 0.79,
+        "executed": true,
+        "improvement": 0.010000000000000009,
+        "min_improvement": 0.05,
+        "reason": "stage_stall",
+        "required": true,
+        "state": "failed"
+      }
+    ],
+    "stop_index": 3,
+    "stopped": true
+  },
+  "status": "track3_z3_passed"
+}

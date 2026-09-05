@@ -78,3 +78,16 @@ def test_progress_stall_stops_at_first_failed_window() -> None:
     assert result["stopped"] is True
     assert result["stop_index"] == 3
     assert result["failure_reason"] == "stage_stall"
+
+
+def test_z0_z4_execution_evidence_is_closed_before_z5() -> None:
+    handoff = json.loads((ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json").read_text(encoding="utf-8"))
+    execution = handoff["track3_y3_launch_phase_ledger_remediation_execution"]
+    assert execution["phase_status"]["Z0"] == "passed"
+    assert execution["phase_status"]["Z4"] == "passed_pending_clean_commit"
+    assert all(execution["phase_status"][f"Z{i}"] == "not_evaluated" for i in range(5, 15))
+    assert execution["counts"] == {"exact_reverse_demo": 0, "pending_autogen": 0, "accepted_reverse_demo": 0}
+    assert all((ROOT / value).is_file() for value in execution["reports"].values())
+    closeout = json.loads((ROOT / execution["reports"]["closeout"]).read_text(encoding="utf-8"))
+    assert closeout["status"] == "track3_z4_passed_pending_clean_commit"
+    assert closeout["hard_stop"]["automatic_resume"] is False

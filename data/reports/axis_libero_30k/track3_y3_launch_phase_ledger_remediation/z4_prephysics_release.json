@@ -1,0 +1,59 @@
+{
+  "canonical_resolution": {
+    "cuda_initialized": false,
+    "env_step_called": false,
+    "passed": true,
+    "physics_steps": 0,
+    "returncode": 0,
+    "simulator_created": false,
+    "stderr": "[robosuite WARNING] No private macro file found! (__init__.py:7)\n[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)\n[robosuite WARNING] To setup, run: python /home/huang/code/PARC2026_final/.venv_axis_pi05/lib/python3.12/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)\n",
+    "stdout": "canonical_resolution_passed\n"
+  },
+  "created_at_utc": "2026-09-05T18:54:46.223917+00:00",
+  "finalizer_order": [
+    "producer_close_fsync",
+    "phase_summary_lf_csv",
+    "inactive_cursor",
+    "manifest",
+    "strict_hash_np_checks",
+    "targeted_full_tests",
+    "final_validation",
+    "clean_commit",
+    "post_commit_identity_note"
+  ],
+  "resource_boundary": {
+    "cuda_initialized": false,
+    "env_step_called": false,
+    "generation": false,
+    "gpu0_touched": false,
+    "official_gpu": false,
+    "physics_steps": 0,
+    "replay": false,
+    "simulator_created": false,
+    "training": false,
+    "zip": false
+  },
+  "schema_version": "track3_z4_prephysics_release_v1",
+  "source_identity": {
+    "freeze_mode": "post_commit_git_note",
+    "self_assertion_forbidden": true
+  },
+  "stage_ledger_regression": {
+    "close_failure_is_frozen": true,
+    "complete_success_passes": true,
+    "destination_numeric_failure": true,
+    "lift_failure_is_frozen": true,
+    "release_does_not_rewrite_close": true,
+    "release_goal_failure": true,
+    "source_release_comes_from_lift": true,
+    "stall_early_stop": true,
+    "transport_stall_recorded": true
+  },
+  "status": "track3_z4_prephysics_release_ready",
+  "upstream": {
+    "z0": "track3_z0_passed",
+    "z1": "track3_z1_passed",
+    "z2": "track3_z2_passed",
+    "z3": "track3_z3_passed"
+  }
+}

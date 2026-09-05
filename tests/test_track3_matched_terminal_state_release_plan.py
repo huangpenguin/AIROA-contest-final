@@ -11,7 +11,7 @@ CANARY = ROOT / "data/reports/axis_libero_30k/track3_background_predicate_conver
 
 def test_only_the_track3_y3_launch_phase_ledger_plan_is_active() -> None:
     handoff = json.loads(HANDOFF.read_text(encoding="utf-8"))
-    assert handoff["status"] == "track3_y3_launch_phase_ledger_remediation_planned"
+    assert handoff["status"] == "track3_z4_prephysics_release_ready_pending_clean_commit"
     assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md"
     assert handoff["next_phase_only"] == "Z0_to_Z14_then_hard_stop"
     assert (ROOT / handoff["next_plan"]).is_file()

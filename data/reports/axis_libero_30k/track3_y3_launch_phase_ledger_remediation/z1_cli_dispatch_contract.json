@@ -1,0 +1,93 @@
+{
+  "atomic_result_protocol": {
+    "partial_suffix": ".partial",
+    "producer_close_fsync_then_replace": true,
+    "stdout_stderr_diagnostic_only": true
+  },
+  "checks": {
+    "argparse_return2_is_infrastructure": true,
+    "argument_rejection": true,
+    "duplicate_json_rejected": true,
+    "exact_dispatch": true,
+    "failed_gate_is_family_failure": true,
+    "large_stdout_16m": true,
+    "result_path_exact": true,
+    "worker_exception_is_infrastructure": true
+  },
+  "classifications": {
+    "argparse_return2": {
+      "category": "infrastructure",
+      "child_status": null,
+      "reason": "dispatch_or_worker_exception_or_missing_result",
+      "returncode": 2
+    },
+    "failed_gate": {
+      "category": "family_failure",
+      "child_status": "failed_gate",
+      "reason": "normal_physical_gate_failure",
+      "returncode": 0
+    },
+    "passed": {
+      "category": "success",
+      "child_status": "passed",
+      "reason": "child_passed",
+      "returncode": 0
+    },
+    "worker_exception": {
+      "category": "infrastructure",
+      "child_status": "worker_exception",
+      "reason": "dispatch_or_worker_exception_or_missing_result",
+      "returncode": 1
+    }
+  },
+  "created_at_utc": "2026-09-05T18:38:29.698330+00:00",
+  "resource_boundary": {
+    "cuda_initialized": false,
+    "env_step_called": false,
+    "physics_steps": 0,
+    "simulator_created": false
+  },
+  "schema_version": "track3_z1_cli_dispatch_contract_v1",
+  "single_instance": {
+    "active_cursor_rejected": true,
+    "function": "single_instance_gate",
+    "pid_reuse_rejected": true
+  },
+  "smoke": {
+    "argument_rejection": true,
+    "command": [
+      "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+      "-m",
+      "tools.axis_pi05.track3_y3_launch_phase_ledger_remediation",
+      "--z1-worker",
+      "--result-output",
+      "/tmp/track3_z1_g5a5zq_j/worker_result.json"
+    ],
+    "duplicate_result_output_returncode": 2,
+    "exact_dispatch": true,
+    "missing_result_output_returncode": 2,
+    "result": {
+      "argv": [
+        "--z1-worker",
+        "--result-output",
+        "/tmp/track3_z1_g5a5zq_j/worker_result.json"
+      ],
+      "cuda_initialized": false,
+      "physics_steps": 0,
+      "result_path": "/tmp/track3_z1_g5a5zq_j/worker_result.json",
+      "schema_version": "track3_z1_worker_result_v1",
+      "simulator_imported": false,
+      "status": "passed",
+      "worker_pid": 1521133
+    },
+    "returncode": 0,
+    "stderr": "",
+    "stdout_bytes": 0,
+    "unknown_arg_returncode": 2
+  },
+  "status": "track3_z1_passed",
+  "termination": {
+    "function": "terminate_process",
+    "term_then_kill": true
+  }
+}

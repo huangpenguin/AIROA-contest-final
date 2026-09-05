@@ -1,0 +1,111 @@
+{
+  "checks": {
+    "commit_drift_fails_closed": true,
+    "evidence_namespace_only_allowed": true,
+    "explicit_frozen_clean_identity_passes": true,
+    "real_dirty_source_fails_closed": true,
+    "temp_clean_repo_detected": true,
+    "temp_source_dirty_detected": true
+  },
+  "created_at_utc": "2026-09-05T18:38:50.919238+00:00",
+  "fixtures": {
+    "clean": {
+      "checks": {
+        "command_exact": true,
+        "cuda_visible_devices_exact": true,
+        "gpu_policy_allowed": true,
+        "libero_plus_snapshot_exact": true,
+        "openpi_commit_exact": true,
+        "root_commit_exact": true,
+        "source_clean": true,
+        "tool_sha256_exact": true
+      },
+      "errors": [],
+      "frozen_command": [
+        "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+        "-m",
+        "tools.axis_pi05.track3_y3_launch_phase_ledger_remediation",
+        "--z1-worker",
+        "--result-output",
+        "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z1_smoke/worker_result.json"
+      ],
+      "frozen_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+      "frozen_root_commit": "release",
+      "frozen_tool_sha256": "tool",
+      "state": "passed"
+    },
+    "commit_drift": {
+      "checks": {
+        "command_exact": true,
+        "cuda_visible_devices_exact": true,
+        "gpu_policy_allowed": true,
+        "libero_plus_snapshot_exact": true,
+        "openpi_commit_exact": true,
+        "root_commit_exact": false,
+        "source_clean": true,
+        "tool_sha256_exact": true
+      },
+      "errors": [
+        "root_commit_exact"
+      ],
+      "frozen_command": [
+        "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+        "-m",
+        "tools.axis_pi05.track3_y3_launch_phase_ledger_remediation",
+        "--z1-worker",
+        "--result-output",
+        "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z1_smoke/worker_result.json"
+      ],
+      "frozen_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+      "frozen_root_commit": "release",
+      "frozen_tool_sha256": "tool",
+      "state": "failed"
+    },
+    "dirty": {
+      "checks": {
+        "command_exact": true,
+        "cuda_visible_devices_exact": true,
+        "gpu_policy_allowed": true,
+        "libero_plus_snapshot_exact": true,
+        "openpi_commit_exact": true,
+        "root_commit_exact": true,
+        "source_clean": false,
+        "tool_sha256_exact": true
+      },
+      "errors": [
+        "source_clean"
+      ],
+      "frozen_command": [
+        "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+        "-m",
+        "tools.axis_pi05.track3_y3_launch_phase_ledger_remediation",
+        "--z1-worker",
+        "--result-output",
+        "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z1_smoke/worker_result.json"
+      ],
+      "frozen_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+      "frozen_root_commit": "release",
+      "frozen_tool_sha256": "tool",
+      "state": "failed"
+    }
+  },
+  "identity_contract": {
+    "allowed_only": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation",
+    "command": "exact",
+    "cuda_visible_devices": "exact",
+    "expected_values_must_be_supplied_by_frozen_release": true,
+    "libero_plus_snapshot": "exact",
+    "openpi_commit": "exact",
+    "permanent_source_whitelist": [],
+    "root_commit": "exact",
+    "startup_current_head_self_assertion": false,
+    "tool_sha256": "exact"
+  },
+  "resource_boundary": {
+    "cuda_initialized": false,
+    "env_step_called": false,
+    "simulator_created": false
+  },
+  "schema_version": "track3_z2_source_identity_contract_v1",
+  "status": "track3_z2_passed"
+}

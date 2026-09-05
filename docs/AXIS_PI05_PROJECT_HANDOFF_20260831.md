@@ -776,3 +776,11 @@ Y2 finalizer写入inactive cursor、LF phase CSV、manifest与checkout-stable ma
 审核发现三个阻止Y3释放的问题：parent child argv包含顶层parser未注册的`--result-output`，因此会在worker dispatch前return 2；最终hard gate以全轨迹末端window重算close/lift证据且same-demo destination没有数值门禁；source dirty扫描永久豁免工具/测试/交接文件，expected commit/tool hash又取自启动时自身，不能证明冻结clean source identity。
 
 旧Y计划已归档。唯一活动计划为`docs/AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md`：Z0–Z4先CPU-only闭合exact CLI、冻结source identity、真实dirty fail-close、phase-scoped ledger、destination numeric gate与finalizer；通过后Z5才允许固定task10/demo0/seed3121 nominal CPU canary。Z6–Z13条件式继续family pilots、最多12条generation/36次replay、20Hz `80/20` mixture/fresh QUANTILES、R6 L2 LoRA 100/500/1000、独立复验与本地FAST ZIP；Z14统一hard stop。不授权GPU0/官方GPU、Teleop、dense full-FT、自动上传或提交。审核报告：`docs/reviews/axis_pi05/TRACK3_RUNTIME_PREFLIGHT_Y0_Y2_AUDIT_20260906.md`。
+
+## 67. Z0–Z4 Launch/Phase-Ledger remediation 执行停止点（2026-09-06）
+
+Z0–Z4 在新 namespace `data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/` 完成。Z0 复核锁定审核输入 HEAD `56cdffa` 的 descendant、45/45 bytes/SHA、Y2 manifest `6/6`、Y2 self hash `3/3`、9 个 JSON strict、`exact/pending/accepted=0/0/0` 与 GPU/dirty 边界。Z1 以 fresh subprocess 实际接受 `--z1-worker --result-output <absolute>`，拒绝缺失/重复/未知参数，16 MiB stdout、atomic result、TERM→KILL 与 return-code 分类回归通过。Z2 只接受显式 frozen identity；真实源码 dirty、commit drift、命令/工具/OpenPI/CUDA drift 均 fail-closed，临时 Git 仓库验证无永久 dirty whitelist。
+
+Z3 将 contact completion 冻结在 `close_gripper` stable window、object-follow/source-release 固定由 `lift` window 提供；stage failure 触发 acquisition barrier，后续 gate 为 `not_evaluated`；destination 同时检查 object 与 EEF 的平移/旋转数值误差，release 后接触解除不会重写 close。Z4 对 task10/task20/task19 的公开 HDF5/model/state 做 no-physics resolution，`physics_steps=0`；strict JSON、NPY/NPZ no-pickle/finite、LF CSV、py_compile、定向 `8 passed` 与全量 `280 passed, 7 skipped, 23 warnings` 通过。Z4 closeout 为 `track3_z4_passed_pending_clean_commit`，manifest `11` entries exact，尚待最终 clean commit 后写入 frozen source identity note。
+
+Z5–Z14 保持 `not_evaluated`，reverse demo 仍为 `exact/pending/accepted=0/0/0`；没有 ControlEnv、env.step、GPU、生成、replay、训练、norm、FAST、ZIP、上传或提交。GPU0 未触碰，LIBERO-plus 既有 dirty 未改。

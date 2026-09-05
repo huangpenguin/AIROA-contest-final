@@ -1,0 +1,66 @@
+{
+  "entries": [
+    {
+      "bytes": 202,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/heartbeat.json",
+      "sha256": "4e0e71e3e233ae29ab25132142c85a798e7bbe20cb4a8202a3640dcc92c56cae"
+    },
+    {
+      "bytes": 570,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/resume_cursor.json",
+      "sha256": "bc52d3b301f89d2d4995de0a23cff7867e18c1ae21c372ae2feb22db6118eee7"
+    },
+    {
+      "bytes": 22811,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z0_attempt1_input_lock_failure.json",
+      "sha256": "b92608d2c521b0fa61a90e0c82ed3b4bb131901adeadb50b059694d42d2e30cd"
+    },
+    {
+      "bytes": 22788,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z0_input_lock.json",
+      "sha256": "f3b63cc9ac754682df5b37cfb43dc6bdb381b5632175a066baf8766fc75e3857"
+    },
+    {
+      "bytes": 2659,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z1_cli_dispatch_contract.json",
+      "sha256": "df03e869087bf81285b32ed13941ef6e2e2e2ef005eb558ff72432ac0b19f090"
+    },
+    {
+      "bytes": 3838,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z2_source_identity_contract.json",
+      "sha256": "12b0e37452d96e42b22451cbe7afa1826136a93c9741413dbde6ea06ab2312ff"
+    },
+    {
+      "bytes": 21922,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z3_phase_ledger_contract.json",
+      "sha256": "fc249b4caba2db5b9eb9f3e7fbf520c5eca36d8cf2dee87c5a1797080b8eec4c"
+    },
+    {
+      "bytes": 250,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_phase_status.csv",
+      "sha256": "8ad169ff9390cbb89b4aef8bb4e705fc24a3ced2690c7678110e157d45d230f0"
+    },
+    {
+      "bytes": 1904,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_prephysics_release.json",
+      "sha256": "f04beb3c8a62ae150a468ea73eea0ac9dfaf8f4566bf9e201429c50adbe83239"
+    },
+    {
+      "bytes": 152,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_probe.npy",
+      "sha256": "8389aa0536b3f51cc9577c0c6bd1992be2b5edd23d56fbc4c04844029b42b205"
+    },
+    {
+      "bytes": 404,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_probe.npz",
+      "sha256": "986b8413b5743ef0bc741dbdd460c6e4acc38181a34fa958560405e81c6e9265"
+    }
+  ],
+  "entries_excluded": [
+    "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_prephysics_release.json",
+    "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_artifact_manifest.json",
+    "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_final_validation.json",
+    "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_closeout.json"
+  ],
+  "schema_version": "track3_z4_manifest_v1"
+}

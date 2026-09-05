@@ -1,0 +1,41 @@
+{
+  "created_at_utc": "2026-09-05T18:56:04.015571+00:00",
+  "resource_boundary": {
+    "cuda_initialized": false,
+    "env_step_called": false,
+    "generation": false,
+    "gpu0_touched": false,
+    "official_gpu": false,
+    "physics_steps": 0,
+    "replay": false,
+    "simulator_created": false,
+    "training": false,
+    "zip": false
+  },
+  "schema_version": "track3_z4_final_validation_v1",
+  "validation": {
+    "canonical_resolution_passed": true,
+    "csv_lf": true,
+    "full_tests": {
+      "returncode": 0,
+      "tail": "........................................................................ [ 25%]\n.................................ss..................................... [ 50%]\n........................................................................ [ 75%]\n...........................................sss.......................ss  [100%]\n=============================== warnings summary ===============================\n<frozen importlib._bootstrap>:488\n  <frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.MessageMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.\n\n<frozen importlib._bootstrap>:488\n  <frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.ScalarMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.\n\ntests/test_axis_pi05_lora_screen.py: 21 warnings\n  /home/huang/code/PARC2026_final/.venv_axis_pi05/lib/python3.12/site-packages/flax/core/scope.py:959: DeprecationWarning: shape requires ndarray or scalar arguments, got <class 'jax._src.api.ShapeDtypeStruct'> at position 0. In a future JAX release this will be an error.\n    if jnp.shape(val) != jnp.shape(abs_val):\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n280 passed, 7 skipped, 23 warnings in 71.96s (0:01:11)\n"
+    },
+    "git_diff_check": true,
+    "json_errors": [],
+    "manifest_exact": {
+      "entries": 11,
+      "exact": true,
+      "mismatches": []
+    },
+    "np_errors": [],
+    "np_no_pickle_finite": true,
+    "partial_residue": [],
+    "py_compile": true,
+    "strict_json": true,
+    "targeted_tests": {
+      "returncode": 0,
+      "tail": ".........                                                                [100%]\n9 passed in 0.53s\n"
+    },
+    "z0_z3_passed": true
+  }
+}

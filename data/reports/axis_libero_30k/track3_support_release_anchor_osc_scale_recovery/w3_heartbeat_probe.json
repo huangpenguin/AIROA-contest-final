@@ -1,0 +1,11 @@
+{
+  "count": 2,
+  "created_at_utc": "2026-09-05T04:57:25.425072+00:00",
+  "identity_state": "passed",
+  "phase": "W3.test",
+  "pid": 1461458,
+  "root_commit": "ca8e6514cdb54bb2138dfeab4fcfcb121f522f67",
+  "schema_version": "track3_support_supervisor_heartbeat_v1",
+  "state": "final",
+  "tool_sha256": "21b45b8f6f59516fa1c9ade8cfbea4cb3b47ffbda459f28a814c4af72e5f05f9"
+}

@@ -1,0 +1,179 @@
+{
+  "audit_summary": "data/reports/axis_libero_30k/track3_j5_executor_recovery_audit_20260905/summary.json",
+  "audited_execution_commit": "11483623b7710430a197231b8ed0662c4813c12d",
+  "checks": {
+    "audit_execution_commit": true,
+    "audited_commit_ancestor": true,
+    "gpu0_external_preserved": true,
+    "gpu1_to_gpu3_free": true,
+    "old_manifest_19_of_19": true,
+    "old_v4_immutable": true,
+    "old_v5_hard_stop": true,
+    "openpi_commit": true,
+    "required_inputs": true,
+    "root_clean": true
+  },
+  "created_at_utc": "2026-09-05T04:56:14.657628+00:00",
+  "gpu0": {
+    "compute_processes": [
+      "1133706, /mnt/home/moriyama/workspace/ros2_project/mmdetection/.venv-yolo26/bin/python, 14440"
+    ],
+    "free": false,
+    "gpus": [
+      {
+        "index": "0",
+        "memory_total_mib": 32768.0,
+        "memory_used_mib": 14479.0,
+        "uuid": "GPU-0a004a52-e72d-9b46-0391-9488e841db41"
+      }
+    ],
+    "returncode": 0,
+    "timestamp_utc": "2026-09-05T04:56:14.238464+00:00"
+  },
+  "gpu1_to_gpu3": {
+    "1": {
+      "compute_processes": [],
+      "free": true,
+      "gpus": [
+        {
+          "index": "1",
+          "memory_total_mib": 32768.0,
+          "memory_used_mib": 5.0,
+          "uuid": "GPU-dbf876c3-dcaf-054b-ac9d-035e7198ceda"
+        }
+      ],
+      "returncode": 0,
+      "timestamp_utc": "2026-09-05T04:56:14.378055+00:00"
+    },
+    "2": {
+      "compute_processes": [],
+      "free": true,
+      "gpus": [
+        {
+          "index": "2",
+          "memory_total_mib": 32768.0,
+          "memory_used_mib": 5.0,
+          "uuid": "GPU-0cf6b31a-016b-6e71-a7b5-a790922d89ae"
+        }
+      ],
+      "returncode": 0,
+      "timestamp_utc": "2026-09-05T04:56:14.507215+00:00"
+    },
+    "3": {
+      "compute_processes": [],
+      "free": true,
+      "gpus": [
+        {
+          "index": "3",
+          "memory_total_mib": 32768.0,
+          "memory_used_mib": 5.0,
+          "uuid": "GPU-b03055ef-af46-2cf8-7545-c60870f745f5"
+        }
+      ],
+      "returncode": 0,
+      "timestamp_utc": "2026-09-05T04:56:14.624024+00:00"
+    }
+  },
+  "hashes": {
+    "data/raw/public/libero_official_hdf5/libero_goal/put_the_bowl_on_the_plate_demo.hdf5": {
+      "bytes": 468246288,
+      "sha256": "e69528b0cf10dfc59b20698e12ec2affc03f3887309034d3eb74cac3ec929406"
+    },
+    "data/reports/axis_libero_30k/track3_j5_executor_recovery/v0_input_lock.json": {
+      "bytes": 7915,
+      "sha256": "e839a8345c11d2253c44caecb2df4831f307854e4f82764bedb90df53fbf58df"
+    },
+    "data/reports/axis_libero_30k/track3_j5_executor_recovery/v3_artifact_manifest.json": {
+      "bytes": 1504,
+      "sha256": "dcb212b4322a0760bb37f5df9789517759f693fd3b50c632c95c0c87c5823ccb"
+    },
+    "data/reports/axis_libero_30k/track3_j5_executor_recovery/v3_clean_release.json": {
+      "bytes": 1536,
+      "sha256": "f676d33fc76b319010da25959354e58abf90f9f69ea52c879817ef9c86218a29"
+    },
+    "data/reports/axis_libero_30k/track3_j5_executor_recovery/v4_corrected_task10_demo0_nominal/child_result.json": {
+      "bytes": 1262607,
+      "sha256": "21efad017066433296b18232e603292ede7cd695f8401563c3f4381cb1b6e072"
+    },
+    "data/reports/axis_libero_30k/track3_j5_executor_recovery/v4_corrected_task10_demo0_nominal/end_state.npy": {
+      "bytes": 760,
+      "sha256": "58ecf193d3b57a7ef3ae874790aff5bb9e054011b24a8b28a6a1856c226a56ed"
+    },
+    "data/reports/axis_libero_30k/track3_j5_executor_recovery/v4_corrected_task10_demo0_nominal/frames.npz": {
+      "bytes": 6230849,
+      "sha256": "211751e0bfe73a454bd3612f7c8e277146435561fb07f2e05acf13c54f3e4a79"
+    },
+    "data/reports/axis_libero_30k/track3_j5_executor_recovery/v4_corrected_task10_demo0_nominal/parent_result.json": {
+      "bytes": 1352056,
+      "sha256": "839b16a6320d4b28e6cc8c84c4aeb17a18c9c5a8dd7e58c48c967a5057373408"
+    },
+    "data/reports/axis_libero_30k/track3_j5_executor_recovery/v4_corrected_task10_demo0_nominal/start_state.npy": {
+      "bytes": 760,
+      "sha256": "f5b4d5dd93a42cd133994d23eaeae0bc21bcdc970ba6c03e15a5c37f0928b9b3"
+    },
+    "data/reports/axis_libero_30k/track3_j5_executor_recovery/v4_corrected_task10_demo0_nominal/trajectory.npz": {
+      "bytes": 90903,
+      "sha256": "7fa6f964e0cbd93ea8dd961769e767b41d8d6cc3fcfbc5410e2321362669ed2e"
+    },
+    "data/reports/axis_libero_30k/track3_j5_executor_recovery/v5_artifact_manifest.json": {
+      "bytes": 4607,
+      "sha256": "2b42de2c92a66e4879bd6917ab3cec798ef84934bf93689e6cace29576f46886"
+    },
+    "data/reports/axis_libero_30k/track3_j5_executor_recovery/v5_closeout.json": {
+      "bytes": 1421,
+      "sha256": "9ff5701b0cfbd9168869de2f2ba325b092406087f0fcd21b0c409d59208b9f32"
+    },
+    "data/reports/axis_libero_30k/track3_j5_executor_recovery_audit_20260905/summary.json": {
+      "bytes": 2462,
+      "sha256": "2d6f804e7b9b75c69816bb7d2efc7e0f903c7145f9742ca1a2312330852030df"
+    },
+    "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/start_states.npz": {
+      "bytes": 5183,
+      "sha256": "b21a5080bdaeebcc4999b25f1e1bafab5decef1cf78b09a4d3e7b25e95073447"
+    },
+    "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/task10_demo0_grasp_geometry.json": {
+      "bytes": 6795,
+      "sha256": "fca6e4641feba222f9c6b45924ad7b355a4848632bcc1a24c10174aaf1f2ef0a"
+    }
+  },
+  "libero_plus_porcelain": [
+    "M libero/libero/benchmark/__init__.py",
+    "?? libero/__init__.py",
+    "?? libero/libero/assets",
+    "?? libero/libero/bddl_files/libero_t3",
+    "?? libero/libero/init_files/libero_t3"
+  ],
+  "old_manifest_recomputed": {
+    "entries": 19,
+    "exact": true,
+    "mismatches": []
+  },
+  "old_v4": {
+    "child_status": "failed_gate",
+    "historical_immutable": true,
+    "parent_category": "family_failure",
+    "parent_status": "track3_j5_corrected_support_nominal_failed_gate_pending_review"
+  },
+  "old_v5_counts": {
+    "accepted_reverse_demo": 0,
+    "exact_reverse_demo": 0,
+    "pending_autogen": 0
+  },
+  "openpi_head": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "plan": "docs/AXIS_PI05_TRACK3_SUPPORT_RELEASE_ANCHOR_AND_OSC_SCALE_RECOVERY_PLAN.md",
+  "required_missing": [],
+  "resource_boundary": {
+    "conservative": false,
+    "cuda_imported": false,
+    "generation": false,
+    "gpu0_touched": false,
+    "official_gpu": false,
+    "other_family": false,
+    "simulator_imported": false,
+    "training": false,
+    "zip": false
+  },
+  "root_head": "ca8e6514cdb54bb2138dfeab4fcfcb121f522f67",
+  "schema_version": "track3_support_release_w0_input_lock_v1",
+  "status": "track3_support_release_w0_passed"
+}

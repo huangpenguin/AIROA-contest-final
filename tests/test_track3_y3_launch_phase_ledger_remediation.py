@@ -59,6 +59,7 @@ def test_failed_gate_and_worker_exception_are_distinct() -> None:
     assert tool.classify_worker_result(0, {"status": "failed_gate"})["category"] == "family_failure"
     assert tool.classify_worker_result(1, {"status": "worker_exception"})["category"] == "infrastructure"
     assert tool.classify_worker_result(2, None)["category"] == "infrastructure"
+    assert "failed_gate" in tool.WORKER_COMPLETED_STATUSES
 
 
 def test_source_identity_is_explicit_and_dirty_fail_closed() -> None:

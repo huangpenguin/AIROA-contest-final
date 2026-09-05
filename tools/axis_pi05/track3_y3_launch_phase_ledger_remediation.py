@@ -95,6 +95,7 @@ Z5_PROFILE = {
     "collision_tolerance_m": 0.01,
     "unrelated_movement_tolerance_m": 0.002,
 }
+WORKER_COMPLETED_STATUSES = frozenset({"passed", "failed_gate"})
 
 HDF5_INPUTS = {
     10: ROOT / "data/raw/public/libero_official_hdf5/libero_goal/put_the_bowl_on_the_plate_demo.hdf5",

@@ -6,8 +6,8 @@
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_provenance_jitter_recovery_and_overnight_continuation_planned`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_PROVENANCE_JITTER_RECOVERY_AND_OVERNIGHT_CONTINUATION_PLAN.md`
+> 当前总状态：`track3_j5_executor_contract_and_atomic_video_recovery_planned`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_J5_EXECUTOR_CONTRACT_AND_ATOMIC_VIDEO_RECOVERY_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -15,7 +15,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3 task10 attempt3的child物理/camera及parent核心provenance已闭合；旧O2只因把148.46ms GPU query latency误作100ms heartbeat hard gate而停止。下一计划在CPU修复telemetry与CSV hash后只读升格attempt3，再按三族独立生成/回放、20Hz混合LoRA、holdout/retention选优并在有逆向成功时生成本地FAST ZIP；不回到AXIS init，不重跑task10，用户无需Teleop或值守。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3 task10/20/19的P3 camera/provenance已闭合，但首次task10 manipulation pilot暴露Robosuite quaternion `xyzw`被按`wxyz`处理、`*.mp4.partial`、child return-code分类、J11映射和manifest finalization缺陷。下一计划只做support executor/基础设施最小恢复并运行一次corrected task10 nominal GPU3 canary；不进入其他family、generation或训练，用户无需Teleop。
 
 ## 2. 数据与复现基础
 
@@ -692,3 +692,19 @@ parent失败原因已精确定位：`ad0a428`中的`_run_gpu_canary()`调用`gpu
 旧计划已归档。唯一活动计划为`docs/AXIS_PI05_TRACK3_PROVENANCE_JITTER_RECOVERY_AND_OVERNIGHT_CONTINUATION_PLAN.md`：J0/J1修telemetry v2与LF manifest，J2只读释放attempt3且禁止attempt4；之后J3–J10连续执行task20/task19、family executor、最多12条generation/36次replay、20Hz 80/20 mixture、R6 L2 LoRA 100/500/1000、reverse/C20评估与条件式本地FAST ZIP，J11 hard stop。用户无需人工中途审核；自动上传/比赛提交不授权。
 
 审核报告：`docs/reviews/axis_pi05/TRACK3_OVERNIGHT_O0_O2_AUDIT_20260905.md`。
+
+## 57. Provenance Jitter J0–J5 执行停止点（2026-09-05）
+
+执行HEAD为`7ae488b4475169ac1cc3b586158454639e6a2be9`，J5 clean source为`3a5641956770fa74faaed20f12832489d7f257b7`。J0/J1/J2生成input lock、telemetry v2和task10 attempt3 derived release；J3只在GPU3依次运行task20/demo0、task19/demo0各一次，均通过restore/truth/contact-v3/camera、PID/UUID、return/timeout和两路41帧20 FPS H.264。J4报告释放三族executor。
+
+J5只启动task10/demo0 nominal一次。child真实产生180帧双相机和finite trajectory，但`approach_grasp`没有收敛，最后translation/rotation error为`0.015306 m / 3.126052 rad`，180帧均action saturated，goal始终false。parent随后因ffmpeg无法识别`agentview.mp4.partial`而camera失败；child return code 1又使telemetry记录`process_returncode`错误，J5 summary正确写为infrastructure hard stop。J11错误改写成`no_family_release`。
+
+J6–J10均为`not_evaluated`，`exact/pending/accepted=0/0/0`。没有training、norm、Teleop、demo、FAST、ZIP、官方GPU、上传或提交。全量测试为`250 passed, 7 skipped, 23 warnings`；GPU3已释放，GPU0外部PID保持，root/OpenPI clean，`LIBERO-plus`既有dirty未改。
+
+## 58. J0–J5 独立审核与最小恢复计划（2026-09-05）
+
+审核唯一结论为`remediation_required`。J0 hashes、J2/J3核心release、J5单次执行/hard stop、未执行边界与资源边界获批准。J4 intended executor不获批准：Robosuite返回`xyzw`，工具按`wxyz`做compose/log；正确HDF5 EEF重构误差为`2.276e-7 rad`，现helper偏差`2.21036 rad`。旧nominal的历史`failed_gate`保留，但对修正后executor的profile结论只能是`not_evaluated`。
+
+审核还确认：J4未证明same-demo init target、object-follow、task19 joint direction或实际contact/stall/unrelated gates；J1 launcher没有实现宣称的dirty/commit/tool校验和周期heartbeat；旧J3/J11 manifests分别有`5/21`与`4/37`项因cursor/log/PID finalization顺序而漂移，J3 core entries为`14/14`、J11 core execution entries为`25/25` exact。
+
+旧计划已归档。新唯一活动计划`docs/AXIS_PI05_TRACK3_J5_EXECUTOR_CONTRACT_AND_ATOMIC_VIDEO_RECOVERY_PLAN.md`执行V0–V5：CPU统一`xyzw`、support HDF5与hard-gate合同、原子MP4、进程分类、J11传播、supervisor和manifest；离线重编码旧180帧并写derived errata；形成clean commit后仅GPU3运行一次corrected task10/demo0 nominal canary，然后hard stop。task20/task19 manipulation、conservative、J6 generation/replay、训练与ZIP均未授权。审核报告：`docs/reviews/axis_pi05/TRACK3_JITTER_J0_J5_AUDIT_20260905.md`。

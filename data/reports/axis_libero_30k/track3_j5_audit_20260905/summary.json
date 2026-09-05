@@ -1,0 +1,126 @@
+{
+  "approved": {
+    "baseline_full_tests": "250_passed_7_skipped_23_warnings",
+    "exact_pending_accepted": [
+      0,
+      0,
+      0
+    ],
+    "forbidden_actions_observed": [],
+    "hard_stop_after_j5": true,
+    "immutable_hdf5_hashes_exact": "3/3",
+    "immutable_j0_evidence_hashes_exact": "9/9",
+    "j3_core_manifest_entries_exact": "14/14",
+    "j3_p3_canaries": "2/2",
+    "j11_core_execution_manifest_entries_exact": "25/25",
+    "j5_unique_gpu_processes": 1,
+    "j6_to_j10": "not_evaluated",
+    "nested_openpi_clean": true,
+    "r6_folded_and_raw_checkpoint_hashes_exact": true,
+    "root_clean": true
+  },
+  "audited_execution_commit": "7ae488b4475169ac1cc3b586158454639e6a2be9",
+  "created_date": "2026-09-05",
+  "evidence": {
+    "j11_artifact_manifest": {
+      "bytes": 8761,
+      "path": "data/reports/axis_libero_30k/track3_jitter_recovery/j11_artifact_manifest.json",
+      "sha256": "27adebb93ce9e7de144f559ee54cb9c6406d3903dff0a8197d36ec5d9928a970"
+    },
+    "j11_closeout": {
+      "bytes": 1169,
+      "path": "data/reports/axis_libero_30k/track3_jitter_recovery/j11_closeout.json",
+      "sha256": "c49503b29f6490d7825f25f8f9d0ec4798b567d38ee33f2446aff64921aec895"
+    },
+    "j3_summary": {
+      "bytes": 57732,
+      "path": "data/reports/axis_libero_30k/track3_jitter_recovery/j3_summary.json",
+      "sha256": "b3bf3f33f41e644bb2c8aefbd89980a9d26ce5bc9f405bec04ef8f0136eb033d"
+    },
+    "j4_executor_contract": {
+      "bytes": 13294,
+      "path": "data/reports/axis_libero_30k/track3_jitter_recovery/j4_executor_contract.json",
+      "sha256": "b7ba01bb291ef833fb81647962cd9ad11c3274a15b54fa9fe91310ad4a641944"
+    },
+    "j5_child_result": {
+      "bytes": 26711,
+      "path": "data/reports/axis_libero_30k/track3_jitter_recovery/j5_pilots/task10_demo0_nominal_attempt1/child_result.json",
+      "sha256": "8860f91bd3a067959237114b84f866a52a87667b96148744a45f799f447744a6"
+    },
+    "j5_frames": {
+      "bytes": 7070971,
+      "path": "data/reports/axis_libero_30k/track3_jitter_recovery/j5_pilots/task10_demo0_nominal_attempt1/frames.npz",
+      "sha256": "d78eec1c0741eebc084b3d92524b659504d7b962b5bf171706efbf17f55e1986"
+    },
+    "j5_parent_result": {
+      "bytes": 33764,
+      "path": "data/reports/axis_libero_30k/track3_jitter_recovery/j5_pilots/task10_demo0_nominal_attempt1/parent_result.json",
+      "sha256": "dc31b22f4d693c72c777efd5e3845b2956676a000852b458a2171720a38886eb"
+    },
+    "j5_pilot_summary": {
+      "bytes": 39910,
+      "path": "data/reports/axis_libero_30k/track3_jitter_recovery/j5_pilot_summary.json",
+      "sha256": "40a8fee71ec451acacbac80abbb756ab25c6425513848a7ae6fe51fff336dbf7"
+    },
+    "j5_trajectory": {
+      "bytes": 119339,
+      "path": "data/reports/axis_libero_30k/track3_jitter_recovery/j5_pilots/task10_demo0_nominal_attempt1/trajectory.npz",
+      "sha256": "1d082039f1ded9b5f493f62188a741e3209a31d1b46e89b178a962cebe9bcf00"
+    }
+  },
+  "findings": {
+    "closeout_manifest": {
+      "j11_entries": 37,
+      "j11_hash_or_bytes_mismatches": 4,
+      "j3_entries": 21,
+      "j3_hash_or_bytes_mismatches": 5,
+      "reason": "mutable_cursor_and_logs_and_ephemeral_pid_were_hashed_before_finalization"
+    },
+    "executor_contract": {
+      "hdf5_same_demo_init_target_proven": false,
+      "j4_release_approved": false,
+      "required_contact_stall_unrelated_movement_gates_implemented": false,
+      "task19_joint_direction_proven": false
+    },
+    "ffmpeg_atomic_output": {
+      "corrected_partial_shape": "agentview.partial.mp4",
+      "historical_partial_shape": "agentview.mp4.partial",
+      "reproduced_bad_returncode": 234
+    },
+    "j11_mapping": {
+      "actual_j5_status": "track3_jitter_stopped_J5_infrastructure_failure",
+      "incorrect_closeout_reason": "no_family_release",
+      "incorrect_closeout_status": "track3_jitter_recovery_stopped_J5_no_family_release"
+    },
+    "j5_child_exit_semantics": {
+      "child_status": "failed_gate",
+      "process_returncode": 1,
+      "telemetry_error": "process_returncode",
+      "valid_result_publication_misclassified_as_infrastructure": true
+    },
+    "j5_quaternion_convention": {
+      "action_saturated_frames": "180/180",
+      "correct_xyzw_reconstruction_geodesic_rad": 2.2760074661787235e-07,
+      "historical_fields_mislabeled": "wxyz_but_values_are_xyzw",
+      "intended_executor_profile_result": "not_evaluated",
+      "last_runtime_rotation_error_rad": 3.126052229586576,
+      "robosuite_convention": "xyzw",
+      "tool_product_geodesic_to_hdf5_eef_rad": 2.210355626925068
+    },
+    "supervisor_contract": {
+      "dirty_source_rejection_implemented": false,
+      "periodic_heartbeat_implemented": false,
+      "source_commit_and_tool_hash_launch_validation_implemented": false
+    }
+  },
+  "gpu_boundary_at_audit": {
+    "gpu0_external_pid": 1133706,
+    "gpu0_external_process_preserved": true,
+    "gpu1_to_gpu3_compute_processes": 0
+  },
+  "historical_evidence_rewritten": false,
+  "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "next_plan": "docs/AXIS_PI05_TRACK3_J5_EXECUTOR_CONTRACT_AND_ATOMIC_VIDEO_RECOVERY_PLAN.md",
+  "schema_version": "track3_jitter_j0_j5_audit_v1",
+  "verdict": "remediation_required"
+}

@@ -9,12 +9,14 @@ HANDOFF = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_2026
 CANARY = ROOT / "data/reports/axis_libero_30k/track3_background_predicate_convergence/k3_gpu3_release/task19_canary.json"
 
 
-def test_only_the_track3_jitter_recovery_plan_is_active() -> None:
+def test_only_the_track3_j5_executor_recovery_plan_is_active() -> None:
     handoff = json.loads(HANDOFF.read_text(encoding="utf-8"))
-    assert handoff["status"] == "track3_provenance_jitter_recovery_and_overnight_continuation_planned"
-    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_PROVENANCE_JITTER_RECOVERY_AND_OVERNIGHT_CONTINUATION_PLAN.md"
-    assert handoff["next_phase_only"] == "J0_to_J11_then_hard_stop"
+    assert handoff["status"] == "track3_j5_executor_contract_and_atomic_video_recovery_planned"
+    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_J5_EXECUTOR_CONTRACT_AND_ATOMIC_VIDEO_RECOVERY_PLAN.md"
+    assert handoff["next_phase_only"] == "V0_to_V5_then_hard_stop"
     assert (ROOT / handoff["next_plan"]).is_file()
+    assert not (ROOT / "docs/AXIS_PI05_TRACK3_PROVENANCE_JITTER_RECOVERY_AND_OVERNIGHT_CONTINUATION_PLAN.md").exists()
+    assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_PROVENANCE_JITTER_RECOVERY_AND_OVERNIGHT_CONTINUATION_PLAN.md").is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_OVERNIGHT_AUTOGEN_LORA_AND_ZIP_PLAN.md").exists()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_OVERNIGHT_AUTOGEN_LORA_AND_ZIP_PLAN.md").is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_P3_IO_RECOVERY_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md").exists()
@@ -156,6 +158,8 @@ def test_composed_state_authorization_is_data_source_only_and_bounded() -> None:
     assert audit["user_manual_action_required"] is False
 
     continuation = handoff["track3_provenance_jitter_recovery_and_overnight_continuation_authorization"]
+    assert continuation["status"] == "track3_provenance_jitter_recovery_and_overnight_continuation_completed_and_audited"
+    assert continuation["plan"].startswith("docs/archive/axis_pi05/")
     assert continuation["authorized_phases"] == ["J0", "J1", "J2", "J3", "J4", "J5", "J6", "J7", "J8", "J9", "J10", "J11_closeout"]
     next_scope = continuation["authorization"]
     assert next_scope["persistent_supervisor"] == "setsid_single_instance_pidfile_atomic_cursor"
@@ -172,3 +176,35 @@ def test_composed_state_authorization_is_data_source_only_and_bounded() -> None:
     assert next_scope["gpu0"] is False
     assert next_scope["official_gpu"] is False
     assert next_scope["automatic_upload_or_submission"] is False
+
+    execution = continuation["execution"]
+    assert execution["status"] == "track3_jitter_stopped_J5_infrastructure_failure"
+    assert execution["j5_unique_pilots"] == 1
+    assert execution["j5_task10_nominal_frames"] == 180
+    assert execution["exact_pending_accepted"] == [0, 0, 0]
+
+    j5_audit = handoff["track3_jitter_j0_j5_audit"]
+    assert j5_audit["status"] == "remediation_required"
+    assert (ROOT / j5_audit["audit_report"]).is_file()
+    assert (ROOT / j5_audit["audit_summary"]).is_file()
+    assert j5_audit["approved"]["j3_task20_task19_p3"] == "2/2"
+    assert j5_audit["approved"]["j6_to_j10_not_evaluated"] is True
+    assert j5_audit["findings"]["robosuite_quaternion_convention"] == "xyzw"
+    assert j5_audit["findings"]["j4_executor_release_approved"] is False
+    assert j5_audit["findings"]["corrected_executor_profile_result"] == "not_evaluated"
+    assert j5_audit["findings"]["j11_infrastructure_mapped_to_no_family_release"] is True
+    assert j5_audit["findings"]["j3_manifest_hash_or_bytes_mismatches"] == "5/21"
+    assert j5_audit["findings"]["j11_manifest_hash_or_bytes_mismatches"] == "4/37"
+
+    recovery = handoff["track3_j5_executor_contract_and_atomic_video_recovery_authorization"]
+    assert recovery["status"] == "track3_j5_executor_contract_and_atomic_video_recovery_planned"
+    assert recovery["authorized_phases"] == ["V0", "V1", "V2", "V3", "V4", "V5_closeout"]
+    scope = recovery["authorization"]
+    assert scope["quaternion_convention"] == "explicit_xyzw"
+    assert scope["corrected_task10_demo0_nominal_gpu3_canaries_max"] == 1
+    assert scope["support_conservative_profile"] is False
+    assert scope["task20_or_task19_manipulation"] is False
+    assert scope["j6_generation_or_replay"] is False
+    assert scope["training_or_norm"] is False
+    assert scope["gpu0"] is False
+    assert scope["automatic_upload_or_submission"] is False

@@ -1,0 +1,51 @@
+{
+  "audit_report": "docs/reviews/axis_pi05/TRACK3_RUNTIME_PREFLIGHT_Y0_Y2_AUDIT_20260906.md",
+  "audited_execution_commit": "882958c8b863585b13f10f22445d4aa4a42b2d56",
+  "execution": {
+    "clean_release_commit": "b16211bc7e48ec96ae8b89b9edf88462e73d3078",
+    "evidence_closure_commit": "d643e105830ac93622169a53198e2f3373f7b658",
+    "exact_pending_accepted": [
+      0,
+      0,
+      0
+    ],
+    "y3_to_y13": "not_evaluated"
+  },
+  "findings": {
+    "child_exact_argv_dispatches": false,
+    "destination_numeric_gate_implemented": false,
+    "frozen_clean_source_identity_enforced": false,
+    "hard_gates_use_phase_scoped_windows": false,
+    "intended_y3_physical_result": "not_evaluated",
+    "source_dirty_gate_fail_closed": false
+  },
+  "historical_evidence_rewritten": false,
+  "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "next_plan": "docs/AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md",
+  "resource_boundary": {
+    "generation": false,
+    "gpu0_touched": false,
+    "gpu_compute_apps_at_audit": 0,
+    "official_gpu": false,
+    "physics": false,
+    "replay": false,
+    "teleop": false,
+    "training": false,
+    "zip": false
+  },
+  "schema_version": "track3_runtime_preflight_y0_y2_audit_v1",
+  "status": "remediation_required",
+  "verified": {
+    "closeout_self_hashes_exact": "3/3",
+    "full_tests_reproduced": "271 passed, 7 skipped, 23 warnings",
+    "input_inventory_bytes_sha_exact": "45/45",
+    "libero_plus_existing_dirty_preserved": true,
+    "lifecycle_targeted_tests": "28 passed, 2 warnings",
+    "manifest_git_tracked_bytes_sha_exact": "6/6",
+    "no_live_track3_process": true,
+    "no_partial_or_y3_run_artifacts": true,
+    "root_and_openpi_clean": true,
+    "strict_json": "9/9",
+    "targeted_tests_reproduced": "10 passed"
+  }
+}

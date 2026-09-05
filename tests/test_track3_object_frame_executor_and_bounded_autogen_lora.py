@@ -37,14 +37,11 @@ def test_x0_x13_audit_archives_x_and_releases_exactly_one_y_plan() -> None:
             / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
         ).read_text(encoding="utf-8")
     )
-    assert handoff["status"] in {
-        "track3_runtime_preflight_and_bounded_continuation_planned",
-        "track3_runtime_y2_clean_release_ready",
-    }
+    assert handoff["status"] == "track3_y3_launch_phase_ledger_remediation_planned"
     assert handoff["next_plan"] == (
-        "docs/AXIS_PI05_TRACK3_RUNTIME_PREFLIGHT_AND_BOUNDED_CONTINUATION_PLAN.md"
+        "docs/AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md"
     )
-    assert handoff["next_phase_only"] == "Y0_to_Y13_then_hard_stop"
+    assert handoff["next_phase_only"] == "Z0_to_Z14_then_hard_stop"
     assert (ROOT / handoff["next_plan"]).is_file()
     assert not (
         ROOT
@@ -71,8 +68,8 @@ def test_x0_x13_audit_archives_x_and_releases_exactly_one_y_plan() -> None:
     assert audit["findings"]["source_release_gate_phase"] == "incorrectly_at_close_before_lift"
 
     next_authorization = handoff["track3_runtime_preflight_and_bounded_continuation_authorization"]
-    assert next_authorization["status"] == "track3_runtime_preflight_and_bounded_continuation_planned"
-    assert next_authorization["plan"] == handoff["next_plan"]
+    assert next_authorization["status"] == "track3_runtime_preflight_and_bounded_continuation_completed_and_audited"
+    assert next_authorization["plan"] == "docs/archive/axis_pi05/AXIS_PI05_TRACK3_RUNTIME_PREFLIGHT_AND_BOUNDED_CONTINUATION_PLAN.md"
     assert next_authorization["authorized_phases"] == [
         "Y0", "Y1", "Y2", "Y3", "Y4", "Y5", "Y6", "Y7", "Y8", "Y9", "Y10", "Y11", "Y12", "Y13_closeout"
     ]
@@ -85,3 +82,10 @@ def test_x0_x13_audit_archives_x_and_releases_exactly_one_y_plan() -> None:
     assert scope["gpu0"] is False
     assert scope["official_gpu"] is False
     assert scope["automatic_upload_or_submission"] is False
+
+    y_audit = handoff["track3_runtime_preflight_y0_y2_audit"]
+    assert y_audit["status"] == "remediation_required"
+    assert y_audit["findings"]["child_exact_argv_dispatches"] is False
+    z_authorization = handoff["track3_y3_launch_phase_ledger_remediation_authorization"]
+    assert z_authorization["plan"] == handoff["next_plan"]
+    assert z_authorization["next_phase_only"] == handoff["next_phase_only"]

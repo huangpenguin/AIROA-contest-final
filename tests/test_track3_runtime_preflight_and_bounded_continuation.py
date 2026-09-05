@@ -80,11 +80,32 @@ def test_identity_gate_rejects_dirty_or_command_drift() -> None:
     assert tool.identity_gate(identity, expected_commit="abc", expected_tool_sha256="tool", expected_openpi="openpi", expected_command=["worker"])["state"] == "failed"
 
 
-def test_y_plan_is_the_unique_active_plan() -> None:
+def test_y_audit_archives_y_and_releases_exactly_one_z_plan() -> None:
     handoff = json.loads((ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json").read_text(encoding="utf-8"))
-    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_RUNTIME_PREFLIGHT_AND_BOUNDED_CONTINUATION_PLAN.md"
-    assert handoff["next_phase_only"] == "Y0_to_Y13_then_hard_stop"
+    assert handoff["status"] == "track3_y3_launch_phase_ledger_remediation_planned"
+    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md"
+    assert handoff["next_phase_only"] == "Z0_to_Z14_then_hard_stop"
     assert (ROOT / handoff["next_plan"]).is_file()
+    assert not (ROOT / "docs/AXIS_PI05_TRACK3_RUNTIME_PREFLIGHT_AND_BOUNDED_CONTINUATION_PLAN.md").exists()
+    assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_RUNTIME_PREFLIGHT_AND_BOUNDED_CONTINUATION_PLAN.md").is_file()
+
+    audit = handoff["track3_runtime_preflight_y0_y2_audit"]
+    assert audit["status"] == "remediation_required"
+    assert (ROOT / audit["audit_report"]).is_file()
+    assert (ROOT / audit["audit_summary"]).is_file()
+    assert audit["verified"]["input_inventory_bytes_sha_exact"] == "45/45"
+    assert audit["verified"]["manifest_git_tracked_bytes_sha_exact"] == "6/6"
+    assert audit["findings"]["child_exact_argv_dispatches"] is False
+    assert audit["findings"]["hard_gates_use_phase_scoped_windows"] is False
+    assert audit["findings"]["frozen_clean_source_identity_enforced"] is False
+
+    authorization = handoff["track3_y3_launch_phase_ledger_remediation_authorization"]
+    assert authorization["status"] == handoff["status"]
+    assert authorization["plan"] == handoff["next_plan"]
+    assert authorization["authorization"]["support_nominal_cpu_physics_canaries_max"] == 1
+    assert authorization["authorization"]["total_train_generations_max"] == 12
+    assert authorization["authorization"]["gpu0"] is False
+    assert authorization["authorization"]["automatic_upload_or_submission"] is False
 
 
 def test_y0_y2_execution_evidence_is_closed_before_y3() -> None:

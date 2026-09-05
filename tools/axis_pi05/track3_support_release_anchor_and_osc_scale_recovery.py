@@ -118,6 +118,29 @@ def porcelain(repo: Path = ROOT) -> list[str]:
     return [line for line in git(("status", "--porcelain", "--untracked-files=all"), repo).splitlines() if line]
 
 
+def source_porcelain(repo: Path = ROOT) -> list[str]:
+    """Return source-worktree changes, excluding this run's evidence files.
+
+    W0--W3 deliberately rewrite their own reports while validating the
+    release.  Those reports are tracked evidence, not source changes, so a
+    full-root porcelain check would make the W3 identity gate self-fail.
+    Keep the filtering scoped to the root repository; the OpenPI and
+    LIBERO-plus checks must continue to report their complete independent
+    worktree state.
+    """
+    rows = porcelain(repo)
+    if repo.resolve() != ROOT.resolve():
+        return rows
+    evidence_prefix = f"{rel(OUT).rstrip('/')}/"
+    source_rows: list[str] = []
+    for row in rows:
+        path_field = row[3:].strip() if len(row) >= 3 else row.strip()
+        paths = [part.strip().strip('"') for part in path_field.split(" -> ")]
+        if any(not path.startswith(evidence_prefix) for path in paths):
+            source_rows.append(row)
+    return source_rows
+
+
 def strict_json(path: Path) -> Any:
     return previous.strict_json_load(path)
 
@@ -362,7 +385,7 @@ def run_w0() -> dict[str, Any]:
         "openpi_commit": current_openpi == EXPECTED_OPENPI_COMMIT and not porcelain(OPENPI),
         "old_v4_immutable": old_v4_parent.get("category") == "family_failure" and old_v4_child.get("status") == "failed_gate",
         "old_v5_hard_stop": old_v5.get("counts") == {"accepted_reverse_demo": 0, "exact_reverse_demo": 0, "pending_autogen": 0},
-        "root_clean": not porcelain(ROOT),
+        "root_clean": not source_porcelain(ROOT),
         "gpu0_external_preserved": any(EXPECTED_GPU0_PID in line for line in gpu0.get("compute_processes", [])),
         "gpu1_to_gpu3_free": all(row.get("free") for row in gpu_free.values()),
     }
@@ -564,7 +587,7 @@ def run_w3() -> dict[str, Any]:
     root_head = git(("rev-parse", "HEAD"))
     tool_hash = sha256_file(Path(__file__))
     command = _planned_command("w4", W4_ROOT, W4_CHILD)
-    identity = supervisor_identity_gate(expected_commit=root_head, observed_commit=root_head, expected_tool_sha256=tool_hash, observed_tool_sha256=tool_hash, expected_openpi=EXPECTED_OPENPI_COMMIT, observed_openpi=git(("rev-parse", "HEAD"), OPENPI), dirty=bool(porcelain(ROOT)), pid_active=False, cursor_active=False, expected_command=command, observed_command=command, expected_cuda_visible_devices="", observed_cuda_visible_devices="", gpu_policy="cpu_no_renderer")
+    identity = supervisor_identity_gate(expected_commit=root_head, observed_commit=root_head, expected_tool_sha256=tool_hash, observed_tool_sha256=tool_hash, expected_openpi=EXPECTED_OPENPI_COMMIT, observed_openpi=git(("rev-parse", "HEAD"), OPENPI), dirty=bool(source_porcelain(ROOT)), pid_active=False, cursor_active=False, expected_command=command, observed_command=command, expected_cuda_visible_devices="", observed_cuda_visible_devices="", gpu_policy="cpu_no_renderer")
     heartbeat_path = OUT / "w3_heartbeat_probe.json"
     first = _heartbeat(heartbeat_path, phase="W3.test", state="running", pid=os.getpid(), count=1, identity=identity)
     time.sleep(0.02)
@@ -572,7 +595,7 @@ def run_w3() -> dict[str, Any]:
     rejected = supervisor_identity_gate(expected_commit=root_head, observed_commit="wrong", expected_tool_sha256=tool_hash, observed_tool_sha256=tool_hash, expected_openpi=EXPECTED_OPENPI_COMMIT, observed_openpi=EXPECTED_OPENPI_COMMIT, dirty=True, pid_active=True, cursor_active=True, expected_command=command, observed_command=command + ["--wrong"], expected_cuda_visible_devices="", observed_cuda_visible_devices="3", gpu_policy="cpu_no_renderer")
     compile_result = subprocess.run([sys.executable, "-m", "py_compile", str(Path(__file__))], capture_output=True, text=True, check=False)
     test_result = subprocess.run([sys.executable, "-m", "pytest", "-q", "tests"], cwd=ROOT, capture_output=True, text=True, check=False)
-    checks = {"identity_gate_passed": identity["state"] == "passed", "identity_gate_rejects_mismatch": rejected["state"] == "failed", "heartbeat_two_updates": first["count"] == 1 and second["count"] == 2, "py_compile": compile_result.returncode == 0, "root_tests": test_result.returncode == 0, "root_clean": not porcelain(ROOT), "openpi_clean": not porcelain(OPENPI)}
+    checks = {"identity_gate_passed": identity["state"] == "passed", "identity_gate_rejects_mismatch": rejected["state"] == "failed", "heartbeat_two_updates": first["count"] == 1 and second["count"] == 2, "py_compile": compile_result.returncode == 0, "root_tests": test_result.returncode == 0, "root_clean": not source_porcelain(ROOT), "openpi_clean": not porcelain(OPENPI)}
     result = {"schema_version": "track3_support_w3_clean_release_v1", "status": "track3_support_release_w3_clean_ready" if all(checks.values()) else "track3_support_release_stopped_W3_release_failure", "created_at_utc": now(), "root_commit": root_head, "tool_sha256": tool_hash, "openpi_commit": git(("rev-parse", "HEAD"), OPENPI), "identity_contract": identity, "identity_rejection_fixture": rejected, "heartbeat_test": {"path": rel(heartbeat_path), "updates": 2, "periodic_function": "heartbeat_due", "atomic": True}, "py_compile": {"returncode": compile_result.returncode, "stderr": compile_result.stderr[-1000:]}, "root_tests": {"returncode": test_result.returncode, "tail": test_result.stdout[-3000:]}, "checks": checks, "v4_scope": {"task": 10, "demo": 0, "family": "support_remove", "profile": "release_anchor_scaled_nominal", "seed": W4_SEED, "max_runs": 1, "renderer": "none", "gpu": "none"}}
     write_json(W3_REPORT, result)
     return result
@@ -862,7 +885,7 @@ def _parent_run(*, phase: str, run_root: Path, parent_path: Path, child_path: Pa
     current_tool = sha256_file(Path(__file__))
     cursor = OUT / "resume_cursor.json"
     pid_file = run_root / "supervisor.pid"
-    identity = supervisor_identity_gate(expected_commit=w3.get("root_commit", ""), observed_commit=current_commit, expected_tool_sha256=w3.get("tool_sha256", ""), observed_tool_sha256=current_tool, expected_openpi=EXPECTED_OPENPI_COMMIT, observed_openpi=git(("rev-parse", "HEAD"), OPENPI), dirty=bool(porcelain(ROOT)), pid_active=pid_file.exists(), cursor_active=bool(strict_json(cursor).get("active")) if cursor.is_file() else False, expected_command=command, observed_command=command, expected_cuda_visible_devices=observed_cuda, observed_cuda_visible_devices=observed_cuda, gpu_policy=gpu_policy, root_commit_relation=_release_commit_compatible(w3.get("root_commit", ""), current_commit))
+    identity = supervisor_identity_gate(expected_commit=w3.get("root_commit", ""), observed_commit=current_commit, expected_tool_sha256=w3.get("tool_sha256", ""), observed_tool_sha256=current_tool, expected_openpi=EXPECTED_OPENPI_COMMIT, observed_openpi=git(("rev-parse", "HEAD"), OPENPI), dirty=bool(source_porcelain(ROOT)), pid_active=pid_file.exists(), cursor_active=bool(strict_json(cursor).get("active")) if cursor.is_file() else False, expected_command=command, observed_command=command, expected_cuda_visible_devices=observed_cuda, observed_cuda_visible_devices=observed_cuda, gpu_policy=gpu_policy, root_commit_relation=_release_commit_compatible(w3.get("root_commit", ""), current_commit))
     write_json(run_root / "identity_preflight.json", {"schema_version": "track3_support_supervisor_identity_v1", "phase": phase, "called_by_launcher": True, "identity": identity, "root_commit": current_commit, "tool_sha256": current_tool, "openpi_commit": git(("rev-parse", "HEAD"), OPENPI), "command": command, "cuda_visible_devices": observed_cuda})
     if identity["state"] != "passed":
         result = {"schema_version": "track3_support_parent_v1", "status": f"track3_support_release_stopped_{phase.upper()}_identity_failure", "category": "infrastructure", "created_at_utc": now(), "phase": phase.upper(), "identity_gate": identity, "identity_gate_called": True, "resource_boundary": {"gpu3_only": capture_camera, "cpu_no_renderer": not capture_camera, "gpu0_touched": False, "official_gpu": False}}

@@ -450,12 +450,46 @@ def run_j3() -> dict[str, Any]:
     return summary
 
 
+def _pid_is_this_supervisor(pid: int) -> bool:
+    try:
+        command = Path(f"/proc/{pid}/cmdline").read_bytes().replace(b"\0", b" ").decode(errors="replace")
+    except (FileNotFoundError, PermissionError):
+        return False
+    return MODULE in command and "--supervisor" in command
+
+
+def run_supervisor() -> dict[str, Any]:
+    """Single-instance, SSH-independent supervisor for the J3 lane."""
+    OUT_ROOT.mkdir(parents=True, exist_ok=True)
+    pid_path = OUT_ROOT / "supervisor.pid"
+    if pid_path.exists():
+        try:
+            old_pid = int(pid_path.read_text(encoding="utf-8").strip())
+        except ValueError as exc:
+            raise RuntimeError("malformed_supervisor_pid_file") from exc
+        if old_pid == os.getpid() or _pid_is_this_supervisor(old_pid):
+            raise RuntimeError(f"supervisor_already_active:{old_pid}")
+        raise RuntimeError(f"supervisor_pid_file_requires_review:{old_pid}")
+    pid_path.write_text(str(os.getpid()) + "\n", encoding="utf-8")
+    cursor_path = OUT_ROOT / "resume_cursor.json"
+    write_json(cursor_path, {"schema_version": "track3_jitter_cursor_v2", "status": "active", "pid": os.getpid(), "commit": git(("rev-parse", "HEAD")), "tool_sha256": sha256_file(Path(__file__)), "last_heartbeat_utc": now(), "next_phase": "J3"})
+    try:
+        j3 = run_j3()
+        final = {"schema_version": "track3_jitter_supervisor_v1", "status": "completed_J3", "j3_status": j3.get("status"), "last_heartbeat_utc": now(), "pid": os.getpid(), "commit": git(("rev-parse", "HEAD")), "tool_sha256": sha256_file(Path(__file__)), "next_phase": "J4" if j3.get("released_families") else "J11"}
+        write_json(cursor_path, final)
+        write_json(OUT_ROOT / "supervisor_closeout.json", final)
+        return final
+    finally:
+        pid_path.unlink(missing_ok=True)
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--j0", action="store_true")
     parser.add_argument("--j1", action="store_true")
     parser.add_argument("--j2", action="store_true")
     parser.add_argument("--j3", action="store_true")
+    parser.add_argument("--supervisor", action="store_true")
     parser.add_argument("--j3-worker", action="store_true")
     parser.add_argument("--task-index", type=int)
     parser.add_argument("--demo-index", type=int)
@@ -470,6 +504,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         if any(value is None for value in required):
             parser.error("--j3-worker requires task/demo/seed/attempt/state/frames/result")
         return _j3_worker(args.task_index, args.demo_index, args.seed, args.attempt_number, args.state_bundle, args.frames_output, args.result_output)
+    if args.supervisor:
+        result = run_supervisor()
+        print(json.dumps(result, ensure_ascii=False, sort_keys=True))
+        return 0
     selected = [name for name, value in (("j0", args.j0), ("j1", args.j1), ("j2", args.j2), ("j3", args.j3)) if value]
     if len(selected) != 1:
         parser.error("select exactly one of --j0/--j1/--j2")

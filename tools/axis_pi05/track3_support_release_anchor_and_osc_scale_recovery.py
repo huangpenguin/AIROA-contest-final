@@ -79,6 +79,14 @@ EXPECTED_GPU0_PID = "1133706"
 COMPLETED_WORKER_STATUSES = frozenset({"passed", "failed_gate"})
 
 
+def _ensure_runtime_pythonpath() -> None:
+    """Make the public LIBERO checkout importable for direct CLI launches."""
+    for path in (ROOT, PUBLIC_LIBERO):
+        value = str(path)
+        if value not in sys.path:
+            sys.path.insert(0, value)
+
+
 def now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
@@ -431,6 +439,7 @@ def run_w1() -> dict[str, Any]:
         write_json(W1_REPORT, result)
         return result
     import numpy as np
+    _ensure_runtime_pythonpath()
     from tools.axis_pi05 import track3_composed_reverse_start_stabilization as composed
     from tools.axis_pi05 import track3_dynamic_gate_reconciliation as dynamic
     from tools.axis_pi05 import track3_operator_scoped_stability as prior
@@ -567,6 +576,7 @@ def _contact_rows_for_gate(sample: Mapping[str, Any]) -> Mapping[str, Any]:
 
 def _executor_worker(run_root: Path, result_path: Path, frames_path: Path | None, *, capture_camera: bool) -> int:
     import numpy as np
+    _ensure_runtime_pythonpath()
     from tools.axis_pi05 import track3_composed_reverse_start_stabilization as composed
     from tools.axis_pi05 import track3_dynamic_gate_reconciliation as dynamic
     from tools.axis_pi05 import track3_operator_scoped_stability as prior

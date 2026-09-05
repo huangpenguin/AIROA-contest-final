@@ -1,0 +1,17 @@
+{
+  "active": false,
+  "command": [
+    "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+    "-m",
+    "tools.axis_pi05.track3_y3_launch_phase_ledger_remediation",
+    "--z14"
+  ],
+  "openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "phase": "Z14",
+  "pid": 1533548,
+  "root_commit": "89428e972671379603f0d04ebdcf94b8c449a281",
+  "schema_version": "track3_z_cursor_v1",
+  "status": "hard_stop",
+  "tool_sha256": "fab710a4a907d941276c3ebabfbd94d444a1891aa8598aea060f90e69dabc26f",
+  "updated_at_utc": "2026-09-05T19:37:58.807716+00:00"
+}

@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-06",
-  "status": "track3_z4_prephysics_release_ready_for_z5",
+  "status": "track3_z14_hard_stop_pending_review",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
   "latest_audited_execution_commit": "882958c8b863585b13f10f22445d4aa4a42b2d56",
   "latest_audit_input_commit": "882958c8b863585b13f10f22445d4aa4a42b2d56",
-  "latest_execution_root_commit": "882958c8b863585b13f10f22445d4aa4a42b2d56",
+  "latest_execution_root_commit": "933f4d3afb70ca31c95d55881d404b97cb3687d5",
   "latest_execution_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
@@ -3807,16 +3807,16 @@
     "next_phase_only": "Z0_to_Z14_then_hard_stop"
   },
   "track3_y3_launch_phase_ledger_remediation_execution": {
-    "status": "track3_z4_prephysics_release_ready_for_z5",
+    "status": "track3_z14_hard_stop_pending_review",
     "plan": "docs/AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md",
     "input_audit": "docs/reviews/axis_pi05/TRACK3_RUNTIME_PREFLIGHT_Y0_Y2_AUDIT_20260906.md",
     "input_commit_locked": "56cdffa83a530cb0dab71e4d17b7a9112a2742af",
     "namespace": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation",
-    "phase_status": {"Z0": "passed", "Z1": "passed", "Z2": "passed", "Z3": "passed", "Z4": "passed_clean_release", "Z5": "not_evaluated", "Z6": "not_evaluated", "Z7": "not_evaluated", "Z8": "not_evaluated", "Z9": "not_evaluated", "Z10": "not_evaluated", "Z11": "not_evaluated", "Z12": "not_evaluated", "Z13": "not_evaluated", "Z14": "not_evaluated"},
-    "reports": {"z0": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z0_input_lock.json", "z1": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z1_cli_dispatch_contract.json", "z2": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z2_source_identity_contract.json", "z3": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z3_phase_ledger_contract.json", "z4": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_prephysics_release.json", "validation": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_final_validation.json", "manifest": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_artifact_manifest.json", "closeout": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_closeout.json"},
-    "checks": {"input_inventory": "45/45", "y2_manifest": "6/6", "y2_self_hashes": "3/3", "z4_manifest_entries": 11, "z4_manifest_exact": true, "strict_json": true, "np_no_pickle_finite": true, "csv_lf": true, "py_compile": true, "targeted_tests": "8 passed", "full_tests": "280 passed, 7 skipped, 23 warnings", "canonical_resolution": "passed_physics_steps_0"},
+    "phase_status": {"Z0": "passed", "Z1": "passed", "Z2": "passed", "Z3": "passed", "Z4": "passed_clean_release", "Z5": "track3_runtime_stopped_Z5_infrastructure_failure", "Z6": "not_evaluated", "Z7": "not_evaluated", "Z8": "not_evaluated", "Z9": "not_evaluated", "Z10": "not_evaluated", "Z11": "not_evaluated", "Z12": "not_evaluated", "Z13": "not_evaluated", "Z14": "hard_stop"},
+    "reports": {"z0": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z0_input_lock.json", "z1": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z1_cli_dispatch_contract.json", "z2": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z2_source_identity_contract.json", "z3": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z3_phase_ledger_contract.json", "z4": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_prephysics_release.json", "z4_validation": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_final_validation.json", "z4_manifest": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_artifact_manifest.json", "z4_closeout": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_closeout.json", "z5_parent": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_cpu_task10_demo0_nominal/parent_result.json", "z5_child": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_cpu_task10_demo0_nominal/child_result.json", "z5_postmortem": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_infrastructure_postmortem.json", "z14_validation": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z14_final_validation.json", "z14_manifest": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z14_artifact_manifest.json", "z14_closeout": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z14_closeout.json"},
+    "checks": {"input_inventory": "45/45", "y2_manifest": "6/6", "y2_self_hashes": "3/3", "z4_manifest_entries": 11, "z4_manifest_exact": true, "z5_physics_steps": 28, "z5_stage": "approach_grasp", "z5_failure_reason": "stage_stall:approach_grasp", "z5_worker_result": "failed_gate", "z5_parent_classification": "infrastructure", "strict_json": true, "np_no_pickle_finite": true, "csv_lf": true, "no_partial": true, "z14_manifest_entries": 28, "z14_manifest_exact": true, "py_compile": true, "targeted_tests": "10 passed", "full_tests": "281 passed, 7 skipped, 23 warnings", "canonical_resolution": "passed_physics_steps_0"},
     "counts": {"exact_reverse_demo": 0, "pending_autogen": 0, "accepted_reverse_demo": 0},
-    "source_identity": {"freeze_mode": "post_commit_git_note", "note_ref": "refs/notes/axis-pi05-track3-z4-source-identity", "self_assertion": false, "status": "pending_note_after_final_commit"},
-    "resource_boundary": {"simulator_created": false, "env_step_called": false, "cuda_initialized": false, "gpu0_touched": false, "official_gpu": false, "generation": false, "replay": false, "training": false, "norm": false, "fast": false, "zip": false, "upload": false, "submit": false, "libero_plus_existing_dirty_untouched": true}
+    "source_identity": {"freeze_mode": "post_commit_git_note", "note_ref": "refs/notes/axis-pi05-track3-z5-source-identity", "run_root_commit": "933f4d3afb70ca31c95d55881d404b97cb3687d5", "self_assertion": false, "post_attempt_source_fix_commits": ["614220d93328de7e12e508f96917b2767e0f4be3", "89428e972671379603f0d04ebdcf94b8c449a281"], "status": "run_frozen_pre_finalizer_fix"},
+    "resource_boundary": {"simulator_created": true, "env_step_called": true, "cuda_initialized": false, "cpu_no_renderer": true, "gpu0_touched": false, "gpu1_touched": false, "gpu2_touched": false, "gpu3_touched": false, "official_gpu": false, "generation": false, "replay": false, "training": false, "norm": false, "fast": false, "zip": false, "upload": false, "submit": false, "libero_plus_existing_dirty_untouched": true, "hard_stop": true}
   }
 }

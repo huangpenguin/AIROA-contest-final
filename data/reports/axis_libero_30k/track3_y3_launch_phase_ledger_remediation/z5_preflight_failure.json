@@ -1,0 +1,74 @@
+{
+  "category": "infrastructure",
+  "command": [
+    "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+    "-m",
+    "tools.axis_pi05.track3_y3_launch_phase_ledger_remediation",
+    "--z5"
+  ],
+  "created_at_utc": "2026-09-05T19:20:17.833639+00:00",
+  "identity": {
+    "command": [
+      "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+      "-m",
+      "tools.axis_pi05.track3_y3_launch_phase_ledger_remediation",
+      "--z5"
+    ],
+    "cuda_visible_devices": "",
+    "gpu_policy": "cpu_no_renderer",
+    "libero_plus_porcelain": [
+      "M libero/libero/benchmark/__init__.py",
+      "?? libero/__init__.py",
+      "?? libero/libero/assets",
+      "?? libero/libero/bddl_files/libero_t3",
+      "?? libero/libero/init_files/libero_t3"
+    ],
+    "openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "root_commit": "28ca069a9b6dd722f15c820aab098aed78b5326b",
+    "schema_version": "track3_z_runtime_identity_v1",
+    "source_porcelain": [],
+    "tool_sha256": "441b6f3528afcb6d9f22c15e826c09211c8dddb23378382127e75d377f976a13"
+  },
+  "identity_gate": {
+    "checks": {
+      "command_exact": true,
+      "cuda_visible_devices_exact": true,
+      "gpu_policy_allowed": true,
+      "libero_plus_snapshot_exact": true,
+      "openpi_commit_exact": true,
+      "root_commit_exact": true,
+      "source_clean": true,
+      "tool_sha256_exact": true
+    },
+    "errors": [],
+    "frozen_command": [
+      "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+      "-m",
+      "tools.axis_pi05.track3_y3_launch_phase_ledger_remediation",
+      "--z5"
+    ],
+    "frozen_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "frozen_root_commit": "28ca069a9b6dd722f15c820aab098aed78b5326b",
+    "frozen_tool_sha256": "441b6f3528afcb6d9f22c15e826c09211c8dddb23378382127e75d377f976a13",
+    "state": "passed"
+  },
+  "phase": "Z5",
+  "preflight": {
+    "frozen_note_exact": true,
+    "identity_gate": true,
+    "openpi_exact": false,
+    "single_instance": true,
+    "source_clean": true,
+    "upstream_z4": true
+  },
+  "resource_boundary": {
+    "cpu_started": false,
+    "generation": false,
+    "gpu0_touched": false,
+    "official_gpu": false,
+    "training": false,
+    "zip": false
+  },
+  "schema_version": "track3_z5_support_nominal_parent_v1",
+  "status": "track3_runtime_stopped_Z5_preflight_failure"
+}

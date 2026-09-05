@@ -784,3 +784,11 @@ Z0–Z4 在新 namespace `data/reports/axis_libero_30k/track3_y3_launch_phase_le
 Z3 将 contact completion 冻结在 `close_gripper` stable window、object-follow/source-release 固定由 `lift` window 提供；stage failure 触发 acquisition barrier，后续 gate 为 `not_evaluated`；destination 同时检查 object 与 EEF 的平移/旋转数值误差，release 后接触解除不会重写 close。Z4 对 task10/task20/task19 的公开 HDF5/model/state 做 no-physics resolution，`physics_steps=0`；strict JSON、NPY/NPZ no-pickle/finite、LF CSV、py_compile、定向 `8 passed` 与全量 `280 passed, 7 skipped, 23 warnings` 通过，并已形成 clean source release。manifest `11` entries exact；source identity 将以 post-commit Git note 冻结后释放 Z5。
 
 Z5–Z14 保持 `not_evaluated`，reverse demo 仍为 `exact/pending/accepted=0/0/0`；没有 ControlEnv、env.step、GPU、生成、replay、训练、norm、FAST、ZIP、上传或提交。GPU0 未触碰，LIBERO-plus 既有 dirty 未改。
+
+## 68. Z5 单次 CPU Canary 与 Z14 Hard Stop（2026-09-06）
+
+Z5 在 post-commit Z5 identity `933f4d3` 下只运行一次 task10/demo0、seed3121、`object_frame_nominal`、CPU/no-renderer canary。ControlEnv 与 physics 实际启动，worker 运行 28 个 steps；approach 阶段第 28 步的完整 progress window 触发 `stage_stall:approach_grasp` 并立即停止。source 初态为 true、goal 初态为 false；未进入 close/lift/transport/place/release，因此 contact completion、object-follow、source-release、transport、destination numeric 与 goal continuity 均保持 `not_evaluated`。trajectory 为 finite `28×7` actions / `28×79` states，GPU0–3 未触碰，未生成 demo。
+
+worker 已原子写出 `failed_gate`，但该次运行所用 release 漏掉 `WORKER_COMPLETED_STATUSES`，导致 worker 最终 return code `1`；parent 按 fail-closed 合同将本次执行标为 `infrastructure`，不是 family failure。stderr、parent/child、phase ledger 和 trajectory 均保留在 `data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_cpu_task10_demo0_nominal/`；返回码修复提交为 `614220d`，收尾 process-scan 修复提交为 `89428e9`，均未触发重跑。
+
+Z14 纯收尾已执行：旧 Z4 manifest 恢复 `11/11` exact，Z14 manifest `28` entries exact，strict JSON、NPY/NPZ finite/no-pickle、CSV LF、无 partial、OpenPI clean、无 live Track3、GPU compute free 全通过。Z14 hard stop 的 `next_authority` 为 `new_reviewed_plan_required`。Z6–Z13 均为 `not_evaluated`，`exact/pending/accepted=0/0/0`；没有 conservative、其他 family、GPU canary、generation、replay、training、norm、FAST/ZIP、Teleop、上传或提交。当前代码树提交为 `89428e9`，Z5 运行 identity 与后续修复 identity 分开记录；LIBERO-plus 既有 dirty 未触碰。

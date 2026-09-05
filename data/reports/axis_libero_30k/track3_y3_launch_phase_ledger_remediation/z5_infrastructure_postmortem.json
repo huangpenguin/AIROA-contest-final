@@ -1,0 +1,87 @@
+{
+  "action_shape": [
+    28,
+    7
+  ],
+  "artifacts": {
+    "child": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_cpu_task10_demo0_nominal/child_result.json",
+    "parent": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_cpu_task10_demo0_nominal/parent_result.json",
+    "phase_ledger": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_cpu_task10_demo0_nominal/phase_ledger.json",
+    "trajectory": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_cpu_task10_demo0_nominal/trajectory.npz"
+  },
+  "counts": {
+    "accepted_reverse_demo": 0,
+    "exact_reverse_demo": 0,
+    "pending_autogen": 0
+  },
+  "created_at_utc": "2026-09-05T19:37:58.761459+00:00",
+  "downstream": {
+    "Z10": "not_evaluated",
+    "Z11": "not_evaluated",
+    "Z12": "not_evaluated",
+    "Z13": "not_evaluated",
+    "Z6": "not_evaluated",
+    "Z7": "not_evaluated",
+    "Z8": "not_evaluated",
+    "Z9": "not_evaluated"
+  },
+  "finalizer_defect": {
+    "effect": "valid_failed_gate_result_was_published_but_worker_returned_1",
+    "historical_result_immutable": true,
+    "present": true,
+    "rerun_forbidden_under_z5_max_one": true
+  },
+  "finite_trajectory": true,
+  "physical_attempt": {
+    "demo_index": 0,
+    "executed": true,
+    "mode": "CPU_no_renderer",
+    "physics_steps": 28,
+    "profile": "object_frame_nominal",
+    "seed": 3121,
+    "task_index": 10
+  },
+  "physical_gate_scope": {
+    "approach_stall": null,
+    "contact_completion": null,
+    "destination_numeric": "not_evaluated",
+    "goal_continuity": null,
+    "object_follow": null
+  },
+  "resource_boundary": {
+    "cpu_no_renderer": true,
+    "fast": false,
+    "generation": false,
+    "gpu0_touched": false,
+    "gpu1_touched": false,
+    "gpu2_touched": false,
+    "gpu3_touched": false,
+    "norm": false,
+    "replay": false,
+    "submit": false,
+    "teleop": false,
+    "training": false,
+    "upload": false,
+    "zip": false
+  },
+  "schema_version": "track3_z5_infrastructure_postmortem_v1",
+  "state_shape": [
+    28,
+    79
+  ],
+  "status": "track3_z5_canary_infrastructure_failure_preserved",
+  "worker": {
+    "classification": {
+      "category": "infrastructure",
+      "child_status": "failed_gate",
+      "reason": "dispatch_or_worker_exception_or_missing_result",
+      "returncode": 1
+    },
+    "entered_stages": [
+      "approach_grasp"
+    ],
+    "failure_at": "stage_stall:approach_grasp",
+    "returncode": 1,
+    "status": "failed_gate"
+  }
+}

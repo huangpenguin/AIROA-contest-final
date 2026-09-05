@@ -1,0 +1,19 @@
+[robosuite WARNING] No private macro file found! (__init__.py:7)
+[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)
+[robosuite WARNING] To setup, run: python /home/huang/code/PARC2026_final/.venv_axis_pi05/lib/python3.12/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/huang/code/PARC2026_final/tools/axis_pi05/track3_y3_launch_phase_ledger_remediation.py", line 1115, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/home/huang/code/PARC2026_final/tools/axis_pi05/track3_y3_launch_phase_ledger_remediation.py", line 1101, in main
+    return _dispatch_z5_worker(args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/huang/code/PARC2026_final/tools/axis_pi05/track3_y3_launch_phase_ledger_remediation.py", line 1018, in _dispatch_z5_worker
+    return _z5_worker(_parse_z5_worker(argv))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/huang/code/PARC2026_final/tools/axis_pi05/track3_y3_launch_phase_ledger_remediation.py", line 998, in _z5_worker
+    return 0 if result.get("status") in WORKER_COMPLETED_STATUSES else 1
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^
+NameError: name 'WORKER_COMPLETED_STATUSES' is not defined

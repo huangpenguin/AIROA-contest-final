@@ -3,7 +3,7 @@
 > 制定日期：2026-09-06（Asia/Tokyo）
 > 审核输入：root `882958c8b863585b13f10f22445d4aa4a42b2d56`
 > nested OpenPI：`b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`
-> 当前状态：`track3_z4_prephysics_release_ready_for_z5`
+> 当前状态：`track3_z14_hard_stop_pending_review`
 > 唯一授权链：`Z0_to_Z14_then_hard_stop`
 > 用户人工操作：`not_required`
 > 执行上限：18小时；单一supervisor可原子resume，禁止第二实例、无限retry和结果后调参
@@ -100,3 +100,9 @@
 - 未运行工作=`not_evaluated`；报告exact/pending/accepted和denylist overlap，不得把缺失证据改写为结论。
 - 重验strict JSON、NPZ/NPY/parquet、CSV LF、ffprobe、checkout hashes、py_compile、targeted/full tests与`git diff --check`，root/OpenPI clean commit；LIBERO-plus既有dirty不改。
 - 所有结果最终hard stop等待审核；不自动resume、上传或提交。
+
+## 16. 本轮执行停止点
+
+Z5 已按冻结的 Z5 identity 只运行一次 task10/demo0/seed3121 CPU/no-renderer canary。worker 实际执行 28 个 physics steps，在 `approach_grasp` 的第 28 步触发 `stage_stall`；未进入 close/lift/contact/place/release，故这些阶段门禁保持 `not_evaluated`。worker 已原子发布 `failed_gate`，但初次发布代码遗漏 completed-status 常量，return code 为 1，父进程按 fail-closed 合同记录为 infrastructure failure。该 canary 不重跑。
+
+随后已修复返回码与收尾 process scan，并执行 Z14 纯收尾。Z14 manifest/final validation 通过，Z14 hard stop 已执行；Z6–Z13、生成、replay、训练、norm、FAST/ZIP 均为 `not_evaluated`，`exact/pending/accepted=0/0/0`。等待新的审核计划，不自动恢复。

@@ -1,0 +1,153 @@
+{
+  "entries": [
+    {
+      "bytes": 202,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/heartbeat.json",
+      "sha256": "4e0e71e3e233ae29ab25132142c85a798e7bbe20cb4a8202a3640dcc92c56cae"
+    },
+    {
+      "bytes": 570,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/resume_cursor.json",
+      "sha256": "bc52d3b301f89d2d4995de0a23cff7867e18c1ae21c372ae2feb22db6118eee7"
+    },
+    {
+      "bytes": 22811,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z0_attempt1_input_lock_failure.json",
+      "sha256": "b92608d2c521b0fa61a90e0c82ed3b4bb131901adeadb50b059694d42d2e30cd"
+    },
+    {
+      "bytes": 22788,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z0_input_lock.json",
+      "sha256": "f3b63cc9ac754682df5b37cfb43dc6bdb381b5632175a066baf8766fc75e3857"
+    },
+    {
+      "bytes": 2211,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z14_attempt1_finalizer_failure_closeout.json",
+      "sha256": "1524b870a2c38c7f4c760b05d44dfe673004116b1387550dffdea649402c25cd"
+    },
+    {
+      "bytes": 1897,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z14_attempt1_finalizer_failure_validation.json",
+      "sha256": "9328faaa534788bb76d80abca11185441ec758b045705c4f5dbff30961f01731"
+    },
+    {
+      "bytes": 2209,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z14_attempt2_finalizer_failure_closeout.json",
+      "sha256": "1153b2668ee52a94f88364b92ce384df556333993f6db2635148df6d82bfa2f2"
+    },
+    {
+      "bytes": 1256,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z14_attempt2_finalizer_failure_validation.json",
+      "sha256": "c2a91f4e2dabf8d3c57b86efb9c979500f80f38ce36354df778bdc39e7fe1ee1"
+    },
+    {
+      "bytes": 563,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z14_cursor.json",
+      "sha256": "d884a41eefaa65a45968ca6f79cd29a1dee4d25bd8f3ed6f2c052403875e8205"
+    },
+    {
+      "bytes": 283,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z14_phase_status.csv",
+      "sha256": "dffc609040b17a5540349113da0f039445b221289f728e43b68484ee4cd9a2e6"
+    },
+    {
+      "bytes": 2659,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z1_cli_dispatch_contract.json",
+      "sha256": "df03e869087bf81285b32ed13941ef6e2e2e2ef005eb558ff72432ac0b19f090"
+    },
+    {
+      "bytes": 3838,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z2_source_identity_contract.json",
+      "sha256": "12b0e37452d96e42b22451cbe7afa1826136a93c9741413dbde6ea06ab2312ff"
+    },
+    {
+      "bytes": 21922,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z3_phase_ledger_contract.json",
+      "sha256": "fc249b4caba2db5b9eb9f3e7fbf520c5eca36d8cf2dee87c5a1797080b8eec4c"
+    },
+    {
+      "bytes": 250,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_phase_status.csv",
+      "sha256": "8ad169ff9390cbb89b4aef8bb4e705fc24a3ced2690c7678110e157d45d230f0"
+    },
+    {
+      "bytes": 1904,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_prephysics_release.json",
+      "sha256": "f04beb3c8a62ae150a468ea73eea0ac9dfaf8f4566bf9e201429c50adbe83239"
+    },
+    {
+      "bytes": 152,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_probe.npy",
+      "sha256": "8389aa0536b3f51cc9577c0c6bd1992be2b5edd23d56fbc4c04844029b42b205"
+    },
+    {
+      "bytes": 404,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_probe.npz",
+      "sha256": "986b8413b5743ef0bc741dbdd460c6e4acc38181a34fa958560405e81c6e9265"
+    },
+    {
+      "bytes": 27127,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_cpu_task10_demo0_nominal/child_result.json",
+      "sha256": "55d3e6365faf8245a83c2c6dcd87d6d2007291b2879e4d666b872fec24205c61"
+    },
+    {
+      "bytes": 760,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_cpu_task10_demo0_nominal/end_state.npy",
+      "sha256": "fbc59ef0eca50da24f7c43b8f7c48f0d8bd65fadb916a3d3f98161a43822c3b8"
+    },
+    {
+      "bytes": 202,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_cpu_task10_demo0_nominal/heartbeat.json",
+      "sha256": "67973d50b28857b7c14190501fcf24891668754c39b4f626fbd952e4764f51a1"
+    },
+    {
+      "bytes": 3260,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_cpu_task10_demo0_nominal/identity_preflight.json",
+      "sha256": "0d65c2fa2c859479b2ef246d8de522d5667eac8bd986fd31e648e209dd8b1a65"
+    },
+    {
+      "bytes": 33598,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_cpu_task10_demo0_nominal/parent_result.json",
+      "sha256": "6e16b6a0888b4bd4111a5853532d2fe69a9a0e5528d0c2a1f89e42dbdf2e0917"
+    },
+    {
+      "bytes": 8629,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_cpu_task10_demo0_nominal/phase_ledger.json",
+      "sha256": "1ff159d36524d6af702319bab7e03f688363e1bdc29b9845363e359be4d8cfff"
+    },
+    {
+      "bytes": 760,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_cpu_task10_demo0_nominal/start_state.npy",
+      "sha256": "f5b4d5dd93a42cd133994d23eaeae0bc21bcdc970ba6c03e15a5c37f0928b9b3"
+    },
+    {
+      "bytes": 16533,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_cpu_task10_demo0_nominal/trajectory.npz",
+      "sha256": "3478d998998bff247bede21ba3201894e983e1b37a958392823f2d2e497ec195"
+    },
+    {
+      "bytes": 2531,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_infrastructure_postmortem.json",
+      "sha256": "3e70846572b6b0c34aaf5b99d13a425451fad699bd9612b750ffcd039c1b7182"
+    },
+    {
+      "bytes": 287,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_phase_status.csv",
+      "sha256": "78039889dce9217ee935390ddd398c87ceb688d2f567edac6ca9e72153e930a2"
+    },
+    {
+      "bytes": 2362,
+      "relative_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_preflight_failure.json",
+      "sha256": "30121c148c0f28f1f6545041e31a04d9283bfb5e0605027f888bf22b20504027"
+    }
+  ],
+  "entries_excluded": [
+    "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z14_artifact_manifest.json",
+    "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z14_closeout.json",
+    "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z14_final_validation.json",
+    "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_artifact_manifest.json",
+    "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_closeout.json",
+    "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_final_validation.json"
+  ],
+  "schema_version": "track3_z14_manifest_v1"
+}

@@ -1,0 +1,957 @@
+{
+  "artifacts": {
+    "end_state": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_cpu_task10_demo0_nominal/end_state.npy",
+    "phase_ledger": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_cpu_task10_demo0_nominal/phase_ledger.json",
+    "start_state": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_cpu_task10_demo0_nominal/start_state.npy",
+    "trajectory": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_cpu_task10_demo0_nominal/trajectory.npz"
+  },
+  "child_pid": 1530313,
+  "completed_at_utc": "2026-09-05T19:23:08.722062+00:00",
+  "created_at_utc": "2026-09-05T19:22:48.137853+00:00",
+  "demo_index": 0,
+  "family": "support_remove",
+  "fresh_process": true,
+  "hard_gate": {
+    "close_gate_owner": "close_gripper",
+    "destination_numeric": {
+      "executed": false,
+      "gate": "destination_numeric",
+      "owner_stage": "place_same_demo_init_pose",
+      "reason": "stage_not_entered",
+      "required": true,
+      "state": "not_evaluated"
+    },
+    "gates": {
+      "collision": {
+        "executed": true,
+        "max_penetration_m": 2.0246476469179997e-05,
+        "required": true,
+        "state": "passed",
+        "threshold_m": 0.01
+      },
+      "contact_completion": {
+        "executed": false,
+        "gate": "contact_completion",
+        "owner_stage": "close_gripper",
+        "reason": "stage_not_entered",
+        "required": true,
+        "state": "not_evaluated"
+      },
+      "destination_numeric": {
+        "executed": false,
+        "gate": "destination_numeric",
+        "owner_stage": "place_same_demo_init_pose",
+        "reason": "stage_not_entered",
+        "required": true,
+        "state": "not_evaluated"
+      },
+      "finite": {
+        "action_shape": [
+          28,
+          7
+        ],
+        "executed": true,
+        "required": true,
+        "state": "passed",
+        "state_shape": [
+          28,
+          79
+        ]
+      },
+      "goal_continuity": {
+        "executed": false,
+        "gate": "goal_continuity",
+        "owner_stage": "release",
+        "reason": "stage_not_entered",
+        "required": true,
+        "state": "not_evaluated"
+      },
+      "initial_goal_false": {
+        "executed": true,
+        "goal_value": false,
+        "required": true,
+        "state": "passed"
+      },
+      "initial_source_true": {
+        "executed": true,
+        "required": true,
+        "source_value": true,
+        "state": "passed"
+      },
+      "object_follow": {
+        "executed": false,
+        "gate": "object_follow",
+        "owner_stage": "lift",
+        "reason": "stage_not_entered",
+        "required": true,
+        "state": "not_evaluated"
+      },
+      "prefix_contact_safety": {
+        "executed": true,
+        "required": true,
+        "state": "passed"
+      },
+      "progress_stall": {
+        "executed": true,
+        "reason": "stage_stall:approach_grasp",
+        "required": true,
+        "state": "failed"
+      },
+      "source_release": {
+        "executed": false,
+        "gate": "source_release",
+        "owner_stage": "lift",
+        "reason": "stage_not_entered",
+        "required": true,
+        "state": "not_evaluated"
+      },
+      "stall_timeout": {
+        "executed": true,
+        "reason": "stage_stall:approach_grasp",
+        "required": true,
+        "state": "failed",
+        "step_budget": 900,
+        "used_steps": 28
+      },
+      "transport_safe": {
+        "executed": false,
+        "gate": "transport_safe",
+        "owner_stage": "transport",
+        "reason": "stage_not_entered",
+        "required": true,
+        "state": "not_evaluated"
+      },
+      "unrelated_movement": {
+        "executed": true,
+        "max_unrelated_movement_m": 0.0,
+        "required": true,
+        "state": "passed",
+        "threshold_m": 0.002
+      }
+    },
+    "lift_gate_owner": "lift",
+    "passed": false,
+    "release_contact_does_not_rewrite_close": false,
+    "source_release_gate_owner": "lift"
+  },
+  "mode": "CPU_no_renderer",
+  "model_state_identity": {
+    "destination_pose_source": "same_demo_hdf5_state0",
+    "hdf5_path": "/home/huang/code/PARC2026_final/data/raw/public/libero_official_hdf5/libero_goal/put_the_bowl_on_the_plate_demo.hdf5",
+    "hdf5_sha256": "e69528b0cf10dfc59b20698e12ec2affc03f3887309034d3eb74cac3ec929406",
+    "model_file_sha256": "e9a508e1e98a7bd2631796a4c41476a449fd9821fb45837a27d2ebefd87c8830",
+    "release_anchor_state_index": 75,
+    "resolved_model_xml_sha256": "d637223bfe311c2ae6daeb0572f0a75528f2613f54eff1ef3acbe540167ea099",
+    "same_demo_model_and_state_components": true,
+    "start_state_path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_cpu_task10_demo0_nominal/start_state.npy",
+    "start_state_sha256": "f5b4d5dd93a42cd133994d23eaeae0bc21bcdc970ba6c03e15a5c37f0928b9b3",
+    "terminal_pose_source": "same_demo_hdf5_terminal_state"
+  },
+  "pending_autogen": false,
+  "phase_ledger": {
+    "entered_stages": [
+      "approach_grasp"
+    ],
+    "stages": [
+      {
+        "completed": false,
+        "eef_error": {
+          "position_m": 0.008483301314458078,
+          "rotation_rad": 0.032315020712934094
+        },
+        "entered": true,
+        "failure_reason": "stage_stall:approach_grasp",
+        "frame_end": 28,
+        "frame_start": 0,
+        "gates": {
+          "pose_stable": {
+            "executed": true,
+            "reason": "stage_stall:approach_grasp",
+            "required": true,
+            "state": "failed"
+          }
+        },
+        "progress_windows": [
+          {
+            "executed": false,
+            "grace": 4,
+            "reason": "window_not_full_or_grace",
+            "required": true,
+            "samples": 1,
+            "state": "not_evaluated",
+            "window": 4
+          },
+          {
+            "executed": false,
+            "grace": 4,
+            "reason": "window_not_full_or_grace",
+            "required": true,
+            "samples": 2,
+            "state": "not_evaluated",
+            "window": 4
+          },
+          {
+            "executed": false,
+            "grace": 4,
+            "reason": "window_not_full_or_grace",
+            "required": true,
+            "samples": 3,
+            "state": "not_evaluated",
+            "window": 4
+          },
+          {
+            "executed": false,
+            "grace": 4,
+            "reason": "window_not_full_or_grace",
+            "required": true,
+            "samples": 4,
+            "state": "not_evaluated",
+            "window": 4
+          },
+          {
+            "baseline_error": 22.85809837172323,
+            "current_error": 19.907157794126356,
+            "executed": true,
+            "improvement": 2.9509405775968744,
+            "min_improvement": 0.02,
+            "required": true,
+            "state": "passed"
+          },
+          {
+            "baseline_error": 21.93959505033185,
+            "current_error": 18.885205024275027,
+            "executed": true,
+            "improvement": 3.054390026056822,
+            "min_improvement": 0.02,
+            "required": true,
+            "state": "passed"
+          },
+          {
+            "baseline_error": 20.928812181182305,
+            "current_error": 17.86277865954354,
+            "executed": true,
+            "improvement": 3.066033521638765,
+            "min_improvement": 0.02,
+            "required": true,
+            "state": "passed"
+          },
+          {
+            "baseline_error": 19.907157794126356,
+            "current_error": 16.838290820664774,
+            "executed": true,
+            "improvement": 3.0688669734615814,
+            "min_improvement": 0.02,
+            "required": true,
+            "state": "passed"
+          },
+          {
+            "baseline_error": 18.885205024275027,
+            "current_error": 15.810428670757213,
+            "executed": true,
+            "improvement": 3.074776353517814,
+            "min_improvement": 0.02,
+            "required": true,
+            "state": "passed"
+          },
+          {
+            "baseline_error": 17.86277865954354,
+            "current_error": 14.778413550065778,
+            "executed": true,
+            "improvement": 3.084365109477762,
+            "min_improvement": 0.02,
+            "required": true,
+            "state": "passed"
+          },
+          {
+            "baseline_error": 16.838290820664774,
+            "current_error": 13.741983017150856,
+            "executed": true,
+            "improvement": 3.096307803513918,
+            "min_improvement": 0.02,
+            "required": true,
+            "state": "passed"
+          },
+          {
+            "baseline_error": 15.810428670757213,
+            "current_error": 12.70113860071098,
+            "executed": true,
+            "improvement": 3.1092900700462334,
+            "min_improvement": 0.02,
+            "required": true,
+            "state": "passed"
+          },
+          {
+            "baseline_error": 14.778413550065778,
+            "current_error": 11.655798772303072,
+            "executed": true,
+            "improvement": 3.1226147777627062,
+            "min_improvement": 0.02,
+            "required": true,
+            "state": "passed"
+          },
+          {
+            "baseline_error": 13.741983017150856,
+            "current_error": 10.607892189290187,
+            "executed": true,
+            "improvement": 3.1340908278606694,
+            "min_improvement": 0.02,
+            "required": true,
+            "state": "passed"
+          },
+          {
+            "baseline_error": 12.70113860071098,
+            "current_error": 9.559237981418983,
+            "executed": true,
+            "improvement": 3.141900619291997,
+            "min_improvement": 0.02,
+            "required": true,
+            "state": "passed"
+          },
+          {
+            "baseline_error": 11.655798772303072,
+            "current_error": 8.510988414578694,
+            "executed": true,
+            "improvement": 3.144810357724378,
+            "min_improvement": 0.02,
+            "required": true,
+            "state": "passed"
+          },
+          {
+            "baseline_error": 10.607892189290187,
+            "current_error": 7.464295305277711,
+            "executed": true,
+            "improvement": 3.143596884012476,
+            "min_improvement": 0.02,
+            "required": true,
+            "state": "passed"
+          },
+          {
+            "baseline_error": 9.559237981418983,
+            "current_error": 6.420409285367502,
+            "executed": true,
+            "improvement": 3.1388286960514806,
+            "min_improvement": 0.02,
+            "required": true,
+            "state": "passed"
+          },
+          {
+            "baseline_error": 8.510988414578694,
+            "current_error": 5.380742286273312,
+            "executed": true,
+            "improvement": 3.130246128305382,
+            "min_improvement": 0.02,
+            "required": true,
+            "state": "passed"
+          },
+          {
+            "baseline_error": 7.464295305277711,
+            "current_error": 4.346983031670908,
+            "executed": true,
+            "improvement": 3.117312273606802,
+            "min_improvement": 0.02,
+            "required": true,
+            "state": "passed"
+          },
+          {
+            "baseline_error": 6.420409285367502,
+            "current_error": 3.3213465334151135,
+            "executed": true,
+            "improvement": 3.099062751952389,
+            "min_improvement": 0.02,
+            "required": true,
+            "state": "passed"
+          },
+          {
+            "baseline_error": 5.380742286273312,
+            "current_error": 2.393474888530394,
+            "executed": true,
+            "improvement": 2.9872673977429183,
+            "min_improvement": 0.02,
+            "required": true,
+            "state": "passed"
+          },
+          {
+            "baseline_error": 4.346983031670908,
+            "current_error": 1.6250831278997173,
+            "executed": true,
+            "improvement": 2.721899903771191,
+            "min_improvement": 0.02,
+            "required": true,
+            "state": "passed"
+          },
+          {
+            "baseline_error": 3.3213465334151135,
+            "current_error": 1.005901264090406,
+            "executed": true,
+            "improvement": 2.315445269324708,
+            "min_improvement": 0.02,
+            "required": true,
+            "state": "passed"
+          },
+          {
+            "baseline_error": 2.393474888530394,
+            "current_error": 0.5312567791501828,
+            "executed": true,
+            "improvement": 1.8622181093802113,
+            "min_improvement": 0.02,
+            "required": true,
+            "state": "passed"
+          },
+          {
+            "baseline_error": 1.6250831278997173,
+            "current_error": 0.6119171987166514,
+            "executed": true,
+            "improvement": 1.013165929183066,
+            "min_improvement": 0.02,
+            "required": true,
+            "state": "passed"
+          },
+          {
+            "baseline_error": 1.005901264090406,
+            "current_error": 0.863587300498339,
+            "executed": true,
+            "improvement": 0.14231396359206694,
+            "min_improvement": 0.02,
+            "required": true,
+            "state": "passed"
+          },
+          {
+            "baseline_error": 0.5312567791501828,
+            "current_error": 1.077167357097803,
+            "executed": true,
+            "improvement": -0.5459105779476203,
+            "min_improvement": 0.02,
+            "reason": "stage_stall",
+            "required": true,
+            "state": "failed"
+          }
+        ],
+        "stable_window": null,
+        "stage": "approach_grasp",
+        "target_pose": {
+          "gripper": -1.0,
+          "position_m": [
+            0.030914021257368945,
+            0.00793726265472558,
+            1.0232073740994794
+          ],
+          "quaternion_xyzw": [
+            -0.7041931718105557,
+            -0.7094403058685832,
+            0.020077925203136802,
+            0.02008248251630337
+          ]
+        }
+      }
+    ]
+  },
+  "profile": {
+    "collision_tolerance_m": 0.01,
+    "name": "object_frame_nominal",
+    "object_follow_rotation_tolerance_rad": 0.15,
+    "object_follow_translation_tolerance_m": 0.02,
+    "progress_grace": 4,
+    "progress_min_improvement": 0.02,
+    "progress_window": 4,
+    "rotation_clip_rad": 0.12,
+    "rotation_output_scale_rad": 0.5,
+    "rotation_tolerance_rad": 0.03,
+    "stable_ticks": 4,
+    "stage_budgets": [
+      150,
+      120,
+      35,
+      150,
+      180,
+      120,
+      35,
+      80
+    ],
+    "step_budget": 900,
+    "translation_clip_m": 0.05,
+    "translation_output_scale_m": 0.05,
+    "translation_tolerance_m": 0.012,
+    "unrelated_movement_tolerance_m": 0.002
+  },
+  "quaternion_convention": "xyzw",
+  "resource_boundary": {
+    "cpu_no_renderer": true,
+    "gpu0_touched": false,
+    "gpu1_touched": false,
+    "gpu2_touched": false,
+    "gpu3_touched": false,
+    "no_generation": true,
+    "no_teleop": true,
+    "no_training": true,
+    "no_zip": true,
+    "official_gpu": false,
+    "task20_task19": "not_evaluated"
+  },
+  "reverse": {
+    "failure_reason": "stage_stall:approach_grasp",
+    "goal_atom": "(On akita_black_bowl_1 main_table_akita_black_bowl_region)",
+    "goal_values": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    "progress_windows": [
+      {
+        "frame": 1,
+        "stage": "approach_grasp",
+        "stage_index": 0,
+        "window": {
+          "executed": false,
+          "grace": 4,
+          "reason": "window_not_full_or_grace",
+          "required": true,
+          "samples": 1,
+          "state": "not_evaluated",
+          "window": 4
+        }
+      },
+      {
+        "frame": 2,
+        "stage": "approach_grasp",
+        "stage_index": 0,
+        "window": {
+          "executed": false,
+          "grace": 4,
+          "reason": "window_not_full_or_grace",
+          "required": true,
+          "samples": 2,
+          "state": "not_evaluated",
+          "window": 4
+        }
+      },
+      {
+        "frame": 3,
+        "stage": "approach_grasp",
+        "stage_index": 0,
+        "window": {
+          "executed": false,
+          "grace": 4,
+          "reason": "window_not_full_or_grace",
+          "required": true,
+          "samples": 3,
+          "state": "not_evaluated",
+          "window": 4
+        }
+      },
+      {
+        "frame": 4,
+        "stage": "approach_grasp",
+        "stage_index": 0,
+        "window": {
+          "executed": false,
+          "grace": 4,
+          "reason": "window_not_full_or_grace",
+          "required": true,
+          "samples": 4,
+          "state": "not_evaluated",
+          "window": 4
+        }
+      },
+      {
+        "frame": 5,
+        "stage": "approach_grasp",
+        "stage_index": 0,
+        "window": {
+          "baseline_error": 22.85809837172323,
+          "current_error": 19.907157794126356,
+          "executed": true,
+          "improvement": 2.9509405775968744,
+          "min_improvement": 0.02,
+          "required": true,
+          "state": "passed"
+        }
+      },
+      {
+        "frame": 6,
+        "stage": "approach_grasp",
+        "stage_index": 0,
+        "window": {
+          "baseline_error": 21.93959505033185,
+          "current_error": 18.885205024275027,
+          "executed": true,
+          "improvement": 3.054390026056822,
+          "min_improvement": 0.02,
+          "required": true,
+          "state": "passed"
+        }
+      },
+      {
+        "frame": 7,
+        "stage": "approach_grasp",
+        "stage_index": 0,
+        "window": {
+          "baseline_error": 20.928812181182305,
+          "current_error": 17.86277865954354,
+          "executed": true,
+          "improvement": 3.066033521638765,
+          "min_improvement": 0.02,
+          "required": true,
+          "state": "passed"
+        }
+      },
+      {
+        "frame": 8,
+        "stage": "approach_grasp",
+        "stage_index": 0,
+        "window": {
+          "baseline_error": 19.907157794126356,
+          "current_error": 16.838290820664774,
+          "executed": true,
+          "improvement": 3.0688669734615814,
+          "min_improvement": 0.02,
+          "required": true,
+          "state": "passed"
+        }
+      },
+      {
+        "frame": 9,
+        "stage": "approach_grasp",
+        "stage_index": 0,
+        "window": {
+          "baseline_error": 18.885205024275027,
+          "current_error": 15.810428670757213,
+          "executed": true,
+          "improvement": 3.074776353517814,
+          "min_improvement": 0.02,
+          "required": true,
+          "state": "passed"
+        }
+      },
+      {
+        "frame": 10,
+        "stage": "approach_grasp",
+        "stage_index": 0,
+        "window": {
+          "baseline_error": 17.86277865954354,
+          "current_error": 14.778413550065778,
+          "executed": true,
+          "improvement": 3.084365109477762,
+          "min_improvement": 0.02,
+          "required": true,
+          "state": "passed"
+        }
+      },
+      {
+        "frame": 11,
+        "stage": "approach_grasp",
+        "stage_index": 0,
+        "window": {
+          "baseline_error": 16.838290820664774,
+          "current_error": 13.741983017150856,
+          "executed": true,
+          "improvement": 3.096307803513918,
+          "min_improvement": 0.02,
+          "required": true,
+          "state": "passed"
+        }
+      },
+      {
+        "frame": 12,
+        "stage": "approach_grasp",
+        "stage_index": 0,
+        "window": {
+          "baseline_error": 15.810428670757213,
+          "current_error": 12.70113860071098,
+          "executed": true,
+          "improvement": 3.1092900700462334,
+          "min_improvement": 0.02,
+          "required": true,
+          "state": "passed"
+        }
+      },
+      {
+        "frame": 13,
+        "stage": "approach_grasp",
+        "stage_index": 0,
+        "window": {
+          "baseline_error": 14.778413550065778,
+          "current_error": 11.655798772303072,
+          "executed": true,
+          "improvement": 3.1226147777627062,
+          "min_improvement": 0.02,
+          "required": true,
+          "state": "passed"
+        }
+      },
+      {
+        "frame": 14,
+        "stage": "approach_grasp",
+        "stage_index": 0,
+        "window": {
+          "baseline_error": 13.741983017150856,
+          "current_error": 10.607892189290187,
+          "executed": true,
+          "improvement": 3.1340908278606694,
+          "min_improvement": 0.02,
+          "required": true,
+          "state": "passed"
+        }
+      },
+      {
+        "frame": 15,
+        "stage": "approach_grasp",
+        "stage_index": 0,
+        "window": {
+          "baseline_error": 12.70113860071098,
+          "current_error": 9.559237981418983,
+          "executed": true,
+          "improvement": 3.141900619291997,
+          "min_improvement": 0.02,
+          "required": true,
+          "state": "passed"
+        }
+      },
+      {
+        "frame": 16,
+        "stage": "approach_grasp",
+        "stage_index": 0,
+        "window": {
+          "baseline_error": 11.655798772303072,
+          "current_error": 8.510988414578694,
+          "executed": true,
+          "improvement": 3.144810357724378,
+          "min_improvement": 0.02,
+          "required": true,
+          "state": "passed"
+        }
+      },
+      {
+        "frame": 17,
+        "stage": "approach_grasp",
+        "stage_index": 0,
+        "window": {
+          "baseline_error": 10.607892189290187,
+          "current_error": 7.464295305277711,
+          "executed": true,
+          "improvement": 3.143596884012476,
+          "min_improvement": 0.02,
+          "required": true,
+          "state": "passed"
+        }
+      },
+      {
+        "frame": 18,
+        "stage": "approach_grasp",
+        "stage_index": 0,
+        "window": {
+          "baseline_error": 9.559237981418983,
+          "current_error": 6.420409285367502,
+          "executed": true,
+          "improvement": 3.1388286960514806,
+          "min_improvement": 0.02,
+          "required": true,
+          "state": "passed"
+        }
+      },
+      {
+        "frame": 19,
+        "stage": "approach_grasp",
+        "stage_index": 0,
+        "window": {
+          "baseline_error": 8.510988414578694,
+          "current_error": 5.380742286273312,
+          "executed": true,
+          "improvement": 3.130246128305382,
+          "min_improvement": 0.02,
+          "required": true,
+          "state": "passed"
+        }
+      },
+      {
+        "frame": 20,
+        "stage": "approach_grasp",
+        "stage_index": 0,
+        "window": {
+          "baseline_error": 7.464295305277711,
+          "current_error": 4.346983031670908,
+          "executed": true,
+          "improvement": 3.117312273606802,
+          "min_improvement": 0.02,
+          "required": true,
+          "state": "passed"
+        }
+      },
+      {
+        "frame": 21,
+        "stage": "approach_grasp",
+        "stage_index": 0,
+        "window": {
+          "baseline_error": 6.420409285367502,
+          "current_error": 3.3213465334151135,
+          "executed": true,
+          "improvement": 3.099062751952389,
+          "min_improvement": 0.02,
+          "required": true,
+          "state": "passed"
+        }
+      },
+      {
+        "frame": 22,
+        "stage": "approach_grasp",
+        "stage_index": 0,
+        "window": {
+          "baseline_error": 5.380742286273312,
+          "current_error": 2.393474888530394,
+          "executed": true,
+          "improvement": 2.9872673977429183,
+          "min_improvement": 0.02,
+          "required": true,
+          "state": "passed"
+        }
+      },
+      {
+        "frame": 23,
+        "stage": "approach_grasp",
+        "stage_index": 0,
+        "window": {
+          "baseline_error": 4.346983031670908,
+          "current_error": 1.6250831278997173,
+          "executed": true,
+          "improvement": 2.721899903771191,
+          "min_improvement": 0.02,
+          "required": true,
+          "state": "passed"
+        }
+      },
+      {
+        "frame": 24,
+        "stage": "approach_grasp",
+        "stage_index": 0,
+        "window": {
+          "baseline_error": 3.3213465334151135,
+          "current_error": 1.005901264090406,
+          "executed": true,
+          "improvement": 2.315445269324708,
+          "min_improvement": 0.02,
+          "required": true,
+          "state": "passed"
+        }
+      },
+      {
+        "frame": 25,
+        "stage": "approach_grasp",
+        "stage_index": 0,
+        "window": {
+          "baseline_error": 2.393474888530394,
+          "current_error": 0.5312567791501828,
+          "executed": true,
+          "improvement": 1.8622181093802113,
+          "min_improvement": 0.02,
+          "required": true,
+          "state": "passed"
+        }
+      },
+      {
+        "frame": 26,
+        "stage": "approach_grasp",
+        "stage_index": 0,
+        "window": {
+          "baseline_error": 1.6250831278997173,
+          "current_error": 0.6119171987166514,
+          "executed": true,
+          "improvement": 1.013165929183066,
+          "min_improvement": 0.02,
+          "required": true,
+          "state": "passed"
+        }
+      },
+      {
+        "frame": 27,
+        "stage": "approach_grasp",
+        "stage_index": 0,
+        "window": {
+          "baseline_error": 1.005901264090406,
+          "current_error": 0.863587300498339,
+          "executed": true,
+          "improvement": 0.14231396359206694,
+          "min_improvement": 0.02,
+          "required": true,
+          "state": "passed"
+        }
+      },
+      {
+        "frame": 28,
+        "stage": "approach_grasp",
+        "stage_index": 0,
+        "window": {
+          "baseline_error": 0.5312567791501828,
+          "current_error": 1.077167357097803,
+          "executed": true,
+          "improvement": -0.5459105779476203,
+          "min_improvement": 0.02,
+          "reason": "stage_stall",
+          "required": true,
+          "state": "failed"
+        }
+      }
+    ],
+    "source_atom": "(On akita_black_bowl_1 plate_1)",
+    "source_values": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "schema_version": "track3_z5_support_nominal_worker_v1",
+  "seed": 3121,
+  "status": "failed_gate",
+  "task_index": 10,
+  "training_eligible": false
+}

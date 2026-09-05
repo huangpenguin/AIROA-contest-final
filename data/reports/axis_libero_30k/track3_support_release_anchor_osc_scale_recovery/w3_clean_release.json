@@ -8,7 +8,7 @@
     "root_clean": true,
     "root_tests": true
   },
-  "created_at_utc": "2026-09-05T04:58:42.042884+00:00",
+  "created_at_utc": "2026-09-05T05:10:04.284290+00:00",
   "heartbeat_test": {
     "atomic": true,
     "path": "data/reports/axis_libero_30k/track3_support_release_anchor_osc_scale_recovery/w3_heartbeat_probe.json",
@@ -36,6 +36,7 @@
       "--result-output",
       "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_release_anchor_osc_scale_recovery/w4_cpu_task10_demo0_nominal/child_result.json"
     ],
+    "expected_root_commit": "a7a4de49871ca646b943aeeae34b2590d8207219",
     "gpu_policy": "cpu_no_renderer",
     "observed_command": [
       "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
@@ -45,6 +46,8 @@
       "--result-output",
       "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_release_anchor_osc_scale_recovery/w4_cpu_task10_demo0_nominal/child_result.json"
     ],
+    "observed_root_commit": "a7a4de49871ca646b943aeeae34b2590d8207219",
+    "root_commit_relation": "exact",
     "state": "passed"
   },
   "identity_rejection_fixture": {
@@ -75,6 +78,7 @@
       "--result-output",
       "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_release_anchor_osc_scale_recovery/w4_cpu_task10_demo0_nominal/child_result.json"
     ],
+    "expected_root_commit": "a7a4de49871ca646b943aeeae34b2590d8207219",
     "gpu_policy": "cpu_no_renderer",
     "observed_command": [
       "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
@@ -85,6 +89,8 @@
       "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_release_anchor_osc_scale_recovery/w4_cpu_task10_demo0_nominal/child_result.json",
       "--wrong"
     ],
+    "observed_root_commit": "wrong",
+    "root_commit_relation": "exact",
     "state": "failed"
   },
   "openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
@@ -92,14 +98,14 @@
     "returncode": 0,
     "stderr": ""
   },
-  "root_commit": "ca8e6514cdb54bb2138dfeab4fcfcb121f522f67",
+  "root_commit": "a7a4de49871ca646b943aeeae34b2590d8207219",
   "root_tests": {
     "returncode": 0,
-    "tail": "........................................................................ [ 27%]\n.................................ss..................................... [ 54%]\n........................................................................ [ 81%]\n....................sss.......................ss                         [100%]\n=============================== warnings summary ===============================\n<frozen importlib._bootstrap>:488\n  <frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.MessageMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.\n\n<frozen importlib._bootstrap>:488\n  <frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.ScalarMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.\n\ntests/test_axis_pi05_lora_screen.py: 21 warnings\n  /home/huang/code/PARC2026_final/.venv_axis_pi05/lib/python3.12/site-packages/flax/core/scope.py:959: DeprecationWarning: shape requires ndarray or scalar arguments, got <class 'jax._src.api.ShapeDtypeStruct'> at position 0. In a future JAX release this will be an error.\n    if jnp.shape(val) != jnp.shape(abs_val):\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n257 passed, 7 skipped, 23 warnings in 72.05s (0:01:12)\n"
+    "tail": "........................................................................ [ 27%]\n.................................ss..................................... [ 54%]\n........................................................................ [ 81%]\n....................sss.......................ss                         [100%]\n=============================== warnings summary ===============================\n<frozen importlib._bootstrap>:488\n  <frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.MessageMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.\n\n<frozen importlib._bootstrap>:488\n  <frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.ScalarMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.\n\ntests/test_axis_pi05_lora_screen.py: 21 warnings\n  /home/huang/code/PARC2026_final/.venv_axis_pi05/lib/python3.12/site-packages/flax/core/scope.py:959: DeprecationWarning: shape requires ndarray or scalar arguments, got <class 'jax._src.api.ShapeDtypeStruct'> at position 0. In a future JAX release this will be an error.\n    if jnp.shape(val) != jnp.shape(abs_val):\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n257 passed, 7 skipped, 23 warnings in 71.27s (0:01:11)\n"
   },
   "schema_version": "track3_support_w3_clean_release_v1",
   "status": "track3_support_release_w3_clean_ready",
-  "tool_sha256": "21b45b8f6f59516fa1c9ade8cfbea4cb3b47ffbda459f28a814c4af72e5f05f9",
+  "tool_sha256": "00d0ce3145c91b7ea61430133c16420eba37040b3fb654c04709e864ddba8f25",
   "v4_scope": {
     "demo": 0,
     "family": "support_remove",

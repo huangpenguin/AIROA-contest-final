@@ -474,7 +474,9 @@ def _input_inventory() -> list[dict[str, Any]]:
     rows = []
     for entry in y0.get("inventory", []):
         path = ROOT / entry["path"]
-        rows.append({"path": entry["path"], "expected_bytes": entry["bytes"], "observed_bytes": path.stat().st_size if path.is_file() else None, "expected_sha256": entry["sha256"], "observed_sha256": sha256_file(path) if path.is_file() else None, "exact": path.is_file() and path.stat().st_size == entry["bytes"] and sha256_file(path) == entry["sha256"]})
+        observed_bytes = path.stat().st_size if path.is_file() else None
+        observed_sha256 = sha256_file(path) if path.is_file() else None
+        rows.append({"path": entry["path"], "expected_bytes": entry["bytes"], "observed_bytes": observed_bytes, "expected_sha256": entry["sha256"], "observed_sha256": observed_sha256, "exact": path.is_file() and observed_bytes == entry["bytes"] and observed_sha256 == entry["sha256"]})
     return rows
 
 

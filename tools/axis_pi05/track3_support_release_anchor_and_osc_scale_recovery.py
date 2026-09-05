@@ -275,10 +275,11 @@ def osc_action_scaled(translation_m: Sequence[float], rotation_rad: Sequence[flo
     }
 
 
-def supervisor_identity_gate(*, expected_commit: str, observed_commit: str, expected_tool_sha256: str, observed_tool_sha256: str, expected_openpi: str, observed_openpi: str, dirty: bool, pid_active: bool, cursor_active: bool, expected_command: Sequence[str], observed_command: Sequence[str], expected_cuda_visible_devices: str, observed_cuda_visible_devices: str, gpu_policy: str) -> dict[str, Any]:
+def supervisor_identity_gate(*, expected_commit: str, observed_commit: str, expected_tool_sha256: str, observed_tool_sha256: str, expected_openpi: str, observed_openpi: str, dirty: bool, pid_active: bool, cursor_active: bool, expected_command: Sequence[str], observed_command: Sequence[str], expected_cuda_visible_devices: str, observed_cuda_visible_devices: str, gpu_policy: str, root_commit_relation: bool | None = None) -> dict[str, Any]:
     errors: list[str] = []
+    root_commit_ok = expected_commit == observed_commit if root_commit_relation is None else bool(root_commit_relation)
     checks = {
-        "root_commit": expected_commit == observed_commit,
+        "root_commit": root_commit_ok,
         "tool_sha256": expected_tool_sha256 == observed_tool_sha256,
         "openpi_head": expected_openpi == observed_openpi,
         "root_clean": not dirty,
@@ -291,7 +292,7 @@ def supervisor_identity_gate(*, expected_commit: str, observed_commit: str, expe
     for name, value in checks.items():
         if not value:
             errors.append(name)
-    return {"state": "passed" if not errors else "failed", "errors": errors, "checks": checks, "expected_command": list(expected_command), "observed_command": list(observed_command), "gpu_policy": gpu_policy}
+    return {"state": "passed" if not errors else "failed", "errors": errors, "checks": checks, "expected_root_commit": expected_commit, "observed_root_commit": observed_commit, "root_commit_relation": "exact" if root_commit_relation is None else "locked_ancestor_evidence_descendant", "expected_command": list(expected_command), "observed_command": list(observed_command), "gpu_policy": gpu_policy}
 
 
 def _manifest_verify(path: Path) -> dict[str, Any]:
@@ -533,6 +534,17 @@ def _planned_command(phase: str, root: Path, result_path: Path, frames_path: Pat
     if frames_path is not None:
         command.extend(["--frames-output", str(frames_path)])
     return command
+
+
+def _release_commit_compatible(expected: str, observed: str) -> bool:
+    """Permit only evidence-only descendants of the locked clean release."""
+    if expected == observed:
+        return True
+    if subprocess.run(["git", "-C", str(ROOT), "merge-base", "--is-ancestor", expected, observed], check=False).returncode != 0:
+        return False
+    changed = [line for line in git(("diff", "--name-only", f"{expected}..{observed}")).splitlines() if line]
+    prefix = "data/reports/axis_libero_30k/track3_support_release_anchor_osc_scale_recovery/"
+    return bool(changed) and all(path.startswith(prefix) for path in changed)
 
 
 def _heartbeat(path: Path, *, phase: str, state: str, pid: int, count: int, identity: Mapping[str, Any]) -> dict[str, Any]:
@@ -850,7 +862,7 @@ def _parent_run(*, phase: str, run_root: Path, parent_path: Path, child_path: Pa
     current_tool = sha256_file(Path(__file__))
     cursor = OUT / "resume_cursor.json"
     pid_file = run_root / "supervisor.pid"
-    identity = supervisor_identity_gate(expected_commit=w3.get("root_commit", ""), observed_commit=current_commit, expected_tool_sha256=w3.get("tool_sha256", ""), observed_tool_sha256=current_tool, expected_openpi=EXPECTED_OPENPI_COMMIT, observed_openpi=git(("rev-parse", "HEAD"), OPENPI), dirty=bool(porcelain(ROOT)), pid_active=pid_file.exists(), cursor_active=bool(strict_json(cursor).get("active")) if cursor.is_file() else False, expected_command=command, observed_command=command, expected_cuda_visible_devices=observed_cuda, observed_cuda_visible_devices=observed_cuda, gpu_policy=gpu_policy)
+    identity = supervisor_identity_gate(expected_commit=w3.get("root_commit", ""), observed_commit=current_commit, expected_tool_sha256=w3.get("tool_sha256", ""), observed_tool_sha256=current_tool, expected_openpi=EXPECTED_OPENPI_COMMIT, observed_openpi=git(("rev-parse", "HEAD"), OPENPI), dirty=bool(porcelain(ROOT)), pid_active=pid_file.exists(), cursor_active=bool(strict_json(cursor).get("active")) if cursor.is_file() else False, expected_command=command, observed_command=command, expected_cuda_visible_devices=observed_cuda, observed_cuda_visible_devices=observed_cuda, gpu_policy=gpu_policy, root_commit_relation=_release_commit_compatible(w3.get("root_commit", ""), current_commit))
     write_json(run_root / "identity_preflight.json", {"schema_version": "track3_support_supervisor_identity_v1", "phase": phase, "called_by_launcher": True, "identity": identity, "root_commit": current_commit, "tool_sha256": current_tool, "openpi_commit": git(("rev-parse", "HEAD"), OPENPI), "command": command, "cuda_visible_devices": observed_cuda})
     if identity["state"] != "passed":
         result = {"schema_version": "track3_support_parent_v1", "status": f"track3_support_release_stopped_{phase.upper()}_identity_failure", "category": "infrastructure", "created_at_utc": now(), "phase": phase.upper(), "identity_gate": identity, "identity_gate_called": True, "resource_boundary": {"gpu3_only": capture_camera, "cpu_no_renderer": not capture_camera, "gpu0_touched": False, "official_gpu": False}}

@@ -1,0 +1,72 @@
+{
+  "checks": {
+    "axisangle_finite": true,
+    "explicit_xyzw_operations": true,
+    "gripper_transition_exactly_one": true,
+    "normalized_7d_builder": true,
+    "same_demo_init_pose_locked": true,
+    "same_model_hdf5_pose_reconstruction": true
+  },
+  "created_at_utc": "2026-09-05T03:26:20.905955+00:00",
+  "cuda_imported": false,
+  "hdf5": {
+    "axisangle_observation": [
+      3.0962988781460936,
+      -0.1681780321636898,
+      -0.0735228741307732
+    ],
+    "axisangle_observation_index": 32,
+    "demo_index": 0,
+    "gripper_transition_indices": [
+      32
+    ],
+    "path": "data/raw/public/libero_official_hdf5/libero_goal/put_the_bowl_on_the_plate_demo.hdf5",
+    "sha256": "e69528b0cf10dfc59b20698e12ec2affc03f3887309034d3eb74cac3ec929406"
+  },
+  "profile": {
+    "rotation_clip_rad": 0.12,
+    "rotation_tolerance_rad": 0.03,
+    "stable_ticks": 4,
+    "step_budget": 900,
+    "translation_clip_m": 0.05,
+    "translation_tolerance_m": 0.012
+  },
+  "quaternion_convention": "xyzw",
+  "same_model_pose": {
+    "expected_gate_rad": 1e-05,
+    "old_relative_field_retyped": "xyzw",
+    "recomposed_eef_xyzw": [
+      0.7423039847565317,
+      0.6692540248301357,
+      -0.03267730113383754,
+      -0.004004803846310131
+    ],
+    "recomposition_geodesic_error_rad": 2.2696772533249593e-07,
+    "source_geometry": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/task10_demo0_grasp_geometry.json",
+    "source_model_file_sha256": "e9a508e1e98a7bd2631796a4c41476a449fd9821fb45837a27d2ebefd87c8830",
+    "stored_eef_xyzw": [
+      -0.7423039575965739,
+      -0.6692540556528399,
+      0.03267729983947019,
+      0.004004697727757677
+    ]
+  },
+  "schema_version": "track3_j5_v1_contract_v1",
+  "simulator_imported": false,
+  "status": "track3_j5_v1_support_contract_passed",
+  "support_contract": {
+    "object_follow_contact_window": "required_at_V4_runtime",
+    "same_demo_init_pose": "required_same_demo_object_init_pose",
+    "stall_and_unrelated_movement": "required_at_V4_runtime",
+    "task10_receiver_contact": "required_at_V4_runtime",
+    "unexecuted_runtime_gates": [
+      "object_follow_contact_window",
+      "contact_v3",
+      "collision",
+      "stall",
+      "unrelated_movement"
+    ]
+  },
+  "task10_attempt4": "forbidden",
+  "task20_task19_manipulation": "not_evaluated"
+}

@@ -1,0 +1,193 @@
+{
+  "audit_summary_sha256": "006cf1bd9dc1003913345c8180086b5deb336f881755cda60df0797b1eb454e9",
+  "audited_commit": "7ae488b4475169ac1cc3b586158454639e6a2be9",
+  "checks": {
+    "audited_input_is_ancestor": true,
+    "gpu0_external_preserved": true,
+    "old_j5_child_immutable": true,
+    "old_j5_parent_immutable": true,
+    "openpi_commit": true,
+    "other_gpu3_free": true,
+    "required_artifacts": true
+  },
+  "created_at_utc": "2026-09-05T03:26:20.551751+00:00",
+  "gpu0": {
+    "compute_processes": [
+      "1133706, /mnt/home/moriyama/workspace/ros2_project/mmdetection/.venv-yolo26/bin/python, 14340"
+    ],
+    "free": false,
+    "gpus": [
+      {
+        "index": "0",
+        "memory_total_mib": 32768.0,
+        "memory_used_mib": 14377.0,
+        "uuid": "GPU-0a004a52-e72d-9b46-0391-9488e841db41"
+      }
+    ],
+    "returncode": 0,
+    "timestamp_utc": "2026-09-05T03:26:20.162746+00:00"
+  },
+  "gpu1_to_gpu3": {
+    "1": {
+      "compute_processes": [],
+      "free": true,
+      "gpus": [
+        {
+          "index": "1",
+          "memory_total_mib": 32768.0,
+          "memory_used_mib": 5.0,
+          "uuid": "GPU-dbf876c3-dcaf-054b-ac9d-035e7198ceda"
+        }
+      ],
+      "returncode": 0,
+      "timestamp_utc": "2026-09-05T03:26:20.302996+00:00"
+    },
+    "2": {
+      "compute_processes": [],
+      "free": true,
+      "gpus": [
+        {
+          "index": "2",
+          "memory_total_mib": 32768.0,
+          "memory_used_mib": 5.0,
+          "uuid": "GPU-0cf6b31a-016b-6e71-a7b5-a790922d89ae"
+        }
+      ],
+      "returncode": 0,
+      "timestamp_utc": "2026-09-05T03:26:20.424993+00:00"
+    },
+    "3": {
+      "compute_processes": [],
+      "free": true,
+      "gpus": [
+        {
+          "index": "3",
+          "memory_total_mib": 32768.0,
+          "memory_used_mib": 5.0,
+          "uuid": "GPU-b03055ef-af46-2cf8-7545-c60870f745f5"
+        }
+      ],
+      "returncode": 0,
+      "timestamp_utc": "2026-09-05T03:26:20.544084+00:00"
+    }
+  },
+  "hashes": {
+    "data/raw/public/libero_official_hdf5/libero_goal/put_the_bowl_on_the_plate_demo.hdf5": {
+      "bytes": 468246288,
+      "sha256": "e69528b0cf10dfc59b20698e12ec2affc03f3887309034d3eb74cac3ec929406"
+    },
+    "data/reports/axis_libero_30k/track3_jitter_recovery/j0_input_lock.json": {
+      "bytes": 11416,
+      "sha256": "059182063941480fd9b0f2294c0334eb09795cf6651a57a66646859942e34050"
+    },
+    "data/reports/axis_libero_30k/track3_jitter_recovery/j11_artifact_manifest.json": {
+      "bytes": 8761,
+      "sha256": "27adebb93ce9e7de144f559ee54cb9c6406d3903dff0a8197d36ec5d9928a970"
+    },
+    "data/reports/axis_libero_30k/track3_jitter_recovery/j11_closeout.json": {
+      "bytes": 1169,
+      "sha256": "c49503b29f6490d7825f25f8f9d0ec4798b567d38ee33f2446aff64921aec895"
+    },
+    "data/reports/axis_libero_30k/track3_jitter_recovery/j1_telemetry_v2_contract.json": {
+      "bytes": 5978,
+      "sha256": "2cdbee494a28a1c903fad7a3c56dc9228b4a460ba7413316355981e6ea51cc1b"
+    },
+    "data/reports/axis_libero_30k/track3_jitter_recovery/j2_derived_attempt3_release.json": {
+      "bytes": 4685,
+      "sha256": "72cbb58efcdff25193a5ea95643bad651c25759e09def35486411a8233a69536"
+    },
+    "data/reports/axis_libero_30k/track3_jitter_recovery/j3_artifact_manifest.json": {
+      "bytes": 5028,
+      "sha256": "678d56082108a085d6b2b949844342bdde6d8d2853abf93b993263befcd3c575"
+    },
+    "data/reports/axis_libero_30k/track3_jitter_recovery/j3_summary.json": {
+      "bytes": 57732,
+      "sha256": "b3bf3f33f41e644bb2c8aefbd89980a9d26ce5bc9f405bec04ef8f0136eb033d"
+    },
+    "data/reports/axis_libero_30k/track3_jitter_recovery/j4_executor_contract.json": {
+      "bytes": 13294,
+      "sha256": "b7ba01bb291ef833fb81647962cd9ad11c3274a15b54fa9fe91310ad4a641944"
+    },
+    "data/reports/axis_libero_30k/track3_jitter_recovery/j5_pilot_summary.json": {
+      "bytes": 39910,
+      "sha256": "40a8fee71ec451acacbac80abbb756ab25c6425513848a7ae6fe51fff336dbf7"
+    },
+    "data/reports/axis_libero_30k/track3_jitter_recovery/j5_pilots/task10_demo0_nominal_attempt1/child_result.json": {
+      "bytes": 26711,
+      "sha256": "8860f91bd3a067959237114b84f866a52a87667b96148744a45f799f447744a6"
+    },
+    "data/reports/axis_libero_30k/track3_jitter_recovery/j5_pilots/task10_demo0_nominal_attempt1/end_state.npy": {
+      "bytes": 760,
+      "sha256": "75666e10bb24c3cece86466bf31e4520a0a82244119af4256a0542e6c2c879ea"
+    },
+    "data/reports/axis_libero_30k/track3_jitter_recovery/j5_pilots/task10_demo0_nominal_attempt1/frames.npz": {
+      "bytes": 7070971,
+      "sha256": "d78eec1c0741eebc084b3d92524b659504d7b962b5bf171706efbf17f55e1986"
+    },
+    "data/reports/axis_libero_30k/track3_jitter_recovery/j5_pilots/task10_demo0_nominal_attempt1/parent_result.json": {
+      "bytes": 33764,
+      "sha256": "dc31b22f4d693c72c777efd5e3845b2956676a000852b458a2171720a38886eb"
+    },
+    "data/reports/axis_libero_30k/track3_jitter_recovery/j5_pilots/task10_demo0_nominal_attempt1/start_state.npy": {
+      "bytes": 760,
+      "sha256": "f5b4d5dd93a42cd133994d23eaeae0bc21bcdc970ba6c03e15a5c37f0928b9b3"
+    },
+    "data/reports/axis_libero_30k/track3_jitter_recovery/j5_pilots/task10_demo0_nominal_attempt1/trajectory.npz": {
+      "bytes": 119339,
+      "sha256": "1d082039f1ded9b5f493f62188a741e3209a31d1b46e89b178a962cebe9bcf00"
+    },
+    "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/start_states.npz": {
+      "bytes": 5183,
+      "sha256": "b21a5080bdaeebcc4999b25f1e1bafab5decef1cf78b09a4d3e7b25e95073447"
+    },
+    "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/task10_demo0_grasp_geometry.json": {
+      "bytes": 6795,
+      "sha256": "fca6e4641feba222f9c6b45924ad7b355a4848632bcc1a24c10174aaf1f2ef0a"
+    }
+  },
+  "libero_plus_porcelain": [
+    "M libero/libero/benchmark/__init__.py",
+    "?? libero/__init__.py",
+    "?? libero/libero/assets",
+    "?? libero/libero/bddl_files/libero_t3",
+    "?? libero/libero/init_files/libero_t3"
+  ],
+  "old_j5": {
+    "child_failure_reason": "stage_timeout:approach_grasp",
+    "child_status": "failed_gate",
+    "parent_category": "infrastructure",
+    "parent_ffmpeg_failure": [
+      "RuntimeError:j5_ffmpeg_failed:234:[AVFormatContext @ 0x63b87fc2b200] Unable to choose an output format for '/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_jitter_recovery/j5_pilots/task10_demo0_nominal_attempt1/agentview.mp4.partial'; use a standard extension for the filename or specify the format manually.\n[out#0 @ 0x63b87fc2a640] Error initializing the muxer for /home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_jitter_recovery/j5_pilots/task10_demo0_nominal_attempt1/agentview.mp4.partial: Invalid argument\nError opening output file /home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_jitter_recovery/j5_pilots/task10_demo0_nominal_attempt1/agentview.mp4.partial.\nError opening output files: Invalid argument\n"
+    ],
+    "parent_status": "failed_closed"
+  },
+  "old_manifest_drift": {
+    "historical_files_not_rewritten": true,
+    "j11": {
+      "entries": 37,
+      "mismatches": 4
+    },
+    "j3": {
+      "entries": 21,
+      "mismatches": 5
+    },
+    "source": "data/reports/axis_libero_30k/track3_j5_audit_20260905/summary.json"
+  },
+  "openpi_head": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "plan": "docs/AXIS_PI05_TRACK3_J5_EXECUTOR_CONTRACT_AND_ATOMIC_VIDEO_RECOVERY_PLAN.md",
+  "required_missing": [],
+  "resource_boundary": {
+    "conservative": false,
+    "cuda_imported": false,
+    "generation": false,
+    "gpu0_touched": false,
+    "official_gpu": false,
+    "other_family": false,
+    "simulator_imported": false,
+    "training": false,
+    "zip": false
+  },
+  "root_head": "db621e7f859f05b5c7a3304cc843eba26d588756",
+  "schema_version": "track3_j5_v0_input_lock_v1",
+  "status": "track3_j5_v0_passed"
+}

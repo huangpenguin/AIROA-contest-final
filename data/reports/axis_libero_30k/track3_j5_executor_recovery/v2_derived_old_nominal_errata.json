@@ -1,0 +1,91 @@
+{
+  "corrected_hdf5_xyzw": {
+    "gate_rad": 1e-05,
+    "reconstruction_error_rad": 2.2696772533249593e-07
+  },
+  "created_at_utc": "2026-09-05T03:26:25.138175+00:00",
+  "offline_frames": {
+    "shapes": {
+      "agentview": [
+        180,
+        128,
+        128,
+        3
+      ],
+      "wrist": [
+        180,
+        128,
+        128,
+        3
+      ]
+    },
+    "source": "data/reports/axis_libero_30k/track3_jitter_recovery/j5_pilots/task10_demo0_nominal_attempt1/frames.npz",
+    "source_is_not_pilot_success": true,
+    "source_sha256": "d78eec1c0741eebc084b3d92524b659504d7b962b5bf171706efbf17f55e1986",
+    "videos": {
+      "agentview": {
+        "atomic_publish": true,
+        "bytes": 47804,
+        "ffprobe": {
+          "expected_frames": 180,
+          "returncode": 0,
+          "state": "passed",
+          "stream": {
+            "avg_frame_rate": "20/1",
+            "codec_name": "h264",
+            "height": 128,
+            "nb_frames": "180",
+            "width": 128
+          }
+        },
+        "partial_path": "data/reports/axis_libero_30k/track3_j5_executor_recovery/old_nominal_videos/agentview.partial.mp4",
+        "path": "data/reports/axis_libero_30k/track3_j5_executor_recovery/old_nominal_videos/agentview.mp4",
+        "sha256": "e59acde130aa1ae456db1f79d6f516234e26146bff2e1e31da3c42e4f127c9e2"
+      },
+      "wrist": {
+        "atomic_publish": true,
+        "bytes": 61667,
+        "ffprobe": {
+          "expected_frames": 180,
+          "returncode": 0,
+          "state": "passed",
+          "stream": {
+            "avg_frame_rate": "20/1",
+            "codec_name": "h264",
+            "height": 128,
+            "nb_frames": "180",
+            "width": 128
+          }
+        },
+        "partial_path": "data/reports/axis_libero_30k/track3_j5_executor_recovery/old_nominal_videos/wrist.partial.mp4",
+        "path": "data/reports/axis_libero_30k/track3_j5_executor_recovery/old_nominal_videos/wrist.mp4",
+        "sha256": "8d41898bb5f2dd26a923ebb15326166574d9a05e2d92a71425b5ce953a746ba3"
+      }
+    }
+  },
+  "old_manifest_drift": {
+    "j11": "4/37",
+    "j3": "5/21",
+    "not_repaired": true
+  },
+  "old_nominal": {
+    "child_failure_reason": "stage_timeout:approach_grasp",
+    "child_status": "failed_gate",
+    "historical_executor_profile": "not_evaluated",
+    "old_return_code_coupling": {
+      "child_process_returncode": 1,
+      "child_status": "failed_gate",
+      "corrected_valid_failed_gate_returncode": 0
+    },
+    "parent_category": "infrastructure",
+    "parent_ffmpeg_errors": [
+      "RuntimeError:j5_ffmpeg_failed:234:[AVFormatContext @ 0x63b87fc2b200] Unable to choose an output format for '/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_jitter_recovery/j5_pilots/task10_demo0_nominal_attempt1/agentview.mp4.partial'; use a standard extension for the filename or specify the format manually.\n[out#0 @ 0x63b87fc2a640] Error initializing the muxer for /home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_jitter_recovery/j5_pilots/task10_demo0_nominal_attempt1/agentview.mp4.partial: Invalid argument\nError opening output file /home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_jitter_recovery/j5_pilots/task10_demo0_nominal_attempt1/agentview.mp4.partial.\nError opening output files: Invalid argument\n"
+    ],
+    "parent_status": "failed_closed",
+    "reason": "old_wxyz_executor_saturated_180_of_180_and_parent_video_suffix_failed"
+  },
+  "runtime_not_started": true,
+  "schema_version": "track3_j5_v2_derived_v1",
+  "status": "track3_j5_v2_passed",
+  "task10_attempt4": "forbidden"
+}

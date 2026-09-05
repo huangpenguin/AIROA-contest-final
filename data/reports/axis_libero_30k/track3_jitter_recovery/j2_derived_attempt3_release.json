@@ -1,0 +1,161 @@
+{
+  "created_at_utc": "2026-09-05T02:27:11.259976+00:00",
+  "cuda_imported": false,
+  "derived_telemetry_v2": {
+    "child_elapsed_ms": 25528.28,
+    "child_pid": 1416920,
+    "child_result_pid": 1416920,
+    "cuda_visible_devices": "3",
+    "deadline_seconds": 300.0,
+    "end_snapshot": {
+      "compute_processes": [],
+      "free_gate": true,
+      "gpus": [
+        {
+          "index": "3",
+          "memory_total_mib": 32768.0,
+          "memory_used_mib": 5.0,
+          "uuid": "GPU-b03055ef-af46-2cf8-7545-c60870f745f5"
+        }
+      ],
+      "process_query_returncode": 0,
+      "query": [
+        "nvidia-smi",
+        "-i",
+        "3",
+        "--query-gpu=index,uuid,memory.used,memory.total",
+        "--format=csv,noheader,nounits"
+      ],
+      "returncode": 0,
+      "timestamp_utc": "2026-09-04T16:53:52.255368+00:00"
+    },
+    "gpu_query_latency_ms": {
+      "count": 113,
+      "max_ms": 148.45660293940455,
+      "min_ms": "not_recoverable_historical",
+      "p50_ms": "not_recoverable_historical",
+      "p95_ms": "not_recoverable_historical",
+      "p99_ms": "not_recoverable_historical",
+      "source": "old_parent_poll_interval_max_ms_only",
+      "status": "partially_measured"
+    },
+    "heartbeat_gap_ms": {
+      "reason": "old_evidence_did_not_store_sample_completion_timestamps",
+      "status": "not_evaluated_historical"
+    },
+    "historical_not_recoverable": true,
+    "parent_pid": 1416912,
+    "peak_memory_mib": 459.0,
+    "physical_gpu_uuid": "GPU-b03055ef-af46-2cf8-7545-c60870f745f5",
+    "process_returncode": 0,
+    "sampling_coverage_count": 113,
+    "seed": 3100,
+    "start_snapshot": {
+      "compute_processes": [],
+      "free_gate": true,
+      "gpus": [
+        {
+          "index": "3",
+          "memory_total_mib": 32768.0,
+          "memory_used_mib": 5.0,
+          "uuid": "GPU-b03055ef-af46-2cf8-7545-c60870f745f5"
+        }
+      ],
+      "process_query_returncode": 0,
+      "query": [
+        "nvidia-smi",
+        "-i",
+        "3",
+        "--query-gpu=index,uuid,memory.used,memory.total",
+        "--format=csv,noheader,nounits"
+      ],
+      "returncode": 0,
+      "timestamp_utc": "2026-09-04T16:53:26.727088+00:00"
+    },
+    "supervisor_elapsed_ms": 25528.28,
+    "term_grace_seconds": 10.0,
+    "timed_out": false
+  },
+  "historical_mapping": {
+    "coverage_hz": 4.4264635141889705,
+    "heartbeat_detail": "not_evaluated_historical",
+    "no_pseudodata": true,
+    "parent_snapshot_count": 113,
+    "snapshot_span_ms": 25528.28
+  },
+  "release": {
+    "artifact_partial_residue": [],
+    "camera_artifacts_passed": true,
+    "child_camera_physics_predicates_passed": true,
+    "demo_index": 0,
+    "family": "support_remove",
+    "released_for_executor": true,
+    "task10_attempt4": "forbidden",
+    "task_index": 10
+  },
+  "root_head": "b90ab5431da319859d2f80a95e62019dd117b80b",
+  "schema_version": "track3_jitter_j2_v2",
+  "simulator_imported": false,
+  "source_attempt": {
+    "attempt_number": 3,
+    "historical_failure_unchanged": true,
+    "original_gpu_provenance_gate": {
+      "executed": true,
+      "missing": [
+        "parent_poll_interval_over_100ms"
+      ],
+      "reason": "gpu_provenance_incomplete",
+      "required": true,
+      "required_fields": [
+        "seed",
+        "parent_pid",
+        "child_pid",
+        "child_result_pid",
+        "physical_gpu_uuid",
+        "cuda_visible_devices",
+        "start_snapshot",
+        "end_snapshot",
+        "peak_memory_mib",
+        "parent_poll_count",
+        "parent_poll_interval_max_ms",
+        "deadline_seconds",
+        "term_grace_seconds",
+        "process_returncode",
+        "timed_out"
+      ],
+      "state": "failed"
+    },
+    "original_status": "failed_closed",
+    "path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o2_runs/task10_demo0_attempt3/parent_result.json"
+  },
+  "status": "track3_jitter_j2_support_remove_released",
+  "telemetry_v2_gate": {
+    "errors": [],
+    "heartbeat_gap_threshold_ms": 2000.0,
+    "missing": [],
+    "query_latency_is_warning_only": true,
+    "required_fields": [
+      "seed",
+      "parent_pid",
+      "child_pid",
+      "child_result_pid",
+      "physical_gpu_uuid",
+      "cuda_visible_devices",
+      "start_snapshot",
+      "end_snapshot",
+      "peak_memory_mib",
+      "deadline_seconds",
+      "term_grace_seconds",
+      "process_returncode",
+      "timed_out",
+      "gpu_query_latency_ms",
+      "heartbeat_gap_ms",
+      "supervisor_elapsed_ms",
+      "child_elapsed_ms",
+      "sampling_coverage_count"
+    ],
+    "state": "passed",
+    "warnings": []
+  },
+  "tool_sha256": "984210fb05e92d56d6e953293d47f0fd3064ea242fbed5e2eebb625cfea24bbc"
+}

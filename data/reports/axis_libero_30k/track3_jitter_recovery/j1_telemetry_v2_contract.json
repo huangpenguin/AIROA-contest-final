@@ -1,0 +1,213 @@
+{
+  "created_at_utc": "2026-09-05T02:27:11.147157+00:00",
+  "csv_probe": {
+    "bytes": 50,
+    "contains_crlf": false,
+    "lineterminator": "\\n",
+    "path": "data/reports/axis_libero_30k/track3_jitter_recovery/j1_lf_manifest_probe.csv",
+    "sha256": "a9b71b293e2a22f127f3ac621cd766949521a11b1ac0a157a8c3c118bab4a494"
+  },
+  "cuda_imported": false,
+  "heartbeat_cases": {
+    "1999.0": {
+      "errors": [],
+      "heartbeat_gap_threshold_ms": 2000.0,
+      "missing": [],
+      "query_latency_is_warning_only": true,
+      "required_fields": [
+        "seed",
+        "parent_pid",
+        "child_pid",
+        "child_result_pid",
+        "physical_gpu_uuid",
+        "cuda_visible_devices",
+        "start_snapshot",
+        "end_snapshot",
+        "peak_memory_mib",
+        "deadline_seconds",
+        "term_grace_seconds",
+        "process_returncode",
+        "timed_out",
+        "gpu_query_latency_ms",
+        "heartbeat_gap_ms",
+        "supervisor_elapsed_ms",
+        "child_elapsed_ms",
+        "sampling_coverage_count"
+      ],
+      "state": "passed",
+      "warnings": []
+    },
+    "2001.0": {
+      "errors": [
+        "heartbeat_gap_over_2000ms"
+      ],
+      "heartbeat_gap_threshold_ms": 2000.0,
+      "missing": [],
+      "query_latency_is_warning_only": true,
+      "required_fields": [
+        "seed",
+        "parent_pid",
+        "child_pid",
+        "child_result_pid",
+        "physical_gpu_uuid",
+        "cuda_visible_devices",
+        "start_snapshot",
+        "end_snapshot",
+        "peak_memory_mib",
+        "deadline_seconds",
+        "term_grace_seconds",
+        "process_returncode",
+        "timed_out",
+        "gpu_query_latency_ms",
+        "heartbeat_gap_ms",
+        "supervisor_elapsed_ms",
+        "child_elapsed_ms",
+        "sampling_coverage_count"
+      ],
+      "state": "failed",
+      "warnings": []
+    }
+  },
+  "latency_cases": {
+    "148.46": {
+      "errors": [],
+      "heartbeat_gap_threshold_ms": 2000.0,
+      "missing": [],
+      "query_latency_is_warning_only": true,
+      "required_fields": [
+        "seed",
+        "parent_pid",
+        "child_pid",
+        "child_result_pid",
+        "physical_gpu_uuid",
+        "cuda_visible_devices",
+        "start_snapshot",
+        "end_snapshot",
+        "peak_memory_mib",
+        "deadline_seconds",
+        "term_grace_seconds",
+        "process_returncode",
+        "timed_out",
+        "gpu_query_latency_ms",
+        "heartbeat_gap_ms",
+        "supervisor_elapsed_ms",
+        "child_elapsed_ms",
+        "sampling_coverage_count"
+      ],
+      "state": "passed",
+      "warnings": []
+    },
+    "50.0": {
+      "errors": [],
+      "heartbeat_gap_threshold_ms": 2000.0,
+      "missing": [],
+      "query_latency_is_warning_only": true,
+      "required_fields": [
+        "seed",
+        "parent_pid",
+        "child_pid",
+        "child_result_pid",
+        "physical_gpu_uuid",
+        "cuda_visible_devices",
+        "start_snapshot",
+        "end_snapshot",
+        "peak_memory_mib",
+        "deadline_seconds",
+        "term_grace_seconds",
+        "process_returncode",
+        "timed_out",
+        "gpu_query_latency_ms",
+        "heartbeat_gap_ms",
+        "supervisor_elapsed_ms",
+        "child_elapsed_ms",
+        "sampling_coverage_count"
+      ],
+      "state": "passed",
+      "warnings": []
+    },
+    "600.0": {
+      "errors": [],
+      "heartbeat_gap_threshold_ms": 2000.0,
+      "missing": [],
+      "query_latency_is_warning_only": true,
+      "required_fields": [
+        "seed",
+        "parent_pid",
+        "child_pid",
+        "child_result_pid",
+        "physical_gpu_uuid",
+        "cuda_visible_devices",
+        "start_snapshot",
+        "end_snapshot",
+        "peak_memory_mib",
+        "deadline_seconds",
+        "term_grace_seconds",
+        "process_returncode",
+        "timed_out",
+        "gpu_query_latency_ms",
+        "heartbeat_gap_ms",
+        "supervisor_elapsed_ms",
+        "child_elapsed_ms",
+        "sampling_coverage_count"
+      ],
+      "state": "passed",
+      "warnings": [
+        "gpu_query_p99_over_500ms"
+      ]
+    }
+  },
+  "launcher_contract": {
+    "atomic_cursor": true,
+    "entrypoint": "tools.axis_pi05.track3_provenance_jitter_recovery_and_overnight_continuation",
+    "heartbeat_interval_seconds": 900.0,
+    "launch_form": "setsid",
+    "pid_file": "data/reports/axis_libero_30k/track3_jitter_recovery/supervisor.pid",
+    "reject_pid_reuse_or_dirty_source": true,
+    "single_instance": true,
+    "term_then_atomic_closeout": true
+  },
+  "plan": "docs/AXIS_PI05_TRACK3_PROVENANCE_JITTER_RECOVERY_AND_OVERNIGHT_CONTINUATION_PLAN.md",
+  "resume_cursor": "data/reports/axis_libero_30k/track3_jitter_recovery/resume_cursor.json",
+  "root_head": "b90ab5431da319859d2f80a95e62019dd117b80b",
+  "schema_version": "track3_jitter_j1_v2",
+  "simulator_imported": false,
+  "status": "track3_jitter_j1_passed",
+  "telemetry_schema": {
+    "gpu_query_latency_ms": "diagnostic distribution only",
+    "heartbeat_gap_max_ms": 2000.0,
+    "heartbeat_gap_ms": "sampling completion gap",
+    "query_p99_warning_ms": 500.0,
+    "required_gate": [
+      "seed",
+      "parent_pid",
+      "child_pid",
+      "child_result_pid",
+      "physical_gpu_uuid",
+      "cuda_visible_devices",
+      "start_snapshot",
+      "end_snapshot",
+      "peak_memory_mib",
+      "deadline_seconds",
+      "term_grace_seconds",
+      "process_returncode",
+      "timed_out",
+      "gpu_query_latency_ms",
+      "heartbeat_gap_ms",
+      "supervisor_elapsed_ms",
+      "child_elapsed_ms",
+      "sampling_coverage_count"
+    ],
+    "version": "v2"
+  },
+  "tests": {
+    "atomic_partial_empty": true,
+    "csv_hash_stable": true,
+    "csv_lf_only": true,
+    "heartbeat_1999_passes": true,
+    "heartbeat_2001_fails": true,
+    "latency_148_46_passes": true,
+    "latency_50_passes": true,
+    "latency_600_passes_with_warning": true
+  },
+  "tool_sha256": "984210fb05e92d56d6e953293d47f0fd3064ea242fbed5e2eebb625cfea24bbc"
+}

@@ -1,0 +1,288 @@
+{
+  "created_at_utc": "2026-09-05T01:57:51.874932+00:00",
+  "evidence_hashes": {
+    "data/reports/axis_libero_30k/phase1/norm_stats.json": {
+      "bytes": 2736,
+      "sha256": "4c803bf59c52677c36b6b420c614d8a7742e0847708443863e13e67cb80b18f5"
+    },
+    "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o10_artifact_manifest.json": {
+      "bytes": 3225,
+      "sha256": "9dd1a762f82216aedfa6ffbbc5870fb29690677dc6d19c8880dcfe7325494e56"
+    },
+    "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o10_phase_results.csv": {
+      "bytes": 552,
+      "sha256": "c39b4d3069cd9431b26c0b01572a03cb264db6538a33a7461cac3570309b8af8"
+    },
+    "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o2_camera_frames/task10_demo0_attempt3.npz": {
+      "bytes": 1758862,
+      "sha256": "ec9ba4e20beecb355b41015de5f8672e0b5b4ebe38ccab7bee66a4e81aa93377"
+    },
+    "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o2_runs/task10_demo0_attempt3/agentview.mp4": {
+      "bytes": 5646,
+      "sha256": "ca1b71621e8fd7148a24146beaf8be05cb7110a6644aace689a7ae721cf04af8"
+    },
+    "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o2_runs/task10_demo0_attempt3/child_result.json": {
+      "bytes": 18579,
+      "sha256": "115160ba8474300725b8e9f0324451c161544a57c8daf15898b1c11611d447cb"
+    },
+    "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o2_runs/task10_demo0_attempt3/parent_result.json": {
+      "bytes": 49786,
+      "sha256": "e0a3cdd7bfc204bb4ae071df3338a26b4733fe321139a650d0904d4bd03940e1"
+    },
+    "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o2_runs/task10_demo0_attempt3/wrist.mp4": {
+      "bytes": 6435,
+      "sha256": "b2a23b2f5702ceb718715ae731260a3f6b380e3ce92fa9b32b0da0058fd1548d"
+    },
+    "outputs/axis_pi05/axis_libero_lora_folded/r6_dual_l2_fresh500_r1_step500/model.safetensors": {
+      "bytes": 14467165872,
+      "sha256": "5c73e1e8217dbb75a934c2b0165208e851f69e66cfe2ea0430590a29901e6d5b"
+    }
+  },
+  "gpu_snapshots": {
+    "0": {
+      "compute_processes": [
+        "1133706, /mnt/home/moriyama/workspace/ros2_project/mmdetection/.venv-yolo26/bin/python, 14288"
+      ],
+      "free_gate": false,
+      "gpus": [
+        {
+          "index": "0",
+          "memory_total_mib": 32768.0,
+          "memory_used_mib": 14325.0,
+          "uuid": "GPU-0a004a52-e72d-9b46-0391-9488e841db41"
+        }
+      ],
+      "process_query_returncode": 0,
+      "returncode": 0,
+      "timestamp_utc": "2026-09-05T01:57:52.101200+00:00"
+    },
+    "1": {
+      "compute_processes": [],
+      "free_gate": true,
+      "gpus": [
+        {
+          "index": "1",
+          "memory_total_mib": 32768.0,
+          "memory_used_mib": 5.0,
+          "uuid": "GPU-dbf876c3-dcaf-054b-ac9d-035e7198ceda"
+        }
+      ],
+      "process_query_returncode": 0,
+      "returncode": 0,
+      "timestamp_utc": "2026-09-05T01:57:52.223294+00:00"
+    },
+    "2": {
+      "compute_processes": [],
+      "free_gate": true,
+      "gpus": [
+        {
+          "index": "2",
+          "memory_total_mib": 32768.0,
+          "memory_used_mib": 5.0,
+          "uuid": "GPU-0cf6b31a-016b-6e71-a7b5-a790922d89ae"
+        }
+      ],
+      "process_query_returncode": 0,
+      "returncode": 0,
+      "timestamp_utc": "2026-09-05T01:57:52.354161+00:00"
+    },
+    "3": {
+      "compute_processes": [],
+      "free_gate": true,
+      "gpus": [
+        {
+          "index": "3",
+          "memory_total_mib": 32768.0,
+          "memory_used_mib": 5.0,
+          "uuid": "GPU-b03055ef-af46-2cf8-7545-c60870f745f5"
+        }
+      ],
+      "process_query_returncode": 0,
+      "returncode": 0,
+      "timestamp_utc": "2026-09-05T01:57:52.474561+00:00"
+    }
+  },
+  "hashes": {
+    "data/reports/axis_libero_30k/phase1/norm_stats.json": {
+      "bytes": 2736,
+      "sha256": "4c803bf59c52677c36b6b420c614d8a7742e0847708443863e13e67cb80b18f5"
+    },
+    "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o10_artifact_manifest.json": {
+      "bytes": 3225,
+      "sha256": "9dd1a762f82216aedfa6ffbbc5870fb29690677dc6d19c8880dcfe7325494e56"
+    },
+    "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o10_phase_results.csv": {
+      "bytes": 552,
+      "sha256": "c39b4d3069cd9431b26c0b01572a03cb264db6538a33a7461cac3570309b8af8"
+    },
+    "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o2_camera_frames/task10_demo0_attempt3.npz": {
+      "bytes": 1758862,
+      "sha256": "ec9ba4e20beecb355b41015de5f8672e0b5b4ebe38ccab7bee66a4e81aa93377"
+    },
+    "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o2_runs/task10_demo0_attempt3/agentview.mp4": {
+      "bytes": 5646,
+      "sha256": "ca1b71621e8fd7148a24146beaf8be05cb7110a6644aace689a7ae721cf04af8"
+    },
+    "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o2_runs/task10_demo0_attempt3/child_result.json": {
+      "bytes": 18579,
+      "sha256": "115160ba8474300725b8e9f0324451c161544a57c8daf15898b1c11611d447cb"
+    },
+    "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o2_runs/task10_demo0_attempt3/parent_result.json": {
+      "bytes": 49786,
+      "sha256": "e0a3cdd7bfc204bb4ae071df3338a26b4733fe321139a650d0904d4bd03940e1"
+    },
+    "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o2_runs/task10_demo0_attempt3/wrist.mp4": {
+      "bytes": 6435,
+      "sha256": "b2a23b2f5702ceb718715ae731260a3f6b380e3ce92fa9b32b0da0058fd1548d"
+    },
+    "outputs/axis_pi05/axis_libero_lora_folded/r6_dual_l2_fresh500_r1_step500/model.safetensors": {
+      "bytes": 14467165872,
+      "sha256": "5c73e1e8217dbb75a934c2b0165208e851f69e66cfe2ea0430590a29901e6d5b"
+    }
+  },
+  "immutable_prior": {
+    "o0_status": "track3_overnight_o0_passed",
+    "o1_status": "track3_overnight_o1_provenance_watchdog_passed",
+    "o2_status": "track3_overnight_stopped_O2_task10_attempt3_failure",
+    "old_child_status": "passed",
+    "old_parent_not_rewritten": true,
+    "old_parent_status": "failed_closed"
+  },
+  "input_root_commit": "8c0d296f1dfedb0c777040a733b6f9e352234111",
+  "libero_plus_porcelain": [
+    "M libero/libero/benchmark/__init__.py",
+    "?? libero/__init__.py",
+    "?? libero/libero/assets",
+    "?? libero/libero/bddl_files/libero_t3",
+    "?? libero/libero/init_files/libero_t3"
+  ],
+  "old_o10_csv_line_endings": {
+    "current_git_blob_sha256": "5201adeadd4be91b5723dcb6723f083a2f77c0f2",
+    "current_worktree_sha256": "c39b4d3069cd9431b26c0b01572a03cb264db6538a33a7461cac3570309b8af8",
+    "declared_manifest_sha256": "ad4f84c9d715d6a6f22a0e37ed56b613d8d771134fae45c327ad8dc45dfeccc5",
+    "known_difference": true,
+    "worktree_bytes_contains_crlf": false,
+    "worktree_bytes_contains_lf": true
+  },
+  "openpi_expected": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "openpi_head": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "openpi_porcelain": [],
+  "plan": "docs/AXIS_PI05_TRACK3_PROVENANCE_JITTER_RECOVERY_AND_OVERNIGHT_CONTINUATION_PLAN.md",
+  "r6_inputs_from_prior_lock": {
+    "folded_config": "outputs/axis_pi05/axis_libero_lora_folded/r6_dual_l2_fresh500_r1_step500/config.json",
+    "folded_model": "outputs/axis_pi05/axis_libero_lora_folded/r6_dual_l2_fresh500_r1_step500/model.safetensors",
+    "folded_model_actual_sha256": "5c73e1e8217dbb75a934c2b0165208e851f69e66cfe2ea0430590a29901e6d5b",
+    "folded_model_expected_sha256": "5c73e1e8217dbb75a934c2b0165208e851f69e66cfe2ea0430590a29901e6d5b",
+    "folded_model_match": true,
+    "forward_dataset": "data/raw/hf/lerobot/libero_plus",
+    "forward_dataset_info_sha256": "5374c74f2c9ed44575d1ffa8d5528068bb601388d2a646e9e8b666ce83cf48a0",
+    "forward_dataset_revision": "f3f49f426d75030177b18778374005bc12ccd588",
+    "forward_dataset_stats_sha256": "9c2679d28e09728aa745e7650d30663a9a1d64c1a87650673794b88bca8ec2db",
+    "norm_stats": "data/reports/axis_libero_30k/phase1/norm_stats.json",
+    "norm_stats_actual_sha256": "4c803bf59c52677c36b6b420c614d8a7742e0847708443863e13e67cb80b18f5",
+    "norm_stats_expected_sha256": "4c803bf59c52677c36b6b420c614d8a7742e0847708443863e13e67cb80b18f5",
+    "norm_stats_match": true,
+    "normalization": "QUANTILES",
+    "optimizer_steps": 500,
+    "r6_raw_metadata": "outputs/axis_pi05/axis_libero_lora_screen/L2_action_lora_heads/r6_dual_l2_fresh500_r1/500/_CHECKPOINT_METADATA",
+    "raw_checkpoint": "outputs/axis_pi05/axis_libero_lora_screen/L2_action_lora_heads/r6_dual_l2_fresh500_r1/500",
+    "raw_checkpoint_actual_tree_sha256": "d203635f1eb0b006ec27841db6ce5171f74a37035eca4291c8107c05838c276f",
+    "raw_checkpoint_expected_tree_sha256": "d203635f1eb0b006ec27841db6ce5171f74a37035eca4291c8107c05838c276f",
+    "raw_checkpoint_match": true,
+    "topology": "L2_action_lora_heads"
+  },
+  "resource_boundary": {
+    "cuda_imported": false,
+    "gpu0_external_process_preserved": true,
+    "gpu0_touched": false,
+    "new_task20_task19_started": false,
+    "official_gpu": false,
+    "simulator_imported": false,
+    "task10_attempt4": "forbidden",
+    "training_started": false
+  },
+  "root_head": "8b718731cae4f1350455ccae336af91c7a6a0f16",
+  "root_input_ancestor": true,
+  "root_porcelain": [
+    "?? tools/axis_pi05/track3_provenance_jitter_recovery_and_overnight_continuation.py"
+  ],
+  "schema_version": "track3_jitter_j0_lock_v1",
+  "status": "track3_jitter_j0_passed",
+  "status_reasons": [],
+  "task10_attempt3": {
+    "attempt_number": 3,
+    "camera_npz": {
+      "allow_pickle": false,
+      "errors": [],
+      "keys": [
+        "agentview",
+        "wrist"
+      ],
+      "path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o2_camera_frames/task10_demo0_attempt3.npz",
+      "shapes": {
+        "agentview": [
+          41,
+          128,
+          128,
+          3
+        ],
+        "wrist": [
+          41,
+          128,
+          128,
+          3
+        ]
+      },
+      "state": "passed"
+    },
+    "child_pid": 1416920,
+    "child_status": "passed",
+    "cuda_visible_devices": "3",
+    "hard_gate_states": {
+      "camera_schema": "passed",
+      "contact_v3_full_window": "passed",
+      "restore_identity": "passed",
+      "truth": "passed"
+    },
+    "partial_residue": [],
+    "peak_memory_mib": 459.0,
+    "physical_gpu_uuid": "GPU-b03055ef-af46-2cf8-7545-c60870f745f5",
+    "pid_match": true,
+    "returncode": 0,
+    "snapshot_count": 113,
+    "timed_out": false,
+    "videos": {
+      "agentview": {
+        "atomic_publish": true,
+        "bytes": 5646,
+        "ffprobe": {
+          "avg_frame_rate": "20/1",
+          "codec_name": "h264",
+          "height": 128,
+          "nb_frames": "41",
+          "width": 128
+        },
+        "fps": "20/1",
+        "frame_count": 41,
+        "path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o2_runs/task10_demo0_attempt3/agentview.mp4",
+        "sha256": "ca1b71621e8fd7148a24146beaf8be05cb7110a6644aace689a7ae721cf04af8"
+      },
+      "wrist": {
+        "atomic_publish": true,
+        "bytes": 6435,
+        "ffprobe": {
+          "avg_frame_rate": "20/1",
+          "codec_name": "h264",
+          "height": 128,
+          "nb_frames": "41",
+          "width": 128
+        },
+        "fps": "20/1",
+        "frame_count": 41,
+        "path": "data/reports/axis_libero_30k/track3_overnight_autogen_lora/o2_runs/task10_demo0_attempt3/wrist.mp4",
+        "sha256": "b2a23b2f5702ceb718715ae731260a3f6b380e3ce92fa9b32b0da0058fd1548d"
+      }
+    },
+    "worker_pid": 1416920
+  }
+}

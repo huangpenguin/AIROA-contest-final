@@ -1,0 +1,23 @@
+{
+  "active": false,
+  "completed": [
+    "J0",
+    "J1"
+  ],
+  "last_heartbeat_utc": "2026-09-05T02:27:11.145952+00:00",
+  "next_phase": "J2",
+  "not_evaluated": [
+    "J2",
+    "J3",
+    "J4",
+    "J5",
+    "J6",
+    "J7",
+    "J8",
+    "J9",
+    "J10",
+    "J11"
+  ],
+  "schema_version": "track3_jitter_cursor_v2",
+  "status": "j1_passed"
+}

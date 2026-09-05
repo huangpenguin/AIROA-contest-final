@@ -1,0 +1,112 @@
+{
+  "created_at_utc": "2026-09-05T02:06:33.258263+00:00",
+  "entries": [
+    {
+      "bytes": 11416,
+      "relative_path": "data/reports/axis_libero_30k/track3_jitter_recovery/j0_input_lock.json",
+      "sha256": "059182063941480fd9b0f2294c0334eb09795cf6651a57a66646859942e34050"
+    },
+    {
+      "bytes": 50,
+      "relative_path": "data/reports/axis_libero_30k/track3_jitter_recovery/j1_lf_manifest_probe.csv",
+      "sha256": "a9b71b293e2a22f127f3ac621cd766949521a11b1ac0a157a8c3c118bab4a494"
+    },
+    {
+      "bytes": 5978,
+      "relative_path": "data/reports/axis_libero_30k/track3_jitter_recovery/j1_telemetry_v2_contract.json",
+      "sha256": "377531fa0d4b5fdf3c3bfdc382f258026955e8ba27a50158e0b4af1fd868935e"
+    },
+    {
+      "bytes": 4685,
+      "relative_path": "data/reports/axis_libero_30k/track3_jitter_recovery/j2_derived_attempt3_release.json",
+      "sha256": "05f96fb01beb1bfcec1c56e37da08da4f2816888858c66483431ea6b4a0837b1"
+    },
+    {
+      "bytes": 1663598,
+      "relative_path": "data/reports/axis_libero_30k/track3_jitter_recovery/j3_camera_frames/task19_demo0_attempt1.npz",
+      "sha256": "24819ba5b8ab0d7e18ac8f9e18aa9391829cd1184455a9c3b3c20ed25126bbcf"
+    },
+    {
+      "bytes": 2155075,
+      "relative_path": "data/reports/axis_libero_30k/track3_jitter_recovery/j3_camera_frames/task20_demo0_attempt1.npz",
+      "sha256": "d307c28b93220963074564f0d692d15a5be56cba81b2e7d5cd07589f4b1fd373"
+    },
+    {
+      "bytes": 5503,
+      "relative_path": "data/reports/axis_libero_30k/track3_jitter_recovery/j3_runs/task19_demo0_attempt1/agentview.mp4",
+      "sha256": "4d7c501d3069c3fdc377553ea0c6bfacc34fcf01817ab36aaac33984060ab3c8"
+    },
+    {
+      "bytes": 18538,
+      "relative_path": "data/reports/axis_libero_30k/track3_jitter_recovery/j3_runs/task19_demo0_attempt1/child_result.json",
+      "sha256": "f6078ca30dfabe6363a620a10c89bb2fef83e753f06b7ab225268d4f101b183b"
+    },
+    {
+      "bytes": 24842,
+      "relative_path": "data/reports/axis_libero_30k/track3_jitter_recovery/j3_runs/task19_demo0_attempt1/parent_result.json",
+      "sha256": "aabc7af8594e14245d22b2a8d7b598ffcfc5de5e2ab1b9971a36cb57d8fb27b5"
+    },
+    {
+      "bytes": 316,
+      "relative_path": "data/reports/axis_libero_30k/track3_jitter_recovery/j3_runs/task19_demo0_attempt1/stderr.log",
+      "sha256": "b64f85f67048e258074975a341f381ae84f788926051563a6e509c7cb5191add"
+    },
+    {
+      "bytes": 0,
+      "relative_path": "data/reports/axis_libero_30k/track3_jitter_recovery/j3_runs/task19_demo0_attempt1/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 6776,
+      "relative_path": "data/reports/axis_libero_30k/track3_jitter_recovery/j3_runs/task19_demo0_attempt1/wrist.mp4",
+      "sha256": "2dbcbad2f3fffe0acb6b4766fd661cf3bc49b14b2403b24a29e432891dea1547"
+    },
+    {
+      "bytes": 5866,
+      "relative_path": "data/reports/axis_libero_30k/track3_jitter_recovery/j3_runs/task20_demo0_attempt1/agentview.mp4",
+      "sha256": "061dd4c9df647ecac9cb8b9ee2013f2ec48c18ce2e6b94a826d847644e056563"
+    },
+    {
+      "bytes": 18568,
+      "relative_path": "data/reports/axis_libero_30k/track3_jitter_recovery/j3_runs/task20_demo0_attempt1/child_result.json",
+      "sha256": "827eadc3735d49ad87a0a5e478895999273fdaa7067928908a53e0bee1e65052"
+    },
+    {
+      "bytes": 24871,
+      "relative_path": "data/reports/axis_libero_30k/track3_jitter_recovery/j3_runs/task20_demo0_attempt1/parent_result.json",
+      "sha256": "4b2524429227ba29014062a75d49d8bc22207744527d0535a7c32cfb15f2afcf"
+    },
+    {
+      "bytes": 316,
+      "relative_path": "data/reports/axis_libero_30k/track3_jitter_recovery/j3_runs/task20_demo0_attempt1/stderr.log",
+      "sha256": "b64f85f67048e258074975a341f381ae84f788926051563a6e509c7cb5191add"
+    },
+    {
+      "bytes": 0,
+      "relative_path": "data/reports/axis_libero_30k/track3_jitter_recovery/j3_runs/task20_demo0_attempt1/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 7208,
+      "relative_path": "data/reports/axis_libero_30k/track3_jitter_recovery/j3_runs/task20_demo0_attempt1/wrist.mp4",
+      "sha256": "e9e3a347433ca28ea6ad6cd9184340980593773acce60bdc90d0d9c6192b3e8e"
+    },
+    {
+      "bytes": 313,
+      "relative_path": "data/reports/axis_libero_30k/track3_jitter_recovery/resume_cursor.json",
+      "sha256": "b87ad54e1291c138b51062aa5273f8b7eaecd6d64d2f164f38deaaab1deaa5d1"
+    },
+    {
+      "bytes": 0,
+      "relative_path": "data/reports/axis_libero_30k/track3_jitter_recovery/supervisor.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 8,
+      "relative_path": "data/reports/axis_libero_30k/track3_jitter_recovery/supervisor.pid",
+      "sha256": "4d243d4cc629d72ed7f1c6564762f54c09a9ec9beb984dff84532ce207facd25"
+    }
+  ],
+  "entries_exclude_self": true,
+  "schema_version": "track3_jitter_j3_artifact_manifest_v2"
+}

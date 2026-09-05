@@ -1,0 +1,411 @@
+{
+  "created_at_utc": "2026-09-05T02:27:39.018272+00:00",
+  "cuda_imported": false,
+  "executor_contract": {
+    "action_dim": 7,
+    "contact_contract": "v3 intended receiver + demonstrator + unrelated background",
+    "controller": "OSC_POSE",
+    "gripper_values": [
+      -1.0,
+      1.0
+    ],
+    "hidden_task_special_case": false,
+    "normalized_translation_rotation_input": true,
+    "rotation_error": "quaternion_log_shortest_path",
+    "stall_timeout_gate": true,
+    "step_budget_is_frozen": true,
+    "translation_rotation_separately_clipped": true,
+    "unrelated_movement_gate_m": 0.002
+  },
+  "families": {
+    "articulation_close": "released",
+    "containment_remove": "released",
+    "support_remove": "released"
+  },
+  "hdf5_extractions": {
+    "10": [
+      {
+        "action_dim": 7,
+        "action_finite": true,
+        "demo_index": 0,
+        "eef_finite": true,
+        "eef_position_motion_m": 0.3136601913066271,
+        "eef_rotation_motion_rad": 0.40643406569984397,
+        "fixture_direction_evidence": {
+          "eef_path_nonzero": true,
+          "required": false,
+          "state_motion_nonzero": true
+        },
+        "frame_count": 90,
+        "gripper_sign_proof": {
+          "native_action_values": [
+            -1.0,
+            1.0
+          ],
+          "required_transition": true,
+          "transition_found": true
+        },
+        "gripper_transition_index": 32,
+        "gripper_values": [
+          -1.0,
+          1.0
+        ],
+        "path": "data/raw/public/libero_official_hdf5/libero_goal/put_the_bowl_on_the_plate_demo.hdf5",
+        "post_transition_motion": 4.697874159908489,
+        "sha256": "e69528b0cf10dfc59b20698e12ec2affc03f3887309034d3eb74cac3ec929406",
+        "state_dim": 79,
+        "state_finite": true,
+        "task_index": 10
+      },
+      {
+        "action_dim": 7,
+        "action_finite": true,
+        "demo_index": 1,
+        "eef_finite": true,
+        "eef_position_motion_m": 0.33810625943372213,
+        "eef_rotation_motion_rad": 0.21801182568918578,
+        "fixture_direction_evidence": {
+          "eef_path_nonzero": true,
+          "required": false,
+          "state_motion_nonzero": true
+        },
+        "frame_count": 88,
+        "gripper_sign_proof": {
+          "native_action_values": [
+            -1.0,
+            1.0
+          ],
+          "required_transition": true,
+          "transition_found": true
+        },
+        "gripper_transition_index": 36,
+        "gripper_values": [
+          -1.0,
+          1.0
+        ],
+        "path": "data/raw/public/libero_official_hdf5/libero_goal/put_the_bowl_on_the_plate_demo.hdf5",
+        "post_transition_motion": 4.676016391303881,
+        "sha256": "e69528b0cf10dfc59b20698e12ec2affc03f3887309034d3eb74cac3ec929406",
+        "state_dim": 79,
+        "state_finite": true,
+        "task_index": 10
+      },
+      {
+        "action_dim": 7,
+        "action_finite": true,
+        "demo_index": 2,
+        "eef_finite": true,
+        "eef_position_motion_m": 0.34631862461787455,
+        "eef_rotation_motion_rad": 0.20499860973176787,
+        "fixture_direction_evidence": {
+          "eef_path_nonzero": true,
+          "required": false,
+          "state_motion_nonzero": true
+        },
+        "frame_count": 92,
+        "gripper_sign_proof": {
+          "native_action_values": [
+            -1.0,
+            1.0
+          ],
+          "required_transition": true,
+          "transition_found": true
+        },
+        "gripper_transition_index": 36,
+        "gripper_values": [
+          -1.0,
+          1.0
+        ],
+        "path": "data/raw/public/libero_official_hdf5/libero_goal/put_the_bowl_on_the_plate_demo.hdf5",
+        "post_transition_motion": 4.798411243217707,
+        "sha256": "e69528b0cf10dfc59b20698e12ec2affc03f3887309034d3eb74cac3ec929406",
+        "state_dim": 79,
+        "state_finite": true,
+        "task_index": 10
+      }
+    ],
+    "19": [
+      {
+        "action_dim": 7,
+        "action_finite": true,
+        "demo_index": 0,
+        "eef_finite": true,
+        "eef_position_motion_m": 0.28026439877080556,
+        "eef_rotation_motion_rad": 2.5401779936453868,
+        "fixture_direction_evidence": {
+          "eef_path_nonzero": true,
+          "required": true,
+          "state_motion_nonzero": true
+        },
+        "frame_count": 138,
+        "gripper_sign_proof": {
+          "native_action_values": [
+            -1.0
+          ],
+          "required_transition": false,
+          "transition_found": false
+        },
+        "gripper_transition_index": null,
+        "gripper_values": [
+          -1.0
+        ],
+        "path": "data/raw/public/libero_official_hdf5/libero_goal/open_the_middle_drawer_of_the_cabinet_demo.hdf5",
+        "post_transition_motion": 7.268989876401976,
+        "sha256": "20252c7cf98cd7437061f7f200ae7b6cb6219fabbd53b4536dfaa8abda6ab737",
+        "state_dim": 79,
+        "state_finite": true,
+        "task_index": 19
+      },
+      {
+        "action_dim": 7,
+        "action_finite": true,
+        "demo_index": 1,
+        "eef_finite": true,
+        "eef_position_motion_m": 0.29395588545545726,
+        "eef_rotation_motion_rad": 2.7138044516425976,
+        "fixture_direction_evidence": {
+          "eef_path_nonzero": true,
+          "required": true,
+          "state_motion_nonzero": true
+        },
+        "frame_count": 138,
+        "gripper_sign_proof": {
+          "native_action_values": [
+            -1.0
+          ],
+          "required_transition": false,
+          "transition_found": false
+        },
+        "gripper_transition_index": null,
+        "gripper_values": [
+          -1.0
+        ],
+        "path": "data/raw/public/libero_official_hdf5/libero_goal/open_the_middle_drawer_of_the_cabinet_demo.hdf5",
+        "post_transition_motion": 7.287871391304268,
+        "sha256": "20252c7cf98cd7437061f7f200ae7b6cb6219fabbd53b4536dfaa8abda6ab737",
+        "state_dim": 79,
+        "state_finite": true,
+        "task_index": 19
+      },
+      {
+        "action_dim": 7,
+        "action_finite": true,
+        "demo_index": 2,
+        "eef_finite": true,
+        "eef_position_motion_m": 0.25522948659192446,
+        "eef_rotation_motion_rad": 2.3094897635886222,
+        "fixture_direction_evidence": {
+          "eef_path_nonzero": true,
+          "required": true,
+          "state_motion_nonzero": true
+        },
+        "frame_count": 151,
+        "gripper_sign_proof": {
+          "native_action_values": [
+            -1.0
+          ],
+          "required_transition": false,
+          "transition_found": false
+        },
+        "gripper_transition_index": null,
+        "gripper_values": [
+          -1.0
+        ],
+        "path": "data/raw/public/libero_official_hdf5/libero_goal/open_the_middle_drawer_of_the_cabinet_demo.hdf5",
+        "post_transition_motion": 7.723064824436459,
+        "sha256": "20252c7cf98cd7437061f7f200ae7b6cb6219fabbd53b4536dfaa8abda6ab737",
+        "state_dim": 79,
+        "state_finite": true,
+        "task_index": 19
+      }
+    ],
+    "20": [
+      {
+        "action_dim": 7,
+        "action_finite": true,
+        "demo_index": 0,
+        "eef_finite": true,
+        "eef_position_motion_m": 0.2805572166064125,
+        "eef_rotation_motion_rad": 0.8693702235646705,
+        "fixture_direction_evidence": {
+          "eef_path_nonzero": true,
+          "required": false,
+          "state_motion_nonzero": true
+        },
+        "frame_count": 126,
+        "gripper_sign_proof": {
+          "native_action_values": [
+            -1.0,
+            1.0
+          ],
+          "required_transition": true,
+          "transition_found": true
+        },
+        "gripper_transition_index": 42,
+        "gripper_values": [
+          -1.0,
+          1.0
+        ],
+        "path": "data/raw/public/libero_official_hdf5/libero_object/pick_up_the_orange_juice_and_place_it_in_the_basket_demo.hdf5",
+        "post_transition_motion": 7.849775049483924,
+        "sha256": "53e40490c62e94c678233eefbfd874a61c93d92c8088f59d426ae6c3fd90d288",
+        "state_dim": 110,
+        "state_finite": true,
+        "task_index": 20
+      },
+      {
+        "action_dim": 7,
+        "action_finite": true,
+        "demo_index": 1,
+        "eef_finite": true,
+        "eef_position_motion_m": 0.32297036953164526,
+        "eef_rotation_motion_rad": 0.6214809389613712,
+        "fixture_direction_evidence": {
+          "eef_path_nonzero": true,
+          "required": false,
+          "state_motion_nonzero": true
+        },
+        "frame_count": 135,
+        "gripper_sign_proof": {
+          "native_action_values": [
+            -1.0,
+            1.0
+          ],
+          "required_transition": true,
+          "transition_found": true
+        },
+        "gripper_transition_index": 48,
+        "gripper_values": [
+          -1.0,
+          1.0
+        ],
+        "path": "data/raw/public/libero_official_hdf5/libero_object/pick_up_the_orange_juice_and_place_it_in_the_basket_demo.hdf5",
+        "post_transition_motion": 7.235654674423547,
+        "sha256": "53e40490c62e94c678233eefbfd874a61c93d92c8088f59d426ae6c3fd90d288",
+        "state_dim": 110,
+        "state_finite": true,
+        "task_index": 20
+      },
+      {
+        "action_dim": 7,
+        "action_finite": true,
+        "demo_index": 2,
+        "eef_finite": true,
+        "eef_position_motion_m": 0.38214388035133173,
+        "eef_rotation_motion_rad": 0.5231509112369137,
+        "fixture_direction_evidence": {
+          "eef_path_nonzero": true,
+          "required": false,
+          "state_motion_nonzero": true
+        },
+        "frame_count": 132,
+        "gripper_sign_proof": {
+          "native_action_values": [
+            -1.0,
+            1.0
+          ],
+          "required_transition": true,
+          "transition_found": true
+        },
+        "gripper_transition_index": 49,
+        "gripper_values": [
+          -1.0,
+          1.0
+        ],
+        "path": "data/raw/public/libero_official_hdf5/libero_object/pick_up_the_orange_juice_and_place_it_in_the_basket_demo.hdf5",
+        "post_transition_motion": 7.058261413737994,
+        "sha256": "53e40490c62e94c678233eefbfd874a61c93d92c8088f59d426ae6c3fd90d288",
+        "state_dim": 110,
+        "state_finite": true,
+        "task_index": 20
+      }
+    ]
+  },
+  "plan": "docs/AXIS_PI05_TRACK3_PROVENANCE_JITTER_RECOVERY_AND_OVERNIGHT_CONTINUATION_PLAN.md",
+  "profiles": {
+    "articulation_close": {
+      "conservative": {
+        "frozen_before_gpu": true,
+        "profile_name": "conservative",
+        "rotation_clip_rad": 0.06,
+        "rotation_tolerance_rad": 0.02,
+        "stable_ticks": 8,
+        "step_budget": 1200,
+        "translation_clip_m": 0.025,
+        "translation_tolerance_m": 0.008
+      },
+      "nominal": {
+        "frozen_before_gpu": true,
+        "profile_name": "nominal",
+        "rotation_clip_rad": 0.12,
+        "rotation_tolerance_rad": 0.03,
+        "stable_ticks": 4,
+        "step_budget": 900,
+        "translation_clip_m": 0.05,
+        "translation_tolerance_m": 0.012
+      }
+    },
+    "containment_remove": {
+      "conservative": {
+        "frozen_before_gpu": true,
+        "profile_name": "conservative",
+        "rotation_clip_rad": 0.06,
+        "rotation_tolerance_rad": 0.02,
+        "stable_ticks": 8,
+        "step_budget": 1200,
+        "translation_clip_m": 0.025,
+        "translation_tolerance_m": 0.008
+      },
+      "nominal": {
+        "frozen_before_gpu": true,
+        "profile_name": "nominal",
+        "rotation_clip_rad": 0.12,
+        "rotation_tolerance_rad": 0.03,
+        "stable_ticks": 4,
+        "step_budget": 900,
+        "translation_clip_m": 0.05,
+        "translation_tolerance_m": 0.012
+      }
+    },
+    "support_remove": {
+      "conservative": {
+        "frozen_before_gpu": true,
+        "profile_name": "conservative",
+        "rotation_clip_rad": 0.06,
+        "rotation_tolerance_rad": 0.02,
+        "stable_ticks": 8,
+        "step_budget": 1200,
+        "translation_clip_m": 0.025,
+        "translation_tolerance_m": 0.008
+      },
+      "nominal": {
+        "frozen_before_gpu": true,
+        "profile_name": "nominal",
+        "rotation_clip_rad": 0.12,
+        "rotation_tolerance_rad": 0.03,
+        "stable_ticks": 4,
+        "step_budget": 900,
+        "translation_clip_m": 0.05,
+        "translation_tolerance_m": 0.012
+      }
+    }
+  },
+  "reverse_instructions": {
+    "articulation_close": "Close the middle drawer of the wooden cabinet.",
+    "containment_remove": "Take the orange juice out of the basket and place it on the floor target area.",
+    "support_remove": "Remove the black bowl from the plate and place it on the table region where it started."
+  },
+  "schema_version": "track3_jitter_j4_v2",
+  "simulator_imported": false,
+  "source_commit": "b90ab5431da319859d2f80a95e62019dd117b80b",
+  "source_j3": "data/reports/axis_libero_30k/track3_jitter_recovery/j3_summary.json",
+  "status": "track3_jitter_j4_executor_contract_passed",
+  "task10_attempt4": "forbidden",
+  "tests": {
+    "action_builder_shape": true,
+    "all_executed_family_proofs_present": true,
+    "all_profiles_have_se3_clip": true,
+    "quaternion_log_identity_zero": true
+  },
+  "tool_sha256": "984210fb05e92d56d6e953293d47f0fd3064ea242fbed5e2eebb625cfea24bbc"
+}

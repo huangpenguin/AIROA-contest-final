@@ -1,0 +1,715 @@
+{
+  "attempt_number": 1,
+  "camera_frames": {
+    "agentview": 41,
+    "wrist": 41
+  },
+  "camera_npz": {
+    "allow_pickle": false,
+    "bytes": 1663598,
+    "dtypes": {
+      "agentview": "uint8",
+      "wrist": "uint8"
+    },
+    "keys": [
+      "agentview",
+      "wrist"
+    ],
+    "path": "data/reports/axis_libero_30k/track3_jitter_recovery/j3_camera_frames/task19_demo0_attempt1.npz",
+    "schema_version": "track3_gpu3_camera_frames_npz_v2",
+    "sha256": "24819ba5b8ab0d7e18ac8f9e18aa9391829cd1184455a9c3b3c20ed25126bbcf",
+    "shapes": {
+      "agentview": [
+        41,
+        128,
+        128,
+        3
+      ],
+      "wrist": [
+        41,
+        128,
+        128,
+        3
+      ]
+    }
+  },
+  "child_pid": 1436228,
+  "completed_at_utc": "2026-09-05T02:06:31.353011+00:00",
+  "created_at_utc": "2026-09-05T02:06:06.176062+00:00",
+  "demo_index": 0,
+  "family": "articulation_close",
+  "fresh_process": true,
+  "hard_gate": {
+    "camera_schema": {
+      "executed": true,
+      "renderer": {
+        "cameras": {
+          "agentview_image": {
+            "dtype": "uint8",
+            "present": true,
+            "shape": [
+              128,
+              128,
+              3
+            ],
+            "uint8": true
+          },
+          "robot0_eye_in_hand_image": {
+            "dtype": "uint8",
+            "present": true,
+            "shape": [
+              128,
+              128,
+              3
+            ],
+            "uint8": true
+          }
+        },
+        "schema_complete": true,
+        "underlying_flags": {
+          "has_offscreen_renderer": true,
+          "has_renderer": false,
+          "use_camera_obs": true
+        },
+        "wrapper_flags": {
+          "has_offscreen_renderer": null,
+          "has_renderer": null,
+          "use_camera_obs": null
+        }
+      },
+      "state": "passed"
+    },
+    "contact_v3_full_window": {
+      "executed": true,
+      "state": "passed",
+      "step_range": [
+        0,
+        40
+      ]
+    },
+    "restore_identity": {
+      "executed": true,
+      "max_abs_diff": 0.0,
+      "state": "passed"
+    },
+    "truth": {
+      "executed": true,
+      "goal_all_false": true,
+      "source_all_true": true,
+      "state": "passed"
+    }
+  },
+  "mode": "GPU3_EGL_camera",
+  "model_state_identity": {
+    "hdf5_path": "/home/huang/code/PARC2026_final/data/raw/public/libero_official_hdf5/libero_goal/open_the_middle_drawer_of_the_cabinet_demo.hdf5",
+    "hdf5_sha256": "20252c7cf98cd7437061f7f200ae7b6cb6219fabbd53b4536dfaa8abda6ab737",
+    "model_file_sha256": "ccf958ea89aa0e84e32cb90b99e31faf66f3cd5e33082f7d2a1d4444c4660257",
+    "resolved_model_xml_sha256": "32e9c8562f8b79a7764ab0feead506d54772fa5c5986c1f5660d66b88a3b3281",
+    "restore_max_abs_diff": 0.0,
+    "restored_state_sha256": "a524e075fb1dc2cb88425471d49dcffff82398f59d73af0a304364b20f7c573a",
+    "same_demo_model_and_state_components": true,
+    "state_bundle_path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/start_states.npz",
+    "state_key": "task19_demo0",
+    "state_sha256": "a524e075fb1dc2cb88425471d49dcffff82398f59d73af0a304364b20f7c573a"
+  },
+  "provenance": {
+    "gpu3_only": true,
+    "no_manipulation_action": true,
+    "no_se3_or_grasp": true,
+    "no_teleop": true,
+    "official_gpu": false,
+    "seed_layers": [
+      "parent_registration",
+      "python_random",
+      "numpy_random"
+    ]
+  },
+  "renderer": {
+    "cameras": {
+      "agentview_image": {
+        "dtype": "uint8",
+        "present": true,
+        "shape": [
+          128,
+          128,
+          3
+        ],
+        "uint8": true
+      },
+      "robot0_eye_in_hand_image": {
+        "dtype": "uint8",
+        "present": true,
+        "shape": [
+          128,
+          128,
+          3
+        ],
+        "uint8": true
+      }
+    },
+    "schema_complete": true,
+    "underlying_flags": {
+      "has_offscreen_renderer": true,
+      "has_renderer": false,
+      "use_camera_obs": true
+    },
+    "wrapper_flags": {
+      "has_offscreen_renderer": null,
+      "has_renderer": null,
+      "use_camera_obs": null
+    }
+  },
+  "reverse": {
+    "checkpoint_telemetry": [
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 0
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 1
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 2
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 3
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 4
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 5
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 6
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 7
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 8
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 9
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 10
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 11
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 12
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 13
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 14
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 15
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 16
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 17
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 18
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 19
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 20
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 21
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 22
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 23
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 24
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 25
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 26
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 27
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 28
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 29
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 30
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 31
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 32
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 33
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 34
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 35
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 36
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 37
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 38
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 39
+      },
+      {
+        "contact_counts": {
+          "background_contact": 37,
+          "demonstrator_contact": 0,
+          "intended_receiver_contact": 0,
+          "unrelated_background_contact": 0
+        },
+        "contact_state": "passed",
+        "goal": false,
+        "source": true,
+        "state_hash": "",
+        "step": 40
+      }
+    ],
+    "frame_count": 41,
+    "goal_atom": "(Close wooden_cabinet_1_middle_region)",
+    "hold_action": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "source_atom": "(Open wooden_cabinet_1_middle_region)"
+  },
+  "schema_version": "track3_gpu3_camera_canary_v3",
+  "seed": 3190,
+  "status": "passed",
+  "task_index": 19
+}

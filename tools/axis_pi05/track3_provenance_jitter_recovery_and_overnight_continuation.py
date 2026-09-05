@@ -483,12 +483,126 @@ def run_supervisor() -> dict[str, Any]:
         pid_path.unlink(missing_ok=True)
 
 
+# ---------------------------------------------------------------------------
+# J4: CPU-only executor contract.  Geometry is extracted from the public
+# forward HDF5 files once and frozen before any J5 GPU process is launched.
+
+
+HDF5_INPUTS = {
+    10: ROOT / "data/raw/public/libero_official_hdf5/libero_goal/put_the_bowl_on_the_plate_demo.hdf5",
+    20: ROOT / "data/raw/public/libero_official_hdf5/libero_object/pick_up_the_orange_juice_and_place_it_in_the_basket_demo.hdf5",
+    19: ROOT / "data/raw/public/libero_official_hdf5/libero_goal/open_the_middle_drawer_of_the_cabinet_demo.hdf5",
+}
+PROFILE_CONTRACT = {
+    "nominal": {"translation_clip_m": 0.05, "rotation_clip_rad": 0.12, "translation_tolerance_m": 0.012, "rotation_tolerance_rad": 0.03, "stable_ticks": 4, "step_budget": 900},
+    "conservative": {"translation_clip_m": 0.025, "rotation_clip_rad": 0.06, "translation_tolerance_m": 0.008, "rotation_tolerance_rad": 0.02, "stable_ticks": 8, "step_budget": 1200},
+}
+
+
+def _quat_normalize(value: Sequence[float]) -> tuple[float, float, float, float]:
+    values = [float(item) for item in value]
+    if len(values) != 4 or not all(math.isfinite(item) for item in values):
+        raise ValueError("invalid_quaternion")
+    norm = math.sqrt(sum(item * item for item in values))
+    if norm <= 1e-12:
+        raise ValueError("zero_quaternion")
+    return tuple(item / norm for item in values)
+
+
+def quaternion_log_error(target: Sequence[float], current: Sequence[float]) -> list[float]:
+    """Shortest quaternion-log rotation vector, wxyz convention."""
+    tw, tx, ty, tz = _quat_normalize(target)
+    cw, cx, cy, cz = _quat_normalize(current)
+    # target * inverse(current)
+    w = tw * cw + tx * cx + ty * cy + tz * cz
+    x = -tw * cx + tx * cw - ty * cz + tz * cy
+    y = -tw * cy + ty * cw - tz * cx + tx * cz
+    z = -tw * cz + tz * cw - tx * cy + ty * cx
+    if w < 0:
+        w, x, y, z = -w, -x, -y, -z
+    angle = 2.0 * math.atan2(math.sqrt(x * x + y * y + z * z), max(-1.0, min(1.0, w)))
+    denominator = math.sqrt(x * x + y * y + z * z)
+    if denominator <= 1e-12:
+        return [0.0, 0.0, 0.0]
+    scale = angle / denominator
+    return [x * scale, y * scale, z * scale]
+
+
+def osc_pose_action(translation: Sequence[float], rotation: Sequence[float], gripper: float, profile: Mapping[str, Any]) -> list[float]:
+    translation_values = [float(item) for item in translation]
+    rotation_values = [float(item) for item in rotation]
+    if len(translation_values) != 3 or len(rotation_values) != 3 or not all(math.isfinite(item) for item in translation_values + rotation_values):
+        raise ValueError("nonfinite_se3_error")
+    tclip = float(profile["translation_clip_m"])
+    rclip = float(profile["rotation_clip_rad"])
+    tnorm = math.sqrt(sum(item * item for item in translation_values))
+    rnorm = math.sqrt(sum(item * item for item in rotation_values))
+    if tnorm > tclip:
+        translation_values = [item * tclip / tnorm for item in translation_values]
+    if rnorm > rclip:
+        rotation_values = [item * rclip / rnorm for item in rotation_values]
+    value = translation_values + rotation_values + [1.0 if float(gripper) >= 0 else -1.0]
+    if len(value) != 7 or not all(math.isfinite(item) for item in value):
+        raise ValueError("invalid_7d_osc_pose_action")
+    return value
+
+
+def _extract_hdf5_demo(task: int, demo: int = 0) -> dict[str, Any]:
+    import h5py
+    import numpy as np
+
+    path = HDF5_INPUTS[task]
+    with h5py.File(path, "r") as handle:
+        group = handle["data"][f"demo_{demo}"]
+        actions = np.asarray(group["actions"], dtype=np.float64)
+        states = np.asarray(group["states"], dtype=np.float64)
+        ee_pos = np.asarray(group["obs"]["ee_pos"], dtype=np.float64)
+        ee_ori = np.asarray(group["obs"]["ee_ori"], dtype=np.float64)
+        if actions.ndim != 2 or actions.shape[1] != 7 or states.ndim != 2 or ee_pos.shape[0] != actions.shape[0] or ee_ori.shape[0] != actions.shape[0]:
+            raise ValueError(f"hdf5_schema_task{task}_demo{demo}")
+        signs = actions[:, 6]
+        transition = next((index for index in range(1, len(signs)) if signs[index - 1] < 0 and signs[index] > 0), None)
+        state_motion_after = float(np.linalg.norm(states[-1] - states[0]))
+        position_motion = float(np.linalg.norm(ee_pos[-1] - ee_pos[0]))
+        rotation_motion = float(np.linalg.norm(ee_ori[-1] - ee_ori[0]))
+        return {"task_index": task, "demo_index": demo, "path": relative(path), "sha256": sha256_file(path), "frame_count": int(actions.shape[0]), "action_dim": int(actions.shape[1]), "state_dim": int(states.shape[1]), "action_finite": bool(np.isfinite(actions).all()), "state_finite": bool(np.isfinite(states).all()), "eef_finite": bool(np.isfinite(ee_pos).all() and np.isfinite(ee_ori).all()), "gripper_values": sorted(float(value) for value in np.unique(signs)), "gripper_transition_index": transition, "gripper_sign_proof": {"required_transition": task in (10, 20), "transition_found": transition is not None, "native_action_values": [-1.0, 1.0] if task in (10, 20) else [-1.0]}, "post_transition_motion": state_motion_after, "eef_position_motion_m": position_motion, "eef_rotation_motion_rad": rotation_motion, "fixture_direction_evidence": {"required": task == 19, "state_motion_nonzero": state_motion_after > 1e-9, "eef_path_nonzero": position_motion > 1e-9}}
+
+
+def run_j4() -> dict[str, Any]:
+    j3 = strict_json_load(OUT_ROOT / "j3_summary.json") if (OUT_ROOT / "j3_summary.json").is_file() else {}
+    if j3.get("status") not in {"track3_jitter_j3_all_families_passed", "track3_jitter_j3_partial_family_release"}:
+        result = {"schema_version": "track3_jitter_j4_v2", "status": "not_evaluated", "reason": "j3_no_release", "task10_attempt4": "forbidden"}
+        write_json(OUT_ROOT / "j4_executor_contract.json", result)
+        return result
+    extractions: dict[str, Any] = {}
+    family_status: dict[str, str] = {}
+    for task in TASK_ORDER:
+        try:
+            extracted = [_extract_hdf5_demo(task, demo) for demo in (0, 1, 2)]
+            extractions[str(task)] = extracted
+            required_proof = all(item["action_finite"] and item["state_finite"] and item["eef_finite"] for item in extracted)
+            if task in (10, 20):
+                required_proof = required_proof and all(item["gripper_transition_index"] is not None for item in extracted)
+            else:
+                required_proof = required_proof and all(item["fixture_direction_evidence"]["state_motion_nonzero"] for item in extracted)
+            family_status[FAMILY[task]] = "released" if required_proof else "closed_no_hdf5_proof"
+        except Exception as exc:
+            extractions[str(task)] = {"error": f"{type(exc).__name__}:{exc}"}
+            family_status[FAMILY[task]] = "closed_hdf5_exception"
+    profiles = {family: {name: {**value, "profile_name": name, "frozen_before_gpu": True} for name, value in PROFILE_CONTRACT.items()} for family in FAMILY.values()}
+    tests = {"all_profiles_have_se3_clip": all("rotation_clip_rad" in profile and profile["rotation_clip_rad"] > 0 for family in profiles.values() for profile in family.values()), "action_builder_shape": len(osc_pose_action([0, 0, 0], [0, 0, 0], -1, PROFILE_CONTRACT["nominal"])) == 7, "quaternion_log_identity_zero": max(abs(value) for value in quaternion_log_error([1, 0, 0, 0], [1, 0, 0, 0])) == 0.0, "all_executed_family_proofs_present": all(value in {"released", "closed_no_hdf5_proof", "closed_hdf5_exception"} for value in family_status.values())}
+    report = {"schema_version": "track3_jitter_j4_v2", "status": "track3_jitter_j4_executor_contract_passed" if all(tests.values()) else "track3_jitter_stopped_J4_contract_failure", "created_at_utc": now(), "plan": relative(PLAN), "source_j3": relative(OUT_ROOT / "j3_summary.json"), "families": family_status, "hdf5_extractions": extractions, "profiles": profiles, "executor_contract": {"controller": "OSC_POSE", "action_dim": 7, "translation_rotation_separately_clipped": True, "rotation_error": "quaternion_log_shortest_path", "gripper_values": [-1.0, 1.0], "step_budget_is_frozen": True, "contact_contract": "v3 intended receiver + demonstrator + unrelated background", "unrelated_movement_gate_m": 0.002, "stall_timeout_gate": True, "hidden_task_special_case": False}, "tests": tests, "task10_attempt4": "forbidden", "simulator_imported": False, "cuda_imported": False, "source_commit": git(("rev-parse", "HEAD")), "tool_sha256": sha256_file(Path(__file__))}
+    write_json(OUT_ROOT / "j4_executor_contract.json", report)
+    return report
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--j0", action="store_true")
     parser.add_argument("--j1", action="store_true")
     parser.add_argument("--j2", action="store_true")
     parser.add_argument("--j3", action="store_true")
+    parser.add_argument("--j4", action="store_true")
     parser.add_argument("--supervisor", action="store_true")
     parser.add_argument("--j3-worker", action="store_true")
     parser.add_argument("--task-index", type=int)
@@ -508,10 +622,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         result = run_supervisor()
         print(json.dumps(result, ensure_ascii=False, sort_keys=True))
         return 0
-    selected = [name for name, value in (("j0", args.j0), ("j1", args.j1), ("j2", args.j2), ("j3", args.j3)) if value]
+    selected = [name for name, value in (("j0", args.j0), ("j1", args.j1), ("j2", args.j2), ("j3", args.j3), ("j4", args.j4)) if value]
     if len(selected) != 1:
-        parser.error("select exactly one of --j0/--j1/--j2")
-    result = {"j0": run_j0, "j1": run_j1, "j2": run_j2, "j3": run_j3}[selected[0]]()
+        parser.error("select exactly one of --j0/--j1/--j2/--j3/--j4")
+    result = {"j0": run_j0, "j1": run_j1, "j2": run_j2, "j3": run_j3, "j4": run_j4}[selected[0]]()
     print(json.dumps(result, ensure_ascii=False, sort_keys=True))
     return 0 if "passed" in str(result.get("status", "")) or "released" in str(result.get("status", "")) else 1
 

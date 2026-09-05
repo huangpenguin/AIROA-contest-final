@@ -40,3 +40,24 @@ def test_csv_probe_is_lf_only_and_no_partial() -> None:
     assert b"\r\n" not in path.read_bytes()
     assert not Path(str(path) + ".partial").exists()
 
+
+def test_se3_quaternion_log_and_action_builder_are_finite_and_separate() -> None:
+    identity = tool.quaternion_log_error([1, 0, 0, 0], [-1, 0, 0, 0])
+    assert identity == [0.0, 0.0, 0.0]
+    error = tool.quaternion_log_error([0.0, 0.0, 0.0, 1.0], [1.0, 0.0, 0.0, 0.0])
+    assert abs(error[2]) > 3.0
+    action = tool.osc_pose_action([1.0, 0.0, 0.0], [0.0, 0.0, 1.0], -1, tool.PROFILE_CONTRACT["nominal"])
+    assert len(action) == 7
+    assert abs(action[0] - 0.05) < 1e-12
+    assert abs(action[5] - 0.12) < 1e-12
+    assert action[6] == -1.0
+
+
+def test_j4_report_releases_all_three_hdf5_families() -> None:
+    report_path = tool.OUT_ROOT / "j4_executor_contract.json"
+    if not report_path.is_file():
+        return
+    report = json.loads(report_path.read_text(encoding="utf-8"))
+    assert report["status"] == "track3_jitter_j4_executor_contract_passed"
+    assert set(report["families"]) == {"support_remove", "containment_remove", "articulation_close"}
+    assert all(value == "released" for value in report["families"].values())

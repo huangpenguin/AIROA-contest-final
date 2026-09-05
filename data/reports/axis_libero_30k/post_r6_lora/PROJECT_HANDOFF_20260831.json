@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_date": "2026-09-05",
-  "status": "track3_runtime_preflight_and_bounded_continuation_planned",
+  "generated_date": "2026-09-06",
+  "status": "track3_runtime_y2_clean_release_ready",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
@@ -3607,6 +3607,64 @@
     "historical_reports_rewritten": false,
     "user_manual_action_required": false,
     "next_plan_approved": true
+  },
+  "track3_runtime_preflight_and_bounded_continuation_execution": {
+    "status": "track3_runtime_y2_clean_release_ready",
+    "plan": "docs/AXIS_PI05_TRACK3_RUNTIME_PREFLIGHT_AND_BOUNDED_CONTINUATION_PLAN.md",
+    "input_execution_commit": "64a0d31c3b2864562887044bad7ef8b522a213db",
+    "root_head_before_commit": "a223bc1f352a1e65e0d196ed4b0dfde0fc089660",
+    "y0": {
+      "status": "passed",
+      "report": "data/reports/axis_libero_30k/track3_runtime_preflight_and_bounded_continuation/y0_recheck_input_lock.json",
+      "full_inventory": true,
+      "gpu0_observed_state": "no_compute_app_at_recheck",
+      "gpu0_touched": false,
+      "gpu1_to_gpu3_free": true
+    },
+    "y1": {
+      "status": "passed",
+      "report": "data/reports/axis_libero_30k/track3_runtime_preflight_and_bounded_continuation/y1_runtime_contract.json",
+      "canonical_helper_smoke": true,
+      "phase_contract": "close_to_lift_contact_then_lift_to_transport_object_follow_and_source_release",
+      "stall_early_stop": true,
+      "periodic_heartbeat": true,
+      "identity_and_return_code_contract": true
+    },
+    "y2": {
+      "status": "passed",
+      "report": "data/reports/axis_libero_30k/track3_runtime_preflight_and_bounded_continuation/y2_clean_release.json",
+      "final_validation": "data/reports/axis_libero_30k/track3_runtime_preflight_and_bounded_continuation/y2_final_validation.json",
+      "manifest": "data/reports/axis_libero_30k/track3_runtime_preflight_and_bounded_continuation/y2_artifact_manifest.json",
+      "manifest_sha256": "ecd462c122f902474358f87a2c7c56a412b5fb28155861e6bfcd8d6407180979",
+      "final_validation_sha256": "30393e40f7c2ed8af0ecfca9c5331ca464135605f65e5feefa375bce279de7e7",
+      "release_summary_sha256": "2ee9f4085d291e95effdfa40d0fc019ce24ef27911e9a2cace860349ce286e56",
+      "targeted_tests": "10 passed",
+      "full_tests": "271 passed, 7 skipped, 23 warnings",
+      "strict_json": true,
+      "npz_no_pickle_and_finite": true,
+      "csv_lf": true,
+      "py_compile": true,
+      "git_diff_check": true
+    },
+    "exact_pending_accepted": [0, 0, 0],
+    "y3_to_y13": "not_evaluated",
+    "resource_boundary": {
+      "simulator_started": false,
+      "gpu0_touched": false,
+      "gpu1_to_gpu3_used": false,
+      "official_gpu": false,
+      "teleop": false,
+      "generation": false,
+      "replay": false,
+      "training": false,
+      "norm": false,
+      "fast": false,
+      "zip": false,
+      "upload": false,
+      "submit": false,
+      "libero_plus_existing_dirty_untouched": true
+    },
+    "next_phase_only": "Y3_single_nominal_cpu_canary_after_clean_release_commit"
   },
   "track3_runtime_preflight_and_bounded_continuation_authorization": {
     "status": "track3_runtime_preflight_and_bounded_continuation_planned",

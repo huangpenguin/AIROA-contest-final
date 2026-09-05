@@ -1,7 +1,7 @@
 # PARC2026_final Project Memory
 
 > Purpose: durable cross-session context for Codex and human handoff. Read this file before major work. This is an index and rulebook, not a substitute for current machine evidence.
-> Last memory refresh: 2026-09-05 (Asia/Tokyo), memory commit pending at authoring time.
+> Last memory refresh: 2026-09-06 (Asia/Tokyo), memory commit pending at authoring time.
 
 ## 1. Canonical session entrypoint
 
@@ -34,13 +34,13 @@ If these disagree, stop mutation, audit the discrepancy and repair the handoff i
 - Repository: `/home/huang/code/PARC2026_final`
 - Branch: `codex/axis-pi05-audit-remediation`; no upstream recorded.
 - Memory input HEAD: `fb249732b1ce5a43a6eccab31fd53c5c781b24dd`.
-- Latest audited execution: `8c0d296f1dfedb0c777040a733b6f9e352234111`.
+- Latest audited execution: `64a0d31c3b2864562887044bad7ef8b522a213db` (Y0–Y2 execution evidence is now derived from this input).
 - Nested OpenPI: `third_party/axis_openpi` at `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`, clean at review.
 - `LIBERO-plus` has pre-existing dirty files. They belong to the user/project and must not be reset, cleaned, overwritten or silently committed.
-- Current planned state at this refresh: `track3_provenance_jitter_recovery_and_overnight_continuation_planned`.
-- Active plan: `docs/AXIS_PI05_TRACK3_PROVENANCE_JITTER_RECOVERY_AND_OVERNIGHT_CONTINUATION_PLAN.md`.
-- Authorized chain: `J0_to_J11_then_hard_stop`; no automatic upload/submission.
-- The user has handed this plan to another task for execution. Before acting, check whether that task has created a live supervisor, dirty worktree, new commit or newer cursor. Never start a duplicate run.
+- Current planned state at this refresh: `track3_runtime_y2_clean_release_ready`.
+- Active plan: `docs/AXIS_PI05_TRACK3_RUNTIME_PREFLIGHT_AND_BOUNDED_CONTINUATION_PLAN.md`.
+- Authorized chain: `Y0_to_Y13_then_hard_stop`; Y0–Y2 passed, Y3 nominal CPU canary is the next gated phase; no automatic upload/submission.
+- Y0–Y2 execution evidence is in `data/reports/axis_libero_30k/track3_runtime_preflight_and_bounded_continuation/`. Y3–Y13 remain `not_evaluated`; before any canary, recheck live supervisor/PID/cursor, dirty worktree and GPU boundaries. Never start a duplicate run.
 
 The snapshot above becomes historical as soon as execution advances. Always refresh from Git, machine JSON and the live cursor rather than treating this paragraph as a lock.
 
@@ -75,8 +75,8 @@ Completed and reusable:
 
 Still not completed at this snapshot:
 
-- task20/task19 P3 under the corrected telemetry contract.
-- A successful manipulation executor pilot.
+- Y3 nominal CPU physics canary and all subsequent Track 3 work.
+- Any successful manipulation executor pilot.
 - Any reverse `exact/pending/accepted` demo; current counts remain `0/0/0`.
 - Track 3 training, holdout result, FAST export or ZIP.
 

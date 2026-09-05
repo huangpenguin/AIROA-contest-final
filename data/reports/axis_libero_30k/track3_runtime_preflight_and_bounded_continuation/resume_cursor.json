@@ -1,0 +1,18 @@
+{
+  "active": false,
+  "command": [
+    "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+    "-m",
+    "tools.axis_pi05.track3_runtime_preflight_and_bounded_continuation",
+    "--y2"
+  ],
+  "gpu_policy": "cpu_no_renderer",
+  "openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "phase": "Y2",
+  "pid": 1507916,
+  "root_commit": "a223bc1f352a1e65e0d196ed4b0dfde0fc089660",
+  "schema_version": "track3_runtime_preflight_cursor_v1",
+  "status": "preflight_release",
+  "tool_sha256": "516c3a703b7bc77f443117a6f1f294c764e97d199fa7450dfa95e18e1cdfdad2",
+  "updated_at_utc": "2026-09-05T16:07:22.032910+00:00"
+}

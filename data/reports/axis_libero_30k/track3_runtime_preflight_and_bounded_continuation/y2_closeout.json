@@ -1,0 +1,64 @@
+{
+  "counts": {
+    "accepted_reverse_demo": 0,
+    "exact_reverse_demo": 0,
+    "pending_autogen": 0
+  },
+  "created_at_utc": "2026-09-05T16:08:29.854359+00:00",
+  "hard_stop": {
+    "automatic_resume": false,
+    "executed": false,
+    "next_phase": "Y3_if_clean_release_commit_is_created",
+    "submit": false,
+    "upload": false
+  },
+  "manifest_exclusions": [
+    "data/reports/axis_libero_30k/track3_runtime_preflight_and_bounded_continuation/y2_clean_release.json",
+    "data/reports/axis_libero_30k/track3_runtime_preflight_and_bounded_continuation/y2_artifact_manifest.json",
+    "data/reports/axis_libero_30k/track3_runtime_preflight_and_bounded_continuation/y2_final_validation.json",
+    "data/reports/axis_libero_30k/track3_runtime_preflight_and_bounded_continuation/y2_closeout.json"
+  ],
+  "phase_status": {
+    "Y0": "passed",
+    "Y1": "passed",
+    "Y10": "not_evaluated",
+    "Y11": "not_evaluated",
+    "Y12": "not_evaluated",
+    "Y13": "not_evaluated",
+    "Y2": "track3_runtime_y2_clean_release_ready",
+    "Y3": "not_evaluated",
+    "Y4": "not_evaluated",
+    "Y5": "not_evaluated",
+    "Y6": "not_evaluated",
+    "Y7": "not_evaluated",
+    "Y8": "not_evaluated",
+    "Y9": "not_evaluated"
+  },
+  "resource_boundary": {
+    "cuda_started": false,
+    "generation": false,
+    "gpu0_touched": false,
+    "simulator_started": false,
+    "training": false,
+    "zip": false
+  },
+  "schema_version": "track3_runtime_y2_closeout_v1",
+  "self_hashes": {
+    "final_validation": {
+      "bytes": 2408,
+      "path": "data/reports/axis_libero_30k/track3_runtime_preflight_and_bounded_continuation/y2_final_validation.json",
+      "sha256": "30393e40f7c2ed8af0ecfca9c5331ca464135605f65e5feefa375bce279de7e7"
+    },
+    "manifest": {
+      "bytes": 1621,
+      "path": "data/reports/axis_libero_30k/track3_runtime_preflight_and_bounded_continuation/y2_artifact_manifest.json",
+      "sha256": "ecd462c122f902474358f87a2c7c56a412b5fb28155861e6bfcd8d6407180979"
+    },
+    "release_summary": {
+      "bytes": 1945,
+      "path": "data/reports/axis_libero_30k/track3_runtime_preflight_and_bounded_continuation/y2_clean_release.json",
+      "sha256": "2ee9f4085d291e95effdfa40d0fc019ce24ef27911e9a2cace860349ce286e56"
+    }
+  },
+  "status": "track3_runtime_y2_clean_release_ready"
+}

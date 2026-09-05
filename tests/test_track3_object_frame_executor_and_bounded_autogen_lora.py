@@ -37,7 +37,10 @@ def test_x0_x13_audit_archives_x_and_releases_exactly_one_y_plan() -> None:
             / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
         ).read_text(encoding="utf-8")
     )
-    assert handoff["status"] == "track3_runtime_preflight_and_bounded_continuation_planned"
+    assert handoff["status"] in {
+        "track3_runtime_preflight_and_bounded_continuation_planned",
+        "track3_runtime_y2_clean_release_ready",
+    }
     assert handoff["next_plan"] == (
         "docs/AXIS_PI05_TRACK3_RUNTIME_PREFLIGHT_AND_BOUNDED_CONTINUATION_PLAN.md"
     )

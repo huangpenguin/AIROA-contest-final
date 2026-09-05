@@ -11,7 +11,10 @@ CANARY = ROOT / "data/reports/axis_libero_30k/track3_background_predicate_conver
 
 def test_only_the_track3_runtime_preflight_bounded_continuation_plan_is_active() -> None:
     handoff = json.loads(HANDOFF.read_text(encoding="utf-8"))
-    assert handoff["status"] == "track3_runtime_preflight_and_bounded_continuation_planned"
+    assert handoff["status"] in {
+        "track3_runtime_preflight_and_bounded_continuation_planned",
+        "track3_runtime_y2_clean_release_ready",
+    }
     assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_RUNTIME_PREFLIGHT_AND_BOUNDED_CONTINUATION_PLAN.md"
     assert handoff["next_phase_only"] == "Y0_to_Y13_then_hard_stop"
     assert (ROOT / handoff["next_plan"]).is_file()

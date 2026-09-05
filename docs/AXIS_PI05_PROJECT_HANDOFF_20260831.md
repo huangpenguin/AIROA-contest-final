@@ -6,7 +6,7 @@
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_runtime_preflight_and_bounded_continuation_planned`
+> 当前总状态：`track3_runtime_y2_clean_release_ready`
 > 唯一活动计划：`docs/AXIS_PI05_TRACK3_RUNTIME_PREFLIGHT_AND_BOUNDED_CONTINUATION_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
@@ -16,6 +16,8 @@
 ## 1. 一句话结论
 
 canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3 object-frame数学与hard-stop闭包已有进展，但X4 worker在0 physics step时因缺失runtime helper停止，且审计发现stall、close/lift/source-release顺序、周期heartbeat与完整input lock尚未闭合。新计划先完成runtime preflight和执行合同，再在同一条件链内继续三族bounded generation、LoRA、holdout与本地ZIP；用户无需Teleop或中途逐阶段审核。
+
+Y0–Y2工程补救已完成并形成clean-release候选：完整输入bytes/SHA锁、canonical runtime helper smoke、正确阶段合同、真实stall早停、周期heartbeat、supervisor identity与`failed_gate`/`worker_exception`返回码分层均已写入新的Y运行时模块；finalizer自哈希、严格artifact检查、定向/全量CPU测试均通过。GPU0未触碰；复核时历史外部PID已退出并如实记录。Y3 nominal CPU canary尚未运行，Track3 reverse数据、训练与ZIP仍未开始。
 
 ## 2. 数据与复现基础
 
@@ -758,3 +760,11 @@ X13 manifest为13项，全部Git-tracked且bytes/SHA exact；14个JSON strict、
 但X0没有记录计划要求的W4 trajectory、state bundle、三份public HDF5、R6 checkpoint/norm完整immutable inventory。X2的worker只记录progress window而不在failure时产生stall/早停；又在close后、lift前错误要求source已释放，和冻结的close→lift contact、lift→transport source-release阶段合同相反。运行期symbol smoke与长run周期heartbeat也缺失。X13未记录其承诺的manifest自身/final-validation checkout-stable hash。
 
 旧X计划已归档。唯一活动计划为`docs/AXIS_PI05_TRACK3_RUNTIME_PREFLIGHT_AND_BOUNDED_CONTINUATION_PLAN.md`：Y0–Y2先完成全量input lock、runtime symbol/阶段/stall/heartbeat/finalizer补救与clean release；通过后Y3才以新identity执行一次同task/demo/seed nominal物理canary。后续Y4–Y12仍是family隔离、最多12条generation/36次replay、20Hz `80/20` mixture/fresh QUANTILES、R6 L2 LoRA 100/500/1000、独立复验和条件式本地FAST ZIP；Y13在任何分支hard stop。生命周期更新后的最终全量测试为`261 passed, 7 skipped, 23 warnings`。审核报告：`docs/reviews/axis_pi05/TRACK3_OBJECT_FRAME_X0_X13_AUDIT_20260905.md`。
+
+## 65. Runtime Preflight Y0–Y2 执行收尾（2026-09-06）
+
+Y0首次运行因进程扫描误计当前launcher且GPU0历史外部PID已退出而保留为失败证据；修正后Y0复核通过。新的锁定文件记录X/W历史证据、三份公开HDF5、start-state bundle、R6 raw/folded checkpoint/norm的逐文件bytes/SHA，并记录复核时GPU0无compute app、未被本任务触碰，GPU1–3空闲。
+
+Y1通过canonical `track3_composed_reverse_start_stabilization._configure_public_env` fresh subprocess smoke；阶段合同固定为close→lift连续demonstrator contact、lift后object-follow/source-release、transport、place、release；progress window在首个失败完整窗口产生`stage_stall:<stage>`并停止；atomic heartbeat、真实launcher identity与`failed_gate` return 0 / `worker_exception` return 1分类均通过。Y3 worker/supervisor已实现但未执行。
+
+Y2 finalizer写入inactive cursor、LF phase CSV、manifest与checkout-stable manifest/final-validation SHA；strict duplicate-key JSON、NPZ no-pickle/finite、CSV LF、py_compile、定向测试`10 passed`、全量测试`271 passed, 7 skipped, 23 warnings`及`git diff --check`均通过。当前`exact/pending/accepted=0/0/0`；Y3–Y13为`not_evaluated`，没有启动physics、GPU、generation、replay、training、norm、FAST或ZIP。证据：`data/reports/axis_libero_30k/track3_runtime_preflight_and_bounded_continuation/`。

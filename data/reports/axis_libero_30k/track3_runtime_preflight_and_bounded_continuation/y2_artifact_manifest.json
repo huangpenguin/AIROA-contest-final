@@ -1,0 +1,36 @@
+{
+  "entries": [
+    {
+      "bytes": 628,
+      "relative_path": "data/reports/axis_libero_30k/track3_runtime_preflight_and_bounded_continuation/resume_cursor.json",
+      "sha256": "8ab9c1fdd736b15b7f0cea232ea78729b7f5a2cdb7d8a0aad3f59a676aaa5ee6"
+    },
+    {
+      "bytes": 15881,
+      "relative_path": "data/reports/axis_libero_30k/track3_runtime_preflight_and_bounded_continuation/y0_input_lock.json",
+      "sha256": "da0b4c9f54dd8b84e19fcaaf5a48f717d1bf00fdc07467be3e072bd38b2e9105"
+    },
+    {
+      "bytes": 16171,
+      "relative_path": "data/reports/axis_libero_30k/track3_runtime_preflight_and_bounded_continuation/y0_recheck_input_lock.json",
+      "sha256": "1f0383d2e87924fe8f1c6e814c6a81fc4fe2134de56a150e804a2eb5c1ce0578"
+    },
+    {
+      "bytes": 5034,
+      "relative_path": "data/reports/axis_libero_30k/track3_runtime_preflight_and_bounded_continuation/y1_runtime_contract.json",
+      "sha256": "a6a1f27fb95e85eb1b9167b55174ad33f6c01c1bcf465a07d2bf6560c9d8bbd0"
+    },
+    {
+      "bytes": 1950,
+      "relative_path": "data/reports/axis_libero_30k/track3_runtime_preflight_and_bounded_continuation/y2_attempt1_release_failure.json",
+      "sha256": "c6eeb0b7f773755fd4f2e2e9142ee9a467c9162eb7ec846b2057356293e760fe"
+    },
+    {
+      "bytes": 281,
+      "relative_path": "data/reports/axis_libero_30k/track3_runtime_preflight_and_bounded_continuation/y2_phase_status.csv",
+      "sha256": "3b0c0a1ab39ebfb2033e80c41f8911cd50c87acfd07f780d6379663270f13f35"
+    }
+  ],
+  "entries_exclude_self_final_validation_and_closeout": true,
+  "schema_version": "track3_runtime_y2_artifact_manifest_v1"
+}

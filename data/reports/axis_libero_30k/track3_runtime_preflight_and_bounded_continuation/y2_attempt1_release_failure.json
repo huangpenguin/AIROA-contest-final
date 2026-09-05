@@ -1,0 +1,55 @@
+{
+  "checkout_stable_self_hashes": {
+    "final_validation": {
+      "bytes": 2434,
+      "path": "data/reports/axis_libero_30k/track3_runtime_preflight_and_bounded_continuation/y2_final_validation.json",
+      "sha256": "15c70fd63a06fc7e2c440123259579debce9bc13e408cfb8e1eb7d2529707699"
+    },
+    "manifest": {
+      "bytes": 1865,
+      "path": "data/reports/axis_libero_30k/track3_runtime_preflight_and_bounded_continuation/y2_artifact_manifest.json",
+      "sha256": "7152034c4df2b0f83011c0dd4a6d6c6d92c4df1e256e49da130995df5756712f"
+    }
+  },
+  "checks": {
+    "csv_lf": true,
+    "diff_check": true,
+    "full_tests": true,
+    "manifest_exact": true,
+    "no_partial": true,
+    "npz_no_pickle_and_finite": true,
+    "openpi_clean": true,
+    "py_compile": true,
+    "source_not_dirty_outside_y": false,
+    "strict_json": true,
+    "targeted_tests": true,
+    "y1_passed": true
+  },
+  "created_at_utc": "2026-09-05T16:03:52.224663+00:00",
+  "final_validation": "data/reports/axis_libero_30k/track3_runtime_preflight_and_bounded_continuation/y2_final_validation.json",
+  "manifest": "data/reports/axis_libero_30k/track3_runtime_preflight_and_bounded_continuation/y2_artifact_manifest.json",
+  "resource_boundary": {
+    "cuda_started": false,
+    "generation": false,
+    "gpu0_touched": false,
+    "simulator_started": false,
+    "training": false,
+    "zip": false
+  },
+  "root_head_before_commit": "a223bc1f352a1e65e0d196ed4b0dfde0fc089660",
+  "schema_version": "track3_runtime_y2_release_v1",
+  "status": "track3_runtime_stopped_Y2_release_failure",
+  "tool_sha256": "7cc97a4e50a1b7e3c426d1dfb8a11c14dc75290ed15602f41f5ff699f3cdc211",
+  "unentered_phases": {
+    "Y10": "not_evaluated",
+    "Y11": "not_evaluated",
+    "Y12": "not_evaluated",
+    "Y3": "not_evaluated",
+    "Y4": "not_evaluated",
+    "Y5": "not_evaluated",
+    "Y6": "not_evaluated",
+    "Y7": "not_evaluated",
+    "Y8": "not_evaluated",
+    "Y9": "not_evaluated"
+  }
+}

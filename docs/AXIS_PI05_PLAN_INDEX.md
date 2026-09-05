@@ -1,9 +1,9 @@
 # AXIS Pi0.5 计划索引与审核生命周期
 
-> 更新日期：2026-09-05（Asia/Tokyo）
+> 更新日期：2026-09-06（Asia/Tokyo）
 > 跨session入口：先完整读取根目录`AGENTS.md`与`MEMORY.md`，再读取本索引、handoff、machine JSON、唯一活动计划和最新审核；先查live PID/cursor，禁止重复启动。
 > 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_RUNTIME_PREFLIGHT_AND_BOUNDED_CONTINUATION_PLAN.md`
-> 当前状态：`track3_runtime_preflight_and_bounded_continuation_planned`
+> 当前状态：`track3_runtime_y2_clean_release_ready`
 > 最新审核：`docs/reviews/axis_pi05/TRACK3_OBJECT_FRAME_X0_X13_AUDIT_20260905.md`
 
 ## 1. 本轮执行停止点
@@ -16,10 +16,12 @@ X13 manifest `13/13` Git-tracked/bytes/SHA exact，14个JSON strict，CSV LF且�
 
 当前审核唯一结论为`remediation_required`。新计划一次性授权Y0–Y13条件链：先完成全量input lock、runtime symbol/阶段/stall/heartbeat/finalizer补救和clean release，再以新identity执行一次真实nominal CPU canary；通过门禁后才继续family pilots、最多12条generation/36次replay、20Hz `80/20` mixture、R6 L2 LoRA 100/500/1000、独立复验与条件式本地ZIP。任意分支最终hard stop，不自动上传/提交。
 
+Y0–Y2已完成：新namespace锁定X/W证据、三份公开HDF5、state bundle与R6 raw/folded checkpoint/norm的bytes/SHA；Y1通过canonical helper smoke、阶段合同、真实stall早停、周期heartbeat、supervisor identity及返回码分层；Y2通过strict JSON、NPZ/NPY、CSV LF、py_compile、定向/全量CPU测试和diff check，形成clean-release候选。GPU0未触碰；复核时历史外部PID已退出并记录为`no_compute_app_at_recheck`。Y3 nominal CPU canary及后续所有生成、replay、训练和ZIP仍为`not_evaluated`，计数`0/0/0`。
+
 ## 2. 当前计划与停止点
 
 - `AXIS_PI05_TRACK3_RUNTIME_PREFLIGHT_AND_BOUNDED_CONTINUATION_PLAN.md`
-  - Y0–Y2锁定`64a0d31`与全部上游资产，修复runtime symbol、close/lift/source-release顺序、stall真实早停、周期heartbeat和finalizer自哈希，形成clean release；
+  - Y0–Y2已锁定`64a0d31`与全部上游资产，修复runtime symbol、close/lift/source-release顺序、stall真实早停、周期heartbeat和finalizer自哈希，并通过clean-release候选门禁；
   - Y3–Y4只在新namespace中运行一次nominal CPU物理canary；正常family failure才允许conservative，CPU成功profile才允许一次GPU3 camera release；
   - Y5–Y6从公开HDF5冻结task20/task19合同并运行有界CPU/GPU3 pilots，family/profile failure隔离；
   - Y7最多12条generation/36次fresh replay，只有严格`3/3`才machine-accepted；

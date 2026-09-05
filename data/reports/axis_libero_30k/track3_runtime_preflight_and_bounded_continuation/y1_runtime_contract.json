@@ -1,0 +1,176 @@
+{
+  "checks": {
+    "canonical_helper_smoke": true,
+    "contact_close_to_lift": true,
+    "identity_gate": true,
+    "return_code_contract": true,
+    "source_release_after_lift": true,
+    "stage_order": true,
+    "stall_stops_early": true,
+    "unentered_is_not_evaluated": true
+  },
+  "created_at_utc": "2026-09-05T15:52:37.524508+00:00",
+  "heartbeat_contract": {
+    "atomic": true,
+    "interval_seconds": 900.0,
+    "parent_polling_required": true,
+    "schema_version": "track3_runtime_heartbeat_v2"
+  },
+  "identity": {
+    "command": [
+      "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+      "-m",
+      "tools.axis_pi05.track3_runtime_preflight_and_bounded_continuation",
+      "--y3-worker"
+    ],
+    "cuda_visible_devices": "",
+    "cursor_active_before_launch": false,
+    "expected_cuda_visible_devices": "",
+    "gpu_policy": "cpu_no_renderer",
+    "openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "root_commit": "a223bc1f352a1e65e0d196ed4b0dfde0fc089660",
+    "root_dirty": false,
+    "schema_version": "track3_runtime_identity_v2",
+    "tool_sha256": "0834ba9d11bc81f3e8fe124be05127976e13181a71d01536b55daa36318d2d9f"
+  },
+  "identity_gate": {
+    "checks": {
+      "command_exact": true,
+      "cuda_visible_devices": true,
+      "cursor_inactive": true,
+      "gpu_policy": true,
+      "openpi_commit": true,
+      "root_clean": true,
+      "root_commit": true,
+      "tool_sha256": true
+    },
+    "errors": [],
+    "expected_command": [
+      "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+      "-m",
+      "tools.axis_pi05.track3_runtime_preflight_and_bounded_continuation",
+      "--y3-worker"
+    ],
+    "expected_cuda_visible_devices": "",
+    "expected_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "expected_root_commit": "a223bc1f352a1e65e0d196ed4b0dfde0fc089660",
+    "expected_tool_sha256": "0834ba9d11bc81f3e8fe124be05127976e13181a71d01536b55daa36318d2d9f",
+    "state": "passed"
+  },
+  "resource_boundary": {
+    "cuda_started": false,
+    "generation": false,
+    "gpu0_touched": false,
+    "simulator_started": false,
+    "training": false,
+    "zip": false
+  },
+  "return_code_contract": {
+    "failed_gate": {
+      "category": "family_failure",
+      "child_status": "failed_gate",
+      "reason": "normal_physical_gate_failure",
+      "returncode": 0
+    },
+    "passed": {
+      "category": "success",
+      "child_status": "passed",
+      "reason": "child_passed",
+      "returncode": 0
+    },
+    "worker_exception": {
+      "category": "infrastructure",
+      "child_status": "worker_exception",
+      "reason": "worker_exception_or_result_publication",
+      "returncode": 1
+    }
+  },
+  "schema_version": "track3_runtime_y1_contract_v1",
+  "stage_contract": {
+    "contact_phase": "close_to_lift",
+    "gates": {
+      "approach_grasp": "pose_stable",
+      "close_gripper": "continuous_demonstrator_contact",
+      "descend_grasp": "pose_stable",
+      "lift": "object_follow",
+      "place_same_demo_init_pose": "destination_pose",
+      "release": "goal_continuity",
+      "retreat": "goal_continuity",
+      "transport": "source_release"
+    },
+    "order": [
+      "approach_grasp",
+      "descend_grasp",
+      "close_gripper",
+      "lift",
+      "transport",
+      "place_same_demo_init_pose",
+      "release",
+      "retreat"
+    ],
+    "source_release_phase": "after_lift_before_transport",
+    "unentered_gate_state": "not_evaluated"
+  },
+  "stall_fixture": {
+    "failure_reason": "stage_stall",
+    "records": [
+      {
+        "executed": false,
+        "grace": 1,
+        "min_improvement": 0.05,
+        "reason": "grace_period",
+        "required": true,
+        "samples": 1,
+        "state": "not_evaluated",
+        "window": 3
+      },
+      {
+        "executed": false,
+        "grace": 1,
+        "min_improvement": 0.05,
+        "reason": "window_not_full",
+        "required": true,
+        "samples": 2,
+        "state": "not_evaluated",
+        "window": 3
+      },
+      {
+        "baseline_error": 1.0,
+        "current_error": 0.6,
+        "executed": true,
+        "failure_event": null,
+        "grace": 1,
+        "improvement": 0.4,
+        "min_improvement": 0.05,
+        "required": true,
+        "samples": 3,
+        "state": "passed",
+        "window": 3
+      },
+      {
+        "baseline_error": 0.8,
+        "current_error": 0.79,
+        "executed": true,
+        "failure_event": "stage_stall",
+        "grace": 1,
+        "improvement": 0.010000000000000009,
+        "min_improvement": 0.05,
+        "reason": "stage_stall",
+        "required": true,
+        "samples": 4,
+        "state": "failed",
+        "window": 3
+      }
+    ],
+    "stop_index": 3,
+    "stopped": true
+  },
+  "status": "track3_runtime_y1_passed",
+  "symbol_smoke": {
+    "passed": true,
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "symbol_smoke_passed\n"
+  },
+  "y0_input_lock": "data/reports/axis_libero_30k/track3_runtime_preflight_and_bounded_continuation/y0_recheck_input_lock.json"
+}

@@ -53,6 +53,11 @@ Z5_PARENT = Z5_ROOT / "parent_result.json"
 Z5_CHILD = Z5_ROOT / "child_result.json"
 Z5_TRAJECTORY = Z5_ROOT / "trajectory.npz"
 Z5_PHASE_CSV = OUT / "z5_phase_status.csv"
+Z5_POSTMORTEM = OUT / "z5_infrastructure_postmortem.json"
+Z14_PHASE_CSV = OUT / "z14_phase_status.csv"
+Z14_FINAL_VALIDATION = OUT / "z14_final_validation.json"
+Z14_MANIFEST = OUT / "z14_artifact_manifest.json"
+Z14_CLOSEOUT = OUT / "z14_closeout.json"
 IDENTITY_NOTE_REF = "refs/notes/axis-pi05-track3-z5-source-identity"
 
 Y_OUT = ROOT / "data/reports/axis_libero_30k/track3_runtime_preflight_and_bounded_continuation"
@@ -1086,6 +1091,38 @@ def _z5() -> dict[str, Any]:
     return result
 
 
+def _z14() -> dict[str, Any]:
+    """Close the Z chain after the single canary's infrastructure stop."""
+    import numpy as np
+
+    parent = strict_json(Z5_PARENT) if Z5_PARENT.is_file() else {}
+    child = strict_json(Z5_CHILD) if Z5_CHILD.is_file() else {}
+    stderr = (Z5_ROOT / "stderr.log").read_text(encoding="utf-8", errors="replace") if (Z5_ROOT / "stderr.log").is_file() else ""
+    with np.load(Z5_TRAJECTORY, allow_pickle=False) as archive:
+        action_shape = list(archive["actions"].shape)
+        state_shape = list(archive["states"].shape)
+        finite = all(np.isfinite(np.asarray(archive[name], dtype=np.float64)).all() for name in archive.files if np.asarray(archive[name]).dtype.kind in "fiu")
+    postmortem = {"schema_version": "track3_z5_infrastructure_postmortem_v1", "status": "track3_z5_canary_infrastructure_failure_preserved", "created_at_utc": now(), "physical_attempt": {"executed": True, "physics_steps": action_shape[0], "task_index": 10, "demo_index": 0, "seed": 3121, "profile": "object_frame_nominal", "mode": "CPU_no_renderer"}, "worker": {"status": child.get("status"), "returncode": parent.get("process_returncode"), "classification": parent.get("classification"), "failure_at": child.get("reverse", {}).get("failure_reason"), "entered_stages": child.get("phase_ledger", {}).get("entered_stages", [])}, "finalizer_defect": {"present": "NameError: name 'WORKER_COMPLETED_STATUSES' is not defined" in stderr, "effect": "valid_failed_gate_result_was_published_but_worker_returned_1", "historical_result_immutable": True, "rerun_forbidden_under_z5_max_one": True}, "physical_gate_scope": {"approach_stall": child.get("hard_gate", {}).get("progress_stall", {}).get("state"), "contact_completion": child.get("hard_gate", {}).get("contact_completion", {}).get("state"), "object_follow": child.get("hard_gate", {}).get("object_follow", {}).get("state"), "destination_numeric": child.get("hard_gate", {}).get("destination_numeric", {}).get("state"), "goal_continuity": child.get("hard_gate", {}).get("goal_continuity", {}).get("state")}, "artifacts": {"parent": rel(Z5_PARENT), "child": rel(Z5_CHILD), "trajectory": rel(Z5_TRAJECTORY), "phase_ledger": rel(Z5_ROOT / "phase_ledger.json")}, "finite_trajectory": finite, "action_shape": action_shape, "state_shape": state_shape, "counts": {"exact_reverse_demo": 0, "pending_autogen": 0, "accepted_reverse_demo": 0}, "downstream": {f"Z{i}": "not_evaluated" for i in range(6, 14)}, "resource_boundary": {"cpu_no_renderer": True, "gpu0_touched": False, "gpu1_touched": False, "gpu2_touched": False, "gpu3_touched": False, "generation": False, "replay": False, "training": False, "norm": False, "fast": False, "zip": False, "upload": False, "submit": False, "teleop": False}}
+    write_json(Z5_POSTMORTEM, postmortem)
+    phase_rows = ["phase,status", "Z0,passed", "Z1,passed", "Z2,passed", "Z3,passed", "Z4,passed_clean_release", "Z5,track3_runtime_stopped_Z5_infrastructure_failure", *[f"Z{i},not_evaluated" for i in range(6, 14)], "Z14,hard_stop"]
+    write_text(Z14_PHASE_CSV, "\n".join(phase_rows) + "\n")
+    write_cursor(active=False, phase="Z14", command=[sys.executable, "-m", MODULE, "--z14"], status="hard_stop")
+    entries = []
+    excluded = {Z4_MANIFEST, Z4_VALIDATION, Z4_CLOSEOUT, Z14_MANIFEST, Z14_FINAL_VALIDATION, Z14_CLOSEOUT}
+    for path in sorted(OUT.rglob("*")):
+        if not path.is_file() or path in excluded or path.name.endswith(".partial") or path.suffix == ".log":
+            continue
+        entries.append({"relative_path": rel(path), "bytes": path.stat().st_size, "sha256": sha256_file(path)})
+    write_json(Z14_MANIFEST, {"schema_version": "track3_z14_manifest_v1", "entries_excluded": [rel(path) for path in sorted(excluded)], "entries": entries})
+    validation = _validate_namespace()
+    validation.update({"z5_parent_strict": bool(parent), "z5_child_strict": bool(child), "z5_trajectory_finite": finite, "z5_finalizer_defect_recorded": postmortem["finalizer_defect"]["present"], "z14_manifest_entries": len(entries), "z14_manifest_exact": _verify_manifest(Z14_MANIFEST), "z4_manifest_exact": _verify_manifest(Z4_MANIFEST), "source_clean_outside_evidence": not source_porcelain(), "openpi_clean": not porcelain(OPENPI), "no_live_track3": not _active_track3_processes(), "gpu_compute_free": all(_gpu_state(index).get("free") for index in (0, 1, 2, 3)), "git_diff_check": git(("diff", "--check")) == ""})
+    write_json(Z14_FINAL_VALIDATION, {"schema_version": "track3_z14_final_validation_v1", "created_at_utc": now(), "validation": validation, "resource_boundary": postmortem["resource_boundary"]})
+    checks = {"z5_artifacts_present": bool(parent and child), "z5_trajectory_finite": finite, "z5_postmortem": Z5_POSTMORTEM.is_file(), "strict_json": validation["strict_json"], "np_no_pickle_finite": validation["np_no_pickle_finite"], "csv_lf": validation["csv_lf"], "no_partial": not validation["partial_residue"], "z4_manifest_exact": validation["z4_manifest_exact"]["exact"], "z14_manifest_exact": validation["z14_manifest_exact"]["exact"], "source_clean_outside_evidence": validation["source_clean_outside_evidence"], "openpi_clean": validation["openpi_clean"], "no_live_track3": validation["no_live_track3"], "gpu_compute_free": validation["gpu_compute_free"], "git_diff_check": validation["git_diff_check"]}
+    closeout = {"schema_version": "track3_z14_closeout_v1", "status": "track3_z14_hard_stop" if all(checks.values()) else "track3_runtime_stopped_Z14_finalizer_failure", "created_at_utc": now(), "checks": checks, "phase_status": {"Z0": "passed", "Z1": "passed", "Z2": "passed", "Z3": "passed", "Z4": "passed_clean_release", "Z5": "track3_runtime_stopped_Z5_infrastructure_failure", **{f"Z{i}": "not_evaluated" for i in range(6, 14)}, "Z14": "hard_stop"}, "counts": postmortem["counts"], "hard_stop": {"executed": True, "reason": "Z5 worker finalizer infrastructure failure; no retry under max-one canary", "next_authority": "new_reviewed_plan_required", "automatic_resume": False, "generation": False, "replay": False, "training": False, "zip": False, "upload": False, "submit": False}, "resource_boundary": postmortem["resource_boundary"], "postmortem": rel(Z5_POSTMORTEM), "manifest": rel(Z14_MANIFEST), "final_validation": rel(Z14_FINAL_VALIDATION)}
+    write_json(Z14_CLOSEOUT, closeout)
+    return closeout
+
+
 def _dispatch_worker(argv: Sequence[str]) -> int:
     try:
         result_path = _parse_z1_worker(argv)
@@ -1101,13 +1138,13 @@ def main(argv: Sequence[str] | None = None) -> int:
     if "--z5-worker" in args:
         return _dispatch_z5_worker(args)
     parser = argparse.ArgumentParser()
-    for phase in ("z0", "z1", "z2", "z3", "z4", "z5"):
+    for phase in ("z0", "z1", "z2", "z3", "z4", "z5", "z14"):
         parser.add_argument(f"--{phase}", action="store_true")
     parsed = parser.parse_args(args)
-    selected = [phase for phase in ("z0", "z1", "z2", "z3", "z4", "z5") if getattr(parsed, phase)]
+    selected = [phase for phase in ("z0", "z1", "z2", "z3", "z4", "z5", "z14") if getattr(parsed, phase)]
     if len(selected) != 1:
-        parser.error("select exactly one Z0/Z1/Z2/Z3/Z4/Z5 phase")
-    result = {"z0": _z0, "z1": _z1, "z2": _z2, "z3": _z3, "z4": _z4, "z5": _z5}[selected[0]]()
+        parser.error("select exactly one Z0/Z1/Z2/Z3/Z4/Z5/Z14 phase")
+    result = {"z0": _z0, "z1": _z1, "z2": _z2, "z3": _z3, "z4": _z4, "z5": _z5, "z14": _z14}[selected[0]]()
     print(json.dumps(result, ensure_ascii=False, sort_keys=True))
     return 0 if "passed" in str(result.get("status")) or "ready" in str(result.get("status")) else 1
 

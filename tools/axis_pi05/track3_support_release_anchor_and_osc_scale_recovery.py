@@ -115,7 +115,8 @@ def git(args: Sequence[str], repo: Path = ROOT) -> str:
 
 
 def porcelain(repo: Path = ROOT) -> list[str]:
-    return [line for line in git(("status", "--porcelain", "--untracked-files=all"), repo).splitlines() if line]
+    result = subprocess.run(["git", "-C", str(repo), "status", "--porcelain", "--untracked-files=all"], capture_output=True, text=True, check=False)
+    return [line for line in result.stdout.splitlines() if line]
 
 
 def source_porcelain(repo: Path = ROOT) -> list[str]:

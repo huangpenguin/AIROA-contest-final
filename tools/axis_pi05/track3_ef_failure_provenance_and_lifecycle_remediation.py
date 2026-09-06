@@ -492,8 +492,8 @@ def run_eg3(root: Path = EG_ROOT) -> dict[str, Any]:
     return result
 
 
-def _root_manifest(root: Path) -> dict[str, Any]:
-    excluded = {"artifact_manifest.json", "outer_hash.json", "checkout_stable_closure.json", "latest_attempt.json", "attempt_counter.json", "heartbeat.json", "resume_cursor.json", "execution_summary.json"}
+def _root_manifest(root: Path, *, excluded_extra: Sequence[str] = ()) -> dict[str, Any]:
+    excluded = {"artifact_manifest.json", "outer_hash.json", "checkout_stable_closure.json", "latest_attempt.json", "attempt_counter.json", "heartbeat.json", "resume_cursor.json", "execution_summary.json", "phase_ledger.csv", *excluded_extra}
     paths = sorted(path for path in root.rglob("*") if path.is_file() and path.name not in excluded and not path.name.endswith(".partial"))
     return {"schema_version": "eg_root_manifest_v1", "entries": [{"path": rel(path), "bytes": path.stat().st_size, "sha256": sha256_file(path)} for path in paths], "excluded": sorted(excluded), "historical_namespaces_modified": False}
 
@@ -564,18 +564,33 @@ def run_eg4(root: Path = EG_ROOT) -> dict[str, Any]:
     write_json(root / "latest_attempt.json", pointer)
     phase_rows = [{"phase": f"EG{i}", "status": strict_json(root / name).get("status", "not_evaluated") if (root / name).is_file() else "not_evaluated"} for i, name in enumerate(("eg0_provenance_gap.json", "eg1_attempt_specific_finalizer.json", "eg2_clean_source_and_independence.json", "eg3_lifecycle_pointer_consistency.json"))]
     phase_rows.append({"phase": "EG4", "status": "passed_hard_stop" if validation_status == "passed" else "failed"})
-    atomic_bytes(root / "phase_ledger.csv", ("phase,status\n" + "".join(f"{row['phase']},{row['status']}\n" for row in phase_rows)).encode("utf-8"))
-    write_json(root / "execution_summary.json", {"schema_version": "eg_execution_summary_v1", "status": "hard_stop", "phase_status": {row["phase"]: row["status"] for row in phase_rows}, "execution_commit": git(("rev-parse", "HEAD")), "audit_input_commit": EF_AUDIT_INPUT_COMMIT, "attempt_id": attempt_id, "attempt_final_validation": rel(attempt_dir / "final_validation.json"), "attempt_closure": rel(attempt_dir / "checkout_stable_closure.json"), "new_physics_identities": 0, "old_identity_rerun": False, "physics_started": False, "gpu_compute_started": False, "generation": False, "replay": False, "training": False, "new_candidate_zip_created": False, "upload": False, "submission": False})
-    root_manifest = _root_manifest(root)
-    write_json(root / "artifact_manifest.json", root_manifest, refuse_overwrite=True)
-    root_outer = {"schema_version": "eg_root_outer_hash_v1", "manifest_sha256": sha256_file(root / "artifact_manifest.json"), "entries_sha256": canonical_hash(root_manifest["entries"]), "created_at_utc": now()}
-    write_json(root / "outer_hash.json", root_outer, refuse_overwrite=True)
+    root_attempt_prefix = f"root_attempt_{attempt_id:04d}"
+    phase_ledger_path = root / f"phase_ledger_{attempt_id:04d}.csv"
+    execution_summary_path = root / f"execution_summary_{attempt_id:04d}.json"
+    root_manifest_path = root / f"{root_attempt_prefix}_artifact_manifest.json"
+    root_outer_path = root / f"{root_attempt_prefix}_outer_hash.json"
+    root_cursor_path = root / f"{root_attempt_prefix}_resume_cursor.json"
+    root_heartbeat_path = root / f"{root_attempt_prefix}_heartbeat.json"
+    root_closure_path = root / f"{root_attempt_prefix}_checkout_stable_closure.json"
+    atomic_bytes(phase_ledger_path, ("phase,status\n" + "".join(f"{row['phase']},{row['status']}\n" for row in phase_rows)).encode("utf-8"))
+    write_json(execution_summary_path, {"schema_version": "eg_execution_summary_v1", "status": "hard_stop", "phase_status": {row["phase"]: row["status"] for row in phase_rows}, "execution_commit": git(("rev-parse", "HEAD")), "audit_input_commit": EF_AUDIT_INPUT_COMMIT, "attempt_id": attempt_id, "attempt_final_validation": rel(attempt_dir / "final_validation.json"), "attempt_closure": rel(attempt_dir / "checkout_stable_closure.json"), "phase_ledger": rel(phase_ledger_path), "new_physics_identities": 0, "old_identity_rerun": False, "physics_started": False, "gpu_compute_started": False, "generation": False, "replay": False, "training": False, "new_candidate_zip_created": False, "upload": False, "submission": False})
+    root_control_names = {
+        path.name
+        for path in root.iterdir()
+        if path.name.startswith("root_attempt_") and path.name.endswith(("_artifact_manifest.json", "_outer_hash.json", "_resume_cursor.json", "_heartbeat.json", "_checkout_stable_closure.json"))
+    }
+    root_control_names.update(path.name for path in root.iterdir() if path.name.startswith("execution_summary_") and path.name.endswith(".json"))
+    root_control_names.update(path.name for path in root.iterdir() if path.name.startswith("phase_ledger_") and path.name.endswith(".csv"))
+    root_manifest = _root_manifest(root, excluded_extra=root_control_names)
+    write_json(root_manifest_path, root_manifest, refuse_overwrite=True)
+    root_outer = {"schema_version": "eg_root_outer_hash_v1", "attempt_id": attempt_id, "manifest_sha256": sha256_file(root_manifest_path), "entries_sha256": canonical_hash(root_manifest["entries"]), "created_at_utc": now()}
+    write_json(root_outer_path, root_outer, refuse_overwrite=True)
     root_manifest_check = _root_manifest_match(root, root_manifest)
-    write_json(root / "resume_cursor.json", {"schema_version": "eg_root_cursor_v1", "active": False, "final_status": "hard_stop", "attempt_id": attempt_id, "updated_at_utc": now()})
-    write_json(root / "heartbeat.json", {"schema_version": "eg_root_heartbeat_v1", "state": "closed", "final_status": "hard_stop", "final_validation_status": validation_status, "attempt_id": attempt_id, "updated_at_utc": now()})
-    root_closure = {"schema_version": "eg_root_checkout_closure_v1", "status": "passed" if validation_status == "passed" and root_manifest_check["status"] == "passed" and root_outer["manifest_sha256"] == sha256_file(root / "artifact_manifest.json") and strict_json(root / "resume_cursor.json").get("active") is False else "failed", "attempt_id": attempt_id, "attempt_final_validation_sha256": attempt_closure["final_validation_sha256"], "root_manifest_sha256": sha256_file(root / "artifact_manifest.json"), "root_outer_hash_sha256": sha256_file(root / "outer_hash.json"), "closed_heartbeat_sha256": sha256_file(root / "heartbeat.json"), "inactive_cursor": strict_json(root / "resume_cursor.json").get("active") is False, "root_manifest_check": root_manifest_check, "next_phase_only": "independent_audit_required"}
-    write_json(root / "checkout_stable_closure.json", root_closure, refuse_overwrite=True)
-    return {"status": validation_status, "attempt_id": attempt_id, "final_validation": final_validation, "attempt_closure": attempt_closure, "root_closure": root_closure}
+    write_json(root_cursor_path, {"schema_version": "eg_root_cursor_v1", "active": False, "final_status": "hard_stop", "attempt_id": attempt_id, "updated_at_utc": now()}, refuse_overwrite=True)
+    write_json(root_heartbeat_path, {"schema_version": "eg_root_heartbeat_v1", "state": "closed", "final_status": "hard_stop", "final_validation_status": validation_status, "attempt_id": attempt_id, "updated_at_utc": now()}, refuse_overwrite=True)
+    root_closure = {"schema_version": "eg_root_checkout_closure_v1", "status": "passed" if validation_status == "passed" and root_manifest_check["status"] == "passed" and root_outer["manifest_sha256"] == sha256_file(root_manifest_path) and strict_json(root_cursor_path).get("active") is False else "failed", "attempt_id": attempt_id, "attempt_final_validation_sha256": attempt_closure["final_validation_sha256"], "root_manifest_path": rel(root_manifest_path), "root_outer_path": rel(root_outer_path), "root_cursor_path": rel(root_cursor_path), "root_heartbeat_path": rel(root_heartbeat_path), "root_manifest_sha256": sha256_file(root_manifest_path), "root_outer_hash_sha256": sha256_file(root_outer_path), "closed_heartbeat_sha256": sha256_file(root_heartbeat_path), "inactive_cursor": strict_json(root_cursor_path).get("active") is False, "root_manifest_check": root_manifest_check, "next_phase_only": "independent_audit_required"}
+    write_json(root_closure_path, root_closure, refuse_overwrite=True)
+    return {"status": validation_status, "attempt_id": attempt_id, "final_validation": final_validation, "attempt_closure": attempt_closure, "root_closure": root_closure, "root_closure_path": rel(root_closure_path)}
 
 
 def run_all() -> dict[str, Any]:

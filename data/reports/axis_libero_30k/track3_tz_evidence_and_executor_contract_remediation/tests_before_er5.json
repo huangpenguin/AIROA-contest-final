@@ -1,0 +1,14 @@
+{
+  "full_project_tests": {
+    "command": "PYTHONPATH=. ./.venv_axis_pi05/bin/pytest -q tests",
+    "passed": 308,
+    "skipped": 7,
+    "status": "passed",
+    "warnings": 23
+  },
+  "targeted": {
+    "command": "PYTHONPATH=. ./.venv_axis_pi05/bin/pytest -q tests/test_track3_tz_evidence_and_executor_contract_remediation.py tests/test_track3_tonight_tz0_tz9_audit.py",
+    "passed": 15,
+    "status": "passed"
+  }
+}

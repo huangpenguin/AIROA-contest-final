@@ -1,0 +1,343 @@
+{
+  "created_at_utc": "2026-09-06T08:41:28.909410+00:00",
+  "csv_lf": true,
+  "final_validation_after_manifest_outer_hash": true,
+  "git_diff_check": {
+    "returncode": 0,
+    "stderr": ""
+  },
+  "gpu": {
+    "0": {
+      "compute_processes": [],
+      "free": true,
+      "index": 0,
+      "returncode": 0,
+      "stderr": ""
+    },
+    "1": {
+      "compute_processes": [],
+      "free": true,
+      "index": 1,
+      "returncode": 0,
+      "stderr": ""
+    },
+    "2": {
+      "compute_processes": [],
+      "free": true,
+      "index": 2,
+      "returncode": 0,
+      "stderr": ""
+    },
+    "3": {
+      "compute_processes": [],
+      "free": true,
+      "index": 3,
+      "returncode": 0,
+      "stderr": ""
+    }
+  },
+  "live_worker_pids": [],
+  "npz_no_pickle_finite": [
+    {
+      "allow_pickle_false": true,
+      "arrays": {
+        "action_saturated": {
+          "dtype": "bool",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            180
+          ]
+        },
+        "actions": {
+          "dtype": "float32",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            180,
+            7
+          ]
+        },
+        "contact_complete": {
+          "dtype": "bool",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            180
+          ]
+        },
+        "contact_ncon": {
+          "dtype": "int32",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            180
+          ]
+        },
+        "eef_error": {
+          "dtype": "float32",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            180
+          ]
+        },
+        "goal_known": {
+          "dtype": "bool",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            180
+          ]
+        },
+        "goal_value": {
+          "dtype": "int8",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            180
+          ]
+        },
+        "phase": {
+          "dtype": "<U64",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            180
+          ]
+        },
+        "source_known": {
+          "dtype": "bool",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            180
+          ]
+        },
+        "source_value": {
+          "dtype": "int8",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            180
+          ]
+        },
+        "unrelated_contact": {
+          "dtype": "bool",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            180
+          ]
+        }
+      },
+      "errors": [],
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/runs/traces/er_articulation_pull_fresh_demo0.npz",
+      "status": "passed"
+    },
+    {
+      "allow_pickle_false": true,
+      "arrays": {
+        "action_saturated": {
+          "dtype": "bool",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            149
+          ]
+        },
+        "actions": {
+          "dtype": "float32",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            149,
+            7
+          ]
+        },
+        "contact_complete": {
+          "dtype": "bool",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            149
+          ]
+        },
+        "contact_ncon": {
+          "dtype": "int32",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            149
+          ]
+        },
+        "eef_error": {
+          "dtype": "float32",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            149
+          ]
+        },
+        "goal_known": {
+          "dtype": "bool",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            149
+          ]
+        },
+        "goal_value": {
+          "dtype": "int8",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            149
+          ]
+        },
+        "phase": {
+          "dtype": "<U64",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            149
+          ]
+        },
+        "source_known": {
+          "dtype": "bool",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            149
+          ]
+        },
+        "source_value": {
+          "dtype": "int8",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            149
+          ]
+        },
+        "unrelated_contact": {
+          "dtype": "bool",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            149
+          ]
+        }
+      },
+      "errors": [],
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/runs/traces/er_containment_extract_fresh_demo0.npz",
+      "status": "passed"
+    },
+    {
+      "allow_pickle_false": true,
+      "arrays": {
+        "action_saturated": {
+          "dtype": "bool",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            155
+          ]
+        },
+        "actions": {
+          "dtype": "float32",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            155,
+            7
+          ]
+        },
+        "contact_complete": {
+          "dtype": "bool",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            155
+          ]
+        },
+        "contact_ncon": {
+          "dtype": "int32",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            155
+          ]
+        },
+        "eef_error": {
+          "dtype": "float32",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            155
+          ]
+        },
+        "goal_known": {
+          "dtype": "bool",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            155
+          ]
+        },
+        "goal_value": {
+          "dtype": "int8",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            155
+          ]
+        },
+        "phase": {
+          "dtype": "<U64",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            155
+          ]
+        },
+        "source_known": {
+          "dtype": "bool",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            155
+          ]
+        },
+        "source_value": {
+          "dtype": "int8",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            155
+          ]
+        },
+        "unrelated_contact": {
+          "dtype": "bool",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            155
+          ]
+        }
+      },
+      "errors": [],
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/runs/traces/er_support_contact_repair_fresh_demo0.npz",
+      "status": "passed"
+    }
+  ],
+  "py_compile": {
+    "returncode": 0,
+    "stderr": ""
+  },
+  "schema_version": "track3_tz_er5_final_validation_v1",
+  "status": "passed",
+  "strict_json": {
+    "errors": [],
+    "files": 18
+  }
+}

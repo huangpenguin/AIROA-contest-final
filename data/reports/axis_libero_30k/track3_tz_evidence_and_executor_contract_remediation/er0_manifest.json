@@ -1,0 +1,400 @@
+{
+  "csv": [
+    {
+      "bytes": 1104,
+      "lf_only": true,
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/phase_ledger.csv",
+      "sha256": "296719b15a8dd4d137de465b5b45636a81ea18c407c14ecf31b70be504aa6d0f",
+      "tracked": "tracked",
+      "utf8": true
+    }
+  ],
+  "fallback": {
+    "absolute_path": "/home/huang/code/PARC2026_final/artifacts/submission_axis_r6_fallback_revalidated_20260906.zip",
+    "bytes": 9383571677,
+    "crc_test": "passed",
+    "duplicate_entries": [],
+    "entry_count": 3401,
+    "model_fast_entries": [
+      "model_weights/model_fast.safetensors"
+    ],
+    "path": "artifacts/submission_axis_r6_fallback_revalidated_20260906.zip",
+    "sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a",
+    "slow_model_entries": [],
+    "unsafe_paths": []
+  },
+  "fallback_source": {
+    "absolute_path": "/home/huang/code/PARC2026_final/artifacts/submission_axis_r6_step500_fast_positive_score_20260831.zip",
+    "bytes": 9383571677,
+    "crc_test": "passed",
+    "duplicate_entries": [],
+    "entry_count": 3401,
+    "model_fast_entries": [
+      "model_weights/model_fast.safetensors"
+    ],
+    "path": "artifacts/submission_axis_r6_step500_fast_positive_score_20260831.zip",
+    "sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a",
+    "slow_model_entries": [],
+    "unsafe_paths": []
+  },
+  "historical_files_modified": false,
+  "json": [
+    {
+      "bytes": 4417,
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/final_manifest.json",
+      "sha256": "290f23a0bdb2ca888c4e61e8688a7be23ea533d6c81aee141ecb24e4b2214156",
+      "strict_json": "passed",
+      "tracked": "tracked"
+    },
+    {
+      "bytes": 275,
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/heartbeat.json",
+      "sha256": "71c10d6cb841a40dcca0b65d9cd9694ab53536ecde205e8086ca0725d66aa6ea",
+      "strict_json": "passed",
+      "tracked": "tracked"
+    },
+    {
+      "bytes": 3341,
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/profile_lock.json",
+      "sha256": "e9e30cab39489572c8413ac0e950b3979be3c7fce534403b4bc2fdece77267e2",
+      "strict_json": "passed",
+      "tracked": "tracked"
+    },
+    {
+      "bytes": 284,
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/resume_cursor.json",
+      "sha256": "0d65050d5e9502dd78825edc33fedd72bce0bd52c568d5f5e25e60fe8edbc209",
+      "strict_json": "passed",
+      "tracked": "tracked"
+    },
+    {
+      "bytes": 2729,
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/cpu_01_support_contact_repair_a.json",
+      "sha256": "0252b5acd649b257f01f2fd2fcb89e93104df4090adcbf3205382aba73656a12",
+      "strict_json": "passed",
+      "tracked": "tracked"
+    },
+    {
+      "bytes": 13026,
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/cpu_02_support_contact_repair_b.json",
+      "sha256": "ce5b9fb4144c437b800237286045463cf982ec553ce4cf546623daabeafdb9fe",
+      "strict_json": "passed",
+      "tracked": "tracked"
+    },
+    {
+      "bytes": 13026,
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/cpu_03_support_contact_repair_c.json",
+      "sha256": "9e3d7dd8f68326cd15e431bd1b6fdc398dc4589c2e6d2b3dbf7535bae9d591ad",
+      "strict_json": "passed",
+      "tracked": "tracked"
+    },
+    {
+      "bytes": 13029,
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/cpu_04_containment_extract_a.json",
+      "sha256": "f4d7d7c4858a6133888bbe8afbadfa6b02fcef3c080df40b2f18dfd5eae78a42",
+      "strict_json": "passed",
+      "tracked": "tracked"
+    },
+    {
+      "bytes": 13029,
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/cpu_05_containment_extract_b.json",
+      "sha256": "32f632c2cfa98397a57bb16370f53d154c28b7de08833ca2720456e2f03780f4",
+      "strict_json": "passed",
+      "tracked": "tracked"
+    },
+    {
+      "bytes": 10723,
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/cpu_06_articulation_pull_a.json",
+      "sha256": "6f7fbe785eedbb4fa742df3cf8470aababa353a89e3a60cf574c3853c0036212",
+      "strict_json": "passed",
+      "tracked": "tracked"
+    },
+    {
+      "bytes": 10723,
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/cpu_07_articulation_pull_b.json",
+      "sha256": "15dd4e687f3eca2ab7b0a5bc71a608513e15902c126696119e3955aa08620542",
+      "strict_json": "passed",
+      "tracked": "tracked"
+    },
+    {
+      "bytes": 4417,
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/summary.json",
+      "sha256": "290f23a0bdb2ca888c4e61e8688a7be23ea533d6c81aee141ecb24e4b2214156",
+      "strict_json": "passed",
+      "tracked": "tracked"
+    },
+    {
+      "bytes": 1495,
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/tz0_fallback_revalidation.json",
+      "sha256": "3970350db6810d0ff0650faecaf0da0e6bf21ef4b5ece51c6f45b9f6c9b1a6e2",
+      "strict_json": "passed",
+      "tracked": "tracked"
+    },
+    {
+      "bytes": 2577,
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/tz0_summary.json",
+      "sha256": "7cdf295cbe00160f33938ec6b898669a02312c681db2b55c87080b4526169c6a",
+      "strict_json": "passed",
+      "tracked": "tracked"
+    },
+    {
+      "bytes": 6303,
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/tz1_cli_and_profile_lock.json",
+      "sha256": "4a44bc3c3af071e06d7727604fe302baee80823ad72725fbfd43bdcd17403ac5",
+      "strict_json": "passed",
+      "tracked": "tracked"
+    },
+    {
+      "bytes": 4751,
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/tz2_cpu_matrix.json",
+      "sha256": "1650aeccfe88bb582a8ed1b0613d709cec2fcdf2a020ccd0529f2d168a39b2b9",
+      "strict_json": "passed",
+      "tracked": "tracked"
+    },
+    {
+      "bytes": 173,
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/tz3_summary.json",
+      "sha256": "6821065d2d6423a6be38207f5c689548021f2d0323277f78aeebeb2cf4e9af18",
+      "strict_json": "passed",
+      "tracked": "tracked"
+    },
+    {
+      "bytes": 174,
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/tz4_summary.json",
+      "sha256": "720608074cea0ff349a39ebd7216f33ff1dee5d67d79348f927971510a5cc1a8",
+      "strict_json": "passed",
+      "tracked": "tracked"
+    },
+    {
+      "bytes": 205,
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/tz5_summary.json",
+      "sha256": "4e797c9939f6ae90e642775152ccc445d3ac77349e6e15450500f5e8b4955ab8",
+      "strict_json": "passed",
+      "tracked": "tracked"
+    },
+    {
+      "bytes": 186,
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/tz6_summary.json",
+      "sha256": "233895c4d56c302f6b03ba9120607252db925c02432fc9719f6cfa6684145623",
+      "strict_json": "passed",
+      "tracked": "tracked"
+    },
+    {
+      "bytes": 178,
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/tz7_summary.json",
+      "sha256": "e183768d59ff588926d4a6626d828315f02394b050974debeeb9965a0b3befda",
+      "strict_json": "passed",
+      "tracked": "tracked"
+    },
+    {
+      "bytes": 178,
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/tz8_summary.json",
+      "sha256": "c4466e42fe4a3ebb604009c038094d34a4854e558630e8c2ecd8a496ea65a5cf",
+      "strict_json": "passed",
+      "tracked": "tracked"
+    },
+    {
+      "bytes": 1162,
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/tz9_validation.json",
+      "sha256": "2147bb584284c3890102e01129574331779c0e7df85f65c0f972ea78e3b35bb8",
+      "strict_json": "passed",
+      "tracked": "tracked"
+    }
+  ],
+  "npz": [
+    {
+      "allow_pickle_false": false,
+      "arrays": {
+        "actions": {
+          "dtype": "float32",
+          "object_dtype": false,
+          "shape": [
+            180,
+            7
+          ]
+        },
+        "eef_error": {
+          "dtype": "float32",
+          "object_dtype": false,
+          "shape": [
+            180
+          ]
+        },
+        "phase": {
+          "dtype": "<U64",
+          "object_dtype": false,
+          "shape": [
+            180
+          ]
+        }
+      },
+      "bytes": 3691,
+      "error": "ValueError:Object arrays cannot be loaded when allow_pickle=False",
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/traces/articulation_pull_a_demo0.npz",
+      "sha256": "269a2c5a9630381a91e64389c189e6c4e1547b404308d844d92b37be23479b17",
+      "tracked": "untracked_or_ignored"
+    },
+    {
+      "allow_pickle_false": false,
+      "arrays": {
+        "actions": {
+          "dtype": "float32",
+          "object_dtype": false,
+          "shape": [
+            180,
+            7
+          ]
+        },
+        "eef_error": {
+          "dtype": "float32",
+          "object_dtype": false,
+          "shape": [
+            180
+          ]
+        },
+        "phase": {
+          "dtype": "<U64",
+          "object_dtype": false,
+          "shape": [
+            180
+          ]
+        }
+      },
+      "bytes": 3691,
+      "error": "ValueError:Object arrays cannot be loaded when allow_pickle=False",
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/traces/articulation_pull_b_demo0.npz",
+      "sha256": "269a2c5a9630381a91e64389c189e6c4e1547b404308d844d92b37be23479b17",
+      "tracked": "untracked_or_ignored"
+    },
+    {
+      "allow_pickle_false": false,
+      "arrays": {
+        "actions": {
+          "dtype": "float32",
+          "object_dtype": false,
+          "shape": [
+            149,
+            7
+          ]
+        },
+        "eef_error": {
+          "dtype": "float32",
+          "object_dtype": false,
+          "shape": [
+            149
+          ]
+        },
+        "phase": {
+          "dtype": "<U64",
+          "object_dtype": false,
+          "shape": [
+            149
+          ]
+        }
+      },
+      "bytes": 3654,
+      "error": "ValueError:Object arrays cannot be loaded when allow_pickle=False",
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/traces/containment_extract_a_demo0.npz",
+      "sha256": "cc7b74cbb044c1d432a8b7bdb5f7e547e13f3da57968e1b21c0b0de91fa073d8",
+      "tracked": "untracked_or_ignored"
+    },
+    {
+      "allow_pickle_false": false,
+      "arrays": {
+        "actions": {
+          "dtype": "float32",
+          "object_dtype": false,
+          "shape": [
+            149,
+            7
+          ]
+        },
+        "eef_error": {
+          "dtype": "float32",
+          "object_dtype": false,
+          "shape": [
+            149
+          ]
+        },
+        "phase": {
+          "dtype": "<U64",
+          "object_dtype": false,
+          "shape": [
+            149
+          ]
+        }
+      },
+      "bytes": 3654,
+      "error": "ValueError:Object arrays cannot be loaded when allow_pickle=False",
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/traces/containment_extract_b_demo0.npz",
+      "sha256": "cc7b74cbb044c1d432a8b7bdb5f7e547e13f3da57968e1b21c0b0de91fa073d8",
+      "tracked": "untracked_or_ignored"
+    },
+    {
+      "allow_pickle_false": false,
+      "arrays": {
+        "actions": {
+          "dtype": "float32",
+          "object_dtype": false,
+          "shape": [
+            155,
+            7
+          ]
+        },
+        "eef_error": {
+          "dtype": "float32",
+          "object_dtype": false,
+          "shape": [
+            155
+          ]
+        },
+        "phase": {
+          "dtype": "<U64",
+          "object_dtype": false,
+          "shape": [
+            155
+          ]
+        }
+      },
+      "bytes": 3720,
+      "error": "ValueError:Object arrays cannot be loaded when allow_pickle=False",
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/traces/support_contact_repair_b_demo0.npz",
+      "sha256": "5ac8ae9a849a6a5588eb49c2e00d26e88d75116e9d05e2e6cc59a9df60d3f6c7",
+      "tracked": "untracked_or_ignored"
+    },
+    {
+      "allow_pickle_false": false,
+      "arrays": {
+        "actions": {
+          "dtype": "float32",
+          "object_dtype": false,
+          "shape": [
+            155,
+            7
+          ]
+        },
+        "eef_error": {
+          "dtype": "float32",
+          "object_dtype": false,
+          "shape": [
+            155
+          ]
+        },
+        "phase": {
+          "dtype": "<U64",
+          "object_dtype": false,
+          "shape": [
+            155
+          ]
+        }
+      },
+      "bytes": 3720,
+      "error": "ValueError:Object arrays cannot be loaded when allow_pickle=False",
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/traces/support_contact_repair_c_demo0.npz",
+      "sha256": "5ac8ae9a849a6a5588eb49c2e00d26e88d75116e9d05e2e6cc59a9df60d3f6c7",
+      "tracked": "untracked_or_ignored"
+    }
+  ],
+  "schema_version": "track3_tz_er0_manifest_v1",
+  "source_namespace": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery"
+}

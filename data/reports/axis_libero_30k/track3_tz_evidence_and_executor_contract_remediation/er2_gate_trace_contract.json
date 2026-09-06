@@ -1,0 +1,81 @@
+{
+  "computed_gate_helpers": true,
+  "fallback_summary_contract": {
+    "delivered_zip_kind": "r6_fallback",
+    "readiness": "fallback_no_track3_improvement",
+    "recommended_for_track3_submission": false
+  },
+  "finalizer_order": [
+    "producer_close_fsync",
+    "inactive_cursor",
+    "artifact_manifest",
+    "outer_hash",
+    "strict_json_npz_csv_zip",
+    "targeted_full_tests",
+    "final_validation"
+  ],
+  "forbidden_object_dtype": true,
+  "gate_probe": {
+    "action_saturation": {
+      "executed": true,
+      "required": true,
+      "state": "passed",
+      "value": true
+    },
+    "contact_complete": {
+      "executed": true,
+      "required": true,
+      "state": "passed",
+      "value": true
+    },
+    "controller_clip": {
+      "executed": true,
+      "required": true,
+      "state": "failed",
+      "value": false
+    },
+    "unrelated_contact": {
+      "executed": true,
+      "required": true,
+      "state": "failed",
+      "value": false
+    }
+  },
+  "no_gpu": true,
+  "no_physics": true,
+  "schema_version": "track3_tz_er2_gate_trace_contract_v1",
+  "status": "passed",
+  "typed_trace_probe": {
+    "allow_pickle_false": true,
+    "arrays": {
+      "actions": {
+        "dtype": "float32",
+        "finite": true,
+        "object_dtype": false,
+        "shape": [
+          2,
+          7
+        ]
+      },
+      "known": {
+        "dtype": "bool",
+        "finite": true,
+        "object_dtype": false,
+        "shape": [
+          2
+        ]
+      },
+      "phase": {
+        "dtype": "<U64",
+        "finite": true,
+        "object_dtype": false,
+        "shape": [
+          2
+        ]
+      }
+    },
+    "errors": [],
+    "path": "/tmp/axis_pi05_er2_871pkvm8/typed_trace.npz",
+    "status": "passed"
+  }
+}

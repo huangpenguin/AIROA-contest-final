@@ -1,0 +1,77 @@
+{
+  "cli_contract": {
+    "family_failure_continues_other_new_families": true,
+    "fixed_argv_identity": true,
+    "forbidden_paths": [
+      "--gpu",
+      "--generation",
+      "--replay",
+      "--train",
+      "--candidate-zip"
+    ],
+    "periodic_atomic_heartbeat": true,
+    "phase_flags": [
+      "--er0",
+      "--er1",
+      "--er2",
+      "--er3",
+      "--er4",
+      "--er5"
+    ],
+    "pid_pgid_recorded": true,
+    "resume_requires_result_hash_and_identity": true,
+    "return_code_contract": {
+      "failed_gate": 0,
+      "infrastructure_failure": 1,
+      "passed": 0
+    },
+    "schema_version": "track3_tz_er_cli_contract_v1",
+    "single_instance_file_lock": true,
+    "sticky_shared_infrastructure_stop": true,
+    "timeout_order": [
+      "SIGTERM",
+      "wait_10_seconds",
+      "SIGKILL",
+      "verify_no_descendants"
+    ],
+    "worker_flags": [
+      "--cpu-worker"
+    ]
+  },
+  "frozen_identity_core": {
+    "clean_root": true,
+    "cuda_visible_devices": "",
+    "jax_platforms": "",
+    "mujoco_gl": "",
+    "openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "profile_lock_sha256": "e69542220eaf4ae4edfc780c5aa5f276c0c43637582ce96d58f8f69d8edac3a9",
+    "root_commit": "04eef24161bfe62adc9a51378235f73b34e6ac51",
+    "tool_sha256": "15e53f436457ed427a0e7564ad4c85841d404fe2fc3efbdda0ee97c268481f09"
+  },
+  "identity_probe": {
+    "checked_fields": [
+      "root_commit",
+      "tool_sha256",
+      "openpi_commit",
+      "profile_lock_sha256",
+      "cuda_visible_devices",
+      "jax_platforms",
+      "mujoco_gl",
+      "clean_root",
+      "openpi_porcelain",
+      "libero_plus_porcelain",
+      "command",
+      "command_hash"
+    ],
+    "mismatches": [],
+    "state": "passed"
+  },
+  "lock_probe": {
+    "held_and_released": true,
+    "second_acquire_rejected": true
+  },
+  "no_gpu": true,
+  "no_physics": true,
+  "schema_version": "track3_tz_er1_executor_contract_v1",
+  "status": "passed"
+}

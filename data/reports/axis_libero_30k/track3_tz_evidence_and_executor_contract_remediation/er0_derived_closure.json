@@ -1,0 +1,75 @@
+{
+  "derived_classification": {
+    "aggregate_contradiction_preserved": true,
+    "diagnostic_family_failures": [
+      "support_contact_repair_b",
+      "support_contact_repair_c",
+      "containment_extract_a",
+      "containment_extract_b",
+      "articulation_pull_a",
+      "articulation_pull_b"
+    ],
+    "first_infrastructure_failure": "support_contact_repair_a",
+    "identical_trace_groups": [
+      [
+        "support_contact_repair_b",
+        "support_contact_repair_c"
+      ],
+      [
+        "containment_extract_a",
+        "containment_extract_b"
+      ],
+      [
+        "articulation_pull_a",
+        "articulation_pull_b"
+      ]
+    ],
+    "old_aggregate_infrastructure_failure": null
+  },
+  "fallback": {
+    "absolute_path": "/home/huang/code/PARC2026_final/artifacts/submission_axis_r6_fallback_revalidated_20260906.zip",
+    "bytes": 9383571677,
+    "crc_test": "passed",
+    "duplicate_entries": [],
+    "entry_count": 3401,
+    "model_fast_entries": [
+      "model_weights/model_fast.safetensors"
+    ],
+    "path": "artifacts/submission_axis_r6_fallback_revalidated_20260906.zip",
+    "sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a",
+    "slow_model_entries": [],
+    "unsafe_paths": []
+  },
+  "fallback_source": {
+    "absolute_path": "/home/huang/code/PARC2026_final/artifacts/submission_axis_r6_step500_fast_positive_score_20260831.zip",
+    "bytes": 9383571677,
+    "crc_test": "passed",
+    "duplicate_entries": [],
+    "entry_count": 3401,
+    "model_fast_entries": [
+      "model_weights/model_fast.safetensors"
+    ],
+    "path": "artifacts/submission_axis_r6_step500_fast_positive_score_20260831.zip",
+    "sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a",
+    "slow_model_entries": [],
+    "unsafe_paths": []
+  },
+  "immutable_input_commit": "2ae08e974d6be9ac59541236ce7ddb1d7f288dd6",
+  "old_files_read_only": true,
+  "old_namespace": {
+    "csv_count": 1,
+    "json_count": 23,
+    "npz_count": 6,
+    "strict_json_errors": []
+  },
+  "old_npz_no_pickle_failures": [
+    "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/traces/articulation_pull_a_demo0.npz",
+    "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/traces/articulation_pull_b_demo0.npz",
+    "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/traces/containment_extract_a_demo0.npz",
+    "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/traces/containment_extract_b_demo0.npz",
+    "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/traces/support_contact_repair_b_demo0.npz",
+    "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/traces/support_contact_repair_c_demo0.npz"
+  ],
+  "schema_version": "track3_tz_er0_derived_closure_v1",
+  "status": "passed"
+}

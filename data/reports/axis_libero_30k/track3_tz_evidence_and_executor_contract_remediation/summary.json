@@ -1,0 +1,91 @@
+{
+  "accepted_data_count": 0,
+  "delivered_zip_absolute_path": "/home/huang/code/PARC2026_final/artifacts/submission_axis_r6_fallback_revalidated_20260906.zip",
+  "delivered_zip_bytes": 9383571677,
+  "delivered_zip_kind": "r6_fallback",
+  "delivered_zip_sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a",
+  "fallback": {
+    "absolute_path": "/home/huang/code/PARC2026_final/artifacts/submission_axis_r6_fallback_revalidated_20260906.zip",
+    "bytes": 9383571677,
+    "crc_test": "passed",
+    "duplicate_entries": [],
+    "entry_count": 3401,
+    "model_fast_entries": [
+      "model_weights/model_fast.safetensors"
+    ],
+    "path": "artifacts/submission_axis_r6_fallback_revalidated_20260906.zip",
+    "sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a",
+    "slow_model_entries": [],
+    "unsafe_paths": []
+  },
+  "hard_stop": {
+    "next_authority": "new_reviewed_plan_required",
+    "status": "hard_stop"
+  },
+  "new_candidate_zip_created": false,
+  "phase_ledger": [
+    {
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/er0_derived_closure.json",
+      "phase": "ER0",
+      "status": "passed"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/er1_executor_contract.json",
+      "phase": "ER1",
+      "status": "passed"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/er2_gate_trace_contract.json",
+      "phase": "ER2",
+      "status": "passed"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/er3_diagnosis_and_identity_freeze.json",
+      "phase": "ER3",
+      "status": "passed"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/er4_cpu_matrix.json",
+      "phase": "ER4",
+      "status": "completed"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/summary.json",
+      "phase": "ER5",
+      "status": "hard_stop"
+    }
+  ],
+  "readiness": "fallback_no_track3_improvement",
+  "recommended_for_track3_submission": false,
+  "repository_before_final_commit": {
+    "libero_plus_porcelain": [
+      "M libero/libero/benchmark/__init__.py",
+      "?? libero/__init__.py",
+      "?? libero/libero/assets",
+      "?? libero/libero/bddl_files/libero_t3",
+      "?? libero/libero/init_files/libero_t3"
+    ],
+    "openpi_head": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "openpi_porcelain": [],
+    "root_head": "c2d9f23bb0bbe13a0860aeb4fecf3a75c932ae0d",
+    "root_porcelain": []
+  },
+  "resource_boundary": {
+    "dense_full_ft": false,
+    "generation": false,
+    "gpu0": false,
+    "gpu1": false,
+    "gpu2": false,
+    "gpu3": false,
+    "official_gpu": false,
+    "replay": false,
+    "teleop": false,
+    "upload_or_submission": false
+  },
+  "schema_version": "track3_tz_er5_summary_v1",
+  "status": "hard_stop",
+  "submission": false,
+  "track3_improvement": false,
+  "training": false,
+  "upload": false
+}

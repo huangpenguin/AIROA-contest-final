@@ -1,0 +1,373 @@
+{
+  "executed": 3,
+  "family_results": {
+    "articulation_close": {
+      "family_failure": [
+        "er_articulation_pull_fresh"
+      ],
+      "not_evaluated": [],
+      "passed": []
+    },
+    "containment_remove": {
+      "family_failure": [
+        "er_containment_extract_fresh"
+      ],
+      "not_evaluated": [],
+      "passed": []
+    },
+    "support_remove": {
+      "family_failure": [
+        "er_support_contact_repair_fresh"
+      ],
+      "not_evaluated": [],
+      "passed": []
+    }
+  },
+  "limits": {
+    "gpu": false,
+    "max_new_cpu_identities": 3,
+    "old_identity_rerun": false,
+    "renderer": false
+  },
+  "no_gpu": true,
+  "profiles": [
+    {
+      "category": "family_failure",
+      "family": "support_remove",
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/runs/01_er_support_contact_repair_fresh.json",
+      "profile_id": "er_support_contact_repair_fresh",
+      "result_sha256": "3eaf9c9ccaad8c166aa9d28e225a61ae291aa068065f2328d9cb46069f318307",
+      "resumed_existing": false,
+      "status": "failed_gate",
+      "task_index": 10,
+      "trace": {
+        "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/runs/traces/er_support_contact_repair_fresh_demo0.npz",
+        "sha256": "2cf648745cd9750e429c31c9be020eed966dc5abc83378dc0247fa8f79b8df6b",
+        "validation": {
+          "allow_pickle_false": true,
+          "arrays": {
+            "action_saturated": {
+              "dtype": "bool",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                155
+              ]
+            },
+            "actions": {
+              "dtype": "float32",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                155,
+                7
+              ]
+            },
+            "contact_complete": {
+              "dtype": "bool",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                155
+              ]
+            },
+            "contact_ncon": {
+              "dtype": "int32",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                155
+              ]
+            },
+            "eef_error": {
+              "dtype": "float32",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                155
+              ]
+            },
+            "goal_known": {
+              "dtype": "bool",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                155
+              ]
+            },
+            "goal_value": {
+              "dtype": "int8",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                155
+              ]
+            },
+            "phase": {
+              "dtype": "<U64",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                155
+              ]
+            },
+            "source_known": {
+              "dtype": "bool",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                155
+              ]
+            },
+            "source_value": {
+              "dtype": "int8",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                155
+              ]
+            },
+            "unrelated_contact": {
+              "dtype": "bool",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                155
+              ]
+            }
+          },
+          "errors": [],
+          "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/runs/traces/er_support_contact_repair_fresh_demo0.npz",
+          "status": "passed"
+        }
+      }
+    },
+    {
+      "category": "family_failure",
+      "family": "containment_remove",
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/runs/02_er_containment_extract_fresh.json",
+      "profile_id": "er_containment_extract_fresh",
+      "result_sha256": "94dddf56e181d96edfc10d2bfceeaf6d19444e0db7e2ffbbf78f5260fce89d6c",
+      "resumed_existing": false,
+      "status": "failed_gate",
+      "task_index": 20,
+      "trace": {
+        "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/runs/traces/er_containment_extract_fresh_demo0.npz",
+        "sha256": "23e6cd6f959c78a6627a783d35780b76668983b6aded57459f3e9f8e4b8076b1",
+        "validation": {
+          "allow_pickle_false": true,
+          "arrays": {
+            "action_saturated": {
+              "dtype": "bool",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                149
+              ]
+            },
+            "actions": {
+              "dtype": "float32",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                149,
+                7
+              ]
+            },
+            "contact_complete": {
+              "dtype": "bool",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                149
+              ]
+            },
+            "contact_ncon": {
+              "dtype": "int32",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                149
+              ]
+            },
+            "eef_error": {
+              "dtype": "float32",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                149
+              ]
+            },
+            "goal_known": {
+              "dtype": "bool",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                149
+              ]
+            },
+            "goal_value": {
+              "dtype": "int8",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                149
+              ]
+            },
+            "phase": {
+              "dtype": "<U64",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                149
+              ]
+            },
+            "source_known": {
+              "dtype": "bool",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                149
+              ]
+            },
+            "source_value": {
+              "dtype": "int8",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                149
+              ]
+            },
+            "unrelated_contact": {
+              "dtype": "bool",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                149
+              ]
+            }
+          },
+          "errors": [],
+          "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/runs/traces/er_containment_extract_fresh_demo0.npz",
+          "status": "passed"
+        }
+      }
+    },
+    {
+      "category": "family_failure",
+      "family": "articulation_close",
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/runs/03_er_articulation_pull_fresh.json",
+      "profile_id": "er_articulation_pull_fresh",
+      "result_sha256": "636afcf21203001fd1b0061b6fc6a878754185752a83aaade69ecb7941a6b494",
+      "resumed_existing": false,
+      "status": "failed_gate",
+      "task_index": 19,
+      "trace": {
+        "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/runs/traces/er_articulation_pull_fresh_demo0.npz",
+        "sha256": "13ef104cc45e0242bc722556258d455946b8e74c055bb3ae8cfcb0ea24b8b500",
+        "validation": {
+          "allow_pickle_false": true,
+          "arrays": {
+            "action_saturated": {
+              "dtype": "bool",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                180
+              ]
+            },
+            "actions": {
+              "dtype": "float32",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                180,
+                7
+              ]
+            },
+            "contact_complete": {
+              "dtype": "bool",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                180
+              ]
+            },
+            "contact_ncon": {
+              "dtype": "int32",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                180
+              ]
+            },
+            "eef_error": {
+              "dtype": "float32",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                180
+              ]
+            },
+            "goal_known": {
+              "dtype": "bool",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                180
+              ]
+            },
+            "goal_value": {
+              "dtype": "int8",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                180
+              ]
+            },
+            "phase": {
+              "dtype": "<U64",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                180
+              ]
+            },
+            "source_known": {
+              "dtype": "bool",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                180
+              ]
+            },
+            "source_value": {
+              "dtype": "int8",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                180
+              ]
+            },
+            "unrelated_contact": {
+              "dtype": "bool",
+              "finite": true,
+              "object_dtype": false,
+              "shape": [
+                180
+              ]
+            }
+          },
+          "errors": [],
+          "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/runs/traces/er_articulation_pull_fresh_demo0.npz",
+          "status": "passed"
+        }
+      }
+    }
+  ],
+  "schema_version": "track3_tz_er4_cpu_matrix_v1",
+  "status": "completed",
+  "stop_latched": false,
+  "stop_reason": null,
+  "training_eligible": false
+}

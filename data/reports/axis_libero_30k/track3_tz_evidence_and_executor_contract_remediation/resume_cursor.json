@@ -1,0 +1,9 @@
+{
+  "active": false,
+  "delivered_zip": "/home/huang/code/PARC2026_final/artifacts/submission_axis_r6_fallback_revalidated_20260906.zip",
+  "final_status": "hard_stop",
+  "phase": "ER5",
+  "pid": 1594882,
+  "schema_version": "track3_tz_er_cursor_v1",
+  "updated_at_utc": "2026-09-06T08:41:28.265882+00:00"
+}

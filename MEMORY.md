@@ -34,12 +34,12 @@ If these disagree, stop mutation, audit the discrepancy and repair the handoff i
 - Repository: `/home/huang/code/PARC2026_final`
 - Branch: `codex/axis-pi05-audit-remediation`; no upstream recorded.
 - EF0 anchor input HEAD: `38635fbf08e4e8df8c4877ddcb6b2b2ec8b9b118`; final lifecycle state is captured by the clean closeout commit.
-- Latest audited execution: `c2d9f23bb0bbe13a0860aeb4fecf3a75c932ae0d` (ER0–ER5 execution closeout).
+- Latest audited execution: `b1195dd59830f7c44d831bd0007e61229446d9b5` (EF0–EF4 execution/evidence commit; independently re-audited `remediation_required`).
 - Nested OpenPI: `third_party/axis_openpi` at `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`, clean at review.
 - `LIBERO-plus` has pre-existing dirty files. They belong to the user/project and must not be reset, cleaned, overwritten or silently committed.
-- Current state at this refresh: `track3_er_evidence_anchor_and_finalizer_verification_completed_hard_stop`.
-- Active plan: none; the EF plan is archived after independent approval, and `new_reviewed_plan_required` is the next authority.
-- ER0–ER5 is audited `remediation_required`. The explicitly labeled fallback and three new diagnostic family failures are valid, but the ignored evidence, resume identity, required-contact and finalizer contracts are not approved. EF0–EF4 authorizes only exact-byte evidence anchoring and code/fixture verification; no new physics, GPU, generation, replay, training, candidate, upload or submission.
+- Current state at this refresh: `track3_ef0_ef4_audited_remediation_required`.
+- Active plan: `docs/AXIS_PI05_TRACK3_EF_FAILURE_PROVENANCE_AND_LIFECYCLE_REMEDIATION_PLAN.md`; only EG0–EG4 evidence-governance/code/no-physics fixture work is authorized.
+- EF0–EF3 technical contracts and the corrected EF4 checkout closure are valid, but the first failed EF4 raw validation/test/partial evidence was overwritten and is currently unavailable. The same-commit `approved` audit is superseded by the independent `remediation_required` audit. No new physics, GPU, generation, replay, training, candidate, upload or submission is authorized.
 - Z0–Z14 execution evidence is in `data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/`; its audit is `docs/reviews/axis_pi05/TRACK3_Y3_LAUNCH_Z0_Z14_AUDIT_20260906.md`. Historical parent remains infrastructure while physical result is derived nominal family failure. Z6–Z13 remain `not_evaluated`; before any AA execution, recheck live supervisor/PID/cursor, dirty worktree and GPU boundaries. Never start a duplicate run.
 
 The snapshot above becomes historical as soon as execution advances. Always refresh from Git, machine JSON and the live cursor rather than treating this paragraph as a lock.
@@ -72,6 +72,14 @@ The snapshot above becomes historical as soon as execution advances. Always refr
 - TZ1's claimed complete scheduler was not implemented: TZ4–TZ8 are stubs and singleton/periodic heartbeat/deadline/full identity gates are absent. After the first shared infrastructure failure, commit `343c5a5` resumed the remaining identities and the aggregate cleared the failure, contrary to the frozen global-stop rule.
 - Frozen seeds were recorded but never applied; three same-family pairs produced byte-identical traces. Runtime clip/contact gates are hardcoded. All six NPZ traces hash exact but contain object arrays that fail `allow_pickle=False`; TZ9 lacks the required complete artifact manifest/outer hash and post-final-artifact validation.
 - ER0–ER5 remediation is complete and hard-stopped pending review. Old TZ evidence and seven identities are immutable and were not rerun. GPU0–3, official GPU, Teleop, generation/replay, accepted data, training/norm, new candidate ZIP, upload and submission remain unauthorized; next authority is `new_reviewed_plan_required`.
+
+## 15. EF0–EF4 independent audit correction (2026-09-06)
+
+- Audit input root is `b1195dd59830f7c44d831bd0007e61229446d9b5`; EF0 anchor is `38635fbf08e4e8df8c4877ddcb6b2b2ec8b9b118`; nested OpenPI is `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`.
+- ER anchor `29/29`, EF checkout `22/22`, producer manifest `13/13`, outer/closure hashes, strict JSON, typed NPZ, LF CSV and fallback full ZIP all independently pass. The fallback remains `fallback_no_track3_improvement` with `9383571677` bytes and SHA `95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a`.
+- Verdict is `remediation_required`: `ef4_first_attempt_failure.json` explicitly admits that the historical report was replaced by the corrected attempt. The original failed validation, full test stdout/stderr and partial inventory are not present in the repository, `/tmp`, or unreachable Git blobs and must remain labeled `unavailable`, never reconstructed as raw.
+- The prior `approved` report was committed together with the EF tool/evidence and incorrectly claimed the failure was not overwritten. It remains historical but is superseded by `docs/reviews/axis_pi05/TRACK3_EF0_EF4_INDEPENDENT_AUDIT_20260906.md`.
+- The only active authority is EG0–EG4: attempt-specific immutable finalizer evidence, clean-source/no-physics fixtures, lifecycle pointer consistency and hard stop. It does not authorize physics, any GPU, generation/replay, accepted data, training, ZIP creation, upload or submission.
 
 ## 3. Stable competition/model facts
 

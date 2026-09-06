@@ -2,9 +2,9 @@
 
 > 更新日期：2026-09-06（Asia/Tokyo）
 > 跨session入口：先完整读取根目录`AGENTS.md`与`MEMORY.md`，再读取本索引、handoff、machine JSON、唯一活动计划和最新审核；先查live PID/cursor，禁止重复启动。
-> 当前唯一活动计划：无（EF0–EF4 已完成并 hard stop；下一权限为 `new_reviewed_plan_required`）
-> 当前状态：`track3_er_evidence_anchor_and_finalizer_verification_completed_hard_stop`
-> 最新审核：`docs/reviews/axis_pi05/TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_AUDIT_20260906.md`
+> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_EF_FAILURE_PROVENANCE_AND_LIFECYCLE_REMEDIATION_PLAN.md`
+> 当前状态：`track3_ef0_ef4_audited_remediation_required`
+> 最新审核：`docs/reviews/axis_pi05/TRACK3_EF0_EF4_INDEPENDENT_AUDIT_20260906.md`
 
 ## 1. 本轮执行停止点
 
@@ -26,15 +26,12 @@ ER审核确认三条新CPU/no-renderer canary均为有效诊断性`family_failur
 
 ## 2. 当前计划与停止点
 
-- `AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md` 已归档；EF0–EF4 完成，最终状态为 `approved` hard stop。
-  - EF0 已把现存 ER bytes 原样锚定入 Git 并完成 checkout/read/hash 复核，不修改旧 ER/TZ evidence；
-  - EF1/EF2 已用 code 与 fixture child 闭合 parent→child/resume 完整 identity、周期 heartbeat、TERM→KILL/no-descendant 和 sticky stop；
-  - EF3 已离线拆分 telemetry schema completeness 与 physical required-contact completeness；EF4 已真实运行 ZIP/process/GPU/tests/final validation 并写入 closed heartbeat；
-  - 新证据命名空间：`data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/`；
-  - 下一权限：`new_reviewed_plan_required`，未授权任何新的 physics identity。
-  - 三条ER4和旧七条TZ identity均禁止重跑。任何新physics、GPU0–3、官方GPU、Teleop、generation/replay、accepted数据、训练/norm、新candidate ZIP、上传/提交均不授权。
+- `AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md` 已归档；EF0–EF4 完成并 hard stop。EF0–EF3 技术合同、corrected EF4 checkout closure 与 fallback 机械属性经独立复核成立。
+- 既有 EF `approved` 审核与 execution/evidence 同在 `b1195dd`，且其引用的 `ef4_first_attempt_failure.json` 明确承认首次失败 report 被 corrected attempt 覆盖。首次失败 raw 当前不可恢复，不能用派生说明替代；本轮唯一结论修正为 `remediation_required`。
+- 唯一活动计划 `docs/AXIS_PI05_TRACK3_EF_FAILURE_PROVENANCE_AND_LIFECYCLE_REMEDIATION_PLAN.md` 只授权 EG0–EG4：冻结 provenance gap、实现 attempt-specific immutable finalizer、独立/clean-source fixture 与 lifecycle 一致性回归，然后 hard stop。
+- 三条 ER4、旧七条 TZ identity 和既有 EF fixture 均禁止作为历史结果重跑。任何新 physics、GPU0–3、官方 GPU、Teleop、generation/replay、accepted 数据、训练/norm、新 candidate ZIP、上传/提交均不授权。
 
-任何执行者看到多个计划时，以本索引的“唯一活动计划”为准；当前无活动计划，不得从归档计划的未执行尾部自行恢复任务。
+任何执行者看到多个计划时，以本索引的“唯一活动计划”为准；不得从归档计划的未执行尾部自行恢复任务。
 
 正式Track1 `0.47`与Track2 `0.33`已证明R6 FAST在官方20Hz闭环有效；Track3 `0`说明纯正向LIBERO LoRA并未自然获得逆向能力。当前优先级不是立即训练，而是先用公开完整simulator state建立合法、通用、可回放的reverse supervision；dense full-FT继续冻结为独立研究线。
 
@@ -302,6 +299,16 @@ EF2 仅运行无 physics fixture child：singleton lock 被第二入口拒绝；
 EF4 在新 namespace 中按 producer close/fsync→inactive cursor→manifest/outer hash→strict JSON/NPZ/CSV 与 fallback ZIP→真实 process/GPU scan→targeted/full tests→final validation→closed heartbeat 完成；fallback 仅作既有机械 fallback，不创建新 candidate ZIP。最终独立审核结论为 `approved`，无新的 physics identity、GPU compute、生成、replay、训练、上传或提交；计划已归档，下一权限为 `new_reviewed_plan_required`。完整审核见 `docs/reviews/axis_pi05/TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_AUDIT_20260906.md`。
 
 EF4 finalizer targeted 为`7 passed`、项目全量为`320 passed, 7 skipped, 23 warnings`；审核后生命周期 targeted 为`12 passed`、项目全量仍为`320 passed, 7 skipped, 23 warnings`；strict JSON、引用/归档、py_compile、diff-check与资源边界均通过。
+
+## 3.26 EF0–EF4 真正独立复核与 EG 修复授权（2026-09-06）
+
+审核输入 root `b1195dd59830f7c44d831bd0007e61229446d9b5`、EF0 anchor `38635fbf08e4e8df8c4877ddcb6b2b2ec8b9b118`、nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`。ER `29/29`、EF checkout `22/22`、producer manifest `13/13`、outer/closure hashes、18 个 strict JSON、typed NPZ、LF CSV 和 fallback 全包复核通过；EF0–EF3 技术合同与 corrected EF4 closure 保留有效。审核前 targeted/full 为 `12 passed` 与 `320 passed, 7 skipped, 23 warnings`；无 live worker 或 GPU compute，禁止项均未发生。
+
+唯一结论为 `remediation_required`：`ef4_first_attempt_failure.json` 明确写有 `historical_report_replaced_by_corrected_attempt=true`，首次失败的原始 validation、测试 stdout/stderr 和 partial inventory 没有保留；仓库、临时目录和不可达 Git blob 中也未找到副本。既有 `approved` 报告与 execution/evidence 同在一个提交，并错误声称没有覆盖；machine handoff 顶层三个 latest commit 指针还停在旧 ER 阶段。
+
+旧 EF 计划保持归档。唯一活动计划为 `docs/AXIS_PI05_TRACK3_EF_FAILURE_PROVENANCE_AND_LIFECYCLE_REMEDIATION_PLAN.md`：EG0–EG4 只做不可恢复 gap 的诚实冻结、attempt-specific immutable finalizer、clean-source 无 physics fixture、独立性/lifecycle 回归与最终闭包。不得伪造首次失败 raw，也不授权任何 physics、GPU、generation/replay、accepted data、training、candidate ZIP、upload 或 submission。完整审核见 `docs/reviews/axis_pi05/TRACK3_EF0_EF4_INDEPENDENT_AUDIT_20260906.md`。
+
+生命周期更新后 targeted 为 `17 passed`，项目全量为 `325 passed, 7 skipped, 23 warnings`；19/19 strict JSON、py_compile、diff-check、无 partial、process/GPU 边界通过。
 
 ## 4. 保留但非活动的研究线
 

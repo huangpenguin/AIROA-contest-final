@@ -2,12 +2,12 @@
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
 > 新session先读：根目录`AGENTS.md`、`MEMORY.md`，然后按其中顺序核对本handoff、machine JSON、活动计划、最新审核与live cursor/PID。
-> 最新审核状态：`approved`
+> 最新审核状态：`remediation_required`
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_er_evidence_anchor_and_finalizer_verification_completed_hard_stop`
-> 唯一活动计划：无（EF0–EF4 已完成；下一权限为 `new_reviewed_plan_required`）
+> 当前总状态：`track3_ef0_ef4_audited_remediation_required`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_EF_FAILURE_PROVENANCE_AND_LIFECYCLE_REMEDIATION_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -17,7 +17,7 @@
 
 canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Tonight已交付明确标注的本地R6 fallback ZIP；ER4新增三条CPU canary也均为有效诊断性family failure，成功族和accepted数据仍为0。ER审核发现证据未入Git、resume identity、required contact与finalizer合同未闭合，当前转入EF0–EF4只读锚定/code-only修复。
 
-最新审核确认fallback、旧TZ派生事实与三条ER4 family failure有效。EF0–EF4 已在新证据命名空间完成原字节锚定、完整 parent→child/resume identity、无 physics supervisor fixture、required-contact code gate 与真实 finalizer；独立审核结论为 `approved`。不授权任何新的 physics identity、GPU、数据生成、replay、训练、candidate ZIP、上传或提交。
+最新审核确认 fallback、旧 TZ 派生事实、三条 ER4 family failure、EF0–EF3 技术合同及 corrected EF4 checkout closure 有效；但首次 EF4 失败的原始 validation/test/partial 证据被 corrected attempt 覆盖，只留下派生说明。既有 `approved` 报告又与 execution/evidence 同提交，不能作为独立审核。本轮唯一结论为 `remediation_required`，转入只含 evidence-governance/code/no-physics fixture 的 EG0–EG4 修复；不授权任何新的 physics identity、GPU、数据生成、replay、训练、candidate ZIP、上传或提交。
 
 ## 2. 数据与复现基础
 
@@ -868,3 +868,13 @@ EF2 仅使用无 physics fixture child：第二入口真实被 file lock 拒绝�
 EF4 在 `data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/` 按冻结顺序完成 producer close/fsync、inactive cursor、manifest/outer hash、strict JSON/NPZ/CSV、既有 fallback ZIP bytes/SHA/CRC/layout、真实 process/GPU scan、targeted/full tests、final validation，并写入 `state=closed` heartbeat。没有新 physics identity、GPU compute、generation/replay、accepted data、training、new candidate ZIP、upload 或 submission；fallback 仍仅是 `fallback_no_track3_improvement`。
 
 EF0–EF4 独立审核结论为 `approved`，活动计划已归档至 `docs/archive/axis_pi05/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md`。当前无活动计划；下一权限为 `new_reviewed_plan_required`，只有新的 reviewed plan 才能规划物理 canary。
+
+## 77. EF0–EF4 独立复核修正与 EG0–EG4 授权（2026-09-06）
+
+本轮以 root `b1195dd59830f7c44d831bd0007e61229446d9b5` 为审核输入，逐字节确认 ER anchor `29/29`、EF checkout `22/22`、producer manifest `13/13`、outer/closure hashes；18 个 JSON duplicate-key rejection、typed NPZ、LF CSV、无 partial 和 9.38 GB fallback 全包检查均通过。fallback 为 `9383571677` bytes、SHA `95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a`、CRC/3401/path/FAST-only passed。EF0–EF3 和 corrected EF4 closure 的技术结果继续有效。
+
+唯一审核结论修正为 `remediation_required`。`ef4_first_attempt_failure.json` 自身承认首次失败 report 被 corrected attempt 覆盖；原始失败 validation、完整测试 stdout/stderr 与当时 partial inventory当前不可恢复。既有 `approved` 报告与 execution/evidence 同在 `b1195dd`，且声称“未覆盖”，与机器证据矛盾；machine handoff 顶层 latest commit 指针也仍停在旧 ER。旧报告和 summary 保留为历史错误证据，新结论写入 `docs/reviews/axis_pi05/TRACK3_EF0_EF4_INDEPENDENT_AUDIT_20260906.md` 和独立 derived namespace。
+
+唯一活动计划改为 `docs/AXIS_PI05_TRACK3_EF_FAILURE_PROVENANCE_AND_LIFECYCLE_REMEDIATION_PLAN.md`。EG0–EG4 只允许冻结不可恢复 gap、实现 attempt-specific immutable finalizer、运行 clean-source/no-physics fixture 与 lifecycle 回归、完成最终闭包并 hard stop。不得伪造首次失败 raw；不得运行任何新 physics 或旧 identity，不得使用 GPU0–3/官方 GPU，不得 generation、replay、accepted data、training、candidate ZIP、upload 或 submission。
+
+生命周期更新后 targeted 为 `17 passed`，项目全量为 `325 passed, 7 skipped, 23 warnings`；19/19 strict JSON、py_compile、diff-check、无 partial、process/GPU 边界通过。

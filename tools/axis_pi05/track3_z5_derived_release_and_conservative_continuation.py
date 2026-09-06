@@ -322,7 +322,7 @@ def _aa0() -> dict[str, Any]:
         path = ROOT / str(entry["path"])
         observed_bytes = path.stat().st_size if path.is_file() else None
         observed_sha = sha256_file(path) if path.is_file() else None
-        inventory_exact.append(path.is_file() and observed_bytes == entry.get("bytes") and observed_sha == entry.get("sha256"))
+        inventory_exact.append(path.is_file() and observed_bytes == entry.get("expected_bytes") and observed_sha == entry.get("expected_sha256"))
     current = current_identity(command)
     gpu = {str(index): gpu_state(index) for index in range(4)}
     checks = {

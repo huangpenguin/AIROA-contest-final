@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-07",
-  "status": "track3_acquisition_gate_attempt_lifecycle_remediation_completed_hard_stop_pending_independent_audit",
+  "status": "track3_clean_launch_and_diversified_canary_recovery_planned",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
-  "latest_audited_execution_commit": "720733047a687de5cb456830467151c0102e4171",
-  "latest_audit_input_commit": "720733047a687de5cb456830467151c0102e4171",
-  "latest_execution_root_commit": "afabffdb2124a870dd16bd9e2fcf3ba9df246327",
+  "latest_audited_execution_commit": "474d36d7e36aa3f428c8fff3fbf38b8d5db03f05",
+  "latest_audit_input_commit": "474d36d7e36aa3f428c8fff3fbf38b8d5db03f05",
+  "latest_execution_root_commit": "cba0b12c578412d741b6e071c09b19caf3cbe405",
   "latest_execution_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
@@ -259,8 +259,8 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_TRACK3_ACQUISITION_GATE_ATTEMPT_LIFECYCLE_REMEDIATION_INDEPENDENT_AUDIT_PLAN.md",
-  "next_phase_only": "independent_audit_required",
+  "next_plan": "docs/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_PLAN.md",
+  "next_phase_only": "CR0_to_CR14_then_hard_stop",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -4631,7 +4631,7 @@
     "next_phase_only": "BR0_to_BR11_then_hard_stop"
   },
   "track3_acquisition_gate_and_attempt_lifecycle_remediation_authorization": {
-    "status": "completed_hard_stop_dirty_source_correction",
+    "status": "completed_hard_stop_audited_remediation_required",
     "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ACQUISITION_GATE_AND_ATTEMPT_LIFECYCLE_REMEDIATION_PLAN.md",
     "audit_input_root_commit": "720733047a687de5cb456830467151c0102e4171",
     "authorized_phases": ["BR0", "BR1", "BR2", "BR3", "BR4", "BR5", "BR6", "BR7", "BR8", "BR9", "BR10", "BR11_closeout"],
@@ -4668,7 +4668,7 @@
       "upload": false,
       "submission": false
     },
-    "next_phase_only": "independent_audit_required"
+    "next_phase_only": "superseded_by_CR0_to_CR14"
   },
   "track3_acquisition_gate_attempt_lifecycle_remediation_execution": {
     "status": "passed_hard_stop_with_remediation_required",
@@ -4677,7 +4677,7 @@
     "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
     "evidence_root": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation",
     "archived_plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ACQUISITION_GATE_AND_ATTEMPT_LIFECYCLE_REMEDIATION_PLAN.md",
-    "active_next_plan": "docs/AXIS_PI05_TRACK3_ACQUISITION_GATE_ATTEMPT_LIFECYCLE_REMEDIATION_INDEPENDENT_AUDIT_PLAN.md",
+    "active_next_plan": "docs/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_PLAN.md",
     "br0_br7": {
       "attempt_id": 5,
       "status": "passed",
@@ -4749,6 +4749,97 @@
     },
     "old_ac_er_eg_namespaces_modified": false,
     "libero_plus_preexisting_dirty_preserved": true,
-    "next_phase_only": "independent_audit_required"
+    "next_phase_only": "superseded_by_CR0_to_CR14"
+  },
+  "track3_br0_br11_independent_audit": {
+    "status": "remediation_required",
+    "classification": "remediation_required",
+    "audit_input_root_commit": "474d36d7e36aa3f428c8fff3fbf38b8d5db03f05",
+    "execution_root_commit": "80d98a8471509581971335fb627d7b6faa4544c1",
+    "clean_source_commit": "cba0b12c578412d741b6e071c09b19caf3cbe405",
+    "report": "docs/reviews/axis_pi05/TRACK3_BR0_BR11_INDEPENDENT_AUDIT_20260907.md",
+    "summary": "data/reports/axis_libero_30k/track3_br0_br11_independent_audit_20260907/summary.json",
+    "verified": {
+      "br_git_tracked_bytes_exact": "88/88",
+      "strict_json_br_namespace": "71/71",
+      "strict_json_with_machine_handoff": "72/72",
+      "attempt_ids_preserved": [1, 2, 3, 4, 5, 6],
+      "physics_attempt_clean_root": false,
+      "diagnostic_family_failures": 3,
+      "br_traces_byte_identical_to_ac": 3,
+      "actual_partial_bytes": 43,
+      "actual_partial_manifested": false,
+      "successful_families": 0,
+      "accepted_data_count": 0,
+      "training_started": false,
+      "new_candidate_zip_created": false
+    },
+    "findings": {
+      "launch_time_clean_gate_missing": true,
+      "attempt_manifests_incomplete": true,
+      "synthetic_partial_observation_not_actual_raw": true,
+      "telemetry_unknown_misclassified_as_family_failure": true,
+      "normalized_action_double_normalized": true,
+      "new_behavioral_diversity_absent": true
+    },
+    "targeted_tests_before_lifecycle": "16 passed",
+    "full_tests_before_lifecycle": "362 passed, 7 skipped, 23 warnings",
+    "post_lifecycle_validation": {
+      "status": "passed",
+      "strict_json": "73/73",
+      "targeted_tests": "24 passed",
+      "full_tests": "370 passed, 7 skipped, 23 warnings",
+      "py_compile": true,
+      "diff_check": true,
+      "live_track3_workers": 0,
+      "gpu_compute_apps": 0,
+      "nested_openpi_clean": true,
+      "libero_plus_preexisting_dirty_preserved": true,
+      "root_clean_after_commit": true
+    },
+    "next_phase_only": "CR0_to_CR14_then_hard_stop"
+  },
+  "track3_clean_launch_and_diversified_canary_recovery_authorization": {
+    "status": "authorized",
+    "plan": "docs/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_PLAN.md",
+    "audit_input_root_commit": "474d36d7e36aa3f428c8fff3fbf38b8d5db03f05",
+    "authorized_phases": ["CR0", "CR1", "CR2", "CR3", "CR4", "CR5", "CR6", "CR7", "CR8", "CR9", "CR10", "CR11", "CR12", "CR13", "CR14"],
+    "physics_requires_cr0_through_cr8_passed": true,
+    "new_cpu_physics_identities_max": 6,
+    "new_cpu_physics_identities_per_family_max": 2,
+    "primary_identities_max": 3,
+    "alternative_identities_max": 3,
+    "same_strategy_retry_allowed": false,
+    "family_failure_policy": "one_frozen_alternative_then_stop_family",
+    "shared_infrastructure_failure_policy": "sticky_global_hard_stop",
+    "byte_identical_trace_policy": "no_effect_variant_family_failure",
+    "success_disposition": "pending_replay_or_human_review_only",
+    "gpu3_replay_requires_cpu_success": true,
+    "gpu3_replay_runs_per_success_max": 3,
+    "human_input_policy": "prepare_handoff_only_unless_user_explicitly_takes_control",
+    "authorization": {
+      "historical_evidence_read_only": true,
+      "launch_gate_manifest_partial_telemetry_action_repairs": true,
+      "clean_source_commit": true,
+      "new_cpu_no_renderer_physics": true,
+      "gpu3_exact_action_camera_replay": true,
+      "human_teleop_handoff_preparation": true,
+      "next_stage_machine_ready_dry_run_bundle": true,
+      "old_identity_rerun": false,
+      "gpu0": false,
+      "gpu1": false,
+      "gpu2": false,
+      "official_gpu": false,
+      "unattended_teleop": false,
+      "generation": false,
+      "accepted_data": false,
+      "training": false,
+      "norm": false,
+      "fast_export": false,
+      "new_candidate_zip": false,
+      "upload": false,
+      "submission": false
+    },
+    "next_phase_only": "CR0_to_CR14_then_hard_stop"
   }
 }

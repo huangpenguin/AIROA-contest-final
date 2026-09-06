@@ -1,7 +1,7 @@
 # AXIS Pi0.5 Track 3：BR0–BR11 独立审核计划
 
 > 创建日期：2026-09-07（Asia/Tokyo）
-> 唯一活动计划：是
+> 唯一活动计划：否；审核完成后归档
 > 审核对象：`data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/`
 > 前置执行：BR0–BR8 clean-source 修复与 BR9–BR11 旧执行证据已 hard stop
 

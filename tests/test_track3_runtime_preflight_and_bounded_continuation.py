@@ -82,9 +82,9 @@ def test_identity_gate_rejects_dirty_or_command_drift() -> None:
 
 def test_y_audit_archives_y_and_releases_exactly_one_z_plan() -> None:
     handoff = json.loads((ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json").read_text(encoding="utf-8"))
-    assert handoff["status"] == "track3_acquisition_gate_attempt_lifecycle_remediation_completed_hard_stop_pending_independent_audit"
-    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_ACQUISITION_GATE_ATTEMPT_LIFECYCLE_REMEDIATION_INDEPENDENT_AUDIT_PLAN.md"
-    assert handoff["next_phase_only"] == "independent_audit_required"
+    assert handoff["status"] == "track3_clean_launch_and_diversified_canary_recovery_planned"
+    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_PLAN.md"
+    assert handoff["next_phase_only"] == "CR0_to_CR14_then_hard_stop"
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md").is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_RUNTIME_PREFLIGHT_AND_BOUNDED_CONTINUATION_PLAN.md").exists()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_RUNTIME_PREFLIGHT_AND_BOUNDED_CONTINUATION_PLAN.md").is_file()

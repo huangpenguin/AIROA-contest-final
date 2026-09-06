@@ -2,9 +2,9 @@
 
 > 更新日期：2026-09-07（Asia/Tokyo）
 > 跨session入口：先完整读取根目录`AGENTS.md`与`MEMORY.md`，再读取本索引、handoff、machine JSON、唯一活动计划和最新审核；先查live PID/cursor，禁止重复启动。
-> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_ACQUISITION_GATE_ATTEMPT_LIFECYCLE_REMEDIATION_INDEPENDENT_AUDIT_PLAN.md`
-> 当前状态：`track3_acquisition_gate_attempt_lifecycle_remediation_completed_hard_stop_pending_independent_audit`
-> 最新审核：`docs/reviews/axis_pi05/TRACK3_AC0_AC6_INDEPENDENT_AUDIT_20260907.md`
+> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_PLAN.md`
+> 当前状态：`track3_clean_launch_and_diversified_canary_recovery_planned`
+> 最新审核：`docs/reviews/axis_pi05/TRACK3_BR0_BR11_INDEPENDENT_AUDIT_20260907.md`
 
 ## 1. 本轮执行停止点
 
@@ -30,9 +30,9 @@ ER审核确认三条新CPU/no-renderer canary均为有效诊断性`family_failur
 - 既有 EF `approved` 审核与 execution/evidence 同在 `b1195dd`，且其引用的 `ef4_first_attempt_failure.json` 明确承认首次失败 report 被 corrected attempt 覆盖。首次失败 raw 当前不可恢复，不能用派生说明替代；本轮唯一结论修正为 `remediation_required`。
 - `AXIS_PI05_TRACK3_EF_FAILURE_PROVENANCE_AND_LIFECYCLE_REMEDIATION_PLAN.md` 已归档；EG0–EG4 已执行并经再次独立复核 `approved`。共享 root cursor/heartbeat 保留历史 attempt_0003 失败，当前成功指针精确指向 attempt_0005 与 `root_attempt_0005_*` 闭包。
 - AC0–AC6 执行计划与只读独立审核计划均已归档。三条 AC CPU/no-renderer canary 是有效诊断性 `family_failure`，但 AC3 partial 后继续、stage 三态、source/contact gate、attempt 不可覆盖和完整 manifest 合同不合规；本轮唯一审核结论为 `remediation_required`。
-- BR remediation 已执行并 hard stop。BR0–BR7 的首个失败 attempt 保留了 partial/timeout fixture failure，后续 attempt 完成 sticky-stop、attempt allocator、完整 manifest、stage 三态、source/contact timing 与 typed-trace 重算；BR8 在提交 `cba0b12` 后以 clean root/OpenPI 通过，code-only clean-source evidence 为 attempts `0005/0006`。
-- 旧 BR9–BR10 执行 evidence 位于 attempt `0004`，三条 identity 各运行一次且均为诊断性 `family_failure`；但它们是在 `clean_root=false` 的 root 下启动，不能批准为合规 BR9/BR10。该 lifecycle correction 写入 `br9_dirty_source_correction.json`，不重跑已消耗 identity。
-- BR11 以 `passed_hard_stop` 闭包停止；唯一活动计划改为 `docs/AXIS_PI05_TRACK3_ACQUISITION_GATE_ATTEMPT_LIFECYCLE_REMEDIATION_INDEPENDENT_AUDIT_PLAN.md`，只授权独立只读审核。GPU、generation/replay、accepted data、training/norm、FAST/ZIP、upload/submission 继续禁止。
+- BR remediation 已执行并 hard stop。独立审核确认 code/fixture attempts `0005/0006`、Git bytes、测试和资源边界，但唯一结论为 `remediation_required`：BR9 launch path 没有实时 clean-source gate；六个 attempt manifest 均漏后生成文件；43-byte actual partial 未入 manifest而39-byte固定 synthetic observation被误称 raw provenance；telemetry unknown 会落成 family failure；normalized actions 被 double-normalize。
+- 旧 BR9–BR10 attempt `0004` 的三条轨迹继续保留为诊断性 `family_failure`。它们不仅在 `clean_root=false` 下运行，而且与 AC 对应 NPZ 的 SHA 逐字节相同，没有新行为信息；已消耗 identity 不重跑，不能 promotion。
+- 旧 BR 独立审核计划已归档。唯一活动计划为 `docs/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_PLAN.md`：CR0–CR8 先修复 launch/manifest/partial/telemetry/action-unit 并形成 clean source；CR9–CR10 最多三族各 primary+alternative 两条、总上限6；CPU success 后才允许 GPU3 exact-action camera replay。正常 family failure 隔离，shared infrastructure sticky hard stop。训练、accepted data、新 ZIP、上传/提交仍禁止。
 - 三条 AC/ER4、旧七条 TZ identity、Z5/AA5 和既有 EF/EG fixture 均禁止作为历史结果重跑。GPU0–3、official GPU、Teleop、generation/replay、accepted 数据、训练/norm、FAST/export、新 candidate ZIP、上传/提交均不授权。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准；不得从归档计划的未执行尾部自行恢复任务。
@@ -368,6 +368,18 @@ BR9–BR10 attempt `0004` 实际按 support→containment→articulation 各运�
 BR11 attempt `0004` 仍保留原样作为历史闭包：summary/ledger 为 `passed_hard_stop`、strict JSON `12/12`、CSV LF、无 active partial、无 live worker、GPU0–3 compute empty、closure/pointer exact；最终工程生命周期的独立审核状态暂不预判，唯一活动计划为 `docs/AXIS_PI05_TRACK3_ACQUISITION_GATE_ATTEMPT_LIFECYCLE_REMEDIATION_INDEPENDENT_AUDIT_PLAN.md`。禁止 GPU、generation/replay、accepted data、training、norm、FAST/export、candidate ZIP、upload 与 submission。
 
 本次 handoff 更新后的最终工程回归为 targeted `100 passed`、全量 `362 passed, 7 skipped, 26 warnings`；strict JSON `72/72`、py_compile、diff-check、无 active partial、process/GPU 边界和 nested OpenPI clean 均通过。历史 attempt `0002` 的 `.partial` observation 继续原样保留，不作为当前 active residue。
+
+## 3.33 BR0–BR11 独立审核与 CR0–CR14 今夜恢复授权（2026-09-07）
+
+独立审核以 root/evidence `474d36d7e36aa3f428c8fff3fbf38b8d5db03f05`、BR execution root `80d98a8471509581971335fb627d7b6faa4544c1`、clean-source code commit `cba0b12c578412d741b6e071c09b19caf3cbe405` 为边界。BR tracked bytes `88/88`、tool与`cba0b12:path`、当前 BR strict JSON `71/71`、attempts `0001–0006`、pointer hash、相关测试 `16 passed`、项目全量 `362 passed, 7 skipped, 23 warnings` 及 root/OpenPI/process/GPU 边界成立。
+
+唯一审核结论为 `remediation_required`。BR9 launch path 仅相信旧 BR8 pass，没有 spawn 前 live clean-source gate；dirty expected/observed 可一起通过 identity。六个 attempt manifest 分别漏 `4/5/1/4/4/1` 个当前文件。attempt `0002` 实际 timeout partial 是43 bytes、SHA `e77dcf6...`，却被排除；代码另写固定39-byte sequence=999文件并误称 raw observation。telemetry unknown 会被归入 family failure；已归一化 controller action又除 `0.05/0.25`，产生 `normalized_action_abs_max=20.0`。
+
+三条 BR NPZ 与 AC 对应轨迹逐字节相同，SHA 分别为 `3537623d...`、`186019af...`、`9a1db8e5...`，因此没有新 reverse success或行为多样性，只能保留为 dirty-source diagnostic family failures。success/pending/exact/accepted/training仍为0，没有 GPU、generation、replay、训练、新 ZIP、上传或提交。
+
+旧只读审核计划已归档。唯一活动计划为 `docs/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_PLAN.md`：CR0–CR8 修复真实 partial、两层 finalizer、normalized-action单位、telemetry infrastructure分类与 launch-time clean gate；clean commit后冻结并运行真正不同的 primary/alternative，每族最多2、总上限6。正常 family failure允许该族一条预冻结 alternative；共享 infrastructure failure全局 sticky stop。CPU success 后才允许GPU3 exact-action camera replay；无 success则只准备 human handoff。generation、accepted data、训练、新 candidate ZIP、upload和submission均未授权，CR13只做下一阶段machine-ready dry-run bundle。
+
+完整审核见 `docs/reviews/axis_pi05/TRACK3_BR0_BR11_INDEPENDENT_AUDIT_20260907.md`，机器摘要见 `data/reports/axis_libero_30k/track3_br0_br11_independent_audit_20260907/summary.json`。生命周期最终验证为 strict JSON `73/73`、targeted `24 passed`、项目全量 `370 passed, 7 skipped, 23 warnings`；py_compile、diff-check、引用、process/GPU与nested Git边界通过。
 
 ## 4. 保留但非活动的研究线
 

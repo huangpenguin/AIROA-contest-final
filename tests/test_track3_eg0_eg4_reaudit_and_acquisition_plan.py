@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 HANDOFF = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
 SUMMARY = ROOT / "data/reports/axis_libero_30k/track3_eg0_eg4_reaudit_20260906/summary.json"
 EG_ROOT = ROOT / "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation"
-PLAN = "docs/AXIS_PI05_TRACK3_ACQUISITION_GATE_ATTEMPT_LIFECYCLE_REMEDIATION_INDEPENDENT_AUDIT_PLAN.md"
+PLAN = "docs/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_PLAN.md"
 ARCHIVED_AC_PLAN = "docs/archive/axis_pi05/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_PLAN.md"
 ARCHIVED_AC_AUDIT_PLAN = "docs/archive/axis_pi05/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_INDEPENDENT_AUDIT_PLAN.md"
 ARCHIVED_BR_PLAN = "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ACQUISITION_GATE_AND_ATTEMPT_LIFECYCLE_REMEDIATION_PLAN.md"
@@ -52,9 +52,9 @@ def test_shared_root_attempt3_is_historical_and_root_attempt5_is_current() -> No
 
 def test_lifecycle_releases_exactly_one_acquisition_plan() -> None:
     handoff = strict_json(HANDOFF)
-    assert handoff["status"] == "track3_acquisition_gate_attempt_lifecycle_remediation_completed_hard_stop_pending_independent_audit"
+    assert handoff["status"] == "track3_clean_launch_and_diversified_canary_recovery_planned"
     assert handoff["next_plan"] == PLAN
-    assert handoff["next_phase_only"] == "independent_audit_required"
+    assert handoff["next_phase_only"] == "CR0_to_CR14_then_hard_stop"
     assert (ROOT / PLAN).is_file()
     assert (ROOT / ARCHIVED_AC_PLAN).is_file()
     assert (ROOT / ARCHIVED_AC_AUDIT_PLAN).is_file()
@@ -65,9 +65,9 @@ def test_lifecycle_releases_exactly_one_acquisition_plan() -> None:
 
 def test_machine_latest_commits_name_actual_eg_boundaries() -> None:
     handoff = strict_json(HANDOFF)
-    assert handoff["latest_audited_execution_commit"] == "720733047a687de5cb456830467151c0102e4171"
-    assert handoff["latest_audit_input_commit"] == "720733047a687de5cb456830467151c0102e4171"
-    assert handoff["latest_execution_root_commit"] == "afabffdb2124a870dd16bd9e2fcf3ba9df246327"
+    assert handoff["latest_audited_execution_commit"] == "474d36d7e36aa3f428c8fff3fbf38b8d5db03f05"
+    assert handoff["latest_audit_input_commit"] == "474d36d7e36aa3f428c8fff3fbf38b8d5db03f05"
+    assert handoff["latest_execution_root_commit"] == "cba0b12c578412d741b6e071c09b19caf3cbe405"
 
 
 def test_acquisition_authority_is_three_cpu_identities_without_promotion() -> None:

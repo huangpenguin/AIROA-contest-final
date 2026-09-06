@@ -1,0 +1,91 @@
+{
+  "accepted_data_count": 0,
+  "actual_physics_identities": [
+    "ac_support_remove_20260906_0001",
+    "ac_containment_remove_20260906_0001",
+    "ac_articulation_close_20260906_0001"
+  ],
+  "exact_count": 0,
+  "family_status": {
+    "articulation_close": {
+      "family_failure": [
+        "ac_articulation_close_20260906_0001"
+      ],
+      "infrastructure_failure": [],
+      "not_evaluated": [],
+      "success": []
+    },
+    "containment_remove": {
+      "family_failure": [
+        "ac_containment_remove_20260906_0001"
+      ],
+      "infrastructure_failure": [],
+      "not_evaluated": [],
+      "success": []
+    },
+    "support_remove": {
+      "family_failure": [
+        "ac_support_remove_20260906_0001"
+      ],
+      "infrastructure_failure": [],
+      "not_evaluated": [],
+      "success": []
+    }
+  },
+  "forbidden_actions": {
+    "generation": false,
+    "gpu0": false,
+    "gpu1": false,
+    "gpu2": false,
+    "gpu3": false,
+    "new_candidate_zip": false,
+    "official_gpu": false,
+    "old_identity_rerun": false,
+    "replay": false,
+    "submission": false,
+    "training": false,
+    "upload": false
+  },
+  "hard_stop": true,
+  "new_physics_identity_count": 3,
+  "pending_replay_review_count": 0,
+  "phase_ledger": [
+    {
+      "path": "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/attempts/attempt_0001/ac0_result.json",
+      "phase": "AC0",
+      "status": "passed"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/attempts/attempt_0001/ac1_old_trace_diagnosis.json",
+      "phase": "AC1",
+      "status": "passed"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/attempts/attempt_0001/ac2_runtime_gate_and_fixture.json",
+      "phase": "AC2",
+      "status": "passed"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/attempts/attempt_0001/ac3_clean_source_supervisor_fixture.json",
+      "phase": "AC3",
+      "status": "passed"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/attempts/attempt_0001/ac4_cpu_canary_matrix.json",
+      "phase": "AC4",
+      "status": "completed"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/attempts/attempt_0001/ac5_crossfamily_classification.json",
+      "phase": "AC5",
+      "status": "passed"
+    },
+    {
+      "phase": "AC6",
+      "status": "running"
+    }
+  ],
+  "schema_version": "track3_ac6_execution_summary_v1",
+  "status": "hard_stop",
+  "training_eligible": false
+}

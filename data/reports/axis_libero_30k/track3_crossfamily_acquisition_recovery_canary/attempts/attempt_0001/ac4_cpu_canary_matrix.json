@@ -1,0 +1,76 @@
+{
+  "executed": 3,
+  "family_results": {
+    "articulation_close": {
+      "family_failure": [
+        "ac_articulation_close_20260906_0001"
+      ],
+      "infrastructure_failure": [],
+      "not_evaluated": [],
+      "success": []
+    },
+    "containment_remove": {
+      "family_failure": [
+        "ac_containment_remove_20260906_0001"
+      ],
+      "infrastructure_failure": [],
+      "not_evaluated": [],
+      "success": []
+    },
+    "support_remove": {
+      "family_failure": [
+        "ac_support_remove_20260906_0001"
+      ],
+      "infrastructure_failure": [],
+      "not_evaluated": [],
+      "success": []
+    }
+  },
+  "gpu": false,
+  "limits": {
+    "max_new_cpu_identities": 3,
+    "order": [
+      "support",
+      "containment",
+      "articulation"
+    ],
+    "per_family_max": 1,
+    "retry": false
+  },
+  "old_identity_rerun": false,
+  "profiles": [
+    {
+      "category": "family_failure",
+      "family": "support_remove",
+      "path": "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/attempts/attempt_0001/canaries/01_ac_support_remove_20260906_0001.json",
+      "profile_id": "ac_support_remove_20260906_0001",
+      "result_sha256": "058b2a837deff955528b0fedb710b6da25bede1861dadad649d0d48c46eb3eac",
+      "status": "failed_gate",
+      "task_index": 10
+    },
+    {
+      "category": "family_failure",
+      "family": "containment_remove",
+      "path": "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/attempts/attempt_0001/canaries/02_ac_containment_remove_20260906_0001.json",
+      "profile_id": "ac_containment_remove_20260906_0001",
+      "result_sha256": "e56b25764d6220b48e1d39690470192d032cdeebc54ca4ad2052df930419af53",
+      "status": "failed_gate",
+      "task_index": 20
+    },
+    {
+      "category": "family_failure",
+      "family": "articulation_close",
+      "path": "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/attempts/attempt_0001/canaries/03_ac_articulation_close_20260906_0001.json",
+      "profile_id": "ac_articulation_close_20260906_0001",
+      "result_sha256": "33125768a28569e7531929870be5a4396ff53d1872d6c7a14a63371709ba627e",
+      "status": "failed_gate",
+      "task_index": 19
+    }
+  ],
+  "renderer": false,
+  "schema_version": "track3_ac4_cpu_canary_matrix_v1",
+  "status": "completed",
+  "stop_latched": false,
+  "stop_reason": null,
+  "training_eligible": false
+}

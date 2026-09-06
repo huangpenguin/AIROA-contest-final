@@ -1,0 +1,142 @@
+{
+  "contract": {
+    "acquisition_barrier": "required_demonstrator_contact_continuous_before_grasp_or_pull",
+    "approach_tolerance_m": 0.014,
+    "articulation_tolerance_m": 0.015,
+    "descend_tolerance_m": 0.012,
+    "goal_gate": "runtime_predicate_goal_true_continuously_after_goal_entry",
+    "gripper_commands": {
+      "closed": -1.0,
+      "neutral": 0.0,
+      "open": 1.0
+    },
+    "normalized_action_abs_limit": 1.0,
+    "osc_rotation_normalized_scale": 0.25,
+    "osc_translation_normalized_scale": 0.05,
+    "progress_window": 12,
+    "required_contact_window": 4,
+    "source_release": "runtime_predicate_source_false_after_acquisition",
+    "stall_epsilon_m": 1e-05
+  },
+  "family_order": [
+    "support_remove",
+    "containment_remove",
+    "articulation_close"
+  ],
+  "input_manifest_sha256": "d183367d78086723b98e6655243f3686999cb735c4805760cd062c1b0c3c8ce1",
+  "limits": {
+    "articulation_close": 1,
+    "containment_remove": 1,
+    "support_remove": 1,
+    "total": 3
+  },
+  "lock_sha256": "f8a1e54d1662377fc74567ddb2da9fddf0024f9be014dd17fd07dd53a007f041",
+  "official_track3_claim": false,
+  "old_profile_ids_denylist": [
+    "articulation_pull_a",
+    "articulation_pull_b",
+    "containment_extract_a",
+    "containment_extract_b",
+    "er_articulation_pull_fresh",
+    "er_containment_extract_fresh",
+    "er_support_contact_repair_fresh",
+    "support_contact_repair_a",
+    "support_contact_repair_b",
+    "support_contact_repair_c"
+  ],
+  "profile_order": [
+    "ac_support_remove_20260906_0001",
+    "ac_containment_remove_20260906_0001",
+    "ac_articulation_close_20260906_0001"
+  ],
+  "profiles": [
+    {
+      "close_dwell": 2,
+      "family": "support_remove",
+      "gpu": false,
+      "grasp_z_m": 0.024,
+      "identity_scope": "new_ac_cpu_no_renderer_identity_once",
+      "max_steps": {
+        "approach_drawer_region": 180,
+        "approach_object": 170,
+        "descend_object": 140,
+        "descend_to_target": 140,
+        "grasp_drawer_region": 40,
+        "grasp_object": 45,
+        "hold_closed": 45,
+        "lift_object": 170,
+        "pull_drawer_closed": 280,
+        "release_object": 40,
+        "retreat": 90,
+        "transport_to_target": 220
+      },
+      "old_identity_rerun": false,
+      "profile_id": "ac_support_remove_20260906_0001",
+      "release_dwell": 1,
+      "renderer": false,
+      "seed": 61010,
+      "task_index": 10,
+      "training_eligible": false
+    },
+    {
+      "close_dwell": 2,
+      "family": "containment_remove",
+      "gpu": false,
+      "grasp_z_m": 0.024,
+      "identity_scope": "new_ac_cpu_no_renderer_identity_once",
+      "max_steps": {
+        "approach_drawer_region": 180,
+        "approach_object": 170,
+        "descend_object": 140,
+        "descend_to_target": 140,
+        "grasp_drawer_region": 40,
+        "grasp_object": 45,
+        "hold_closed": 45,
+        "lift_object": 170,
+        "pull_drawer_closed": 280,
+        "release_object": 40,
+        "retreat": 90,
+        "transport_to_target": 220
+      },
+      "old_identity_rerun": false,
+      "profile_id": "ac_containment_remove_20260906_0001",
+      "release_dwell": 1,
+      "renderer": false,
+      "seed": 62020,
+      "task_index": 20,
+      "training_eligible": false
+    },
+    {
+      "close_dwell": 2,
+      "family": "articulation_close",
+      "gpu": false,
+      "grasp_z_m": 0.012,
+      "identity_scope": "new_ac_cpu_no_renderer_identity_once",
+      "max_steps": {
+        "approach_drawer_region": 180,
+        "approach_object": 170,
+        "descend_object": 140,
+        "descend_to_target": 140,
+        "grasp_drawer_region": 40,
+        "grasp_object": 45,
+        "hold_closed": 45,
+        "lift_object": 170,
+        "pull_drawer_closed": 280,
+        "release_object": 40,
+        "retreat": 90,
+        "transport_to_target": 220
+      },
+      "old_identity_rerun": false,
+      "profile_id": "ac_articulation_close_20260906_0001",
+      "release_dwell": 1,
+      "renderer": false,
+      "seed": 63019,
+      "task_index": 19,
+      "training_eligible": false
+    }
+  ],
+  "retry_allowed": false,
+  "schema_version": "track3_ac0_profile_lock_v1",
+  "source_root_commit": "afabffdb2124a870dd16bd9e2fcf3ba9df246327",
+  "tool_sha256": "3062ca7861dcf7941832562e5a3c914a94aa02a6497fb802ffda4684a4882c3d"
+}

@@ -1,0 +1,9 @@
+{
+  "attempt_id": 1,
+  "immutable": true,
+  "schema_version": "track3_ac_latest_attempt_pointer_v1",
+  "target_closure": "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/attempts/attempt_0001/checkout_stable_closure.json",
+  "target_closure_sha256": "d3fc759526c7e37154e7f26ea584a60a683c19a6a23f0f990b73a3b1f418bacd",
+  "target_final_validation": "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/attempts/attempt_0001/final_validation.json",
+  "target_final_validation_sha256": "f7ceea105f44786dfa8b75b60b5c914893feb09775ba4a39966270891237b579"
+}

@@ -1,0 +1,7 @@
+{
+  "attempt_id": 1,
+  "attempt_root": "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/attempts/attempt_0001",
+  "immutable": true,
+  "profile_lock_sha256": "f8a1e54d1662377fc74567ddb2da9fddf0024f9be014dd17fd07dd53a007f041",
+  "schema_version": "track3_ac_attempt_pointer_v1"
+}

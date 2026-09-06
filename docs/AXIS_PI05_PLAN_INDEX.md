@@ -2,9 +2,9 @@
 
 > 更新日期：2026-09-06（Asia/Tokyo）
 > 跨session入口：先完整读取根目录`AGENTS.md`与`MEMORY.md`，再读取本索引、handoff、machine JSON、唯一活动计划和最新审核；先查live PID/cursor，禁止重复启动。
-> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_PLAN.md`
-> 当前状态：`track3_crossfamily_acquisition_recovery_canary_planned`
-> 最新审核：`docs/reviews/axis_pi05/TRACK3_EG0_EG4_REAUDIT_AND_NEXT_PLAN_20260906.md`
+> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_INDEPENDENT_AUDIT_PLAN.md`
+> 当前状态：`track3_crossfamily_acquisition_recovery_canary_completed_hard_stop`
+> 最新审核：`docs/reviews/axis_pi05/TRACK3_EG0_EG4_REAUDIT_AND_NEXT_PLAN_20260906.md`（AC 独立审核待执行）
 
 ## 1. 本轮执行停止点
 
@@ -29,7 +29,7 @@ ER审核确认三条新CPU/no-renderer canary均为有效诊断性`family_failur
 - `AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md` 已归档；EF0–EF4 完成并 hard stop。EF0–EF3 技术合同、corrected EF4 checkout closure 与 fallback 机械属性经独立复核成立。
 - 既有 EF `approved` 审核与 execution/evidence 同在 `b1195dd`，且其引用的 `ef4_first_attempt_failure.json` 明确承认首次失败 report 被 corrected attempt 覆盖。首次失败 raw 当前不可恢复，不能用派生说明替代；本轮唯一结论修正为 `remediation_required`。
 - `AXIS_PI05_TRACK3_EF_FAILURE_PROVENANCE_AND_LIFECYCLE_REMEDIATION_PLAN.md` 已归档；EG0–EG4 已执行并经再次独立复核 `approved`。共享 root cursor/heartbeat 保留历史 attempt_0003 失败，当前成功指针精确指向 attempt_0005 与 `root_attempt_0005_*` 闭包。
-- 唯一活动计划为 `docs/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_PLAN.md`。AC0–AC3 先做旧 trace 只读诊断和 code/fixture/supervisor gate；AC4 最多按 support→containment→articulation 各运行一条全新 CPU/no-renderer identity，总上限 3 且不 retry；AC5–AC6 分类、闭包并 hard stop。
+- 当时唯一活动计划为 `docs/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_PLAN.md`；该执行计划现已完成并归档。AC0–AC3 先做旧 trace 只读诊断和 code/fixture/supervisor gate；AC4 最多按 support→containment→articulation 各运行一条全新 CPU/no-renderer identity，总上限 3 且不 retry；AC5–AC6 分类、闭包并 hard stop。
 - 三条 ER4、旧七条 TZ identity、Z5/AA5 和既有 EF/EG fixture 均禁止作为历史结果重跑。GPU0–3、official GPU、Teleop、generation/replay、accepted 数据、训练/norm、FAST/export、新 candidate ZIP、上传/提交均不授权。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准；不得从归档计划的未执行尾部自行恢复任务。
@@ -336,6 +336,14 @@ EG3 确认顶层 `latest_audited_execution_commit`、`latest_audit_input_commit`
 旧 EG 计划保持归档。唯一活动计划为 `docs/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_PLAN.md`：AC0–AC3 只读诊断并冻结 acquisition/runtime/supervisor 合同，随后最多三族各一条全新 CPU/no-renderer canary，无 retry；正常 family failure 隔离，共享 infrastructure failure sticky hard stop。成功也只到 `pending_replay_review`；不授权任何 GPU、generation/replay、accepted data、训练、FAST/ZIP、上传或提交。完整审核见 `docs/reviews/axis_pi05/TRACK3_EG0_EG4_REAUDIT_AND_NEXT_PLAN_20260906.md`。
 
 生命周期更新后的最终验证为 strict JSON `97/97`、targeted `19 passed`、项目全量 `339 passed, 7 skipped, 23 warnings`；py_compile、diff-check、无 partial、process/GPU 边界通过，OpenPI clean，LIBERO-plus 既有 dirty 保持不变。
+
+## 3.30 AC0–AC6 Acquisition Canary 执行收尾（2026-09-06）
+
+AC0–AC3 已完成：三族旧 ER trace 只读诊断为 `155/149/180` steps；runtime-derived acquisition/contact/saturation/stage/source-goal contract、typed fixture、clean-source parent→child identity、resume、singleton、周期 heartbeat、TERM→KILL/no-descendant 和 sticky supervisor fixture 均执行。一次 timeout fixture 的 SIGKILL 在 atomic heartbeat 写入中留下 partial，已用独立 observation 记录原 bytes/SHA 后清除；不得把该记录解释为原始 partial 从未发生。
+
+AC4 严格按 support→containment→articulation 各执行一次全新 CPU/no-renderer identity，共 `3/3`，无 retry、无 GPU、无 shared infrastructure failure；三族均为独立正常 `family_failure`，不是 evaluator/model 结论。AC5 保持 `success=0`、`pending_replay_review=0`、`exact=0`、`accepted=0`、`training_eligible=0`。
+
+AC6 attempt-specific finalizer 已完成：strict JSON `20/20`、定向 `7 passed`、全量 `346 passed, 7 skipped, 23 warnings`、typed NPZ/CSV、manifest/outer/pointer、py_compile、diff-check、无 partial、无 live Track3 worker、GPU0–3 compute empty，closed heartbeat 与 inactive cursor 均通过。证据位于 `data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/attempts/attempt_0001/`；旧 ER/EG namespace 未修改。当前已 hard stop，活动计划仅为 `docs/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_INDEPENDENT_AUDIT_PLAN.md`，等待独立审核；未授权 physics、GPU、旧 identity、generation/replay、训练、ZIP、上传或提交。
 
 ## 4. 保留但非活动的研究线
 

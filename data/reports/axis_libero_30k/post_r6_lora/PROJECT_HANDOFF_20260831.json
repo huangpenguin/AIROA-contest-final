@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-06",
-  "status": "track3_crossfamily_acquisition_recovery_canary_planned",
+  "status": "track3_crossfamily_acquisition_recovery_canary_completed_hard_stop",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
   "latest_audited_execution_commit": "5d20e25d3890e937c0278ea2656236449b82898f",
-  "latest_audit_input_commit": "5d20e25d3890e937c0278ea2656236449b82898f",
-  "latest_execution_root_commit": "0799142b92ad3e799dd2d1b78ca964f07dd87587",
+  "latest_audit_input_commit": "afabffdb2124a870dd16bd9e2fcf3ba9df246327",
+  "latest_execution_root_commit": "afabffdb2124a870dd16bd9e2fcf3ba9df246327",
   "latest_execution_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
@@ -259,8 +259,8 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_PLAN.md",
-  "next_phase_only": "AC0_to_AC6_then_hard_stop",
+  "next_plan": "docs/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_INDEPENDENT_AUDIT_PLAN.md",
+  "next_phase_only": "independent_audit_required",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -4522,12 +4522,12 @@
       "reconstructed": false
     },
     "historical_evidence_rewritten": false,
-    "next_plan": "docs/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_PLAN.md",
-    "next_phase_only": "AC0_to_AC6_then_hard_stop"
+    "next_plan": "docs/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_INDEPENDENT_AUDIT_PLAN.md",
+    "next_phase_only": "independent_audit_required"
   },
   "track3_crossfamily_acquisition_recovery_canary_authorization": {
-    "status": "authorized_not_started",
-    "plan": "docs/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_PLAN.md",
+    "status": "completed_hard_stop",
+    "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_PLAN.md",
     "audit_input_root_commit": "4bbfe7eb7fdb404085f39712aae94572c9d0fbce",
     "authorized_phases": ["AC0", "AC1", "AC2", "AC3", "AC4", "AC5", "AC6_closeout"],
     "new_cpu_physics_identities_max": 3,
@@ -4559,6 +4559,20 @@
       "upload": false,
       "submission": false
     },
-    "next_phase_only": "AC0_to_AC6_then_hard_stop"
+    "next_phase_only": "independent_audit_required",
+    "execution": {
+      "source_commit": "afabffdb2124a870dd16bd9e2fcf3ba9df246327",
+      "evidence_root": "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/attempts/attempt_0001",
+      "attempt_id": 1,
+      "phase_status": {"AC0": "passed", "AC1": "passed", "AC2": "passed", "AC3": "passed", "AC4": "completed_three_family_failures", "AC5": "passed", "AC6": "passed_hard_stop"},
+      "actual_new_cpu_identities": ["ac_support_remove_20260906_0001", "ac_containment_remove_20260906_0001", "ac_articulation_close_20260906_0001"],
+      "family_status": {"support_remove": "family_failure", "containment_remove": "family_failure", "articulation_close": "family_failure"},
+      "counts": {"success": 0, "pending_replay_review": 0, "exact": 0, "accepted": 0, "training_eligible": 0},
+      "final_validation": {"status": "passed", "strict_json": "20/20", "targeted_tests": "7 passed", "full_tests": "346 passed, 7 skipped, 23 warnings", "manifest_entries": 28, "closed_heartbeat": true, "inactive_cursor": true, "no_partial": true, "process_workers": 0, "gpu_compute_apps": 0},
+      "partial_observation": {"path": "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/attempts/attempt_0001/ac3_partial_residue_observation.json", "derived_observation_preserved": true, "raw_partial_bytes_preserved": false, "reconstructed": false, "historical_namespaces_modified": false},
+      "historical_er_eg_namespaces_modified": false,
+      "hard_stop": true
+    },
+    "next_plan": "docs/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_INDEPENDENT_AUDIT_PLAN.md"
   }
 }

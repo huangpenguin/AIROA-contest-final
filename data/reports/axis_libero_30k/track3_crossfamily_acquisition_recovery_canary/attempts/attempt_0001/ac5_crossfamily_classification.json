@@ -1,0 +1,41 @@
+{
+  "accepted_data_count": 0,
+  "all_failures_are_executor_contract_results": true,
+  "classification_is_independent": true,
+  "exact_count": 0,
+  "family_results": {
+    "articulation_close": {
+      "family_failure": [
+        "ac_articulation_close_20260906_0001"
+      ],
+      "infrastructure_failure": [],
+      "not_evaluated": [],
+      "success": []
+    },
+    "containment_remove": {
+      "family_failure": [
+        "ac_containment_remove_20260906_0001"
+      ],
+      "infrastructure_failure": [],
+      "not_evaluated": [],
+      "success": []
+    },
+    "support_remove": {
+      "family_failure": [
+        "ac_support_remove_20260906_0001"
+      ],
+      "infrastructure_failure": [],
+      "not_evaluated": [],
+      "success": []
+    }
+  },
+  "generation": false,
+  "gpu": false,
+  "pending_replay_review_count": 0,
+  "replay_executed": false,
+  "schema_version": "track3_ac5_crossfamily_classification_v1",
+  "status": "passed",
+  "success_disposition": {},
+  "training": false,
+  "training_eligible_count": 0
+}

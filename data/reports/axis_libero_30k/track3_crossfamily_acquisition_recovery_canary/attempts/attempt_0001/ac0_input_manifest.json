@@ -1,0 +1,201 @@
+{
+  "authorized_audit_root_commit": "4bbfe7eb7fdb404085f39712aae94572c9d0fbce",
+  "bddl_files": [
+    {
+      "bytes": 3020,
+      "path": "data/reports/axis_libero_30k/track3_public_autogen/s3_reverse_specs/canary_support_remove_task_10.bddl",
+      "sha256": "8cbd2a5508922403699d35f08cb02501da58417c0ab1b96c350c0cfb681081f1"
+    },
+    {
+      "bytes": 2210,
+      "path": "data/reports/axis_libero_30k/track3_public_autogen/s3_reverse_specs/canary_containment_remove_task_20.bddl",
+      "sha256": "5e7a15c4606ce9c58e078b446dec28ab26c8850f0040f6e4bc30198a75283c54"
+    },
+    {
+      "bytes": 3020,
+      "path": "data/reports/axis_libero_30k/track3_public_autogen/s3_reverse_specs/canary_articulation_close_task_19.bddl",
+      "sha256": "54f92ee202577d67180f246c62138f6ec6152ba4dbb75f8fd2e70e2cf2000352"
+    }
+  ],
+  "eg_audit_summary": {
+    "bytes": 3356,
+    "path": "data/reports/axis_libero_30k/track3_eg0_eg4_reaudit_20260906/summary.json",
+    "sha256": "8f3dfd2332ca6ff9c5029ab036181c33411330bb203e971adac88601d103cc39"
+  },
+  "eg_files": [
+    {
+      "bytes": 3356,
+      "path": "data/reports/axis_libero_30k/track3_eg0_eg4_reaudit_20260906/summary.json",
+      "sha256": "8f3dfd2332ca6ff9c5029ab036181c33411330bb203e971adac88601d103cc39"
+    },
+    {
+      "bytes": 424,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/latest_attempt.json",
+      "sha256": "9dbb2b13fe23c49646c144a66d4c4361ade524467c4c0a84896879a6a6d92f43"
+    },
+    {
+      "bytes": 4522,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0005/final_validation.json",
+      "sha256": "48b7a97b3a00dd4c239e62f1bab8b9235e3d7e3c159c67ecdc20311de2680f1c"
+    },
+    {
+      "bytes": 508,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0005/checkout_stable_closure.json",
+      "sha256": "5049761f7f1a3e55db0fd9b604ce38a6550d0b037470559ac19f3290b0a719ab"
+    },
+    {
+      "bytes": 19116,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/root_attempt_0005_artifact_manifest.json",
+      "sha256": "54e6c47c3ae3069b250ee24599437f9734814a3b3b18e28787bbc400bd59d4ae"
+    },
+    {
+      "bytes": 300,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/root_attempt_0005_outer_hash.json",
+      "sha256": "893bfc90673169fbe37e9251e53a8f9d3342dfbecd5cfed4cc6ff5643253964d"
+    },
+    {
+      "bytes": 1246,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/root_attempt_0005_checkout_stable_closure.json",
+      "sha256": "49cd19e55f580c55115ef0271240207e316f46e6ade75ff34d8aeee0498d15c7"
+    }
+  ],
+  "er_files": [
+    {
+      "bytes": 17800,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/runs/01_er_support_contact_repair_fresh.json",
+      "sha256": "3eaf9c9ccaad8c166aa9d28e225a61ae291aa068065f2328d9cb46069f318307"
+    },
+    {
+      "bytes": 17805,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/runs/02_er_containment_extract_fresh.json",
+      "sha256": "94dddf56e181d96edfc10d2bfceeaf6d19444e0db7e2ffbbf78f5260fce89d6c"
+    },
+    {
+      "bytes": 15462,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/runs/03_er_articulation_pull_fresh.json",
+      "sha256": "636afcf21203001fd1b0061b6fc6a878754185752a83aaade69ecb7941a6b494"
+    },
+    {
+      "bytes": 4756,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/runs/traces/er_support_contact_repair_fresh_demo0.npz",
+      "sha256": "2cf648745cd9750e429c31c9be020eed966dc5abc83378dc0247fa8f79b8df6b"
+    },
+    {
+      "bytes": 4657,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/runs/traces/er_containment_extract_fresh_demo0.npz",
+      "sha256": "23e6cd6f959c78a6627a783d35780b76668983b6aded57459f3e9f8e4b8076b1"
+    },
+    {
+      "bytes": 4692,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/runs/traces/er_articulation_pull_fresh_demo0.npz",
+      "sha256": "13ef104cc45e0242bc722556258d455946b8e74c055bb3ae8cfcb0ea24b8b500"
+    }
+  ],
+  "historical_namespaces_modified": false,
+  "libero_plus_porcelain_at_lock": [
+    "M libero/libero/benchmark/__init__.py",
+    "?? libero/__init__.py",
+    "?? libero/libero/assets",
+    "?? libero/libero/bddl_files/libero_t3",
+    "?? libero/libero/init_files/libero_t3"
+  ],
+  "openpi_head_at_lock": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "openpi_porcelain_at_lock": [],
+  "public_hdf5": [
+    {
+      "actions_dtype": "float64",
+      "actions_shape": [
+        90,
+        7
+      ],
+      "bytes": 468246288,
+      "family": "support_remove",
+      "init_state_sha256": "8c4ae412e216181c736f16a73ef8cd3bb8ecbd32e8ae49836e7f8b40eec0516c",
+      "model_file_bytes": 91305,
+      "model_file_sha256": "e9a508e1e98a7bd2631796a4c41476a449fd9821fb45837a27d2ebefd87c8830",
+      "path": "data/raw/public/libero_official_hdf5/libero_goal/put_the_bowl_on_the_plate_demo.hdf5",
+      "rewards_dtype": "uint8",
+      "rewards_shape": [
+        90
+      ],
+      "sha256": "e69528b0cf10dfc59b20698e12ec2affc03f3887309034d3eb74cac3ec929406",
+      "states0_equals_init_state": true,
+      "states_dtype": "float64",
+      "states_shape": [
+        90,
+        79
+      ],
+      "task_index": 10
+    },
+    {
+      "actions_dtype": "float64",
+      "actions_shape": [
+        126,
+        7
+      ],
+      "bytes": 696180446,
+      "family": "containment_remove",
+      "init_state_sha256": "4969ede2d8336a297864dea5996f30e93adb25c8a0956eec381ec7c1e1f4f218",
+      "model_file_bytes": 52728,
+      "model_file_sha256": "4e0497a77437ac5846c84c6bea8e08a9af66b11829f8edbe8bc692616a1be723",
+      "path": "data/raw/public/libero_official_hdf5/libero_object/pick_up_the_orange_juice_and_place_it_in_the_basket_demo.hdf5",
+      "rewards_dtype": "uint8",
+      "rewards_shape": [
+        126
+      ],
+      "sha256": "53e40490c62e94c678233eefbfd874a61c93d92c8088f59d426ae6c3fd90d288",
+      "states0_equals_init_state": true,
+      "states_dtype": "float64",
+      "states_shape": [
+        126,
+        110
+      ],
+      "task_index": 20
+    },
+    {
+      "actions_dtype": "float64",
+      "actions_shape": [
+        138,
+        7
+      ],
+      "bytes": 702223367,
+      "family": "articulation_close",
+      "init_state_sha256": "662983d89d2abb8cc80ea6349e252757d6c3b1e19034c28c658a3aea20a027b5",
+      "model_file_bytes": 91305,
+      "model_file_sha256": "ccf958ea89aa0e84e32cb90b99e31faf66f3cd5e33082f7d2a1d4444c4660257",
+      "path": "data/raw/public/libero_official_hdf5/libero_goal/open_the_middle_drawer_of_the_cabinet_demo.hdf5",
+      "rewards_dtype": "uint8",
+      "rewards_shape": [
+        138
+      ],
+      "sha256": "20252c7cf98cd7437061f7f200ae7b6cb6219fabbd53b4536dfaa8abda6ab737",
+      "states0_equals_init_state": true,
+      "states_dtype": "float64",
+      "states_shape": [
+        138,
+        79
+      ],
+      "task_index": 19
+    }
+  ],
+  "root_head_at_lock": "afabffdb2124a870dd16bd9e2fcf3ba9df246327",
+  "root_porcelain_at_lock": [],
+  "schema_version": "track3_ac0_input_manifest_v1",
+  "snapshot_files": [
+    {
+      "bytes": 760,
+      "path": "data/reports/axis_libero_30k/track3_public_terminal_recovery/snapshots/task_10/attempt_1/terminal_state.npy",
+      "sha256": "34e0c70edac11ce668e548c5cca308a9fbd16b64afc8726e8800280c8c82c66d"
+    },
+    {
+      "bytes": 1008,
+      "path": "data/reports/axis_libero_30k/track3_public_terminal_recovery/snapshots/task_20/attempt_1/terminal_state.npy",
+      "sha256": "7d3d2547794fef4576672e6f37b666700556f857f1afddf19a8e173139f2d3e8"
+    },
+    {
+      "bytes": 760,
+      "path": "data/reports/axis_libero_30k/track3_public_terminal_recovery/snapshots/task_19/attempt_1/terminal_state.npy",
+      "sha256": "0e2ee6afffe27c3ed8811b79a368111562b968ed381f3fb7388c68f2a6b1708e"
+    }
+  ]
+}

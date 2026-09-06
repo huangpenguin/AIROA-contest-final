@@ -76,5 +76,9 @@ def test_duplicate_json_keys_are_rejected(tmp_path: Path) -> None:
 
 def test_current_plan_is_the_only_active_plan() -> None:
     plan = Path(ac.PLAN)
-    assert plan.is_file()
-    assert "AC0" in plan.read_text(encoding="utf-8")
+    assert not plan.is_file()
+    active = Path(ac.ROOT) / "docs/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_INDEPENDENT_AUDIT_PLAN.md"
+    archived = Path(ac.ROOT) / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_PLAN.md"
+    assert active.is_file()
+    assert archived.is_file()
+    assert "只读独立审核" in active.read_text(encoding="utf-8")

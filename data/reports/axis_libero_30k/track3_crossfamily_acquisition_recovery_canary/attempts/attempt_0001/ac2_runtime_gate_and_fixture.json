@@ -1,0 +1,115 @@
+{
+  "contract": {
+    "acquisition_barrier": "required_demonstrator_contact_continuous_before_grasp_or_pull",
+    "approach_tolerance_m": 0.014,
+    "articulation_tolerance_m": 0.015,
+    "descend_tolerance_m": 0.012,
+    "goal_gate": "runtime_predicate_goal_true_continuously_after_goal_entry",
+    "gripper_commands": {
+      "closed": -1.0,
+      "neutral": 0.0,
+      "open": 1.0
+    },
+    "normalized_action_abs_limit": 1.0,
+    "osc_rotation_normalized_scale": 0.25,
+    "osc_translation_normalized_scale": 0.05,
+    "progress_window": 12,
+    "required_contact_window": 4,
+    "source_release": "runtime_predicate_source_false_after_acquisition",
+    "stall_epsilon_m": 1e-05
+  },
+  "fixture": {
+    "articulation_handle_pass": {
+      "contact_window": 4,
+      "executed": true,
+      "family": "articulation_close",
+      "min_window": 4,
+      "required": true,
+      "state": "passed",
+      "value": true
+    },
+    "support_fail": {
+      "contact_window": 0,
+      "executed": true,
+      "family": "support_remove",
+      "min_window": 4,
+      "reason": "required_contact_window_short",
+      "required": true,
+      "state": "failed",
+      "value": false
+    },
+    "support_pass": {
+      "contact_window": 4,
+      "executed": true,
+      "family": "support_remove",
+      "min_window": 4,
+      "required": true,
+      "state": "passed",
+      "value": true
+    },
+    "telemetry_drift": {
+      "errors": [
+        "sample_0:[]"
+      ],
+      "executed": true,
+      "reason": "sample_0:[]",
+      "required": true,
+      "sample_count": 1,
+      "state": "failed",
+      "value": false
+    },
+    "unentered_not_evaluated": {
+      "contact_window": 0,
+      "executed": false,
+      "family": "support_remove",
+      "min_window": 4,
+      "reason": "stage_not_entered",
+      "required": true,
+      "state": "not_evaluated",
+      "value": null
+    }
+  },
+  "gate_separation": {
+    "action_saturation_is_not_grandfathered": true,
+    "contact_roles_are_runtime_derived": true,
+    "later_stage_after_not_entered": "not_evaluated",
+    "telemetry_integrity_is_not_required_physical_contact": true
+  },
+  "gpu_compute_started": false,
+  "physics_started": false,
+  "schema_version": "track3_ac2_runtime_derived_gate_and_fixture_v1",
+  "status": "passed",
+  "typed_trace": {
+    "allow_pickle_false": true,
+    "arrays": {
+      "action_saturated": {
+        "dtype": "bool",
+        "shape": [
+          2
+        ]
+      },
+      "actions": {
+        "dtype": "float32",
+        "shape": [
+          2,
+          7
+        ]
+      },
+      "goal_known": {
+        "dtype": "bool",
+        "shape": [
+          2
+        ]
+      },
+      "source_known": {
+        "dtype": "bool",
+        "shape": [
+          2
+        ]
+      }
+    },
+    "errors": [],
+    "path": "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/attempts/attempt_0001/ac2_fixture_typed_trace.npz",
+    "status": "passed"
+  }
+}

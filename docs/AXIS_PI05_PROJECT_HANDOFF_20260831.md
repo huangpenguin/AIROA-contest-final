@@ -6,9 +6,9 @@
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_crossfamily_acquisition_recovery_canary_planned`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_PLAN.md`
-> 下一停止点：`AC0_to_AC6_then_hard_stop`
+> 当前总状态：`track3_crossfamily_acquisition_recovery_canary_completed_hard_stop`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_INDEPENDENT_AUDIT_PLAN.md`
+> 下一停止点：`independent_audit_required`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -905,3 +905,13 @@ EG4 `attempt_0005` 的定向测试为 `7 passed`，项目全量为 `332 passed, 
 唯一活动计划为 `docs/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_PLAN.md`。AC0–AC3 只读诊断 ER 的 support/containment/articulation trace 并实现 runtime-derived acquisition/saturation/contact/stage gate 与 supervisor fixture；AC4 固定顺序每族最多一条全新 CPU/no-renderer identity，总上限 3、无 retry。正常 family failure 不阻断其他冻结 family，共享 infrastructure failure sticky hard stop；AC5–AC6 分类、闭包并停止。成功也只到 `pending_replay_review`，不得 promotion。GPU0–3、official GPU、Teleop、generation/replay、accepted data、训练/norm、FAST/ZIP、上传与提交均未授权。
 
 生命周期更新后的最终验证为 strict JSON `97/97`、targeted `19 passed`、项目全量 `339 passed, 7 skipped, 23 warnings`；py_compile、diff-check、无 partial、process/GPU 边界通过，nested OpenPI clean，LIBERO-plus 既有 dirty 保持不变。
+
+## 81. AC0–AC6 Acquisition Canary 执行收尾（2026-09-06）
+
+AC0–AC3 完成了只读旧 ER trace 诊断、runtime-derived acquisition/contact/saturation/stage/source-goal contract、typed fixture 和 clean-source supervisor 生命周期回归。旧 trace 的实际长度为 support/containment/articulation=`155/149/180`；历史 NPZ 未发出的 contact pairs 保持 `not_evaluated`，没有重构。AC3 timeout fixture 的 SIGKILL 曾在 atomic heartbeat 写入中留下一个 190-byte partial，原 bytes/SHA 已记录于 `ac3_partial_residue_observation.json`，残留随后被清除；该 observation 不能解释为 raw 从未存在。
+
+AC4 按 support→containment→articulation 固定顺序各运行一次全新 CPU/no-renderer child，实际 identity 为 `ac_support_remove_20260906_0001`、`ac_containment_remove_20260906_0001`、`ac_articulation_close_20260906_0001`，共 `3/3`，无 retry、无 shared infrastructure failure。三族均为正常独立 `family_failure`：没有完整 stage→contact→source-release→goal 连续通过，因此没有 success、pending replay、exact 或 accepted data。AC5/summary 的 `training_eligible=false`，且没有 replay、generation、GPU、训练、norm、FAST/export、新 ZIP、上传或提交。
+
+AC6 attempt-specific evidence 位于 `data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/attempts/attempt_0001/`，`latest_attempt.json` 精确指向该 attempt。final validation 为 `passed`：strict JSON `20/20`、定向 `7 passed`、全量 `346 passed, 7 skipped, 23 warnings`、typed NPZ/CSV、manifest/outer/pointer、py_compile、diff-check、无 partial、无 Track3 worker、GPU0–3 compute empty；closed heartbeat、inactive cursor、checkout closure 通过。root/OpenPI clean，`LIBERO-plus` 原有 dirty 集合未触碰，ER/EG 历史 namespace 未修改。
+
+AC0–AC6 已 hard stop。原执行计划已归档；当前唯一活动计划为 `docs/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_INDEPENDENT_AUDIT_PLAN.md`，只授权对本次 attempt 做独立只读审核；不授权任何新 physics、旧 identity、GPU、generation/replay、训练、ZIP、上传或提交。

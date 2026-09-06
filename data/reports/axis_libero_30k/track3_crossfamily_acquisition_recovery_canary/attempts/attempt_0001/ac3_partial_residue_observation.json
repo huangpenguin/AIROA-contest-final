@@ -1,0 +1,12 @@
+{
+  "schema_version": "track3_ac3_partial_residue_observation_v1",
+  "status": "observed_and_preserved_as_derived_record",
+  "path": "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/attempts/attempt_0001/ac3_fixture/timeout_term_kill_descendant/heartbeat.json.partial",
+  "bytes": 190,
+  "sha256": "85980fcfb45dde3f948b341080c14323665639ac7155b23f2b585348a80031a3",
+  "cause": "SIGKILL interrupted an atomic heartbeat write during the timeout fixture",
+  "raw_bytes_reconstructed": false,
+  "historical_evidence_modified": false,
+  "cleanup_authorized": "remove_ephemeral_partial_after_hash_capture_before_AC6",
+  "independent_audit_attention": "AC3 implementation did not clean this partial automatically; do not treat AC3 as stronger than its recorded evidence"
+}

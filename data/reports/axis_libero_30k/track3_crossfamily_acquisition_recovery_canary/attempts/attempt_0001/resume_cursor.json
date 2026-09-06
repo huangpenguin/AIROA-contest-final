@@ -1,0 +1,8 @@
+{
+  "active": false,
+  "attempt_id": 1,
+  "final_status": "hard_stop",
+  "phase": "AC6",
+  "schema_version": "track3_ac_resume_cursor_v1",
+  "updated_at_utc": "2026-09-06T14:07:18.315175+00:00"
+}

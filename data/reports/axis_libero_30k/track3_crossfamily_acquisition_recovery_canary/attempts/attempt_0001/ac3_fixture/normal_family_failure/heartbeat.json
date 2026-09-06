@@ -1,0 +1,8 @@
+{
+  "mode": "family_failure",
+  "pid": 1651022,
+  "schema_version": "track3_ac_heartbeat_v1",
+  "sequence": 4,
+  "state": "child_running",
+  "updated_at_utc": "2026-09-06T14:03:25.910756+00:00"
+}

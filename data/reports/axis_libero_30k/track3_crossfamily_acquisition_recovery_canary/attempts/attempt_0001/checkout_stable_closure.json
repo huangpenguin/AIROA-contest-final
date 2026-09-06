@@ -1,0 +1,15 @@
+{
+  "artifact_manifest_sha256": "3c1f1e633ba3f68530ba81b8caff17cb409401016595945da6876eecb5a96de7",
+  "attempt_id": 1,
+  "closed_heartbeat_sha256": "aea973ea957b8996db2f348e1593f3cdc8f8869902914550a2642829f00298d3",
+  "final_validation_sha256": "f7ceea105f44786dfa8b75b60b5c914893feb09775ba4a39966270891237b579",
+  "historical_er_eg_namespaces_modified": false,
+  "inactive_cursor": true,
+  "next_authority": "independent_review_required",
+  "no_partial": true,
+  "openpi_porcelain": [],
+  "outer_hash_sha256": "f6be26d43df7e3ace538f309d2e8c2f26e99edc81fa0642affe44eed3652b657",
+  "root_porcelain": [],
+  "schema_version": "track3_ac6_checkout_stable_closure_v1",
+  "status": "passed"
+}

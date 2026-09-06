@@ -1,0 +1,8 @@
+{
+  "mode": "timeout",
+  "pid": 1651078,
+  "schema_version": "track3_ac_heartbeat_v1",
+  "sequence": 11,
+  "state": "child_running",
+  "updated_at_utc": "2026-09-06T14:03:27.211540+00:00"
+}

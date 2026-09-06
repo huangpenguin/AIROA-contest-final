@@ -1,0 +1,25 @@
+{
+  "attempt_id": 1,
+  "gpu_compute_started": false,
+  "historical_namespaces_modified": false,
+  "input_manifest": {
+    "path": "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/attempts/attempt_0001/ac0_input_manifest.json",
+    "sha256": "78fd8d0a1772ad302546f88f054f689af4a115984202accbb4a9443be57ed3f1"
+  },
+  "new_cpu_physics_identities_max": 3,
+  "old_identity_rerun": false,
+  "per_family_max": 1,
+  "physics_started": false,
+  "profile_lock": {
+    "path": "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/attempts/attempt_0001/ac0_profile_lock.json",
+    "sha256": "36423f1d87849d563f2fc696b9a3d19cde218e8e45e55a950b8bf83b4ba61b31"
+  },
+  "profile_order": [
+    "ac_support_remove_20260906_0001",
+    "ac_containment_remove_20260906_0001",
+    "ac_articulation_close_20260906_0001"
+  ],
+  "retry_allowed": false,
+  "schema_version": "track3_ac0_input_and_quota_lock_v1",
+  "status": "passed"
+}

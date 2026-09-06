@@ -1,0 +1,244 @@
+{
+  "clean_source": {
+    "clean_gate": {
+      "checked_fields": [
+        "root_commit",
+        "tool_sha256",
+        "openpi_commit",
+        "profile_lock_sha256",
+        "cuda_visible_devices",
+        "jax_platforms",
+        "mujoco_gl",
+        "root_porcelain_sha256",
+        "openpi_porcelain_sha256",
+        "libero_plus_porcelain_sha256",
+        "clean_root",
+        "command",
+        "command_hash"
+      ],
+      "mismatches": [],
+      "state": "passed"
+    },
+    "command_drift": {
+      "checked_fields": [
+        "root_commit",
+        "tool_sha256",
+        "openpi_commit",
+        "profile_lock_sha256",
+        "cuda_visible_devices",
+        "jax_platforms",
+        "mujoco_gl",
+        "root_porcelain_sha256",
+        "openpi_porcelain_sha256",
+        "libero_plus_porcelain_sha256",
+        "clean_root",
+        "command",
+        "command_hash"
+      ],
+      "mismatches": [
+        "command"
+      ],
+      "state": "failed"
+    },
+    "dirty_gate": {
+      "checked_fields": [
+        "root_commit",
+        "tool_sha256",
+        "openpi_commit",
+        "profile_lock_sha256",
+        "cuda_visible_devices",
+        "jax_platforms",
+        "mujoco_gl",
+        "root_porcelain_sha256",
+        "openpi_porcelain_sha256",
+        "libero_plus_porcelain_sha256",
+        "clean_root",
+        "command",
+        "command_hash"
+      ],
+      "mismatches": [
+        "root_porcelain_sha256",
+        "clean_root"
+      ],
+      "state": "failed"
+    },
+    "libero_plus_porcelain": [
+      "M libero/libero/benchmark/__init__.py",
+      "?? libero/__init__.py",
+      "?? libero/libero/assets",
+      "?? libero/libero/bddl_files/libero_t3",
+      "?? libero/libero/init_files/libero_t3"
+    ],
+    "openpi_porcelain": [],
+    "root_head": "afabffdb2124a870dd16bd9e2fcf3ba9df246327",
+    "root_porcelain": []
+  },
+  "gpu_compute_started": false,
+  "normal_family_failure": {
+    "child_pgid": 1651022,
+    "child_pid": 1651022,
+    "descendants_after_stop": [],
+    "heartbeat_sequences": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "identity_gate": {
+      "checked_fields": [
+        "root_commit",
+        "tool_sha256",
+        "openpi_commit",
+        "profile_lock_sha256",
+        "cuda_visible_devices",
+        "jax_platforms",
+        "mujoco_gl",
+        "root_porcelain_sha256",
+        "openpi_porcelain_sha256",
+        "libero_plus_porcelain_sha256",
+        "clean_root",
+        "command",
+        "command_hash"
+      ],
+      "mismatches": [],
+      "state": "passed"
+    },
+    "kill_sent": false,
+    "label": "normal_family_failure",
+    "mode": "family_failure",
+    "payload": {
+      "category": "family_failure",
+      "completed_at_utc": "2026-09-06T14:03:26.003644+00:00",
+      "cuda_initialized": false,
+      "identity": {
+        "clean_root": true,
+        "command": [
+          "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+          "-m",
+          "tools.axis_pi05.track3_crossfamily_acquisition_recovery_canary",
+          "--ac-fixture-child",
+          "--mode",
+          "family_failure",
+          "--result-output",
+          "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/attempts/attempt_0001/ac3_fixture/normal_family_failure/result.json",
+          "--heartbeat-output",
+          "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/attempts/attempt_0001/ac3_fixture/normal_family_failure/heartbeat.json",
+          "--expected-identity-file",
+          "/tmp/ac_expected_tpbz2k8u/expected.json",
+          "--expected-command-sha256",
+          "92308830bd64eccdba63c93c168d3423b84c356f2617134e77c64d8e1d3b14a5"
+        ],
+        "command_hash": "92308830bd64eccdba63c93c168d3423b84c356f2617134e77c64d8e1d3b14a5",
+        "cuda_visible_devices": "",
+        "jax_platforms": "cpu",
+        "libero_plus_porcelain": [
+          "M libero/libero/benchmark/__init__.py",
+          "?? libero/__init__.py",
+          "?? libero/libero/assets",
+          "?? libero/libero/bddl_files/libero_t3",
+          "?? libero/libero/init_files/libero_t3"
+        ],
+        "libero_plus_porcelain_sha256": "e34630b50279fe065af3a9a90a431e91b3faa6331b04aea35165e712dabf083b",
+        "mujoco_gl": "disable",
+        "openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+        "openpi_porcelain": [],
+        "openpi_porcelain_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "pgid": 1651022,
+        "pid": 1651022,
+        "profile_lock_sha256": "f8a1e54d1662377fc74567ddb2da9fddf0024f9be014dd17fd07dd53a007f041",
+        "root_commit": "afabffdb2124a870dd16bd9e2fcf3ba9df246327",
+        "root_porcelain": [],
+        "root_porcelain_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "tool_sha256": "3062ca7861dcf7941832562e5a3c914a94aa02a6497fb802ffda4684a4882c3d"
+      },
+      "identity_gate": {
+        "checked_fields": [
+          "root_commit",
+          "tool_sha256",
+          "openpi_commit",
+          "profile_lock_sha256",
+          "cuda_visible_devices",
+          "jax_platforms",
+          "mujoco_gl",
+          "root_porcelain_sha256",
+          "openpi_porcelain_sha256",
+          "libero_plus_porcelain_sha256",
+          "clean_root",
+          "command",
+          "command_hash"
+        ],
+        "mismatches": [],
+        "state": "passed"
+      },
+      "physics_steps": 0,
+      "profile_id": "ac_fixture",
+      "result_sha256": "72db1e1e7d28766967397eccfa9bdfc123ea278fd23af5d78a788801fbca5f87",
+      "schema_version": "track3_ac_fixture_result_v1",
+      "simulator_created": false,
+      "status": "family_failure",
+      "trace": {
+        "bytes": 20,
+        "path": "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/attempts/attempt_0001/ac3_fixture/normal_family_failure/result.trace.bin",
+        "sha256": "8d2a7ec5da59f444a15de137eaf4e7cb30375546542be8e622f99918745b8350"
+      }
+    },
+    "resume_gate": {
+      "mismatches": [],
+      "state": "passed"
+    },
+    "returncode": 0,
+    "stderr_tail": "",
+    "stdout_tail": "",
+    "term_sent": false,
+    "timed_out": false,
+    "unique_pid_pgid": true
+  },
+  "physics_started": false,
+  "resume_drift": {
+    "mismatches": [
+      "trace_hash"
+    ],
+    "state": "failed"
+  },
+  "resume_pass": {
+    "mismatches": [],
+    "state": "passed"
+  },
+  "schema_version": "track3_ac3_clean_source_supervisor_fixture_v1",
+  "singleton": {
+    "second_acquire_rejected": true,
+    "second_acquire_returncode": 0
+  },
+  "status": "passed",
+  "timeout_term_kill_no_descendant": {
+    "child_pgid": 1651078,
+    "child_pid": 1651078,
+    "descendants_after_stop": [],
+    "heartbeat_sequences": [
+      1
+    ],
+    "identity_gate": {
+      "mismatches": [
+        "identity_missing"
+      ],
+      "state": "failed"
+    },
+    "kill_sent": true,
+    "label": "timeout_term_kill_descendant",
+    "mode": "timeout",
+    "payload": {
+      "category": "infrastructure_failure",
+      "status": "infrastructure_failure"
+    },
+    "resume_gate": {
+      "mismatches": [],
+      "state": "not_evaluated"
+    },
+    "returncode": -9,
+    "stderr_tail": "",
+    "stdout_tail": "",
+    "term_sent": true,
+    "timed_out": true,
+    "unique_pid_pgid": true
+  }
+}

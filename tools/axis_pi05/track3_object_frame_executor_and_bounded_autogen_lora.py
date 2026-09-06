@@ -509,7 +509,10 @@ def _worker_profile(profile: Mapping[str, Any], result_path: Path) -> int:
         grasp = compose_object_to_eef(terminal_pose, relative)
         destination = compose_object_to_eef(state0_pose, relative)
         transport = compose_object_to_eef(state0_pose, relative, object_position_offset_m=(0.0, 0.0, 0.12))
-        base._configure_public_env(gpu=False)
+        # The public environment configuration belongs to the composed
+        # reverse-start runtime.  ``base`` only owns predicate/BDDL helpers
+        # and intentionally has no environment configurator.
+        composed._configure_public_env(gpu=False)
         from libero.libero.envs.env_wrapper import ControlEnv
 
         env = ControlEnv(bddl_file_name=str(base.REVERSE_BDDL[10]), control_freq=CONTROL_FREQ_HZ, use_camera_obs=False, has_renderer=False, has_offscreen_renderer=False, render_gpu_device_id=-1)

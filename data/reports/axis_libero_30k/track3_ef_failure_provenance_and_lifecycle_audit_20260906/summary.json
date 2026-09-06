@@ -1,0 +1,89 @@
+{
+  "schema_version": "track3_eg_independent_audit_v1",
+  "status": "approved",
+  "classification": "approved",
+  "audit_input_execution_source_commit": "0799142b92ad3e799dd2d1b78ca964f07dd87587",
+  "audit_input_evidence_commit": "5d20e25d3890e937c0278ea2656236449b82898f",
+  "audit_input_root_commit": "b1195dd59830f7c44d831bd0007e61229446d9b5",
+  "audit_report_commit": "separate_commit_after_audit_input_evidence",
+  "findings": {
+    "first_failed_raw_preserved_as_unavailable": true,
+    "no_raw_reconstruction_or_derived_raw_claim": true,
+    "historical_ef_er_tz_namespaces_unchanged_vs_074ccdf": true,
+    "eg1_fixture_fail_retry_bytes_unchanged": true,
+    "attempt_ids_monotonic_non_reusable": true,
+    "failed_attempts_preserved_without_overwrite": true,
+    "parent_child_identity_and_resume_contract": true,
+    "dirty_and_command_drift_fail_closed": true,
+    "lifecycle_pointers_and_plan_state_consistent": true,
+    "attempt_0005_manifest_outer_closure_exact": true,
+    "root_attempt_0005_manifest_outer_closure_exact": true,
+    "fallback_bytes_sha_crc_layout_fast_only": true,
+    "strict_json_duplicate_rejection": true,
+    "typed_npz_no_pickle_finite": true,
+    "csv_lf_only": true,
+    "targeted_and_full_tests_passed": true,
+    "process_and_gpu_boundary_empty": true,
+    "no_partial_files": true,
+    "no_forbidden_actions": true
+  },
+  "provenance_gap": {
+    "historical_derived_record": "data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/ef4_first_attempt_failure.json",
+    "historical_report_replaced_by_corrected_attempt": true,
+    "first_failed_final_validation_raw": "unavailable",
+    "first_failed_test_stdout_stderr_raw": "unavailable",
+    "first_failed_partial_inventory_raw": "unavailable",
+    "raw_recovery_candidate_found": false,
+    "reconstruction_forbidden": true
+  },
+  "attempts": {
+    "fixture": {"first": 1, "second": 2, "first_bytes_unchanged_after_retry": true},
+    "closeout": {
+      "attempt_0003": {"final_validation": "failed", "closure": "failed", "reason": "full_test_lifecycle_expectations", "preserved": true},
+      "attempt_0004": {"final_validation": "passed", "closure": "passed", "root_aggregate_collision": true, "preserved": true},
+      "attempt_0005": {"final_validation": "passed", "closure": "passed", "root_closure": "passed", "preserved": true}
+    },
+    "latest_attempt_id": 5,
+    "latest_pointer_only": true
+  },
+  "final_closeout": {
+    "evidence_root": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation",
+    "attempt_id": 5,
+    "attempt_final_validation_sha256": "48b7a97b3a00dd4c239e62f1bab8b9235e3d7e3c159c67ecdc20311de2680f1c",
+    "root_closure": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/root_attempt_0005_checkout_stable_closure.json",
+    "root_manifest_entries": 73,
+    "strict_json_files_after_evidence_commit": 94,
+    "typed_npz_files": 1,
+    "targeted_tests": "7 passed",
+    "full_tests": "332 passed, 7 skipped, 23 warnings",
+    "fallback": {"bytes": 9383571677, "sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a", "crc": "passed", "entries": 3401, "fast_only": true},
+    "process_workers": 0,
+    "gpu_compute_apps": 0,
+    "partial_files": 0,
+    "py_compile": true,
+    "git_diff_check": true
+  },
+  "resource_boundary": {
+    "new_physics_identities": 0,
+    "old_identity_rerun": false,
+    "gpu0": false,
+    "gpu1": false,
+    "gpu2": false,
+    "gpu3": false,
+    "generation": false,
+    "replay": false,
+    "training": false,
+    "new_candidate_zip": false,
+    "upload": false,
+    "submission": false
+  },
+  "machine_lifecycle": {
+    "latest_audited_execution_commit": "b1195dd59830f7c44d831bd0007e61229446d9b5",
+    "latest_audit_input_commit": "b1195dd59830f7c44d831bd0007e61229446d9b5",
+    "latest_execution_root_commit": "b1195dd59830f7c44d831bd0007e61229446d9b5",
+    "active_plan": null,
+    "next_phase_only": "new_reviewed_plan_required"
+  },
+  "historical_evidence_rewritten": false,
+  "hard_stop": {"status": "hard_stop", "next_authority": "new_reviewed_plan_required", "automatic_resume": false}
+}

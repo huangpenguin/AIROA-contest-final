@@ -5,7 +5,7 @@
   "audit_input_execution_source_commit": "0799142b92ad3e799dd2d1b78ca964f07dd87587",
   "audit_input_evidence_commit": "5d20e25d3890e937c0278ea2656236449b82898f",
   "audit_input_root_commit": "b1195dd59830f7c44d831bd0007e61229446d9b5",
-  "audit_report_commit": "separate_commit_after_audit_input_evidence",
+  "audit_report_commit": "ad4f34e81ccaa39397f5ac550dd41f21734f47cb",
   "findings": {
     "first_failed_raw_preserved_as_unavailable": true,
     "no_raw_reconstruction_or_derived_raw_claim": true,
@@ -56,6 +56,8 @@
     "typed_npz_files": 1,
     "targeted_tests": "7 passed",
     "full_tests": "332 passed, 7 skipped, 23 warnings",
+    "post_audit_targeted_tests": "14 passed",
+    "post_audit_full_tests": "334 passed, 7 skipped, 23 warnings",
     "fallback": {"bytes": 9383571677, "sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a", "crc": "passed", "entries": 3401, "fast_only": true},
     "process_workers": 0,
     "gpu_compute_apps": 0,

@@ -16,7 +16,7 @@ def test_er_audit_has_one_remediation_verdict_and_ef_is_closed() -> None:
     handoff = json.loads(HANDOFF.read_text(encoding="utf-8"))
     audit = json.loads(AUDIT.read_text(encoding="utf-8"))
     assert audit["classification"] == audit["status"] == "remediation_required"
-    assert handoff["status"] == "track3_ef_failure_provenance_and_lifecycle_remediation_completed_hard_stop_pending_independent_audit"
+    assert handoff["status"] == "track3_ef_failure_provenance_and_lifecycle_remediation_completed_hard_stop"
     assert handoff["next_plan"] is None
     assert audit["next_plan"] == PLAN
     assert audit["next_phase_only"] == "EF0_to_EF4_then_hard_stop"

@@ -3,8 +3,8 @@
 > 更新日期：2026-09-06（Asia/Tokyo）
 > 跨session入口：先完整读取根目录`AGENTS.md`与`MEMORY.md`，再读取本索引、handoff、machine JSON、唯一活动计划和最新审核；先查live PID/cursor，禁止重复启动。
 > 当前唯一活动计划：无（EG0–EG4 已执行并 hard stop，等待独立审核）
-> 当前状态：`track3_ef_failure_provenance_and_lifecycle_remediation_completed_hard_stop_pending_independent_audit`
-> 最新审核：`docs/reviews/axis_pi05/TRACK3_EF0_EF4_INDEPENDENT_AUDIT_20260906.md`
+> 当前状态：`track3_ef_failure_provenance_and_lifecycle_remediation_completed_hard_stop`
+> 最新审核：`docs/reviews/axis_pi05/TRACK3_EF_FAILURE_PROVENANCE_AND_LIFECYCLE_REMEDIATION_AUDIT_20260906.md`
 
 ## 1. 本轮执行停止点
 
@@ -28,7 +28,7 @@ ER审核确认三条新CPU/no-renderer canary均为有效诊断性`family_failur
 
 - `AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md` 已归档；EF0–EF4 完成并 hard stop。EF0–EF3 技术合同、corrected EF4 checkout closure 与 fallback 机械属性经独立复核成立。
 - 既有 EF `approved` 审核与 execution/evidence 同在 `b1195dd`，且其引用的 `ef4_first_attempt_failure.json` 明确承认首次失败 report 被 corrected attempt 覆盖。首次失败 raw 当前不可恢复，不能用派生说明替代；本轮唯一结论修正为 `remediation_required`。
-- `AXIS_PI05_TRACK3_EF_FAILURE_PROVENANCE_AND_LIFECYCLE_REMEDIATION_PLAN.md` 已归档；EG0–EG4 已执行并 hard stop，新的独立审核尚未完成。当前没有活动计划，`next_phase_only=independent_audit_required`。
+- `AXIS_PI05_TRACK3_EF_FAILURE_PROVENANCE_AND_LIFECYCLE_REMEDIATION_PLAN.md` 已归档；EG0–EG4 已执行并经独立审核 `approved`，当前没有活动计划，`next_phase_only=new_reviewed_plan_required`。
 - 三条 ER4、旧七条 TZ identity 和既有 EF fixture 均禁止作为历史结果重跑。任何新 physics、GPU0–3、官方 GPU、Teleop、generation/replay、accepted 数据、训练/norm、新 candidate ZIP、上传/提交均不授权。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准；不得从归档计划的未执行尾部自行恢复任务。
@@ -319,6 +319,12 @@ EG1 的无 physics fixture `attempt_0001→0002` 实测 fail→retry 后首个 a
 EG2 从 clean source `0799142b92ad3e799dd2d1b78ca964f07dd87587` 执行 finalizer 合同；clean root、root/tool/OpenPI/command/profile identity 及 dirty/command drift fail-close 回归通过。机器字段分别记录 execution source、audit input 和后续 audit lifecycle commit，未生成同提交独立审核。
 
 EG3 确认顶层 `latest_audited_execution_commit`、`latest_audit_input_commit`、`latest_execution_root_commit` 均精确指向 `b1195dd59830f7c44d831bd0007e61229446d9b5`；当前无活动计划，`next_phase_only=independent_audit_required`。EG4 在 `attempt_0005` 完成：定向 `7 passed`，全量 `332 passed, 7 skipped, 23 warnings`，strict JSON `72`，typed NPZ `1/1` no-pickle/finite，CSV LF、py_compile、diff-check、无 partial、无 worker、GPU0–3 compute empty；既有 fallback 仍为 `9383571677` bytes、SHA `95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a`、CRC passed、3401 entries、FAST-only。没有新 physics identity、旧 identity 重跑、generation/replay、训练、新 candidate ZIP、上传或提交；已 hard stop，等待不同提交的独立审核。
+
+## 3.28 EG0–EG4 独立审核与最终 hard stop（2026-09-06）
+
+独立审核输入为 execution source `0799142b92ad3e799dd2d1b78ca964f07dd87587`、evidence commit `5d20e25d3890e937c0278ea2656236449b82898f` 和冻结审核输入 `b1195dd59830f7c44d831bd0007e61229446d9b5`；审核报告提交为 `ad4f34e81ccaa39397f5ac550dd41f21734f47cb`，与 execution/evidence 分离。审核逐个重算 attempt/root manifest、outer/closure、strict JSON `94/94`、NPZ/CSV、fallback、无 partial、进程/GPU 边界，确认首次失败 raw 三项均诚实为 `unavailable`，attempt_0003/0004 失败记录未被覆盖，attempt_0005 完整通过。
+
+本轮唯一独立审核结论为 `approved`。EG0–EG4 的证据治理缺口已关闭；最终 lifecycle 回归为定向 `14 passed`、全量 `334 passed, 7 skipped, 23 warnings`。该结论不释放 physics、GPU、旧 identity、generation/replay、训练、candidate ZIP、上传或提交；当前 hard stop，下一权限为 `new_reviewed_plan_required`。
 
 ## 4. 保留但非活动的研究线
 

@@ -41,11 +41,11 @@ def test_existing_corrected_checkout_closure_remains_exact() -> None:
     assert sha256(EF_ROOT / "heartbeat.json") == closure["closed_heartbeat_sha256"]
 
 
-def test_lifecycle_closes_eg_and_waits_for_independent_audit() -> None:
+def test_lifecycle_closes_eg_after_independent_audit() -> None:
     handoff = json.loads(HANDOFF.read_text(encoding="utf-8"))
-    assert handoff["status"] == "track3_ef_failure_provenance_and_lifecycle_remediation_completed_hard_stop_pending_independent_audit"
+    assert handoff["status"] == "track3_ef_failure_provenance_and_lifecycle_remediation_completed_hard_stop"
     assert handoff["next_plan"] is None
-    assert handoff["next_phase_only"] == "independent_audit_required"
+    assert handoff["next_phase_only"] == "new_reviewed_plan_required"
     assert not (ROOT / PLAN).exists()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md").exists()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md").is_file()
@@ -56,7 +56,7 @@ def test_eg_authorization_remains_code_fixture_only() -> None:
     handoff = json.loads(HANDOFF.read_text(encoding="utf-8"))
     auth = handoff["track3_ef_failure_provenance_and_lifecycle_remediation_authorization"]
     assert auth["plan"] == PLAN
-    assert auth["status"] == "completed_hard_stop_pending_independent_audit"
+    assert auth["status"] == "completed_hard_stop"
     assert auth["authorized_phases"] == ["EG0", "EG1", "EG2", "EG3", "EG4_closeout"]
     for key in ("new_physics", "old_identity_rerun", "gpu0", "gpu1", "gpu2", "gpu3", "official_gpu", "teleop", "generation", "replay", "accepted_data", "training", "new_candidate_zip", "upload", "submission"):
         assert auth["authorization"][key] is False

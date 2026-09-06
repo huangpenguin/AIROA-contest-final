@@ -1,15 +1,14 @@
 # AXIS Pi0.5 Track 3：ER 证据锚定与 Finalizer 验证计划
 
-> 制定日期：2026-09-06（Asia/Tokyo）
-> 审核输入：root `c2d9f23bb0bbe13a0860aeb4fecf3a75c932ae0d`
-> ER worker source：`04eef24161bfe62adc9a51378235f73b34e6ac51`
-> nested OpenPI：`b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`
-> 当前状态：`track3_er_evidence_anchor_and_finalizer_verification_planned`
-> 唯一授权链：`EF0_to_EF4_then_hard_stop`
-> 用户人工操作：`not_required`
-> 不授权：任何新physics identity或旧identity重跑、GPU0–3、官方GPU、Teleop、generation/replay、accepted数据、训练/norm、FAST重导出、新candidate ZIP、上传或比赛提交
+> 归档日期：2026-09-06（Asia/Tokyo）
+> 归档状态：EF0–EF4 completed; independently audited `approved`; hard stop
+> 原计划输入：root `c2d9f23bb0bbe13a0860aeb4fecf3a75c932ae0d`
+> EF0 anchor commit：`38635fbf08e4e8df8c4877ddcb6b2b2ec8b9b118`
+> 下一权限：`new_reviewed_plan_required`
 
 本计划只修复 ER0–ER5 审核发现的证据持久化、resume identity、contact gate 和 finalizer 验证缺口。三条 ER4 identity 已消耗，原始 raw/NPZ/status、旧 TZ 证据和 R6 fallback 均只读；不得重新运行或改写。
+不授权任何新physics identity或旧identity重跑。
+不授权 GPU0–3、official GPU、Teleop、generation、replay、training、candidate ZIP、upload 或 submission。
 
 ## 0. EF0：ER 原始证据逐字节锚定
 
@@ -42,3 +41,8 @@
 - `final_validation.status` 必须纳入 ZIP expected bytes/SHA/CRC/layout、process scan、GPU boundary、targeted/full return code、manifest/outer hash和无 partial；禁止硬编码 live PID 空列表。
 - 将所有小型 evidence、测试结果和最终 validation 跟踪入 Git；commit 后再次 strict parse/hash/diff-check，并写 checkout-stable 派生 closure。
 - 无论通过或失败均 hard stop，下一权限为 `new_reviewed_plan_required`。不运行任何 ER/TZ identity，不产生训练数据或新 ZIP。
+
+## 5. 实际收尾
+
+- EF0–EF4 已按顺序完成；新 EF namespace 记录 code-only identity/contact fixture、fallback inventory、真实 process/GPU scan、targeted/full tests、final validation 和 closed heartbeat。
+- 独立审核结论为 `approved`；旧 ER/TZ identity 未重跑，GPU compute、physics、generation、replay、training、candidate ZIP、upload 和 submission 均未执行。

@@ -1,0 +1,9 @@
+{
+  "final_status": "hard_stop",
+  "final_validation_status": "passed",
+  "phase": "EF4",
+  "pid": 1615743,
+  "schema_version": "track3_ef_heartbeat_v1",
+  "state": "closed",
+  "updated_at_utc": "2026-09-06T11:41:28.116255+00:00"
+}

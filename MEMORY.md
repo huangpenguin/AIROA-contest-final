@@ -12,7 +12,7 @@ Read in this order:
 3. `docs/AXIS_PI05_PLAN_INDEX.md`
 4. `docs/AXIS_PI05_PROJECT_HANDOFF_20260831.md`
 5. `data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json`
-6. the one active plan referenced by machine JSON `next_plan`
+6. the one active plan referenced by machine JSON `next_plan`, if non-null
 7. the latest audit referenced by the plan index
 8. the active run's summary/cursor/PID/heartbeat, if any
 
@@ -33,12 +33,12 @@ If these disagree, stop mutation, audit the discrepancy and repair the handoff i
 
 - Repository: `/home/huang/code/PARC2026_final`
 - Branch: `codex/axis-pi05-audit-remediation`; no upstream recorded.
-- Memory input HEAD: `c2d9f23bb0bbe13a0860aeb4fecf3a75c932ae0d`.
+- EF0 anchor input HEAD: `38635fbf08e4e8df8c4877ddcb6b2b2ec8b9b118`; final lifecycle state is captured by the clean closeout commit.
 - Latest audited execution: `c2d9f23bb0bbe13a0860aeb4fecf3a75c932ae0d` (ER0–ER5 execution closeout).
 - Nested OpenPI: `third_party/axis_openpi` at `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`, clean at review.
 - `LIBERO-plus` has pre-existing dirty files. They belong to the user/project and must not be reset, cleaned, overwritten or silently committed.
-- Current state at this refresh: `track3_er_evidence_anchor_and_finalizer_verification_planned`.
-- Active plan: `docs/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md`.
+- Current state at this refresh: `track3_er_evidence_anchor_and_finalizer_verification_completed_hard_stop`.
+- Active plan: none; the EF plan is archived after independent approval, and `new_reviewed_plan_required` is the next authority.
 - ER0–ER5 is audited `remediation_required`. The explicitly labeled fallback and three new diagnostic family failures are valid, but the ignored evidence, resume identity, required-contact and finalizer contracts are not approved. EF0–EF4 authorizes only exact-byte evidence anchoring and code/fixture verification; no new physics, GPU, generation, replay, training, candidate, upload or submission.
 - Z0–Z14 execution evidence is in `data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/`; its audit is `docs/reviews/axis_pi05/TRACK3_Y3_LAUNCH_Z0_Z14_AUDIT_20260906.md`. Historical parent remains infrastructure while physical result is derived nominal family failure. Z6–Z13 remain `not_evaluated`; before any AA execution, recheck live supervisor/PID/cursor, dirty worktree and GPU boundaries. Never start a duplicate run.
 
@@ -179,3 +179,9 @@ After a phase completes, the reviewing agent must refresh this file only when st
 - Verdict: `remediation_required`. Valid facts remain immutable: fallback SHA/CRC/3401/FAST-only, old TZ failure semantics, and three ER4 family failures at 155/149/180 steps with source true, goal false and typed no-pickle traces.
 - ER evidence is locally complete enough to inspect but not checkout-stable: `0/29` files are tracked. The 26-entry manifest and outer hash are exact on the current machine, not anchored in any execution commit.
 - The next plan is EF0–EF4 only: exact-byte Git anchoring, full parent/child/resume identity, real no-physics supervisor regressions, required-contact gate semantics and a finalizer whose pass status covers ZIP/process/GPU/tests. All consumed identities and all GPU/data/training/ZIP expansion remain prohibited.
+
+## 17. EF0–EF4 Evidence Anchor / Finalizer result (2026-09-06)
+
+- EF0 anchored all 29 ER evidence files byte-for-byte in commit `38635fbf08e4e8df8c4877ddcb6b2b2ec8b9b118`; commit read/hash and worktree hashes were `29/29` exact. The old ER namespace persistence distinction remains explicit: 24 Git-persisted records and 6 local NPZ records.
+- EF1 froze parent-provided root/tool/OpenPI/profile/command, porcelain and digest fields plus CPU/no-renderer environment; real drift probes and legal resume passed, while trace bytes/SHA drift failed closed. EF2's no-physics fixture passed singleton lock, heartbeat sequence, TERM→KILL, no-descendant and sticky stop. EF3 separated telemetry schema completeness from physical required contact with pass/fail/not_evaluated fixtures.
+- EF4's new namespace records the real fallback ZIP check, process/GPU scan, targeted/full tests, manifest/outer hash, final validation and `state=closed` heartbeat. No physics identity, GPU compute, generation, replay, accepted data, training, candidate ZIP, upload or submission occurred. Independent audit is `approved`; no active plan remains.

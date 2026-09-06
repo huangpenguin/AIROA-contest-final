@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-06",
-  "status": "track3_er_evidence_anchor_and_finalizer_verification_planned",
+  "status": "track3_er_evidence_anchor_and_finalizer_verification_completed_hard_stop",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
@@ -259,8 +259,8 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md",
-  "next_phase_only": "EF0_to_EF4_then_hard_stop",
+  "next_plan": null,
+  "next_phase_only": "new_reviewed_plan_required",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -4307,7 +4307,7 @@
     "next_plan_approved": true
   },
   "track3_er_evidence_anchor_and_finalizer_verification_authorization": {
-    "status": "track3_er_evidence_anchor_and_finalizer_verification_planned",
+    "status": "track3_er_evidence_anchor_and_finalizer_verification_completed_and_audited_approved",
     "plan": "docs/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md",
     "audited_input_commit": "c2d9f23bb0bbe13a0860aeb4fecf3a75c932ae0d",
     "authorized_phases": ["EF0", "EF1", "EF2", "EF3", "EF4_closeout"],
@@ -4334,6 +4334,36 @@
       "upload": false,
       "submission": false
     },
-    "next_phase_only": "EF0_to_EF4_then_hard_stop"
+    "next_phase_only": "new_reviewed_plan_required"
+  },
+  "track3_er_evidence_anchor_and_finalizer_verification_execution": {
+    "status": "track3_er_evidence_anchor_and_finalizer_verification_completed_hard_stop",
+    "execution_parent_commit": "38635fbf08e4e8df8c4877ddcb6b2b2ec8b9b118",
+    "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "evidence_root": "data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification",
+    "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md",
+    "phase_status": {"EF0": "passed", "EF1": "passed", "EF2": "passed", "EF3": "passed", "EF4": "passed_hard_stop"},
+    "new_physics_identities": 0,
+    "old_er_or_tz_identity_rerun": false,
+    "supervisor_fixture": {"singleton": "passed", "periodic_heartbeat_updates": ">=4", "normal_family_failure_returncode": 0, "timeout_order": ["SIGTERM", "grace", "SIGKILL"], "no_descendants": true, "sticky_stop": "passed"},
+    "identity_resume": {"complete_parent_child_fields": "passed", "drift_probes": ["root_dirty", "openpi", "libero_plus", "command", "trace_bytes_sha256"], "legal_resume": "passed"},
+    "contact_gate": {"telemetry_schema_and_physical_required_contact_separate": true, "zero_correlated_contact": "failed", "unentered_stage": "not_evaluated", "typed_no_pickle_finite": true},
+    "fallback": {"kind": "r6_fallback", "readiness": "fallback_no_track3_improvement", "bytes": 9383571677, "sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a", "crc_test": "passed", "entry_count": 3401, "new_candidate_zip_created": false},
+    "final_manifest": "data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/artifact_manifest.json",
+    "outer_hash": "data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/outer_hash.json",
+    "final_validation": "data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/final_validation.json",
+    "closed_heartbeat": "data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/heartbeat.json",
+    "tests": {"targeted": "7 passed", "full": "320 passed, 7 skipped, 23 warnings", "returncodes": {"targeted": 0, "full": 0}},
+    "resource_boundary": {"gpu0": false, "gpu1": false, "gpu2": false, "gpu3": false, "official_gpu": false, "physics": false, "generation": false, "replay": false, "accepted_data": false, "training": false, "new_candidate_zip": false, "upload": false, "submission": false},
+    "hard_stop": {"status": "hard_stop", "next_authority": "new_reviewed_plan_required"},
+    "historical_evidence_rewritten": false
+  },
+  "track3_er_evidence_anchor_and_finalizer_verification_audit": {
+    "status": "approved",
+    "classification": "approved",
+    "audit_report": "docs/reviews/axis_pi05/TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_AUDIT_20260906.md",
+    "audit_summary": "data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/audit_summary.json",
+    "next_plan": null,
+    "next_phase_only": "new_reviewed_plan_required"
   }
 }

@@ -1,0 +1,5 @@
+{
+  "schema_version": "ef_sticky_state_v1",
+  "stop_latched": true,
+  "stop_reason": "fixture_shared_infrastructure_failure"
+}

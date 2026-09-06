@@ -1,0 +1,79 @@
+{
+  "entries": [
+    {
+      "bytes": 11140,
+      "path": "data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/ef0_byte_anchor.json",
+      "sha256": "33a846a9cdad159df7a430df4eb157405590813d797291efba50062fcd2abd08"
+    },
+    {
+      "bytes": 5173,
+      "path": "data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/ef1_identity_and_resume.json",
+      "sha256": "68f7d8b2dbf1aac8f84ade99156e6a60075b3bc5bc987d6871336e1e4e76c409"
+    },
+    {
+      "bytes": 12,
+      "path": "data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/ef1_resume_trace.bin",
+      "sha256": "a9ffc89992d0b0d85a36762e5caea49894abbcbe889c902539f7374c5719ede8"
+    },
+    {
+      "bytes": 7862,
+      "path": "data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/ef2_supervisor_fixture.json",
+      "sha256": "19700d23a2d9c5457e421fc2272b306415323258f6097621058a2d13351ad4a3"
+    },
+    {
+      "bytes": 2919,
+      "path": "data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/ef3_contact_gate.json",
+      "sha256": "9e20fdbf6525c7d99b16c05f1f2fb927c4ede5c7b949990bedfc84185f95f666"
+    },
+    {
+      "bytes": 641,
+      "path": "data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/ef3_typed_trace.npz",
+      "sha256": "93fff0e7fac666a264c643598f5eda2e0647d5fbf3f5f61f52b2822d442ae9c2"
+    },
+    {
+      "bytes": 977,
+      "path": "data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/ef4_first_attempt_failure.json",
+      "sha256": "4430c16d91216908b52f958cdd0b07bc51b86ace230d92a28a5d8efe3dbead3f"
+    },
+    {
+      "bytes": 385,
+      "path": "data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/execution_summary.json",
+      "sha256": "033a2d6ffe145b4271f2623dd9022696bb2a965c0fd8f2bd74b18721d932d47f"
+    },
+    {
+      "bytes": 4560,
+      "path": "data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/fixture/normal_family_failure/result.json",
+      "sha256": "9c57a164335acd37e89ecfbf19d939315c50785683a5509bffcb359b2aed735f"
+    },
+    {
+      "bytes": 20,
+      "path": "data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/fixture/normal_family_failure/trace.bin",
+      "sha256": "fd0790f35d7a9f1b25adf35954ed843392dbef91f0868f315c41cd9a0b9c5875"
+    },
+    {
+      "bytes": 89,
+      "path": "data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/fixture_supervisor.lock",
+      "sha256": "414024c98566401e55aad805e5a3346a396067bea9c52c2e1a7a325f6f315150"
+    },
+    {
+      "bytes": 78,
+      "path": "data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/phase_ledger.csv",
+      "sha256": "d04891f3f9aff4286f49bc273602a73b43344b76a41fd8328c7fe2b58f5ed983"
+    },
+    {
+      "bytes": 127,
+      "path": "data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/sticky_state.json",
+      "sha256": "d616dd1f7d9a4d8935148b182effc3731e758d7e0739953d27b2e3b543be7587"
+    }
+  ],
+  "excluded": [
+    "artifact_manifest.json",
+    "outer_hash.json",
+    "final_validation.json",
+    "checkout_stable_closure.json",
+    "resume_cursor.json",
+    "heartbeat.json"
+  ],
+  "historical_er_namespace_modified": false,
+  "schema_version": "track3_ef4_artifact_manifest_v1"
+}

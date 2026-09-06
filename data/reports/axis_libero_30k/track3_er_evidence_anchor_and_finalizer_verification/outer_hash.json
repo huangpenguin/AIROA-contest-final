@@ -1,0 +1,7 @@
+{
+  "created_at_utc": "2026-09-06T11:41:28.050764+00:00",
+  "entries_sha256": "d4137eb07659f35cca67a66b703c05a04fa4ae2b26138c79106e09ecfde28a93",
+  "manifest_path": "data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/artifact_manifest.json",
+  "manifest_sha256": "5649d2c09add79d9ab7213bada6e0454672358e5c25ae0f127bbb0aac11d795d",
+  "schema_version": "track3_ef_outer_hash_v1"
+}

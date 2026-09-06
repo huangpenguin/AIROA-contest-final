@@ -1,0 +1,24 @@
+{
+  "schema_version": "track3_ef4_first_attempt_failure_derived_v1",
+  "attempt": 1,
+  "status": "failed",
+  "derived_from": "first EF4 finalizer return before fixture-cleanup and lifecycle-test corrections",
+  "failure_reasons": [
+    "targeted_tests_returncode_1_due_to_lifecycle_test_referencing_archived_plan_as_active",
+    "full_tests_returncode_1_due_to_same_lifecycle_assertion_and_archive-wording_assertion",
+    "timeout_fixture_left_one_partial_heartbeat_during_forced_kill"
+  ],
+  "checks_that_passed": {
+    "fallback_zip": "expected_bytes_sha_crc_layout_passed",
+    "process_scan": "passed",
+    "gpu_scan": "all_compute_processes_empty_at_final_scan",
+    "manifest_outer_hash": "passed",
+    "git_diff_check": "passed",
+    "py_compile": "passed"
+  },
+  "historical_report_replaced_by_corrected_attempt": true,
+  "historical_er_namespace_modified": false,
+  "new_physics_identities": 0,
+  "gpu_compute_started": false,
+  "old_er_or_tz_identity_rerun": false
+}

@@ -1,0 +1,105 @@
+{
+  "schema_version": "track3_ef_independent_audit_v1",
+  "classification": "approved",
+  "status": "approved",
+  "audit_report": "docs/reviews/axis_pi05/TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_AUDIT_20260906.md",
+  "inputs": {
+    "execution_parent_commit": "38635fbf08e4e8df8c4877ddcb6b2b2ec8b9b118",
+    "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "archived_plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md",
+    "historical_audit": "docs/reviews/axis_pi05/TRACK3_TZ_ER0_ER5_AUDIT_20260906.md",
+    "evidence_root": "data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification"
+  },
+  "verified": {
+    "ef0": {
+      "status": "passed",
+      "anchor_commit": "38635fbf08e4e8df8c4877ddcb6b2b2ec8b9b118",
+      "tracked_files": 29,
+      "exact_bytes_and_sha256": "29/29",
+      "historical_er_records_git_persisted": 24,
+      "historical_er_local_npz_records": 6,
+      "historical_namespace_rewritten": false
+    },
+    "ef1": {
+      "status": "passed",
+      "complete_parent_child_identity": true,
+      "legal_resume": true,
+      "fail_closed_drift_probes": ["root_dirty", "openpi", "libero_plus", "command", "trace_bytes_sha256"]
+    },
+    "ef2": {
+      "status": "passed",
+      "singleton": "passed",
+      "heartbeat_sequences": [1, 2, 3, 4],
+      "normal_family_failure_returncode": 0,
+      "timeout_order": ["SIGTERM", "grace", "SIGKILL"],
+      "no_descendants": true,
+      "sticky_stop": "passed"
+    },
+    "ef3": {
+      "status": "passed",
+      "telemetry_and_required_contact_are_separate": true,
+      "zero_correlated_contact": "failed",
+      "unentered_stage": "not_evaluated",
+      "typed_no_pickle_finite": true
+    },
+    "ef4": {
+      "status": "passed_hard_stop",
+      "final_validation_status": "passed",
+      "artifact_manifest_entries": 13,
+      "artifact_manifest_sha256": "5649d2c09add79d9ab7213bada6e0454672358e5c25ae0f127bbb0aac11d795d",
+      "outer_hash_sha256": "05f4511946a8a3513ddffac15832730ae47b7e2f5a42596197eac6c2fbf61d84",
+      "fallback": {
+        "kind": "r6_fallback",
+        "bytes": 9383571677,
+        "sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a",
+        "crc": "passed",
+        "entries": 3401,
+        "fast_only": true,
+        "new_candidate_zip_created": false
+      },
+      "targeted_tests": "7 passed",
+      "full_tests": "320 passed, 7 skipped, 23 warnings",
+      "process_scan": "passed; live_worker_pids=[]",
+      "gpu0_to_gpu3_compute_processes": [],
+      "strict_json_files": 16,
+      "npz": "allow_pickle=False, finite, no object dtype",
+      "csv": "LF-only",
+      "partial_residue": [],
+      "closed_heartbeat": true,
+      "inactive_cursor": true
+    }
+  },
+  "preserved_failure_evidence": {
+    "first_ef4_attempt": "ef4_first_attempt_failure.json",
+    "first_attempt_rewritten": false,
+    "corrected_attempt_passed": true
+  },
+  "non_actions_verified": {
+    "new_physics_identities": 0,
+    "old_er_or_tz_identity_rerun": false,
+    "physics": false,
+    "gpu_compute": false,
+    "generation": false,
+    "replay": false,
+    "training": false,
+    "accepted_data": false,
+    "new_candidate_zip": false,
+    "upload": false,
+    "submission": false
+  },
+  "post_audit_revalidation": {
+    "targeted_tests": "12 passed",
+    "targeted_returncode": 0,
+    "full_tests": "320 passed, 7 skipped, 23 warnings",
+    "full_returncode": 0,
+    "strict_json_duplicate_rejection": "passed",
+    "git_diff_check": "passed",
+    "py_compile": "passed"
+  },
+  "closure": {
+    "heartbeat_state": "closed",
+    "final_status": "hard_stop",
+    "next_plan": null,
+    "next_phase_only": "new_reviewed_plan_required"
+  }
+}

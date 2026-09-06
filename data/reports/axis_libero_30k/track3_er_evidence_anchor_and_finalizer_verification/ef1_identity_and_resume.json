@@ -1,0 +1,215 @@
+{
+  "gpu_started": false,
+  "identity_probes": {
+    "clean": {
+      "checked_fields": [
+        "root_commit",
+        "tool_sha256",
+        "openpi_commit",
+        "profile_lock_sha256",
+        "cuda_visible_devices",
+        "jax_platforms",
+        "mujoco_gl",
+        "root_porcelain",
+        "root_porcelain_sha256",
+        "clean_root",
+        "openpi_porcelain",
+        "openpi_porcelain_sha256",
+        "libero_plus_porcelain",
+        "libero_plus_porcelain_sha256",
+        "command",
+        "command_hash"
+      ],
+      "mismatches": [],
+      "state": "passed"
+    },
+    "command_drift": {
+      "checked_fields": [
+        "root_commit",
+        "tool_sha256",
+        "openpi_commit",
+        "profile_lock_sha256",
+        "cuda_visible_devices",
+        "jax_platforms",
+        "mujoco_gl",
+        "root_porcelain",
+        "root_porcelain_sha256",
+        "clean_root",
+        "openpi_porcelain",
+        "openpi_porcelain_sha256",
+        "libero_plus_porcelain",
+        "libero_plus_porcelain_sha256",
+        "command",
+        "command_hash"
+      ],
+      "mismatches": [
+        "command",
+        "command_hash"
+      ],
+      "state": "failed"
+    },
+    "libero_plus_drift": {
+      "checked_fields": [
+        "root_commit",
+        "tool_sha256",
+        "openpi_commit",
+        "profile_lock_sha256",
+        "cuda_visible_devices",
+        "jax_platforms",
+        "mujoco_gl",
+        "root_porcelain",
+        "root_porcelain_sha256",
+        "clean_root",
+        "openpi_porcelain",
+        "openpi_porcelain_sha256",
+        "libero_plus_porcelain",
+        "libero_plus_porcelain_sha256",
+        "command",
+        "command_hash"
+      ],
+      "mismatches": [
+        "libero_plus_porcelain",
+        "libero_plus_porcelain_sha256"
+      ],
+      "state": "failed"
+    },
+    "openpi_drift": {
+      "checked_fields": [
+        "root_commit",
+        "tool_sha256",
+        "openpi_commit",
+        "profile_lock_sha256",
+        "cuda_visible_devices",
+        "jax_platforms",
+        "mujoco_gl",
+        "root_porcelain",
+        "root_porcelain_sha256",
+        "clean_root",
+        "openpi_porcelain",
+        "openpi_porcelain_sha256",
+        "libero_plus_porcelain",
+        "libero_plus_porcelain_sha256",
+        "command",
+        "command_hash"
+      ],
+      "mismatches": [
+        "openpi_commit",
+        "openpi_porcelain",
+        "openpi_porcelain_sha256"
+      ],
+      "state": "failed"
+    },
+    "root_dirty": {
+      "checked_fields": [
+        "root_commit",
+        "tool_sha256",
+        "openpi_commit",
+        "profile_lock_sha256",
+        "cuda_visible_devices",
+        "jax_platforms",
+        "mujoco_gl",
+        "root_porcelain",
+        "root_porcelain_sha256",
+        "clean_root",
+        "openpi_porcelain",
+        "openpi_porcelain_sha256",
+        "libero_plus_porcelain",
+        "libero_plus_porcelain_sha256",
+        "command",
+        "command_hash"
+      ],
+      "mismatches": [
+        "root_porcelain",
+        "root_porcelain_sha256"
+      ],
+      "state": "failed"
+    }
+  },
+  "parent_child_identity": {
+    "child_may_not_recompute_expected": true,
+    "expected_captured_before_child": true,
+    "expected_fields": [
+      "root_commit",
+      "tool_sha256",
+      "openpi_commit",
+      "profile_lock_sha256",
+      "cuda_visible_devices",
+      "jax_platforms",
+      "mujoco_gl",
+      "root_porcelain",
+      "root_porcelain_sha256",
+      "clean_root",
+      "openpi_porcelain",
+      "openpi_porcelain_sha256",
+      "libero_plus_porcelain",
+      "libero_plus_porcelain_sha256",
+      "command",
+      "command_hash"
+    ]
+  },
+  "physics_started": false,
+  "resume_pass": {
+    "identity": {
+      "checked_fields": [
+        "root_commit",
+        "tool_sha256",
+        "openpi_commit",
+        "profile_lock_sha256",
+        "cuda_visible_devices",
+        "jax_platforms",
+        "mujoco_gl",
+        "root_porcelain",
+        "root_porcelain_sha256",
+        "clean_root",
+        "openpi_porcelain",
+        "openpi_porcelain_sha256",
+        "libero_plus_porcelain",
+        "libero_plus_porcelain_sha256",
+        "command",
+        "command_hash"
+      ],
+      "mismatches": [],
+      "state": "passed"
+    },
+    "mismatches": [],
+    "state": "passed"
+  },
+  "schema_version": "track3_ef1_identity_resume_v1",
+  "status": "passed",
+  "temporary_git_repo": {
+    "clean_porcelain": [],
+    "dirty_detected": true,
+    "dirty_porcelain": [
+      "?? dirty.txt"
+    ]
+  },
+  "trace_drift": {
+    "identity": {
+      "checked_fields": [
+        "root_commit",
+        "tool_sha256",
+        "openpi_commit",
+        "profile_lock_sha256",
+        "cuda_visible_devices",
+        "jax_platforms",
+        "mujoco_gl",
+        "root_porcelain",
+        "root_porcelain_sha256",
+        "clean_root",
+        "openpi_porcelain",
+        "openpi_porcelain_sha256",
+        "libero_plus_porcelain",
+        "libero_plus_porcelain_sha256",
+        "command",
+        "command_hash"
+      ],
+      "mismatches": [],
+      "state": "passed"
+    },
+    "mismatches": [
+      "trace_bytes",
+      "trace_sha256"
+    ],
+    "state": "failed"
+  }
+}

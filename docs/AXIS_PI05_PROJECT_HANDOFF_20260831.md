@@ -2,12 +2,12 @@
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
 > 新session先读：根目录`AGENTS.md`、`MEMORY.md`，然后按其中顺序核对本handoff、machine JSON、活动计划、最新审核与live cursor/PID。
-> 最新审核状态：`remediation_required`
+> 最新审核状态：`approved`
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_er_evidence_anchor_and_finalizer_verification_planned`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md`（EF0–EF4，仅证据锚定与 code/fixture 修复，尚未执行）
+> 当前总状态：`track3_er_evidence_anchor_and_finalizer_verification_completed_hard_stop`
+> 唯一活动计划：无（EF0–EF4 已完成；下一权限为 `new_reviewed_plan_required`）
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -17,7 +17,7 @@
 
 canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Tonight已交付明确标注的本地R6 fallback ZIP；ER4新增三条CPU canary也均为有效诊断性family failure，成功族和accepted数据仍为0。ER审核发现证据未入Git、resume identity、required contact与finalizer合同未闭合，当前转入EF0–EF4只读锚定/code-only修复。
 
-最新审核确认fallback、旧TZ派生事实与三条ER4 family failure有效；但ER namespace 29项均未入提交，resume未复验完整identity，physical required-contact与真实supervisor/finalizer回归缺失。新计划`EF0–EF4`不授权任何physics identity，只允许锚定现存bytes并完成code/fixture合同修复；不授权任何GPU、数据生成或训练。
+最新审核确认fallback、旧TZ派生事实与三条ER4 family failure有效。EF0–EF4 已在新证据命名空间完成原字节锚定、完整 parent→child/resume identity、无 physics supervisor fixture、required-contact code gate 与真实 finalizer；独立审核结论为 `approved`。不授权任何新的 physics identity、GPU、数据生成、replay、训练、candidate ZIP、上传或提交。
 
 ## 2. 数据与复现基础
 
@@ -856,3 +856,15 @@ ER5 以明确标注的 R6 fallback hard stop：绝对路径 `/home/huang/code/PA
 旧ER计划已归档。唯一活动计划为`docs/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md`：EF0原样锚定现存ER bytes；EF1–EF3只做完整identity/resume、无physics supervisor fixture和required-contact code gate；EF4实现真实finalizer并hard stop。三条ER4和旧七条TZ identity均不得重跑；不授权任何新physics、GPU0–3、官方GPU、Teleop、generation/replay、accepted数据、训练/norm、新candidate ZIP、上传或提交。审核报告：`docs/reviews/axis_pi05/TRACK3_TZ_ER0_ER5_AUDIT_20260906.md`。
 
 审核生命周期更新后targeted为`19 passed`，项目全量为`312 passed, 7 skipped, 23 warnings`；strict JSON、引用/归档、py_compile、diff-check与最终资源边界在提交前复核。
+
+## 76. EF0–EF4 Evidence Anchor / Finalizer 执行收尾（2026-09-06）
+
+EF0 将 ER remediation namespace 的 29 个现存文件按原字节 force-add 入 Git commit `38635fbf08e4e8df8c4877ddcb6b2b2ec8b9b118`，commit read/hash 与工作树逐项 `29/29` exact；旧 ER0 manifest 中 24 个 records 已 Git-persisted、6 个 local NPZ 的不同持久化状态仍被明确保留，历史 ER/TZ bytes 未改写。
+
+EF1 使用新的 `tools/axis_pi05/track3_er_evidence_anchor_and_finalizer_verification.py` 冻结 parent identity：root/tool/OpenPI/profile/command、root/OpenPI/`LIBERO-plus` porcelain 与 digest、CPU/no-renderer 环境均显式传递，child 不回填 expected。临时 Git repo、root dirty、OpenPI drift、`LIBERO-plus` drift、command drift、合法 resume 和 trace bytes/SHA drift 均实测通过 fail-close。
+
+EF2 仅使用无 physics fixture child：第二入口真实被 file lock 拒绝；正常 family failure return `0`；heartbeat 观察序列为至少 `1,2,3,4`；timeout 实测 TERM→grace→KILL，结束后无后代；sticky state 在启动 child 前拒绝第二次入口。EF3 离线将 telemetry schema completeness 与 required physical contact completeness 分成三态 gate；support/containment 检查 demonstrator↔object 连续窗口，articulation 检查 demonstrator↔handle/region；零相关接触为 `failed`，未进入阶段为 `not_evaluated`，typed trace 为 no-pickle/finite。
+
+EF4 在 `data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/` 按冻结顺序完成 producer close/fsync、inactive cursor、manifest/outer hash、strict JSON/NPZ/CSV、既有 fallback ZIP bytes/SHA/CRC/layout、真实 process/GPU scan、targeted/full tests、final validation，并写入 `state=closed` heartbeat。没有新 physics identity、GPU compute、generation/replay、accepted data、training、new candidate ZIP、upload 或 submission；fallback 仍仅是 `fallback_no_track3_improvement`。
+
+EF0–EF4 独立审核结论为 `approved`，活动计划已归档至 `docs/archive/axis_pi05/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md`。当前无活动计划；下一权限为 `new_reviewed_plan_required`，只有新的 reviewed plan 才能规划物理 canary。

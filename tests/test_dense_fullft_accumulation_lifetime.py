@@ -155,13 +155,8 @@ def test_m0_summary_is_fail_closed_and_machine_handoff_advances_without_losing_e
     handoff_path = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
     handoff = __import__("json").loads(handoff_path.read_text(encoding="utf-8"))
     execution = handoff["dense_fullft_allocator_fraction_recovery_execution"]
-    assert handoff["next_plan"].endswith(
-        "AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md"
-    )
-    assert (
-        handoff["next_phase_only"]
-        == "EF0_to_EF4_then_hard_stop"
-    )
+    assert handoff["next_plan"] is None
+    assert handoff["next_phase_only"] == "new_reviewed_plan_required"
     autogen = handoff["track3_public_primitive_autogen_planning"]
     assert autogen["accepted_reverse_episode_count"] == 0
     assert autogen["superseded_plan_executed"] is False
@@ -205,7 +200,7 @@ def test_m0_summary_is_fail_closed_and_machine_handoff_advances_without_losing_e
     assert terminal_audit["pilot_gate"]["fresh_process_replay"] == "3/3"
     assert terminal_audit["resource_boundaries"]["gpu0_authorized"] is False
     assert terminal_audit["training_fast_zip_upload_submission_authorized"] is False
-    assert (ROOT / handoff["next_plan"]).is_file()
+    assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md").is_file()
     autogen_audit = handoff["track3_public_autogen_s0_s5_audit"]
     assert autogen_audit["status"] == "remediation_required"
     assert autogen_audit["findings"]["s1_reported_identity_sum"] == 22156

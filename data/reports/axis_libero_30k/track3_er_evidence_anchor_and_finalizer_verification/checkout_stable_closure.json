@@ -1,0 +1,11 @@
+{
+  "artifact_manifest_sha256": "5649d2c09add79d9ab7213bada6e0454672358e5c25ae0f127bbb0aac11d795d",
+  "closed_heartbeat_sha256": "a4724b4c32bc57b7aa038e7c3028ee1e2d89c25762cdc202db5611d8f7158fe4",
+  "final_validation_sha256": "65d994c278231301471a315b2e7fbb46560b1caaf72429f30a83781f215ca7e0",
+  "historical_er_namespace_modified": false,
+  "inactive_cursor": true,
+  "next_authority": "new_reviewed_plan_required",
+  "outer_hash_sha256": "05f4511946a8a3513ddffac15832730ae47b7e2f5a42596197eac6c2fbf61d84",
+  "schema_version": "track3_ef_checkout_stable_closure_v1",
+  "status": "passed"
+}

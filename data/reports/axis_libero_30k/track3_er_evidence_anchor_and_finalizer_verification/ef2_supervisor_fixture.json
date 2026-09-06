@@ -1,0 +1,219 @@
+{
+  "no_gpu": true,
+  "no_physics": true,
+  "normal_family_failure": {
+    "child_pgid": 1612677,
+    "child_pid": 1612677,
+    "descendants_after_stop": [],
+    "heartbeat_sequences_observed": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "heartbeat_updates_at_least_two": true,
+    "kill_sent": false,
+    "label": "normal_family_failure",
+    "mode": "family_failure",
+    "parent_identity_gate": {
+      "checked_fields": [
+        "root_commit",
+        "tool_sha256",
+        "openpi_commit",
+        "profile_lock_sha256",
+        "cuda_visible_devices",
+        "jax_platforms",
+        "mujoco_gl",
+        "root_porcelain",
+        "root_porcelain_sha256",
+        "clean_root",
+        "openpi_porcelain",
+        "openpi_porcelain_sha256",
+        "libero_plus_porcelain",
+        "libero_plus_porcelain_sha256",
+        "command",
+        "command_hash"
+      ],
+      "mismatches": [],
+      "state": "passed"
+    },
+    "partial_residue_cleaned": [],
+    "payload": {
+      "completed_at_utc": "2026-09-06T11:28:38.345164+00:00",
+      "cuda_initialized": false,
+      "identity": {
+        "clean_root": false,
+        "command": [
+          "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+          "-m",
+          "tools.axis_pi05.track3_er_evidence_anchor_and_finalizer_verification",
+          "--ef-fixture-child",
+          "--mode",
+          "family_failure",
+          "--result-output",
+          "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/fixture/normal_family_failure/result.json",
+          "--heartbeat-output",
+          "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/fixture/normal_family_failure/heartbeat.json",
+          "--trace-output",
+          "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/fixture/normal_family_failure/trace.bin",
+          "--expected-identity-file",
+          "/tmp/ef_expected_h8qf5tbx/expected_identity.json",
+          "--expected-command-sha256",
+          "2168035492c65659d72349820df214e6c73a49f376fed1e0a46e6eabef30ab96"
+        ],
+        "command_hash": "2168035492c65659d72349820df214e6c73a49f376fed1e0a46e6eabef30ab96",
+        "cuda_visible_devices": "",
+        "jax_platforms": "cpu",
+        "libero_plus_porcelain": [
+          "M libero/libero/benchmark/__init__.py",
+          "?? libero/__init__.py",
+          "?? libero/libero/assets",
+          "?? libero/libero/bddl_files/libero_t3",
+          "?? libero/libero/init_files/libero_t3"
+        ],
+        "libero_plus_porcelain_sha256": "e34630b50279fe065af3a9a90a431e91b3faa6331b04aea35165e712dabf083b",
+        "mujoco_gl": "disable",
+        "openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+        "openpi_porcelain": [],
+        "openpi_porcelain_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "pgid": 1612677,
+        "pid": 1612677,
+        "profile_lock_sha256": "7767e88c1b161312f10f75085ee622fd09f7c2f6efe65671f6f7552f58607d3b",
+        "root_commit": "38635fbf08e4e8df8c4877ddcb6b2b2ec8b9b118",
+        "root_porcelain": [
+          "M MEMORY.md",
+          " M data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json",
+          " M docs/AXIS_PI05_PLAN_INDEX.md",
+          " M docs/AXIS_PI05_PROJECT_HANDOFF_20260831.md",
+          " D docs/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md",
+          " M tests/test_dense_fullft_accumulation_lifetime.py",
+          " M tests/test_track3_matched_terminal_state_release_plan.py",
+          " M tests/test_track3_object_frame_executor_and_bounded_autogen_lora.py",
+          " M tests/test_track3_runtime_preflight_and_bounded_continuation.py",
+          " M tests/test_track3_support_autogen_v2.py",
+          " M tests/test_track3_tonight_tz0_tz9_audit.py",
+          " M tests/test_track3_tz_er0_er5_audit.py",
+          " M tests/test_track3_tz_evidence_and_executor_contract_remediation.py",
+          " M tests/test_track3_y3_launch_phase_ledger_remediation.py",
+          " M tests/test_track3_z5_derived_release_and_conservative_continuation.py",
+          "?? docs/archive/axis_pi05/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md",
+          "?? tests/test_track3_er_evidence_anchor_and_finalizer_verification.py",
+          "?? tools/axis_pi05/track3_er_evidence_anchor_and_finalizer_verification.py"
+        ],
+        "root_porcelain_sha256": "1808679ed3b64ef42edb93c7a75a664239090519b898ec0a7f39a1ca0a8dc9ec",
+        "tool_sha256": "aa63aefb523f74e16a59fb84cc6faf3d771c278f2176c6e4270fe008e5d1fb89"
+      },
+      "identity_gate": {
+        "checked_fields": [
+          "root_commit",
+          "tool_sha256",
+          "openpi_commit",
+          "profile_lock_sha256",
+          "cuda_visible_devices",
+          "jax_platforms",
+          "mujoco_gl",
+          "root_porcelain",
+          "root_porcelain_sha256",
+          "clean_root",
+          "openpi_porcelain",
+          "openpi_porcelain_sha256",
+          "libero_plus_porcelain",
+          "libero_plus_porcelain_sha256",
+          "command",
+          "command_hash"
+        ],
+        "mismatches": [],
+        "state": "passed"
+      },
+      "physics_steps": 0,
+      "profile_id": "ef_fixture",
+      "result_sha256": "c03e53275471c98d080afb3809832f6d77bfbf2632ce37bff61bcbcee2d6fe71",
+      "schema_version": "ef_fixture_result_v1",
+      "simulator_created": false,
+      "status": "family_failure",
+      "terminal_category": "family_failure",
+      "trace": {
+        "bytes": 20,
+        "path": "data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/fixture/normal_family_failure/trace.bin",
+        "sha256": "fd0790f35d7a9f1b25adf35954ed843392dbef91f0868f315c41cd9a0b9c5875"
+      }
+    },
+    "resume_gate": {
+      "identity": {
+        "checked_fields": [
+          "root_commit",
+          "tool_sha256",
+          "openpi_commit",
+          "profile_lock_sha256",
+          "cuda_visible_devices",
+          "jax_platforms",
+          "mujoco_gl",
+          "root_porcelain",
+          "root_porcelain_sha256",
+          "clean_root",
+          "openpi_porcelain",
+          "openpi_porcelain_sha256",
+          "libero_plus_porcelain",
+          "libero_plus_porcelain_sha256",
+          "command",
+          "command_hash"
+        ],
+        "mismatches": [],
+        "state": "passed"
+      },
+      "mismatches": [],
+      "state": "passed"
+    },
+    "returncode": 0,
+    "stderr_tail": "",
+    "stdout_tail": "",
+    "term_sent": false,
+    "timed_out": false,
+    "unique_pid_pgid": true
+  },
+  "schema_version": "track3_ef2_supervisor_fixture_v1",
+  "singleton": {
+    "second_acquire_rejected": true,
+    "second_acquire_returncode": 0
+  },
+  "status": "passed",
+  "sticky_stop": {
+    "child_started": false,
+    "reason": "fixture_shared_infrastructure_failure",
+    "started": false
+  },
+  "timeout_term_grace_kill": {
+    "child_pgid": 1612733,
+    "child_pid": 1612733,
+    "descendants_after_stop": [],
+    "heartbeat_sequences_observed": [
+      1,
+      2
+    ],
+    "heartbeat_updates_at_least_two": true,
+    "kill_sent": true,
+    "label": "timeout_term_kill",
+    "mode": "timeout",
+    "parent_identity_gate": {
+      "mismatches": [
+        "identity_missing"
+      ],
+      "state": "failed"
+    },
+    "partial_residue_cleaned": [],
+    "payload": {
+      "status": "infrastructure_failure",
+      "terminal_category": "infrastructure_failure"
+    },
+    "resume_gate": {
+      "mismatches": [],
+      "state": "not_evaluated"
+    },
+    "returncode": -9,
+    "stderr_tail": "",
+    "stdout_tail": "",
+    "term_sent": true,
+    "timed_out": true,
+    "unique_pid_pgid": true
+  }
+}

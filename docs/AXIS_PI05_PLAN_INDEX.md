@@ -2,9 +2,9 @@
 
 > 更新日期：2026-09-06（Asia/Tokyo）
 > 跨session入口：先完整读取根目录`AGENTS.md`与`MEMORY.md`，再读取本索引、handoff、machine JSON、唯一活动计划和最新审核；先查live PID/cursor，禁止重复启动。
-> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md`
-> 当前状态：`track3_er_evidence_anchor_and_finalizer_verification_planned`
-> 最新审核：`docs/reviews/axis_pi05/TRACK3_TZ_ER0_ER5_AUDIT_20260906.md`
+> 当前唯一活动计划：无（EF0–EF4 已完成并 hard stop；下一权限为 `new_reviewed_plan_required`）
+> 当前状态：`track3_er_evidence_anchor_and_finalizer_verification_completed_hard_stop`
+> 最新审核：`docs/reviews/axis_pi05/TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_AUDIT_20260906.md`
 
 ## 1. 本轮执行停止点
 
@@ -26,13 +26,15 @@ ER审核确认三条新CPU/no-renderer canary均为有效诊断性`family_failur
 
 ## 2. 当前计划与停止点
 
-- `AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md`（EF0–EF4，已规划，尚未执行）
-  - EF0只把现存 ER bytes 原样锚定入Git并做checkout复核，不修改旧 ER/TZ evidence；
-  - EF1/EF2只用code与fixture child闭合parent→child/resume完整identity、周期heartbeat、TERM→KILL/no-descendant和sticky stop；
-  - EF3离线拆分telemetry schema completeness与physical required-contact completeness；EF4真实运行ZIP/process/GPU/tests/final validation并closed heartbeat；
+- `AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md` 已归档；EF0–EF4 完成，最终状态为 `approved` hard stop。
+  - EF0 已把现存 ER bytes 原样锚定入 Git 并完成 checkout/read/hash 复核，不修改旧 ER/TZ evidence；
+  - EF1/EF2 已用 code 与 fixture child 闭合 parent→child/resume 完整 identity、周期 heartbeat、TERM→KILL/no-descendant 和 sticky stop；
+  - EF3 已离线拆分 telemetry schema completeness 与 physical required-contact completeness；EF4 已真实运行 ZIP/process/GPU/tests/final validation 并写入 closed heartbeat；
+  - 新证据命名空间：`data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/`；
+  - 下一权限：`new_reviewed_plan_required`，未授权任何新的 physics identity。
   - 三条ER4和旧七条TZ identity均禁止重跑。任何新physics、GPU0–3、官方GPU、Teleop、generation/replay、accepted数据、训练/norm、新candidate ZIP、上传/提交均不授权。
 
-任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
+任何执行者看到多个计划时，以本索引的“唯一活动计划”为准；当前无活动计划，不得从归档计划的未执行尾部自行恢复任务。
 
 正式Track1 `0.47`与Track2 `0.33`已证明R6 FAST在官方20Hz闭环有效；Track3 `0`说明纯正向LIBERO LoRA并未自然获得逆向能力。当前优先级不是立即训练，而是先用公开完整simulator state建立合法、通用、可回放的reverse supervision；dense full-FT继续冻结为独立研究线。
 
@@ -291,7 +293,15 @@ ER5 以 fallback 作为唯一交付对象并 hard stop：`delivered_zip_kind=r6_
 
 旧ER计划已归档。唯一活动计划`docs/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md`只授权现存ER bytes原样锚定、完整identity/resume、无physics supervisor fixture、required-contact code gate和真实finalizer。三条ER4及旧七条TZ identity禁止重跑；任何新physics、GPU、generation/replay、accepted数据、训练或新ZIP均不授权。完整审核见`docs/reviews/axis_pi05/TRACK3_TZ_ER0_ER5_AUDIT_20260906.md`。
 
-生命周期更新后targeted为`19 passed`，项目全量为`312 passed, 7 skipped, 23 warnings`；最终提交前继续复核strict JSON、引用/归档、py_compile、diff-check与资源边界。
+## 3.25 EF0–EF4 Evidence Anchor / Finalizer 执行与独立审核（2026-09-06）
+
+EF0 已将 ER namespace 的 29 个现存文件以原字节 force-add 入 `38635fbf08e4e8df8c4877ddcb6b2b2ec8b9b118`，并逐项通过 commit read/hash 复核；旧 namespace 的 24 个 Git-persisted records 与 6 个 local NPZ 的差异状态保留。EF1 的 parent snapshot 显式冻结 root/tool/OpenPI/profile/command、三份 porcelain 及 digest 和 CPU/no-renderer 环境；真实 drift probes 与合法 resume 通过，trace bytes/SHA drift fail-close。
+
+EF2 仅运行无 physics fixture child：singleton lock 被第二入口拒绝；正常 family-failure return `0`；周期 heartbeat 观察到至少四次 atomic 更新；timeout 真实经历 TERM→grace→KILL，结束后无后代；sticky stop 在启动 child 前拒绝第二入口。EF3 将 telemetry schema 与 required physical contact 分为独立三态 gate，support/containment 使用 demonstrator↔object 连续窗口，articulation 使用 demonstrator↔handle/region；零相关接触为 failed，未进入阶段为 `not_evaluated`。
+
+EF4 在新 namespace 中按 producer close/fsync→inactive cursor→manifest/outer hash→strict JSON/NPZ/CSV 与 fallback ZIP→真实 process/GPU scan→targeted/full tests→final validation→closed heartbeat 完成；fallback 仅作既有机械 fallback，不创建新 candidate ZIP。最终独立审核结论为 `approved`，无新的 physics identity、GPU compute、生成、replay、训练、上传或提交；计划已归档，下一权限为 `new_reviewed_plan_required`。完整审核见 `docs/reviews/axis_pi05/TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_AUDIT_20260906.md`。
+
+EF4 finalizer targeted 为`7 passed`、项目全量为`320 passed, 7 skipped, 23 warnings`；审核后生命周期 targeted 为`12 passed`、项目全量仍为`320 passed, 7 skipped, 23 warnings`；strict JSON、引用/归档、py_compile、diff-check与资源边界均通过。
 
 ## 4. 保留但非活动的研究线
 

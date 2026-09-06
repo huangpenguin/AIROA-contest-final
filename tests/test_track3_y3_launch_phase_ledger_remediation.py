@@ -111,10 +111,10 @@ def test_z0_z4_execution_evidence_is_closed_before_z5() -> None:
 def test_z0_z14_audit_archives_z_and_releases_exactly_one_aa_plan() -> None:
     handoff_path = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
     handoff = tool.strict_json(handoff_path)
-    assert handoff["status"] == "track3_er_evidence_anchor_and_finalizer_verification_planned"
-    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md"
-    assert handoff["next_phase_only"] == "EF0_to_EF4_then_hard_stop"
-    assert (ROOT / handoff["next_plan"]).is_file()
+    assert handoff["status"] == "track3_er_evidence_anchor_and_finalizer_verification_completed_hard_stop"
+    assert handoff["next_plan"] is None
+    assert handoff["next_phase_only"] == "new_reviewed_plan_required"
+    assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md").is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md").exists()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md").is_file()
 

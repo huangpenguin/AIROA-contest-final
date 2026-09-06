@@ -1,0 +1,8 @@
+{
+  "active": false,
+  "final_status": "hard_stop",
+  "phase": "EF4",
+  "pid": 1615743,
+  "schema_version": "track3_ef_cursor_v1",
+  "updated_at_utc": "2026-09-06T11:39:13.154361+00:00"
+}

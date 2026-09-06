@@ -1,0 +1,116 @@
+{
+  "gpu_started": false,
+  "physics_started": false,
+  "runtime_derived": {
+    "controller_saturation": {
+      "executed": true,
+      "required": true,
+      "state": "failed",
+      "value": false
+    },
+    "known_mask": {
+      "executed": true,
+      "required": true,
+      "state": "passed",
+      "value": true
+    },
+    "typed_no_pickle_trace": {
+      "allow_pickle_false": true,
+      "finite": true,
+      "object_dtype": false,
+      "path": "data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/ef3_typed_trace.npz",
+      "status": "passed"
+    },
+    "unrelated_contact": {
+      "executed": true,
+      "required": true,
+      "state": "failed",
+      "value": false
+    }
+  },
+  "schema_version": "track3_ef3_contact_gate_v1",
+  "status": "passed",
+  "telemetry_vs_physical": {
+    "articulation_handle_pass": {
+      "required_physical_contact": {
+        "contact_window": 2,
+        "executed": true,
+        "family": "articulation_close",
+        "min_window": 2,
+        "required": true,
+        "state": "passed",
+        "telemetry_state": "passed",
+        "value": true
+      },
+      "telemetry_schema": {
+        "errors": [],
+        "executed": true,
+        "required": true,
+        "sample_count": 2,
+        "state": "passed",
+        "value": true
+      }
+    },
+    "support_pass": {
+      "required_physical_contact": {
+        "contact_window": 3,
+        "executed": true,
+        "family": "support_remove",
+        "min_window": 2,
+        "required": true,
+        "state": "passed",
+        "telemetry_state": "passed",
+        "value": true
+      },
+      "telemetry_schema": {
+        "errors": [],
+        "executed": true,
+        "required": true,
+        "sample_count": 3,
+        "state": "passed",
+        "value": true
+      }
+    },
+    "unentered": {
+      "required_physical_contact": {
+        "contact_window": 0,
+        "executed": false,
+        "family": "support_remove",
+        "min_window": 2,
+        "reason": "stage_not_entered",
+        "required": true,
+        "state": "not_evaluated",
+        "telemetry_state": "not_evaluated",
+        "value": null
+      },
+      "telemetry_schema": {
+        "executed": false,
+        "reason": "stage_not_entered",
+        "required": true,
+        "state": "not_evaluated",
+        "value": null
+      }
+    },
+    "zero_correlated_contact": {
+      "required_physical_contact": {
+        "contact_window": 0,
+        "executed": true,
+        "family": "support_remove",
+        "min_window": 2,
+        "reason": "no_continuous_required_contact",
+        "required": true,
+        "state": "failed",
+        "telemetry_state": "passed",
+        "value": false
+      },
+      "telemetry_schema": {
+        "errors": [],
+        "executed": true,
+        "required": true,
+        "sample_count": 3,
+        "state": "passed",
+        "value": true
+      }
+    }
+  }
+}

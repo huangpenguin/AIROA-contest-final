@@ -1,0 +1,17 @@
+{
+  "new_candidate_zip": false,
+  "new_physics_identities": 0,
+  "old_er_or_tz_identity_rerun": false,
+  "phase_status": {
+    "EF0": "passed",
+    "EF1": "passed",
+    "EF2": "passed",
+    "EF3": "passed",
+    "EF4": "passed_hard_stop"
+  },
+  "schema_version": "track3_ef_execution_summary_v1",
+  "status": "hard_stop",
+  "submission": false,
+  "training": false,
+  "upload": false
+}

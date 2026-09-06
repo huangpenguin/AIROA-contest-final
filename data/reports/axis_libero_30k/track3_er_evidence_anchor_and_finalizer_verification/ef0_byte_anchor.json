@@ -1,0 +1,221 @@
+{
+  "anchor_commit": "38635fbf08e4e8df8c4877ddcb6b2b2ec8b9b118",
+  "files": [
+    {
+      "bytes": 6720,
+      "commit_sha256": "869ef8c2c560b8541576857cf89196f14e865a97439b3688a5fdce37e57655e8",
+      "exact": true,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/artifact_manifest.json",
+      "worktree_sha256": "869ef8c2c560b8541576857cf89196f14e865a97439b3688a5fdce37e57655e8"
+    },
+    {
+      "bytes": 2893,
+      "commit_sha256": "c96b5ad270b3a3ce2cf0ef9b1535d920cf7e772bcca1492c0b2cecd96e2b6575",
+      "exact": true,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/er0_derived_closure.json",
+      "worktree_sha256": "c96b5ad270b3a3ce2cf0ef9b1535d920cf7e772bcca1492c0b2cecd96e2b6575"
+    },
+    {
+      "bytes": 13613,
+      "commit_sha256": "864c32d9e0be3e2f8f2843b75524850ca531cbfe7b4f062030664f97dc235041",
+      "exact": true,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/er0_manifest.json",
+      "worktree_sha256": "864c32d9e0be3e2f8f2843b75524850ca531cbfe7b4f062030664f97dc235041"
+    },
+    {
+      "bytes": 1946,
+      "commit_sha256": "138d1eecc12e10d25aba59c895134157ce2ca601b7f286f1965de01d3e9327a7",
+      "exact": true,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/er1_executor_contract.json",
+      "worktree_sha256": "138d1eecc12e10d25aba59c895134157ce2ca601b7f286f1965de01d3e9327a7"
+    },
+    {
+      "bytes": 1744,
+      "commit_sha256": "011fc722473c04896b1cecbd9ca0244dcd3495b1bef513f4ce484558e1db82ae",
+      "exact": true,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/er2_gate_trace_contract.json",
+      "worktree_sha256": "011fc722473c04896b1cecbd9ca0244dcd3495b1bef513f4ce484558e1db82ae"
+    },
+    {
+      "bytes": 3548,
+      "commit_sha256": "d4fdfe1feb720bf98cc8267ab8524b56986873d1dbac5732ab2cc37a7dd6eeed",
+      "exact": true,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/er3_diagnosis_and_identity_freeze.json",
+      "worktree_sha256": "d4fdfe1feb720bf98cc8267ab8524b56986873d1dbac5732ab2cc37a7dd6eeed"
+    },
+    {
+      "bytes": 10722,
+      "commit_sha256": "acb81f54e99435eccf0deddf6ca940eaa05df91bfdd139b2ac7ea7a763fc913c",
+      "exact": true,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/er4_cpu_matrix.json",
+      "worktree_sha256": "acb81f54e99435eccf0deddf6ca940eaa05df91bfdd139b2ac7ea7a763fc913c"
+    },
+    {
+      "bytes": 7512,
+      "commit_sha256": "e7a787e9d73227e5662ac5b229298a80f684ec708e1acebabc7b6ad31efdb46a",
+      "exact": true,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/final_validation.json",
+      "worktree_sha256": "e7a787e9d73227e5662ac5b229298a80f684ec708e1acebabc7b6ad31efdb46a"
+    },
+    {
+      "bytes": 169,
+      "commit_sha256": "003a14fa107e24fd4b30b5753cbdcf6146b3a82d2f90435c4173d1c4c2ed9df4",
+      "exact": true,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/heartbeat.json",
+      "worktree_sha256": "003a14fa107e24fd4b30b5753cbdcf6146b3a82d2f90435c4173d1c4c2ed9df4"
+    },
+    {
+      "bytes": 413,
+      "commit_sha256": "e184406cc62c7778cb32beff185c3d568b0a7b7861349fe78e289839076cfe4b",
+      "exact": true,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/outer_hash.json",
+      "worktree_sha256": "e184406cc62c7778cb32beff185c3d568b0a7b7861349fe78e289839076cfe4b"
+    },
+    {
+      "bytes": 735,
+      "commit_sha256": "340a51b19578a0e389cf6fd90986b7dfeed45be3465b6194e539b01ce1b19efc",
+      "exact": true,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/phase_ledger.csv",
+      "worktree_sha256": "340a51b19578a0e389cf6fd90986b7dfeed45be3465b6194e539b01ce1b19efc"
+    },
+    {
+      "bytes": 1941,
+      "commit_sha256": "36235f62923f17199059efdf30b703abc547636ec9caf6bf0595731acc6e314b",
+      "exact": true,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/profile_lock.json",
+      "worktree_sha256": "36235f62923f17199059efdf30b703abc547636ec9caf6bf0595731acc6e314b"
+    },
+    {
+      "bytes": 308,
+      "commit_sha256": "4449e7d85a003731db1533b39866262244283f549d8ea4a9e4390adca9626e14",
+      "exact": true,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/resume_cursor.json",
+      "worktree_sha256": "4449e7d85a003731db1533b39866262244283f549d8ea4a9e4390adca9626e14"
+    },
+    {
+      "bytes": 17800,
+      "commit_sha256": "3eaf9c9ccaad8c166aa9d28e225a61ae291aa068065f2328d9cb46069f318307",
+      "exact": true,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/runs/01_er_support_contact_repair_fresh.json",
+      "worktree_sha256": "3eaf9c9ccaad8c166aa9d28e225a61ae291aa068065f2328d9cb46069f318307"
+    },
+    {
+      "bytes": 316,
+      "commit_sha256": "b64f85f67048e258074975a341f381ae84f788926051563a6e509c7cb5191add",
+      "exact": true,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/runs/01_er_support_contact_repair_fresh.stderr.log",
+      "worktree_sha256": "b64f85f67048e258074975a341f381ae84f788926051563a6e509c7cb5191add"
+    },
+    {
+      "bytes": 9881,
+      "commit_sha256": "d1cc12de04eb918cfb7ecd24d730116e494e1ef273fef785707d7ba7331ff6a4",
+      "exact": true,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/runs/01_er_support_contact_repair_fresh.stdout.log",
+      "worktree_sha256": "d1cc12de04eb918cfb7ecd24d730116e494e1ef273fef785707d7ba7331ff6a4"
+    },
+    {
+      "bytes": 17805,
+      "commit_sha256": "94dddf56e181d96edfc10d2bfceeaf6d19444e0db7e2ffbbf78f5260fce89d6c",
+      "exact": true,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/runs/02_er_containment_extract_fresh.json",
+      "worktree_sha256": "94dddf56e181d96edfc10d2bfceeaf6d19444e0db7e2ffbbf78f5260fce89d6c"
+    },
+    {
+      "bytes": 316,
+      "commit_sha256": "b64f85f67048e258074975a341f381ae84f788926051563a6e509c7cb5191add",
+      "exact": true,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/runs/02_er_containment_extract_fresh.stderr.log",
+      "worktree_sha256": "b64f85f67048e258074975a341f381ae84f788926051563a6e509c7cb5191add"
+    },
+    {
+      "bytes": 9886,
+      "commit_sha256": "2b16ad58d00f83213d72575879471ad8590a639fd4a9decd285399fd3978a21a",
+      "exact": true,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/runs/02_er_containment_extract_fresh.stdout.log",
+      "worktree_sha256": "2b16ad58d00f83213d72575879471ad8590a639fd4a9decd285399fd3978a21a"
+    },
+    {
+      "bytes": 15462,
+      "commit_sha256": "636afcf21203001fd1b0061b6fc6a878754185752a83aaade69ecb7941a6b494",
+      "exact": true,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/runs/03_er_articulation_pull_fresh.json",
+      "worktree_sha256": "636afcf21203001fd1b0061b6fc6a878754185752a83aaade69ecb7941a6b494"
+    },
+    {
+      "bytes": 316,
+      "commit_sha256": "b64f85f67048e258074975a341f381ae84f788926051563a6e509c7cb5191add",
+      "exact": true,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/runs/03_er_articulation_pull_fresh.stderr.log",
+      "worktree_sha256": "b64f85f67048e258074975a341f381ae84f788926051563a6e509c7cb5191add"
+    },
+    {
+      "bytes": 8603,
+      "commit_sha256": "3d46c92a3bcf8c530c87332409d303440e086df0d27e9bfa73c0a4c334d2db2b",
+      "exact": true,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/runs/03_er_articulation_pull_fresh.stdout.log",
+      "worktree_sha256": "3d46c92a3bcf8c530c87332409d303440e086df0d27e9bfa73c0a4c334d2db2b"
+    },
+    {
+      "bytes": 4692,
+      "commit_sha256": "13ef104cc45e0242bc722556258d455946b8e74c055bb3ae8cfcb0ea24b8b500",
+      "exact": true,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/runs/traces/er_articulation_pull_fresh_demo0.npz",
+      "worktree_sha256": "13ef104cc45e0242bc722556258d455946b8e74c055bb3ae8cfcb0ea24b8b500"
+    },
+    {
+      "bytes": 4657,
+      "commit_sha256": "23e6cd6f959c78a6627a783d35780b76668983b6aded57459f3e9f8e4b8076b1",
+      "exact": true,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/runs/traces/er_containment_extract_fresh_demo0.npz",
+      "worktree_sha256": "23e6cd6f959c78a6627a783d35780b76668983b6aded57459f3e9f8e4b8076b1"
+    },
+    {
+      "bytes": 4756,
+      "commit_sha256": "2cf648745cd9750e429c31c9be020eed966dc5abc83378dc0247fa8f79b8df6b",
+      "exact": true,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/runs/traces/er_support_contact_repair_fresh_demo0.npz",
+      "worktree_sha256": "2cf648745cd9750e429c31c9be020eed966dc5abc83378dc0247fa8f79b8df6b"
+    },
+    {
+      "bytes": 3131,
+      "commit_sha256": "5511dfd60cd73ea7363690934bc9d007dc6588dd4512ed8839ca9cb6e2a69920",
+      "exact": true,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/summary.json",
+      "worktree_sha256": "5511dfd60cd73ea7363690934bc9d007dc6588dd4512ed8839ca9cb6e2a69920"
+    },
+    {
+      "bytes": 235,
+      "commit_sha256": "79e64296dd6804372ae2ba06b446413eee192a7f45ed01edb4b21d0f38d228fb",
+      "exact": true,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/supervisor.lock",
+      "worktree_sha256": "79e64296dd6804372ae2ba06b446413eee192a7f45ed01edb4b21d0f38d228fb"
+    },
+    {
+      "bytes": 168,
+      "commit_sha256": "4941921d5add3ca2968ad7a5d8fc85955568fc6aeaa29b2c92ba2514045d5d31",
+      "exact": true,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/supervisor_state.json",
+      "worktree_sha256": "4941921d5add3ca2968ad7a5d8fc85955568fc6aeaa29b2c92ba2514045d5d31"
+    },
+    {
+      "bytes": 418,
+      "commit_sha256": "9116d06a320527ba5c83845c901f510eacb37ccfee7fc72b57c3e890c1196832",
+      "exact": true,
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/tests_before_er5.json",
+      "worktree_sha256": "9116d06a320527ba5c83845c901f510eacb37ccfee7fc72b57c3e890c1196832"
+    }
+  ],
+  "gpu_started": false,
+  "old_evidence_rewritten": false,
+  "old_namespace_persistence": {
+    "git_persisted": 24,
+    "historical_files_modified": false,
+    "local_npz": 6,
+    "records": 30
+  },
+  "physics_started": false,
+  "schema_version": "track3_ef0_byte_anchor_v1",
+  "status": "passed",
+  "tracked_er_files": 29,
+  "tracked_er_files_exact": 29
+}

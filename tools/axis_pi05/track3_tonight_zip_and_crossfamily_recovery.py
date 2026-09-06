@@ -350,6 +350,7 @@ def run_child(flag: str, args: Sequence[str], result_path: Path, timeout: float,
         env.pop("MUJOCO_EGL_DEVICE_ID", None)
     command = [sys.executable, "-m", MODULE, flag, *args, "--result-output", str(result_path)]
     process = subprocess.Popen(command, cwd=ROOT, env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, start_new_session=True)
+    child_pid = process.pid
     try:
         stdout, stderr = process.communicate(timeout=timeout)
         timed_out = False
@@ -367,6 +368,7 @@ def run_child(flag: str, args: Sequence[str], result_path: Path, timeout: float,
     except Exception as exc:
         payload = {"schema_version": "track3_tonight_child_result_v1", "status": "worker_exception", "error": {"type": type(exc).__name__, "message": str(exc), "stdout_tail": (stdout or "")[-3000:], "stderr_tail": (stderr or "")[-3000:]}}
     payload["process_returncode"] = process.returncode
+    payload["child_pid"] = child_pid
     payload["timed_out"] = timed_out
     payload["stdout_tail"] = (stdout or "")[-3000:]
     payload["stderr_tail"] = (stderr or "")[-3000:]
@@ -401,6 +403,8 @@ def _stage_target(env: Any, task: int, profile: Mapping[str, Any], stage: str, a
 
 
 def _safe_site_position(env: Any, name: str, dynamic: Any) -> np.ndarray:
+    import numpy as np
+
     pose = dynamic._object_or_site_pose(env, name)
     if pose is None:
         raise RuntimeError(f"missing_operator_site:{name}")
@@ -556,13 +560,21 @@ def run_tz2() -> dict[str, Any]:
     for index, profile_id in enumerate(PROFILE_ORDER):
         path = RUN_ROOT / f"cpu_{index + 1:02d}_{profile_id}.json"
         if path.exists():
-            raise RuntimeError(f"identity_output_already_exists:{profile_id}")
+            # Resume only from an immutable result.  In particular, the
+            # already-consumed identity that exposed an executor bug is never
+            # rerun after the code-only remediation.
+            payload = strict_json(path)
+            category = str(payload.get("category") or _family_status(payload))
+            compact = {"profile_id": profile_id, "task_index": PROFILE_TASK[profile_id], "family": FAMILY[PROFILE_TASK[profile_id]], "status": payload.get("status"), "category": category, "returncode": payload.get("process_returncode"), "timed_out": payload.get("timed_out", False), "path": rel(path), "trace": payload.get("trace"), "resumed_existing": True}
+            rows.append(compact)
+            _set_cursor("TZ2", True, total_profiles=len(PROFILE_ORDER), completed_profiles=index + 1, last_profile=profile_id, last_category=category, resumed_existing=True)
+            continue
         child = run_child("--cpu-worker", ["--profile-id", profile_id], path, CPU_TIMEOUT_SECONDS, gpu=False)
         payload = dict(child.payload)
         category = _family_status(payload)
-        payload.update({"category": category, "parent_pid": os.getpid(), "child_pid": payload.get("child_pid", None), "timed_out": child.timed_out})
+        payload.update({"category": category, "parent_pid": os.getpid(), "timed_out": child.timed_out})
         write_json(path, payload)
-        compact = {"profile_id": profile_id, "task_index": PROFILE_TASK[profile_id], "family": FAMILY[PROFILE_TASK[profile_id]], "status": payload.get("status"), "category": category, "returncode": child.returncode, "timed_out": child.timed_out, "path": rel(path), "trace": payload.get("trace")}
+        compact = {"profile_id": profile_id, "task_index": PROFILE_TASK[profile_id], "family": FAMILY[PROFILE_TASK[profile_id]], "status": payload.get("status"), "category": category, "returncode": child.returncode, "timed_out": child.timed_out, "path": rel(path), "trace": payload.get("trace"), "resumed_existing": False}
         rows.append(compact)
         _set_cursor("TZ2", True, total_profiles=len(PROFILE_ORDER), completed_profiles=index + 1, last_profile=profile_id, last_category=category)
         if category == "infrastructure_failure":

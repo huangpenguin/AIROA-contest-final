@@ -6,8 +6,8 @@
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_tz_evidence_and_executor_contract_remediation_completed_hard_stop_pending_review`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_TZ_EVIDENCE_AND_EXECUTOR_CONTRACT_REMEDIATION_PLAN.md`（ER0–ER5 已执行并 hard stop，等待独立审核）
+> 当前总状态：`track3_er_evidence_anchor_and_finalizer_verification_planned`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md`（EF0–EF4，仅证据锚定与 code/fixture 修复，尚未执行）
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -15,9 +15,9 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Tonight已交付明确标注的本地R6 fallback ZIP；七个CPU child attempt产生1条infrastructure failure和6条诊断性family failure，但调度/身份/证据合同未获批准，当前转入ER0–ER5修复。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Tonight已交付明确标注的本地R6 fallback ZIP；ER4新增三条CPU canary也均为有效诊断性family failure，成功族和accepted数据仍为0。ER审核发现证据未入Git、resume identity、required contact与finalizer合同未闭合，当前转入EF0–EF4只读锚定/code-only修复。
 
-最新审核确认fallback交付有效，但TZ执行器仍把flag/常量自报当作完整实现，且首个shared infrastructure failure后跨提交续跑。新计划改为`ER0–ER5`：只做不可变证据闭包、supervisor/identity/门禁/finalizer修复、离线三族诊断与最多三条全新CPU canary；不授权任何GPU、数据生成或训练。
+最新审核确认fallback、旧TZ派生事实与三条ER4 family failure有效；但ER namespace 29项均未入提交，resume未复验完整identity，physical required-contact与真实supervisor/finalizer回归缺失。新计划`EF0–EF4`不授权任何physics identity，只允许锚定现存bytes并完成code/fixture合同修复；不授权任何GPU、数据生成或训练。
 
 ## 2. 数据与复现基础
 
@@ -846,3 +846,13 @@ ER0 在新 namespace `data/reports/axis_libero_30k/track3_tz_evidence_and_execut
 ER1–ER3 的真实文件锁、PID/PGID、固定 argv/runtime identity、周期 atomic heartbeat、TERM→KILL/no-descendant、sticky stop、seed 应用、computed 三态 gate、typed no-pickle trace、离线诊断和三条新 identity freeze 均通过。ER4 固定 support→containment→articulation 顺序，只运行三条全新 CPU/no-renderer child，三条 identity gate 均通过并实际应用 seed；结果为 support、containment、articulation 各一个正常 `family_failure`，成功族 `0/3`，无 retry、旧 identity 重跑或 GPU。
 
 ER5 以明确标注的 R6 fallback hard stop：绝对路径 `/home/huang/code/PARC2026_final/artifacts/submission_axis_r6_fallback_revalidated_20260906.zip`，`delivered_zip_kind=r6_fallback`、`fallback_no_track3_improvement`、`9383571677` bytes、SHA `95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a`、CRC passed、3401 entries、FAST-only；`recommended_for_track3_submission=false`，accepted/training/new candidate 均 `0/false`。final manifest、outer hash、inactive cursor 与 final validation 已生成；3 个新 NPZ 均 no-pickle/finite，18 个 JSON strict、CSV LF、py_compile、diff-check 和 GPU0–3 empty 通过。执行后 targeted `15 passed`，项目全量 `308 passed, 7 skipped, 23 warnings`；执行 root `04eef24161bfe62adc9a51378235f73b34e6ac51`，nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1` clean，LIBERO-plus 原有 dirty 未触碰。证据：`data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/summary.json`；下一权限为`new_reviewed_plan_required`，不上传、不提交。
+
+## 75. ER0–ER5 独立审核与 Evidence/Finalizer 修复授权（2026-09-06）
+
+审核输入root `c2d9f23bb0bbe13a0860aeb4fecf3a75c932ae0d`、ER worker source `04eef24161bfe62adc9a51378235f73b34e6ac51`、nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`。旧证据30/30 current hash、23/23 strict JSON、旧6个no-pickle失败、fallback两次全包CRC/SHA、ER manifest 26/26/outer hash和三条raw/NPZ均复核成立。三条ER4结果保持诊断性family failure：support/containment/articulation分别155/149/180步，source仍true、goal false，action saturation分别10/5/10，三份trace均typed/no-pickle/finite且不能入训。
+
+唯一审核结论为`remediation_required`。ER namespace 29项全部被ignore且`git ls-files=0/29`；existing-result resume只验自哈希和profile ID，child clean baseline来自自身观测；ER3承诺的真实periodic-heartbeat/timeout/sticky/finalizer回归没有执行。`contact_complete`只表示contact telemetry枚举成功，不是required physical contact。ER5没有实际运行targeted/full tests，final status也未纳入expected ZIP、真实process/GPU scan或tests，heartbeat仍是`finalizing`。
+
+旧ER计划已归档。唯一活动计划为`docs/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md`：EF0原样锚定现存ER bytes；EF1–EF3只做完整identity/resume、无physics supervisor fixture和required-contact code gate；EF4实现真实finalizer并hard stop。三条ER4和旧七条TZ identity均不得重跑；不授权任何新physics、GPU0–3、官方GPU、Teleop、generation/replay、accepted数据、训练/norm、新candidate ZIP、上传或提交。审核报告：`docs/reviews/axis_pi05/TRACK3_TZ_ER0_ER5_AUDIT_20260906.md`。
+
+审核生命周期更新后targeted为`19 passed`，项目全量为`312 passed, 7 skipped, 23 warnings`；strict JSON、引用/归档、py_compile、diff-check与最终资源边界在提交前复核。

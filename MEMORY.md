@@ -33,13 +33,13 @@ If these disagree, stop mutation, audit the discrepancy and repair the handoff i
 
 - Repository: `/home/huang/code/PARC2026_final`
 - Branch: `codex/axis-pi05-audit-remediation`; no upstream recorded.
-- Memory input HEAD: `2ae08e974d6be9ac59541236ce7ddb1d7f288dd6`.
-- Latest audited execution: `2ae08e974d6be9ac59541236ce7ddb1d7f288dd6` (Tonight TZ0–TZ9 execution handoff).
+- Memory input HEAD: `c2d9f23bb0bbe13a0860aeb4fecf3a75c932ae0d`.
+- Latest audited execution: `c2d9f23bb0bbe13a0860aeb4fecf3a75c932ae0d` (ER0–ER5 execution closeout).
 - Nested OpenPI: `third_party/axis_openpi` at `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`, clean at review.
 - `LIBERO-plus` has pre-existing dirty files. They belong to the user/project and must not be reset, cleaned, overwritten or silently committed.
-- Current state at this refresh: `track3_tz_evidence_and_executor_contract_remediation_completed_hard_stop_pending_review`.
-- Active plan: `docs/AXIS_PI05_TRACK3_TZ_EVIDENCE_AND_EXECUTOR_CONTRACT_REMEDIATION_PLAN.md`.
-- Tonight chain is audited `remediation_required`. The explicitly labeled `fallback_no_track3_improvement` R6 ZIP is independently valid, but TZ1/TZ2/TZ9 execution-contract claims are not approved. ER0–ER5 authorizes evidence/code repair and at most three new CPU/no-renderer identities; no GPU, generation, replay, training, new candidate, upload or submission.
+- Current state at this refresh: `track3_er_evidence_anchor_and_finalizer_verification_planned`.
+- Active plan: `docs/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md`.
+- ER0–ER5 is audited `remediation_required`. The explicitly labeled fallback and three new diagnostic family failures are valid, but the ignored evidence, resume identity, required-contact and finalizer contracts are not approved. EF0–EF4 authorizes only exact-byte evidence anchoring and code/fixture verification; no new physics, GPU, generation, replay, training, candidate, upload or submission.
 - Z0–Z14 execution evidence is in `data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/`; its audit is `docs/reviews/axis_pi05/TRACK3_Y3_LAUNCH_Z0_Z14_AUDIT_20260906.md`. Historical parent remains infrastructure while physical result is derived nominal family failure. Z6–Z13 remain `not_evaluated`; before any AA execution, recheck live supervisor/PID/cursor, dirty worktree and GPU boundaries. Never start a duplicate run.
 
 The snapshot above becomes historical as soon as execution advances. Always refresh from Git, machine JSON and the live cursor rather than treating this paragraph as a lock.
@@ -171,5 +171,11 @@ After a phase completes, the reviewing agent must refresh this file only when st
 ## 15. ER0–ER5 Executor Contract remediation result (2026-09-06)
 
 - ER0 derived the old Tonight namespace without mutation: 23/23 JSON strict; all 6 old NPZ object-array/no-pickle failures, first infrastructure failure, six diagnostic family failures, aggregate null contradiction and three identical-trace groups were preserved. Both R6 fallback/source ZIPs were read-only checked at 9,383,571,677 bytes, SHA `95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a`, CRC passed, 3401 entries, FAST-only.
-- ER1–ER3 passed the real file lock, PID/PGID, fixed argv/runtime identity, periodic atomic heartbeat, TERM→KILL/no-descendant, sticky-stop, effective seed, computed tri-state gates, typed trace and offline diagnosis contracts. ER4 executed exactly three new identities, in support→containment→articulation order; all three were normal `family_failure`, with no retry and no old identity rerun. All three traces are no-pickle/finite and `training_eligible=false`.
-- ER5 delivered only the explicitly labeled R6 fallback, not Track3 improvement: `accepted=0`, training false, new candidate false. Final validation passed (18 strict JSON, 3 typed NPZ, LF CSV, py_compile, diff-check, GPU0–3 empty); tests were targeted `15 passed` and project `308 passed, 7 skipped, 23 warnings`. Execution source commit is `04eef24161bfe62adc9a51378235f73b34e6ac51`; nested OpenPI remains `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`, root/OpenPI clean, and pre-existing LIBERO-plus dirty was preserved. Hard stop awaits a new reviewed plan.
+- ER4 executed exactly three new identities, in support→containment→articulation order; all three were valid diagnostic `family_failure`, with no retry and no old identity rerun. All three traces are no-pickle/finite and `training_eligible=false`; controller saturation was observed and correctly prevents success.
+- ER5 delivered only the explicitly labeled R6 fallback, not Track3 improvement: `accepted=0`, training false, new candidate false. Its local JSON/NPZ/CSV/hash facts and independent targeted `15` / full `308 passed, 7 skipped, 23 warnings` reruns are valid. The audit did not approve the general executor/finalizer contract: all 29 ER evidence files were ignored, resume did not recheck full identity, required physical contact was not gated, tests were not run by ER5, and final pass omitted ZIP/process/GPU/tests. Execution source commit is `04eef24161bfe62adc9a51378235f73b34e6ac51`; nested OpenPI remains `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`.
+
+## 16. ER0–ER5 audit and EF authorization (2026-09-06)
+
+- Verdict: `remediation_required`. Valid facts remain immutable: fallback SHA/CRC/3401/FAST-only, old TZ failure semantics, and three ER4 family failures at 155/149/180 steps with source true, goal false and typed no-pickle traces.
+- ER evidence is locally complete enough to inspect but not checkout-stable: `0/29` files are tracked. The 26-entry manifest and outer hash are exact on the current machine, not anchored in any execution commit.
+- The next plan is EF0–EF4 only: exact-byte Git anchoring, full parent/child/resume identity, real no-physics supervisor regressions, required-contact gate semantics and a finalizer whose pass status covers ZIP/process/GPU/tests. All consumed identities and all GPU/data/training/ZIP expansion remain prohibited.

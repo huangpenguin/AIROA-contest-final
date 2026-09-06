@@ -2,9 +2,9 @@
 
 > 更新日期：2026-09-06（Asia/Tokyo）
 > 跨session入口：先完整读取根目录`AGENTS.md`与`MEMORY.md`，再读取本索引、handoff、machine JSON、唯一活动计划和最新审核；先查live PID/cursor，禁止重复启动。
-> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_TZ_EVIDENCE_AND_EXECUTOR_CONTRACT_REMEDIATION_PLAN.md`
-> 当前状态：`track3_tz_evidence_and_executor_contract_remediation_completed_hard_stop_pending_review`
-> 最新审核：`docs/reviews/axis_pi05/TRACK3_TONIGHT_TZ0_TZ9_AUDIT_20260906.md`
+> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md`
+> 当前状态：`track3_er_evidence_anchor_and_finalizer_verification_planned`
+> 最新审核：`docs/reviews/axis_pi05/TRACK3_TZ_ER0_ER5_AUDIT_20260906.md`
 
 ## 1. 本轮执行停止点
 
@@ -22,13 +22,15 @@ Z0–Z4的runtime/identity/phase-ledger修复成立；Z5只运行一次task10/de
 
 Tonight执行的fallback本体、七个child attempt、首个infrastructure failure、后六条诊断性family failure、TZ3–TZ8未执行和所有零计数成立；本次独立审核结论为`remediation_required`。TZ1实际只有CLI flags，TZ4–TZ8仍是stub且没有真实singleton/周期heartbeat/deadline/identity/finalizer；首个shared infrastructure failure又被`343c5a5`的resume分支跨提交绕过，最终matrix顶层把它清成null。冻结seed未应用，三对同族trace分别byte-identical；6个NPZ含object dtype且不能全array `allow_pickle=False`读取，clip/contact字段亦为硬编码。旧failure和raw均保留，不能把六条诊断结果称为合规TZ2 completion。
 
+ER审核确认三条新CPU/no-renderer canary均为有效诊断性`family_failure`，typed trace和fallback也成立；但ER namespace `0/29`文件进入Git，resume未复验完整identity，contact-completeness只表示telemetry枚举成功，ER3要求的真实supervisor回归缺失，ER5没有按声明顺序实际运行tests且final pass不覆盖ZIP/process/GPU/tests。唯一结论继续为`remediation_required`；三条ER4 identity已消耗，下一计划只做证据锚定和code/fixture修复。
+
 ## 2. 当前计划与停止点
 
-- `AXIS_PI05_TRACK3_TZ_EVIDENCE_AND_EXECUTOR_CONTRACT_REMEDIATION_PLAN.md`（ER0–ER5，已执行并 hard stop，等待独立审核）
-  - ER0在新namespace闭合旧TZ的23个JSON、6个NPZ、phase CSV、两个worker source commit与fallback ZIP，不修改旧证据；
-  - ER1/ER2实现真实singleton、周期heartbeat、source/profile/command身份、sticky infrastructure stop、有效seed/determinism、computed clip/contact、typed no-pickle trace和manifest/outer hash finalizer；
-  - ER3只做离线三族失败诊断并冻结每族最多1个全新identity；ER4最多执行3条CPU/no-renderer canary，任何结果都不具备training eligibility；
-  - ER5统一hard stop。GPU0–3、官方GPU、Teleop、generation/replay、accepted数据、训练/norm、新candidate ZIP、上传/提交均不授权。
+- `AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md`（EF0–EF4，已规划，尚未执行）
+  - EF0只把现存 ER bytes 原样锚定入Git并做checkout复核，不修改旧 ER/TZ evidence；
+  - EF1/EF2只用code与fixture child闭合parent→child/resume完整identity、周期heartbeat、TERM→KILL/no-descendant和sticky stop；
+  - EF3离线拆分telemetry schema completeness与physical required-contact completeness；EF4真实运行ZIP/process/GPU/tests/final validation并closed heartbeat；
+  - 三条ER4和旧七条TZ identity均禁止重跑。任何新physics、GPU0–3、官方GPU、Teleop、generation/replay、accepted数据、训练/norm、新candidate ZIP、上传/提交均不授权。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 
@@ -81,6 +83,7 @@ Tonight执行的fallback本体、七个child attempt、首个infrastructure fail
 41. `AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md`：Z0–Z4工程合同成立；Z5 nominal在28步approach stall，worker发布结果后finalizer NameError使parent按infrastructure hard stop。审核派生物理family failure，并发现28/36 manifest coverage、自哈希与postmortem gate-path缺口，转入derived closure和单次conservative continuation。
 42. `AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md`：AA0–AA4闭环成立；AA5 support conservative在76步acquisition barrier正常family failure。执行器却未实现AA6–AA13且错误停止独立family，转入Tonight ZIP与cross-family一次性恢复。
 43. `AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md`：fallback SHA/CRC/布局和七个CPU child attempt成立；但完整调度器、sticky infrastructure stop、identity/seed、computed gates、no-pickle trace与finalizer合同未闭合，转入ER0–ER5最小修复。
+44. `AXIS_PI05_TRACK3_TZ_EVIDENCE_AND_EXECUTOR_CONTRACT_REMEDIATION_PLAN.md`：ER0旧证据派生、fallback和三条新CPU诊断family failure成立；但29项ER证据均未入Git，resume identity、真实supervisor回归、physical contact-completeness与finalizer验证顺序未闭合，转入EF0–EF4只读锚定/code-only修复。
 
 归档不表示旧计划所有尾部阶段都完成；只表示该文件不再是活动授权入口。旧 failure、阈值、hash 和未执行阶段必须继续保留。
 
@@ -279,6 +282,16 @@ ER0 在新 namespace `data/reports/axis_libero_30k/track3_tz_evidence_and_execut
 ER1–ER3 通过真实文件锁、PID/PGID、固定 argv/runtime identity、atomic heartbeat、TERM→KILL/no-descendant 合同、sticky stop 逻辑、有效 seed 应用、三态 computed gate、typed no-pickle trace、离线阶段诊断和每族一条新 identity freeze。ER4 按 support→containment→articulation 只执行三条全新 CPU/no-renderer child；三条 identity gate 均通过，seed 均实际应用，结果分别为正常 `family_failure`，support/containment 在 `descend_object`、articulation 在 `approach_drawer_region` 停止，成功族为 `0/3`，没有 retry、GPU 或旧 identity 重跑。
 
 ER5 以 fallback 作为唯一交付对象并 hard stop：`delivered_zip_kind=r6_fallback`、`fallback_no_track3_improvement`、`9383571677` bytes、SHA `95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a`；accepted reverse、training、new candidate 均为 `0/false`。artifact manifest、outer hash、inactive cursor、final validation 均已生成；3/3 typed NPZ no-pickle/finite、18 个 JSON strict、CSV LF、py_compile、diff-check 和 GPU0–3 empty 通过。ER4 后 targeted 为`15 passed`，项目全量为`308 passed, 7 skipped, 23 warnings`；canary source root `04eef24` clean、nested OpenPI `b58aff0` clean，LIBERO-plus 原有 dirty 未触碰。完整执行证据见 `data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/summary.json`；下一权限为`new_reviewed_plan_required`，不上传、不提交。
+
+## 3.24 ER0–ER5 独立审核与 EF0–EF4 授权（2026-09-06）
+
+审核输入root `c2d9f23bb0bbe13a0860aeb4fecf3a75c932ae0d`、worker source `04eef24161bfe62adc9a51378235f73b34e6ac51`、nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`。旧证据30/30 current hash、fallback全包、ER manifest 26/26/outer hash、三条raw/NPZ、运行身份和禁止项均独立复核。三条canary保持有效诊断性family failure：support/containment/articulation分别155/149/180步，source仍true、goal false，action saturation分别10/5/10；成功族0，不能入训。
+
+唯一审核结论为`remediation_required`。ER namespace 29个文件全部ignored且未入任何commit；resume只验result hash/profile ID，child又以当前dirty状态回填expected；pre-physics没有真实timeout/heartbeat/sticky/finalizer fixture回归；physical required-contact gate未实现；ER5未实际运行targeted/full tests，final pass也不包含expected ZIP、process/GPU和tests，heartbeat仍停在`finalizing`。
+
+旧ER计划已归档。唯一活动计划`docs/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md`只授权现存ER bytes原样锚定、完整identity/resume、无physics supervisor fixture、required-contact code gate和真实finalizer。三条ER4及旧七条TZ identity禁止重跑；任何新physics、GPU、generation/replay、accepted数据、训练或新ZIP均不授权。完整审核见`docs/reviews/axis_pi05/TRACK3_TZ_ER0_ER5_AUDIT_20260906.md`。
+
+生命周期更新后targeted为`19 passed`，项目全量为`312 passed, 7 skipped, 23 warnings`；最终提交前继续复核strict JSON、引用/归档、py_compile、diff-check与资源边界。
 
 ## 4. 保留但非活动的研究线
 

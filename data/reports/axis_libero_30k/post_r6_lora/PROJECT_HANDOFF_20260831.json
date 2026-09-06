@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-06",
-  "status": "track3_tz_evidence_and_executor_contract_remediation_completed_hard_stop_pending_review",
+  "status": "track3_er_evidence_anchor_and_finalizer_verification_planned",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
-  "latest_audited_execution_commit": "2ae08e974d6be9ac59541236ce7ddb1d7f288dd6",
-  "latest_audit_input_commit": "2ae08e974d6be9ac59541236ce7ddb1d7f288dd6",
+  "latest_audited_execution_commit": "c2d9f23bb0bbe13a0860aeb4fecf3a75c932ae0d",
+  "latest_audit_input_commit": "c2d9f23bb0bbe13a0860aeb4fecf3a75c932ae0d",
   "latest_execution_root_commit": "04eef24161bfe62adc9a51378235f73b34e6ac51",
   "latest_execution_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
@@ -225,7 +225,7 @@
   },
   "tests": {
     "command": "PYTHONPATH=. JAX_PLATFORMS=cpu .venv_axis_pi05/bin/pytest -q tests",
-    "passed": 296,
+    "passed": 312,
     "skipped": 7,
     "warnings": 23,
     "pynvml_is_collection_blocker": false
@@ -259,8 +259,8 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_TRACK3_TZ_EVIDENCE_AND_EXECUTOR_CONTRACT_REMEDIATION_PLAN.md",
-  "next_phase_only": "new_reviewed_plan_required",
+  "next_plan": "docs/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md",
+  "next_phase_only": "EF0_to_EF4_then_hard_stop",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -4205,8 +4205,8 @@
     "next_plan_approved": true
   },
   "track3_tz_evidence_and_executor_contract_remediation_authorization": {
-    "status": "track3_tz_evidence_and_executor_contract_remediation_completed_hard_stop_pending_review",
-    "plan": "docs/AXIS_PI05_TRACK3_TZ_EVIDENCE_AND_EXECUTOR_CONTRACT_REMEDIATION_PLAN.md",
+    "status": "track3_tz_evidence_and_executor_contract_remediation_completed_and_audited_remediation_required",
+    "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_TZ_EVIDENCE_AND_EXECUTOR_CONTRACT_REMEDIATION_PLAN.md",
     "audited_input_commit": "2ae08e974d6be9ac59541236ce7ddb1d7f288dd6",
     "authorized_phases": ["ER0", "ER1", "ER2", "ER3", "ER4", "ER5_closeout"],
     "authorization": {
@@ -4238,14 +4238,14 @@
     },
     "family_failure_policy": "continue_other_new_cpu_families_only",
     "shared_failure_policy": "sticky_global_hard_stop_requires_new_review",
-    "next_phase_only": "new_reviewed_plan_required"
+    "next_phase_only": "superseded_by_track3_er_evidence_anchor_and_finalizer_verification_plan"
   },
   "track3_tz_evidence_and_executor_contract_remediation_execution": {
     "status": "track3_tz_evidence_and_executor_contract_remediation_completed_hard_stop_pending_review",
     "execution_commit": "04eef24161bfe62adc9a51378235f73b34e6ac51",
     "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
     "evidence_root": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation",
-    "plan": "docs/AXIS_PI05_TRACK3_TZ_EVIDENCE_AND_EXECUTOR_CONTRACT_REMEDIATION_PLAN.md",
+    "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_TZ_EVIDENCE_AND_EXECUTOR_CONTRACT_REMEDIATION_PLAN.md",
     "phase_status": {"ER0": "passed", "ER1": "passed", "ER2": "passed", "ER3": "passed", "ER4": "completed_three_family_failures", "ER5": "hard_stop"},
     "derived_old_evidence": {"old_json": "23/23_strict", "old_npz": "6/6_object_dtype_no_pickle_failures_preserved", "old_trace_identical_groups": 3, "first_infrastructure_failure": "support_contact_repair_a", "diagnostic_family_failures": {"support_remove": 2, "containment_remove": 2, "articulation_close": 2}},
     "new_cpu_canaries": {"max_authorized": 3, "executed": 3, "order": ["support_remove", "containment_remove", "articulation_close"], "statuses": {"support_remove": "family_failure", "containment_remove": "family_failure", "articulation_close": "family_failure"}, "successful_families": 0, "old_identity_rerun": false, "training_eligible": false},
@@ -4261,5 +4261,79 @@
     "resource_boundary": {"gpu0": false, "gpu1": false, "gpu2": false, "gpu3": false, "official_gpu": false, "teleop": false, "generation": false, "replay": false, "accepted_data": false, "training": false, "new_candidate_zip": false, "upload": false, "submission": false},
     "hard_stop": {"status": "hard_stop", "next_authority": "new_reviewed_plan_required"},
     "historical_evidence_rewritten": false
+  },
+  "track3_tz_er0_er5_audit": {
+    "status": "remediation_required",
+    "audited_execution_commit": "c2d9f23bb0bbe13a0860aeb4fecf3a75c932ae0d",
+    "execution_source_commit": "04eef24161bfe62adc9a51378235f73b34e6ac51",
+    "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "audit_report": "docs/reviews/axis_pi05/TRACK3_TZ_ER0_ER5_AUDIT_20260906.md",
+    "audit_summary": "data/reports/axis_libero_30k/track3_tz_er0_er5_audit_20260906/summary.json",
+    "verified": {
+      "old_er0_manifest_current_hashes_exact": "30/30",
+      "old_json_strict": "23/23",
+      "old_npz_no_pickle_failures_preserved": "6/6",
+      "artifact_manifest_entries_exact": "26/26",
+      "er_namespace_files": 29,
+      "er_namespace_git_tracked_files": 0,
+      "new_cpu_attempts": 3,
+      "new_cpu_statuses": {"support_remove": "family_failure", "containment_remove": "family_failure", "articulation_close": "family_failure"},
+      "controller_saturation_counts": {"support_remove": 10, "containment_remove": 5, "articulation_close": 10},
+      "trace_no_pickle_finite": "3/3",
+      "successful_families": 0,
+      "accepted_training_candidate": [0, false, false],
+      "fallback_bytes": 9383571677,
+      "fallback_sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a",
+      "fallback_crc_entries_fast_only": "passed_3401_entries_one_fast_zero_slow",
+      "targeted_tests_before_lifecycle_update": "15_passed",
+      "full_tests_before_lifecycle_update": "308_passed_7_skipped_23_warnings",
+      "targeted_tests_after_lifecycle_update": "19_passed",
+      "full_tests_after_lifecycle_update": "312_passed_7_skipped_23_warnings",
+      "root_and_openpi_clean_at_audit_start": true,
+      "libero_plus_dirty_preserved": true,
+      "no_live_track3_process": true,
+      "gpu_compute_apps_at_audit": 0
+    },
+    "findings": {
+      "er_namespace_git_tracked": false,
+      "complete_runtime_identity_checked_on_resume": false,
+      "periodic_heartbeat_timeout_sticky_stop_real_regression": false,
+      "contact_completeness_is_physical_required_contact": false,
+      "finalizer_runs_targeted_and_full_tests_in_order": false,
+      "final_validation_covers_zip_process_gpu_and_tests": false,
+      "three_family_failure_classifications_valid": true
+    },
+    "historical_evidence_rewritten": false,
+    "next_plan_approved": true
+  },
+  "track3_er_evidence_anchor_and_finalizer_verification_authorization": {
+    "status": "track3_er_evidence_anchor_and_finalizer_verification_planned",
+    "plan": "docs/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md",
+    "audited_input_commit": "c2d9f23bb0bbe13a0860aeb4fecf3a75c932ae0d",
+    "authorized_phases": ["EF0", "EF1", "EF2", "EF3", "EF4_closeout"],
+    "new_physics_identities": 0,
+    "authorization": {
+      "anchor_existing_er_bytes_without_rewrite": true,
+      "complete_parent_child_and_resume_identity": true,
+      "fixture_only_supervisor_regression": true,
+      "physical_required_contact_gate_code_only": true,
+      "real_finalizer_and_checkout_closure": true,
+      "old_er_or_tz_identity_rerun": false,
+      "new_physics": false,
+      "gpu0": false,
+      "gpu1": false,
+      "gpu2": false,
+      "gpu3": false,
+      "official_gpu": false,
+      "teleop": false,
+      "generation": false,
+      "replay": false,
+      "accepted_data": false,
+      "training": false,
+      "new_candidate_zip": false,
+      "upload": false,
+      "submission": false
+    },
+    "next_phase_only": "EF0_to_EF4_then_hard_stop"
   }
 }

@@ -6,8 +6,8 @@
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_tz_evidence_and_executor_contract_remediation_planned`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_TZ_EVIDENCE_AND_EXECUTOR_CONTRACT_REMEDIATION_PLAN.md`（ER0–ER5，等待执行）
+> 当前总状态：`track3_tz_evidence_and_executor_contract_remediation_completed_hard_stop_pending_review`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_TZ_EVIDENCE_AND_EXECUTOR_CONTRACT_REMEDIATION_PLAN.md`（ER0–ER5 已执行并 hard stop，等待独立审核）
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -838,3 +838,11 @@ TZ2按固定顺序实际完成7/7个CPU/no-renderer fresh child，严格没有�
 旧TZ计划已归档。唯一活动计划`docs/AXIS_PI05_TRACK3_TZ_EVIDENCE_AND_EXECUTOR_CONTRACT_REMEDIATION_PLAN.md`只授权旧证据derived closure、code-only合同修复、离线诊断和最多三族各一条全新CPU/no-renderer canary；旧七条identity不重跑。GPU0–3、官方GPU、Teleop、generation/replay、accepted数据、训练/norm、新candidate ZIP、上传/提交全部不授权。审核报告：`docs/reviews/axis_pi05/TRACK3_TONIGHT_TZ0_TZ9_AUDIT_20260906.md`。
 
 生命周期更新后targeted为`53 passed, 2 warnings`，项目全量为`296 passed, 7 skipped, 23 warnings`；strict JSON、引用/归档和py_compile通过，最终提交前继续执行diff-check与资源边界复核。
+
+## 74. ER0–ER5 Executor Contract 修复执行收尾（2026-09-06）
+
+ER0 在新 namespace `data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/` 完成旧 Tonight 证据闭包：旧 namespace 的 23/23 JSON strict、6/6 NPZ object-array/no-pickle 失败、phase CSV、fallback/source ZIP 的 bytes/SHA/CRC/布局结果均以新 manifest 派生保存；首条 infrastructure failure、6 条诊断性 family failure、三组同族 byte-identical trace 和旧 aggregate null 矛盾均未改写。
+
+ER1–ER3 的真实文件锁、PID/PGID、固定 argv/runtime identity、周期 atomic heartbeat、TERM→KILL/no-descendant、sticky stop、seed 应用、computed 三态 gate、typed no-pickle trace、离线诊断和三条新 identity freeze 均通过。ER4 固定 support→containment→articulation 顺序，只运行三条全新 CPU/no-renderer child，三条 identity gate 均通过并实际应用 seed；结果为 support、containment、articulation 各一个正常 `family_failure`，成功族 `0/3`，无 retry、旧 identity 重跑或 GPU。
+
+ER5 以明确标注的 R6 fallback hard stop：绝对路径 `/home/huang/code/PARC2026_final/artifacts/submission_axis_r6_fallback_revalidated_20260906.zip`，`delivered_zip_kind=r6_fallback`、`fallback_no_track3_improvement`、`9383571677` bytes、SHA `95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a`、CRC passed、3401 entries、FAST-only；`recommended_for_track3_submission=false`，accepted/training/new candidate 均 `0/false`。final manifest、outer hash、inactive cursor 与 final validation 已生成；3 个新 NPZ 均 no-pickle/finite，17 个 JSON strict、CSV LF、py_compile、diff-check 和 GPU0–3 empty 通过。执行后 targeted `14 passed`，项目全量 `307 passed, 7 skipped, 23 warnings`；执行 root `04eef24161bfe62adc9a51378235f73b34e6ac51`，nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1` clean，LIBERO-plus 原有 dirty 未触碰。证据：`data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/summary.json`；下一权限为`new_reviewed_plan_required`，不上传、不提交。

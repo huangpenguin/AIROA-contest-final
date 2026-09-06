@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-06",
-  "status": "track3_tz_evidence_and_executor_contract_remediation_planned",
+  "status": "track3_tz_evidence_and_executor_contract_remediation_completed_hard_stop_pending_review",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
   "latest_audited_execution_commit": "2ae08e974d6be9ac59541236ce7ddb1d7f288dd6",
   "latest_audit_input_commit": "2ae08e974d6be9ac59541236ce7ddb1d7f288dd6",
-  "latest_execution_root_commit": "343c5a554b0bfa05839b145f48a8c785d38edd19",
+  "latest_execution_root_commit": "04eef24161bfe62adc9a51378235f73b34e6ac51",
   "latest_execution_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
@@ -260,7 +260,7 @@
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
   "next_plan": "docs/AXIS_PI05_TRACK3_TZ_EVIDENCE_AND_EXECUTOR_CONTRACT_REMEDIATION_PLAN.md",
-  "next_phase_only": "ER0_to_ER5_then_hard_stop",
+  "next_phase_only": "new_reviewed_plan_required",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -4205,7 +4205,7 @@
     "next_plan_approved": true
   },
   "track3_tz_evidence_and_executor_contract_remediation_authorization": {
-    "status": "track3_tz_evidence_and_executor_contract_remediation_planned",
+    "status": "track3_tz_evidence_and_executor_contract_remediation_completed_hard_stop_pending_review",
     "plan": "docs/AXIS_PI05_TRACK3_TZ_EVIDENCE_AND_EXECUTOR_CONTRACT_REMEDIATION_PLAN.md",
     "audited_input_commit": "2ae08e974d6be9ac59541236ce7ddb1d7f288dd6",
     "authorized_phases": ["ER0", "ER1", "ER2", "ER3", "ER4", "ER5_closeout"],
@@ -4238,6 +4238,28 @@
     },
     "family_failure_policy": "continue_other_new_cpu_families_only",
     "shared_failure_policy": "sticky_global_hard_stop_requires_new_review",
-    "next_phase_only": "ER0_to_ER5_then_hard_stop"
+    "next_phase_only": "new_reviewed_plan_required"
+  },
+  "track3_tz_evidence_and_executor_contract_remediation_execution": {
+    "status": "track3_tz_evidence_and_executor_contract_remediation_completed_hard_stop_pending_review",
+    "execution_commit": "04eef24161bfe62adc9a51378235f73b34e6ac51",
+    "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "evidence_root": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation",
+    "plan": "docs/AXIS_PI05_TRACK3_TZ_EVIDENCE_AND_EXECUTOR_CONTRACT_REMEDIATION_PLAN.md",
+    "phase_status": {"ER0": "passed", "ER1": "passed", "ER2": "passed", "ER3": "passed", "ER4": "completed_three_family_failures", "ER5": "hard_stop"},
+    "derived_old_evidence": {"old_json": "23/23_strict", "old_npz": "6/6_object_dtype_no_pickle_failures_preserved", "old_trace_identical_groups": 3, "first_infrastructure_failure": "support_contact_repair_a", "diagnostic_family_failures": {"support_remove": 2, "containment_remove": 2, "articulation_close": 2}},
+    "new_cpu_canaries": {"max_authorized": 3, "executed": 3, "order": ["support_remove", "containment_remove", "articulation_close"], "statuses": {"support_remove": "family_failure", "containment_remove": "family_failure", "articulation_close": "family_failure"}, "successful_families": 0, "old_identity_rerun": false, "training_eligible": false},
+    "fallback": {"delivered_zip_kind": "r6_fallback", "readiness": "fallback_no_track3_improvement", "absolute_path": "/home/huang/code/PARC2026_final/artifacts/submission_axis_r6_fallback_revalidated_20260906.zip", "bytes": 9383571677, "sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a", "crc_test": "passed", "entry_count": 3401, "new_candidate_zip_created": false, "recommended_for_track3_submission": false},
+    "accepted_reverse_demos": [0, 0, 0],
+    "training_started": false,
+    "gpu3_generation_replay": [0, 0, 0],
+    "final_manifest": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/artifact_manifest.json",
+    "outer_hash": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/outer_hash.json",
+    "final_validation": {"path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/final_validation.json", "status": "passed", "strict_json_files": 17, "typed_npz_files": 3, "csv_lf": true, "py_compile": true, "git_diff_check": true, "gpu_compute_apps": 0},
+    "tests": {"targeted": "14 passed", "project_full": "307 passed, 7 skipped, 23 warnings"},
+    "repository": {"root_commit": "04eef24161bfe62adc9a51378235f73b34e6ac51", "root_clean_before_final_docs": true, "openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1", "openpi_clean": true, "libero_plus_preexisting_dirty_preserved": true, "live_workers": 0},
+    "resource_boundary": {"gpu0": false, "gpu1": false, "gpu2": false, "gpu3": false, "official_gpu": false, "teleop": false, "generation": false, "replay": false, "accepted_data": false, "training": false, "new_candidate_zip": false, "upload": false, "submission": false},
+    "hard_stop": {"status": "hard_stop", "next_authority": "new_reviewed_plan_required"},
+    "historical_evidence_rewritten": false
   }
 }

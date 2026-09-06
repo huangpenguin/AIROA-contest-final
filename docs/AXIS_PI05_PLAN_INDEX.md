@@ -3,7 +3,7 @@
 > 更新日期：2026-09-06（Asia/Tokyo）
 > 跨session入口：先完整读取根目录`AGENTS.md`与`MEMORY.md`，再读取本索引、handoff、machine JSON、唯一活动计划和最新审核；先查live PID/cursor，禁止重复启动。
 > 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_TZ_EVIDENCE_AND_EXECUTOR_CONTRACT_REMEDIATION_PLAN.md`
-> 当前状态：`track3_tz_evidence_and_executor_contract_remediation_planned`
+> 当前状态：`track3_tz_evidence_and_executor_contract_remediation_completed_hard_stop_pending_review`
 > 最新审核：`docs/reviews/axis_pi05/TRACK3_TONIGHT_TZ0_TZ9_AUDIT_20260906.md`
 
 ## 1. 本轮执行停止点
@@ -24,7 +24,7 @@ Tonight执行的fallback本体、七个child attempt、首个infrastructure fail
 
 ## 2. 当前计划与停止点
 
-- `AXIS_PI05_TRACK3_TZ_EVIDENCE_AND_EXECUTOR_CONTRACT_REMEDIATION_PLAN.md`（ER0–ER5，等待执行）
+- `AXIS_PI05_TRACK3_TZ_EVIDENCE_AND_EXECUTOR_CONTRACT_REMEDIATION_PLAN.md`（ER0–ER5，已执行并 hard stop，等待独立审核）
   - ER0在新namespace闭合旧TZ的23个JSON、6个NPZ、phase CSV、两个worker source commit与fallback ZIP，不修改旧证据；
   - ER1/ER2实现真实singleton、周期heartbeat、source/profile/command身份、sticky infrastructure stop、有效seed/determinism、computed clip/contact、typed no-pickle trace和manifest/outer hash finalizer；
   - ER3只做离线三族失败诊断并冻结每族最多1个全新identity；ER4最多执行3条CPU/no-renderer canary，任何结果都不具备training eligibility；
@@ -84,7 +84,7 @@ Tonight执行的fallback本体、七个child attempt、首个infrastructure fail
 
 归档不表示旧计划所有尾部阶段都完成；只表示该文件不再是活动授权入口。旧 failure、阈值、hash 和未执行阶段必须继续保留。
 
-当前只执行ER0–ER5修复链；不得修改历史证据/公开HDF5/BDDL、重跑旧七条TZ identity、把失败轨迹入训，或使用任何GPU/Teleop/generation/replay/训练/上传/提交。ER4最多三族各一条全新CPU/no-renderer identity；共享基础设施失败必须sticky全局停止。
+ER0–ER5修复链已执行并 hard stop；不得修改历史证据/公开HDF5/BDDL、重跑旧七条TZ identity、把失败轨迹入训，或使用任何GPU/Teleop/generation/replay/训练/上传/提交。ER4实际三族各一条全新CPU/no-renderer identity且均为正常family failure；当前下一权限为`new_reviewed_plan_required`。
 
 ## 3.1 G0–G1 执行审核与门禁重构
 
@@ -271,6 +271,14 @@ TZ1完成全部TZ0–TZ9与worker CLI的静态入口、原子cursor/heartbeat/�
 旧TZ计划已归档。唯一活动计划`docs/AXIS_PI05_TRACK3_TZ_EVIDENCE_AND_EXECUTOR_CONTRACT_REMEDIATION_PLAN.md`先做不可变derived closure和code-only修复，再最多运行三族各一条全新CPU/no-renderer canary并hard stop。不授权任何GPU、generation/replay、accepted数据、训练或新candidate ZIP。完整审核见`docs/reviews/axis_pi05/TRACK3_TONIGHT_TZ0_TZ9_AUDIT_20260906.md`。
 
 生命周期更新后的targeted为`53 passed, 2 warnings`，项目全量为`296 passed, 7 skipped, 23 warnings`；strict JSON、引用/归档与py_compile通过，最终树仍须通过diff-check和clean commit复核。
+
+## 3.23 ER0–ER5 Executor Contract 修复执行收尾（2026-09-06）
+
+ER0 在新 namespace `data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/` 完成旧 Tonight 证据派生闭包：23/23 JSON strict、6/6 旧 NPZ 的 object-array/no-pickle 失败原样保留、1 个 phase CSV、两个 fallback ZIP 均完成只读 bytes/SHA/CRC/布局复核；首条 `support_contact_repair_a` infrastructure failure、6 条诊断性 family failure、顶层 aggregate null 矛盾和三组同族 identical trace 均保留。
+
+ER1–ER3 通过真实文件锁、PID/PGID、固定 argv/runtime identity、atomic heartbeat、TERM→KILL/no-descendant 合同、sticky stop 逻辑、有效 seed 应用、三态 computed gate、typed no-pickle trace、离线阶段诊断和每族一条新 identity freeze。ER4 按 support→containment→articulation 只执行三条全新 CPU/no-renderer child；三条 identity gate 均通过，seed 均实际应用，结果分别为正常 `family_failure`，support/containment 在 `descend_object`、articulation 在 `approach_drawer_region` 停止，成功族为 `0/3`，没有 retry、GPU 或旧 identity 重跑。
+
+ER5 以 fallback 作为唯一交付对象并 hard stop：`delivered_zip_kind=r6_fallback`、`fallback_no_track3_improvement`、`9383571677` bytes、SHA `95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a`；accepted reverse、training、new candidate 均为 `0/false`。artifact manifest、outer hash、inactive cursor、final validation 均已生成；3/3 typed NPZ no-pickle/finite、17 个 JSON strict、CSV LF、py_compile、diff-check 和 GPU0–3 empty 通过。ER4 后 targeted 为`14 passed`，项目全量为`307 passed, 7 skipped, 23 warnings`；root `04eef24` clean、nested OpenPI `b58aff0` clean，LIBERO-plus 原有 dirty 未触碰。完整执行证据见 `data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/summary.json`；下一权限为`new_reviewed_plan_required`，不上传、不提交。
 
 ## 4. 保留但非活动的研究线
 

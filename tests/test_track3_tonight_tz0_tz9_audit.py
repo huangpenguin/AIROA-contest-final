@@ -11,9 +11,9 @@ AUDIT = ROOT / "data/reports/axis_libero_30k/track3_tonight_tz0_tz9_audit_202609
 
 def test_tonight_audit_archives_old_plan_and_releases_one_remediation_plan() -> None:
     handoff = json.loads(HANDOFF.read_text(encoding="utf-8"))
-    assert handoff["status"] == "track3_tz_evidence_and_executor_contract_remediation_planned"
+    assert handoff["status"] == "track3_tz_evidence_and_executor_contract_remediation_completed_hard_stop_pending_review"
     assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_TZ_EVIDENCE_AND_EXECUTOR_CONTRACT_REMEDIATION_PLAN.md"
-    assert handoff["next_phase_only"] == "ER0_to_ER5_then_hard_stop"
+    assert handoff["next_phase_only"] == "new_reviewed_plan_required"
     assert (ROOT / handoff["next_plan"]).is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md").exists()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md").is_file()

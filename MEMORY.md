@@ -33,13 +33,13 @@ If these disagree, stop mutation, audit the discrepancy and repair the handoff i
 
 - Repository: `/home/huang/code/PARC2026_final`
 - Branch: `codex/axis-pi05-audit-remediation`; no upstream recorded.
-- Memory input HEAD: `5a270a912362376cbfa13a7f9e9fd66c8b5d6237`.
-- Latest audited execution: `5a270a912362376cbfa13a7f9e9fd66c8b5d6237` (Z0–Z14 execution and lifecycle handoff).
+- Memory input HEAD: `0e7e495d6a8c4dd9abb32525d117eda8166d1a8c`.
+- Latest audited execution: `0e7e495d6a8c4dd9abb32525d117eda8166d1a8c` (AA0–AA14 execution and lifecycle handoff).
 - Nested OpenPI: `third_party/axis_openpi` at `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`, clean at review.
 - `LIBERO-plus` has pre-existing dirty files. They belong to the user/project and must not be reset, cleaned, overwritten or silently committed.
-- Current execution state at this refresh: `track3_aa5_support_conservative_cpu_family_failure_hard_stop_pending_review`.
-- Active plan: `docs/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md`.
-- The `AA0_to_AA14_then_hard_stop` authorization has been executed and consumed: AA0–AA4 passed, the one allowed conservative CPU canary AA5 was a `family_failure`, and AA6–AA13 are `not_evaluated`. Nominal rerun is forbidden; no GPU3/data generation, Teleop, dense full-FT, upload or submission is authorized without a new reviewed plan.
+- Current planned state at this refresh: `track3_tonight_zip_and_crossfamily_recovery_planned`.
+- Active plan: `docs/AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md`.
+- Authorized chain: `TZ0_to_TZ9_then_hard_stop`. It must first revalidate/materialize an explicitly labeled R6 fallback ZIP, then implement full family isolation and run the bounded support/containment/articulation matrix. A T3 candidate ZIP requires accepted reverse data and holdout/C20/fold/FAST gates; otherwise the only tonight deliverable is the honest fallback. No upload/submission is authorized.
 - Z0–Z14 execution evidence is in `data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/`; its audit is `docs/reviews/axis_pi05/TRACK3_Y3_LAUNCH_Z0_Z14_AUDIT_20260906.md`. Historical parent remains infrastructure while physical result is derived nominal family failure. Z6–Z13 remain `not_evaluated`; before any AA execution, recheck live supervisor/PID/cursor, dirty worktree and GPU boundaries. Never start a duplicate run.
 
 The snapshot above becomes historical as soon as execution advances. Always refresh from Git, machine JSON and the live cursor rather than treating this paragraph as a lock.
@@ -50,6 +50,12 @@ The snapshot above becomes historical as soon as execution advances. Always refr
 - AA5 ran exactly once: task10/demo0, seed3121, `object_frame_conservative`, CPU/no-renderer. It returned a normal process result but failed the acquisition barrier and is classified `family_failure`; its trajectory is finite `76×7` actions / `76×79` states and is not training-eligible.
 - AA14 is `hard_stop`; AA6–AA13 are `not_evaluated`; counts remain `exact/pending/accepted=0/0/0`. No GPU3, generation, replay, training, ZIP, Teleop, upload or submission occurred. Next authority: `new_reviewed_plan_required`.
 - Frozen execution identity: root `cf27e7b1fe9276eaf0d4285128d56586e049d28f`, tool SHA `3484ffe39d5a80277575ca006f3ea0d8f067b510779584955b833818e917cb79`, nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`, CUDA visibility empty, CPU/no-renderer.
+
+## 12. Tonight ZIP audit correction (2026-09-06)
+
+- AA5 evidence is valid, but the AA executor implemented only AA0–AA5 and AA14. Its closeout incorrectly made all AA6–AA13 depend on support success, contrary to the plan's family-isolation rule; containment and articulation remain untested, not failed.
+- Current accepted reverse data and new T3 ZIP counts are zero. The existing Aug-31 R6 FAST ZIP remains mechanically usable and hashes to `95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a`, but user-reported Track3 score for that model is zero.
+- The active TZ plan uses a 23:00 JST deadline: materialize a clearly labeled fallback first, then pursue a real T3 candidate through a bounded cross-family matrix and minimal single-arm LoRA. Do not present the fallback as Track3 improvement.
 
 ## 3. Stable competition/model facts
 

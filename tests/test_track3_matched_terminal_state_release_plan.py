@@ -9,12 +9,14 @@ HANDOFF = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_2026
 CANARY = ROOT / "data/reports/axis_libero_30k/track3_background_predicate_convergence/k3_gpu3_release/task19_canary.json"
 
 
-def test_only_the_track3_z5_derived_release_plan_is_active() -> None:
+def test_only_the_track3_tonight_zip_plan_is_active() -> None:
     handoff = json.loads(HANDOFF.read_text(encoding="utf-8"))
-    assert handoff["status"] == "track3_aa5_support_conservative_cpu_family_failure_hard_stop_pending_review"
-    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md"
-    assert handoff["next_phase_only"] == "new_reviewed_plan_required"
+    assert handoff["status"] == "track3_tonight_zip_and_crossfamily_recovery_planned"
+    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md"
+    assert handoff["next_phase_only"] == "TZ0_to_TZ9_then_hard_stop"
     assert (ROOT / handoff["next_plan"]).is_file()
+    assert not (ROOT / "docs/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md").exists()
+    assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md").is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md").exists()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md").is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_RUNTIME_PREFLIGHT_AND_BOUNDED_CONTINUATION_PLAN.md").exists()

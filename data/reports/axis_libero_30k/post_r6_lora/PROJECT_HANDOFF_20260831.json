@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-06",
-  "status": "track3_aa5_support_conservative_cpu_family_failure_hard_stop_pending_review",
+  "status": "track3_tonight_zip_and_crossfamily_recovery_planned",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
-  "latest_audited_execution_commit": "5a270a912362376cbfa13a7f9e9fd66c8b5d6237",
-  "latest_audit_input_commit": "5a270a912362376cbfa13a7f9e9fd66c8b5d6237",
-  "latest_execution_root_commit": "cf27e7b1fe9276eaf0d4285128d56586e049d28f",
+  "latest_audited_execution_commit": "0e7e495d6a8c4dd9abb32525d117eda8166d1a8c",
+  "latest_audit_input_commit": "0e7e495d6a8c4dd9abb32525d117eda8166d1a8c",
+  "latest_execution_root_commit": "0e7e495d6a8c4dd9abb32525d117eda8166d1a8c",
   "latest_execution_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
@@ -225,7 +225,7 @@
   },
   "tests": {
     "command": "PYTHONPATH=. JAX_PLATFORMS=cpu .venv_axis_pi05/bin/pytest -q tests",
-    "passed": 287,
+    "passed": 288,
     "skipped": 7,
     "warnings": 23,
     "pynvml_is_collection_blocker": false
@@ -259,8 +259,8 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md",
-  "next_phase_only": "new_reviewed_plan_required",
+  "next_plan": "docs/AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md",
+  "next_phase_only": "TZ0_to_TZ9_then_hard_stop",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -3869,8 +3869,8 @@
     "next_plan_approved": true
   },
   "track3_z5_derived_release_and_conservative_continuation_authorization": {
-    "status": "track3_z5_derived_release_and_conservative_continuation_planned",
-    "plan": "docs/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md",
+    "status": "track3_z5_derived_release_and_conservative_continuation_completed_and_audited",
+    "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md",
     "audited_input_commit": "5a270a912362376cbfa13a7f9e9fd66c8b5d6237",
     "authorized_phases": ["AA0", "AA1", "AA2", "AA3", "AA4", "AA5", "AA6", "AA7", "AA8", "AA9", "AA10", "AA11", "AA12", "AA13", "AA14_closeout"],
     "authorization": {
@@ -3918,11 +3918,11 @@
       "manifest_outer_hash_or_final_validation_failure"
     ],
     "family_failure_policy": "close_only_the_failed_family_lane",
-    "next_phase_only": "AA0_to_AA14_then_hard_stop"
+    "next_phase_only": "superseded_by_track3_tonight_zip_and_crossfamily_recovery_plan"
   },
   "track3_z5_derived_release_and_conservative_continuation_execution": {
     "status": "track3_aa14_hard_stop_pending_review",
-    "plan": "docs/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md",
+    "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md",
     "input_audit": "docs/reviews/axis_pi05/TRACK3_Y3_LAUNCH_Z0_Z14_AUDIT_20260906.md",
     "input_commit_locked": "5a270a912362376cbfa13a7f9e9fd66c8b5d6237",
     "execution_root_commit": "cf27e7b1fe9276eaf0d4285128d56586e049d28f",
@@ -4002,6 +4002,105 @@
       "gpu3_or_data_generation_allowed": false,
       "upload_or_submission": false
     },
-    "next_phase_only": "new_reviewed_plan_required"
+    "execution_closeout_commit": "0e7e495d6a8c4dd9abb32525d117eda8166d1a8c",
+    "next_phase_only": "superseded_by_track3_tonight_zip_and_crossfamily_recovery_plan"
+  },
+  "track3_aa0_aa14_tonight_zip_audit": {
+    "status": "remediation_required",
+    "audited_execution_commit": "0e7e495d6a8c4dd9abb32525d117eda8166d1a8c",
+    "aa5_frozen_source_commit": "cf27e7b1fe9276eaf0d4285128d56586e049d28f",
+    "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "audit_report": "docs/reviews/axis_pi05/TRACK3_AA0_AA14_AND_TONIGHT_ZIP_AUDIT_20260906.md",
+    "audit_summary": "data/reports/axis_libero_30k/track3_aa0_aa14_tonight_zip_audit_20260906/summary.json",
+    "verified": {
+      "old_z_artifacts_bytes_sha_exact": "36/36",
+      "aa_manifest_entries_bytes_sha_exact": "31/31",
+      "aa_namespace_file_closure": "31+4_excluded=35/35",
+      "aa_outer_hash_exact": true,
+      "strict_json": "26_namespace_plus_1_machine=27",
+      "np_no_pickle_numeric_finite": true,
+      "csv_lf": true,
+      "no_partial": true,
+      "aa5_attempts": 1,
+      "aa5_category": "family_failure",
+      "aa5_process_returncode": 0,
+      "aa5_physics_steps": 76,
+      "aa5_phase_counts": {"approach_grasp": 49, "descend_grasp": 21, "close_gripper": 6},
+      "aa6_to_aa13_not_evaluated": true,
+      "exact_pending_accepted": [0, 0, 0],
+      "targeted_tests_before_lifecycle_update": "44_passed",
+      "full_tests_before_lifecycle_update": "287_passed_7_skipped_23_warnings",
+      "targeted_tests_after_lifecycle_update": "45_passed",
+      "full_tests_after_lifecycle_update": "288_passed_7_skipped_23_warnings",
+      "root_and_openpi_clean": true,
+      "libero_plus_dirty_preserved": true,
+      "no_live_track3_process": true,
+      "gpu_compute_apps_at_audit": 0
+    },
+    "findings": {
+      "aa5_physical_family_failure_valid": true,
+      "aa6_to_aa13_cli_implemented": false,
+      "family_isolation_execution_implemented": false,
+      "support_failure_incorrectly_stopped_independent_families": true,
+      "new_track3_zip_created": false
+    },
+    "existing_fallback_zip": {
+      "path": "artifacts/submission_axis_r6_step500_fast_positive_score_20260831.zip",
+      "bytes": 9383571677,
+      "sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a",
+      "track3_improvement": false
+    },
+    "historical_evidence_rewritten": false,
+    "next_plan_approved": true
+  },
+  "track3_tonight_zip_and_crossfamily_recovery_authorization": {
+    "status": "track3_tonight_zip_and_crossfamily_recovery_planned",
+    "plan": "docs/AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md",
+    "audited_input_commit": "0e7e495d6a8c4dd9abb32525d117eda8166d1a8c",
+    "authorized_phases": ["TZ0", "TZ1", "TZ2", "TZ3", "TZ4", "TZ5", "TZ6", "TZ7", "TZ8", "TZ9_closeout"],
+    "deadline_jst": "2026-09-06T23:00:00+09:00",
+    "authorization": {
+      "materialize_revalidated_r6_fallback_zip": true,
+      "fallback_readiness_label": "fallback_no_track3_improvement",
+      "complete_phase_cli_before_physics": true,
+      "family_failure_isolation": true,
+      "old_nominal_or_conservative_identity_rerun": false,
+      "support_contact_repair_cpu_identities_max": 3,
+      "containment_cpu_identities_max": 2,
+      "articulation_cpu_identities_max": 2,
+      "gpu3_camera_canaries_max": 3,
+      "total_train_generations_max": 6,
+      "total_fresh_replays_max": 18,
+      "accepted_replay_gate": "3/3",
+      "holdout_demo": "demo2",
+      "forward_reverse_sampling": [0.8, 0.2],
+      "fresh_quantiles_required": true,
+      "initialization": "r6_dual_l2_fresh500_r1_step500_params",
+      "lora_topology": "L2_action_lora_heads",
+      "training_gpus": [1, 2],
+      "training_precision": "float32",
+      "peak_lr": 1e-6,
+      "screen_steps": 100,
+      "conditional_max_steps": 500,
+      "reverse_improvement_min_successes": 1,
+      "c20_max_success_loss": 2,
+      "candidate_zip_conditional": true,
+      "fallback_zip_required_by_deadline": true,
+      "gpu0": false,
+      "official_gpu": false,
+      "dense_full_ft": false,
+      "human_teleop": false,
+      "automatic_upload_or_submission": false
+    },
+    "shared_global_stop_conditions": [
+      "source_or_model_identity_drift",
+      "active_instance_or_gpu_boundary_conflict",
+      "worker_or_finalizer_infrastructure_failure",
+      "data_contamination_or_holdout_overlap",
+      "nonfinite_training_state",
+      "manifest_hash_or_zip_crc_failure"
+    ],
+    "family_failure_policy": "close_only_failed_identity_and_continue_other_families",
+    "next_phase_only": "TZ0_to_TZ9_then_hard_stop"
   }
 }

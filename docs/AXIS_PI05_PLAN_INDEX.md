@@ -2,9 +2,9 @@
 
 > 更新日期：2026-09-06（Asia/Tokyo）
 > 跨session入口：先完整读取根目录`AGENTS.md`与`MEMORY.md`，再读取本索引、handoff、machine JSON、唯一活动计划和最新审核；先查live PID/cursor，禁止重复启动。
-> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md`
-> 当前状态：`track3_aa5_support_conservative_cpu_family_failure_hard_stop_pending_review`
-> 最新审核：`docs/reviews/axis_pi05/TRACK3_Y3_LAUNCH_Z0_Z14_AUDIT_20260906.md`
+> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md`
+> 当前状态：`track3_tonight_zip_and_crossfamily_recovery_planned`
+> 最新审核：`docs/reviews/axis_pi05/TRACK3_AA0_AA14_AND_TONIGHT_ZIP_AUDIT_20260906.md`
 
 ## 1. 本轮执行停止点
 
@@ -14,17 +14,20 @@ Z0–Z4的runtime/identity/phase-ledger修复成立；Z5只运行一次task10/de
 
 45项输入、26个JSON、NPY/NPZ/CSV、Z5 identity与资源边界均独立通过；生命周期更新前全量为`281 passed, 7 skipped, 23 warnings`，更新后项目全量为`282 passed, 7 skipped, 23 warnings`。Z6–Z13=`not_evaluated`，`exact/pending/accepted=0/0/0`，没有GPU、generation/replay、训练或ZIP。
 
-当前执行已完成AA0–AA5并进入AA14 hard stop：旧Z namespace已完成`36/36` artifact closure，派生分类、真实worker/finalizer回归和AA4 clean identity均通过；AA5唯一一次冻结参数的`object_frame_conservative` CPU/no-renderer canary为`family_failure`。因此AA6–AA13全部`not_evaluated`，当前必须等待`new_reviewed_plan_required`；不得nominal重跑、触碰GPU0、启动Teleop、dense full-FT、上传或提交。
+当前执行已完成AA0–AA5并进入AA14 hard stop：旧Z namespace已完成`36/36` artifact closure，派生分类、真实worker/finalizer回归和AA4 clean identity均通过；AA5唯一一次冻结参数的`object_frame_conservative` CPU/no-renderer canary为`family_failure`。审核确认AA5在approach/descend/close走了`49/21/6`步，EEF到位且无controller clip，但连续接触和source release未成立。
+
+审核同时发现旧计划的family isolation没有实现：工具只提供AA0–AA5/AA14入口，AA6–AA13没有CLI；AA14又把support family failure扩散为全部尾部`not_evaluated`，与“support失败不阻止task20/task19”的计划冲突。当前T3数据、训练和新ZIP仍为0；旧R6 FAST ZIP已复核SHA exact，但其已知Track3结果为0，只能作为明确标注的fallback。
+
+审核生命周期更新后targeted为`45 passed`，项目全量为`288 passed, 7 skipped, 23 warnings`；strict JSON、引用、py_compile与diff check通过。
 
 ## 2. 当前计划与停止点
 
-- `AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md`
-  - AA0–AA4已在CPU/code/filesystem完成：36/36 closure、derived nominal family classification、真实worker return-code/finalizer回归和clean identity均通过；
-  - AA5仅执行一次冻结的support conservative CPU canary，结果为`family_failure`；AA6 GPU3 camera release及所有后续阶段不允许自动进入；
-  - AA7–AA8冻结task20/task19合同并运行有界CPU/GPU3 pilots，family/profile failure隔离；
-  - AA9最多12条generation/36次fresh replay，只有严格`3/3`才machine-accepted；
-  - AA10–AA13仅在数据门禁通过后执行20Hz `80/20` mixture/fresh QUANTILES、两卡R6 L2 LoRA、reverse/C20选择、独立复验与条件式本地FAST ZIP；
-  - AA14统一收尾并hard stop。GPU0、官方GPU、Teleop、dense full-FT、自动上传/提交均不授权。
+- `AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md`
+  - `TZ`是Tonight ZIP范围代号，不再累计字母进度；TZ0先复验并物化明确标注`fallback_no_track3_improvement`的本地R6 ZIP；
+  - TZ1在任何physics前实现全链入口、family隔离和离线抓取诊断，一次性冻结support≤3、containment≤2、articulation≤2个新identity；
+  - TZ2–TZ4最多7条CPU pilot、每族最多1条GPU3 camera、总generation≤6/fresh replay≤18；单个family failure不得停止其他family；
+  - TZ5–TZ8仅在至少一个family有2条accepted数据后执行20Hz `80/20` mixture/fresh QUANTILES、单臂R6 L2 LoRA 100步、条件500步、holdout/C20、fold/FAST和T3 candidate ZIP；
+  - 22:30停止启动长训练，23:00前交付合格T3 candidate或诚实fallback；TZ9 hard stop。GPU0、官方GPU、Teleop、dense full-FT、自动上传/提交均不授权。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 
@@ -75,10 +78,11 @@ Z0–Z4的runtime/identity/phase-ledger修复成立；Z5只运行一次task10/de
 39. `AXIS_PI05_TRACK3_OBJECT_FRAME_EXECUTOR_AND_BOUNDED_AUTOGEN_LORA_PLAN.md`：X0–X3内部报告与X13 closure成立；X4在0 physics step时因不存在的runtime helper发生infrastructure hard stop。审核另发现完整input lock、stall执行、阶段门禁、周期heartbeat与finalizer自哈希仍未闭合，转入runtime preflight后再恢复bounded continuation。
 40. `AXIS_PI05_TRACK3_RUNTIME_PREFLIGHT_AND_BOUNDED_CONTINUATION_PLAN.md`：Y0全量input lock与Y2 artifact closure成立；Y3未执行。审核发现child argv无法通过顶层parser、最终hard gate丢失阶段作用域、destination缺数值验证且source identity自指，转入launch/phase-ledger remediation。
 41. `AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md`：Z0–Z4工程合同成立；Z5 nominal在28步approach stall，worker发布结果后finalizer NameError使parent按infrastructure hard stop。审核派生物理family failure，并发现28/36 manifest coverage、自哈希与postmortem gate-path缺口，转入derived closure和单次conservative continuation。
+42. `AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md`：AA0–AA4闭环成立；AA5 support conservative在76步acquisition barrier正常family failure。执行器却未实现AA6–AA13且错误停止独立family，转入Tonight ZIP与cross-family一次性恢复。
 
 归档不表示旧计划所有尾部阶段都完成；只表示该文件不再是活动授权入口。旧 failure、阈值、hash 和未执行阶段必须继续保留。
 
-当前只执行AA0–AA14条件链；不得修改历史证据/公开HDF5/BDDL、重跑nominal、把Z5轨迹入训、人工Teleop、使用GPU0/官方GPU、dense full-FT、失败/partial/holdout轨迹入训、超过1000 optimizer steps或自动上传/提交。每个profile/start identity只执行一次，共享基础设施失败全局停止，正常family failure只关闭该lane；所有分支最终AA14 hard stop。
+当前只执行TZ0–TZ9当晚链；不得修改历史证据/公开HDF5/BDDL、重跑旧nominal/conservative identity、把失败轨迹入训、人工Teleop、使用GPU0/官方GPU、dense full-FT或自动上传/提交。共享基础设施失败全局停止，正常family failure只关闭该identity；23:00 JST前必须留下明确标注的candidate或fallback ZIP并TZ9 hard stop。
 
 ## 3.1 G0–G1 执行审核与门禁重构
 

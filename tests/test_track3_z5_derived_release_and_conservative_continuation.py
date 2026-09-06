@@ -54,3 +54,44 @@ def test_identity_gate_rejects_drift() -> None:
     assert tool.identity_gate(observed, frozen, command=["worker"])["state"] == "passed"
     assert tool.identity_gate({**observed, "root_commit": "drift"}, frozen, command=["worker"])["state"] == "failed"
 
+
+def test_aa_audit_archives_plan_and_releases_tonight_zip_plan() -> None:
+    handoff = tool.strict_json(
+        ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
+    )
+    assert handoff["status"] == "track3_tonight_zip_and_crossfamily_recovery_planned"
+    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md"
+    assert handoff["next_phase_only"] == "TZ0_to_TZ9_then_hard_stop"
+    assert (ROOT / handoff["next_plan"]).is_file()
+    assert not (ROOT / "docs/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md").exists()
+    assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md").is_file()
+
+    audit = handoff["track3_aa0_aa14_tonight_zip_audit"]
+    assert audit["status"] == "remediation_required"
+    assert (ROOT / audit["audit_report"]).is_file()
+    assert (ROOT / audit["audit_summary"]).is_file()
+    assert audit["verified"]["old_z_artifacts_bytes_sha_exact"] == "36/36"
+    assert audit["verified"]["aa_namespace_file_closure"] == "31+4_excluded=35/35"
+    assert audit["verified"]["aa5_category"] == "family_failure"
+    assert audit["verified"]["exact_pending_accepted"] == [0, 0, 0]
+    assert audit["findings"]["aa6_to_aa13_cli_implemented"] is False
+    assert audit["findings"]["family_isolation_execution_implemented"] is False
+    assert audit["findings"]["new_track3_zip_created"] is False
+
+    old = handoff["track3_z5_derived_release_and_conservative_continuation_authorization"]
+    assert old["status"] == "track3_z5_derived_release_and_conservative_continuation_completed_and_audited"
+    assert old["plan"] == "docs/archive/axis_pi05/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md"
+
+    authorization = handoff["track3_tonight_zip_and_crossfamily_recovery_authorization"]
+    assert authorization["status"] == handoff["status"]
+    assert authorization["plan"] == handoff["next_plan"]
+    assert authorization["next_phase_only"] == handoff["next_phase_only"]
+    scope = authorization["authorization"]
+    assert scope["materialize_revalidated_r6_fallback_zip"] is True
+    assert scope["family_failure_isolation"] is True
+    assert scope["support_contact_repair_cpu_identities_max"] == 3
+    assert scope["total_train_generations_max"] == 6
+    assert scope["total_fresh_replays_max"] == 18
+    assert scope["fallback_zip_required_by_deadline"] is True
+    assert scope["gpu0"] is False
+    assert scope["automatic_upload_or_submission"] is False

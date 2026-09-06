@@ -1,0 +1,48 @@
+{
+  "audit_report": "docs/reviews/axis_pi05/TRACK3_AA0_AA14_AND_TONIGHT_ZIP_AUDIT_20260906.md",
+  "audited_execution_commit": "0e7e495d6a8c4dd9abb32525d117eda8166d1a8c",
+  "classification": "remediation_required",
+  "existing_fallback_zip": {
+    "bytes": 9383571677,
+    "path": "artifacts/submission_axis_r6_step500_fast_positive_score_20260831.zip",
+    "sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a",
+    "track3_improvement": false
+  },
+  "findings": {
+    "aa6_to_aa13_cli_implemented": false,
+    "aa5_family_failure_incorrectly_stopped_independent_families": true,
+    "family_isolation_execution_implemented": false,
+    "new_track3_zip_created": false
+  },
+  "next_plan": "docs/AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md",
+  "next_phase_only": "TZ0_to_TZ9_then_hard_stop",
+  "schema_version": "track3_aa0_aa14_tonight_zip_audit_v1",
+  "status": "remediation_required",
+  "verified": {
+    "aa5_category": "family_failure",
+    "aa5_phase_counts": {
+      "approach_grasp": 49,
+      "close_gripper": 6,
+      "descend_grasp": 21
+    },
+    "aa5_physics_steps": 76,
+    "aa5_process_returncode": 0,
+    "aa5_trajectory_shapes": [
+      [76, 7],
+      [76, 79]
+    ],
+    "aa6_to_aa13": "not_evaluated",
+    "exact_pending_accepted": [0, 0, 0],
+    "manifest_entries_exact": "31/31",
+    "namespace_file_closure": "31+4_excluded=35/35",
+    "no_live_process": true,
+    "np_no_pickle_numeric_finite": true,
+    "old_z_artifacts_exact": "36/36",
+    "outer_hash_exact": true,
+    "project_full_tests_after_lifecycle_update": "288_passed_7_skipped_23_warnings",
+    "project_full_tests_before_lifecycle_update": "287_passed_7_skipped_23_warnings",
+    "strict_json": "26_namespace_plus_1_machine=27",
+    "targeted_tests_after_lifecycle_update": "45_passed",
+    "targeted_tests_before_lifecycle_update": "44_passed"
+  }
+}

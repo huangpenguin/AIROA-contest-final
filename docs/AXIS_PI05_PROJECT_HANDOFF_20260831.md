@@ -6,8 +6,8 @@
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_aa5_support_conservative_cpu_family_failure_hard_stop_pending_review`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md`
+> 当前总状态：`track3_tonight_zip_and_crossfamily_recovery_planned`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -15,9 +15,9 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3首次有效nominal CPU canary已运行28步并在approach发生预注册stage stall；尾部return-code NameError使历史parent按infrastructure停止，但raw child/trajectory支持派生nominal physical family failure。当前仍无reverse训练数据。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。AA0–AA4工程闭包已完成；AA5 support conservative CPU canary已到达抓取位但没有形成连续接触/source release。当前仍无reverse训练数据或新T3 ZIP。
 
-AA0–AA4已补齐Z namespace的36/36 artifact/self-hash closure、postmortem errata和真实worker/finalizer回归，并冻结clean identity；AA5按授权只运行一次结果前已冻结的`object_frame_conservative` CPU/no-renderer profile，结果为`family_failure`。AA6–AA13均未执行，AA14已hard stop；后续必须新审核计划授权，禁止nominal重跑、GPU0、Teleop、dense full-FT、上传或提交。
+审核发现旧AA执行器只实现AA0–AA5/AA14，并把support正常family failure错误扩散为全部family停止。新计划改为`TZ0–TZ9`：先复验并物化明确标注的R6 fallback ZIP，同时一次性执行support/containment/articulation有界矩阵，条件式进入最小数据、单臂LoRA、holdout与T3 candidate；23:00 JST前留下candidate或诚实fallback，用户无需Teleop或中途逐阶段审核。
 
 ## 2. 数据与复现基础
 
@@ -810,3 +810,11 @@ AA0–AA4已完成并通过：旧Z namespace 36个Git-tracked artifacts在`aa1_o
 AA5严格只执行一次task10/demo0、seed3121、CPU/no-renderer canary。worker return code为0并原子发布`failed_gate`，parent分类为`family_failure`；运行76个physics steps，进入approach/descend/close，但acquisition barrier未通过（contact continuous/source released均为false），trajectory finite为`76×7` actions / `76×79` states，same-demo destination未评估，不能入训。没有retry。
 
 AA14已记录`AA5_support_conservative_family_failure` hard stop：AA6–AA13均为`not_evaluated`，计数`exact/pending/accepted=0/0/0`；没有GPU3、generation、replay、training、ZIP、Teleop、上传或提交。执行证据为`data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/`下的AA报告、manifest、validation、outer hash和phase CSV。AA4执行身份为root `cf27e7b1fe9276eaf0d4285128d56586e049d28f`、tool SHA `3484ffe39d5a80277575ca006f3ea0d8f067b510779584955b833818e917cb79`、nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`；AA4时记录全量`287 passed, 7 skipped, 23 warnings`，定向`5 passed`。下一权限为`new_reviewed_plan_required`；LIBERO-plus既有dirty未触碰，root/OpenPI clean，GPU0–3已释放。
+
+## 71. AA0–AA14 独立审核与 Tonight ZIP/Cross-Family 授权（2026-09-06）
+
+审核输入root `0e7e495d6a8c4dd9abb32525d117eda8166d1a8c`、AA5 frozen source `cf27e7b1fe9276eaf0d4285128d56586e049d28f`、nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`。旧Z `36/36`、AA namespace `31+4=35/35`、outer hash、27个strict JSON口径、NPY/NPZ/CSV/no-partial、单次AA5、AA6–AA13未执行、资源边界与`0/0/0`均独立成立；生命周期更新前targeted/full为`44/287 passed`，更新后为`45 passed`及`288 passed, 7 skipped, 23 warnings`。
+
+AA5 physical family failure有效：76步为approach/descend/close=`49/21/6`，末端EEF误差约`0.000576 m / 0.00184 rad`，无controller clip；但contact continuous与source release均false，所以不能入训。审核结论为`remediation_required`，原因是旧工具只实现AA0–AA5/AA14，AA6–AA13无CLI，并违反计划中的family isolation把support失败扩散成全链停止。
+
+旧R6 FAST ZIP `artifacts/submission_axis_r6_step500_fast_positive_score_20260831.zip`已重算SHA为`95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a`，但它不含T3改进。旧AA计划已归档；唯一活动计划为`docs/AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md`。TZ0先物化明确标注的fallback，TZ1–TZ4一次性恢复三族、最多7条CPU/3条GPU3/6条generation/18次replay，TZ5–TZ8条件式执行mixture/norm、单臂LoRA、holdout/C20与candidate ZIP；23:00 JST前定版并TZ9 hard stop。不授权GPU0、官方GPU、Teleop、dense full-FT、自动上传或提交。

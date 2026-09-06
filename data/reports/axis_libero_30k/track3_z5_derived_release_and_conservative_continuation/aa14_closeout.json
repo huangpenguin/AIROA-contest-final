@@ -1,0 +1,63 @@
+{
+  "counts": {
+    "accepted_reverse_demo": 0,
+    "exact_reverse_demo": 0,
+    "pending_autogen": 0
+  },
+  "created_at_utc": "2026-09-06T03:21:10.282464+00:00",
+  "hard_stop": {
+    "automatic_resume": false,
+    "executed": true,
+    "generation": false,
+    "next_authority": "new_reviewed_plan_required",
+    "nominal_rerun": false,
+    "reason": "AA5_support_conservative_family_failure",
+    "replay": false,
+    "submit": false,
+    "training": false,
+    "upload": false,
+    "zip": false
+  },
+  "phase_status": {
+    "AA0": "track3_aa0_passed",
+    "AA1": "track3_aa1_passed",
+    "AA10": "not_evaluated",
+    "AA11": "not_evaluated",
+    "AA12": "not_evaluated",
+    "AA13": "not_evaluated",
+    "AA14": "hard_stop",
+    "AA2": "track3_aa2_passed",
+    "AA3": "track3_aa3_passed",
+    "AA4": "track3_aa4_clean_identity_frozen",
+    "AA5": "track3_aa5_support_conservative_cpu_family_failure",
+    "AA6": "not_evaluated",
+    "AA7": "not_evaluated",
+    "AA8": "not_evaluated",
+    "AA9": "not_evaluated"
+  },
+  "resource_boundary": {
+    "generation": false,
+    "gpu0_touched": false,
+    "gpu1_to_gpu3_released": true,
+    "libero_plus_untouched": true,
+    "official_gpu": false,
+    "replay": false,
+    "teleop": false,
+    "training": false,
+    "zip": false
+  },
+  "schema_version": "track3_aa14_closeout_v1",
+  "status": "track3_aa14_hard_stop",
+  "upstream": {
+    "AA0": "track3_aa0_passed",
+    "AA1": "track3_aa1_passed",
+    "AA2": "track3_aa2_passed",
+    "AA3": "track3_aa3_passed",
+    "AA4": "track3_aa4_clean_identity_frozen",
+    "AA5": {
+      "category": "family_failure",
+      "child_status": "failed_gate",
+      "status": "track3_aa5_support_conservative_cpu_family_failure"
+    }
+  }
+}

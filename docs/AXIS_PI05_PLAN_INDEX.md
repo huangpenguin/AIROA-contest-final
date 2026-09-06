@@ -3,7 +3,7 @@
 > 更新日期：2026-09-06（Asia/Tokyo）
 > 跨session入口：先完整读取根目录`AGENTS.md`与`MEMORY.md`，再读取本索引、handoff、machine JSON、唯一活动计划和最新审核；先查live PID/cursor，禁止重复启动。
 > 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md`
-> 当前状态：`track3_z5_derived_release_and_conservative_continuation_planned`
+> 当前状态：`track3_aa5_support_conservative_cpu_family_failure_hard_stop_pending_review`
 > 最新审核：`docs/reviews/axis_pi05/TRACK3_Y3_LAUNCH_Z0_Z14_AUDIT_20260906.md`
 
 ## 1. 本轮执行停止点
@@ -14,13 +14,13 @@ Z0–Z4的runtime/identity/phase-ledger修复成立；Z5只运行一次task10/de
 
 45项输入、26个JSON、NPY/NPZ/CSV、Z5 identity与资源边界均独立通过；生命周期更新前全量为`281 passed, 7 skipped, 23 warnings`，更新后项目全量为`282 passed, 7 skipped, 23 warnings`。Z6–Z13=`not_evaluated`，`exact/pending/accepted=0/0/0`，没有GPU、generation/replay、训练或ZIP。
 
-当前审核唯一结论为`remediation_required`。新计划先闭合36/36 artifact、派生分类和真实worker/finalizer路径；禁止nominal重跑，只允许一次既有预注册conservative CPU canary。后续family pilots、最多12条generation/36次replay、20Hz `80/20` mixture、R6 L2 LoRA与本地ZIP全部保持条件式门禁。
+当前执行已完成AA0–AA5并进入AA14 hard stop：旧Z namespace已完成`36/36` artifact closure，派生分类、真实worker/finalizer回归和AA4 clean identity均通过；AA5唯一一次冻结参数的`object_frame_conservative` CPU/no-renderer canary为`family_failure`。因此AA6–AA13全部`not_evaluated`，当前必须等待`new_reviewed_plan_required`；不得nominal重跑、触碰GPU0、启动Teleop、dense full-FT、上传或提交。
 
 ## 2. 当前计划与停止点
 
 - `AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md`
-  - AA0–AA4只做CPU/code/filesystem：36/36 closure、derived nominal family classification、真实worker return-code/finalizer回归和clean identity；
-  - AA5禁止nominal重跑，仅允许一次冻结的support conservative CPU canary；成功才允许AA6一次GPU3 camera release；
+  - AA0–AA4已在CPU/code/filesystem完成：36/36 closure、derived nominal family classification、真实worker return-code/finalizer回归和clean identity均通过；
+  - AA5仅执行一次冻结的support conservative CPU canary，结果为`family_failure`；AA6 GPU3 camera release及所有后续阶段不允许自动进入；
   - AA7–AA8冻结task20/task19合同并运行有界CPU/GPU3 pilots，family/profile failure隔离；
   - AA9最多12条generation/36次fresh replay，只有严格`3/3`才machine-accepted；
   - AA10–AA13仅在数据门禁通过后执行20Hz `80/20` mixture/fresh QUANTILES、两卡R6 L2 LoRA、reverse/C20选择、独立复验与条件式本地FAST ZIP；
@@ -235,6 +235,16 @@ W4只运行一次CPU/no-renderer、seed3121。worker正常return 0并发布`fail
 审核批准W0/W1/OSC scale、W4真实运行的family分类、W5未执行、W6 artifact closure、资源与禁止项；唯一结论为`remediation_required`。W4 destination侧没有组合`T_world^object_des·T_object^eef_anchor`，当前place target与正确EEF target相差`0.0817122 m / 1.816425 rad`。同时source为`253/253 true`、contact completion failed，却仍越过acquisition barrier进入transport；progress-window stall、运行中active cursor和post-finalization验证也未闭合。
 
 旧计划已归档。唯一活动计划`docs/AXIS_PI05_TRACK3_OBJECT_FRAME_EXECUTOR_AND_BOUNDED_AUTOGEN_LORA_PLAN.md`在X0–X3修复上述合同，随后单计划条件式授权三族profile/pilot、最多12条generation/36次replay、20Hz mixture/fresh QUANTILES、R6 L2 LoRA 100/500/1000、holdout/C20与本地FAST ZIP。family failure隔离，共享错误全局停止，X13统一hard stop；完整审核见`docs/reviews/axis_pi05/TRACK3_SUPPORT_RELEASE_ANCHOR_W0_W6_AUDIT_20260905.md`。
+
+## 3.20 AA0–AA14 执行收尾（2026-09-06）
+
+AA0–AA4已完成：旧Z namespace的36个Git-tracked artifacts均已在`aa1_old_z_artifact_manifest.json`中exact闭合；AA2保留历史parent=`infrastructure`，并从raw child `hard_gate.gates`派生nominal `family_failure`（`stage_stall:approach_grasp`），不改写旧postmortem；AA3真实worker/finalizer回归覆盖`passed`、`failed_gate`、`worker_exception`、return code、TERM→KILL、16 MiB stdout、LF CSV、inactive cursor和PID祖先过滤；AA4冻结`object_frame_conservative` clean identity。
+
+AA5严格只运行一次task10/demo0、seed3121、CPU/no-renderer、无参数变更canary。worker正常return 0并发布`failed_gate`，parent分类为`family_failure`：共76个physics steps，进入approach/descend/close但acquisition barrier未通过（contact continuous/source released均为false）；trajectory finite为`76×7` actions / `76×79` states，未进入same-demo destination，不能入训。没有retry。
+
+AA14已执行hard stop：AA6–AA13均为`not_evaluated`，`exact/pending/accepted=0/0/0`，没有GPU3、generation、replay、training、ZIP、Teleop、上传或提交。执行证据位于`data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/`，最终closeout、manifest、validation和outer hash均exact；执行root为`cf27e7b1fe9276eaf0d4285128d56586e049d28f`，nested OpenPI仍为`b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`。AA4记录的定向/全量测试为`5/287 passed`（全量`7 skipped, 23 warnings`）；文档同步后的最终测试另行复核。
+
+当前唯一活动计划仍是`docs/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md`，但执行授权已消耗并硬停止；下一步唯一权限是`new_reviewed_plan_required`。LIBERO-plus既有dirty保持原样，root/OpenPI clean，GPU0–3无计算进程。
 
 ## 4. 保留但非活动的研究线
 

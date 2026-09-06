@@ -1,0 +1,41 @@
+{
+  "created_at_utc": "2026-09-06T03:21:11.658202+00:00",
+  "finalizer_order": [
+    "stop_workers_release_gpu",
+    "phase_csv",
+    "inactive_cursor",
+    "complete_manifest",
+    "outer_hash_record",
+    "final_validation",
+    "hard_stop"
+  ],
+  "schema_version": "track3_aa14_final_validation_v1",
+  "validation": {
+    "csv_lf": {
+      "errors": [],
+      "ok": true
+    },
+    "git_diff_check": true,
+    "gpu_compute_free": true,
+    "manifest_entry_count": 31,
+    "manifest_exact": {
+      "entries": 31,
+      "exact": true,
+      "mismatches": []
+    },
+    "no_live_track3": true,
+    "no_partial": true,
+    "np_no_pickle_finite": {
+      "errors": [],
+      "ok": true
+    },
+    "openpi_clean": true,
+    "py_compile": true,
+    "source_porcelain": [],
+    "strict_json": {
+      "count": 24,
+      "errors": [],
+      "ok": true
+    }
+  }
+}

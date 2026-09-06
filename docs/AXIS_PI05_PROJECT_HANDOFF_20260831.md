@@ -6,7 +6,7 @@
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_z5_derived_release_and_conservative_continuation_planned`
+> 当前总状态：`track3_aa5_support_conservative_cpu_family_failure_hard_stop_pending_review`
 > 唯一活动计划：`docs/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
@@ -17,7 +17,7 @@
 
 canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3首次有效nominal CPU canary已运行28步并在approach发生预注册stage stall；尾部return-code NameError使历史parent按infrastructure停止，但raw child/trajectory支持派生nominal physical family failure。当前仍无reverse训练数据。
 
-新计划先补齐Z namespace的36/36 artifact/self-hash closure、postmortem errata和真实worker/finalizer回归；禁止nominal重跑，只允许一次结果前已冻结的conservative CPU profile。通过后才条件式进入GPU3、其余family、bounded generation/replay、LoRA、holdout与本地ZIP；用户无需Teleop或中途逐阶段审核。
+AA0–AA4已补齐Z namespace的36/36 artifact/self-hash closure、postmortem errata和真实worker/finalizer回归，并冻结clean identity；AA5按授权只运行一次结果前已冻结的`object_frame_conservative` CPU/no-renderer profile，结果为`family_failure`。AA6–AA13均未执行，AA14已hard stop；后续必须新审核计划授权，禁止nominal重跑、GPU0、Teleop、dense full-FT、上传或提交。
 
 ## 2. 数据与复现基础
 
@@ -802,3 +802,11 @@ Z14 纯收尾已执行：旧 Z4 manifest 恢复 `11/11` exact，Z14 manifest `28
 Z14的28项全部exact，但旧namespace实际有36个tracked文件：两个Z5 log及六个Z4/Z14 finalizer artifacts没有完整hash/self-hash闭包；旧postmortem还因从`hard_gate`而非`hard_gate.gates`读取，留下多项null。Z4 final validation原文targeted为`9 passed`，旧交接的8是笔误；当前修复后是10。完整审核：`docs/reviews/axis_pi05/TRACK3_Y3_LAUNCH_Z0_Z14_AUDIT_20260906.md`。
 
 旧Z计划已归档。唯一活动计划为`docs/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md`：AA0–AA4先闭合36/36 artifacts、派生分类与worker/finalizer真实路径并冻结clean identity；AA5禁止nominal重跑，只允许一次既有`object_frame_conservative` CPU canary。后续AA6–AA13按独立family、有界generation/replay、20Hz mixture/fresh QUANTILES、R6 L2 LoRA与条件式本地ZIP推进；AA14统一hard stop。不授权Z5轨迹入训、GPU0/官方GPU、Teleop、dense full-FT、自动上传或提交。
+
+## 70. AA0–AA14 执行收尾（2026-09-06）
+
+AA0–AA4已完成并通过：旧Z namespace 36个Git-tracked artifacts在`aa1_old_z_artifact_manifest.json`中`36/36` exact；AA2保留历史parent=`infrastructure`，从raw child `hard_gate.gates`派生nominal `family_failure`，原因是`stage_stall:approach_grasp`；AA3完成真实worker/finalizer回归；AA4冻结`object_frame_conservative` clean identity。历史失败标签和postmortem均未改写。
+
+AA5严格只执行一次task10/demo0、seed3121、CPU/no-renderer canary。worker return code为0并原子发布`failed_gate`，parent分类为`family_failure`；运行76个physics steps，进入approach/descend/close，但acquisition barrier未通过（contact continuous/source released均为false），trajectory finite为`76×7` actions / `76×79` states，same-demo destination未评估，不能入训。没有retry。
+
+AA14已记录`AA5_support_conservative_family_failure` hard stop：AA6–AA13均为`not_evaluated`，计数`exact/pending/accepted=0/0/0`；没有GPU3、generation、replay、training、ZIP、Teleop、上传或提交。执行证据为`data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/`下的AA报告、manifest、validation、outer hash和phase CSV。AA4执行身份为root `cf27e7b1fe9276eaf0d4285128d56586e049d28f`、tool SHA `3484ffe39d5a80277575ca006f3ea0d8f067b510779584955b833818e917cb79`、nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`；AA4时记录全量`287 passed, 7 skipped, 23 warnings`，定向`5 passed`。下一权限为`new_reviewed_plan_required`；LIBERO-plus既有dirty未触碰，root/OpenPI clean，GPU0–3已释放。

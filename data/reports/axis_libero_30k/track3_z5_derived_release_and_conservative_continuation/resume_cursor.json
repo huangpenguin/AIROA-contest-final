@@ -1,0 +1,17 @@
+{
+  "active": false,
+  "command": [
+    "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+    "-m",
+    "tools.axis_pi05.track3_z5_derived_release_and_conservative_continuation",
+    "--aa14"
+  ],
+  "openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "phase": "AA14",
+  "pid": 1562309,
+  "root_commit": "cf27e7b1fe9276eaf0d4285128d56586e049d28f",
+  "schema_version": "track3_aa_cursor_v1",
+  "status": "hard_stop",
+  "tool_sha256": "3484ffe39d5a80277575ca006f3ea0d8f067b510779584955b833818e917cb79",
+  "updated_at_utc": "2026-09-06T03:21:10.242226+00:00"
+}

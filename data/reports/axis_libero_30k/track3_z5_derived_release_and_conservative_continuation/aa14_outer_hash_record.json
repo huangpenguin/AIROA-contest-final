@@ -1,0 +1,19 @@
+{
+  "exact": true,
+  "records": {
+    "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa14_artifact_manifest.json": {
+      "bytes": 9725,
+      "sha256": "1b49ff335e0938ee3f4c4d1637573a925445499b23ceb66bfdea86120481680c"
+    },
+    "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa14_closeout.json": {
+      "bytes": 1723,
+      "sha256": "1e71a325ae34e1a09811e81a690894976d076fbcee4a5c4b75eaef1cdc625956"
+    },
+    "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa14_final_validation.json": {
+      "bytes": 859,
+      "sha256": "9adee2fcda572df1afe55ab2f3034ece76e209a392c3f9c4acc3b600b1724254"
+    }
+  },
+  "schema_version": "track3_aa14_outer_hash_record_v1",
+  "self_hash_excluded": true
+}

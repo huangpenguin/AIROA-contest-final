@@ -1,0 +1,57 @@
+{
+  "created_at_utc": "2026-09-06T03:17:07.333959+00:00",
+  "current_fixed_tests": {
+    "full": "281 passed",
+    "targeted": "10 passed"
+  },
+  "finalizer_exclusions_closed": [
+    "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_artifact_manifest.json",
+    "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_final_validation.json",
+    "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_closeout.json",
+    "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z14_artifact_manifest.json",
+    "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z14_final_validation.json",
+    "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z14_closeout.json"
+  ],
+  "gate_scope": {
+    "collision": "passed",
+    "contact_completion": "not_evaluated",
+    "destination_numeric": "not_evaluated",
+    "finite": "passed",
+    "goal_continuity": "not_evaluated",
+    "initial_goal_false": "passed",
+    "initial_source_true": "passed",
+    "object_follow": "not_evaluated",
+    "prefix_contact_safety": "passed",
+    "progress_stall": "failed",
+    "source_release": "not_evaluated",
+    "stall_timeout": "failed",
+    "transport_safe": "not_evaluated",
+    "unrelated_movement": "passed"
+  },
+  "gate_scope_source": "z5 child hard_gate.gates",
+  "historical_evidence_rewritten": false,
+  "logs_included": [
+    "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_cpu_task10_demo0_nominal/stdout.log",
+    "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_cpu_task10_demo0_nominal/stderr.log"
+  ],
+  "old_z_exact": {
+    "entries": 36,
+    "exact": true,
+    "mismatches": []
+  },
+  "old_z_manifest": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa1_old_z_artifact_manifest.json",
+  "old_z_tracked_count": 36,
+  "postmortem_scope_before": {
+    "approach_stall": null,
+    "contact_completion": null,
+    "destination_numeric": "not_evaluated",
+    "goal_continuity": null,
+    "object_follow": null
+  },
+  "schema_version": "track3_aa1_errata_v1",
+  "status": "track3_aa1_passed",
+  "z4_historical_tests": {
+    "full": "280 passed",
+    "targeted": "9 passed"
+  }
+}

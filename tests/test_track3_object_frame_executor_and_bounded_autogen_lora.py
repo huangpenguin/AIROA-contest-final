@@ -37,11 +37,11 @@ def test_x0_x13_audit_archives_x_and_releases_exactly_one_y_plan() -> None:
             / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
         ).read_text(encoding="utf-8")
     )
-    assert handoff["status"] == "track3_z5_derived_release_and_conservative_continuation_planned"
+    assert handoff["status"] == "track3_aa5_support_conservative_cpu_family_failure_hard_stop_pending_review"
     assert handoff["next_plan"] == (
         "docs/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md"
     )
-    assert handoff["next_phase_only"] == "AA0_to_AA14_then_hard_stop"
+    assert handoff["next_phase_only"] == "new_reviewed_plan_required"
     assert (ROOT / handoff["next_plan"]).is_file()
     assert not (
         ROOT

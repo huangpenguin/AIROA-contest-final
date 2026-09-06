@@ -37,12 +37,19 @@ If these disagree, stop mutation, audit the discrepancy and repair the handoff i
 - Latest audited execution: `5a270a912362376cbfa13a7f9e9fd66c8b5d6237` (Z0–Z14 execution and lifecycle handoff).
 - Nested OpenPI: `third_party/axis_openpi` at `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`, clean at review.
 - `LIBERO-plus` has pre-existing dirty files. They belong to the user/project and must not be reset, cleaned, overwritten or silently committed.
-- Current planned state at this refresh: `track3_z5_derived_release_and_conservative_continuation_planned`.
+- Current execution state at this refresh: `track3_aa5_support_conservative_cpu_family_failure_hard_stop_pending_review`.
 - Active plan: `docs/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md`.
-- Authorized chain: `AA0_to_AA14_then_hard_stop`; AA0–AA4 must close all Z artifacts and derived classification before one conservative CPU canary. Nominal rerun is forbidden; no automatic upload/submission.
+- The `AA0_to_AA14_then_hard_stop` authorization has been executed and consumed: AA0–AA4 passed, the one allowed conservative CPU canary AA5 was a `family_failure`, and AA6–AA13 are `not_evaluated`. Nominal rerun is forbidden; no GPU3/data generation, Teleop, dense full-FT, upload or submission is authorized without a new reviewed plan.
 - Z0–Z14 execution evidence is in `data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/`; its audit is `docs/reviews/axis_pi05/TRACK3_Y3_LAUNCH_Z0_Z14_AUDIT_20260906.md`. Historical parent remains infrastructure while physical result is derived nominal family failure. Z6–Z13 remain `not_evaluated`; before any AA execution, recheck live supervisor/PID/cursor, dirty worktree and GPU boundaries. Never start a duplicate run.
 
 The snapshot above becomes historical as soon as execution advances. Always refresh from Git, machine JSON and the live cursor rather than treating this paragraph as a lock.
+
+## 11. Current AA0–AA14 execution snapshot (2026-09-06)
+
+- Evidence namespace: `data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/`; AA0–AA4 passed, including old-Z `36/36` artifact closure, derived classification, real worker/finalizer regression, and AA4 clean identity freeze.
+- AA5 ran exactly once: task10/demo0, seed3121, `object_frame_conservative`, CPU/no-renderer. It returned a normal process result but failed the acquisition barrier and is classified `family_failure`; its trajectory is finite `76×7` actions / `76×79` states and is not training-eligible.
+- AA14 is `hard_stop`; AA6–AA13 are `not_evaluated`; counts remain `exact/pending/accepted=0/0/0`. No GPU3, generation, replay, training, ZIP, Teleop, upload or submission occurred. Next authority: `new_reviewed_plan_required`.
+- Frozen execution identity: root `cf27e7b1fe9276eaf0d4285128d56586e049d28f`, tool SHA `3484ffe39d5a80277575ca006f3ea0d8f067b510779584955b833818e917cb79`, nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`, CUDA visibility empty, CPU/no-renderer.
 
 ## 3. Stable competition/model facts
 

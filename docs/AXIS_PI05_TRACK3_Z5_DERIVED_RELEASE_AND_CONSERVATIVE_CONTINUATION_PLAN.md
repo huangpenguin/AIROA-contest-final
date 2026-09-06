@@ -4,7 +4,7 @@
 > 审核输入：root `5a270a912362376cbfa13a7f9e9fd66c8b5d6237`
 > Z5 frozen source：`933f4d3afb70ca31c95d55881d404b97cb3687d5`
 > nested OpenPI：`b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`
-> 当前状态：`track3_z5_derived_release_and_conservative_continuation_planned`
+> 当前状态：`track3_aa5_support_conservative_cpu_family_failure_hard_stop_pending_review`
 > 唯一授权链：`AA0_to_AA14_then_hard_stop`
 > 用户人工操作：`not_required`
 > 执行上限：18小时；单一supervisor可原子resume，禁止第二实例、无限retry和结果后调参
@@ -97,3 +97,9 @@
 - 未运行工作=`not_evaluated`；报告exact/pending/accepted及denylist overlap，不得把缺失证据改写为结论。
 - 重验strict JSON、NPY/NPZ/parquet、CSV LF、ffprobe、checkout hashes、py_compile、targeted/full tests和`git diff --check`；root/OpenPI clean commit，LIBERO-plus既有dirty不改。
 - 所有结果最终hard stop等待审核；不自动resume、上传或提交。
+
+## 16. 执行结果（2026-09-06）
+
+AA0–AA4已通过：旧Z namespace完成`36/36` artifact closure，AA2完成derived nominal `family_failure`分类，AA3完成真实worker/finalizer回归，AA4冻结`object_frame_conservative` clean identity。AA5按上限严格只运行一次task10/demo0、seed3121、CPU/no-renderer canary，结果为`family_failure`（76 physics steps，acquisition barrier未通过）；没有retry，结果不具备入训资格。
+
+AA6–AA13均为`not_evaluated`，AA14已记录`AA5_support_conservative_family_failure` hard stop，计数保持`exact/pending/accepted=0/0/0`。执行证据在`data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/`；下一权限为`new_reviewed_plan_required`。本计划不自动恢复任何GPU3、数据生成、replay、训练、Teleop、dense full-FT、上传或提交动作。

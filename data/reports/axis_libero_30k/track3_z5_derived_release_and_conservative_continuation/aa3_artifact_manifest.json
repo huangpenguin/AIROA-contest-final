@@ -1,0 +1,56 @@
+{
+  "entries": [
+    {
+      "bytes": 383,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa3_worker_regression/failed_gate.json",
+      "sha256": "8a2f4fc42c8ba9057ebe7d6e2921fa68fdbe4a2c77b2218b653b15cdff534e0c"
+    },
+    {
+      "bytes": 109,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa3_worker_regression/inactive_cursor.json",
+      "sha256": "cbd8f3a3fd3456f9c1061560262d52e503210d920f9f1d309b5e1938b1b38770"
+    },
+    {
+      "bytes": 16777216,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa3_worker_regression/large_stdout.log",
+      "sha256": "a06c26cbac8b80704f420222dae5658b88ff2da96702d12ef7a4223e9361f7c1"
+    },
+    {
+      "bytes": 369,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa3_worker_regression/manifest_exclusions.json",
+      "sha256": "0ecb36eed4f01f83379d5238335c36147226d8fbfd5e9f062dd78683b4bb17f2"
+    },
+    {
+      "bytes": 373,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa3_worker_regression/passed.json",
+      "sha256": "1296a98ee6a72390e178e4a1b03ae3e816f9a3bc11d61df4bd5aa452c29ea1cb"
+    },
+    {
+      "bytes": 57,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa3_worker_regression/phase_status.csv",
+      "sha256": "218366e6d06e59675f181b8e5fe5a64645974f22ccbfd4f7060fb21eef390f88"
+    },
+    {
+      "bytes": 472,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa3_worker_regression/worker_exception.json",
+      "sha256": "24ec750a50658d7ffad562baa6dc6b8d584920930b9d0d8b8de73d84b5cbe48d"
+    },
+    {
+      "bytes": 53,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa3_worker_regression/worker_exception.stderr.log",
+      "sha256": "d086c123686ad1180e9e24e9fe6d38c04fdbba1b05838f7b15fc2258714a4473"
+    }
+  ],
+  "entries_excluded": [
+    "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa3_artifact_manifest.json"
+  ],
+  "schema_version": "track3_aa3_manifest_v1"
+}

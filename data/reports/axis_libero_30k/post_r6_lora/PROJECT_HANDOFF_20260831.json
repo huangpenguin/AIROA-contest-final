@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-06",
-  "status": "track3_z5_derived_release_and_conservative_continuation_planned",
+  "status": "track3_aa5_support_conservative_cpu_family_failure_hard_stop_pending_review",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
   "latest_audited_execution_commit": "5a270a912362376cbfa13a7f9e9fd66c8b5d6237",
   "latest_audit_input_commit": "5a270a912362376cbfa13a7f9e9fd66c8b5d6237",
-  "latest_execution_root_commit": "5a270a912362376cbfa13a7f9e9fd66c8b5d6237",
+  "latest_execution_root_commit": "cf27e7b1fe9276eaf0d4285128d56586e049d28f",
   "latest_execution_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
@@ -225,7 +225,7 @@
   },
   "tests": {
     "command": "PYTHONPATH=. JAX_PLATFORMS=cpu .venv_axis_pi05/bin/pytest -q tests",
-    "passed": 282,
+    "passed": 287,
     "skipped": 7,
     "warnings": 23,
     "pynvml_is_collection_blocker": false
@@ -260,7 +260,7 @@
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
   "next_plan": "docs/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md",
-  "next_phase_only": "AA0_to_AA14_then_hard_stop",
+  "next_phase_only": "new_reviewed_plan_required",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -3919,5 +3919,89 @@
     ],
     "family_failure_policy": "close_only_the_failed_family_lane",
     "next_phase_only": "AA0_to_AA14_then_hard_stop"
+  },
+  "track3_z5_derived_release_and_conservative_continuation_execution": {
+    "status": "track3_aa14_hard_stop_pending_review",
+    "plan": "docs/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md",
+    "input_audit": "docs/reviews/axis_pi05/TRACK3_Y3_LAUNCH_Z0_Z14_AUDIT_20260906.md",
+    "input_commit_locked": "5a270a912362376cbfa13a7f9e9fd66c8b5d6237",
+    "execution_root_commit": "cf27e7b1fe9276eaf0d4285128d56586e049d28f",
+    "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "namespace": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation",
+    "phase_status": {
+      "AA0": "track3_aa0_passed",
+      "AA1": "track3_aa1_passed",
+      "AA2": "track3_aa2_passed",
+      "AA3": "track3_aa3_passed",
+      "AA4": "track3_aa4_clean_identity_frozen",
+      "AA5": "track3_aa5_support_conservative_cpu_family_failure",
+      "AA6": "not_evaluated",
+      "AA7": "not_evaluated",
+      "AA8": "not_evaluated",
+      "AA9": "not_evaluated",
+      "AA10": "not_evaluated",
+      "AA11": "not_evaluated",
+      "AA12": "not_evaluated",
+      "AA13": "not_evaluated",
+      "AA14": "hard_stop"
+    },
+    "reports": {
+      "aa0": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa0_input_lock.json",
+      "aa1": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa1_errata.json",
+      "aa1_manifest": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa1_old_z_artifact_manifest.json",
+      "aa2": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa2_derived_physical_classification.json",
+      "aa3": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa3_worker_finalizer_regression.json",
+      "aa4": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa4_clean_identity_freeze.json",
+      "aa5_parent": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa5_support_conservative_cpu_canary/parent_result.json",
+      "aa5_child": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa5_support_conservative_cpu_canary/child_result.json",
+      "aa5_identity": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa5_support_conservative_cpu_canary/identity_preflight.json",
+      "aa14_closeout": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa14_closeout.json",
+      "aa14_manifest": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa14_artifact_manifest.json",
+      "aa14_validation": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa14_final_validation.json",
+      "aa14_outer_hash": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa14_outer_hash_record.json",
+      "phase_status": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa14_phase_status.csv"
+    },
+    "checks": {
+      "aa0_to_aa4_passed": true,
+      "old_z_artifacts_exact": "36/36",
+      "aa3_real_worker_finalizer_regression": true,
+      "aa4_clean_identity_frozen": true,
+      "aa5_attempts": 1,
+      "aa5_category": "family_failure",
+      "aa5_child_status": "failed_gate",
+      "aa5_cpu_no_renderer": true,
+      "aa5_nominal_rerun": false,
+      "aa6_to_aa13_not_evaluated": true,
+      "aa14_outer_hash_exact": true,
+      "strict_json": true,
+      "no_partial": true,
+      "gpu_compute_free": true,
+      "no_live_track3": true,
+      "training_generation_replay_zip": false
+    },
+    "identity": {
+      "root_commit": "cf27e7b1fe9276eaf0d4285128d56586e049d28f",
+      "tool_sha256": "3484ffe39d5a80277575ca006f3ea0d8f067b510779584955b833818e917cb79",
+      "openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+      "profile": "object_frame_conservative",
+      "task_index": 10,
+      "demo_index": 0,
+      "seed": 3121,
+      "cuda_visible_devices": "",
+      "gpu_policy": "cpu_no_renderer"
+    },
+    "counts": {
+      "exact_reverse_demo": 0,
+      "pending_autogen": 0,
+      "accepted_reverse_demo": 0
+    },
+    "hard_stop": {
+      "reason": "AA5_support_conservative_family_failure",
+      "next_authority": "new_reviewed_plan_required",
+      "automatic_resume": false,
+      "gpu3_or_data_generation_allowed": false,
+      "upload_or_submission": false
+    },
+    "next_phase_only": "new_reviewed_plan_required"
   }
 }

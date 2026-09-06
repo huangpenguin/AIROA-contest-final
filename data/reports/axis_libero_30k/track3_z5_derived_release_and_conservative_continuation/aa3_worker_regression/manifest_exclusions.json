@@ -1,0 +1,7 @@
+{
+  "excluded": [
+    "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa3_artifact_manifest.json"
+  ],
+  "schema_version": "track3_aa3_manifest_exclusions_v1",
+  "stderr_root_cause_included": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa3_worker_regression/worker_exception.stderr.log"
+}

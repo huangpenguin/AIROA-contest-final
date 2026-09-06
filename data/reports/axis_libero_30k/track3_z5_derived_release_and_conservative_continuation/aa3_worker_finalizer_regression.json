@@ -1,0 +1,101 @@
+{
+  "active_processes_after": [],
+  "checks": {
+    "all_fixture_physics_zero": true,
+    "failed_gate_return_zero_family": true,
+    "inactive_cursor": true,
+    "large_stdout_16m": true,
+    "passed_return_zero": true,
+    "phase_summary_and_lf_csv": true,
+    "process_ancestor_filter": true,
+    "producer_result_files_atomic": true,
+    "stderr_root_cause_available": true,
+    "term_then_kill": true,
+    "worker_exception_nonzero_infra": true
+  },
+  "created_at_utc": "2026-09-06T03:17:21.537405+00:00",
+  "finalizer_contract": [
+    "producer_close_fsync",
+    "stderr_root_cause_in_manifest",
+    "phase_summary_lf_csv",
+    "inactive_cursor",
+    "manifest_exclusions",
+    "outer_self_hash_record",
+    "final_validation",
+    "term_then_kill",
+    "large_stdout",
+    "pid_reuse_process_ancestor_filter"
+  ],
+  "fixtures": {
+    "failed_gate": {
+      "classification": "family_failure",
+      "command": [
+        "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+        "-m",
+        "tools.axis_pi05.track3_z5_derived_release_and_conservative_continuation",
+        "--aa3-worker",
+        "--status",
+        "failed_gate",
+        "--result-output",
+        "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa3_worker_regression/failed_gate.json"
+      ],
+      "physics_steps": 0,
+      "returncode": 0,
+      "status": "failed_gate"
+    },
+    "passed": {
+      "classification": "success",
+      "command": [
+        "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+        "-m",
+        "tools.axis_pi05.track3_z5_derived_release_and_conservative_continuation",
+        "--aa3-worker",
+        "--status",
+        "passed",
+        "--result-output",
+        "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa3_worker_regression/passed.json"
+      ],
+      "physics_steps": 0,
+      "returncode": 0,
+      "status": "passed"
+    },
+    "worker_exception": {
+      "classification": "infrastructure",
+      "command": [
+        "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+        "-m",
+        "tools.axis_pi05.track3_z5_derived_release_and_conservative_continuation",
+        "--aa3-worker",
+        "--status",
+        "worker_exception",
+        "--result-output",
+        "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa3_worker_regression/worker_exception.json"
+      ],
+      "physics_steps": 0,
+      "returncode": 1,
+      "status": "worker_exception"
+    }
+  },
+  "large_stdout_bytes": 16777216,
+  "manifest": {
+    "entries": 8,
+    "exact": {
+      "entries": 8,
+      "exact": true,
+      "mismatches": []
+    },
+    "path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa3_artifact_manifest.json"
+  },
+  "resource_boundary": {
+    "cuda_initialized": false,
+    "gpu0_touched": false,
+    "gpu1_touched": false,
+    "gpu2_touched": false,
+    "gpu3_touched": false,
+    "physics_steps": 0,
+    "simulator_created": false
+  },
+  "schema_version": "track3_aa3_worker_finalizer_regression_v1",
+  "status": "track3_aa3_passed",
+  "termination": "TERM_then_KILL"
+}

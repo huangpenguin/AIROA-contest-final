@@ -1,0 +1,9 @@
+{
+  "created_at_utc": "2026-09-06T03:17:19.450934+00:00",
+  "error": null,
+  "physics_steps": 0,
+  "result_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa3_worker_regression/passed.json",
+  "schema_version": "track3_aa3_fixture_worker_v1",
+  "simulator_created": false,
+  "status": "passed"
+}

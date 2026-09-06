@@ -1,0 +1,151 @@
+{
+  "canonical_inputs": [
+    {
+      "bytes": 468246288,
+      "path": "data/raw/public/libero_official_hdf5/libero_goal/put_the_bowl_on_the_plate_demo.hdf5",
+      "sha256": "e69528b0cf10dfc59b20698e12ec2affc03f3887309034d3eb74cac3ec929406"
+    },
+    {
+      "bytes": 5183,
+      "path": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/start_states.npz",
+      "sha256": "b21a5080bdaeebcc4999b25f1e1bafab5decef1cf78b09a4d3e7b25e95073447"
+    },
+    {
+      "bytes": 198425,
+      "path": "data/reports/axis_libero_30k/track3_support_release_anchor_osc_scale_recovery/w1_release_anchor.json",
+      "sha256": "98e78e8c8ed45c252912df466e45e52e5b97c474198ff69001357db8d8eca58a"
+    },
+    {
+      "bytes": 1559,
+      "path": "data/reports/axis_libero_30k/track3_support_release_anchor_osc_scale_recovery/w2_osc_scale_contract.json",
+      "sha256": "651433c48014d6cf0638be72499891cbfb3d8bc329227aeddb2703fbf979a866"
+    }
+  ],
+  "checks": {
+    "canonical_files_present": true,
+    "csv_lf": true,
+    "destination_numeric_smoke": true,
+    "full_tests": true,
+    "git_diff_check": true,
+    "np_no_pickle_finite": true,
+    "openpi_clean": true,
+    "profile_exact": true,
+    "py_compile": true,
+    "source_clean_for_identity": true,
+    "state_no_pickle_finite": true,
+    "strict_json": true,
+    "targeted_tests": true
+  },
+  "created_at_utc": "2026-09-06T03:18:37.675831+00:00",
+  "cuda_visible_devices": "",
+  "frozen_command": [
+    "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+    "-m",
+    "tools.axis_pi05.track3_z5_derived_release_and_conservative_continuation",
+    "--aa5"
+  ],
+  "gpu_policy": "cpu_no_renderer",
+  "identity_contract": {
+    "no_nominal_rerun": true,
+    "no_parameter_changes_after_freeze": true,
+    "profile_frozen_before_AA5": true
+  },
+  "libero_plus_porcelain": [
+    "M libero/libero/benchmark/__init__.py",
+    "?? libero/__init__.py",
+    "?? libero/libero/assets",
+    "?? libero/libero/bddl_files/libero_t3",
+    "?? libero/libero/init_files/libero_t3"
+  ],
+  "numeric_destination_smoke": {
+    "object_pose": {
+      "pos_m": [
+        -0.07684966308439489,
+        -0.00898957193236043,
+        0.8981585151399347
+      ],
+      "quat": [
+        0.7071067776242912,
+        -1.0724537191720448e-05,
+        -1.4310617004723095e-06,
+        0.7071067846660275
+      ]
+    },
+    "pos_m": [
+      -0.09212732490075308,
+      0.0434092668848339,
+      0.8923486793522427
+    ],
+    "quat": [
+      -0.6846775458597673,
+      -0.6565673578160552,
+      0.25651938157804177,
+      -0.18529373902188273
+    ],
+    "relative_pose": {
+      "quaternion_xyzw": [
+        -0.353113988632159,
+        -0.2828796070015635,
+        0.6456569014738044,
+        -0.615155918897132
+      ],
+      "translation_m": [
+        -0.015278638939362217,
+        -0.005809634465773268,
+        -0.05239857623428304
+      ]
+    }
+  },
+  "openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "plan": "docs/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md",
+  "profile": {
+    "name": "object_frame_conservative",
+    "progress_grace": 4,
+    "progress_min_improvement": 0.02,
+    "progress_window": 4,
+    "rotation_clip_rad": 0.06,
+    "rotation_tolerance_rad": 0.03,
+    "stable_ticks": 6,
+    "stage_budgets": [
+      200,
+      160,
+      50,
+      200,
+      260,
+      160,
+      50,
+      120
+    ],
+    "step_budget": 1250,
+    "translation_clip_m": 0.025,
+    "translation_tolerance_m": 0.012
+  },
+  "resource_boundary": {
+    "cuda_initialized": false,
+    "generation": false,
+    "gpu0_touched": false,
+    "gpu1_touched": false,
+    "gpu2_touched": false,
+    "gpu3_touched": false,
+    "physics_steps": 0,
+    "replay": false,
+    "simulator_created": false,
+    "training": false,
+    "zip": false
+  },
+  "root_commit": "4f07084244037b7c9c2c2a18cdfd65fb7501d244",
+  "schema_version": "track3_aa4_identity_freeze_v1",
+  "status": "track3_aa4_clean_identity_frozen",
+  "test_runs": {
+    "full": {
+      "returncode": 0,
+      "stdout_tail": "........................................................................ [ 24%]\n.................................ss..................................... [ 48%]\n........................................................................ [ 73%]\n..................................................sss................... [ 97%]\n....ss                                                                   [100%]\n=============================== warnings summary ===============================\n<frozen importlib._bootstrap>:488\n  <frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.MessageMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.\n\n<frozen importlib._bootstrap>:488\n  <frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.ScalarMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.\n\ntests/test_axis_pi05_lora_screen.py: 21 warnings\n  /home/huang/code/PARC2026_final/.venv_axis_pi05/lib/python3.12/site-packages/flax/core/scope.py:959: DeprecationWarning: shape requires ndarray or scalar arguments, got <class 'jax._src.api.ShapeDtypeStruct'> at position 0. In a future JAX release this will be an error.\n    if jnp.shape(val) != jnp.shape(abs_val):\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n287 passed, 7 skipped, 23 warnings in 63.55s (0:01:03)\n"
+    },
+    "py_compile_stderr": "",
+    "targeted": {
+      "returncode": 0,
+      "stdout_tail": ".....                                                                    [100%]\n5 passed in 0.44s\n"
+    }
+  },
+  "tool_sha256": "970c31a28d855139a09fe1215e3dd54bd6898fc5bdc72b32f7fb44cf250d1964"
+}

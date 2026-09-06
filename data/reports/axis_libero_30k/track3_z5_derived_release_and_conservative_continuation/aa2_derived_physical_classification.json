@@ -1,0 +1,192 @@
+{
+  "checks": {
+    "child_result_failed_gate": true,
+    "child_trajectory_ledger_published": true,
+    "downstream_not_evaluated": true,
+    "historical_parent_infrastructure": true,
+    "only_approach_entered": true,
+    "physics_shape_exact": true,
+    "source_goal_trace_exact": true,
+    "stall_reason_exact": true,
+    "stderr_name_error_preserved": true,
+    "training_ineligible": true
+  },
+  "created_at_utc": "2026-09-06T03:17:12.464278+00:00",
+  "derived_physical_result": {
+    "category": "family_failure",
+    "demo_index": 0,
+    "family": "support_remove",
+    "nominal_quota_consumed": true,
+    "nominal_rerun_authorized": false,
+    "profile": "object_frame_nominal",
+    "reason": "stage_stall:approach_grasp",
+    "seed": 3121,
+    "task_index": 10,
+    "training_eligible": false,
+    "worker_result_published_before_finalizer_name_error": true,
+    "worker_status": "failed_gate"
+  },
+  "gate_scope_from_raw_child": {
+    "collision": {
+      "executed": true,
+      "max_penetration_m": 2.0246476469179997e-05,
+      "required": true,
+      "state": "passed",
+      "threshold_m": 0.01
+    },
+    "contact_completion": {
+      "executed": false,
+      "gate": "contact_completion",
+      "owner_stage": "close_gripper",
+      "reason": "stage_not_entered",
+      "required": true,
+      "state": "not_evaluated"
+    },
+    "destination_numeric": {
+      "executed": false,
+      "gate": "destination_numeric",
+      "owner_stage": "place_same_demo_init_pose",
+      "reason": "stage_not_entered",
+      "required": true,
+      "state": "not_evaluated"
+    },
+    "finite": {
+      "action_shape": [
+        28,
+        7
+      ],
+      "executed": true,
+      "required": true,
+      "state": "passed",
+      "state_shape": [
+        28,
+        79
+      ]
+    },
+    "goal_continuity": {
+      "executed": false,
+      "gate": "goal_continuity",
+      "owner_stage": "release",
+      "reason": "stage_not_entered",
+      "required": true,
+      "state": "not_evaluated"
+    },
+    "initial_goal_false": {
+      "executed": true,
+      "goal_value": false,
+      "required": true,
+      "state": "passed"
+    },
+    "initial_source_true": {
+      "executed": true,
+      "required": true,
+      "source_value": true,
+      "state": "passed"
+    },
+    "object_follow": {
+      "executed": false,
+      "gate": "object_follow",
+      "owner_stage": "lift",
+      "reason": "stage_not_entered",
+      "required": true,
+      "state": "not_evaluated"
+    },
+    "prefix_contact_safety": {
+      "executed": true,
+      "required": true,
+      "state": "passed"
+    },
+    "progress_stall": {
+      "executed": true,
+      "reason": "stage_stall:approach_grasp",
+      "required": true,
+      "state": "failed"
+    },
+    "source_release": {
+      "executed": false,
+      "gate": "source_release",
+      "owner_stage": "lift",
+      "reason": "stage_not_entered",
+      "required": true,
+      "state": "not_evaluated"
+    },
+    "stall_timeout": {
+      "executed": true,
+      "reason": "stage_stall:approach_grasp",
+      "required": true,
+      "state": "failed",
+      "step_budget": 900,
+      "used_steps": 28
+    },
+    "transport_safe": {
+      "executed": false,
+      "gate": "transport_safe",
+      "owner_stage": "transport",
+      "reason": "stage_not_entered",
+      "required": true,
+      "state": "not_evaluated"
+    },
+    "unrelated_movement": {
+      "executed": true,
+      "max_unrelated_movement_m": 0.0,
+      "required": true,
+      "state": "passed",
+      "threshold_m": 0.002
+    }
+  },
+  "historical_parent": {
+    "category": "infrastructure",
+    "immutable": true,
+    "returncode": 1,
+    "status": "track3_runtime_stopped_Z5_infrastructure_failure"
+  },
+  "phase_ledger": {
+    "downstream_stage_names": [
+      "close_gripper",
+      "lift",
+      "transport",
+      "place_same_demo_init_pose",
+      "release",
+      "retreat"
+    ],
+    "entered_stages": [
+      "approach_grasp"
+    ]
+  },
+  "raw_postmortem_preserved": {
+    "historical_scope": {
+      "approach_stall": null,
+      "contact_completion": null,
+      "destination_numeric": "not_evaluated",
+      "goal_continuity": null,
+      "object_follow": null
+    },
+    "not_rewritten": true,
+    "path": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_infrastructure_postmortem.json"
+  },
+  "resource_boundary": {
+    "cpu_no_renderer": true,
+    "generation": false,
+    "gpu0_touched": false,
+    "gpu1_touched": false,
+    "gpu2_touched": false,
+    "gpu3_touched": false,
+    "physics_steps": 28,
+    "replay": false,
+    "training": false,
+    "zip": false
+  },
+  "schema_version": "track3_aa2_derived_classification_v1",
+  "status": "track3_aa2_passed",
+  "trajectory": {
+    "actions_shape": [
+      28,
+      7
+    ],
+    "finite": true,
+    "states_shape": [
+      28,
+      79
+    ]
+  }
+}

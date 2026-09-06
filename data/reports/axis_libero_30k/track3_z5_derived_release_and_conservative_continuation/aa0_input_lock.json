@@ -1,0 +1,98 @@
+{
+  "audit": "docs/reviews/axis_pi05/TRACK3_Y3_LAUNCH_Z0_Z14_AUDIT_20260906.md",
+  "audited_input_commit": "5a270a912362376cbfa13a7f9e9fd66c8b5d6237",
+  "checks": {
+    "audit_summary_remediation_required": true,
+    "audited_input_commit_ancestor": true,
+    "disk_available": true,
+    "gpu_compute_free": true,
+    "gpu_queries_ok": true,
+    "input_inventory_45_exact": true,
+    "libero_plus_snapshot_exact": true,
+    "no_live_track3": true,
+    "old_cursor_inactive": true,
+    "openpi_exact_clean": true,
+    "source_clean": true,
+    "z14_hard_stop": true,
+    "z5_frozen_source_recorded": true,
+    "z5_parent_immutable": true,
+    "zero_counts": true
+  },
+  "counts": {
+    "accepted_reverse_demo": 0,
+    "exact_reverse_demo": 0,
+    "pending_autogen": 0
+  },
+  "created_at_utc": "2026-09-06T03:17:01.771431+00:00",
+  "disk_available_bytes": 568219832320,
+  "gpu": {
+    "0": {
+      "compute_processes": [],
+      "free": true,
+      "index": 0,
+      "returncode": 0
+    },
+    "1": {
+      "compute_processes": [],
+      "free": true,
+      "index": 1,
+      "returncode": 0
+    },
+    "2": {
+      "compute_processes": [],
+      "free": true,
+      "index": 2,
+      "returncode": 0
+    },
+    "3": {
+      "compute_processes": [],
+      "free": true,
+      "index": 3,
+      "returncode": 0
+    }
+  },
+  "identity": {
+    "command": [
+      "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+      "-m",
+      "tools.axis_pi05.track3_z5_derived_release_and_conservative_continuation",
+      "--aa0"
+    ],
+    "cuda_visible_devices": "",
+    "gpu_policy": "cpu_no_renderer",
+    "libero_plus_porcelain": [
+      "M libero/libero/benchmark/__init__.py",
+      "?? libero/__init__.py",
+      "?? libero/libero/assets",
+      "?? libero/libero/bddl_files/libero_t3",
+      "?? libero/libero/init_files/libero_t3"
+    ],
+    "openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "root_commit": "4f07084244037b7c9c2c2a18cdfd65fb7501d244",
+    "schema_version": "track3_aa_runtime_identity_v1",
+    "source_porcelain": [],
+    "tool_sha256": "970c31a28d855139a09fe1215e3dd54bd6898fc5bdc72b32f7fb44cf250d1964"
+  },
+  "input_inventory": {
+    "count": 45,
+    "exact_count": 45
+  },
+  "openpi_head": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "plan": "docs/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md",
+  "resource_boundary": {
+    "cuda_initialized": false,
+    "generation": false,
+    "gpu0_touched": false,
+    "gpu1_touched": false,
+    "gpu2_touched": false,
+    "gpu3_touched": false,
+    "physics_steps": 0,
+    "replay": false,
+    "simulator_created": false,
+    "training": false,
+    "zip": false
+  },
+  "root_head": "4f07084244037b7c9c2c2a18cdfd65fb7501d244",
+  "schema_version": "track3_aa0_input_lock_v1",
+  "status": "track3_aa0_passed"
+}

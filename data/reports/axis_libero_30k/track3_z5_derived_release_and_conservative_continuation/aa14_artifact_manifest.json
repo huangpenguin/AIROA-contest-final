@@ -1,0 +1,197 @@
+{
+  "entries": [
+    {
+      "bytes": 2847,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa0_attempt1_input_lock_failure.json",
+      "sha256": "6bf3605a13938084025b21d5d2653b83c4ecd39efe5613716640c928ffd8cf7f"
+    },
+    {
+      "bytes": 2819,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa0_input_lock.json",
+      "sha256": "7c9bf3fbd5a40e2ce8e5c58123def07aada0197ae0495ca425bac725bb944e20"
+    },
+    {
+      "bytes": 356,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa14_phase_status.csv",
+      "sha256": "5c135c095e6e8d022cf3381ba972f346c36b1f80082695f1fe85ab5dc7052019"
+    },
+    {
+      "bytes": 2280,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa1_errata.json",
+      "sha256": "cd5eda6b3d8e37df1a0026a6766a7085fd6556fbf85a86525c74632e73f44fed"
+    },
+    {
+      "bytes": 10064,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa1_old_z_artifact_manifest.json",
+      "sha256": "af30ad74be4b0fca435a5901e4b70ebe4e5afb4e7cc20be0a829e5fa7b1eb32e"
+    },
+    {
+      "bytes": 4847,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa2_derived_physical_classification.json",
+      "sha256": "4bb9bf9e6c8af6c14a83e9cd21b035bab6db0879c4a8b182f810ffe1697a690f"
+    },
+    {
+      "bytes": 2593,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa3_artifact_manifest.json",
+      "sha256": "7ae1ae73dc0bf076789d48ea6f05e008d353e28fc95f995419c17708ee5b5dd2"
+    },
+    {
+      "bytes": 3289,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa3_worker_finalizer_regression.json",
+      "sha256": "05d60e050cb55fd2dcecbcc7da9810d6affe27d3fe9a6db2e0c63a2c530fcaec"
+    },
+    {
+      "bytes": 383,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa3_worker_regression/failed_gate.json",
+      "sha256": "8a2f4fc42c8ba9057ebe7d6e2921fa68fdbe4a2c77b2218b653b15cdff534e0c"
+    },
+    {
+      "bytes": 109,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa3_worker_regression/inactive_cursor.json",
+      "sha256": "cbd8f3a3fd3456f9c1061560262d52e503210d920f9f1d309b5e1938b1b38770"
+    },
+    {
+      "bytes": 16777216,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa3_worker_regression/large_stdout.log",
+      "sha256": "a06c26cbac8b80704f420222dae5658b88ff2da96702d12ef7a4223e9361f7c1"
+    },
+    {
+      "bytes": 369,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa3_worker_regression/manifest_exclusions.json",
+      "sha256": "0ecb36eed4f01f83379d5238335c36147226d8fbfd5e9f062dd78683b4bb17f2"
+    },
+    {
+      "bytes": 373,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa3_worker_regression/passed.json",
+      "sha256": "1296a98ee6a72390e178e4a1b03ae3e816f9a3bc11d61df4bd5aa452c29ea1cb"
+    },
+    {
+      "bytes": 57,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa3_worker_regression/phase_status.csv",
+      "sha256": "218366e6d06e59675f181b8e5fe5a64645974f22ccbfd4f7060fb21eef390f88"
+    },
+    {
+      "bytes": 472,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa3_worker_regression/worker_exception.json",
+      "sha256": "24ec750a50658d7ffad562baa6dc6b8d584920930b9d0d8b8de73d84b5cbe48d"
+    },
+    {
+      "bytes": 53,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa3_worker_regression/worker_exception.stderr.log",
+      "sha256": "d086c123686ad1180e9e24e9fe6d38c04fdbba1b05838f7b15fc2258714a4473"
+    },
+    {
+      "bytes": 5874,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa4_attempt1_clean_identity_frozen_cli_exit_failure.json",
+      "sha256": "ca27827648c9277a151888fa5db81a22d50d464e5722b0dec5d743d09ec0984c"
+    },
+    {
+      "bytes": 691,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa4_attempt1_final_validation_cli_exit_failure.json",
+      "sha256": "8e1ec9044ccb298f118312f3a6cace64ed4487f34c0c0ae361fdc5c711a00001"
+    },
+    {
+      "bytes": 5874,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa4_clean_identity_freeze.json",
+      "sha256": "1300f6987f37a430c9af625234a411dfd965ba0241f70ba3db8b9f4b0e052a5b"
+    },
+    {
+      "bytes": 691,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa4_final_validation.json",
+      "sha256": "eefd35077657922a66f164bc2d3aa87e0cb8655c2e78f559043071bda52059c9"
+    },
+    {
+      "bytes": 75192,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa5_support_conservative_cpu_canary/child_result.json",
+      "sha256": "fc7dd6c816656aa308c82a6769b8139c6ae4e01b244e5f62a3af2fcb262683ad"
+    },
+    {
+      "bytes": 760,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa5_support_conservative_cpu_canary/end_state.npy",
+      "sha256": "96049f3c8854bcb03b20f9acf68a83a8f73ac3b42a08d109740ad1c497a793bf"
+    },
+    {
+      "bytes": 175,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa5_support_conservative_cpu_canary/heartbeat.json",
+      "sha256": "4ac0a2940f9f18f742e6a881f09bca7d49fb7319d7644dc0f24b8215b14313a9"
+    },
+    {
+      "bytes": 9938,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa5_support_conservative_cpu_canary/identity_preflight.json",
+      "sha256": "a4d8110d1ff34abe493ec6e8d5698764455dad6958a2a1fd078fbc5a305e8271"
+    },
+    {
+      "bytes": 85459,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa5_support_conservative_cpu_canary/parent_result.json",
+      "sha256": "be90be997a0301df5f5688f52e8a1217e30ba6b477f9a63ca6a2dbfaa8ab4ad8"
+    },
+    {
+      "bytes": 760,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa5_support_conservative_cpu_canary/start_state.npy",
+      "sha256": "f5b4d5dd93a42cd133994d23eaeae0bc21bcdc970ba6c03e15a5c37f0928b9b3"
+    },
+    {
+      "bytes": 316,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa5_support_conservative_cpu_canary/stderr.log",
+      "sha256": "b64f85f67048e258074975a341f381ae84f788926051563a6e509c7cb5191add"
+    },
+    {
+      "bytes": 0,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa5_support_conservative_cpu_canary/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 42581,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa5_support_conservative_cpu_canary/trajectory.npz",
+      "sha256": "e0840d5bc53cbb8adece2fcaa7da52a85d70c6e34b1440559fd6bb1f4ee80e49"
+    },
+    {
+      "bytes": 176,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/heartbeat.json",
+      "sha256": "679f0711f894b378bcc15e3b5dd65b90fc286c2d18cc6fe6e7e47522b81dc34d"
+    },
+    {
+      "bytes": 580,
+      "git_tracked": false,
+      "relative_path": "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/resume_cursor.json",
+      "sha256": "63d8a3ab1b2319c20dbbcd0b91a8b179a70f7206e5b7ccce7ecdc75f0f2a2e2a"
+    }
+  ],
+  "entries_excluded": [
+    "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa14_artifact_manifest.json",
+    "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa14_closeout.json",
+    "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa14_final_validation.json",
+    "data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/aa14_outer_hash_record.json"
+  ],
+  "schema_version": "track3_aa14_manifest_v1"
+}

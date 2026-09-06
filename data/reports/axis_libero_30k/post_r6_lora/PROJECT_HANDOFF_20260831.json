@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-07",
-  "status": "track3_acquisition_gate_attempt_lifecycle_remediation_planned",
+  "status": "track3_acquisition_gate_attempt_lifecycle_remediation_completed_hard_stop_pending_independent_audit",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
@@ -259,8 +259,8 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_TRACK3_ACQUISITION_GATE_AND_ATTEMPT_LIFECYCLE_REMEDIATION_PLAN.md",
-  "next_phase_only": "BR0_to_BR11_then_hard_stop",
+  "next_plan": "docs/AXIS_PI05_TRACK3_ACQUISITION_GATE_ATTEMPT_LIFECYCLE_REMEDIATION_INDEPENDENT_AUDIT_PLAN.md",
+  "next_phase_only": "independent_audit_required",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -4575,7 +4575,7 @@
     },
     "independent_audit_report": "docs/reviews/axis_pi05/TRACK3_AC0_AC6_INDEPENDENT_AUDIT_20260907.md",
     "independent_audit_summary": "data/reports/axis_libero_30k/track3_ac0_ac6_independent_audit_20260907/summary.json",
-    "next_plan": "docs/AXIS_PI05_TRACK3_ACQUISITION_GATE_AND_ATTEMPT_LIFECYCLE_REMEDIATION_PLAN.md"
+    "next_plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ACQUISITION_GATE_AND_ATTEMPT_LIFECYCLE_REMEDIATION_PLAN.md"
   },
   "track3_ac0_ac6_independent_audit": {
     "status": "remediation_required",
@@ -4631,8 +4631,8 @@
     "next_phase_only": "BR0_to_BR11_then_hard_stop"
   },
   "track3_acquisition_gate_and_attempt_lifecycle_remediation_authorization": {
-    "status": "authorized_not_started",
-    "plan": "docs/AXIS_PI05_TRACK3_ACQUISITION_GATE_AND_ATTEMPT_LIFECYCLE_REMEDIATION_PLAN.md",
+    "status": "completed_hard_stop_dirty_source_correction",
+    "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ACQUISITION_GATE_AND_ATTEMPT_LIFECYCLE_REMEDIATION_PLAN.md",
     "audit_input_root_commit": "720733047a687de5cb456830467151c0102e4171",
     "authorized_phases": ["BR0", "BR1", "BR2", "BR3", "BR4", "BR5", "BR6", "BR7", "BR8", "BR9", "BR10", "BR11_closeout"],
     "physics_requires_br0_through_br8_passed": true,
@@ -4668,6 +4668,87 @@
       "upload": false,
       "submission": false
     },
-    "next_phase_only": "BR0_to_BR11_then_hard_stop"
+    "next_phase_only": "independent_audit_required"
+  },
+  "track3_acquisition_gate_attempt_lifecycle_remediation_execution": {
+    "status": "passed_hard_stop_with_remediation_required",
+    "execution_root_commit": "80d98a8471509581971335fb627d7b6faa4544c1",
+    "clean_source_commit": "cba0b12c578412d741b6e071c09b19caf3cbe405",
+    "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "evidence_root": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation",
+    "archived_plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ACQUISITION_GATE_AND_ATTEMPT_LIFECYCLE_REMEDIATION_PLAN.md",
+    "active_next_plan": "docs/AXIS_PI05_TRACK3_ACQUISITION_GATE_ATTEMPT_LIFECYCLE_REMEDIATION_INDEPENDENT_AUDIT_PLAN.md",
+    "br0_br7": {
+      "attempt_id": 5,
+      "status": "passed",
+      "physics_started": false,
+      "gpu_compute_started": false
+    },
+    "br8": {
+      "attempt_id": 6,
+      "status": "passed",
+      "clean_source_gate": true,
+      "final_validation": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0006/final_validation.json"
+    },
+    "historical_br9_br10": {
+      "attempt_id": 4,
+      "status": "remediation_required",
+      "clean_root_observed": false,
+      "three_identities_consumed_once": true,
+      "retry": false,
+      "family_categories": ["family_failure", "family_failure", "family_failure"],
+      "training_eligible": false,
+      "promotion_allowed": false,
+      "correction": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/br9_dirty_source_correction.json"
+    },
+    "br11": {
+      "attempt_id": 4,
+      "status": "passed_hard_stop",
+      "final_validation": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/final_validation.json",
+      "closure": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/checkout_stable_closure.json",
+      "latest_attempt_pointer": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/latest_attempt.json"
+    },
+    "counts": {
+      "success": 0,
+      "pending_replay_review": 0,
+      "exact": 0,
+      "accepted": 0,
+      "training_eligible": 0
+    },
+    "forbidden_actions": {
+      "old_identity_rerun": false,
+      "gpu0": false,
+      "gpu1": false,
+      "gpu2": false,
+      "gpu3": false,
+      "official_gpu": false,
+      "teleop": false,
+      "generation": false,
+      "replay": false,
+      "accepted_data": false,
+      "training": false,
+      "norm": false,
+      "fast_export": false,
+      "new_candidate_zip": false,
+      "upload": false,
+      "submission": false
+    },
+    "validation": {
+      "strict_json": "72/72",
+      "targeted_tests": "100 passed",
+      "full_tests": "362 passed, 7 skipped, 26 warnings",
+      "py_compile": true,
+      "diff_check": true,
+      "no_active_partial_in_closed_attempts": true,
+      "historical_partial_observation_preserved": true,
+      "live_track3_workers": 0,
+      "gpu_compute_apps": 0,
+      "nested_openpi_clean": true,
+      "libero_plus_preexisting_dirty_preserved": true,
+      "root_clean_after_final_commit": true
+    },
+    "old_ac_er_eg_namespaces_modified": false,
+    "libero_plus_preexisting_dirty_preserved": true,
+    "next_phase_only": "independent_audit_required"
   }
 }

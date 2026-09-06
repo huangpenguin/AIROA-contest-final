@@ -1,0 +1,160 @@
+{
+  "fixtures": {
+    "articulation_close": {
+      "entered_prefix_is_passed": true,
+      "stage_gates": {
+        "approach_drawer_region": {
+          "executed": true,
+          "required": true,
+          "state": "passed",
+          "value": true
+        },
+        "grasp_drawer_region": {
+          "executed": true,
+          "required": true,
+          "state": "passed",
+          "value": true
+        },
+        "hold_closed": {
+          "executed": false,
+          "reason": "stage_not_entered",
+          "required": true,
+          "state": "not_evaluated",
+          "value": false
+        },
+        "pull_drawer_closed": {
+          "executed": false,
+          "reason": "stage_not_entered",
+          "required": true,
+          "state": "not_evaluated",
+          "value": false
+        }
+      },
+      "unentered_are_not_evaluated": true
+    },
+    "containment_remove": {
+      "entered_prefix_is_passed": true,
+      "stage_gates": {
+        "approach_object": {
+          "executed": true,
+          "required": true,
+          "state": "passed",
+          "value": true
+        },
+        "descend_object": {
+          "executed": true,
+          "required": true,
+          "state": "passed",
+          "value": true
+        },
+        "descend_to_target": {
+          "executed": true,
+          "required": true,
+          "state": "passed",
+          "value": true
+        },
+        "grasp_object": {
+          "executed": true,
+          "required": true,
+          "state": "passed",
+          "value": true
+        },
+        "lift_object": {
+          "executed": true,
+          "required": true,
+          "state": "passed",
+          "value": true
+        },
+        "release_object": {
+          "executed": true,
+          "required": true,
+          "state": "passed",
+          "value": true
+        },
+        "retreat": {
+          "executed": true,
+          "required": true,
+          "state": "passed",
+          "value": true
+        },
+        "transport_to_target": {
+          "executed": true,
+          "required": true,
+          "state": "passed",
+          "value": true
+        }
+      },
+      "unentered_are_not_evaluated": true
+    },
+    "support_remove": {
+      "entered_prefix_is_passed": true,
+      "stage_gates": {
+        "approach_object": {
+          "executed": true,
+          "required": true,
+          "state": "passed",
+          "value": true
+        },
+        "descend_object": {
+          "executed": false,
+          "reason": "stage_not_entered",
+          "required": true,
+          "state": "not_evaluated",
+          "value": false
+        },
+        "descend_to_target": {
+          "executed": false,
+          "reason": "stage_not_entered",
+          "required": true,
+          "state": "not_evaluated",
+          "value": false
+        },
+        "grasp_object": {
+          "executed": false,
+          "reason": "stage_not_entered",
+          "required": true,
+          "state": "not_evaluated",
+          "value": false
+        },
+        "lift_object": {
+          "executed": false,
+          "reason": "stage_not_entered",
+          "required": true,
+          "state": "not_evaluated",
+          "value": false
+        },
+        "release_object": {
+          "executed": false,
+          "reason": "stage_not_entered",
+          "required": true,
+          "state": "not_evaluated",
+          "value": false
+        },
+        "retreat": {
+          "executed": false,
+          "reason": "stage_not_entered",
+          "required": true,
+          "state": "not_evaluated",
+          "value": false
+        },
+        "transport_to_target": {
+          "executed": false,
+          "reason": "stage_not_entered",
+          "required": true,
+          "state": "not_evaluated",
+          "value": false
+        }
+      },
+      "unentered_are_not_evaluated": true
+    }
+  },
+  "schema_version": "track3_br5_stage_aware_tristate_v1",
+  "states": [
+    "passed",
+    "failed",
+    "not_evaluated"
+  ],
+  "status": "passed",
+  "tail_not_evaluated_does_not_become_failed": true,
+  "unknown_is_not_coerced": true
+}

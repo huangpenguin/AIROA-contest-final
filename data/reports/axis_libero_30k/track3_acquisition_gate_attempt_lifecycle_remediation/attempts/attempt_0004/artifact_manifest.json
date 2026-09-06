@@ -1,0 +1,104 @@
+{
+  "entries": [
+    {
+      "bytes": 43417,
+      "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/canaries/01_br_support_remove_20260907_0001.child.json",
+      "sha256": "62398709b92a00134826a8c0cac6211e3b1038cd0e09d4e876d0c0401556ce11"
+    },
+    {
+      "bytes": 316,
+      "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/canaries/01_br_support_remove_20260907_0001.child.stderr.log",
+      "sha256": "b64f85f67048e258074975a341f381ae84f788926051563a6e509c7cb5191add"
+    },
+    {
+      "bytes": 27461,
+      "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/canaries/01_br_support_remove_20260907_0001.child.stdout.log",
+      "sha256": "364be572fd87f4f932cb212927fc3ef1a5b9b7f63fe965e7be8d788260bd5c7a"
+    },
+    {
+      "bytes": 1687,
+      "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/canaries/01_br_support_remove_20260907_0001.json",
+      "sha256": "7425575f8b2e151c120db6ab6490be486d7d7fd3e3c6facc491ad328abd6f921"
+    },
+    {
+      "bytes": 46620,
+      "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/canaries/02_br_containment_remove_20260907_0001.child.json",
+      "sha256": "45771f56a7950c0919bbfac72742ae63375f760116fadb27da4e2e9bbcb652a7"
+    },
+    {
+      "bytes": 316,
+      "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/canaries/02_br_containment_remove_20260907_0001.child.stderr.log",
+      "sha256": "b64f85f67048e258074975a341f381ae84f788926051563a6e509c7cb5191add"
+    },
+    {
+      "bytes": 29398,
+      "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/canaries/02_br_containment_remove_20260907_0001.child.stdout.log",
+      "sha256": "7164841d66ca603d860928e999f43552b8037557246f858ca1a7c141e9f62a24"
+    },
+    {
+      "bytes": 1707,
+      "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/canaries/02_br_containment_remove_20260907_0001.json",
+      "sha256": "c73482d89a4695b2f8bac451a9bcdb4abb4894a9d824bceb912ea54a0999d9e4"
+    },
+    {
+      "bytes": 41530,
+      "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/canaries/03_br_articulation_close_20260907_0001.child.json",
+      "sha256": "3854e11bb337c40389a07ce4b7f764f04979390f1ad1c2ff71d08d7c77c4c22c"
+    },
+    {
+      "bytes": 316,
+      "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/canaries/03_br_articulation_close_20260907_0001.child.stderr.log",
+      "sha256": "b64f85f67048e258074975a341f381ae84f788926051563a6e509c7cb5191add"
+    },
+    {
+      "bytes": 26464,
+      "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/canaries/03_br_articulation_close_20260907_0001.child.stdout.log",
+      "sha256": "94f86e1661dd5d5ac2ac263473b1076aff394dd1797e46c0148351864474d5e3"
+    },
+    {
+      "bytes": 1707,
+      "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/canaries/03_br_articulation_close_20260907_0001.json",
+      "sha256": "9d054826612a2df8996a368c49ac69b5c6202983dd1f201b6843a2e660cb096b"
+    },
+    {
+      "bytes": 58,
+      "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/phase_ledger.csv",
+      "sha256": "386476d73aa03dac2382cd460048b9a84ba5feac29c705234c69661281f4f693"
+    },
+    {
+      "bytes": 2760,
+      "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/profile_lock.json",
+      "sha256": "1bd49c3aca0e1c348c5b9bacd4b06a04e3a9aabaca2eaff6a5b866b1bdcbe697"
+    },
+    {
+      "bytes": 5357,
+      "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/runs/traces/br_articulation_close_20260907_0001_demo0.npz",
+      "sha256": "9a1db8e5809ea1b6b80f807d37888ee357a5f1e5cd7e98e9148da53b0285ce81"
+    },
+    {
+      "bytes": 5322,
+      "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/runs/traces/br_containment_remove_20260907_0001_demo0.npz",
+      "sha256": "186019af04aa679ba02294374028b251b11c4cee012752caa94bb3f22db91b21"
+    },
+    {
+      "bytes": 5424,
+      "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/runs/traces/br_support_remove_20260907_0001_demo0.npz",
+      "sha256": "3537623df2e2e91a341714b27a198d08c45ce3a844ef77a4d0e18bd0c768ad50"
+    },
+    {
+      "bytes": 7271,
+      "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/summary.json",
+      "sha256": "244884efe99a9c2aad548ab4f76c29a2f3a5fb78f0d674eae14c08db0285ea01"
+    }
+  ],
+  "excluded_exact_relative_paths": [
+    "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/artifact_manifest.json",
+    "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/outer_hash.json",
+    "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/final_validation.json",
+    "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/checkout_stable_closure.json",
+    "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/latest_attempt.json"
+  ],
+  "historical_ac_namespace_modified": false,
+  "nested_fixture_heartbeats_included": false,
+  "schema_version": "track3_br4_artifact_manifest_v1"
+}

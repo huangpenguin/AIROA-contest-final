@@ -1,0 +1,142 @@
+{
+  "cleanup_did_not_release_stop": true,
+  "gpu_compute_started": false,
+  "heartbeat_periodic": true,
+  "normal_family_failure": {
+    "child_pgid": 1670423,
+    "child_pid": 1670423,
+    "descendants_after_stop": [],
+    "heartbeat_sequences": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "kill_sent": false,
+    "label": "normal_family_failure",
+    "mode": "family_failure",
+    "payload": {
+      "category": "family_failure",
+      "identity": {
+        "clean_root": true,
+        "command": [
+          "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+          "-m",
+          "tools.axis_pi05.track3_acquisition_gate_attempt_lifecycle_remediation",
+          "--br-fixture-child",
+          "--mode",
+          "family_failure",
+          "--result-output",
+          "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0005/br3_fixtures/normal_family_failure/result.json",
+          "--heartbeat-output",
+          "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0005/br3_fixtures/normal_family_failure/heartbeat.json",
+          "--expected-identity-file",
+          "/tmp/br_expected_rrvfqyam/expected.json",
+          "--expected-command-sha256",
+          "3b13dd079497596d5cd6e14551fd5cda0d82a0bcc25055411392019922d26ded"
+        ],
+        "command_hash": "3b13dd079497596d5cd6e14551fd5cda0d82a0bcc25055411392019922d26ded",
+        "cuda_visible_devices": "",
+        "jax_platforms": "cpu",
+        "libero_plus_porcelain": [
+          "M libero/libero/benchmark/__init__.py",
+          "?? libero/__init__.py",
+          "?? libero/libero/assets",
+          "?? libero/libero/bddl_files/libero_t3",
+          "?? libero/libero/init_files/libero_t3"
+        ],
+        "libero_plus_porcelain_sha256": "e34630b50279fe065af3a9a90a431e91b3faa6331b04aea35165e712dabf083b",
+        "mujoco_gl": "disable",
+        "openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+        "openpi_porcelain": [],
+        "openpi_porcelain_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "pgid": 1670423,
+        "pid": 1670423,
+        "profile_lock_sha256": "c53ebfd0ace446f722f5ec177de8245e0f0e7eb7e25b5b4a74858658e02ac6ca",
+        "root_commit": "cba0b12c578412d741b6e071c09b19caf3cbe405",
+        "root_porcelain": [],
+        "root_porcelain_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "tool_sha256": "5f244b943d90d66b9722006991d9cb101820f82b6f31e34e164299e6095b4081"
+      },
+      "identity_gate": {
+        "checked_fields": [
+          "root_commit",
+          "tool_sha256",
+          "openpi_commit",
+          "profile_lock_sha256",
+          "cuda_visible_devices",
+          "jax_platforms",
+          "mujoco_gl",
+          "root_porcelain_sha256",
+          "openpi_porcelain_sha256",
+          "libero_plus_porcelain_sha256",
+          "clean_root",
+          "command",
+          "command_hash"
+        ],
+        "mismatches": [],
+        "state": "passed"
+      },
+      "result_sha256": "9422de6032454625a1cc32bba27dcb173ef035af7d93f8ec407fbfed36edf1b3",
+      "status": "family_failure",
+      "trace": {
+        "bytes": 20,
+        "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0005/br3_fixtures/normal_family_failure/result.trace.bin",
+        "sha256": "459d6e772a18b0116d6f188cd608ae8816678aec764dc0cd69955f539be6959c"
+      }
+    },
+    "returncode": 0,
+    "stderr_tail": "",
+    "stdout_tail": "",
+    "term_sent": false,
+    "timed_out": false
+  },
+  "partial_observation": {
+    "bytes": 39,
+    "classification": "infrastructure_failure",
+    "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0005/br3_partial_heartbeat_observed.bin",
+    "raw_partial_preserved_as_observation": true,
+    "sha256": "4c6ec1f8e48050eea51474b21db130ae0cbf3ad49f1f6a1e7443955b9f6bfdf7"
+  },
+  "physics_started": false,
+  "schema_version": "track3_br3_partial_timeout_sticky_stop_v1",
+  "singleton": {
+    "second_acquire_rejected": true,
+    "second_acquire_returncode": 0
+  },
+  "status": "passed",
+  "sticky_stop": {
+    "ac4_or_br9_started": false,
+    "prevents_new_physics_spawn": true,
+    "reason": "partial_or_timeout_is_shared_infrastructure_failure",
+    "stop_latched": true
+  },
+  "timeout_term_kill_no_descendant": {
+    "child_pgid": 1670479,
+    "child_pid": 1670479,
+    "descendants_after_stop": [],
+    "heartbeat_sequences": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "kill_sent": true,
+    "label": "timeout_term_kill_descendant",
+    "mode": "timeout",
+    "payload": {
+      "status": "infrastructure_failure"
+    },
+    "returncode": -9,
+    "stderr_tail": "",
+    "stdout_tail": "",
+    "term_sent": true,
+    "timed_out": true
+  }
+}

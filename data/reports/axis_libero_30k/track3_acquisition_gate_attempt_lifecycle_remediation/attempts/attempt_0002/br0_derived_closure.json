@@ -1,0 +1,65 @@
+{
+  "gpu_compute_started": false,
+  "historical_namespace_write_allowed": false,
+  "new_namespace": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation",
+  "old_identity_rerun": false,
+  "physics_started": false,
+  "schema_version": "track3_br0_derived_closure_v1",
+  "source": {
+    "audit_input_root_commit": "720733047a687de5cb456830467151c0102e4171",
+    "audit_status": "remediation_required",
+    "audit_summary": {
+      "bytes": 3823,
+      "path": "data/reports/axis_libero_30k/track3_ac0_ac6_independent_audit_20260907/summary.json",
+      "sha256": "b000c3bc8ae0f37039e095aa5d70a77a9d35327e1a0c1b8baa86c088c6547d95"
+    },
+    "closure": {
+      "bytes": 687,
+      "path": "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/attempts/attempt_0001/checkout_stable_closure.json",
+      "sha256": "d3fc759526c7e37154e7f26ea584a60a683c19a6a23f0f990b73a3b1f418bacd"
+    },
+    "execution_source_commit": "afabffdb2124a870dd16bd9e2fcf3ba9df246327",
+    "final_validation": {
+      "bytes": 11238,
+      "path": "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/attempts/attempt_0001/final_validation.json",
+      "sha256": "f7ceea105f44786dfa8b75b60b5c914893feb09775ba4a39966270891237b579"
+    },
+    "historical_ac_files_untouched": true,
+    "historical_ac_namespace": "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary",
+    "historical_defects_preserved": {
+      "ac3_partial_should_have_triggered_shared_infrastructure_stop": true,
+      "ac4_started_after_unresolved_ac3_partial_gate": true,
+      "ac6_phase_ledger_left_running": true,
+      "attempt_id_constant_and_overwrite_possible": true,
+      "nested_fixture_heartbeats_missing_from_manifest": true,
+      "required_contact_not_scoped_before_acquisition_barrier": true,
+      "scan_time_strict_json_not_complete_current_set": true,
+      "source_release_numpy_identity_bug": true,
+      "stage_dependent_gates_misclassified_as_failed_instead_of_not_evaluated": true,
+      "three_physical_family_failure_results_valid_as_diagnostics": true
+    },
+    "historical_family_categories": [
+      "family_failure",
+      "family_failure",
+      "family_failure"
+    ],
+    "historical_partial_provenance": {
+      "derived_observation_path": "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/attempts/attempt_0001/ac3_partial_residue_observation.json",
+      "raw_partial_currently_available": false,
+      "reconstructed": false,
+      "recorded_bytes": 190,
+      "recorded_sha256": "85980fcfb45dde3f948b341080c14323665639ac7155b23f2b585348a80031a3"
+    },
+    "historical_trace_steps": [
+      155,
+      149,
+      180
+    ],
+    "pointer": {
+      "bytes": 603,
+      "path": "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/latest_attempt.json",
+      "sha256": "b12a402a206cb8ecc3b1f38a2c9938c067a118fbee4107fcc6ce0d211ac8d649"
+    }
+  },
+  "status": "passed"
+}

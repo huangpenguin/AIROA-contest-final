@@ -1,0 +1,47 @@
+{
+  "category": "family_failure",
+  "child_pgid": 1669798,
+  "child_pid": 1669798,
+  "child_result": {
+    "bytes": 41530,
+    "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/canaries/03_br_articulation_close_20260907_0001.child.json",
+    "sha256": "3854e11bb337c40389a07ce4b7f764f04979390f1ad1c2ff71d08d7c77c4c22c"
+  },
+  "descendants_after_stop": [],
+  "family": "articulation_close",
+  "old_identity_rerun": false,
+  "parent_identity_gate": {
+    "checked_fields": [
+      "root_commit",
+      "tool_sha256",
+      "openpi_commit",
+      "profile_lock_sha256",
+      "cuda_visible_devices",
+      "jax_platforms",
+      "mujoco_gl",
+      "root_porcelain_sha256",
+      "openpi_porcelain_sha256",
+      "libero_plus_porcelain_sha256",
+      "clean_root",
+      "command",
+      "command_hash"
+    ],
+    "mismatches": [],
+    "state": "passed"
+  },
+  "process_returncode": 0,
+  "profile_id": "br_articulation_close_20260907_0001",
+  "retry": false,
+  "schema_version": "track3_br_canary_parent_record_v1",
+  "stderr": {
+    "bytes": 316,
+    "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/canaries/03_br_articulation_close_20260907_0001.child.stderr.log",
+    "sha256": "b64f85f67048e258074975a341f381ae84f788926051563a6e509c7cb5191add"
+  },
+  "stdout": {
+    "bytes": 26464,
+    "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/canaries/03_br_articulation_close_20260907_0001.child.stdout.log",
+    "sha256": "94f86e1661dd5d5ac2ac263473b1076aff394dd1797e46c0148351864474d5e3"
+  },
+  "timed_out": false
+}

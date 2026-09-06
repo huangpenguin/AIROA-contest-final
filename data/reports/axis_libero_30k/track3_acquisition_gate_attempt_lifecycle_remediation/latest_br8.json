@@ -1,0 +1,8 @@
+{
+  "attempt_id": 6,
+  "attempt_root": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0006",
+  "immutable": true,
+  "schema_version": "track3_br_latest_br8_pointer_v1",
+  "target_final_validation": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0006/final_validation.json",
+  "target_final_validation_sha256": "83eda30a7c02fa8ab92ec3846e8bedc4d5e699ac1595c7f668d3cf32c823994c"
+}

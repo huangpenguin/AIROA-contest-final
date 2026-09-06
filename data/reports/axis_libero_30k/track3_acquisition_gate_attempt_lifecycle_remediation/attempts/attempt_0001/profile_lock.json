@@ -1,0 +1,92 @@
+{
+  "contract": {
+    "acquisition_barrier": "required_demonstrator_contact_continuous_before_grasp_or_pull",
+    "goal_gate": "runtime_predicate_goal_true_continuously_after_goal_entry",
+    "normalized_action_abs_limit": 1.0,
+    "osc_rotation_normalized_scale": 0.25,
+    "osc_translation_normalized_scale": 0.05,
+    "progress_window": 12,
+    "required_contact_window": 4,
+    "source_release": "runtime_predicate_source_false_after_acquisition",
+    "stall_epsilon_m": 1e-05
+  },
+  "family_order": [
+    "support_remove",
+    "containment_remove",
+    "articulation_close"
+  ],
+  "limits": {
+    "articulation_close": 1,
+    "containment_remove": 1,
+    "support_remove": 1,
+    "total": 3
+  },
+  "lock_sha256": "c53ebfd0ace446f722f5ec177de8245e0f0e7eb7e25b5b4a74858658e02ac6ca",
+  "official_track3_claim": false,
+  "old_profile_ids_denylist": [
+    "ac_articulation_close_20260906_0001",
+    "ac_containment_remove_20260906_0001",
+    "ac_support_remove_20260906_0001",
+    "articulation_pull_a",
+    "articulation_pull_b",
+    "containment_extract_a",
+    "containment_extract_b",
+    "er_articulation_pull_fresh",
+    "er_containment_extract_fresh",
+    "er_support_contact_repair_fresh",
+    "support_contact_repair_a",
+    "support_contact_repair_b",
+    "support_contact_repair_c"
+  ],
+  "profile_order": [
+    "br_support_remove_20260907_0001",
+    "br_containment_remove_20260907_0001",
+    "br_articulation_close_20260907_0001"
+  ],
+  "profiles": [
+    {
+      "close_dwell": 2,
+      "family": "support_remove",
+      "gpu": false,
+      "grasp_z_m": 0.024,
+      "identity_scope": "new_br_cpu_no_renderer_identity_once",
+      "old_identity_rerun": false,
+      "profile_id": "br_support_remove_20260907_0001",
+      "release_dwell": 1,
+      "renderer": false,
+      "seed": 71010,
+      "task_index": 10,
+      "training_eligible": false
+    },
+    {
+      "close_dwell": 2,
+      "family": "containment_remove",
+      "gpu": false,
+      "grasp_z_m": 0.024,
+      "identity_scope": "new_br_cpu_no_renderer_identity_once",
+      "old_identity_rerun": false,
+      "profile_id": "br_containment_remove_20260907_0001",
+      "release_dwell": 1,
+      "renderer": false,
+      "seed": 72020,
+      "task_index": 20,
+      "training_eligible": false
+    },
+    {
+      "close_dwell": 2,
+      "family": "articulation_close",
+      "gpu": false,
+      "grasp_z_m": 0.012,
+      "identity_scope": "new_br_cpu_no_renderer_identity_once",
+      "old_identity_rerun": false,
+      "profile_id": "br_articulation_close_20260907_0001",
+      "release_dwell": 1,
+      "renderer": false,
+      "seed": 73019,
+      "task_index": 19,
+      "training_eligible": false
+    }
+  ],
+  "retry_allowed": false,
+  "schema_version": "track3_br_profile_lock_v1"
+}

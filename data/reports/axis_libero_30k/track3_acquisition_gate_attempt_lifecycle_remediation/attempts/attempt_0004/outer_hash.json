@@ -1,0 +1,7 @@
+{
+  "created_at_utc": "2026-09-06T15:41:01.402642+00:00",
+  "entries_sha256": "ae4b0ae2b24fa662e04b3ff8085edb19ab2362a12e5e7bd612f6b1fbba4d108f",
+  "manifest_path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/artifact_manifest.json",
+  "manifest_sha256": "7db5af55e75c47d7c4b93ef7dd813fe50630c14ec24c4443a20a5c1da0338e2d",
+  "schema_version": "track3_br11_outer_hash_v1"
+}

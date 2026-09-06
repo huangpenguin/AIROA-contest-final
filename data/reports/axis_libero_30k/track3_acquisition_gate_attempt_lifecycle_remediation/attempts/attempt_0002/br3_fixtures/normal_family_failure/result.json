@@ -1,0 +1,73 @@
+{
+  "category": "family_failure",
+  "identity": {
+    "clean_root": false,
+    "command": [
+      "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+      "-m",
+      "tools.axis_pi05.track3_acquisition_gate_attempt_lifecycle_remediation",
+      "--br-fixture-child",
+      "--mode",
+      "family_failure",
+      "--result-output",
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0002/br3_fixtures/normal_family_failure/result.json",
+      "--heartbeat-output",
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0002/br3_fixtures/normal_family_failure/heartbeat.json",
+      "--expected-identity-file",
+      "/tmp/br_expected_tazcokk6/expected.json",
+      "--expected-command-sha256",
+      "d4f3e37cef76b4b1df293f8e430bcdfc6de3f51fb22eb3773b67520dfba9ac11"
+    ],
+    "command_hash": "d4f3e37cef76b4b1df293f8e430bcdfc6de3f51fb22eb3773b67520dfba9ac11",
+    "cuda_visible_devices": "",
+    "jax_platforms": "cpu",
+    "libero_plus_porcelain": [
+      "M libero/libero/benchmark/__init__.py",
+      "?? libero/__init__.py",
+      "?? libero/libero/assets",
+      "?? libero/libero/bddl_files/libero_t3",
+      "?? libero/libero/init_files/libero_t3"
+    ],
+    "libero_plus_porcelain_sha256": "e34630b50279fe065af3a9a90a431e91b3faa6331b04aea35165e712dabf083b",
+    "mujoco_gl": "disable",
+    "openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "openpi_porcelain": [],
+    "openpi_porcelain_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "pgid": 1669238,
+    "pid": 1669238,
+    "profile_lock_sha256": "c53ebfd0ace446f722f5ec177de8245e0f0e7eb7e25b5b4a74858658e02ac6ca",
+    "root_commit": "80d98a8471509581971335fb627d7b6faa4544c1",
+    "root_porcelain": [
+      "?? tests/test_track3_acquisition_gate_attempt_lifecycle_remediation.py",
+      "?? tools/axis_pi05/track3_acquisition_gate_attempt_lifecycle_remediation.py"
+    ],
+    "root_porcelain_sha256": "2356adfc4302796f3a4da2818ddbd3ae61e26cf3bbee1eefd82b6798b3a5fa16",
+    "tool_sha256": "4f13d53a7625a61a5ce7405e9709bd9cfa574c0dac484479edaedcd42228b34d"
+  },
+  "identity_gate": {
+    "checked_fields": [
+      "root_commit",
+      "tool_sha256",
+      "openpi_commit",
+      "profile_lock_sha256",
+      "cuda_visible_devices",
+      "jax_platforms",
+      "mujoco_gl",
+      "root_porcelain_sha256",
+      "openpi_porcelain_sha256",
+      "libero_plus_porcelain_sha256",
+      "clean_root",
+      "command",
+      "command_hash"
+    ],
+    "mismatches": [],
+    "state": "passed"
+  },
+  "result_sha256": "d9433b00ec28ae05a0c954dff1628b784968a2d062dc71950784d2704382c83c",
+  "status": "family_failure",
+  "trace": {
+    "bytes": 20,
+    "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0002/br3_fixtures/normal_family_failure/result.trace.bin",
+    "sha256": "459d6e772a18b0116d6f188cd608ae8816678aec764dc0cd69955f539be6959c"
+  }
+}

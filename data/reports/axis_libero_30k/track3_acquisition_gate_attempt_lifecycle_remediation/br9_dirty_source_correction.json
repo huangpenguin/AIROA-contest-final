@@ -1,0 +1,32 @@
+{
+  "schema_version": "track3_br9_dirty_source_correction_v1",
+  "status": "remediation_required",
+  "historical_br9_attempt": {
+    "attempt_id": 4,
+    "final_validation": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/final_validation.json",
+    "summary": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/summary.json",
+    "identity_root_commit": "80d98a8471509581971335fb627d7b6faa4544c1",
+    "clean_root_observed": false,
+    "identity_gate_expected_dirty_root": true,
+    "three_identities_consumed_once": true,
+    "retry": false
+  },
+  "correction": {
+    "br9_br10_authorization_contract_satisfied": false,
+    "reason": "BR9 and BR10 ran before the remediation source/test files were committed; the dirty root must be treated as a shared infrastructure lifecycle defect.",
+    "diagnostic_family_failures_preserved": true,
+    "training_eligible": false,
+    "promotion_allowed": false,
+    "identity_rerun_allowed": false,
+    "clean_source_commit": "cba0b12",
+    "clean_source_code_only_rerun": {
+      "br0_br7_attempt_id": 5,
+      "br8_attempt_id": 6,
+      "status": "passed",
+      "clean_source_gate": true
+    }
+  },
+  "next_authority": "independent_audit_required",
+  "historical_attempt_unchanged": true,
+  "old_ac_namespace_modified": false
+}

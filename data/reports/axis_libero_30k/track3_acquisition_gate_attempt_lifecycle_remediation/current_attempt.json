@@ -1,0 +1,8 @@
+{
+  "active": false,
+  "attempt_id": 6,
+  "attempt_root": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0006",
+  "final_status": "passed_clean_source",
+  "schema_version": "track3_br_current_attempt_v1",
+  "updated_at_utc": "2026-09-06T15:44:19.929896+00:00"
+}

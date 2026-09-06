@@ -43,9 +43,9 @@ def test_existing_corrected_checkout_closure_remains_exact() -> None:
 
 def test_lifecycle_closes_eg_after_independent_audit() -> None:
     handoff = json.loads(HANDOFF.read_text(encoding="utf-8"))
-    assert handoff["status"] == "track3_acquisition_gate_attempt_lifecycle_remediation_planned"
-    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_ACQUISITION_GATE_AND_ATTEMPT_LIFECYCLE_REMEDIATION_PLAN.md"
-    assert handoff["next_phase_only"] == "BR0_to_BR11_then_hard_stop"
+    assert handoff["status"] == "track3_acquisition_gate_attempt_lifecycle_remediation_completed_hard_stop_pending_independent_audit"
+    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_ACQUISITION_GATE_ATTEMPT_LIFECYCLE_REMEDIATION_INDEPENDENT_AUDIT_PLAN.md"
+    assert handoff["next_phase_only"] == "independent_audit_required"
     assert not (ROOT / PLAN).exists()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md").exists()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md").is_file()

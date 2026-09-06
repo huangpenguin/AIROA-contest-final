@@ -1,0 +1,19 @@
+{
+  "command_profile_locked": true,
+  "gpu_compute_started": false,
+  "libero_plus_porcelain": [
+    "M libero/libero/benchmark/__init__.py",
+    "?? libero/__init__.py",
+    "?? libero/libero/assets",
+    "?? libero/libero/bddl_files/libero_t3",
+    "?? libero/libero/init_files/libero_t3"
+  ],
+  "openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "openpi_porcelain": [],
+  "physics_started": false,
+  "root_commit": "cba0b12c578412d741b6e071c09b19caf3cbe405",
+  "root_porcelain": [],
+  "schema_version": "track3_br8_clean_source_release_v1",
+  "status": "passed",
+  "tool_sha256": "5f244b943d90d66b9722006991d9cb101820f82b6f31e34e164299e6095b4081"
+}

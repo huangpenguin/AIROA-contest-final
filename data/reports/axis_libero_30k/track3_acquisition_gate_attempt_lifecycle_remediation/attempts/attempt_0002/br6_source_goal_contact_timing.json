@@ -1,0 +1,32 @@
+{
+  "contact_telemetry_separate_from_required_contact": true,
+  "goal_continuity": {
+    "executed": true,
+    "required": true,
+    "state": "passed",
+    "value": true
+  },
+  "late_contact": {
+    "barrier_index": 3,
+    "contact_window": 0,
+    "eligible_sample_count": 4,
+    "executed": true,
+    "family": "support_remove",
+    "late_contact_excluded": true,
+    "min_window": 4,
+    "reason": "required_contact_window_short",
+    "required": true,
+    "state": "failed",
+    "value": false
+  },
+  "numpy_bool_identity_safe": true,
+  "schema_version": "track3_br6_source_goal_contact_timing_v1",
+  "source_release": {
+    "executed": true,
+    "required": true,
+    "state": "passed",
+    "value": true
+  },
+  "status": "passed",
+  "unknown_schema_is_infrastructure_failure": true
+}

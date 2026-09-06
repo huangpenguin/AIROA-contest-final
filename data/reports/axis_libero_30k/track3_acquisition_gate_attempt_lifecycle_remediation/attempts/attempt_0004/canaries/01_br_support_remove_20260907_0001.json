@@ -1,0 +1,47 @@
+{
+  "category": "family_failure",
+  "child_pgid": 1669501,
+  "child_pid": 1669501,
+  "child_result": {
+    "bytes": 43417,
+    "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/canaries/01_br_support_remove_20260907_0001.child.json",
+    "sha256": "62398709b92a00134826a8c0cac6211e3b1038cd0e09d4e876d0c0401556ce11"
+  },
+  "descendants_after_stop": [],
+  "family": "support_remove",
+  "old_identity_rerun": false,
+  "parent_identity_gate": {
+    "checked_fields": [
+      "root_commit",
+      "tool_sha256",
+      "openpi_commit",
+      "profile_lock_sha256",
+      "cuda_visible_devices",
+      "jax_platforms",
+      "mujoco_gl",
+      "root_porcelain_sha256",
+      "openpi_porcelain_sha256",
+      "libero_plus_porcelain_sha256",
+      "clean_root",
+      "command",
+      "command_hash"
+    ],
+    "mismatches": [],
+    "state": "passed"
+  },
+  "process_returncode": 0,
+  "profile_id": "br_support_remove_20260907_0001",
+  "retry": false,
+  "schema_version": "track3_br_canary_parent_record_v1",
+  "stderr": {
+    "bytes": 316,
+    "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/canaries/01_br_support_remove_20260907_0001.child.stderr.log",
+    "sha256": "b64f85f67048e258074975a341f381ae84f788926051563a6e509c7cb5191add"
+  },
+  "stdout": {
+    "bytes": 27461,
+    "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/canaries/01_br_support_remove_20260907_0001.child.stdout.log",
+    "sha256": "364be572fd87f4f932cb212927fc3ef1a5b9b7f63fe965e7be8d788260bd5c7a"
+  },
+  "timed_out": false
+}

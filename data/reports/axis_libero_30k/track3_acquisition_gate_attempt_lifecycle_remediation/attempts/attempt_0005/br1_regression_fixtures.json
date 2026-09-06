@@ -1,0 +1,24 @@
+{
+  "attempt_immutability_regression": {
+    "expected": "existing_attempt_fail_close",
+    "fixture": true
+  },
+  "late_contact_regression": {
+    "expected": "failed",
+    "state": "failed"
+  },
+  "numpy_bool_regression": {
+    "expected": "passed",
+    "state": "passed"
+  },
+  "partial_sticky_regression": {
+    "expected": "infrastructure_failure_and_no_following_stage",
+    "fixture": true
+  },
+  "schema_version": "track3_br1_regression_fixtures_v1",
+  "stage_not_entered_regression": {
+    "expected": "not_evaluated",
+    "state": "not_evaluated"
+  },
+  "status": "passed"
+}

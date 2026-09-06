@@ -1,0 +1,15 @@
+{
+  "ac_attempt_0001_reused": false,
+  "attempt_reuse": false,
+  "attempts": [
+    1,
+    2
+  ],
+  "current_pointer_during_active": true,
+  "existing_attempt_fail_close": true,
+  "first_attempt_sha256": "7fd0d3d434f0a0935c3b41f2e3a1f373bb10ee85dc2178c4e8c47e2f2e590ec6",
+  "first_attempt_unchanged": true,
+  "latest_pointer_only_after_closure": true,
+  "schema_version": "track3_br2_monotonic_attempt_fixture_v1",
+  "status": "passed"
+}

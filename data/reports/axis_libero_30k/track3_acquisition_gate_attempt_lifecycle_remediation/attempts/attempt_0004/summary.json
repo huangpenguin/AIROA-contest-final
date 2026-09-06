@@ -1,0 +1,213 @@
+{
+  "accepted_data_count": 0,
+  "actual_physics_identities": [
+    "br_support_remove_20260907_0001",
+    "br_containment_remove_20260907_0001",
+    "br_articulation_close_20260907_0001"
+  ],
+  "exact_count": 0,
+  "family_status": {
+    "articulation_close": {
+      "family_failure": [
+        "br_articulation_close_20260907_0001"
+      ],
+      "infrastructure_failure": [],
+      "not_evaluated": [],
+      "success": []
+    },
+    "containment_remove": {
+      "family_failure": [
+        "br_containment_remove_20260907_0001"
+      ],
+      "infrastructure_failure": [],
+      "not_evaluated": [],
+      "success": []
+    },
+    "support_remove": {
+      "family_failure": [
+        "br_support_remove_20260907_0001"
+      ],
+      "infrastructure_failure": [],
+      "not_evaluated": [],
+      "success": []
+    }
+  },
+  "forbidden_actions": {
+    "accepted_data": false,
+    "generation": false,
+    "gpu0": false,
+    "gpu1": false,
+    "gpu2": false,
+    "gpu3": false,
+    "new_candidate_zip": false,
+    "old_identity_rerun": false,
+    "replay": false,
+    "submission": false,
+    "training": false,
+    "upload": false
+  },
+  "new_physics_identity_count": 3,
+  "pending_replay_review_count": 0,
+  "phase_ledger": [
+    {
+      "phase": "BR9",
+      "status": "passed"
+    },
+    {
+      "phase": "BR10",
+      "status": "passed"
+    },
+    {
+      "phase": "BR11",
+      "status": "passed_hard_stop"
+    }
+  ],
+  "profiles": [
+    {
+      "category": "family_failure",
+      "child_pgid": 1669501,
+      "child_pid": 1669501,
+      "child_result": {
+        "bytes": 43417,
+        "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/canaries/01_br_support_remove_20260907_0001.child.json",
+        "sha256": "62398709b92a00134826a8c0cac6211e3b1038cd0e09d4e876d0c0401556ce11"
+      },
+      "descendants_after_stop": [],
+      "family": "support_remove",
+      "old_identity_rerun": false,
+      "parent_identity_gate": {
+        "checked_fields": [
+          "root_commit",
+          "tool_sha256",
+          "openpi_commit",
+          "profile_lock_sha256",
+          "cuda_visible_devices",
+          "jax_platforms",
+          "mujoco_gl",
+          "root_porcelain_sha256",
+          "openpi_porcelain_sha256",
+          "libero_plus_porcelain_sha256",
+          "clean_root",
+          "command",
+          "command_hash"
+        ],
+        "mismatches": [],
+        "state": "passed"
+      },
+      "process_returncode": 0,
+      "profile_id": "br_support_remove_20260907_0001",
+      "retry": false,
+      "schema_version": "track3_br_canary_parent_record_v1",
+      "stderr": {
+        "bytes": 316,
+        "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/canaries/01_br_support_remove_20260907_0001.child.stderr.log",
+        "sha256": "b64f85f67048e258074975a341f381ae84f788926051563a6e509c7cb5191add"
+      },
+      "stdout": {
+        "bytes": 27461,
+        "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/canaries/01_br_support_remove_20260907_0001.child.stdout.log",
+        "sha256": "364be572fd87f4f932cb212927fc3ef1a5b9b7f63fe965e7be8d788260bd5c7a"
+      },
+      "timed_out": false
+    },
+    {
+      "category": "family_failure",
+      "child_pgid": 1669645,
+      "child_pid": 1669645,
+      "child_result": {
+        "bytes": 46620,
+        "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/canaries/02_br_containment_remove_20260907_0001.child.json",
+        "sha256": "45771f56a7950c0919bbfac72742ae63375f760116fadb27da4e2e9bbcb652a7"
+      },
+      "descendants_after_stop": [],
+      "family": "containment_remove",
+      "old_identity_rerun": false,
+      "parent_identity_gate": {
+        "checked_fields": [
+          "root_commit",
+          "tool_sha256",
+          "openpi_commit",
+          "profile_lock_sha256",
+          "cuda_visible_devices",
+          "jax_platforms",
+          "mujoco_gl",
+          "root_porcelain_sha256",
+          "openpi_porcelain_sha256",
+          "libero_plus_porcelain_sha256",
+          "clean_root",
+          "command",
+          "command_hash"
+        ],
+        "mismatches": [],
+        "state": "passed"
+      },
+      "process_returncode": 0,
+      "profile_id": "br_containment_remove_20260907_0001",
+      "retry": false,
+      "schema_version": "track3_br_canary_parent_record_v1",
+      "stderr": {
+        "bytes": 316,
+        "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/canaries/02_br_containment_remove_20260907_0001.child.stderr.log",
+        "sha256": "b64f85f67048e258074975a341f381ae84f788926051563a6e509c7cb5191add"
+      },
+      "stdout": {
+        "bytes": 29398,
+        "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/canaries/02_br_containment_remove_20260907_0001.child.stdout.log",
+        "sha256": "7164841d66ca603d860928e999f43552b8037557246f858ca1a7c141e9f62a24"
+      },
+      "timed_out": false
+    },
+    {
+      "category": "family_failure",
+      "child_pgid": 1669798,
+      "child_pid": 1669798,
+      "child_result": {
+        "bytes": 41530,
+        "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/canaries/03_br_articulation_close_20260907_0001.child.json",
+        "sha256": "3854e11bb337c40389a07ce4b7f764f04979390f1ad1c2ff71d08d7c77c4c22c"
+      },
+      "descendants_after_stop": [],
+      "family": "articulation_close",
+      "old_identity_rerun": false,
+      "parent_identity_gate": {
+        "checked_fields": [
+          "root_commit",
+          "tool_sha256",
+          "openpi_commit",
+          "profile_lock_sha256",
+          "cuda_visible_devices",
+          "jax_platforms",
+          "mujoco_gl",
+          "root_porcelain_sha256",
+          "openpi_porcelain_sha256",
+          "libero_plus_porcelain_sha256",
+          "clean_root",
+          "command",
+          "command_hash"
+        ],
+        "mismatches": [],
+        "state": "passed"
+      },
+      "process_returncode": 0,
+      "profile_id": "br_articulation_close_20260907_0001",
+      "retry": false,
+      "schema_version": "track3_br_canary_parent_record_v1",
+      "stderr": {
+        "bytes": 316,
+        "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/canaries/03_br_articulation_close_20260907_0001.child.stderr.log",
+        "sha256": "b64f85f67048e258074975a341f381ae84f788926051563a6e509c7cb5191add"
+      },
+      "stdout": {
+        "bytes": 26464,
+        "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/canaries/03_br_articulation_close_20260907_0001.child.stdout.log",
+        "sha256": "94f86e1661dd5d5ac2ac263473b1076aff394dd1797e46c0148351864474d5e3"
+      },
+      "timed_out": false
+    }
+  ],
+  "schema_version": "track3_br11_summary_v1",
+  "status": "passed_hard_stop",
+  "stop_latched": false,
+  "stop_reason": null,
+  "training_eligible": false
+}

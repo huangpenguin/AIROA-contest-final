@@ -1,0 +1,19 @@
+{
+  "entries": [
+    {
+      "bytes": 827,
+      "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0003/br8_clean_source_release.json",
+      "sha256": "697051080e410aba9513ae2145b7d7ac23e3f85b8e1a54bd57b93335b5989809"
+    }
+  ],
+  "excluded_exact_relative_paths": [
+    "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0003/artifact_manifest.json",
+    "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0003/outer_hash.json",
+    "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0003/final_validation.json",
+    "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0003/checkout_stable_closure.json",
+    "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0003/latest_attempt.json"
+  ],
+  "historical_ac_namespace_modified": false,
+  "nested_fixture_heartbeats_included": false,
+  "schema_version": "track3_br4_artifact_manifest_v1"
+}

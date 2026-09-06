@@ -1,0 +1,69 @@
+{
+  "entries": [
+    {
+      "bytes": 20,
+      "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0002/allocator_fixture/attempt_0001/result.json",
+      "sha256": "7fd0d3d434f0a0935c3b41f2e3a1f373bb10ee85dc2178c4e8c47e2f2e590ec6"
+    },
+    {
+      "bytes": 2999,
+      "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0002/br0_derived_closure.json",
+      "sha256": "832642e3ffc89c916eaa8c05ea1e73f9fc6ce1663ce34e208fc594160a94be74"
+    },
+    {
+      "bytes": 585,
+      "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0002/br1_regression_fixtures.json",
+      "sha256": "58681a7b769547148c21090c0c2f1e0521b90ce6e4bde29982e9b8bad61f5083"
+    },
+    {
+      "bytes": 437,
+      "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0002/br2_attempt_lifecycle.json",
+      "sha256": "747c37c4f2b08740d26fd2a4f97e64491e078b5b9496f076e685f73688f5f19c"
+    },
+    {
+      "bytes": 42,
+      "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0002/br3_fixtures/normal_family_failure/heartbeat.json",
+      "sha256": "17702c2385fe5cd2be973382f55b0b62771874836ac46e83d9355af5f4e1c1d4"
+    },
+    {
+      "bytes": 3088,
+      "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0002/br3_fixtures/normal_family_failure/result.json",
+      "sha256": "0890821a5db351b1e83401103251d5349e400168112d69cfbb3fe71002da3742"
+    },
+    {
+      "bytes": 20,
+      "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0002/br3_fixtures/normal_family_failure/result.trace.bin",
+      "sha256": "459d6e772a18b0116d6f188cd608ae8816678aec764dc0cd69955f539be6959c"
+    },
+    {
+      "bytes": 43,
+      "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0002/br3_fixtures/timeout_term_kill_descendant/heartbeat.json",
+      "sha256": "af2e8166d213b29138c15a6cda0d2900b0068e02bf7367c87268552c77561608"
+    },
+    {
+      "bytes": 39,
+      "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0002/br3_partial_heartbeat_observed.bin",
+      "sha256": "4c6ec1f8e48050eea51474b21db130ae0cbf3ad49f1f6a1e7443955b9f6bfdf7"
+    },
+    {
+      "bytes": 5185,
+      "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0002/br3_partial_timeout_sticky_stop.json",
+      "sha256": "5f10fb645967b6fa46812044895156eb587df4ea53c0352aaae6bf630266914f"
+    },
+    {
+      "bytes": 2760,
+      "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0002/profile_lock.json",
+      "sha256": "1bd49c3aca0e1c348c5b9bacd4b06a04e3a9aabaca2eaff6a5b866b1bdcbe697"
+    }
+  ],
+  "excluded_exact_relative_paths": [
+    "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0002/artifact_manifest.json",
+    "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0002/outer_hash.json",
+    "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0002/final_validation.json",
+    "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0002/checkout_stable_closure.json",
+    "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0002/latest_attempt.json"
+  ],
+  "historical_ac_namespace_modified": false,
+  "nested_fixture_heartbeats_included": true,
+  "schema_version": "track3_br4_artifact_manifest_v1"
+}

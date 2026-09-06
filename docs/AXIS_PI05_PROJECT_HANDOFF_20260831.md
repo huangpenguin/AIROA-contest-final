@@ -6,13 +6,13 @@
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_acquisition_gate_attempt_lifecycle_remediation_planned`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_ACQUISITION_GATE_AND_ATTEMPT_LIFECYCLE_REMEDIATION_PLAN.md`
-> 下一停止点：`BR0_to_BR11_then_hard_stop`
+> 当前总状态：`track3_acquisition_gate_attempt_lifecycle_remediation_completed_hard_stop_pending_independent_audit`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_ACQUISITION_GATE_ATTEMPT_LIFECYCLE_REMEDIATION_INDEPENDENT_AUDIT_PLAN.md`
+> 下一停止点：`independent_audit_required`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
-> closure execution commit：`327316f2ffdca0df3375748bcdd65b5ce263f8f8`
+> closure execution commit：`cba0b12`（BR clean-source gate；BR9–BR11 evidence 另见 execution namespace）
 
 ## 1. 一句话结论
 
@@ -929,3 +929,13 @@ AC0–AC6 已 hard stop。原执行计划已归档；当前唯一活动计划为
 旧 AC 执行计划与独立审核计划均已归档。唯一活动计划为 `docs/AXIS_PI05_TRACK3_ACQUISITION_GATE_AND_ATTEMPT_LIFECYCLE_REMEDIATION_PLAN.md`：BR0–BR8 可连续完成 derived closure、不可覆盖 attempt、partial/sticky stop、完整 manifest、stage 三态、source/contact/progress 与全矩阵 fixture；全部通过并形成 clean source 后，BR9–BR10 才允许三族各一条全新 CPU/no-renderer identity，总上限3且无 retry；BR11 完整闭包并 hard stop。GPU0–3、official GPU、Teleop、generation/replay、accepted data、training/norm、FAST/export、candidate ZIP、upload 与 submission 继续禁止。
 
 审核报告：`docs/reviews/axis_pi05/TRACK3_AC0_AC6_INDEPENDENT_AUDIT_20260907.md`；机器摘要：`data/reports/axis_libero_30k/track3_ac0_ac6_independent_audit_20260907/summary.json`。生命周期最终验证为 strict JSON `26/26`、targeted `14 passed`、项目规范全量 `353 passed, 7 skipped, 23 warnings`；py_compile、diff-check、无 partial、process/GPU 边界通过，nested OpenPI clean，LIBERO-plus 原有 dirty 保持不变。
+
+## 83. BR remediation lifecycle correction and handoff（2026-09-07）
+
+BR0–BR8 的 clean-source 修复已冻结：提交 `cba0b12c578412d741b6e071c09b19caf3cbe405` 后，code-only attempts `0005/0006` 通过 root/OpenPI fail-closed clean-source gate；没有重新消耗 physics identity。BR0 派生 AC closure、BR1–BR7 fixture/typed-trace evidence 和 BR8 final validation 均写入新的 BR namespace，旧 AC/ER/EG namespace 未修改。
+
+BR9–BR10 的旧 attempt `0004` 必须保持为 `remediation_required`：三条 identity 各运行一次、均为诊断性 `family_failure`，但 identity 快照明确记录 `clean_root=false`。这违反“BR8 clean source 后才可启动 BR9–BR10”的生命周期合同；`br9_dirty_source_correction.json` 已记录该修正、禁止 promotion、禁止 retry 和禁止 identity 重跑。不能把三条 trace 重新分类为成功，也不能用后续 clean-source code-only attempt 替换它们。
+
+BR11 保留该 attempt 的 `passed_hard_stop`、manifest/outer/closure/pointer、strict JSON `12/12`、CSV LF、无 active partial、无 live worker 与 GPU0–3 空闲证据。当前 machine handoff 状态为 `track3_acquisition_gate_attempt_lifecycle_remediation_completed_hard_stop_pending_independent_audit`；唯一活动计划为 `docs/AXIS_PI05_TRACK3_ACQUISITION_GATE_ATTEMPT_LIFECYCLE_REMEDIATION_INDEPENDENT_AUDIT_PLAN.md`。下一步只能做独立只读审核；在其完成前不授权新 physics、旧/BR identity 重跑、GPU、generation/replay、accepted data、training/norm、FAST/export、candidate ZIP、upload 或 submission。
+
+本次 handoff 更新后的最终工程回归为 targeted `100 passed`、全量 `362 passed, 7 skipped, 26 warnings`；strict JSON `72/72`、py_compile、diff-check、无 active partial、process/GPU 边界和 nested OpenPI clean 均通过。历史 attempt `0002` 的 `.partial` observation 继续原样保留，不作为当前 active residue。

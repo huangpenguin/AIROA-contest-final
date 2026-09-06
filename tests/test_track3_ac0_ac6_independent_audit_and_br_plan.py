@@ -9,7 +9,8 @@ ROOT = Path(__file__).resolve().parents[1]
 HANDOFF = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
 AUDIT = ROOT / "data/reports/axis_libero_30k/track3_ac0_ac6_independent_audit_20260907/summary.json"
 AC_ROOT = ROOT / "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary"
-PLAN = "docs/AXIS_PI05_TRACK3_ACQUISITION_GATE_AND_ATTEMPT_LIFECYCLE_REMEDIATION_PLAN.md"
+PLAN = "docs/AXIS_PI05_TRACK3_ACQUISITION_GATE_ATTEMPT_LIFECYCLE_REMEDIATION_INDEPENDENT_AUDIT_PLAN.md"
+ARCHIVED_BR_PLAN = ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ACQUISITION_GATE_AND_ATTEMPT_LIFECYCLE_REMEDIATION_PLAN.md"
 ARCHIVED_AUDIT_PLAN = ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_INDEPENDENT_AUDIT_PLAN.md"
 
 
@@ -71,21 +72,38 @@ def test_contract_findings_cannot_be_silently_cleared() -> None:
 
 def test_lifecycle_releases_exactly_one_br_plan() -> None:
     handoff = strict_json(HANDOFF)
-    assert handoff["status"] == "track3_acquisition_gate_attempt_lifecycle_remediation_planned"
+    assert handoff["status"] == "track3_acquisition_gate_attempt_lifecycle_remediation_completed_hard_stop_pending_independent_audit"
     assert handoff["next_plan"] == PLAN
-    assert handoff["next_phase_only"] == "BR0_to_BR11_then_hard_stop"
+    assert handoff["next_phase_only"] == "independent_audit_required"
     assert (ROOT / PLAN).is_file()
+    assert ARCHIVED_BR_PLAN.is_file()
     assert ARCHIVED_AUDIT_PLAN.is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_INDEPENDENT_AUDIT_PLAN.md").exists()
 
 
 def test_br_authority_is_code_first_then_at_most_three_cpu_identities() -> None:
     auth = strict_json(HANDOFF)["track3_acquisition_gate_and_attempt_lifecycle_remediation_authorization"]
+    assert auth["status"] == "completed_hard_stop_dirty_source_correction"
+    assert auth["plan"] == "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ACQUISITION_GATE_AND_ATTEMPT_LIFECYCLE_REMEDIATION_PLAN.md"
     assert auth["authorized_phases"] == [f"BR{i}" for i in range(11)] + ["BR11_closeout"]
     assert auth["physics_requires_br0_through_br8_passed"] is True
     assert auth["new_cpu_physics_identities_max"] == 3
     assert auth["new_cpu_physics_identities_per_family_max"] == 1
     assert auth["retry_allowed"] is False
+
+
+def test_br_execution_preserves_dirty_source_correction_and_hard_stop() -> None:
+    execution = strict_json(HANDOFF)["track3_acquisition_gate_attempt_lifecycle_remediation_execution"]
+    assert execution["status"] == "passed_hard_stop_with_remediation_required"
+    assert execution["br0_br7"]["attempt_id"] == 5
+    assert execution["br8"]["attempt_id"] == 6
+    assert execution["br8"]["clean_source_gate"] is True
+    assert execution["historical_br9_br10"]["attempt_id"] == 4
+    assert execution["historical_br9_br10"]["clean_root_observed"] is False
+    assert execution["historical_br9_br10"]["three_identities_consumed_once"] is True
+    assert execution["historical_br9_br10"]["retry"] is False
+    assert execution["br11"]["status"] == "passed_hard_stop"
+    assert execution["counts"] == {"success": 0, "pending_replay_review": 0, "exact": 0, "accepted": 0, "training_eligible": 0}
 
 
 def test_br_authority_does_not_release_gpu_data_or_training() -> None:

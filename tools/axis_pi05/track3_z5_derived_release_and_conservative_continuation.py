@@ -673,7 +673,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         parser.error("select exactly one AA0/AA1/AA2/AA3/AA4/AA5/AA14 phase")
     result = {"aa0": _aa0, "aa1": _aa1, "aa2": _aa2, "aa3": _aa3, "aa4": _aa4, "aa5": _aa5, "aa14": _aa14}[selected[0]]()
     print(json.dumps(result, ensure_ascii=False, sort_keys=True))
-    return 0 if any(token in str(result.get("status", "")) for token in ("passed", "family_failure", "hard_stop", "not_evaluated")) else 1
+    return 0 if any(token in str(result.get("status", "")) for token in ("passed", "clean_identity_frozen", "family_failure", "hard_stop", "not_evaluated")) else 1
 
 
 if __name__ == "__main__":

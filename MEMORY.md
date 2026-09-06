@@ -33,14 +33,14 @@ If these disagree, stop mutation, audit the discrepancy and repair the handoff i
 
 - Repository: `/home/huang/code/PARC2026_final`
 - Branch: `codex/axis-pi05-audit-remediation`; no upstream recorded.
-- Memory input HEAD: `882958c8b863585b13f10f22445d4aa4a42b2d56`.
-- Latest audited execution: `882958c8b863585b13f10f22445d4aa4a42b2d56` (Y0–Y2 evidence and its final provenance update).
+- Memory input HEAD: `5a270a912362376cbfa13a7f9e9fd66c8b5d6237`.
+- Latest audited execution: `5a270a912362376cbfa13a7f9e9fd66c8b5d6237` (Z0–Z14 execution and lifecycle handoff).
 - Nested OpenPI: `third_party/axis_openpi` at `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`, clean at review.
 - `LIBERO-plus` has pre-existing dirty files. They belong to the user/project and must not be reset, cleaned, overwritten or silently committed.
-- Current planned state at this refresh: `track3_y3_launch_phase_ledger_remediation_planned`.
-- Active plan: `docs/AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md`.
-- Authorized chain: `Z0_to_Z14_then_hard_stop`; Z0–Z4 must repair exact child dispatch, frozen source identity and phase-scoped gates before any nominal CPU canary; no automatic upload/submission.
-- Y0–Y2 execution evidence is in `data/reports/axis_libero_30k/track3_runtime_preflight_and_bounded_continuation/`; its audit is `docs/reviews/axis_pi05/TRACK3_RUNTIME_PREFLIGHT_Y0_Y2_AUDIT_20260906.md`. Y3–Y13 remain historical `not_evaluated`; before any Z execution, recheck live supervisor/PID/cursor, dirty worktree and GPU boundaries. Never start a duplicate run.
+- Current planned state at this refresh: `track3_z5_derived_release_and_conservative_continuation_planned`.
+- Active plan: `docs/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md`.
+- Authorized chain: `AA0_to_AA14_then_hard_stop`; AA0–AA4 must close all Z artifacts and derived classification before one conservative CPU canary. Nominal rerun is forbidden; no automatic upload/submission.
+- Z0–Z14 execution evidence is in `data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/`; its audit is `docs/reviews/axis_pi05/TRACK3_Y3_LAUNCH_Z0_Z14_AUDIT_20260906.md`. Historical parent remains infrastructure while physical result is derived nominal family failure. Z6–Z13 remain `not_evaluated`; before any AA execution, recheck live supervisor/PID/cursor, dirty worktree and GPU boundaries. Never start a duplicate run.
 
 The snapshot above becomes historical as soon as execution advances. Always refresh from Git, machine JSON and the live cursor rather than treating this paragraph as a lock.
 

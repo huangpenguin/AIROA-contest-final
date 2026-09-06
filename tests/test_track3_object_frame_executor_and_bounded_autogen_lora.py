@@ -37,11 +37,11 @@ def test_x0_x13_audit_archives_x_and_releases_exactly_one_y_plan() -> None:
             / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
         ).read_text(encoding="utf-8")
     )
-    assert handoff["status"] == "track3_z14_hard_stop_pending_review"
+    assert handoff["status"] == "track3_z5_derived_release_and_conservative_continuation_planned"
     assert handoff["next_plan"] == (
-        "docs/AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md"
+        "docs/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md"
     )
-    assert handoff["next_phase_only"] == "Z0_to_Z14_then_hard_stop"
+    assert handoff["next_phase_only"] == "AA0_to_AA14_then_hard_stop"
     assert (ROOT / handoff["next_plan"]).is_file()
     assert not (
         ROOT
@@ -87,5 +87,5 @@ def test_x0_x13_audit_archives_x_and_releases_exactly_one_y_plan() -> None:
     assert y_audit["status"] == "remediation_required"
     assert y_audit["findings"]["child_exact_argv_dispatches"] is False
     z_authorization = handoff["track3_y3_launch_phase_ledger_remediation_authorization"]
-    assert z_authorization["plan"] == handoff["next_plan"]
-    assert z_authorization["next_phase_only"] == handoff["next_phase_only"]
+    assert z_authorization["plan"] == "docs/archive/axis_pi05/AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md"
+    assert z_authorization["next_phase_only"] == "superseded_by_track3_z5_derived_release_and_conservative_continuation_plan"

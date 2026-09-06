@@ -82,9 +82,9 @@ def test_identity_gate_rejects_dirty_or_command_drift() -> None:
 
 def test_y_audit_archives_y_and_releases_exactly_one_z_plan() -> None:
     handoff = json.loads((ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json").read_text(encoding="utf-8"))
-    assert handoff["status"] == "track3_z14_hard_stop_pending_review"
-    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md"
-    assert handoff["next_phase_only"] == "Z0_to_Z14_then_hard_stop"
+    assert handoff["status"] == "track3_z5_derived_release_and_conservative_continuation_planned"
+    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md"
+    assert handoff["next_phase_only"] == "AA0_to_AA14_then_hard_stop"
     assert (ROOT / handoff["next_plan"]).is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_RUNTIME_PREFLIGHT_AND_BOUNDED_CONTINUATION_PLAN.md").exists()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_RUNTIME_PREFLIGHT_AND_BOUNDED_CONTINUATION_PLAN.md").is_file()
@@ -100,8 +100,8 @@ def test_y_audit_archives_y_and_releases_exactly_one_z_plan() -> None:
     assert audit["findings"]["frozen_clean_source_identity_enforced"] is False
 
     authorization = handoff["track3_y3_launch_phase_ledger_remediation_authorization"]
-    assert authorization["status"] == handoff["status"]
-    assert authorization["plan"] == handoff["next_plan"]
+    assert authorization["status"] == "track3_y3_launch_phase_ledger_remediation_completed_and_audited"
+    assert authorization["plan"] == "docs/archive/axis_pi05/AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md"
     assert authorization["authorization"]["support_nominal_cpu_physics_canaries_max"] == 1
     assert authorization["authorization"]["total_train_generations_max"] == 12
     assert authorization["authorization"]["gpu0"] is False

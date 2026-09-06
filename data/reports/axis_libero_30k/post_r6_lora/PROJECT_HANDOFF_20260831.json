@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-06",
-  "status": "track3_z14_hard_stop_pending_review",
+  "status": "track3_z5_derived_release_and_conservative_continuation_planned",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
-  "latest_audited_execution_commit": "882958c8b863585b13f10f22445d4aa4a42b2d56",
-  "latest_audit_input_commit": "882958c8b863585b13f10f22445d4aa4a42b2d56",
-  "latest_execution_root_commit": "933f4d3afb70ca31c95d55881d404b97cb3687d5",
+  "latest_audited_execution_commit": "5a270a912362376cbfa13a7f9e9fd66c8b5d6237",
+  "latest_audit_input_commit": "5a270a912362376cbfa13a7f9e9fd66c8b5d6237",
+  "latest_execution_root_commit": "5a270a912362376cbfa13a7f9e9fd66c8b5d6237",
   "latest_execution_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
@@ -225,7 +225,7 @@
   },
   "tests": {
     "command": "PYTHONPATH=. JAX_PLATFORMS=cpu .venv_axis_pi05/bin/pytest -q tests",
-    "passed": 271,
+    "passed": 282,
     "skipped": 7,
     "warnings": 23,
     "pynvml_is_collection_blocker": false
@@ -259,8 +259,8 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md",
-  "next_phase_only": "Z0_to_Z14_then_hard_stop",
+  "next_plan": "docs/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md",
+  "next_phase_only": "AA0_to_AA14_then_hard_stop",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -3755,8 +3755,8 @@
     "next_plan_approved": true
   },
   "track3_y3_launch_phase_ledger_remediation_authorization": {
-    "status": "track3_z14_hard_stop_pending_review",
-    "plan": "docs/AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md",
+    "status": "track3_y3_launch_phase_ledger_remediation_completed_and_audited",
+    "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md",
     "audited_input_commit": "882958c8b863585b13f10f22445d4aa4a42b2d56",
     "authorized_phases": ["Z0", "Z1", "Z2", "Z3", "Z4", "Z5", "Z6", "Z7", "Z8", "Z9", "Z10", "Z11", "Z12", "Z13", "Z14_closeout"],
     "authorization": {
@@ -3804,11 +3804,11 @@
       "manifest_self_hash_or_final_validation_failure"
     ],
     "family_failure_policy": "close_only_the_failed_family_lane",
-    "next_phase_only": "Z0_to_Z14_then_hard_stop"
+    "next_phase_only": "superseded_by_track3_z5_derived_release_and_conservative_continuation_plan"
   },
   "track3_y3_launch_phase_ledger_remediation_execution": {
     "status": "track3_z14_hard_stop_pending_review",
-    "plan": "docs/AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md",
+    "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md",
     "input_audit": "docs/reviews/axis_pi05/TRACK3_RUNTIME_PREFLIGHT_Y0_Y2_AUDIT_20260906.md",
     "input_commit_locked": "56cdffa83a530cb0dab71e4d17b7a9112a2742af",
     "namespace": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation",
@@ -3817,6 +3817,107 @@
     "checks": {"input_inventory": "45/45", "y2_manifest": "6/6", "y2_self_hashes": "3/3", "z4_manifest_entries": 11, "z4_manifest_exact": true, "z5_physics_steps": 28, "z5_stage": "approach_grasp", "z5_failure_reason": "stage_stall:approach_grasp", "z5_worker_result": "failed_gate", "z5_parent_classification": "infrastructure", "strict_json": true, "np_no_pickle_finite": true, "csv_lf": true, "no_partial": true, "z14_manifest_entries": 28, "z14_manifest_exact": true, "py_compile": true, "targeted_tests": "10 passed", "full_tests": "281 passed, 7 skipped, 23 warnings", "canonical_resolution": "passed_physics_steps_0"},
     "counts": {"exact_reverse_demo": 0, "pending_autogen": 0, "accepted_reverse_demo": 0},
     "source_identity": {"freeze_mode": "post_commit_git_note", "note_ref": "refs/notes/axis-pi05-track3-z5-source-identity", "run_root_commit": "933f4d3afb70ca31c95d55881d404b97cb3687d5", "self_assertion": false, "post_attempt_source_fix_commits": ["614220d93328de7e12e508f96917b2767e0f4be3", "89428e972671379603f0d04ebdcf94b8c449a281"], "status": "run_frozen_pre_finalizer_fix"},
-    "resource_boundary": {"simulator_created": true, "env_step_called": true, "cuda_initialized": false, "cpu_no_renderer": true, "gpu0_touched": false, "gpu1_touched": false, "gpu2_touched": false, "gpu3_touched": false, "official_gpu": false, "generation": false, "replay": false, "training": false, "norm": false, "fast": false, "zip": false, "upload": false, "submit": false, "libero_plus_existing_dirty_untouched": true, "hard_stop": true}
+    "resource_boundary": {"simulator_created": true, "env_step_called": true, "cuda_initialized": false, "cpu_no_renderer": true, "gpu0_touched": false, "gpu1_touched": false, "gpu2_touched": false, "gpu3_touched": false, "official_gpu": false, "generation": false, "replay": false, "training": false, "norm": false, "fast": false, "zip": false, "upload": false, "submit": false, "libero_plus_existing_dirty_untouched": true, "hard_stop": true},
+    "next_phase_only": "superseded_by_track3_z5_derived_release_and_conservative_continuation_plan"
+  },
+  "track3_y3_launch_z0_z14_audit": {
+    "status": "remediation_required",
+    "audited_execution_commit": "5a270a912362376cbfa13a7f9e9fd66c8b5d6237",
+    "z5_frozen_source_commit": "933f4d3afb70ca31c95d55881d404b97cb3687d5",
+    "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "audit_report": "docs/reviews/axis_pi05/TRACK3_Y3_LAUNCH_Z0_Z14_AUDIT_20260906.md",
+    "audit_summary": "data/reports/axis_libero_30k/track3_z0_z14_audit_20260906/summary.json",
+    "verified": {
+      "input_inventory_bytes_sha_exact": "45/45",
+      "z4_manifest_bytes_sha_exact": "11/11",
+      "z14_manifest_entries_bytes_sha_exact": "28/28",
+      "z14_manifest_tracked_namespace_coverage": "28/36",
+      "strict_json": "26/26",
+      "np_no_pickle_numeric_finite": true,
+      "csv_lf": true,
+      "no_partial": true,
+      "z5_identity_exact": true,
+      "z5_physics_steps": 28,
+      "z6_to_z13_not_evaluated": true,
+      "exact_pending_accepted": [0, 0, 0],
+      "root_and_openpi_clean": true,
+      "libero_plus_dirty_preserved": true,
+      "no_live_track3_process": true,
+      "gpu_compute_apps_at_audit": 0,
+      "tests_before_lifecycle_update": "281_passed_7_skipped_23_warnings",
+      "targeted_tests_after_lifecycle_update": "11_passed",
+      "full_tests_after_lifecycle_update": "282_passed_7_skipped_23_warnings"
+    },
+    "derived_physical_result": {
+      "historical_parent_category": "infrastructure",
+      "derived_category": "family_failure",
+      "reason": "stage_stall:approach_grasp",
+      "worker_status": "failed_gate",
+      "worker_result_published_before_finalizer_name_error": true,
+      "nominal_quota_consumed": true,
+      "nominal_rerun_authorized": false,
+      "downstream_manipulation_gates": "not_evaluated"
+    },
+    "findings": {
+      "complete_artifact_and_self_hash_closure": false,
+      "z5_logs_in_manifest": false,
+      "postmortem_gate_scope_exact": false,
+      "z4_targeted_test_count": "9_passed_not_8",
+      "markdown_handoff_top_was_stale": true
+    },
+    "historical_reports_rewritten": false,
+    "next_plan_approved": true
+  },
+  "track3_z5_derived_release_and_conservative_continuation_authorization": {
+    "status": "track3_z5_derived_release_and_conservative_continuation_planned",
+    "plan": "docs/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md",
+    "audited_input_commit": "5a270a912362376cbfa13a7f9e9fd66c8b5d6237",
+    "authorized_phases": ["AA0", "AA1", "AA2", "AA3", "AA4", "AA5", "AA6", "AA7", "AA8", "AA9", "AA10", "AA11", "AA12", "AA13", "AA14_closeout"],
+    "authorization": {
+      "user_manual_action": false,
+      "historical_evidence_rewrite": false,
+      "old_z_namespace_tracked_artifact_closure": "36/36",
+      "derived_nominal_family_failure": true,
+      "nominal_rerun": false,
+      "z5_failed_trajectory_training_eligible": false,
+      "worker_completed_status_real_dispatch_regression": true,
+      "finalizer_outer_self_hash_record": true,
+      "support_conservative_cpu_canaries_max": 1,
+      "support_gpu3_camera_canaries_max": 1,
+      "task20_task19_cpu_profiles_max_total": 4,
+      "task20_task19_gpu3_camera_canaries_max_total": 4,
+      "total_train_generations_max": 12,
+      "total_fresh_replays_max": 36,
+      "accepted_replay_gate": "3/3",
+      "holdout_demo": "demo2",
+      "forward_reverse_sampling": [0.8, 0.2],
+      "fresh_quantiles_required": true,
+      "initialization": "r6_dual_l2_fresh500_r1_step500_params",
+      "training_gpus": [1, 2],
+      "training_precision": "float32",
+      "screen_steps_each": 100,
+      "winner_max_steps": 1000,
+      "reverse_improvement_min_successes": 1,
+      "c20_max_success_loss": 2,
+      "independent_winner_revalidation": true,
+      "local_fast_zip_conditional": true,
+      "gpu0": false,
+      "official_gpu": false,
+      "dense_full_ft": false,
+      "human_teleop": false,
+      "automatic_upload_or_submission": false,
+      "unattended_runtime_hours_max": 18
+    },
+    "global_stop_conditions": [
+      "immutable_or_frozen_source_identity_drift",
+      "active_instance_or_gpu_boundary_conflict",
+      "worker_return_code_or_finalizer_failure",
+      "phase_ledger_destination_stall_or_heartbeat_failure",
+      "data_contamination_or_holdout_overlap",
+      "nonfinite_training_state",
+      "manifest_outer_hash_or_final_validation_failure"
+    ],
+    "family_failure_policy": "close_only_the_failed_family_lane",
+    "next_phase_only": "AA0_to_AA14_then_hard_stop"
   }
 }

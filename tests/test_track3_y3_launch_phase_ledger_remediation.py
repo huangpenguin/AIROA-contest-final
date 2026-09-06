@@ -106,3 +106,39 @@ def test_z0_z4_execution_evidence_is_closed_before_z5() -> None:
     closeout = json.loads((ROOT / execution["reports"]["z14_closeout"]).read_text(encoding="utf-8"))
     assert closeout["status"] == "track3_z14_hard_stop"
     assert closeout["hard_stop"]["automatic_resume"] is False
+
+
+def test_z0_z14_audit_archives_z_and_releases_exactly_one_aa_plan() -> None:
+    handoff_path = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
+    handoff = tool.strict_json(handoff_path)
+    assert handoff["status"] == "track3_z5_derived_release_and_conservative_continuation_planned"
+    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md"
+    assert handoff["next_phase_only"] == "AA0_to_AA14_then_hard_stop"
+    assert (ROOT / handoff["next_plan"]).is_file()
+    assert not (ROOT / "docs/AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md").exists()
+    assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md").is_file()
+
+    audit = handoff["track3_y3_launch_z0_z14_audit"]
+    assert audit["status"] == "remediation_required"
+    assert (ROOT / audit["audit_report"]).is_file()
+    assert (ROOT / audit["audit_summary"]).is_file()
+    assert audit["verified"]["input_inventory_bytes_sha_exact"] == "45/45"
+    assert audit["verified"]["z14_manifest_entries_bytes_sha_exact"] == "28/28"
+    assert audit["verified"]["z14_manifest_tracked_namespace_coverage"] == "28/36"
+    assert audit["derived_physical_result"]["historical_parent_category"] == "infrastructure"
+    assert audit["derived_physical_result"]["derived_category"] == "family_failure"
+    assert audit["derived_physical_result"]["nominal_rerun_authorized"] is False
+    assert audit["findings"]["complete_artifact_and_self_hash_closure"] is False
+    assert audit["findings"]["postmortem_gate_scope_exact"] is False
+
+    authorization = handoff["track3_z5_derived_release_and_conservative_continuation_authorization"]
+    assert authorization["status"] == handoff["status"]
+    assert authorization["plan"] == handoff["next_plan"]
+    assert authorization["next_phase_only"] == handoff["next_phase_only"]
+    scope = authorization["authorization"]
+    assert scope["old_z_namespace_tracked_artifact_closure"] == "36/36"
+    assert scope["nominal_rerun"] is False
+    assert scope["support_conservative_cpu_canaries_max"] == 1
+    assert scope["z5_failed_trajectory_training_eligible"] is False
+    assert scope["gpu0"] is False
+    assert scope["automatic_upload_or_submission"] is False

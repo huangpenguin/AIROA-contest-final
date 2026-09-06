@@ -1,0 +1,69 @@
+{
+  "audit_report": "docs/reviews/axis_pi05/TRACK3_Y3_LAUNCH_Z0_Z14_AUDIT_20260906.md",
+  "audited_execution_commit": "5a270a912362376cbfa13a7f9e9fd66c8b5d6237",
+  "derived_physical_result": {
+    "category": "family_failure",
+    "historical_parent_category_preserved": "infrastructure",
+    "nominal_rerun_authorized": false,
+    "reason": "stage_stall:approach_grasp",
+    "worker_status": "failed_gate"
+  },
+  "execution": {
+    "exact_pending_accepted": [
+      0,
+      0,
+      0
+    ],
+    "z5_frozen_source_commit": "933f4d3afb70ca31c95d55881d404b97cb3687d5",
+    "z6_to_z13": "not_evaluated",
+    "z14": "hard_stop"
+  },
+  "findings": {
+    "artifact_manifest_complete_for_all_tracked_files": false,
+    "markdown_handoff_top_current": false,
+    "postmortem_gate_scope_exact": false,
+    "self_hash_closure_complete": false,
+    "z4_targeted_test_count_in_handoff_exact": false
+  },
+  "historical_evidence_rewritten": false,
+  "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "next_plan": "docs/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md",
+  "resource_boundary": {
+    "generation": false,
+    "gpu_compute_apps_at_audit": 0,
+    "gpu_used_by_execution": false,
+    "official_gpu": false,
+    "replay": false,
+    "teleop": false,
+    "training": false,
+    "zip": false
+  },
+  "schema_version": "track3_y3_launch_z0_z14_audit_v1",
+  "status": "remediation_required",
+  "verified": {
+    "input_inventory_bytes_sha_exact": "45/45",
+    "json_strict": "26/26",
+    "libero_plus_existing_dirty_preserved": true,
+    "manifest_entries_bytes_sha_exact": "28/28",
+    "manifest_tracked_namespace_coverage": "28/36",
+    "no_live_track3_process": true,
+    "no_partial": true,
+    "np_no_pickle_and_numeric_finite": true,
+    "root_and_openpi_clean": true,
+    "tests_before_lifecycle_update": "281_passed_7_skipped_23_warnings",
+    "targeted_tests_after_lifecycle_update": "11_passed",
+    "full_tests_after_lifecycle_update": "282_passed_7_skipped_23_warnings",
+    "trajectory_action_state_shapes": [
+      [
+        28,
+        7
+      ],
+      [
+        28,
+        79
+      ]
+    ],
+    "z5_identity_exact": true,
+    "z5_physics_steps": 28
+  }
+}

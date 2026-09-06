@@ -6,8 +6,8 @@
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_z4_prephysics_release_ready_for_z5`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md`
+> 当前总状态：`track3_z5_derived_release_and_conservative_continuation_planned`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -15,9 +15,9 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3 object-frame数学与hard-stop闭包已有进展，但X4 worker在0 physics step时因缺失runtime helper停止，且审计发现stall、close/lift/source-release顺序、周期heartbeat与完整input lock尚未闭合。新计划先完成runtime preflight和执行合同，再在同一条件链内继续三族bounded generation、LoRA、holdout与本地ZIP；用户无需Teleop或中途逐阶段审核。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Track3首次有效nominal CPU canary已运行28步并在approach发生预注册stage stall；尾部return-code NameError使历史parent按infrastructure停止，但raw child/trajectory支持派生nominal physical family failure。当前仍无reverse训练数据。
 
-Y0完整输入锁与Y2 artifact closure已通过独立复算；但Y3 parent构造的`--result-output`无法通过顶层CLI parser，最终hard gate又用末端window覆盖close/lift阶段证据，same-demo destination缺少数值验证，source identity仍自指且dirty白名单过宽。Y3 nominal CPU canary尚未运行，Track3 reverse数据、训练与ZIP仍未开始；新计划先修复launch与phase ledger，再条件式进入有界数据链。
+新计划先补齐Z namespace的36/36 artifact/self-hash closure、postmortem errata和真实worker/finalizer回归；禁止nominal重跑，只允许一次结果前已冻结的conservative CPU profile。通过后才条件式进入GPU3、其余family、bounded generation/replay、LoRA、holdout与本地ZIP；用户无需Teleop或中途逐阶段审核。
 
 ## 2. 数据与复现基础
 
@@ -792,3 +792,13 @@ Z5 在 post-commit Z5 identity `933f4d3` 下只运行一次 task10/demo0、seed3
 worker 已原子写出 `failed_gate`，但该次运行所用 release 漏掉 `WORKER_COMPLETED_STATUSES`，导致 worker 最终 return code `1`；parent 按 fail-closed 合同将本次执行标为 `infrastructure`，不是 family failure。stderr、parent/child、phase ledger 和 trajectory 均保留在 `data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_cpu_task10_demo0_nominal/`；返回码修复提交为 `614220d`，收尾 process-scan 修复提交为 `89428e9`，均未触发重跑。
 
 Z14 纯收尾已执行：旧 Z4 manifest 恢复 `11/11` exact，Z14 manifest `28` entries exact，strict JSON、NPY/NPZ finite/no-pickle、CSV LF、无 partial、OpenPI clean、无 live Track3、GPU compute free 全通过。Z14 hard stop 的 `next_authority` 为 `new_reviewed_plan_required`。Z6–Z13 均为 `not_evaluated`，`exact/pending/accepted=0/0/0`；没有 conservative、其他 family、GPU canary、generation、replay、training、norm、FAST/ZIP、Teleop、上传或提交。当前代码树提交为 `89428e9`，Z5 运行 identity 与后续修复 identity 分开记录；LIBERO-plus 既有 dirty 未触碰。
+
+## 69. Z0–Z14 独立审核与 Derived/Conservative Continuation（2026-09-06）
+
+审核输入root `5a270a912362376cbfa13a7f9e9fd66c8b5d6237`、Z5 frozen source `933f4d3afb70ca31c95d55881d404b97cb3687d5`、nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`。45项上游inventory、Z4 `11/11`、Z14 manifest内`28/28`、26个strict JSON、NPY/NPZ finite/no-pickle、CSV LF、Z5 Git-note identity、单次28-step CPU运行、Z6–Z13未执行及资源边界均独立成立。生命周期更新前targeted/full为`10/281 passed`；更新后为`11 passed`及`282 passed, 7 skipped, 23 warnings`。
+
+历史parent=`infrastructure`保持不变；raw child在finalizer NameError前已原子发布`failed_gate`、trajectory与ledger，因此派生物理结果固定为nominal `family_failure`、`stage_stall:approach_grasp`，nominal配额已消耗且禁止重跑。close/lift/transport/place/release继续为`not_evaluated`，该轨迹禁止入训。
+
+Z14的28项全部exact，但旧namespace实际有36个tracked文件：两个Z5 log及六个Z4/Z14 finalizer artifacts没有完整hash/self-hash闭包；旧postmortem还因从`hard_gate`而非`hard_gate.gates`读取，留下多项null。Z4 final validation原文targeted为`9 passed`，旧交接的8是笔误；当前修复后是10。完整审核：`docs/reviews/axis_pi05/TRACK3_Y3_LAUNCH_Z0_Z14_AUDIT_20260906.md`。
+
+旧Z计划已归档。唯一活动计划为`docs/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md`：AA0–AA4先闭合36/36 artifacts、派生分类与worker/finalizer真实路径并冻结clean identity；AA5禁止nominal重跑，只允许一次既有`object_frame_conservative` CPU canary。后续AA6–AA13按独立family、有界generation/replay、20Hz mixture/fresh QUANTILES、R6 L2 LoRA与条件式本地ZIP推进；AA14统一hard stop。不授权Z5轨迹入训、GPU0/官方GPU、Teleop、dense full-FT、自动上传或提交。

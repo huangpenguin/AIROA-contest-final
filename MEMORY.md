@@ -63,7 +63,7 @@ The snapshot above becomes historical as soon as execution advances. Always refr
 - TZ0 passed full fallback ZIP revalidation: 3401 entries, CRC passed, FAST-only layout, C5 source-success `3/3`; source and materialized ZIP are both `9383571677` bytes with SHA `95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a`.
 - TZ1 passed and froze 7 new identities. TZ2 consumed exactly 7 CPU/no-renderer identities: support 2 normal family failures plus 1 preserved executor infrastructure failure, containment 2 family failures, articulation 2 family failures. The executor bug was fixed without rerunning the consumed identity. No family succeeded.
 - TZ3–TZ8 are `not_evaluated` because no family succeeded: GPU3 0, generation 0, replay 0, accepted reverse `0/0/0`, training false, candidate false. GPU0/official GPU/Teleop/dense full-FT/upload/submission were not used. `LIBERO-plus` pre-existing dirty was preserved.
-- Final validation after the execution evidence was written: targeted `50 passed`; project `293 passed, 7 skipped, 23 warnings`; Tonight namespace strict JSON `22/22`, LF phase CSV, py_compile/diff-check, no partial residue, and GPU0–3 empty.
+- Final validation after the execution evidence was written: targeted `50 passed`; project `293 passed, 7 skipped, 23 warnings`; Tonight namespace strict JSON `23/23` (machine handoff included: `24/24`), LF phase CSV, py_compile/diff-check, no partial residue, and GPU0–3 empty.
 
 ## 3. Stable competition/model facts
 

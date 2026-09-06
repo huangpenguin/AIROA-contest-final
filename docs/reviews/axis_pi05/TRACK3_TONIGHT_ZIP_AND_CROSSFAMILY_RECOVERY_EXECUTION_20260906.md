@@ -18,8 +18,8 @@
 - `tz1_cli_and_profile_lock.json` / `profile_lock.json`：TZ0–TZ9 CLI 合同与 `3+2+2=7` identity freeze。
 - `tz2_cpu_matrix.json`：7/7 matrix、family isolation、首个 infrastructure failure 和后续六个 family failure。
 - `tz3_summary.json`–`tz8_summary.json`：逐阶段 `not_evaluated` 原因。
-- `final_manifest.json`、`phase_ledger.csv`、`tz9_validation.json`：fallback 选择、LF CSV、strict JSON `22` files、py_compile/diff-check、无 partial、GPU0–3 空闲快照。
+- `final_manifest.json`、`phase_ledger.csv`、`tz9_validation.json`：fallback 选择、LF CSV、strict JSON namespace `23/23`（含 machine handoff `24/24`）、py_compile/diff-check、无 partial、GPU0–3 空闲快照。
 
 最终机器 handoff 状态为 `track3_tonight_zip_and_crossfamily_recovery_completed_fallback_hard_stop_pending_review`，下一权限为 `new_reviewed_plan_required`。root/OpenPI 在最终提交后保持 clean；`LIBERO-plus` 的既有 dirty 未触碰。
 
-最终回归：目标测试 `50 passed`；项目全量 `293 passed, 7 skipped, 23 warnings`。namespace strict JSON 为 `22/22`，phase CSV 为 LF，py_compile、diff-check、无 partial 和 GPU0–3 空闲均通过。
+最终回归：目标测试 `50 passed`；项目全量 `293 passed, 7 skipped, 23 warnings`。Tonight namespace strict JSON 为 `23/23`（含 machine handoff `24/24`），phase CSV 为 LF，py_compile、diff-check、无 partial 和 GPU0–3 空闲均通过。

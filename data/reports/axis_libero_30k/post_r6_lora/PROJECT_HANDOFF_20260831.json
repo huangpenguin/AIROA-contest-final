@@ -4098,7 +4098,7 @@
     },
     "final_manifest": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/final_manifest.json",
     "phase_ledger_csv": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/phase_ledger.csv",
-    "validation": {"path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/tz9_validation.json", "status": "passed", "strict_json_files": 22, "partial_residue": 0, "gpu0_to_gpu3_compute_processes": 0},
+    "validation": {"path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/tz9_validation.json", "status": "passed", "strict_json_files": 23, "strict_json_files_including_machine_handoff": 24, "partial_residue": 0, "gpu0_to_gpu3_compute_processes": 0},
     "tests": {"targeted": {"passed": 50, "skipped": 0, "warnings": 2, "returncode": 0}, "project_full_tests": {"passed": 293, "skipped": 7, "warnings": 23, "returncode": 0}, "command_scope": "PYTHONPATH=. ./.venv_axis_pi05/bin/pytest -q tests", "external_nested_pytest_collection": "not_project_full_test_scope; not modified"},
     "resource_boundary": {"gpu0_compute": false, "official_gpu": false, "teleop": false, "dense_full_ft": false, "upload": false, "submission": false},
     "hard_stop": {"status": "hard_stop", "next_authority": "new_reviewed_plan_required", "deadline_jst": "2026-09-06T23:00:00+09:00"},

@@ -81,4 +81,4 @@
 - TZ2执行上限内的7/7 CPU children。support为1条执行器infrastructure failure（numpy延迟导入bug，已修复且不重跑该identity）加2条正常family failure；containment `2/2`、articulation `2/2`均为正常family failure。没有family success，family isolation保留；旧nominal/conservative identity未重跑。
 - 因无成功family，TZ3–TZ8全部为`not_evaluated`；GPU3、generation、replay、accepted reverse data、training和T3 candidate均为0/false。TZ9交付本地R6 fallback并hard stop，下一权限为`new_reviewed_plan_required`。
 - 机器证据：`data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/summary.json`；本轮没有上传或提交，`LIBERO-plus`既有dirty未触碰。
-- 最终测试为目标`50 passed`、项目全量`293 passed, 7 skipped, 23 warnings`；namespace strict JSON `22/22`、LF CSV、py_compile、diff-check、无partial和GPU0–3空闲均通过。
+- 最终测试为目标`50 passed`、项目全量`293 passed, 7 skipped, 23 warnings`；Tonight namespace strict JSON `23/23`（含machine handoff为`24/24`）、LF CSV、py_compile、diff-check、无partial和GPU0–3空闲均通过。

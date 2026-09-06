@@ -258,7 +258,7 @@ TZ1完成全部TZ0–TZ9与worker CLI的静态入口、原子cursor/heartbeat/�
 
 由于没有成功family，TZ3 GPU3 camera、TZ4 generation/replay、TZ5 mixture/QUANTILES、TZ6 LoRA、TZ7 holdout/C20与TZ8 candidate均为`not_evaluated`，不是失败或成功。TZ9选择并再次CRC/SHA复验fallback，accepted reverse为`0/0/0`、candidate为false、training为false，写入`data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/`并hard stop；下一权限为`new_reviewed_plan_required`。
 
-最终验证：目标测试`50 passed`；项目全量`293 passed, 7 skipped, 23 warnings`；项目外部缓存/nested测试树未纳入项目口径且未修改。namespace strict JSON为`22/22`，phase CSV为LF，py_compile、diff-check、无partial和GPU0–3空闲均通过。
+最终验证：目标测试`50 passed`；项目全量`293 passed, 7 skipped, 23 warnings`；项目外部缓存/nested测试树未纳入项目口径且未修改。Tonight namespace strict JSON为`23/23`（含machine handoff为`24/24`），phase CSV为LF，py_compile、diff-check、无partial和GPU0–3空闲均通过。
 
 ## 4. 保留但非活动的研究线
 

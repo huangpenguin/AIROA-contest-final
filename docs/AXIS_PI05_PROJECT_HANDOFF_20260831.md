@@ -8,6 +8,7 @@
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
 > 当前总状态：`track3_ef_failure_provenance_and_lifecycle_remediation_completed_hard_stop_pending_independent_audit`
 > 唯一活动计划：无（EG0–EG4 已执行并 hard stop）
+> 下一停止点：`independent_audit_required`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`

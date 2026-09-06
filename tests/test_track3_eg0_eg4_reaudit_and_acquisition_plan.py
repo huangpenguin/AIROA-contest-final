@@ -9,8 +9,9 @@ ROOT = Path(__file__).resolve().parents[1]
 HANDOFF = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
 SUMMARY = ROOT / "data/reports/axis_libero_30k/track3_eg0_eg4_reaudit_20260906/summary.json"
 EG_ROOT = ROOT / "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation"
-PLAN = "docs/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_INDEPENDENT_AUDIT_PLAN.md"
+PLAN = "docs/AXIS_PI05_TRACK3_ACQUISITION_GATE_AND_ATTEMPT_LIFECYCLE_REMEDIATION_PLAN.md"
 ARCHIVED_AC_PLAN = "docs/archive/axis_pi05/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_PLAN.md"
+ARCHIVED_AC_AUDIT_PLAN = "docs/archive/axis_pi05/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_INDEPENDENT_AUDIT_PLAN.md"
 
 
 def strict_json(path: Path) -> dict:
@@ -50,19 +51,20 @@ def test_shared_root_attempt3_is_historical_and_root_attempt5_is_current() -> No
 
 def test_lifecycle_releases_exactly_one_acquisition_plan() -> None:
     handoff = strict_json(HANDOFF)
-    assert handoff["status"] == "track3_crossfamily_acquisition_recovery_canary_completed_hard_stop"
+    assert handoff["status"] == "track3_acquisition_gate_attempt_lifecycle_remediation_planned"
     assert handoff["next_plan"] == PLAN
-    assert handoff["next_phase_only"] == "independent_audit_required"
+    assert handoff["next_phase_only"] == "BR0_to_BR11_then_hard_stop"
     assert (ROOT / PLAN).is_file()
     assert (ROOT / ARCHIVED_AC_PLAN).is_file()
+    assert (ROOT / ARCHIVED_AC_AUDIT_PLAN).is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_EF_FAILURE_PROVENANCE_AND_LIFECYCLE_REMEDIATION_PLAN.md").exists()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_EF_FAILURE_PROVENANCE_AND_LIFECYCLE_REMEDIATION_PLAN.md").is_file()
 
 
 def test_machine_latest_commits_name_actual_eg_boundaries() -> None:
     handoff = strict_json(HANDOFF)
-    assert handoff["latest_audited_execution_commit"] == "5d20e25d3890e937c0278ea2656236449b82898f"
-    assert handoff["latest_audit_input_commit"] == "afabffdb2124a870dd16bd9e2fcf3ba9df246327"
+    assert handoff["latest_audited_execution_commit"] == "720733047a687de5cb456830467151c0102e4171"
+    assert handoff["latest_audit_input_commit"] == "720733047a687de5cb456830467151c0102e4171"
     assert handoff["latest_execution_root_commit"] == "afabffdb2124a870dd16bd9e2fcf3ba9df246327"
 
 
@@ -70,7 +72,7 @@ def test_acquisition_authority_is_three_cpu_identities_without_promotion() -> No
     handoff = strict_json(HANDOFF)
     auth = handoff["track3_crossfamily_acquisition_recovery_canary_authorization"]
     assert auth["plan"] == ARCHIVED_AC_PLAN
-    assert auth["status"] == "completed_hard_stop"
+    assert auth["status"] == "completed_hard_stop_audited_remediation_required"
     assert auth["next_plan"] == PLAN
     assert auth["new_cpu_physics_identities_max"] == 3
     assert auth["new_cpu_physics_identities_per_family_max"] == 1

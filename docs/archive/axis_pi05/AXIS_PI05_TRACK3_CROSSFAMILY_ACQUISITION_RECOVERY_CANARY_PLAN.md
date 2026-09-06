@@ -1,11 +1,12 @@
 # AXIS Pi0.5 Track 3：Cross-Family Acquisition Recovery Canary 计划
 
 > 创建日期：2026-09-06（Asia/Tokyo）
-> 唯一活动计划：是
+> 唯一活动计划：否（已完成并归档）
 > 审核输入：root `4bbfe7eb7fdb404085f39712aae94572c9d0fbce`
 > 已审核 EG evidence：`5d20e25d3890e937c0278ea2656236449b82898f`
 > 审核结论：`approved`
 > 授权范围：AC0–AC6；最多三条全新 CPU/no-renderer physics identity；之后 hard stop
+> 最终独立审核：`remediation_required`；诊断性 family failure 有效，但 lifecycle/gate 合同需修复
 
 本计划在 EG attempt-specific evidence lifecycle 获批后，恢复最小物理进展：只针对 support、containment、articulation 三族此前停在 acquisition 前后的失败，先做旧 trace 的只读诊断与 code/fixture 修复，再按固定顺序每族至多运行一条全新 CPU/no-renderer canary。成功只进入 `pending_replay_review`，不等于 accepted data。
 

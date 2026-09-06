@@ -1,7 +1,7 @@
 # PARC2026_final Project Memory
 
 > Purpose: durable cross-session context for Codex and human handoff. Read this file before major work. This is an index and rulebook, not a substitute for current machine evidence.
-> Last memory refresh: 2026-09-06 (Asia/Tokyo), memory commit pending at authoring time.
+> Last memory refresh: 2026-09-07 (Asia/Tokyo), memory commit pending at authoring time.
 
 ## 1. Canonical session entrypoint
 
@@ -34,12 +34,12 @@ If these disagree, stop mutation, audit the discrepancy and repair the handoff i
 - Repository: `/home/huang/code/PARC2026_final`
 - Branch: `codex/axis-pi05-audit-remediation`; no upstream recorded.
 - EF0 anchor input HEAD: `38635fbf08e4e8df8c4877ddcb6b2b2ec8b9b118`; its historical lifecycle is closed.
-- Latest audited execution evidence: `5d20e25d3890e937c0278ea2656236449b82898f`; execution source is `0799142b92ad3e799dd2d1b78ca964f07dd87587`. EG0–EG4 is independently re-audited `approved` at root input `4bbfe7eb7fdb404085f39712aae94572c9d0fbce`.
+- Latest audited execution evidence: `720733047a687de5cb456830467151c0102e4171`; execution source is `afabffdb2124a870dd16bd9e2fcf3ba9df246327`. AC0–AC6 is independently audited `remediation_required`.
 - Nested OpenPI: `third_party/axis_openpi` at `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`, clean at review.
 - `LIBERO-plus` has pre-existing dirty files. They belong to the user/project and must not be reset, cleaned, overwritten or silently committed.
-- Current state at this refresh: `track3_crossfamily_acquisition_recovery_canary_completed_hard_stop`.
-- Active plan: `docs/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_INDEPENDENT_AUDIT_PLAN.md`; it is read-only independent audit authority. The completed AC0–AC6 plan is archived.
-- EG0–EG4 closes the evidence-governance gap while preserving the first failed EF4 raw validation/test/partial evidence as `unavailable`. The next plan permits read-only diagnosis, code/fixture work and at most three fresh CPU/no-renderer identities, one per support/containment/articulation family with no retry. Old identities, all GPUs, generation/replay, accepted data, training, FAST/ZIP, upload and submission remain unauthorized.
+- Current state at this refresh: `track3_acquisition_gate_attempt_lifecycle_remediation_planned`.
+- Active plan: `docs/AXIS_PI05_TRACK3_ACQUISITION_GATE_AND_ATTEMPT_LIFECYCLE_REMEDIATION_PLAN.md`; BR0–BR11 is the only authority.
+- AC's three CPU canaries remain valid diagnostic family failures, but AC3 partial/sticky-stop, stage tri-state, source/contact timing, immutable attempts and full-manifest lifecycle must be repaired. BR0–BR8 is code/fixture only; only after all gates pass may BR9–BR10 run at most one fresh CPU/no-renderer identity per family, three total and no retry. Old identities, all GPUs, generation/replay, accepted data, training, FAST/ZIP, upload and submission remain unauthorized.
 - Z0–Z14 execution evidence is in `data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/`; its audit is `docs/reviews/axis_pi05/TRACK3_Y3_LAUNCH_Z0_Z14_AUDIT_20260906.md`. Historical parent remains infrastructure while physical result is derived nominal family failure. Z6–Z13 remain `not_evaluated`; before any AA execution, recheck live supervisor/PID/cursor, dirty worktree and GPU boundaries. Never start a duplicate run.
 
 The snapshot above becomes historical as soon as execution advances. Always refresh from Git, machine JSON and the live cursor rather than treating this paragraph as a lock.
@@ -198,7 +198,7 @@ After a phase completes, the reviewing agent must refresh this file only when st
 
 - EG evidence commit `5d20e25d3890e937c0278ea2656236449b82898f` is byte-exact for `110/110` tracked files; the tool matches execution source `0799142b92ad3e799dd2d1b78ca964f07dd87587`. All five attempts and root attempt_0005 manifest/outer/closure links pass. Shared root attempt_0003 remains immutable failed history; attempt_0005 is the current successful pointer. Verdict: `approved`.
 - The unrecoverable first EF4 validation/test/partial raw remains `unavailable`. The current-checkout pre-lifecycle strict JSON count is `96/96`; the older `94/94` count belongs to the evidence-commit boundary. No historical namespace was rewritten.
-- The completed AC0–AC6 plan is archived at `docs/archive/axis_pi05/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_PLAN.md`. It performed read-only trace diagnosis and code/fixture gates, then ran at most one fresh CPU/no-renderer identity per support/containment/articulation family, three total and no retry; all three were isolated normal family failures. The sole active plan is the read-only independent audit plan `docs/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_INDEPENDENT_AUDIT_PLAN.md`; no new physics, GPU, old identity, generation/replay, accepted data, training, ZIP, upload or submission is authorized.
+- The completed AC0–AC6 plan is archived at `docs/archive/axis_pi05/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_PLAN.md`. It performed read-only trace diagnosis and code/fixture gates, then ran at most one fresh CPU/no-renderer identity per support/containment/articulation family, three total and no retry; all three were isolated normal family failures. Its independent audit plan is also archived; the active authority is now the BR remediation plan.
 - Success remains only `pending_replay_review`. Old identity reruns, every GPU, official GPU, Teleop, generation/replay, accepted data, training/norm, FAST/export, candidate ZIP, upload and submission remain prohibited.
 - Post-lifecycle validation: strict JSON `97/97`, targeted `19 passed`, full `339 passed, 7 skipped, 23 warnings`, py_compile/diff-check/no-partial/process/GPU boundaries passed. Nested OpenPI was clean and the pre-existing `LIBERO-plus` dirty set was preserved.
 
@@ -209,4 +209,12 @@ After a phase completes, the reviewing agent must refresh this file only when st
 - AC4 used exactly three new CPU/no-renderer identities in fixed support→containment→articulation order, no retry: `ac_support_remove_20260906_0001`, `ac_containment_remove_20260906_0001`, and `ac_articulation_close_20260906_0001`. Each is an isolated normal `family_failure`; no shared infrastructure failure occurred. No success, pending replay, exact, accepted or training-eligible data was produced.
 - AC3 timeout teardown left one 190-byte atomic heartbeat partial. Its bytes/SHA are preserved in `ac3_partial_residue_observation.json`; the ephemeral partial was removed before AC6. This is a provenance observation, not reconstructed raw evidence, and must not be erased or described as never having occurred.
 - AC6 finalizer passed and hard-stopped: strict JSON `20/20`, targeted `7 passed`, full `346 passed, 7 skipped, 23 warnings`, manifest `28` entries, outer/pointer/closure exact, no final partial, no live Track3 workers, GPU0–3 compute empty, closed heartbeat and inactive cursor. No physics/GPU/old identity/generation/replay/training/ZIP/upload/submission beyond the three authorized CPU canaries occurred.
-- The AC execution plan is archived. The sole active plan is `docs/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_INDEPENDENT_AUDIT_PLAN.md`, which is read-only and requires an independent audit before any further authority.
+- At AC closeout the execution plan was archived and the read-only independent audit plan became active. That audit is now complete and archived; see section 20 for current authority.
+
+## 20. AC0–AC6 independent audit and BR0–BR11 authority (2026-09-07)
+
+- Verdict: `remediation_required`. AC `38/38` tracked bytes, 22 input locks, manifest `28/28`, outer/closure/pointer, current strict JSON `24/24`, 4/4 typed NPZ and LF CSV pass. The three child runs are valid diagnostic family failures at `155/149/180` steps with saturation `10/5/10`, source always true and goal always false.
+- AC3 observed a 190-byte timeout heartbeat partial but still reported passed and launched AC4, contrary to the frozen shared-infrastructure sticky stop. The derived observation is honest; clearing the raw residue cannot retroactively release AC4.
+- Runtime defects are independently reproduced: later-stage gates are failed instead of `not_evaluated`; `numpy.bool_ is False` prevents source-release success; contact after the acquisition barrier can count backward; attempt ID 1 can be overwritten; nested fixture heartbeats are omitted from the manifest; AC6 remains `running` in summary/CSV.
+- The sole active plan is `docs/AXIS_PI05_TRACK3_ACQUISITION_GATE_AND_ATTEMPT_LIFECYCLE_REMEDIATION_PLAN.md`. BR0–BR8 may proceed continuously through code/fixture and clean-source release. Only if all pass may BR9–BR10 run three fresh CPU/no-renderer identities, one per family and no retry; BR11 then hard-stops. No GPU, replay, generation, accepted data, training, FAST/ZIP, upload or submission is authorized.
+- Post-lifecycle validation: strict JSON `26/26`, targeted `14 passed`, full `353 passed, 7 skipped, 23 warnings`, py_compile/diff-check/no-partial/process/GPU boundaries passed; nested OpenPI clean and the pre-existing `LIBERO-plus` dirty set preserved.

@@ -1,8 +1,10 @@
 # AXIS Pi0.5 Track 3：Cross-Family Acquisition Canary 独立审核计划
 
 > 创建日期：2026-09-06（Asia/Tokyo）
-> 唯一活动计划：是
-> 性质：只读独立审核；不授权任何新执行
+> 唯一活动计划：否（已归档）
+> 性质：只读独立审核；已完成
+> 审核结论：`remediation_required`
+> 审核报告：`docs/reviews/axis_pi05/TRACK3_AC0_AC6_INDEPENDENT_AUDIT_20260907.md`
 
 本计划只审核已完成的 AC0–AC6 attempt-specific evidence。不得启动新的
 physics、GPU、ControlEnv、旧 identity、generation/replay、training、ZIP、

@@ -111,9 +111,9 @@ def test_z0_z4_execution_evidence_is_closed_before_z5() -> None:
 def test_z0_z14_audit_archives_z_and_releases_exactly_one_aa_plan() -> None:
     handoff_path = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
     handoff = tool.strict_json(handoff_path)
-    assert handoff["status"] == "track3_tonight_zip_and_crossfamily_recovery_completed_fallback_hard_stop_pending_review"
-    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md"
-    assert handoff["next_phase_only"] == "new_reviewed_plan_required"
+    assert handoff["status"] == "track3_tz_evidence_and_executor_contract_remediation_planned"
+    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_TZ_EVIDENCE_AND_EXECUTOR_CONTRACT_REMEDIATION_PLAN.md"
+    assert handoff["next_phase_only"] == "ER0_to_ER5_then_hard_stop"
     assert (ROOT / handoff["next_plan"]).is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md").exists()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md").is_file()

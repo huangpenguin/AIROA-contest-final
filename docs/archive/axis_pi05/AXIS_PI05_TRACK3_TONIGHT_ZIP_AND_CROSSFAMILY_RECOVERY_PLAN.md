@@ -3,7 +3,7 @@
 > 制定日期：2026-09-06（Asia/Tokyo）
 > 审核输入：root `0e7e495d6a8c4dd9abb32525d117eda8166d1a8c`
 > nested OpenPI：`b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`
-> 当前状态：`track3_tonight_zip_and_crossfamily_recovery_completed_fallback_hard_stop_pending_review`
+> 当前状态：`track3_tonight_zip_and_crossfamily_recovery_completed_and_audited_remediation_required`
 > 唯一授权链：`TZ0_to_TZ9_then_hard_stop`
 > 当晚截止：2026-09-06 23:00 JST 前必须留下至少一个经过CRC/SHA/布局复验的本地ZIP
 > 用户人工操作：`not_required`

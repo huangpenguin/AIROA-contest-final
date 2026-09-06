@@ -74,9 +74,9 @@ def test_historical_dynamic_failure_is_preserved_but_new_plan_repairs_validator(
             / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
         ).read_text(encoding="utf-8")
     )
-    assert handoff["status"] == "track3_tonight_zip_and_crossfamily_recovery_completed_fallback_hard_stop_pending_review"
+    assert handoff["status"] == "track3_tz_evidence_and_executor_contract_remediation_planned"
     assert handoff["next_plan"].endswith(
-        "AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md"
+        "AXIS_PI05_TRACK3_TZ_EVIDENCE_AND_EXECUTOR_CONTRACT_REMEDIATION_PLAN.md"
     )
     audit = handoff["track3_support_se3_g0_g1_audit"]
     assert audit["status"] == "remediation_required"

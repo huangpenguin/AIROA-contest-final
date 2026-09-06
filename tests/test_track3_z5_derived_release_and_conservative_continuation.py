@@ -59,9 +59,9 @@ def test_aa_audit_archives_plan_and_releases_tonight_zip_plan() -> None:
     handoff = tool.strict_json(
         ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
     )
-    assert handoff["status"] == "track3_tonight_zip_and_crossfamily_recovery_completed_fallback_hard_stop_pending_review"
-    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md"
-    assert handoff["next_phase_only"] == "new_reviewed_plan_required"
+    assert handoff["status"] == "track3_tz_evidence_and_executor_contract_remediation_planned"
+    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_TZ_EVIDENCE_AND_EXECUTOR_CONTRACT_REMEDIATION_PLAN.md"
+    assert handoff["next_phase_only"] == "ER0_to_ER5_then_hard_stop"
     assert (ROOT / handoff["next_plan"]).is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md").exists()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md").is_file()
@@ -83,9 +83,9 @@ def test_aa_audit_archives_plan_and_releases_tonight_zip_plan() -> None:
     assert old["plan"] == "docs/archive/axis_pi05/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md"
 
     authorization = handoff["track3_tonight_zip_and_crossfamily_recovery_authorization"]
-    assert authorization["status"] == handoff["status"]
-    assert authorization["plan"] == handoff["next_plan"]
-    assert authorization["next_phase_only"] == handoff["next_phase_only"]
+    assert authorization["status"] == "track3_tonight_zip_and_crossfamily_recovery_completed_and_audited_remediation_required"
+    assert authorization["plan"] == "docs/archive/axis_pi05/AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md"
+    assert authorization["next_phase_only"] == "superseded_by_track3_tz_evidence_and_executor_contract_remediation_plan"
     scope = authorization["authorization"]
     assert scope["materialize_revalidated_r6_fallback_zip"] is True
     assert scope["family_failure_isolation"] is True
@@ -97,7 +97,7 @@ def test_aa_audit_archives_plan_and_releases_tonight_zip_plan() -> None:
     assert scope["automatic_upload_or_submission"] is False
 
     execution = handoff["track3_tonight_zip_and_crossfamily_recovery_execution"]
-    assert execution["phase_status"]["TZ2"] == "completed_7_of_7"
+    assert execution["phase_status"]["TZ2"] == "7_attempts_consumed_not_compliant_completion"
     assert execution["phase_status"]["TZ3"] == "not_evaluated"
     assert execution["cpu_matrix"]["executed"] == 7
     assert execution["accepted_reverse_demos"] == [0, 0, 0]

@@ -6,8 +6,8 @@
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_tonight_zip_and_crossfamily_recovery_completed_fallback_hard_stop_pending_review`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md`（TZ9已收尾，等待新审核）
+> 当前总状态：`track3_tz_evidence_and_executor_contract_remediation_planned`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_TZ_EVIDENCE_AND_EXECUTOR_CONTRACT_REMEDIATION_PLAN.md`（ER0–ER5，等待执行）
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -15,9 +15,9 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。今晚TZ0–TZ9已完成：7条CPU profile均未形成成功family，因此没有reverse训练数据或新T3 candidate；已交付明确标注的本地R6 fallback ZIP。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Tonight已交付明确标注的本地R6 fallback ZIP；七个CPU child attempt产生1条infrastructure failure和6条诊断性family failure，但调度/身份/证据合同未获批准，当前转入ER0–ER5修复。
 
-审核发现旧AA执行器只实现AA0–AA5/AA14，并把support正常family failure错误扩散为全部family停止。新计划改为`TZ0–TZ9`：先复验并物化明确标注的R6 fallback ZIP，同时一次性执行support/containment/articulation有界矩阵，条件式进入最小数据、单臂LoRA、holdout与T3 candidate；23:00 JST前留下candidate或诚实fallback，用户无需Teleop或中途逐阶段审核。
+最新审核确认fallback交付有效，但TZ执行器仍把flag/常量自报当作完整实现，且首个shared infrastructure failure后跨提交续跑。新计划改为`ER0–ER5`：只做不可变证据闭包、supervisor/identity/门禁/finalizer修复、离线三族诊断与最多三条全新CPU canary；不授权任何GPU、数据生成或训练。
 
 ## 2. 数据与复现基础
 
@@ -826,3 +826,15 @@ TZ0/TZ1通过。TZ0对来源和物化fallback执行了完整SHA-256、ZIP CRC和
 TZ2按固定顺序实际完成7/7个CPU/no-renderer fresh child，严格没有逐个审核后追加profile：support为2条正常`family_failure`加1条执行器import bug造成的`infrastructure_failure`；该identity被保留且不重跑，修复后剩余6条继续完成。containment为`2/2 family_failure`，articulation为`2/2 family_failure`；三族成功均为0，旧`object_frame_nominal`/`object_frame_conservative`均未重跑。所有失败轨迹均不具备training eligibility。
 
 因为没有成功family，TZ3 GPU3 camera、TZ4 generation/replay、TZ5 mixture/QUANTILES、TZ6 R6 L2 LoRA、TZ7 holdout/C20和TZ8 candidate均记录为`not_evaluated`，不是推断的失败或成功；GPU3/generation/replay/accepted reverse/training/candidate分别为`0/0/0/0/false/false`。TZ9已再次CRC/SHA复验fallback并hard stop。机器证据为`data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/summary.json`，下一权限为`new_reviewed_plan_required`；root/OpenPI clean，`LIBERO-plus`既有dirty未触碰，没有上传或提交。
+
+## 73. Tonight TZ0–TZ9 独立审核与 Executor Contract 修复计划（2026-09-06）
+
+审核输入root `2ae08e974d6be9ac59541236ce7ddb1d7f288dd6`；首个worker运行于`1066774918941a574db3f02c7060f40aeb0c9c0a`，后六条运行于`343c5a554b0bfa05839b145f48a8c785d38edd19`。fallback经独立全包复核仍为`9383571677` bytes、SHA `95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a`、CRC通过、3401 entries、无duplicate/unsafe path、FAST-only；C5 `3/3`与内嵌manifest引用的8份报告hash均exact。它获批为诚实机械fallback，不是Track3改进。
+
+七个CPU child attempt存在；首个support为保留的NameError infrastructure failure，后六条有唯一child PID、return 0和决定性的stage failure，故可保留为诊断性family failure。support两条均在descend停止155步，containment两条均在descend停止149步，articulation两条均在approach停止180步；source未释放、goal均false。TZ3–TZ8继续为`not_evaluated`，accepted/training/candidate为`0/false/false`。
+
+唯一审核结论为`remediation_required`。TZ1所谓完整链只是flag和常量自报，TZ4–TZ8仍是stub；没有真实singleton、周期heartbeat、deadline或完整identity/finalizer。首个shared infrastructure failure后，`343c5a5`跨提交resume并清空aggregate failure，违反原global-stop合同。seed未实际应用，三对同族trace各自byte-identical；clip/contact是硬编码，6个NPZ含object dtype而不能全array no-pickle读取，TZ9也没有complete manifest/outer hash。
+
+旧TZ计划已归档。唯一活动计划`docs/AXIS_PI05_TRACK3_TZ_EVIDENCE_AND_EXECUTOR_CONTRACT_REMEDIATION_PLAN.md`只授权旧证据derived closure、code-only合同修复、离线诊断和最多三族各一条全新CPU/no-renderer canary；旧七条identity不重跑。GPU0–3、官方GPU、Teleop、generation/replay、accepted数据、训练/norm、新candidate ZIP、上传/提交全部不授权。审核报告：`docs/reviews/axis_pi05/TRACK3_TONIGHT_TZ0_TZ9_AUDIT_20260906.md`。
+
+生命周期更新后targeted为`53 passed, 2 warnings`，项目全量为`296 passed, 7 skipped, 23 warnings`；strict JSON、引用/归档和py_compile通过，最终提交前继续执行diff-check与资源边界复核。

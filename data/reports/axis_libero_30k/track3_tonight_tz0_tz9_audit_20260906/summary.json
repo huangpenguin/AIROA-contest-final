@@ -1,0 +1,62 @@
+{
+  "audit_report": "docs/reviews/axis_pi05/TRACK3_TONIGHT_TZ0_TZ9_AUDIT_20260906.md",
+  "audited_execution_commit": "2ae08e974d6be9ac59541236ce7ddb1d7f288dd6",
+  "classification": "remediation_required",
+  "fallback": {
+    "bytes": 9383571677,
+    "crc_test": "passed",
+    "duplicate_entries": 0,
+    "entry_count": 3401,
+    "fast_entries": 1,
+    "path": "artifacts/submission_axis_r6_fallback_revalidated_20260906.zip",
+    "readiness": "fallback_no_track3_improvement",
+    "sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a",
+    "slow_entries": 0,
+    "track3_improvement": false,
+    "unsafe_paths": 0
+  },
+  "findings": {
+    "cli_flags_present_but_full_pipeline_implemented": false,
+    "computed_contact_and_clip_gates": false,
+    "effective_seed_binding": false,
+    "finalizer_complete_manifest_outer_hash": false,
+    "npz_allow_pickle_false_all_arrays": false,
+    "shared_infrastructure_failure_sticky_stop_preserved": false,
+    "tz1_pass_claim_valid": false,
+    "tz2_compliant_completion_claim_valid": false
+  },
+  "next_phase_only": "ER0_to_ER5_then_hard_stop",
+  "next_plan": "docs/AXIS_PI05_TRACK3_TZ_EVIDENCE_AND_EXECUTOR_CONTRACT_REMEDIATION_PLAN.md",
+  "schema_version": "track3_tonight_tz0_tz9_audit_v1",
+  "status": "remediation_required",
+  "verified": {
+    "accepted_reverse_demos": [0, 0, 0],
+    "cpu_attempts": 7,
+    "diagnostic_family_failures": {
+      "articulation_close": 2,
+      "containment_remove": 2,
+      "support_remove": 2
+    },
+    "fallback_c5_source_success": "3/3",
+    "fallback_validation_report_hashes_exact": "8/8",
+    "first_attempt_category": "infrastructure_failure",
+    "gpu3_generation_replay": [0, 0, 0],
+    "machine_json_duplicate_key_rejection": "passed",
+    "namespace_strict_json": "23/23",
+    "npz_trace_hashes_exact": "6/6",
+    "old_identity_rerun": false,
+    "project_full_tests_before_lifecycle_update": "293_passed_7_skipped_23_warnings",
+    "project_full_tests_after_lifecycle_update": "296_passed_7_skipped_23_warnings",
+    "targeted_tests_after_lifecycle_update": "53_passed_2_warnings",
+    "targeted_tests_before_lifecycle_update": "50_passed_2_warnings",
+    "training_started": false,
+    "tz3_to_tz8": "not_evaluated",
+    "worker_model_and_snapshot_hashes_exact": "6/6"
+  },
+  "worker_sources": {
+    "first_attempt_commit": "1066774918941a574db3f02c7060f40aeb0c9c0a",
+    "first_attempt_tool_sha256": "cf9337774cf383c5eaa9767da2921a0d32b9a5d696ccd2503616f0ffdbd5e4e9",
+    "remaining_attempts_commit": "343c5a554b0bfa05839b145f48a8c785d38edd19",
+    "remaining_attempts_tool_sha256": "40784f03e56063eaaef7d511353bf716bbc4fd6b638803241bd31ef04e649546"
+  }
+}

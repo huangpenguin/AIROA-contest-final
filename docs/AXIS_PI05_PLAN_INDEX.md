@@ -2,9 +2,9 @@
 
 > 更新日期：2026-09-06（Asia/Tokyo）
 > 跨session入口：先完整读取根目录`AGENTS.md`与`MEMORY.md`，再读取本索引、handoff、machine JSON、唯一活动计划和最新审核；先查live PID/cursor，禁止重复启动。
-> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md`
-> 当前状态：`track3_tonight_zip_and_crossfamily_recovery_completed_fallback_hard_stop_pending_review`
-> 最新审核：`docs/reviews/axis_pi05/TRACK3_AA0_AA14_AND_TONIGHT_ZIP_AUDIT_20260906.md`
+> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_TZ_EVIDENCE_AND_EXECUTOR_CONTRACT_REMEDIATION_PLAN.md`
+> 当前状态：`track3_tz_evidence_and_executor_contract_remediation_planned`
+> 最新审核：`docs/reviews/axis_pi05/TRACK3_TONIGHT_TZ0_TZ9_AUDIT_20260906.md`
 
 ## 1. 本轮执行停止点
 
@@ -20,14 +20,15 @@ Z0–Z4的runtime/identity/phase-ledger修复成立；Z5只运行一次task10/de
 
 审核生命周期更新后targeted为`45 passed`，项目全量为`288 passed, 7 skipped, 23 warnings`；strict JSON、引用、py_compile与diff check通过。
 
+Tonight执行的fallback本体、七个child attempt、首个infrastructure failure、后六条诊断性family failure、TZ3–TZ8未执行和所有零计数成立；本次独立审核结论为`remediation_required`。TZ1实际只有CLI flags，TZ4–TZ8仍是stub且没有真实singleton/周期heartbeat/deadline/identity/finalizer；首个shared infrastructure failure又被`343c5a5`的resume分支跨提交绕过，最终matrix顶层把它清成null。冻结seed未应用，三对同族trace分别byte-identical；6个NPZ含object dtype且不能全array `allow_pickle=False`读取，clip/contact字段亦为硬编码。旧failure和raw均保留，不能把六条诊断结果称为合规TZ2 completion。
+
 ## 2. 当前计划与停止点
 
-- `AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md`（TZ9已收尾，等待新审核）
-  - `TZ`是Tonight ZIP范围代号，不再累计字母进度；TZ0先复验并物化明确标注`fallback_no_track3_improvement`的本地R6 ZIP；
-  - TZ1在任何physics前实现全链入口、family隔离和离线抓取诊断，一次性冻结support≤3、containment≤2、articulation≤2个新identity；
-  - TZ2–TZ4最多7条CPU pilot、每族最多1条GPU3 camera、总generation≤6/fresh replay≤18；单个family failure不得停止其他family；
-  - TZ5–TZ8仅在至少一个family有2条accepted数据后执行20Hz `80/20` mixture/fresh QUANTILES、单臂R6 L2 LoRA 100步、条件500步、holdout/C20、fold/FAST和T3 candidate ZIP；
-  - 本轮已在23:00 JST截止前交付诚实fallback并TZ9 hard stop；GPU0、官方GPU、Teleop、dense full-FT、自动上传/提交均未授权。
+- `AXIS_PI05_TRACK3_TZ_EVIDENCE_AND_EXECUTOR_CONTRACT_REMEDIATION_PLAN.md`（ER0–ER5，等待执行）
+  - ER0在新namespace闭合旧TZ的23个JSON、6个NPZ、phase CSV、两个worker source commit与fallback ZIP，不修改旧证据；
+  - ER1/ER2实现真实singleton、周期heartbeat、source/profile/command身份、sticky infrastructure stop、有效seed/determinism、computed clip/contact、typed no-pickle trace和manifest/outer hash finalizer；
+  - ER3只做离线三族失败诊断并冻结每族最多1个全新identity；ER4最多执行3条CPU/no-renderer canary，任何结果都不具备training eligibility；
+  - ER5统一hard stop。GPU0–3、官方GPU、Teleop、generation/replay、accepted数据、训练/norm、新candidate ZIP、上传/提交均不授权。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 
@@ -79,10 +80,11 @@ Z0–Z4的runtime/identity/phase-ledger修复成立；Z5只运行一次task10/de
 40. `AXIS_PI05_TRACK3_RUNTIME_PREFLIGHT_AND_BOUNDED_CONTINUATION_PLAN.md`：Y0全量input lock与Y2 artifact closure成立；Y3未执行。审核发现child argv无法通过顶层parser、最终hard gate丢失阶段作用域、destination缺数值验证且source identity自指，转入launch/phase-ledger remediation。
 41. `AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md`：Z0–Z4工程合同成立；Z5 nominal在28步approach stall，worker发布结果后finalizer NameError使parent按infrastructure hard stop。审核派生物理family failure，并发现28/36 manifest coverage、自哈希与postmortem gate-path缺口，转入derived closure和单次conservative continuation。
 42. `AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md`：AA0–AA4闭环成立；AA5 support conservative在76步acquisition barrier正常family failure。执行器却未实现AA6–AA13且错误停止独立family，转入Tonight ZIP与cross-family一次性恢复。
+43. `AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md`：fallback SHA/CRC/布局和七个CPU child attempt成立；但完整调度器、sticky infrastructure stop、identity/seed、computed gates、no-pickle trace与finalizer合同未闭合，转入ER0–ER5最小修复。
 
 归档不表示旧计划所有尾部阶段都完成；只表示该文件不再是活动授权入口。旧 failure、阈值、hash 和未执行阶段必须继续保留。
 
-当前只执行TZ0–TZ9当晚链；不得修改历史证据/公开HDF5/BDDL、重跑旧nominal/conservative identity、把失败轨迹入训、人工Teleop、使用GPU0/官方GPU、dense full-FT或自动上传/提交。共享基础设施失败全局停止，正常family failure只关闭该identity；23:00 JST前必须留下明确标注的candidate或fallback ZIP并TZ9 hard stop。
+当前只执行ER0–ER5修复链；不得修改历史证据/公开HDF5/BDDL、重跑旧七条TZ identity、把失败轨迹入训，或使用任何GPU/Teleop/generation/replay/训练/上传/提交。ER4最多三族各一条全新CPU/no-renderer identity；共享基础设施失败必须sticky全局停止。
 
 ## 3.1 G0–G1 执行审核与门禁重构
 
@@ -259,6 +261,16 @@ TZ1完成全部TZ0–TZ9与worker CLI的静态入口、原子cursor/heartbeat/�
 由于没有成功family，TZ3 GPU3 camera、TZ4 generation/replay、TZ5 mixture/QUANTILES、TZ6 LoRA、TZ7 holdout/C20与TZ8 candidate均为`not_evaluated`，不是失败或成功。TZ9选择并再次CRC/SHA复验fallback，accepted reverse为`0/0/0`、candidate为false、training为false，写入`data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/`并hard stop；下一权限为`new_reviewed_plan_required`。
 
 最终验证：目标测试`50 passed`；项目全量`293 passed, 7 skipped, 23 warnings`；项目外部缓存/nested测试树未纳入项目口径且未修改。Tonight namespace strict JSON为`23/23`（含machine handoff为`24/24`），phase CSV为LF，py_compile、diff-check、无partial和GPU0–3空闲均通过。
+
+## 3.22 Tonight TZ0–TZ9 独立审核与 ER 修复授权（2026-09-06）
+
+审核输入root `2ae08e974d6be9ac59541236ce7ddb1d7f288dd6`，首个/后六条worker source分别为`1066774918941a574db3f02c7060f40aeb0c9c0a`与`343c5a554b0bfa05839b145f48a8c785d38edd19`。fallback独立复核为`9383571677` bytes、SHA `95415a...`、CRC通过、3401 entries、无duplicate/unsafe path、FAST-only；C5及其8份引用报告hash exact。七个child attempt、首个NameError infrastructure failure、后六条诊断性family failure和TZ3–TZ8 `not_evaluated`成立。
+
+审核结论为`remediation_required`：TZ1把CLI flag误当完整实现，实际缺singleton/周期heartbeat/deadline/身份和完整尾部；首个shared infrastructure failure后又跨提交继续并在aggregate清空failure；seed未应用、三对trace相同；clip/contact为硬编码，6个NPZ不能全array no-pickle读取，TZ9无完整manifest/outer hash且validation顺序不闭合。
+
+旧TZ计划已归档。唯一活动计划`docs/AXIS_PI05_TRACK3_TZ_EVIDENCE_AND_EXECUTOR_CONTRACT_REMEDIATION_PLAN.md`先做不可变derived closure和code-only修复，再最多运行三族各一条全新CPU/no-renderer canary并hard stop。不授权任何GPU、generation/replay、accepted数据、训练或新candidate ZIP。完整审核见`docs/reviews/axis_pi05/TRACK3_TONIGHT_TZ0_TZ9_AUDIT_20260906.md`。
+
+生命周期更新后的targeted为`53 passed, 2 warnings`，项目全量为`296 passed, 7 skipped, 23 warnings`；strict JSON、引用/归档与py_compile通过，最终树仍须通过diff-check和clean commit复核。
 
 ## 4. 保留但非活动的研究线
 

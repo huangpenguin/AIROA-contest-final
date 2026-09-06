@@ -37,9 +37,9 @@ def test_x0_x13_audit_archives_x_and_releases_exactly_one_y_plan() -> None:
             / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
         ).read_text(encoding="utf-8")
     )
-    assert handoff["status"] == "track3_ef_failure_provenance_and_lifecycle_remediation_completed_hard_stop"
-    assert handoff["next_plan"] is None
-    assert handoff["next_phase_only"] == "new_reviewed_plan_required"
+    assert handoff["status"] == "track3_crossfamily_acquisition_recovery_canary_planned"
+    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_PLAN.md"
+    assert handoff["next_phase_only"] == "AC0_to_AC6_then_hard_stop"
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md").is_file()
     assert not (
         ROOT

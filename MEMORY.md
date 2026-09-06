@@ -33,13 +33,13 @@ If these disagree, stop mutation, audit the discrepancy and repair the handoff i
 
 - Repository: `/home/huang/code/PARC2026_final`
 - Branch: `codex/axis-pi05-audit-remediation`; no upstream recorded.
-- EF0 anchor input HEAD: `38635fbf08e4e8df8c4877ddcb6b2b2ec8b9b118`; final lifecycle state is captured by the clean closeout commit.
-- Latest audited execution: `b1195dd59830f7c44d831bd0007e61229446d9b5` (EF0–EF4 execution/evidence commit; independently re-audited `remediation_required`).
+- EF0 anchor input HEAD: `38635fbf08e4e8df8c4877ddcb6b2b2ec8b9b118`; its historical lifecycle is closed.
+- Latest audited execution evidence: `5d20e25d3890e937c0278ea2656236449b82898f`; execution source is `0799142b92ad3e799dd2d1b78ca964f07dd87587`. EG0–EG4 is independently re-audited `approved` at root input `4bbfe7eb7fdb404085f39712aae94572c9d0fbce`.
 - Nested OpenPI: `third_party/axis_openpi` at `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`, clean at review.
 - `LIBERO-plus` has pre-existing dirty files. They belong to the user/project and must not be reset, cleaned, overwritten or silently committed.
-- Current state at this refresh: `track3_ef0_ef4_audited_remediation_required`.
-- Active plan: `docs/AXIS_PI05_TRACK3_EF_FAILURE_PROVENANCE_AND_LIFECYCLE_REMEDIATION_PLAN.md`; only EG0–EG4 evidence-governance/code/no-physics fixture work is authorized.
-- EF0–EF3 technical contracts and the corrected EF4 checkout closure are valid, but the first failed EF4 raw validation/test/partial evidence was overwritten and is currently unavailable. The same-commit `approved` audit is superseded by the independent `remediation_required` audit. No new physics, GPU, generation, replay, training, candidate, upload or submission is authorized.
+- Current state at this refresh: `track3_crossfamily_acquisition_recovery_canary_planned`.
+- Active plan: `docs/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_PLAN.md`; AC0–AC6 is the only authority.
+- EG0–EG4 closes the evidence-governance gap while preserving the first failed EF4 raw validation/test/partial evidence as `unavailable`. The next plan permits read-only diagnosis, code/fixture work and at most three fresh CPU/no-renderer identities, one per support/containment/articulation family with no retry. Old identities, all GPUs, generation/replay, accepted data, training, FAST/ZIP, upload and submission remain unauthorized.
 - Z0–Z14 execution evidence is in `data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/`; its audit is `docs/reviews/axis_pi05/TRACK3_Y3_LAUNCH_Z0_Z14_AUDIT_20260906.md`. Historical parent remains infrastructure while physical result is derived nominal family failure. Z6–Z13 remain `not_evaluated`; before any AA execution, recheck live supervisor/PID/cursor, dirty worktree and GPU boundaries. Never start a duplicate run.
 
 The snapshot above becomes historical as soon as execution advances. Always refresh from Git, machine JSON and the live cursor rather than treating this paragraph as a lock.
@@ -193,3 +193,11 @@ After a phase completes, the reviewing agent must refresh this file only when st
 - EF0 anchored all 29 ER evidence files byte-for-byte in commit `38635fbf08e4e8df8c4877ddcb6b2b2ec8b9b118`; commit read/hash and worktree hashes were `29/29` exact. The old ER namespace persistence distinction remains explicit: 24 Git-persisted records and 6 local NPZ records.
 - EF1 froze parent-provided root/tool/OpenPI/profile/command, porcelain and digest fields plus CPU/no-renderer environment; real drift probes and legal resume passed, while trace bytes/SHA drift failed closed. EF2's no-physics fixture passed singleton lock, heartbeat sequence, TERM→KILL, no-descendant and sticky stop. EF3 separated telemetry schema completeness from physical required contact with pass/fail/not_evaluated fixtures.
 - EF4's new namespace records the real fallback ZIP check, process/GPU scan, targeted/full tests, manifest/outer hash, final validation and `state=closed` heartbeat. No physics identity, GPU compute, generation, replay, accepted data, training, candidate ZIP, upload or submission occurred. Independent audit is `approved`; no active plan remains.
+
+## 18. EG0–EG4 re-audit and Acquisition Canary authority (2026-09-06)
+
+- EG evidence commit `5d20e25d3890e937c0278ea2656236449b82898f` is byte-exact for `110/110` tracked files; the tool matches execution source `0799142b92ad3e799dd2d1b78ca964f07dd87587`. All five attempts and root attempt_0005 manifest/outer/closure links pass. Shared root attempt_0003 remains immutable failed history; attempt_0005 is the current successful pointer. Verdict: `approved`.
+- The unrecoverable first EF4 validation/test/partial raw remains `unavailable`. The current-checkout pre-lifecycle strict JSON count is `96/96`; the older `94/94` count belongs to the evidence-commit boundary. No historical namespace was rewritten.
+- The sole active plan is `docs/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_PLAN.md`. It first performs read-only trace diagnosis and code/fixture gates, then allows at most one fresh CPU/no-renderer identity per support/containment/articulation family, three total and no retry. A normal family failure is isolated; a shared infrastructure failure is a sticky global hard stop.
+- Success remains only `pending_replay_review`. Old identity reruns, every GPU, official GPU, Teleop, generation/replay, accepted data, training/norm, FAST/export, candidate ZIP, upload and submission remain prohibited.
+- Post-lifecycle validation: strict JSON `97/97`, targeted `19 passed`, full `339 passed, 7 skipped, 23 warnings`, py_compile/diff-check/no-partial/process/GPU boundaries passed. Nested OpenPI was clean and the pre-existing `LIBERO-plus` dirty set was preserved.

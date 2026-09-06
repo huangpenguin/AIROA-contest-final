@@ -2,9 +2,9 @@
 
 > 更新日期：2026-09-06（Asia/Tokyo）
 > 跨session入口：先完整读取根目录`AGENTS.md`与`MEMORY.md`，再读取本索引、handoff、machine JSON、唯一活动计划和最新审核；先查live PID/cursor，禁止重复启动。
-> 当前唯一活动计划：无（EG0–EG4 已执行并 hard stop，等待独立审核）
-> 当前状态：`track3_ef_failure_provenance_and_lifecycle_remediation_completed_hard_stop`
-> 最新审核：`docs/reviews/axis_pi05/TRACK3_EF_FAILURE_PROVENANCE_AND_LIFECYCLE_REMEDIATION_AUDIT_20260906.md`
+> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_PLAN.md`
+> 当前状态：`track3_crossfamily_acquisition_recovery_canary_planned`
+> 最新审核：`docs/reviews/axis_pi05/TRACK3_EG0_EG4_REAUDIT_AND_NEXT_PLAN_20260906.md`
 
 ## 1. 本轮执行停止点
 
@@ -28,8 +28,9 @@ ER审核确认三条新CPU/no-renderer canary均为有效诊断性`family_failur
 
 - `AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md` 已归档；EF0–EF4 完成并 hard stop。EF0–EF3 技术合同、corrected EF4 checkout closure 与 fallback 机械属性经独立复核成立。
 - 既有 EF `approved` 审核与 execution/evidence 同在 `b1195dd`，且其引用的 `ef4_first_attempt_failure.json` 明确承认首次失败 report 被 corrected attempt 覆盖。首次失败 raw 当前不可恢复，不能用派生说明替代；本轮唯一结论修正为 `remediation_required`。
-- `AXIS_PI05_TRACK3_EF_FAILURE_PROVENANCE_AND_LIFECYCLE_REMEDIATION_PLAN.md` 已归档；EG0–EG4 已执行并经独立审核 `approved`，当前没有活动计划，`next_phase_only=new_reviewed_plan_required`。
-- 三条 ER4、旧七条 TZ identity 和既有 EF fixture 均禁止作为历史结果重跑。任何新 physics、GPU0–3、官方 GPU、Teleop、generation/replay、accepted 数据、训练/norm、新 candidate ZIP、上传/提交均不授权。
+- `AXIS_PI05_TRACK3_EF_FAILURE_PROVENANCE_AND_LIFECYCLE_REMEDIATION_PLAN.md` 已归档；EG0–EG4 已执行并经再次独立复核 `approved`。共享 root cursor/heartbeat 保留历史 attempt_0003 失败，当前成功指针精确指向 attempt_0005 与 `root_attempt_0005_*` 闭包。
+- 唯一活动计划为 `docs/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_PLAN.md`。AC0–AC3 先做旧 trace 只读诊断和 code/fixture/supervisor gate；AC4 最多按 support→containment→articulation 各运行一条全新 CPU/no-renderer identity，总上限 3 且不 retry；AC5–AC6 分类、闭包并 hard stop。
+- 三条 ER4、旧七条 TZ identity、Z5/AA5 和既有 EF/EG fixture 均禁止作为历史结果重跑。GPU0–3、official GPU、Teleop、generation/replay、accepted 数据、训练/norm、FAST/export、新 candidate ZIP、上传/提交均不授权。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准；不得从归档计划的未执行尾部自行恢复任务。
 
@@ -325,6 +326,16 @@ EG3 确认顶层 `latest_audited_execution_commit`、`latest_audit_input_commit`
 独立审核输入为 execution source `0799142b92ad3e799dd2d1b78ca964f07dd87587`、evidence commit `5d20e25d3890e937c0278ea2656236449b82898f` 和冻结审核输入 `b1195dd59830f7c44d831bd0007e61229446d9b5`；审核报告提交为 `ad4f34e81ccaa39397f5ac550dd41f21734f47cb`，与 execution/evidence 分离。审核逐个重算 attempt/root manifest、outer/closure、strict JSON `94/94`、NPZ/CSV、fallback、无 partial、进程/GPU 边界，确认首次失败 raw 三项均诚实为 `unavailable`，attempt_0003/0004 失败记录未被覆盖，attempt_0005 完整通过。
 
 本轮唯一独立审核结论为 `approved`。EG0–EG4 的证据治理缺口已关闭；最终 lifecycle 回归为定向 `14 passed`、全量 `334 passed, 7 skipped, 23 warnings`。该结论不释放 physics、GPU、旧 identity、generation/replay、训练、candidate ZIP、上传或提交；当前 hard stop，下一权限为 `new_reviewed_plan_required`。
+
+## 3.29 EG0–EG4 再次独立复核与 Acquisition Canary 授权（2026-09-06）
+
+以 root `4bbfe7eb7fdb404085f39712aae94572c9d0fbce` 为本轮审核输入，独立重算 EG tracked bytes `110/110`、五个 attempt manifest/outer/closure、attempt_0005 pointer、root attempt_0005 `73/73` closure、typed NPZ/CSV、fallback 全包和资源边界。共享 `resume_cursor.json`/`heartbeat.json` 保留 attempt_0003 失败是历史不可覆盖记录，不是当前 live run；当前闭包由 `latest_attempt.json` 与 `root_attempt_0005_*` 表达。首次 EF4 失败 raw 三项仍为 `unavailable`，未重构。
+
+唯一审核结论为 `approved`。生命周期更新前当前 checkout 的严格 JSON 实际为 `96/96`；既有 `94/94` 只对应 evidence-commit 时点。审核前定向为 `14 passed`，项目全量为 `334 passed, 7 skipped, 23 warnings`；无 live Track3 worker、GPU compute 或禁止动作。
+
+旧 EG 计划保持归档。唯一活动计划为 `docs/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_PLAN.md`：AC0–AC3 只读诊断并冻结 acquisition/runtime/supervisor 合同，随后最多三族各一条全新 CPU/no-renderer canary，无 retry；正常 family failure 隔离，共享 infrastructure failure sticky hard stop。成功也只到 `pending_replay_review`；不授权任何 GPU、generation/replay、accepted data、训练、FAST/ZIP、上传或提交。完整审核见 `docs/reviews/axis_pi05/TRACK3_EG0_EG4_REAUDIT_AND_NEXT_PLAN_20260906.md`。
+
+生命周期更新后的最终验证为 strict JSON `97/97`、targeted `19 passed`、项目全量 `339 passed, 7 skipped, 23 warnings`；py_compile、diff-check、无 partial、process/GPU 边界通过，OpenPI clean，LIBERO-plus 既有 dirty 保持不变。
 
 ## 4. 保留但非活动的研究线
 

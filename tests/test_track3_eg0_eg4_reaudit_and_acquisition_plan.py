@@ -1,0 +1,76 @@
+from __future__ import annotations
+
+import hashlib
+import json
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[1]
+HANDOFF = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
+SUMMARY = ROOT / "data/reports/axis_libero_30k/track3_eg0_eg4_reaudit_20260906/summary.json"
+EG_ROOT = ROOT / "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation"
+PLAN = "docs/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_PLAN.md"
+
+
+def strict_json(path: Path) -> dict:
+    def reject(pairs: list[tuple[str, object]]) -> dict:
+        result: dict = {}
+        for key, value in pairs:
+            if key in result:
+                raise AssertionError(f"duplicate key: {key}")
+            result[key] = value
+        return result
+
+    return json.loads(path.read_text(encoding="utf-8"), object_pairs_hook=reject)
+
+
+def sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def test_eg_reaudit_has_one_approved_verdict_and_exact_current_pointer() -> None:
+    audit = strict_json(SUMMARY)
+    pointer = strict_json(EG_ROOT / "latest_attempt.json")
+    assert audit["status"] == audit["classification"] == "approved"
+    assert pointer["attempt_id"] == 5
+    assert sha256(EG_ROOT / "attempts/attempt_0005/final_validation.json") == pointer["target_final_validation_sha256"]
+    assert sha256(EG_ROOT / "attempts/attempt_0005/checkout_stable_closure.json") == pointer["target_closure_sha256"]
+
+
+def test_shared_root_attempt3_is_historical_and_root_attempt5_is_current() -> None:
+    audit = strict_json(SUMMARY)
+    shared = strict_json(EG_ROOT / "resume_cursor.json")
+    current = strict_json(EG_ROOT / "root_attempt_0005_resume_cursor.json")
+    closure = strict_json(EG_ROOT / "root_attempt_0005_checkout_stable_closure.json")
+    assert shared["attempt_id"] == audit["cursor_resolution"]["shared_root_cursor_is_historical_attempt"] == 3
+    assert current["attempt_id"] == 5 and current["active"] is False
+    assert closure["status"] == "passed"
+
+
+def test_lifecycle_releases_exactly_one_acquisition_plan() -> None:
+    handoff = strict_json(HANDOFF)
+    assert handoff["status"] == "track3_crossfamily_acquisition_recovery_canary_planned"
+    assert handoff["next_plan"] == PLAN
+    assert handoff["next_phase_only"] == "AC0_to_AC6_then_hard_stop"
+    assert (ROOT / PLAN).is_file()
+    assert not (ROOT / "docs/AXIS_PI05_TRACK3_EF_FAILURE_PROVENANCE_AND_LIFECYCLE_REMEDIATION_PLAN.md").exists()
+    assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_EF_FAILURE_PROVENANCE_AND_LIFECYCLE_REMEDIATION_PLAN.md").is_file()
+
+
+def test_machine_latest_commits_name_actual_eg_boundaries() -> None:
+    handoff = strict_json(HANDOFF)
+    assert handoff["latest_audited_execution_commit"] == "5d20e25d3890e937c0278ea2656236449b82898f"
+    assert handoff["latest_audit_input_commit"] == "5d20e25d3890e937c0278ea2656236449b82898f"
+    assert handoff["latest_execution_root_commit"] == "0799142b92ad3e799dd2d1b78ca964f07dd87587"
+
+
+def test_acquisition_authority_is_three_cpu_identities_without_promotion() -> None:
+    handoff = strict_json(HANDOFF)
+    auth = handoff["track3_crossfamily_acquisition_recovery_canary_authorization"]
+    assert auth["plan"] == PLAN
+    assert auth["new_cpu_physics_identities_max"] == 3
+    assert auth["new_cpu_physics_identities_per_family_max"] == 1
+    assert auth["family_failure_policy"] == "continue_other_frozen_families"
+    assert auth["shared_infrastructure_failure_policy"] == "sticky_global_hard_stop"
+    for key in ("old_identity_rerun", "gpu0", "gpu1", "gpu2", "gpu3", "official_gpu", "teleop", "generation", "replay", "accepted_data", "training", "norm", "fast_export", "new_candidate_zip", "upload", "submission"):
+        assert auth["authorization"][key] is False

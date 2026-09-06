@@ -1,10 +1,11 @@
 # AXIS Pi0.5 Track 3：EF 失败证据不可变性与生命周期修复计划
 
 > 创建日期：2026-09-06（Asia/Tokyo）
-> 唯一活动计划：否（EG0–EG4 已执行并 hard stop，等待独立审核）
+> 唯一活动计划：否（已归档）
 > 审核输入：root `b1195dd59830f7c44d831bd0007e61229446d9b5`
 > 审核结论：`remediation_required`
-> 执行结果：EG0–EG4 已完成；最终独立审核待执行
+> 执行结果：EG0–EG4 已完成并 hard stop；独立审核 `approved`
+> 最终审核：`docs/reviews/axis_pi05/TRACK3_EG0_EG4_REAUDIT_AND_NEXT_PLAN_20260906.md`
 
 本计划只修复 EF4 首次失败原始报告被后续成功结果覆盖、同提交“自审批准”以及 machine handoff 顶层指针漂移所暴露的证据治理缺口。EF0–EF3 的已验证技术结果、现存 EF/ER/TZ bytes 和 R6 fallback 全部只读；无法恢复的首次失败 raw 必须诚实标为 `unavailable`，不得根据派生描述伪造或重建。
 

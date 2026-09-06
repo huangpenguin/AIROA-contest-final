@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-06",
-  "status": "track3_ef_failure_provenance_and_lifecycle_remediation_completed_hard_stop",
+  "status": "track3_crossfamily_acquisition_recovery_canary_planned",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
-  "latest_audited_execution_commit": "b1195dd59830f7c44d831bd0007e61229446d9b5",
-  "latest_audit_input_commit": "b1195dd59830f7c44d831bd0007e61229446d9b5",
-  "latest_execution_root_commit": "b1195dd59830f7c44d831bd0007e61229446d9b5",
+  "latest_audited_execution_commit": "5d20e25d3890e937c0278ea2656236449b82898f",
+  "latest_audit_input_commit": "5d20e25d3890e937c0278ea2656236449b82898f",
+  "latest_execution_root_commit": "0799142b92ad3e799dd2d1b78ca964f07dd87587",
   "latest_execution_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
@@ -259,8 +259,8 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": null,
-  "next_phase_only": "new_reviewed_plan_required",
+  "next_plan": "docs/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_PLAN.md",
+  "next_phase_only": "AC0_to_AC6_then_hard_stop",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -4444,7 +4444,7 @@
   },
   "track3_ef_failure_provenance_and_lifecycle_remediation_authorization": {
     "status": "completed_hard_stop",
-    "plan": "docs/AXIS_PI05_TRACK3_EF_FAILURE_PROVENANCE_AND_LIFECYCLE_REMEDIATION_PLAN.md",
+    "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_EF_FAILURE_PROVENANCE_AND_LIFECYCLE_REMEDIATION_PLAN.md",
     "audit_input_root_commit": "b1195dd59830f7c44d831bd0007e61229446d9b5",
     "authorized_phases": ["EG0", "EG1", "EG2", "EG3", "EG4_closeout"],
     "authorization": {
@@ -4471,5 +4471,94 @@
     },
     "unavailable_raw_policy": "preserve_as_unavailable_never_reconstruct_or_claim_raw",
     "next_phase_only": "new_reviewed_plan_required"
+  },
+  "track3_eg0_eg4_reaudit": {
+    "status": "approved",
+    "classification": "approved",
+    "audit_input_root_commit": "4bbfe7eb7fdb404085f39712aae94572c9d0fbce",
+    "audited_execution_source_commit": "0799142b92ad3e799dd2d1b78ca964f07dd87587",
+    "audited_evidence_commit": "5d20e25d3890e937c0278ea2656236449b82898f",
+    "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "audit_report": "docs/reviews/axis_pi05/TRACK3_EG0_EG4_REAUDIT_AND_NEXT_PLAN_20260906.md",
+    "audit_summary": "data/reports/axis_libero_30k/track3_eg0_eg4_reaudit_20260906/summary.json",
+    "verified": {
+      "eg_tracked_evidence_exact": "110/110",
+      "tool_matches_execution_source": true,
+      "attempt_manifests_outer_closure_exact": "5/5",
+      "attempt_0001_immutable_after_retry": true,
+      "latest_pointer_targets_attempt_0005": true,
+      "root_attempt_0005_manifest_exact": "73/73",
+      "strict_json_before_lifecycle": "96/96",
+      "typed_npz_no_pickle_finite": "1/1",
+      "csv_lf_only": "2/2",
+      "fallback_bytes": 9383571677,
+      "fallback_sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a",
+      "fallback_crc_entries_path_fast_only": "passed_3401_entries_no_duplicate_no_unsafe_one_fast_zero_slow",
+      "targeted_tests_before_lifecycle": "14 passed",
+      "full_tests_before_lifecycle": "334 passed, 7 skipped, 23 warnings",
+      "live_track3_workers": 0,
+      "gpu_compute_apps": 0
+    },
+    "cursor_resolution": {
+      "shared_root_attempt_0003": "historical_failed_immutable",
+      "current_attempt_0005": "passed_closed_inactive"
+    },
+    "post_lifecycle_validation": {
+      "strict_json": "97/97",
+      "targeted_tests": "19 passed",
+      "full_tests": "339 passed, 7 skipped, 23 warnings",
+      "py_compile": true,
+      "git_diff_check": true,
+      "partial_files": 0,
+      "live_track3_workers": 0,
+      "gpu_compute_apps": 0,
+      "openpi_clean": true,
+      "libero_plus_preexisting_dirty_preserved": true
+    },
+    "provenance_gap": {
+      "first_failed_final_validation_raw": "unavailable",
+      "first_failed_test_stdout_stderr_raw": "unavailable",
+      "first_failed_partial_inventory_raw": "unavailable",
+      "reconstructed": false
+    },
+    "historical_evidence_rewritten": false,
+    "next_plan": "docs/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_PLAN.md",
+    "next_phase_only": "AC0_to_AC6_then_hard_stop"
+  },
+  "track3_crossfamily_acquisition_recovery_canary_authorization": {
+    "status": "authorized_not_started",
+    "plan": "docs/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_PLAN.md",
+    "audit_input_root_commit": "4bbfe7eb7fdb404085f39712aae94572c9d0fbce",
+    "authorized_phases": ["AC0", "AC1", "AC2", "AC3", "AC4", "AC5", "AC6_closeout"],
+    "new_cpu_physics_identities_max": 3,
+    "new_cpu_physics_identities_per_family_max": 1,
+    "family_order": ["support", "containment", "articulation"],
+    "retry_allowed": false,
+    "family_failure_policy": "continue_other_frozen_families",
+    "shared_infrastructure_failure_policy": "sticky_global_hard_stop",
+    "success_disposition": "pending_replay_review_only",
+    "authorization": {
+      "read_only_old_trace_diagnosis": true,
+      "acquisition_contract_code_and_fixture": true,
+      "clean_source_supervisor_preflight": true,
+      "new_cpu_no_renderer_physics": true,
+      "old_identity_rerun": false,
+      "gpu0": false,
+      "gpu1": false,
+      "gpu2": false,
+      "gpu3": false,
+      "official_gpu": false,
+      "teleop": false,
+      "generation": false,
+      "replay": false,
+      "accepted_data": false,
+      "training": false,
+      "norm": false,
+      "fast_export": false,
+      "new_candidate_zip": false,
+      "upload": false,
+      "submission": false
+    },
+    "next_phase_only": "AC0_to_AC6_then_hard_stop"
   }
 }

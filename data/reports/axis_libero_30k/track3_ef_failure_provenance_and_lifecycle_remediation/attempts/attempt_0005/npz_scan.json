@@ -1,0 +1,12 @@
+{
+  "files": [
+    {
+      "allow_pickle_false": true,
+      "finite": true,
+      "object_dtype": false,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/eg2_typed_trace.npz",
+      "status": "passed"
+    }
+  ],
+  "status": "passed"
+}

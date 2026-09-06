@@ -1,0 +1,9 @@
+{
+  "attempt_id": 3,
+  "attempt_kind": "eg4_finalizer",
+  "audit_input_commit": "b1195dd59830f7c44d831bd0007e61229446d9b5",
+  "execution_commit": "31a850bb72ec53ad447a85b3b683cb42c7a68454",
+  "new_physics_identities": 0,
+  "physics_started": false,
+  "schema_version": "eg_attempt_metadata_v1"
+}

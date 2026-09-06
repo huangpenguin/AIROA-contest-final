@@ -1,0 +1,101 @@
+{
+  "clean_source": {
+    "child_identity_gate": {
+      "checked_fields": [
+        "root_commit",
+        "tool_sha256",
+        "openpi_commit",
+        "profile_lock_sha256",
+        "cuda_visible_devices",
+        "jax_platforms",
+        "mujoco_gl",
+        "root_porcelain",
+        "root_porcelain_sha256",
+        "clean_root",
+        "openpi_porcelain",
+        "openpi_porcelain_sha256",
+        "libero_plus_porcelain",
+        "libero_plus_porcelain_sha256",
+        "command",
+        "command_hash"
+      ],
+      "mismatches": [],
+      "state": "passed"
+    },
+    "child_returncode": 0,
+    "clean_root": true,
+    "physics_started": false,
+    "root_commit": "1c74589ca93cd6ab7d0a9e79c6e86ee3ca7cf9af",
+    "tool_sha256": "4da9b5eaf2660c27f80f1b000388222810a78f29ebe28523809e8245eac2de55"
+  },
+  "drift_fail_closed": {
+    "command": {
+      "checked_fields": [
+        "root_commit",
+        "tool_sha256",
+        "openpi_commit",
+        "profile_lock_sha256",
+        "cuda_visible_devices",
+        "jax_platforms",
+        "mujoco_gl",
+        "root_porcelain",
+        "root_porcelain_sha256",
+        "clean_root",
+        "openpi_porcelain",
+        "openpi_porcelain_sha256",
+        "libero_plus_porcelain",
+        "libero_plus_porcelain_sha256",
+        "command",
+        "command_hash"
+      ],
+      "mismatches": [
+        "command",
+        "command_hash"
+      ],
+      "state": "failed"
+    },
+    "root_dirty": {
+      "checked_fields": [
+        "root_commit",
+        "tool_sha256",
+        "openpi_commit",
+        "profile_lock_sha256",
+        "cuda_visible_devices",
+        "jax_platforms",
+        "mujoco_gl",
+        "root_porcelain",
+        "root_porcelain_sha256",
+        "clean_root",
+        "openpi_porcelain",
+        "openpi_porcelain_sha256",
+        "libero_plus_porcelain",
+        "libero_plus_porcelain_sha256",
+        "command",
+        "command_hash"
+      ],
+      "mismatches": [
+        "root_porcelain",
+        "root_porcelain_sha256"
+      ],
+      "state": "failed"
+    },
+    "temporary_git_dirty_detected": true
+  },
+  "independence": {
+    "audit_input_commit": "b1195dd59830f7c44d831bd0007e61229446d9b5",
+    "audit_must_be_later_commit": true,
+    "audit_report_commit": null,
+    "execution_commit": "1c74589ca93cd6ab7d0a9e79c6e86ee3ca7cf9af",
+    "same_commit_audit": false
+  },
+  "schema_version": "eg2_clean_source_independence_v1",
+  "status": "passed",
+  "typed_trace": {
+    "allow_pickle_false": true,
+    "bytes": 403,
+    "finite": true,
+    "object_dtype": false,
+    "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/eg2_typed_trace.npz",
+    "sha256": "1fb97d34e6316050a2b748b5802340fe33e3d118c90bc076f485488822d58888"
+  }
+}

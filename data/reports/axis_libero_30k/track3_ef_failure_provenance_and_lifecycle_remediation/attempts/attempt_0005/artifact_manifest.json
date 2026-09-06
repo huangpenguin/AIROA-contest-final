@@ -1,0 +1,83 @@
+{
+  "entries": [
+    {
+      "bytes": 296,
+      "path": "attempt_metadata.json",
+      "sha256": "fe77f3a45ed91db2b45ef6c816a6349a92ea3c250bcd81c57dea670b9785e8c9"
+    },
+    {
+      "bytes": 298,
+      "path": "csv_scan.json",
+      "sha256": "92ab14aadae21fbc6529a5d88566e3589019c8160e733eb5f3f13b193c2075f4"
+    },
+    {
+      "bytes": 579,
+      "path": "fallback_inventory.json",
+      "sha256": "c05d75d7ffd555af994e468da4cba60deeb778386e7e8343008f5f0dc5aef47d"
+    },
+    {
+      "bytes": 1701,
+      "path": "full_tests.json",
+      "sha256": "c55c4d897785c59d2530813cf5d5f82856f9bace867a94c433fbef5198a9e6a4"
+    },
+    {
+      "bytes": 38,
+      "path": "git_diff_check.json",
+      "sha256": "7360349271ebf1e1e28906b56fe6aef84dea6791cc2fab8a915f3991059e66d4"
+    },
+    {
+      "bytes": 463,
+      "path": "gpu_scan.json",
+      "sha256": "bcf1bbe7614f3d0097089f1ea6bddecee99286284ec02326c1901600f565f356"
+    },
+    {
+      "bytes": 286,
+      "path": "npz_scan.json",
+      "sha256": "081054a706a0837e7e1b5cc475f2cb8f015dce26f4346a8a14fe2d2db8980055"
+    },
+    {
+      "bytes": 51,
+      "path": "partial_inventory.json",
+      "sha256": "0ac3c585509a588adc179e88a1390acc3097d3aae926616f434ebbda246ff6c2"
+    },
+    {
+      "bytes": 273,
+      "path": "process_scan.json",
+      "sha256": "0d77c7f4deaaf1654e5918d3922d1cae8a376b16a29249e19006c85991ac2f14"
+    },
+    {
+      "bytes": 38,
+      "path": "py_compile.json",
+      "sha256": "7360349271ebf1e1e28906b56fe6aef84dea6791cc2fab8a915f3991059e66d4"
+    },
+    {
+      "bytes": 56,
+      "path": "strict_json.json",
+      "sha256": "d088ec4e8c3a8b9d1d8b5e849051191d8282e45b2f994ab125d8cb112573a210"
+    },
+    {
+      "bytes": 349,
+      "path": "targeted_tests.json",
+      "sha256": "a90270b60f0ee85e230e997065bbb8e640518a3278b7ed8e711d37539cc4bf0b"
+    },
+    {
+      "bytes": 14,
+      "path": "tests_stderr.txt",
+      "sha256": "b93a4bcfdf12bc5232affd44f055429061b8b9b9df275b709852bce1652ec277"
+    },
+    {
+      "bytes": 1609,
+      "path": "tests_stdout.txt",
+      "sha256": "6a4efb28759c6e4a20d40eb55c78506aa896cbb0bc5d9283dd897e72a3d15221"
+    }
+  ],
+  "excluded": [
+    "artifact_manifest.json",
+    "checkout_stable_closure.json",
+    "cursor.json",
+    "final_validation.json",
+    "heartbeat.json",
+    "outer_hash.json"
+  ],
+  "schema_version": "eg_attempt_manifest_v1"
+}

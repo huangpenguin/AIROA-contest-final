@@ -1,0 +1,7 @@
+{
+  "attempt_id": 5,
+  "created_at_utc": "2026-09-06T12:50:50.500423+00:00",
+  "entries_sha256": "c056f538ed14818b6017b46d86983e615b7d2c39f5bc31a7a056047591e79309",
+  "manifest_sha256": "54e6c47c3ae3069b250ee24599437f9734814a3b3b18e28787bbc400bd59d4ae",
+  "schema_version": "eg_root_outer_hash_v1"
+}

@@ -1,0 +1,30 @@
+{
+  "0": {
+    "compute_processes": [],
+    "free": true,
+    "index": 0,
+    "returncode": 0,
+    "stderr": ""
+  },
+  "1": {
+    "compute_processes": [],
+    "free": true,
+    "index": 1,
+    "returncode": 0,
+    "stderr": ""
+  },
+  "2": {
+    "compute_processes": [],
+    "free": true,
+    "index": 2,
+    "returncode": 0,
+    "stderr": ""
+  },
+  "3": {
+    "compute_processes": [],
+    "free": true,
+    "index": 3,
+    "returncode": 0,
+    "stderr": ""
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "attempt_id": 5,
+  "attempt_path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0005",
+  "pointer_only": true,
+  "schema_version": "eg_latest_attempt_pointer_v1",
+  "target_closure_sha256": "5049761f7f1a3e55db0fd9b604ce38a6550d0b037470559ac19f3290b0a719ab",
+  "target_final_validation_sha256": "48b7a97b3a00dd4c239e62f1bab8b9235e3d7e3c159c67ecdc20311de2680f1c"
+}

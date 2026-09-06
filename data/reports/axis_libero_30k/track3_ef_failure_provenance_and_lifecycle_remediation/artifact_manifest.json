@@ -1,0 +1,226 @@
+{
+  "entries": [
+    {
+      "bytes": 0,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempt_counter.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 370,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0001/attempt_metadata.json",
+      "sha256": "6b1eeda8674ca81dc9d6f0bb1454a5623b00b6fa1d73572a662c0433cb469c02"
+    },
+    {
+      "bytes": 169,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0001/cursor.json",
+      "sha256": "92e9231b0846b1bfad4abf812c26aa5b76a3132f1f379eba07435e05a1a94750"
+    },
+    {
+      "bytes": 1164,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0001/final_validation.json",
+      "sha256": "1cda9c77aa68812ee38649572585bbde75857ec33d5846121e6e6dc2d31decf3"
+    },
+    {
+      "bytes": 30,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0001/fixture_trace.bin",
+      "sha256": "0132d82f610af16eae5f49fb561ebdd9588539e08b1bccbe78d26da8588a7f9e"
+    },
+    {
+      "bytes": 463,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0001/gpu_scan.json",
+      "sha256": "bcf1bbe7614f3d0097089f1ea6bddecee99286284ec02326c1901600f565f356"
+    },
+    {
+      "bytes": 67,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0001/partial_inventory.json",
+      "sha256": "2c7e82ef02dc69e2fe970a6b755633977772285fc0ec3eed897567068fb697cf"
+    },
+    {
+      "bytes": 273,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0001/process_scan.json",
+      "sha256": "e81b2c3692ac7a241e30d10ab720ca5ec86c4d11ccd9b97619ed1feaccd4cfb6"
+    },
+    {
+      "bytes": 0,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0001/tests_stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 32,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0001/tests_stdout.txt",
+      "sha256": "5567938810a7497110dd382f582d80cf9796d6f6cf91835c72fe96d82165a68c"
+    },
+    {
+      "bytes": 370,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0002/attempt_metadata.json",
+      "sha256": "98dd73ff9d42aec0aac4d057d4f7e1effddb14b57992ab69926e8b76dded07b9"
+    },
+    {
+      "bytes": 169,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0002/cursor.json",
+      "sha256": "f2953cdb1d7e033d96b46d74719ad67f009aee1cef7c4a08c288ea09c0e8b3ba"
+    },
+    {
+      "bytes": 1164,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0002/final_validation.json",
+      "sha256": "16142221f07d44b00bf32e7136874e044ec8bf91b5cc372db7375625eef7810c"
+    },
+    {
+      "bytes": 30,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0002/fixture_trace.bin",
+      "sha256": "0132d82f610af16eae5f49fb561ebdd9588539e08b1bccbe78d26da8588a7f9e"
+    },
+    {
+      "bytes": 463,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0002/gpu_scan.json",
+      "sha256": "bcf1bbe7614f3d0097089f1ea6bddecee99286284ec02326c1901600f565f356"
+    },
+    {
+      "bytes": 67,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0002/partial_inventory.json",
+      "sha256": "2c7e82ef02dc69e2fe970a6b755633977772285fc0ec3eed897567068fb697cf"
+    },
+    {
+      "bytes": 273,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0002/process_scan.json",
+      "sha256": "e81b2c3692ac7a241e30d10ab720ca5ec86c4d11ccd9b97619ed1feaccd4cfb6"
+    },
+    {
+      "bytes": 0,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0002/tests_stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 32,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0002/tests_stdout.txt",
+      "sha256": "5567938810a7497110dd382f582d80cf9796d6f6cf91835c72fe96d82165a68c"
+    },
+    {
+      "bytes": 296,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0003/attempt_metadata.json",
+      "sha256": "bd54a4685daa39eb6d2d8c3d82fca5c1ec5c22b27140c6c4ca4920f32b7fd5b8"
+    },
+    {
+      "bytes": 40,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0003/csv_scan.json",
+      "sha256": "1e065d981e725859b9745d9ef90c019a50545830b9601924a58e95a1f7625434"
+    },
+    {
+      "bytes": 169,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0003/cursor.json",
+      "sha256": "bb4fe7b021fa4f4718cfd058ba0500633077b0b38ae83e27aa4d6dbbe66b2727"
+    },
+    {
+      "bytes": 579,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0003/fallback_inventory.json",
+      "sha256": "c05d75d7ffd555af994e468da4cba60deeb778386e7e8343008f5f0dc5aef47d"
+    },
+    {
+      "bytes": 6797,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0003/final_validation.json",
+      "sha256": "c3ca9d9b32d047cb8e74688a19af3ba27bdb61a20a427d451b16c842774aac99"
+    },
+    {
+      "bytes": 11549,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0003/full_tests.json",
+      "sha256": "a8416965118dcc140ddad94283ea92ab30d32567cf3f522bd6f8d3ea7faaa6ad"
+    },
+    {
+      "bytes": 38,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0003/git_diff_check.json",
+      "sha256": "7360349271ebf1e1e28906b56fe6aef84dea6791cc2fab8a915f3991059e66d4"
+    },
+    {
+      "bytes": 463,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0003/gpu_scan.json",
+      "sha256": "bcf1bbe7614f3d0097089f1ea6bddecee99286284ec02326c1901600f565f356"
+    },
+    {
+      "bytes": 286,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0003/npz_scan.json",
+      "sha256": "081054a706a0837e7e1b5cc475f2cb8f015dce26f4346a8a14fe2d2db8980055"
+    },
+    {
+      "bytes": 51,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0003/partial_inventory.json",
+      "sha256": "0ac3c585509a588adc179e88a1390acc3097d3aae926616f434ebbda246ff6c2"
+    },
+    {
+      "bytes": 273,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0003/process_scan.json",
+      "sha256": "81bbc2334dd87ea35bb9a4dfd84ba3f43d8287dd40b94a1da855f7f375d6a7ed"
+    },
+    {
+      "bytes": 38,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0003/py_compile.json",
+      "sha256": "7360349271ebf1e1e28906b56fe6aef84dea6791cc2fab8a915f3991059e66d4"
+    },
+    {
+      "bytes": 56,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0003/strict_json.json",
+      "sha256": "0763234494888a4ecf1a40b44beb44ceaf8672d9093eddd2973f17bf73ad1f80"
+    },
+    {
+      "bytes": 349,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0003/targeted_tests.json",
+      "sha256": "5b93963b3544e4507fa25cae204f5122326930c04c5d7c9689759e2bd661511f"
+    },
+    {
+      "bytes": 14,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0003/tests_stderr.txt",
+      "sha256": "b93a4bcfdf12bc5232affd44f055429061b8b9b9df275b709852bce1652ec277"
+    },
+    {
+      "bytes": 11199,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0003/tests_stdout.txt",
+      "sha256": "ac45db8037e3fea24dab8fcfee7e51d136fa93cd19514a6c1acc35ef9d4ef632"
+    },
+    {
+      "bytes": 2578,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/clean_source_fixture/result.json",
+      "sha256": "91282cf3a4a80645a2eb80c005dad1dc573a17e4282b144bcfe94b2c6a38935c"
+    },
+    {
+      "bytes": 2417,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/eg0_provenance_gap.json",
+      "sha256": "0ef012dd05060517689a39b4f4fab0461c19289a059e6e83dc278fe7b6f84093"
+    },
+    {
+      "bytes": 2798,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/eg1_attempt_specific_finalizer.json",
+      "sha256": "e421959eb5ab4cd263aa1b1125ec506fe43c4b17714e8238d15bf05e89ab34db"
+    },
+    {
+      "bytes": 2762,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/eg2_clean_source_and_independence.json",
+      "sha256": "d69d4cd65a6a9ca145798fdd0ad05adb17409ecd199dffd76a5ebbd0e88659c2"
+    },
+    {
+      "bytes": 403,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/eg2_typed_trace.npz",
+      "sha256": "1fb97d34e6316050a2b748b5802340fe33e3d118c90bc076f485488822d58888"
+    },
+    {
+      "bytes": 716,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/eg3_lifecycle_pointer_consistency.json",
+      "sha256": "8af7c084b7b19ac18b81b2a2bf7e26c116d7c0d333f30fa26d6862b62e7e626a"
+    },
+    {
+      "bytes": 68,
+      "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/phase_ledger.csv",
+      "sha256": "d78c74dbbd3d31e25b74d1b72eec2166a4441e2fbd17fe4d8838e758e4ce81b7"
+    }
+  ],
+  "excluded": [
+    "artifact_manifest.json",
+    "attempt_counter.json",
+    "checkout_stable_closure.json",
+    "execution_summary.json",
+    "heartbeat.json",
+    "latest_attempt.json",
+    "outer_hash.json",
+    "resume_cursor.json"
+  ],
+  "historical_namespaces_modified": false,
+  "schema_version": "eg_root_manifest_v1"
+}

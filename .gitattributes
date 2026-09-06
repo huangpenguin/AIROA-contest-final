@@ -1,0 +1,2 @@
+/data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/**/tests_stdout.txt -diff
+/data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/**/tests_stderr.txt -diff

@@ -1,0 +1,20 @@
+{
+  "attempt_final_validation_sha256": "48b7a97b3a00dd4c239e62f1bab8b9235e3d7e3c159c67ecdc20311de2680f1c",
+  "attempt_id": 5,
+  "closed_heartbeat_sha256": "184792f43d5d15c9e4999cd2595a81ecf73b7db6c6323dd7a4ff8821ce1ac953",
+  "inactive_cursor": true,
+  "next_phase_only": "independent_audit_required",
+  "root_cursor_path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/root_attempt_0005_resume_cursor.json",
+  "root_heartbeat_path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/root_attempt_0005_heartbeat.json",
+  "root_manifest_check": {
+    "entries": 73,
+    "mismatches": [],
+    "status": "passed"
+  },
+  "root_manifest_path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/root_attempt_0005_artifact_manifest.json",
+  "root_manifest_sha256": "54e6c47c3ae3069b250ee24599437f9734814a3b3b18e28787bbc400bd59d4ae",
+  "root_outer_hash_sha256": "893bfc90673169fbe37e9251e53a8f9d3342dfbecd5cfed4cc6ff5643253964d",
+  "root_outer_path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/root_attempt_0005_outer_hash.json",
+  "schema_version": "eg_root_checkout_closure_v1",
+  "status": "passed"
+}

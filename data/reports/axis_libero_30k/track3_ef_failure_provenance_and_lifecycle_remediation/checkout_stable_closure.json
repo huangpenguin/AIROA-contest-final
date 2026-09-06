@@ -1,0 +1,16 @@
+{
+  "attempt_final_validation_sha256": "c3ca9d9b32d047cb8e74688a19af3ba27bdb61a20a427d451b16c842774aac99",
+  "attempt_id": 3,
+  "closed_heartbeat_sha256": "65a6d822420df613135ee9b33d6dde84fe47dd681853dc850c0718d9b8da37b9",
+  "inactive_cursor": true,
+  "next_phase_only": "independent_audit_required",
+  "root_manifest_check": {
+    "entries": 42,
+    "mismatches": [],
+    "status": "passed"
+  },
+  "root_manifest_sha256": "0cb6e74c69bbd77b7b0f74d1e440d605e617b41509c9bef55da4cfb087ffc32e",
+  "root_outer_hash_sha256": "278015da112ae2e1121c96a8a809435370bfb1171b4185a5555d151164b51c51",
+  "schema_version": "eg_root_checkout_closure_v1",
+  "status": "failed"
+}

@@ -1,0 +1,131 @@
+{
+  "attempt_id": 5,
+  "csv": {
+    "files": [
+      {
+        "bytes": 78,
+        "lf_only": true,
+        "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/phase_ledger.csv",
+        "sha256": "ee064ec983d338854f548462a0c5e9de07788b20b3c38dc730a9c3cc85458830"
+      }
+    ],
+    "status": "passed"
+  },
+  "fallback": {
+    "bytes": 9383571677,
+    "bytes_match": true,
+    "crc_test": "passed",
+    "duplicate_entries": [],
+    "entry_count": 3401,
+    "expected_bytes": 9383571677,
+    "expected_sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a",
+    "fast_entries": [
+      "model_weights/model_fast.safetensors"
+    ],
+    "fast_only": true,
+    "path": "artifacts/submission_axis_r6_fallback_revalidated_20260906.zip",
+    "sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a",
+    "sha256_match": true,
+    "slow_entries": [],
+    "status": "passed",
+    "unsafe_paths": []
+  },
+  "full_tests": {
+    "returncode": 0,
+    "stderr_tail": "",
+    "stdout_tail": "........................................................................ [ 21%]\n.................................ss..................................... [ 42%]\n........................................................................ [ 63%]\n........................................................................ [ 84%]\n.......................sss.......................ss                      [100%]\n=============================== warnings summary ===============================\n<frozen importlib._bootstrap>:488\n  <frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.MessageMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.\n\n<frozen importlib._bootstrap>:488\n  <frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.ScalarMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.\n\ntests/test_axis_pi05_lora_screen.py: 21 warnings\n  /home/huang/code/PARC2026_final/.venv_axis_pi05/lib/python3.12/site-packages/flax/core/scope.py:959: DeprecationWarning: shape requires ndarray or scalar arguments, got <class 'jax._src.api.ShapeDtypeStruct'> at position 0. In a future JAX release this will be an error.\n    if jnp.shape(val) != jnp.shape(abs_val):\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n332 passed, 7 skipped, 23 warnings in 80.98s (0:01:20)\n"
+  },
+  "git_diff_check": {
+    "returncode": 0
+  },
+  "gpu_boundary": {
+    "0": {
+      "compute_processes": [],
+      "free": true,
+      "index": 0,
+      "returncode": 0,
+      "stderr": ""
+    },
+    "1": {
+      "compute_processes": [],
+      "free": true,
+      "index": 1,
+      "returncode": 0,
+      "stderr": ""
+    },
+    "2": {
+      "compute_processes": [],
+      "free": true,
+      "index": 2,
+      "returncode": 0,
+      "stderr": ""
+    },
+    "3": {
+      "compute_processes": [],
+      "free": true,
+      "index": 3,
+      "returncode": 0,
+      "stderr": ""
+    }
+  },
+  "manifest": {
+    "entries": 14,
+    "mismatches": [],
+    "status": "passed"
+  },
+  "new_candidate_zip_created": false,
+  "new_physics_identities": 0,
+  "npz": {
+    "files": [
+      {
+        "allow_pickle_false": true,
+        "finite": true,
+        "object_dtype": false,
+        "path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/eg2_typed_trace.npz",
+        "status": "passed"
+      }
+    ],
+    "status": "passed"
+  },
+  "old_identity_rerun": false,
+  "outer_hash": {
+    "status": "passed"
+  },
+  "partial_inventory": {
+    "after": [],
+    "before": [],
+    "residue": []
+  },
+  "process_scan": {
+    "excluded_ancestor_pids": [
+      1,
+      7175,
+      7213,
+      1634108
+    ],
+    "live_worker_pids": [],
+    "live_worker_rows": [],
+    "returncode": 0,
+    "scan_pid": 1634108,
+    "status": "passed",
+    "worker_tokens": [
+      "--eg-fixture-child",
+      "--eg-finalizer-worker"
+    ]
+  },
+  "py_compile": {
+    "returncode": 0
+  },
+  "schema_version": "eg4_attempt_final_validation_v1",
+  "status": "passed",
+  "strict_json": {
+    "errors": [],
+    "files": 72,
+    "status": "passed"
+  },
+  "targeted_tests": {
+    "returncode": 0,
+    "stderr_tail": "",
+    "stdout_tail": ".......                                                                  [100%]\n7 passed in 6.81s\n"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "aggregate_does_not_replace_attempt": true,
+  "attempts": [
+    {
+      "attempt_id": 1,
+      "closure": {
+        "artifact_manifest_sha256": "4a52b0165c3f72ab6f5a7ed109d93289a8a96f181718020c2f601084794a374b",
+        "attempt_id": 1,
+        "closed_heartbeat_sha256": "e5d89f401da5aa19359719460db836efc88175ff284da0953963452095a4a934",
+        "final_validation_sha256": "1cda9c77aa68812ee38649572585bbde75857ec33d5846121e6e6dc2d31decf3",
+        "inactive_cursor": true,
+        "manifest_check": {
+          "entries": 8,
+          "mismatches": [],
+          "status": "passed"
+        },
+        "outer_check": {
+          "status": "passed"
+        },
+        "outer_hash_sha256": "aa781a8ee88d61c3370204aca39e88eb66230577d3ceaa92303a95a1d3c4b856",
+        "schema_version": "eg_attempt_checkout_closure_v1",
+        "status": "passed"
+      },
+      "final_validation_sha256": "1cda9c77aa68812ee38649572585bbde75857ec33d5846121e6e6dc2d31decf3",
+      "status": "failed"
+    },
+    {
+      "attempt_id": 2,
+      "closure": {
+        "artifact_manifest_sha256": "93aeec0eee21acd6cfae962dd49e061aa51b45186455fd0a02156bd1dd6ce5dc",
+        "attempt_id": 2,
+        "closed_heartbeat_sha256": "073fc2f198132ee3a1142e7623ce1ccdb3542f759dcde2c2515453530ab3b470",
+        "final_validation_sha256": "16142221f07d44b00bf32e7136874e044ec8bf91b5cc372db7375625eef7810c",
+        "inactive_cursor": true,
+        "manifest_check": {
+          "entries": 8,
+          "mismatches": [],
+          "status": "passed"
+        },
+        "outer_check": {
+          "status": "passed"
+        },
+        "outer_hash_sha256": "42d6ba5e1a5d555a0cef4ccfd5c1fcd9ee778f98b4ec6efb474e6fe7f1d8b7de",
+        "schema_version": "eg_attempt_checkout_closure_v1",
+        "status": "passed"
+      },
+      "final_validation_sha256": "16142221f07d44b00bf32e7136874e044ec8bf91b5cc372db7375625eef7810c",
+      "status": "passed"
+    }
+  ],
+  "first_attempt_bytes_unchanged_after_retry": true,
+  "latest_attempt_pointer": {
+    "attempt_id": 2,
+    "attempt_path": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/attempt_0002",
+    "pointer_only": true,
+    "schema_version": "eg_latest_attempt_pointer_v1",
+    "target_closure_sha256": "6fd78b05bd73c99b19a4e0a1a17467e081a6d49be3a6031df79262fb236f0a98",
+    "target_final_validation_sha256": "16142221f07d44b00bf32e7136874e044ec8bf91b5cc372db7375625eef7810c"
+  },
+  "non_reusable_monotonic_ids": true,
+  "physics_started": false,
+  "schema_version": "eg1_attempt_specific_finalizer_v1",
+  "status": "passed",
+  "strict_parse": {
+    "attempt_0001": {
+      "errors": [],
+      "files": 10,
+      "status": "passed"
+    },
+    "attempt_0002": {
+      "errors": [],
+      "files": 10,
+      "status": "passed"
+    }
+  }
+}

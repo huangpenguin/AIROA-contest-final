@@ -1,0 +1,71 @@
+{
+  "completed_at_utc": "2026-09-06T12:30:36.036568+00:00",
+  "cuda_initialized": false,
+  "heartbeat_sequences": [
+    1,
+    2,
+    3
+  ],
+  "identity": {
+    "clean_root": true,
+    "command": [
+      "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+      "-m",
+      "tools.axis_pi05.track3_ef_failure_provenance_and_lifecycle_remediation",
+      "--eg-fixture-child",
+      "--result-output",
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/clean_source_fixture/result.json",
+      "--heartbeat-output",
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/clean_source_fixture/heartbeat.json",
+      "--expected-identity-file",
+      "/tmp/eg_expected_podjl_08/expected.json"
+    ],
+    "command_hash": "1a8c293651ae9af8e2baeccaa3f44ad53e95f2bec5f0acbec3480e8eccabd118",
+    "cuda_visible_devices": "",
+    "jax_platforms": "cpu",
+    "libero_plus_porcelain": [
+      " M libero/libero/benchmark/__init__.py",
+      "?? libero/__init__.py",
+      "?? libero/libero/assets",
+      "?? libero/libero/bddl_files/libero_t3",
+      "?? libero/libero/init_files/libero_t3"
+    ],
+    "libero_plus_porcelain_sha256": "4ed5eb2a74c77985df2ea98d39d2598c65b7f7c36204e7608b4c58a0c3bd55cd",
+    "mujoco_gl": "disable",
+    "openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "openpi_porcelain": [],
+    "openpi_porcelain_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "pgid": 1629014,
+    "pid": 1629042,
+    "profile_lock_sha256": "afe65108165ef7a98ec6ff51091f545ca4cbdcbfb21e5a91dd523a19b6b5b003",
+    "root_commit": "1c74589ca93cd6ab7d0a9e79c6e86ee3ca7cf9af",
+    "root_porcelain": [],
+    "root_porcelain_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "tool_sha256": "4da9b5eaf2660c27f80f1b000388222810a78f29ebe28523809e8245eac2de55"
+  },
+  "identity_gate": {
+    "checked_fields": [
+      "root_commit",
+      "tool_sha256",
+      "openpi_commit",
+      "profile_lock_sha256",
+      "cuda_visible_devices",
+      "jax_platforms",
+      "mujoco_gl",
+      "root_porcelain",
+      "root_porcelain_sha256",
+      "clean_root",
+      "openpi_porcelain",
+      "openpi_porcelain_sha256",
+      "libero_plus_porcelain",
+      "libero_plus_porcelain_sha256",
+      "command",
+      "command_hash"
+    ],
+    "mismatches": [],
+    "state": "passed"
+  },
+  "physics_started": false,
+  "schema_version": "eg_fixture_result_v1",
+  "status": "passed"
+}

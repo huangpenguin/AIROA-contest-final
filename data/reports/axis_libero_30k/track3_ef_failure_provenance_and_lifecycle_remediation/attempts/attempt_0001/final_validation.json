@@ -1,0 +1,61 @@
+{
+  "gpu_boundary": {
+    "0": {
+      "compute_processes": [],
+      "free": true,
+      "index": 0,
+      "returncode": 0,
+      "stderr": ""
+    },
+    "1": {
+      "compute_processes": [],
+      "free": true,
+      "index": 1,
+      "returncode": 0,
+      "stderr": ""
+    },
+    "2": {
+      "compute_processes": [],
+      "free": true,
+      "index": 2,
+      "returncode": 0,
+      "stderr": ""
+    },
+    "3": {
+      "compute_processes": [],
+      "free": true,
+      "index": 3,
+      "returncode": 0,
+      "stderr": ""
+    }
+  },
+  "new_physics_identities": 0,
+  "partial_inventory": {
+    "after": [],
+    "before": [],
+    "during": [],
+    "residue": []
+  },
+  "physics_started": false,
+  "process_scan": {
+    "excluded_ancestor_pids": [
+      1,
+      7175,
+      7213,
+      1628972
+    ],
+    "live_worker_pids": [],
+    "live_worker_rows": [],
+    "returncode": 0,
+    "scan_pid": 1628972,
+    "status": "passed",
+    "worker_tokens": [
+      "--eg-fixture-child",
+      "--eg-finalizer-worker"
+    ]
+  },
+  "schema_version": "eg_attempt_final_validation_v1",
+  "status": "failed",
+  "synthetic_fixture": true,
+  "test_command_returncode": 0
+}

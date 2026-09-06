@@ -1,0 +1,19 @@
+{
+  "bytes": 9383571677,
+  "bytes_match": true,
+  "crc_test": "passed",
+  "duplicate_entries": [],
+  "entry_count": 3401,
+  "expected_bytes": 9383571677,
+  "expected_sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a",
+  "fast_entries": [
+    "model_weights/model_fast.safetensors"
+  ],
+  "fast_only": true,
+  "path": "artifacts/submission_axis_r6_fallback_revalidated_20260906.zip",
+  "sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a",
+  "sha256_match": true,
+  "slow_entries": [],
+  "status": "passed",
+  "unsafe_paths": []
+}

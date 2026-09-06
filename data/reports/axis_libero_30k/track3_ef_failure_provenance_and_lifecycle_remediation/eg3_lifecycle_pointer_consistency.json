@@ -1,0 +1,16 @@
+{
+  "active_plan_absent": true,
+  "archived_prior_ef_plan": true,
+  "execution_commit_and_audit_input_are_separate_fields": true,
+  "machine_status": "track3_ef_failure_provenance_and_lifecycle_remediation_completed_hard_stop_pending_independent_audit",
+  "pending_independent_audit": true,
+  "pointers": {
+    "latest_audit_input_commit": "b1195dd59830f7c44d831bd0007e61229446d9b5",
+    "latest_audited_execution_commit": "b1195dd59830f7c44d831bd0007e61229446d9b5",
+    "latest_execution_root_commit": "b1195dd59830f7c44d831bd0007e61229446d9b5"
+  },
+  "pointers_target_audited_ef_commit": true,
+  "schema_version": "eg3_lifecycle_pointer_consistency_v1",
+  "status": "passed",
+  "unknown_work_not_inferred": true
+}

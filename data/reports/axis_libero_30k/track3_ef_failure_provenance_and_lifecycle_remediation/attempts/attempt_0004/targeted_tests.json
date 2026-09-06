@@ -1,0 +1,12 @@
+{
+  "command": [
+    "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_track3_ef_failure_provenance_and_lifecycle_remediation.py"
+  ],
+  "returncode": 0,
+  "stderr": "",
+  "stdout": ".......                                                                  [100%]\n7 passed in 6.77s\n"
+}

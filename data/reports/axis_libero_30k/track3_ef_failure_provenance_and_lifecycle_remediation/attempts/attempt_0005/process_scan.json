@@ -1,0 +1,17 @@
+{
+  "excluded_ancestor_pids": [
+    1,
+    7175,
+    7213,
+    1634108
+  ],
+  "live_worker_pids": [],
+  "live_worker_rows": [],
+  "returncode": 0,
+  "scan_pid": 1634108,
+  "status": "passed",
+  "worker_tokens": [
+    "--eg-fixture-child",
+    "--eg-finalizer-worker"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "attempt_id": 1,
+  "final_status": "failed",
+  "final_validation_status": "failed",
+  "schema_version": "eg_attempt_heartbeat_v1",
+  "state": "closed",
+  "updated_at_utc": "2026-09-06T12:30:24.690309+00:00"
+}

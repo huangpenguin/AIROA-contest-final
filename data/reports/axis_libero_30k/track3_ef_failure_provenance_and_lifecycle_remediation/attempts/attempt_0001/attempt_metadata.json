@@ -1,0 +1,13 @@
+{
+  "allocated_monotonic": true,
+  "attempt_id": 1,
+  "attempt_kind": "synthetic_fail_retry_fixture",
+  "command": [
+    "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+    "-c",
+    "print('eg synthetic retry fixture test')"
+  ],
+  "created_at_utc": "2026-09-06T12:30:24.379151+00:00",
+  "schema_version": "eg_attempt_metadata_v1",
+  "status": "failed"
+}

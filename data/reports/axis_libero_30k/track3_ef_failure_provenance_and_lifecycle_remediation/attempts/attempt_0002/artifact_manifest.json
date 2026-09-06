@@ -1,0 +1,52 @@
+{
+  "entries": [
+    {
+      "bytes": 370,
+      "path": "attempt_metadata.json",
+      "sha256": "98dd73ff9d42aec0aac4d057d4f7e1effddb14b57992ab69926e8b76dded07b9"
+    },
+    {
+      "bytes": 1164,
+      "path": "final_validation.json",
+      "sha256": "16142221f07d44b00bf32e7136874e044ec8bf91b5cc372db7375625eef7810c"
+    },
+    {
+      "bytes": 30,
+      "path": "fixture_trace.bin",
+      "sha256": "0132d82f610af16eae5f49fb561ebdd9588539e08b1bccbe78d26da8588a7f9e"
+    },
+    {
+      "bytes": 463,
+      "path": "gpu_scan.json",
+      "sha256": "bcf1bbe7614f3d0097089f1ea6bddecee99286284ec02326c1901600f565f356"
+    },
+    {
+      "bytes": 67,
+      "path": "partial_inventory.json",
+      "sha256": "2c7e82ef02dc69e2fe970a6b755633977772285fc0ec3eed897567068fb697cf"
+    },
+    {
+      "bytes": 273,
+      "path": "process_scan.json",
+      "sha256": "e81b2c3692ac7a241e30d10ab720ca5ec86c4d11ccd9b97619ed1feaccd4cfb6"
+    },
+    {
+      "bytes": 0,
+      "path": "tests_stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 32,
+      "path": "tests_stdout.txt",
+      "sha256": "5567938810a7497110dd382f582d80cf9796d6f6cf91835c72fe96d82165a68c"
+    }
+  ],
+  "excluded": [
+    "artifact_manifest.json",
+    "checkout_stable_closure.json",
+    "cursor.json",
+    "heartbeat.json",
+    "outer_hash.json"
+  ],
+  "schema_version": "eg_attempt_manifest_v1"
+}

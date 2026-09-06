@@ -1,0 +1,10 @@
+{
+  "artifact_manifest_sha256": "df00b441a67374ed85fb989072b5a668faddb3d1063ae9134ca395acb80c30eb",
+  "attempt_id": 3,
+  "closed_heartbeat_sha256": "5e26134ef3c08e246427d37ff7ed46e1ceb3a8a849cb5101088286d0d5ae51a9",
+  "final_validation_sha256": "c3ca9d9b32d047cb8e74688a19af3ba27bdb61a20a427d451b16c842774aac99",
+  "inactive_cursor": true,
+  "outer_hash_sha256": "8345f109851d5c075a999ac792271cb28d6f46a2fcb4937d997a4b8eaf439d48",
+  "schema_version": "eg_attempt_checkout_closure_v1",
+  "status": "failed"
+}

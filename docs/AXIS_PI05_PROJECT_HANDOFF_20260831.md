@@ -879,3 +879,13 @@ EF0–EF4 独立审核结论为 `approved`，活动计划已归档至 `docs/arch
 唯一活动计划改为 `docs/AXIS_PI05_TRACK3_EF_FAILURE_PROVENANCE_AND_LIFECYCLE_REMEDIATION_PLAN.md`。EG0–EG4 只允许冻结不可恢复 gap、实现 attempt-specific immutable finalizer、运行 clean-source/no-physics fixture 与 lifecycle 回归、完成最终闭包并 hard stop。不得伪造首次失败 raw；不得运行任何新 physics 或旧 identity，不得使用 GPU0–3/官方 GPU，不得 generation、replay、accepted data、training、candidate ZIP、upload 或 submission。
 
 生命周期更新后 targeted 为 `17 passed`，项目全量为 `325 passed, 7 skipped, 23 warnings`；19/19 strict JSON、py_compile、diff-check、无 partial、process/GPU 边界通过。
+
+## 78. EG0–EG4 失败 provenance 与生命周期修复执行收尾（2026-09-06）
+
+EG0 已将首次 EF4 失败的原始 `final_validation`、完整测试 stdout/stderr 与 partial inventory 永久记录为 `unavailable`。Git history、临时目录和 unreachable objects 的只读检索没有找到副本；派生 `ef4_first_attempt_failure.json` 保持 derived，不得重构为 raw，EF/ER/TZ 历史 namespace 未改写。
+
+EG1 的无 physics fixture `attempt_0001→0002` 实测 fail→retry 后首个 attempt bytes/hash 不变。EG4 的 `attempt_0003`（全量测试暴露 10 个旧生命周期断言）和 `attempt_0004`（旧 root aggregate 存在，finalizer 正确拒绝覆盖）均被封存；`attempt_0005` 以新 attempt 完成成功闭包，`latest_attempt.json` 仅保存目标 hash 的指针。
+
+EG2/EG3 已验证 clean-source、parent→child identity、dirty/command drift fail-close 与 lifecycle 指针：执行源为 `0799142b92ad3e799dd2d1b78ca964f07dd87587`，审核输入为 `b1195dd59830f7c44d831bd0007e61229446d9b5`，三项顶层 audited/latest 指针均指向后者；当前无活动计划，下一停止点为 `independent_audit_required`。
+
+EG4 `attempt_0005` 的定向测试为 `7 passed`，项目全量为 `332 passed, 7 skipped, 23 warnings`；strict JSON `72`，typed NPZ `1/1` no-pickle/finite，CSV LF、py_compile、diff-check、无 partial、无 Track3 worker、GPU0–3 compute empty。既有 fallback 仍为 `9383571677` bytes、SHA `95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a`、CRC passed、3401 entries、FAST-only。没有新 physics identity、旧 identity 重跑、generation/replay、训练、新 candidate ZIP、上传或提交；EG0–EG4 已 hard stop，等待独立审核。

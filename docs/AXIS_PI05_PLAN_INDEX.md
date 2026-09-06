@@ -310,6 +310,16 @@ EF4 finalizer targeted 为`7 passed`、项目全量为`320 passed, 7 skipped, 23
 
 生命周期更新后 targeted 为 `17 passed`，项目全量为 `325 passed, 7 skipped, 23 warnings`；19/19 strict JSON、py_compile、diff-check、无 partial、process/GPU 边界通过。
 
+## 3.27 EG0–EG4 失败 provenance 与生命周期修复执行收尾（2026-09-06）
+
+EG0 已将首次 EF4 失败的原始 `final_validation`、完整测试 stdout/stderr 和 partial inventory 永久记录为 `unavailable`；只读检查 Git history、临时目录和 unreachable objects 未找到可恢复副本，派生 `ef4_first_attempt_failure.json` 未被升级为 raw，也未改写 EF/ER/TZ 历史 namespace。
+
+EG1 的无 physics fixture `attempt_0001→0002` 实测 fail→retry 后首个 attempt bytes/hash 不变、两个闭包可独立 strict parse。EG4 的失败尝试 `attempt_0003`（旧生命周期测试未同步）与 `attempt_0004`（旧 root aggregate 已存在而正确拒绝覆盖）均保留各自 final validation、测试输出、manifest/outer/heartbeat/closure；`attempt_0005` 为新的成功 attempt，IDs 单调且不可复用，`latest_attempt.json` 仅指针。
+
+EG2 从 clean source `0799142b92ad3e799dd2d1b78ca964f07dd87587` 执行 finalizer 合同；clean root、root/tool/OpenPI/command/profile identity 及 dirty/command drift fail-close 回归通过。机器字段分别记录 execution source、audit input 和后续 audit lifecycle commit，未生成同提交独立审核。
+
+EG3 确认顶层 `latest_audited_execution_commit`、`latest_audit_input_commit`、`latest_execution_root_commit` 均精确指向 `b1195dd59830f7c44d831bd0007e61229446d9b5`；当前无活动计划，`next_phase_only=independent_audit_required`。EG4 在 `attempt_0005` 完成：定向 `7 passed`，全量 `332 passed, 7 skipped, 23 warnings`，strict JSON `72`，typed NPZ `1/1` no-pickle/finite，CSV LF、py_compile、diff-check、无 partial、无 worker、GPU0–3 compute empty；既有 fallback 仍为 `9383571677` bytes、SHA `95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a`、CRC passed、3401 entries、FAST-only。没有新 physics identity、旧 identity 重跑、generation/replay、训练、新 candidate ZIP、上传或提交；已 hard stop，等待不同提交的独立审核。
+
 ## 4. 保留但非活动的研究线
 
 - `AXIS_PI05_STANDARD_LIBERO_30K_RESEARCH_PLAN.md`：长期标准LIBERO 30K/full-FT研究的事实与路线来源；当前执行授权由donated accumulator计划收窄到最多10 steps。

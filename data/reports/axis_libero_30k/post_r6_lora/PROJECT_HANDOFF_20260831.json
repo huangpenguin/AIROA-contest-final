@@ -4411,6 +4411,22 @@
     "next_plan": null,
     "next_phase_only": "independent_audit_required"
   },
+  "track3_ef_failure_provenance_and_lifecycle_remediation_execution": {
+    "status": "completed_hard_stop_pending_independent_audit",
+    "execution_input_commit": "b1195dd59830f7c44d831bd0007e61229446d9b5",
+    "execution_source_commit": "0799142b92ad3e799dd2d1b78ca964f07dd87587",
+    "execution_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "audit_report_commit": null,
+    "evidence_root": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation",
+    "phase_status": {"EG0": "passed", "EG1": "passed", "EG2": "passed", "EG3": "passed", "EG4": "passed_hard_stop"},
+    "eg0_provenance_gap": {"first_failed_final_validation_raw": "unavailable", "first_failed_test_stdout_stderr_raw": "unavailable", "first_failed_partial_inventory_raw": "unavailable", "raw_recovery_candidate_found": false, "derived_record_is_not_raw": true, "reconstruction_forbidden": true},
+    "eg1_attempt_specific_finalizer": {"fixture_attempts": [1, 2], "fixture_first_attempt_bytes_unchanged_after_retry": true, "preserved_closeout_attempts": [3, 4, 5], "latest_attempt_id": 5, "attempt_0003_status": "failed_full_tests_lifecycle_expectations", "attempt_0004_status": "failed_root_aggregate_collision_preserved", "attempt_0005_status": "passed", "attempt_ids_monotonic_non_reusable": true},
+    "eg2_clean_source_and_independence": {"fixture_source_commit": "1c74589ca93cd6ab7d0a9e79c6e86ee3ca7cf9af", "finalizer_source_commit": "0799142b92ad3e799dd2d1b78ca964f07dd87587", "audit_input_commit": "b1195dd59830f7c44d831bd0007e61229446d9b5", "same_commit_audit": false, "dirty_and_command_drift_fail_closed": true, "physics_started": false},
+    "eg4_closeout": {"latest_attempt_id": 5, "targeted_tests": "7 passed", "full_tests": "332 passed, 7 skipped, 23 warnings", "strict_json_files": 72, "typed_npz_no_pickle_finite": "1/1", "csv_lf": true, "fallback": {"bytes": 9383571677, "sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a", "crc": "passed", "entries": 3401, "fast_only": true}, "process_workers": 0, "gpu_compute_apps": 0, "py_compile": true, "git_diff_check": true, "partial_files": 0, "new_physics_identities": 0, "old_identity_rerun": false, "new_candidate_zip_created": false, "generation": false, "replay": false, "training": false, "upload": false, "submission": false},
+    "historical_namespaces_modified": false,
+    "libero_plus_preexisting_dirty_preserved": true,
+    "hard_stop": {"status": "hard_stop", "next_phase_only": "independent_audit_required", "automatic_resume": false}
+  },
   "track3_ef_failure_provenance_and_lifecycle_remediation_authorization": {
     "status": "completed_hard_stop_pending_independent_audit",
     "plan": "docs/AXIS_PI05_TRACK3_EF_FAILURE_PROVENANCE_AND_LIFECYCLE_REMEDIATION_PLAN.md",

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-06",
-  "status": "track3_ef0_ef4_audited_remediation_required",
+  "status": "track3_ef_failure_provenance_and_lifecycle_remediation_completed_hard_stop_pending_independent_audit",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
@@ -259,8 +259,8 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_TRACK3_EF_FAILURE_PROVENANCE_AND_LIFECYCLE_REMEDIATION_PLAN.md",
-  "next_phase_only": "EG0_to_EG4_then_hard_stop",
+  "next_plan": null,
+  "next_phase_only": "independent_audit_required",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -4408,11 +4408,11 @@
       "gpu_compute_apps": 0
     },
     "historical_ef_er_tz_evidence_modified": false,
-    "next_plan": "docs/AXIS_PI05_TRACK3_EF_FAILURE_PROVENANCE_AND_LIFECYCLE_REMEDIATION_PLAN.md",
-    "next_phase_only": "EG0_to_EG4_then_hard_stop"
+    "next_plan": null,
+    "next_phase_only": "independent_audit_required"
   },
   "track3_ef_failure_provenance_and_lifecycle_remediation_authorization": {
-    "status": "authorized_not_started",
+    "status": "completed_hard_stop_pending_independent_audit",
     "plan": "docs/AXIS_PI05_TRACK3_EF_FAILURE_PROVENANCE_AND_LIFECYCLE_REMEDIATION_PLAN.md",
     "audit_input_root_commit": "b1195dd59830f7c44d831bd0007e61229446d9b5",
     "authorized_phases": ["EG0", "EG1", "EG2", "EG3", "EG4_closeout"],
@@ -4439,6 +4439,6 @@
       "submission": false
     },
     "unavailable_raw_policy": "preserve_as_unavailable_never_reconstruct_or_claim_raw",
-    "next_phase_only": "EG0_to_EG4_then_hard_stop"
+    "next_phase_only": "independent_audit_required"
   }
 }

@@ -2,12 +2,12 @@
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
 > 新session先读：根目录`AGENTS.md`、`MEMORY.md`，然后按其中顺序核对本handoff、machine JSON、活动计划、最新审核与live cursor/PID。
-> 最新审核状态：`remediation_required`
+> 最新审核状态：`remediation_required`（EG0–EG4 已执行，等待独立审核）
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_ef0_ef4_audited_remediation_required`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_EF_FAILURE_PROVENANCE_AND_LIFECYCLE_REMEDIATION_PLAN.md`
+> 当前总状态：`track3_ef_failure_provenance_and_lifecycle_remediation_completed_hard_stop_pending_independent_audit`
+> 唯一活动计划：无（EG0–EG4 已执行并 hard stop）
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -17,7 +17,7 @@
 
 canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。Tonight已交付明确标注的本地R6 fallback ZIP；ER4新增三条CPU canary也均为有效诊断性family failure，成功族和accepted数据仍为0。ER审核发现证据未入Git、resume identity、required contact与finalizer合同未闭合，当前转入EF0–EF4只读锚定/code-only修复。
 
-最新审核确认 fallback、旧 TZ 派生事实、三条 ER4 family failure、EF0–EF3 技术合同及 corrected EF4 checkout closure 有效；但首次 EF4 失败的原始 validation/test/partial 证据被 corrected attempt 覆盖，只留下派生说明。既有 `approved` 报告又与 execution/evidence 同提交，不能作为独立审核。本轮唯一结论为 `remediation_required`，转入只含 evidence-governance/code/no-physics fixture 的 EG0–EG4 修复；不授权任何新的 physics identity、GPU、数据生成、replay、训练、candidate ZIP、上传或提交。
+最新审核确认 fallback、旧 TZ 派生事实、三条 ER4 family failure、EF0–EF3 技术合同及 corrected EF4 checkout closure 有效；但首次 EF4 失败的原始 validation/test/partial 证据被 corrected attempt 覆盖，只留下派生说明。既有 `approved` 报告又与 execution/evidence 同提交，不能作为独立审核。本轮唯一结论为 `remediation_required`；EG0–EG4 已在新的 evidence-governance/code/no-physics fixture namespace 完成并 hard stop，等待独立审核。不授权任何新的 physics identity、GPU、数据生成、replay、训练、candidate ZIP、上传或提交。
 
 ## 2. 数据与复现基础
 

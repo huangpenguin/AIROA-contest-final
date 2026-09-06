@@ -2,8 +2,8 @@
 
 > 更新日期：2026-09-06（Asia/Tokyo）
 > 跨session入口：先完整读取根目录`AGENTS.md`与`MEMORY.md`，再读取本索引、handoff、machine JSON、唯一活动计划和最新审核；先查live PID/cursor，禁止重复启动。
-> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_EF_FAILURE_PROVENANCE_AND_LIFECYCLE_REMEDIATION_PLAN.md`
-> 当前状态：`track3_ef0_ef4_audited_remediation_required`
+> 当前唯一活动计划：无（EG0–EG4 已执行并 hard stop，等待独立审核）
+> 当前状态：`track3_ef_failure_provenance_and_lifecycle_remediation_completed_hard_stop_pending_independent_audit`
 > 最新审核：`docs/reviews/axis_pi05/TRACK3_EF0_EF4_INDEPENDENT_AUDIT_20260906.md`
 
 ## 1. 本轮执行停止点
@@ -28,7 +28,7 @@ ER审核确认三条新CPU/no-renderer canary均为有效诊断性`family_failur
 
 - `AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md` 已归档；EF0–EF4 完成并 hard stop。EF0–EF3 技术合同、corrected EF4 checkout closure 与 fallback 机械属性经独立复核成立。
 - 既有 EF `approved` 审核与 execution/evidence 同在 `b1195dd`，且其引用的 `ef4_first_attempt_failure.json` 明确承认首次失败 report 被 corrected attempt 覆盖。首次失败 raw 当前不可恢复，不能用派生说明替代；本轮唯一结论修正为 `remediation_required`。
-- 唯一活动计划 `docs/AXIS_PI05_TRACK3_EF_FAILURE_PROVENANCE_AND_LIFECYCLE_REMEDIATION_PLAN.md` 只授权 EG0–EG4：冻结 provenance gap、实现 attempt-specific immutable finalizer、独立/clean-source fixture 与 lifecycle 一致性回归，然后 hard stop。
+- `AXIS_PI05_TRACK3_EF_FAILURE_PROVENANCE_AND_LIFECYCLE_REMEDIATION_PLAN.md` 已归档；EG0–EG4 已执行并 hard stop，新的独立审核尚未完成。当前没有活动计划，`next_phase_only=independent_audit_required`。
 - 三条 ER4、旧七条 TZ identity 和既有 EF fixture 均禁止作为历史结果重跑。任何新 physics、GPU0–3、官方 GPU、Teleop、generation/replay、accepted 数据、训练/norm、新 candidate ZIP、上传/提交均不授权。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准；不得从归档计划的未执行尾部自行恢复任务。

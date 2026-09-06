@@ -330,7 +330,7 @@ def fixture_child(result_path: Path, heartbeat_path: Path, expected_path: Path) 
 
 
 def _attempt_manifest(attempt_dir: Path) -> dict[str, Any]:
-    excluded = {"artifact_manifest.json", "outer_hash.json", "checkout_stable_closure.json", "cursor.json", "heartbeat.json"}
+    excluded = {"artifact_manifest.json", "outer_hash.json", "checkout_stable_closure.json", "cursor.json", "heartbeat.json", "final_validation.json"}
     paths = sorted(path for path in attempt_dir.rglob("*") if path.is_file() and path.name not in excluded and not path.name.endswith(".partial"))
     return {"schema_version": "eg_attempt_manifest_v1", "entries": [{"path": path.relative_to(attempt_dir).as_posix(), "bytes": path.stat().st_size, "sha256": sha256_file(path)} for path in paths], "excluded": sorted(excluded)}
 

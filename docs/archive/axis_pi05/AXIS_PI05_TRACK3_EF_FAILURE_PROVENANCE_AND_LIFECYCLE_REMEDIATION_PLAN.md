@@ -1,10 +1,10 @@
 # AXIS Pi0.5 Track 3：EF 失败证据不可变性与生命周期修复计划
 
 > 创建日期：2026-09-06（Asia/Tokyo）
-> 唯一活动计划：是
+> 唯一活动计划：否（EG0–EG4 已执行并 hard stop，等待独立审核）
 > 审核输入：root `b1195dd59830f7c44d831bd0007e61229446d9b5`
 > 审核结论：`remediation_required`
-> 下一停止点：EG0–EG4 完成后 hard stop，等待新的独立审核
+> 执行结果：EG0–EG4 已完成；最终独立审核待执行
 
 本计划只修复 EF4 首次失败原始报告被后续成功结果覆盖、同提交“自审批准”以及 machine handoff 顶层指针漂移所暴露的证据治理缺口。EF0–EF3 的已验证技术结果、现存 EF/ER/TZ bytes 和 R6 fallback 全部只读；无法恢复的首次失败 raw 必须诚实标为 `unavailable`，不得根据派生描述伪造或重建。
 
@@ -42,3 +42,5 @@
 - 顺序固定为 producers close/fsync→inactive cursor→attempt-specific manifest/outer hash→strict JSON/NPZ/CSV→只读 fallback bytes/SHA/CRC/layout→真实 process/GPU scan→targeted/full tests→final validation→closed heartbeat→checkout-stable closure。
 - 最终要求 duplicate-key rejection、targeted tests、全量 tests、`py_compile`、`git diff --check`、无 `.partial`、root/OpenPI clean；`LIBERO-plus` 既有 dirty 只记录且不得触碰。
 - 无论通过或失败均 hard stop；通过也只表示证据治理缺口关闭，不释放 physics、GPU、数据生成、训练、ZIP、上传或比赛提交。后续必须由新的独立审核决定。
+
+归档说明：本计划已按生命周期规则结束，执行证据保留在新的 EG namespace；归档文件只作为历史授权与停止点记录。

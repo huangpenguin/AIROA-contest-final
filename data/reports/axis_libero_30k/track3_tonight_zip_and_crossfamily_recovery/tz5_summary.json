@@ -1,0 +1,6 @@
+{
+  "created_at_utc": "2026-09-06T05:07:01.981497+00:00",
+  "reason": "no_accepted_data_or_forward_reverse_dataset_materialized",
+  "schema_version": "track3_tonight_tz5_v1",
+  "status": "not_evaluated"
+}

@@ -1,0 +1,27 @@
+{
+  "category": "infrastructure_failure",
+  "child_pid": null,
+  "completed_at_utc": "2026-09-06T05:02:16.516234+00:00",
+  "error": {
+    "message": "name 'np' is not defined",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/huang/code/PARC2026_final/tools/axis_pi05/track3_tonight_zip_and_crossfamily_recovery.py\", line 477, in cpu_worker\n    region = _safe_site_position(env, region_name, dynamic)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/huang/code/PARC2026_final/tools/axis_pi05/track3_tonight_zip_and_crossfamily_recovery.py\", line 407, in _safe_site_position\n    return np.asarray(pose[\"pos_m\"], dtype=np.float64)\n           ^^\nNameError: name 'np' is not defined\n",
+    "type": "NameError"
+  },
+  "family": "support_remove",
+  "fresh_process": true,
+  "gpu_policy": "no_gpu_cpu",
+  "mode": "CPU_no_renderer",
+  "official_track3_claim": false,
+  "parent_pid": 1572939,
+  "process_returncode": 1,
+  "profile_id": "support_contact_repair_a",
+  "schema_version": "track3_tonight_worker_v1",
+  "seed": 41010,
+  "start_at_utc": "2026-09-06T05:01:57.841712+00:00",
+  "status": "worker_exception",
+  "stderr_tail": "[robosuite WARNING] No private macro file found! (__init__.py:7)\n[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)\n[robosuite WARNING] To setup, run: python /home/huang/code/PARC2026_final/.venv_axis_pi05/lib/python3.12/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)\n",
+  "stdout_tail": "{\"completed_at_utc\": \"2026-09-06T05:02:16.516234+00:00\", \"error\": {\"message\": \"name 'np' is not defined\", \"traceback\": \"Traceback (most recent call last):\\n  File \\\"/home/huang/code/PARC2026_final/tools/axis_pi05/track3_tonight_zip_and_crossfamily_recovery.py\\\", line 477, in cpu_worker\\n    region = _safe_site_position(env, region_name, dynamic)\\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\\"/home/huang/code/PARC2026_final/tools/axis_pi05/track3_tonight_zip_and_crossfamily_recovery.py\\\", line 407, in _safe_site_position\\n    return np.asarray(pose[\\\"pos_m\\\"], dtype=np.float64)\\n           ^^\\nNameError: name 'np' is not defined\\n\", \"type\": \"NameError\"}, \"family\": \"support_remove\", \"fresh_process\": true, \"gpu_policy\": \"no_gpu_cpu\", \"mode\": \"CPU_no_renderer\", \"official_track3_claim\": false, \"profile_id\": \"support_contact_repair_a\", \"schema_version\": \"track3_tonight_worker_v1\", \"seed\": 41010, \"start_at_utc\": \"2026-09-06T05:01:57.841712+00:00\", \"status\": \"worker_exception\", \"task_index\": 10, \"training_eligible\": false}\n",
+  "task_index": 10,
+  "timed_out": false,
+  "training_eligible": false
+}

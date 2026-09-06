@@ -6,8 +6,8 @@
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_tonight_zip_and_crossfamily_recovery_planned`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md`
+> 当前总状态：`track3_tonight_zip_and_crossfamily_recovery_completed_fallback_hard_stop_pending_review`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md`（TZ9已收尾，等待新审核）
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
@@ -15,7 +15,7 @@
 
 ## 1. 一句话结论
 
-canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。AA0–AA4工程闭包已完成；AA5 support conservative CPU canary已到达抓取位但没有形成连续接触/source release。当前仍无reverse训练数据或新T3 ZIP。
+canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成；用户报告正式Track1=`0.47`、Track2=`0.33`、Track3=`0`。今晚TZ0–TZ9已完成：7条CPU profile均未形成成功family，因此没有reverse训练数据或新T3 candidate；已交付明确标注的本地R6 fallback ZIP。
 
 审核发现旧AA执行器只实现AA0–AA5/AA14，并把support正常family failure错误扩散为全部family停止。新计划改为`TZ0–TZ9`：先复验并物化明确标注的R6 fallback ZIP，同时一次性执行support/containment/articulation有界矩阵，条件式进入最小数据、单臂LoRA、holdout与T3 candidate；23:00 JST前留下candidate或诚实fallback，用户无需Teleop或中途逐阶段审核。
 
@@ -818,3 +818,11 @@ AA14已记录`AA5_support_conservative_family_failure` hard stop：AA6–AA13均
 AA5 physical family failure有效：76步为approach/descend/close=`49/21/6`，末端EEF误差约`0.000576 m / 0.00184 rad`，无controller clip；但contact continuous与source release均false，所以不能入训。审核结论为`remediation_required`，原因是旧工具只实现AA0–AA5/AA14，AA6–AA13无CLI，并违反计划中的family isolation把support失败扩散成全链停止。
 
 旧R6 FAST ZIP `artifacts/submission_axis_r6_step500_fast_positive_score_20260831.zip`已重算SHA为`95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a`，但它不含T3改进。旧AA计划已归档；唯一活动计划为`docs/AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md`。TZ0先物化明确标注的fallback，TZ1–TZ4一次性恢复三族、最多7条CPU/3条GPU3/6条generation/18次replay，TZ5–TZ8条件式执行mixture/norm、单臂LoRA、holdout/C20与candidate ZIP；23:00 JST前定版并TZ9 hard stop。不授权GPU0、官方GPU、Teleop、dense full-FT、自动上传或提交。
+
+## 72. Tonight TZ0–TZ9 执行收尾（2026-09-06）
+
+TZ0/TZ1通过。TZ0对来源和物化fallback执行了完整SHA-256、ZIP CRC和布局检查：两者均为`9383571677` bytes、SHA `95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a`，entry count `3401`，`model_fast`唯一且无slow权重；C5 source-success为`3/3`。物化方式为hardlink或byte-exact copy，无重压缩，标签为`fallback_no_track3_improvement`。
+
+TZ2按固定顺序实际完成7/7个CPU/no-renderer fresh child，严格没有逐个审核后追加profile：support为2条正常`family_failure`加1条执行器import bug造成的`infrastructure_failure`；该identity被保留且不重跑，修复后剩余6条继续完成。containment为`2/2 family_failure`，articulation为`2/2 family_failure`；三族成功均为0，旧`object_frame_nominal`/`object_frame_conservative`均未重跑。所有失败轨迹均不具备training eligibility。
+
+因为没有成功family，TZ3 GPU3 camera、TZ4 generation/replay、TZ5 mixture/QUANTILES、TZ6 R6 L2 LoRA、TZ7 holdout/C20和TZ8 candidate均记录为`not_evaluated`，不是推断的失败或成功；GPU3/generation/replay/accepted reverse/training/candidate分别为`0/0/0/0/false/false`。TZ9已再次CRC/SHA复验fallback并hard stop。机器证据为`data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/summary.json`，下一权限为`new_reviewed_plan_required`；root/OpenPI clean，`LIBERO-plus`既有dirty未触碰，没有上传或提交。

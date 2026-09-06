@@ -1,0 +1,55 @@
+{
+  "created_at_utc": "2026-09-06T05:15:29.015574+00:00",
+  "git_diff_check": {
+    "state": "passed",
+    "stderr": ""
+  },
+  "gpu": {
+    "0": {
+      "compute_processes": [],
+      "free": true,
+      "index": 0,
+      "returncode": 0,
+      "stderr": ""
+    },
+    "1": {
+      "compute_processes": [],
+      "free": true,
+      "index": 1,
+      "returncode": 0,
+      "stderr": ""
+    },
+    "2": {
+      "compute_processes": [],
+      "free": true,
+      "index": 2,
+      "returncode": 0,
+      "stderr": ""
+    },
+    "3": {
+      "compute_processes": [],
+      "free": true,
+      "index": 3,
+      "returncode": 0,
+      "stderr": ""
+    }
+  },
+  "partial_residue": [],
+  "phase_csv": {
+    "encoding": "UTF-8",
+    "line_ending": "LF",
+    "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/phase_ledger.csv",
+    "sha256": "296719b15a8dd4d137de465b5b45636a81ea18c407c14ecf31b70be504aa6d0f"
+  },
+  "py_compile": {
+    "state": "passed",
+    "stderr": ""
+  },
+  "schema_version": "track3_tonight_tz9_validation_v1",
+  "status": "passed",
+  "strict_json": {
+    "errors": [],
+    "files": 22,
+    "state": "passed"
+  }
+}

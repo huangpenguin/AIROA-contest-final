@@ -1,0 +1,209 @@
+{
+  "aa5_diagnostic": {
+    "observed_from_reviewed_evidence": {
+      "controller_clip": false,
+      "eef_rotation_error_rad": 0.00184,
+      "eef_translation_error_m": 0.000576,
+      "failure_scope": "continuous_gripper_contact_and_source_release; not arm_reachability",
+      "goal_success": "0/77",
+      "phases": [
+        49,
+        21,
+        6
+      ],
+      "source_contact_samples": "77/77",
+      "source_release": "false"
+    },
+    "old_nominal_or_conservative_rerun": false,
+    "profile_change_scope": "same public grasp offset envelope; close dwell only 1/2/3 ticks",
+    "rerun": false,
+    "schema_version": "track3_tonight_aa5_diagnostic_v1",
+    "source_reports": {},
+    "status": "passed"
+  },
+  "cli_contract": {
+    "atomic_cursor": true,
+    "atomic_heartbeat": true,
+    "missing_phase_cli": false,
+    "module": "tools.axis_pi05.track3_tonight_zip_and_crossfamily_recovery",
+    "old_aa_namespace_modified": false,
+    "phase_flags": [
+      "--tz0",
+      "--tz1",
+      "--tz2",
+      "--tz3",
+      "--tz4",
+      "--tz5",
+      "--tz6",
+      "--tz7",
+      "--tz8",
+      "--tz9"
+    ],
+    "return_code_contract": {
+      "failed_gate": 0,
+      "family_failure": 0,
+      "infrastructure_failure": 1,
+      "not_evaluated": 0,
+      "passed": 0,
+      "worker_exception": 1
+    },
+    "schema_version": "track3_tonight_cli_contract_v1",
+    "single_instance_supervisor": true,
+    "term_then_kill": true,
+    "worker_flags": [
+      "--cpu-worker",
+      "--gpu3-worker",
+      "--generation-worker",
+      "--replay-worker"
+    ]
+  },
+  "created_at_utc": "2026-09-06T05:01:34.678893+00:00",
+  "gpu_started": false,
+  "physics_started": false,
+  "preflight": {
+    "errors": [],
+    "p1_summary": "data/reports/axis_libero_30k/track3_public_terminal_recovery/p1_restore_canary_summary.json",
+    "reverse_bddl_sha256": {
+      "10": "8cbd2a5508922403699d35f08cb02501da58417c0ab1b96c350c0cfb681081f1",
+      "19": "54f92ee202577d67180f246c62138f6ec6152ba4dbb75f8fd2e70e2cf2000352",
+      "20": "5e7a15c4606ce9c58e078b446dec28ab26c8850f0040f6e4bc30198a75283c54"
+    },
+    "s3_summary": "data/reports/axis_libero_30k/track3_public_autogen/s3_reverse_adapter.json",
+    "snapshot_sha256": {
+      "10": "34e0c70edac11ce668e548c5cca308a9fbd16b64afc8726e8800280c8c82c66d",
+      "19": "0e2ee6afffe27c3ed8811b79a368111562b968ed381f3fb7388c68f2a6b1708e",
+      "20": "7d3d2547794fef4576672e6f37b666700556f857f1afddf19a8e173139f2d3e8"
+    },
+    "state": "passed"
+  },
+  "profile_count": 7,
+  "profile_families": {
+    "articulation_close": 2,
+    "containment_remove": 2,
+    "support_remove": 3
+  },
+  "profile_lock": {
+    "limits": {
+      "articulation_close": 2,
+      "containment_remove": 2,
+      "support_remove": 3,
+      "total": 7
+    },
+    "lock_sha256": "8868cb49457989813fbfa7f90d5f8e35346af039da368da05c64c1e7f381e18a",
+    "official_track3_claim": false,
+    "old_identities_denylist": [
+      "object_frame_nominal",
+      "object_frame_conservative"
+    ],
+    "parameter_source": {
+      "articulation_grasp_z_m": "public scripted articulation approach envelope",
+      "close_dwell": "AA5 continuous-contact diagnosis bounded to 1/2/3 ticks",
+      "grasp_z_m": "AA5/support anchor and existing public scripted envelope"
+    },
+    "profile_order": [
+      "support_contact_repair_a",
+      "support_contact_repair_b",
+      "support_contact_repair_c",
+      "containment_extract_a",
+      "containment_extract_b",
+      "articulation_pull_a",
+      "articulation_pull_b"
+    ],
+    "profiles": [
+      {
+        "close_dwell": 1,
+        "family": "support_remove",
+        "gpu": false,
+        "grasp_z_m": 0.025,
+        "identity_scope": "new_tonight_identity_once",
+        "old_identity_rerun": false,
+        "profile_id": "support_contact_repair_a",
+        "release_dwell": 1,
+        "renderer": false,
+        "seed": 41010,
+        "task_index": 10
+      },
+      {
+        "close_dwell": 2,
+        "family": "support_remove",
+        "gpu": false,
+        "grasp_z_m": 0.025,
+        "identity_scope": "new_tonight_identity_once",
+        "old_identity_rerun": false,
+        "profile_id": "support_contact_repair_b",
+        "release_dwell": 1,
+        "renderer": false,
+        "seed": 41011,
+        "task_index": 10
+      },
+      {
+        "close_dwell": 3,
+        "family": "support_remove",
+        "gpu": false,
+        "grasp_z_m": 0.025,
+        "identity_scope": "new_tonight_identity_once",
+        "old_identity_rerun": false,
+        "profile_id": "support_contact_repair_c",
+        "release_dwell": 1,
+        "renderer": false,
+        "seed": 41012,
+        "task_index": 10
+      },
+      {
+        "close_dwell": 1,
+        "family": "containment_remove",
+        "gpu": false,
+        "grasp_z_m": 0.025,
+        "identity_scope": "new_tonight_identity_once",
+        "old_identity_rerun": false,
+        "profile_id": "containment_extract_a",
+        "release_dwell": 1,
+        "renderer": false,
+        "seed": 42020,
+        "task_index": 20
+      },
+      {
+        "close_dwell": 2,
+        "family": "containment_remove",
+        "gpu": false,
+        "grasp_z_m": 0.025,
+        "identity_scope": "new_tonight_identity_once",
+        "old_identity_rerun": false,
+        "profile_id": "containment_extract_b",
+        "release_dwell": 1,
+        "renderer": false,
+        "seed": 42021,
+        "task_index": 20
+      },
+      {
+        "close_dwell": 1,
+        "family": "articulation_close",
+        "gpu": false,
+        "grasp_z_m": 0.012,
+        "identity_scope": "new_tonight_identity_once",
+        "old_identity_rerun": false,
+        "profile_id": "articulation_pull_a",
+        "release_dwell": 1,
+        "renderer": false,
+        "seed": 43019,
+        "task_index": 19
+      },
+      {
+        "close_dwell": 2,
+        "family": "articulation_close",
+        "gpu": false,
+        "grasp_z_m": 0.012,
+        "identity_scope": "new_tonight_identity_once",
+        "old_identity_rerun": false,
+        "profile_id": "articulation_pull_b",
+        "release_dwell": 1,
+        "renderer": false,
+        "seed": 43020,
+        "task_index": 19
+      }
+    ],
+    "schema_version": "track3_tonight_profile_lock_v1"
+  },
+  "schema_version": "track3_tonight_tz1_v1",
+  "status": "passed"
+}

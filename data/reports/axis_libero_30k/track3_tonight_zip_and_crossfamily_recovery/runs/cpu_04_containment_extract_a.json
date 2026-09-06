@@ -1,0 +1,328 @@
+{
+  "category": "family_failure",
+  "child_pid": 1573316,
+  "completed_at_utc": "2026-09-06T05:04:56.002184+00:00",
+  "family": "containment_remove",
+  "final": {
+    "all_false": false,
+    "all_true": false,
+    "count": 2,
+    "detail_complete": true,
+    "label": "final",
+    "predicates": [
+      {
+        "args": [
+          "orange_juice_1",
+          "basket_1_contain_region"
+        ],
+        "atom": "(In orange_juice_1 basket_1_contain_region)",
+        "detail": {
+          "args": [
+            "orange_juice_1",
+            "basket_1_contain_region"
+          ],
+          "contact_information": {
+            "ontop_xy_threshold_m": null,
+            "predicate_contact_is_model_defined": true,
+            "site_contact_is_logical_true": true
+          },
+          "detail_status": "passed",
+          "geometry": [
+            {
+              "kind": "object",
+              "name": "orange_juice_1",
+              "pos_m": [
+                0.010237200076088955,
+                0.23480750506713066,
+                0.0867726540505881
+              ],
+              "quat": [
+                0.5306601535558738,
+                0.5357447049709702,
+                0.4659565014154805,
+                0.4628843822298068
+              ]
+            },
+            {
+              "kind": "site",
+              "name": "basket_1_contain_region",
+              "pos_m": [
+                -0.003945125457932087,
+                0.25893494155099545,
+                0.0674789288144455
+              ],
+              "quat": [
+                -0.0036125678473617508,
+                0.002041458657131039,
+                -0.7068033530130804,
+                0.7073979092205221
+              ]
+            }
+          ],
+          "predicate": "In",
+          "value": true
+        },
+        "detail_status": "passed",
+        "predicate": "In",
+        "truth_status": "passed",
+        "value": true
+      },
+      {
+        "args": [
+          "orange_juice_1",
+          "floor_target_object_region"
+        ],
+        "atom": "(On orange_juice_1 floor_target_object_region)",
+        "detail": {
+          "args": [
+            "orange_juice_1",
+            "floor_target_object_region"
+          ],
+          "contact_information": {
+            "ontop_xy_threshold_m": 0.03,
+            "predicate_contact_is_model_defined": true,
+            "site_contact_is_logical_true": true
+          },
+          "detail_status": "passed",
+          "geometry": [
+            {
+              "kind": "object",
+              "name": "orange_juice_1",
+              "pos_m": [
+                0.010237200076088955,
+                0.23480750506713066,
+                0.0867726540505881
+              ],
+              "quat": [
+                0.5306601535558738,
+                0.5357447049709702,
+                0.4659565014154805,
+                0.4628843822298068
+              ]
+            },
+            {
+              "kind": "site",
+              "name": "floor_target_object_region",
+              "pos_m": [
+                0.05,
+                -0.1,
+                0.02
+              ],
+              "quat": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            }
+          ],
+          "predicate": "On",
+          "value": false
+        },
+        "detail_status": "passed",
+        "predicate": "On",
+        "truth_status": "passed",
+        "value": false
+      }
+    ],
+    "true_count": 1,
+    "truth_complete": true
+  },
+  "fresh_process": true,
+  "gates": {
+    "all_stages_reached": false,
+    "controller_clip": false,
+    "goal_true": false,
+    "source_released": false,
+    "unrelated_contact": false
+  },
+  "gpu_policy": "no_gpu_cpu",
+  "initial": {
+    "goal": {
+      "all_false": true,
+      "all_true": false,
+      "count": 1,
+      "detail_complete": true,
+      "label": "initial_goal",
+      "predicates": [
+        {
+          "args": [
+            "orange_juice_1",
+            "floor_target_object_region"
+          ],
+          "atom": "(On orange_juice_1 floor_target_object_region)",
+          "detail": {
+            "args": [
+              "orange_juice_1",
+              "floor_target_object_region"
+            ],
+            "contact_information": {
+              "ontop_xy_threshold_m": 0.03,
+              "predicate_contact_is_model_defined": true,
+              "site_contact_is_logical_true": true
+            },
+            "detail_status": "passed",
+            "geometry": [
+              {
+                "kind": "object",
+                "name": "orange_juice_1",
+                "pos_m": [
+                  0.007147495454395382,
+                  0.23398589469893888,
+                  0.08673131566930439
+                ],
+                "quat": [
+                  0.5331260679004391,
+                  0.5331396299723834,
+                  0.464507987776857,
+                  0.4645116359892635
+                ]
+              },
+              {
+                "kind": "site",
+                "name": "floor_target_object_region",
+                "pos_m": [
+                  0.05,
+                  -0.1,
+                  0.02
+                ],
+                "quat": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              }
+            ],
+            "predicate": "On",
+            "value": false
+          },
+          "detail_status": "passed",
+          "predicate": "On",
+          "truth_status": "passed",
+          "value": false
+        }
+      ],
+      "true_count": 0,
+      "truth_complete": true
+    },
+    "source": {
+      "all_false": false,
+      "all_true": true,
+      "count": 1,
+      "detail_complete": true,
+      "label": "initial_source",
+      "predicates": [
+        {
+          "args": [
+            "orange_juice_1",
+            "basket_1_contain_region"
+          ],
+          "atom": "(In orange_juice_1 basket_1_contain_region)",
+          "detail": {
+            "args": [
+              "orange_juice_1",
+              "basket_1_contain_region"
+            ],
+            "contact_information": {
+              "ontop_xy_threshold_m": null,
+              "predicate_contact_is_model_defined": true,
+              "site_contact_is_logical_true": true
+            },
+            "detail_status": "passed",
+            "geometry": [
+              {
+                "kind": "object",
+                "name": "orange_juice_1",
+                "pos_m": [
+                  0.007147495454395382,
+                  0.23398589469893888,
+                  0.08673131566930439
+                ],
+                "quat": [
+                  0.5331260679004391,
+                  0.5331396299723834,
+                  0.464507987776857,
+                  0.4645116359892635
+                ]
+              },
+              {
+                "kind": "site",
+                "name": "basket_1_contain_region",
+                "pos_m": [
+                  -0.006842596178943155,
+                  0.25807847613618207,
+                  0.06726341910963006
+                ],
+                "quat": [
+                  -0.0016917666283873005,
+                  -0.0016855599447853846,
+                  -0.7071047051980403,
+                  0.7071048244073436
+                ]
+              }
+            ],
+            "predicate": "In",
+            "value": true
+          },
+          "detail_status": "passed",
+          "predicate": "In",
+          "truth_status": "passed",
+          "value": true
+        }
+      ],
+      "true_count": 1,
+      "truth_complete": true
+    }
+  },
+  "metrics": {
+    "action_saturation_count": 5,
+    "contact_sample_count": 149,
+    "controller_clip": false,
+    "eef_error_max_m": 0.10338446379513054,
+    "subject_robot_contact_samples": 0
+  },
+  "mode": "CPU_no_renderer",
+  "model": {
+    "hdf5": "/home/huang/code/PARC2026_final/data/raw/public/libero_official_hdf5/libero_object/pick_up_the_orange_juice_and_place_it_in_the_basket_demo.hdf5",
+    "model_file_sha256": "4e0497a77437ac5846c84c6bea8e08a9af66b11829f8edbe8bc692616a1be723",
+    "resolved_model_xml_sha256": "cbd8ed17a212e1b87ea4793847d8dd40532d724225f797aa218b65f16dece429",
+    "snapshot": "data/reports/axis_libero_30k/track3_public_terminal_recovery/snapshots/task_20/attempt_1/terminal_state.npy",
+    "snapshot_sha256": "7d3d2547794fef4576672e6f37b666700556f857f1afddf19a8e173139f2d3e8"
+  },
+  "official_track3_claim": false,
+  "parent_pid": 1573225,
+  "process_returncode": 0,
+  "profile_id": "containment_extract_a",
+  "schema_version": "track3_tonight_worker_v1",
+  "seed": 42020,
+  "source_false_step": null,
+  "stage_results": [
+    {
+      "action_saturation_count": 0,
+      "last_eef_error_m": 0.0033320341118047735,
+      "reached": true,
+      "stage": "approach_object",
+      "steps": 9
+    },
+    {
+      "action_saturation_count": 5,
+      "last_eef_error_m": 0.034312562942298334,
+      "reached": false,
+      "stage": "descend_object",
+      "steps": 140
+    }
+  ],
+  "start_at_utc": "2026-09-06T05:04:28.584702+00:00",
+  "status": "failed_gate",
+  "stderr_tail": "[robosuite WARNING] No private macro file found! (__init__.py:7)\n[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)\n[robosuite WARNING] To setup, run: python /home/huang/code/PARC2026_final/.venv_axis_pi05/lib/python3.12/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)\n",
+  "stdout_tail": "4391, 0.5331396299723834, 0.464507987776857, 0.4645116359892635]}, {\"kind\": \"site\", \"name\": \"floor_target_object_region\", \"pos_m\": [0.05, -0.1, 0.02], \"quat\": [0.0, 0.0, 0.0, 1.0]}], \"predicate\": \"On\", \"value\": false}, \"detail_status\": \"passed\", \"predicate\": \"On\", \"truth_status\": \"passed\", \"value\": false}], \"true_count\": 0, \"truth_complete\": true}, \"source\": {\"all_false\": false, \"all_true\": true, \"count\": 1, \"detail_complete\": true, \"label\": \"initial_source\", \"predicates\": [{\"args\": [\"orange_juice_1\", \"basket_1_contain_region\"], \"atom\": \"(In orange_juice_1 basket_1_contain_region)\", \"detail\": {\"args\": [\"orange_juice_1\", \"basket_1_contain_region\"], \"contact_information\": {\"ontop_xy_threshold_m\": null, \"predicate_contact_is_model_defined\": true, \"site_contact_is_logical_true\": true}, \"detail_status\": \"passed\", \"geometry\": [{\"kind\": \"object\", \"name\": \"orange_juice_1\", \"pos_m\": [0.007147495454395382, 0.23398589469893888, 0.08673131566930439], \"quat\": [0.5331260679004391, 0.5331396299723834, 0.464507987776857, 0.4645116359892635]}, {\"kind\": \"site\", \"name\": \"basket_1_contain_region\", \"pos_m\": [-0.006842596178943155, 0.25807847613618207, 0.06726341910963006], \"quat\": [-0.0016917666283873005, -0.0016855599447853846, -0.7071047051980403, 0.7071048244073436]}], \"predicate\": \"In\", \"value\": true}, \"detail_status\": \"passed\", \"predicate\": \"In\", \"truth_status\": \"passed\", \"value\": true}], \"true_count\": 1, \"truth_complete\": true}}, \"metrics\": {\"action_saturation_count\": 5, \"contact_sample_count\": 149, \"controller_clip\": false, \"eef_error_max_m\": 0.10338446379513054, \"subject_robot_contact_samples\": 0}, \"mode\": \"CPU_no_renderer\", \"model\": {\"hdf5\": \"/home/huang/code/PARC2026_final/data/raw/public/libero_official_hdf5/libero_object/pick_up_the_orange_juice_and_place_it_in_the_basket_demo.hdf5\", \"model_file_sha256\": \"4e0497a77437ac5846c84c6bea8e08a9af66b11829f8edbe8bc692616a1be723\", \"resolved_model_xml_sha256\": \"cbd8ed17a212e1b87ea4793847d8dd40532d724225f797aa218b65f16dece429\", \"snapshot\": \"data/reports/axis_libero_30k/track3_public_terminal_recovery/snapshots/task_20/attempt_1/terminal_state.npy\", \"snapshot_sha256\": \"7d3d2547794fef4576672e6f37b666700556f857f1afddf19a8e173139f2d3e8\"}, \"official_track3_claim\": false, \"profile_id\": \"containment_extract_a\", \"schema_version\": \"track3_tonight_worker_v1\", \"seed\": 42020, \"source_false_step\": null, \"stage_results\": [{\"action_saturation_count\": 0, \"last_eef_error_m\": 0.0033320341118047735, \"reached\": true, \"stage\": \"approach_object\", \"steps\": 9}, {\"action_saturation_count\": 5, \"last_eef_error_m\": 0.034312562942298334, \"reached\": false, \"stage\": \"descend_object\", \"steps\": 140}], \"start_at_utc\": \"2026-09-06T05:04:28.584702+00:00\", \"status\": \"failed_gate\", \"steps\": 149, \"task_index\": 20, \"trace\": {\"path\": \"data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/traces/containment_extract_a_demo0.npz\", \"sha256\": \"cc7b74cbb044c1d432a8b7bdb5f7e547e13f3da57968e1b21c0b0de91fa073d8\"}, \"training_eligible\": false}\n",
+  "steps": 149,
+  "task_index": 20,
+  "timed_out": false,
+  "trace": {
+    "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/traces/containment_extract_a_demo0.npz",
+    "sha256": "cc7b74cbb044c1d432a8b7bdb5f7e547e13f3da57968e1b21c0b0de91fa073d8"
+  },
+  "training_eligible": false
+}

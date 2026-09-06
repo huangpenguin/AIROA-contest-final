@@ -1,0 +1,66 @@
+{
+  "created_at_utc": "2026-09-06T05:01:22.521455+00:00",
+  "fallback": {
+    "c5_source_success": {
+      "gates": {
+        "coverage_5_of_5": true,
+        "forbidden_log_markers_absent": true,
+        "http_server_errors_zero": true,
+        "nonfinite_actions_zero": true,
+        "required_log_markers": true,
+        "source_success_reproduced_at_least_2_of_3": true,
+        "stalls_zero": true
+      },
+      "path": "data/reports/axis_libero_30k/post_r6_lora/r6_positive_score_fast/track1_calibration/summary.json",
+      "source_success_reproduced": 3,
+      "state": "passed",
+      "status": "passed"
+    },
+    "materialized": {
+      "bytes": 9383571677,
+      "method": "hardlink_or_byte_exact_copy_no_recompress",
+      "path": "artifacts/submission_axis_r6_fallback_revalidated_20260906.zip",
+      "sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a"
+    },
+    "official_track3_claim": false,
+    "readiness": "fallback_no_track3_improvement",
+    "schema_version": "track3_tonight_fallback_revalidation_v1",
+    "source": {
+      "bytes": 9383571677,
+      "path": "artifacts/submission_axis_r6_step500_fast_positive_score_20260831.zip",
+      "sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a"
+    },
+    "status": "passed",
+    "track3_improvement": false,
+    "upload_or_submission": false,
+    "zip": {
+      "crc_test": "passed",
+      "entry_count": 3401,
+      "manifest_normalization": "QUANTILES",
+      "manifest_official_result": false,
+      "manifest_submission_status": "NOT_SUBMITTED",
+      "model_fast_exactly_one": true,
+      "slow_model_entries": []
+    }
+  },
+  "no_gpu": true,
+  "no_physics": true,
+  "preflight": {
+    "errors": [],
+    "p1_summary": "data/reports/axis_libero_30k/track3_public_terminal_recovery/p1_restore_canary_summary.json",
+    "reverse_bddl_sha256": {
+      "10": "8cbd2a5508922403699d35f08cb02501da58417c0ab1b96c350c0cfb681081f1",
+      "19": "54f92ee202577d67180f246c62138f6ec6152ba4dbb75f8fd2e70e2cf2000352",
+      "20": "5e7a15c4606ce9c58e078b446dec28ab26c8850f0040f6e4bc30198a75283c54"
+    },
+    "s3_summary": "data/reports/axis_libero_30k/track3_public_autogen/s3_reverse_adapter.json",
+    "snapshot_sha256": {
+      "10": "34e0c70edac11ce668e548c5cca308a9fbd16b64afc8726e8800280c8c82c66d",
+      "19": "0e2ee6afffe27c3ed8811b79a368111562b968ed381f3fb7388c68f2a6b1708e",
+      "20": "7d3d2547794fef4576672e6f37b666700556f857f1afddf19a8e173139f2d3e8"
+    },
+    "state": "passed"
+  },
+  "schema_version": "track3_tonight_tz0_v1",
+  "status": "passed"
+}

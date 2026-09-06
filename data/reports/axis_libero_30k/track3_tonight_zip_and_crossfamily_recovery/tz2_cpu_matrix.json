@@ -1,0 +1,122 @@
+{
+  "created_at_utc": "2026-09-06T05:06:26.668270+00:00",
+  "family_failure_isolation": true,
+  "family_success": {
+    "articulation_close": [],
+    "containment_remove": [],
+    "support_remove": []
+  },
+  "infrastructure_failure": null,
+  "limits": {
+    "executed": 7,
+    "max_profiles": 7
+  },
+  "no_old_identity_rerun": true,
+  "profile_count": 7,
+  "profiles": [
+    {
+      "category": "infrastructure_failure",
+      "family": "support_remove",
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/cpu_01_support_contact_repair_a.json",
+      "profile_id": "support_contact_repair_a",
+      "resumed_existing": true,
+      "returncode": 1,
+      "status": "worker_exception",
+      "task_index": 10,
+      "timed_out": false,
+      "trace": null
+    },
+    {
+      "category": "family_failure",
+      "family": "support_remove",
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/cpu_02_support_contact_repair_b.json",
+      "profile_id": "support_contact_repair_b",
+      "resumed_existing": false,
+      "returncode": 0,
+      "status": "failed_gate",
+      "task_index": 10,
+      "timed_out": false,
+      "trace": {
+        "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/traces/support_contact_repair_b_demo0.npz",
+        "sha256": "5ac8ae9a849a6a5588eb49c2e00d26e88d75116e9d05e2e6cc59a9df60d3f6c7"
+      }
+    },
+    {
+      "category": "family_failure",
+      "family": "support_remove",
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/cpu_03_support_contact_repair_c.json",
+      "profile_id": "support_contact_repair_c",
+      "resumed_existing": false,
+      "returncode": 0,
+      "status": "failed_gate",
+      "task_index": 10,
+      "timed_out": false,
+      "trace": {
+        "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/traces/support_contact_repair_c_demo0.npz",
+        "sha256": "5ac8ae9a849a6a5588eb49c2e00d26e88d75116e9d05e2e6cc59a9df60d3f6c7"
+      }
+    },
+    {
+      "category": "family_failure",
+      "family": "containment_remove",
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/cpu_04_containment_extract_a.json",
+      "profile_id": "containment_extract_a",
+      "resumed_existing": false,
+      "returncode": 0,
+      "status": "failed_gate",
+      "task_index": 20,
+      "timed_out": false,
+      "trace": {
+        "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/traces/containment_extract_a_demo0.npz",
+        "sha256": "cc7b74cbb044c1d432a8b7bdb5f7e547e13f3da57968e1b21c0b0de91fa073d8"
+      }
+    },
+    {
+      "category": "family_failure",
+      "family": "containment_remove",
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/cpu_05_containment_extract_b.json",
+      "profile_id": "containment_extract_b",
+      "resumed_existing": false,
+      "returncode": 0,
+      "status": "failed_gate",
+      "task_index": 20,
+      "timed_out": false,
+      "trace": {
+        "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/traces/containment_extract_b_demo0.npz",
+        "sha256": "cc7b74cbb044c1d432a8b7bdb5f7e547e13f3da57968e1b21c0b0de91fa073d8"
+      }
+    },
+    {
+      "category": "family_failure",
+      "family": "articulation_close",
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/cpu_06_articulation_pull_a.json",
+      "profile_id": "articulation_pull_a",
+      "resumed_existing": false,
+      "returncode": 0,
+      "status": "failed_gate",
+      "task_index": 19,
+      "timed_out": false,
+      "trace": {
+        "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/traces/articulation_pull_a_demo0.npz",
+        "sha256": "269a2c5a9630381a91e64389c189e6c4e1547b404308d844d92b37be23479b17"
+      }
+    },
+    {
+      "category": "family_failure",
+      "family": "articulation_close",
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/cpu_07_articulation_pull_b.json",
+      "profile_id": "articulation_pull_b",
+      "resumed_existing": false,
+      "returncode": 0,
+      "status": "failed_gate",
+      "task_index": 19,
+      "timed_out": false,
+      "trace": {
+        "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/traces/articulation_pull_b_demo0.npz",
+        "sha256": "269a2c5a9630381a91e64389c189e6c4e1547b404308d844d92b37be23479b17"
+      }
+    }
+  ],
+  "schema_version": "track3_tonight_tz2_cpu_matrix_v1",
+  "status": "completed"
+}

@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-06",
-  "status": "track3_tonight_zip_and_crossfamily_recovery_planned",
+  "status": "track3_tonight_zip_and_crossfamily_recovery_completed_fallback_hard_stop_pending_review",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
   "latest_audited_execution_commit": "0e7e495d6a8c4dd9abb32525d117eda8166d1a8c",
   "latest_audit_input_commit": "0e7e495d6a8c4dd9abb32525d117eda8166d1a8c",
-  "latest_execution_root_commit": "0e7e495d6a8c4dd9abb32525d117eda8166d1a8c",
+  "latest_execution_root_commit": "343c5a554b0bfa05839b145f48a8c785d38edd19",
   "latest_execution_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-audit-remediation",
@@ -260,7 +260,7 @@
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
   "next_plan": "docs/AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md",
-  "next_phase_only": "TZ0_to_TZ9_then_hard_stop",
+  "next_phase_only": "new_reviewed_plan_required",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -4053,8 +4053,59 @@
     "historical_evidence_rewritten": false,
     "next_plan_approved": true
   },
+  "track3_tonight_zip_and_crossfamily_recovery_execution": {
+    "status": "track3_tonight_zip_and_crossfamily_recovery_completed_fallback_hard_stop_pending_review",
+    "plan": "docs/AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md",
+    "execution_root_commit": "343c5a554b0bfa05839b145f48a8c785d38edd19",
+    "executor_remediation_commit": "343c5a554b0bfa05839b145f48a8c785d38edd19",
+    "evidence_root": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery",
+    "phase_status": {
+      "TZ0": "passed",
+      "TZ1": "passed",
+      "TZ2": "completed_7_of_7",
+      "TZ3": "not_evaluated",
+      "TZ4": "not_evaluated",
+      "TZ5": "not_evaluated",
+      "TZ6": "not_evaluated",
+      "TZ7": "not_evaluated",
+      "TZ8": "not_evaluated",
+      "TZ9": "fallback_delivered_hard_stop"
+    },
+    "cpu_matrix": {
+      "executed": 7,
+      "maximum": 7,
+      "support_remove": {"executed": 3, "family_success": 0, "family_failure": 2, "infrastructure_failure": 1, "old_identity_rerun": false},
+      "containment_remove": {"executed": 2, "family_success": 0, "family_failure": 2, "old_identity_rerun": false},
+      "articulation_close": {"executed": 2, "family_success": 0, "family_failure": 2, "old_identity_rerun": false},
+      "infrastructure_failure_identity": "support_contact_repair_a",
+      "infrastructure_failure_reason": "executor_missing_delayed_numpy_import; preserved and did not rerun identity"
+    },
+    "gpu3_camera_canaries": 0,
+    "generation": 0,
+    "fresh_replays": 0,
+    "accepted_reverse_demos": [0, 0, 0],
+    "training_started": false,
+    "candidate_zip_created": false,
+    "fallback": {
+      "readiness": "fallback_no_track3_improvement",
+      "path": "artifacts/submission_axis_r6_fallback_revalidated_20260906.zip",
+      "bytes": 9383571677,
+      "sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a",
+      "source_path": "artifacts/submission_axis_r6_step500_fast_positive_score_20260831.zip",
+      "crc_test": "passed",
+      "entry_count": 3401,
+      "track3_improvement": false
+    },
+    "final_manifest": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/final_manifest.json",
+    "phase_ledger_csv": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/phase_ledger.csv",
+    "validation": {"path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/tz9_validation.json", "status": "passed", "strict_json_files": 22, "partial_residue": 0, "gpu0_to_gpu3_compute_processes": 0},
+    "tests": {"targeted": {"passed": 50, "skipped": 0, "warnings": 2, "returncode": 0}, "project_full_tests": {"passed": 293, "skipped": 7, "warnings": 23, "returncode": 0}, "command_scope": "PYTHONPATH=. ./.venv_axis_pi05/bin/pytest -q tests", "external_nested_pytest_collection": "not_project_full_test_scope; not modified"},
+    "resource_boundary": {"gpu0_compute": false, "official_gpu": false, "teleop": false, "dense_full_ft": false, "upload": false, "submission": false},
+    "hard_stop": {"status": "hard_stop", "next_authority": "new_reviewed_plan_required", "deadline_jst": "2026-09-06T23:00:00+09:00"},
+    "historical_evidence_rewritten": false
+  },
   "track3_tonight_zip_and_crossfamily_recovery_authorization": {
-    "status": "track3_tonight_zip_and_crossfamily_recovery_planned",
+    "status": "track3_tonight_zip_and_crossfamily_recovery_completed_fallback_hard_stop_pending_review",
     "plan": "docs/AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md",
     "audited_input_commit": "0e7e495d6a8c4dd9abb32525d117eda8166d1a8c",
     "authorized_phases": ["TZ0", "TZ1", "TZ2", "TZ3", "TZ4", "TZ5", "TZ6", "TZ7", "TZ8", "TZ9_closeout"],
@@ -4101,6 +4152,6 @@
       "manifest_hash_or_zip_crc_failure"
     ],
     "family_failure_policy": "close_only_failed_identity_and_continue_other_families",
-    "next_phase_only": "TZ0_to_TZ9_then_hard_stop"
+    "next_phase_only": "new_reviewed_plan_required"
   }
 }

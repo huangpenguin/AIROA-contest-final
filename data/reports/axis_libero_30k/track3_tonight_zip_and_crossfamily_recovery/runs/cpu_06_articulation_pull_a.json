@@ -1,0 +1,257 @@
+{
+  "category": "family_failure",
+  "child_pid": 1573540,
+  "completed_at_utc": "2026-09-06T05:05:55.152083+00:00",
+  "family": "articulation_close",
+  "final": {
+    "all_false": false,
+    "all_true": false,
+    "count": 2,
+    "detail_complete": true,
+    "label": "final",
+    "predicates": [
+      {
+        "args": [
+          "wooden_cabinet_1_middle_region"
+        ],
+        "atom": "(Open wooden_cabinet_1_middle_region)",
+        "detail": {
+          "args": [
+            "wooden_cabinet_1_middle_region"
+          ],
+          "detail_status": "passed",
+          "geometry": [
+            {
+              "kind": "site",
+              "name": "wooden_cabinet_1_middle_region",
+              "pos_m": [
+                0.0266918,
+                -0.08675677429082455,
+                1.0219
+              ],
+              "quat": [
+                -0.7071067811865475,
+                0.0,
+                0.7071067811865475,
+                0.0
+              ]
+            }
+          ],
+          "joint_names": [
+            "wooden_cabinet_1_middle_level"
+          ],
+          "joint_values": [
+            -0.15983322570917544
+          ],
+          "predicate": "Open",
+          "value": true
+        },
+        "detail_status": "passed",
+        "predicate": "Open",
+        "truth_status": "passed",
+        "value": true
+      },
+      {
+        "args": [
+          "wooden_cabinet_1_middle_region"
+        ],
+        "atom": "(Close wooden_cabinet_1_middle_region)",
+        "detail": {
+          "args": [
+            "wooden_cabinet_1_middle_region"
+          ],
+          "detail_status": "passed",
+          "geometry": [
+            {
+              "kind": "site",
+              "name": "wooden_cabinet_1_middle_region",
+              "pos_m": [
+                0.0266918,
+                -0.08675677429082455,
+                1.0219
+              ],
+              "quat": [
+                -0.7071067811865475,
+                0.0,
+                0.7071067811865475,
+                0.0
+              ]
+            }
+          ],
+          "joint_names": [
+            "wooden_cabinet_1_middle_level"
+          ],
+          "joint_values": [
+            -0.15983322570917544
+          ],
+          "predicate": "Close",
+          "value": false
+        },
+        "detail_status": "passed",
+        "predicate": "Close",
+        "truth_status": "passed",
+        "value": false
+      }
+    ],
+    "true_count": 1,
+    "truth_complete": true
+  },
+  "fresh_process": true,
+  "gates": {
+    "all_stages_reached": false,
+    "controller_clip": false,
+    "goal_true": false,
+    "source_released": false,
+    "unrelated_contact": false
+  },
+  "gpu_policy": "no_gpu_cpu",
+  "initial": {
+    "goal": {
+      "all_false": true,
+      "all_true": false,
+      "count": 1,
+      "detail_complete": true,
+      "label": "initial_goal",
+      "predicates": [
+        {
+          "args": [
+            "wooden_cabinet_1_middle_region"
+          ],
+          "atom": "(Close wooden_cabinet_1_middle_region)",
+          "detail": {
+            "args": [
+              "wooden_cabinet_1_middle_region"
+            ],
+            "detail_status": "passed",
+            "geometry": [
+              {
+                "kind": "site",
+                "name": "wooden_cabinet_1_middle_region",
+                "pos_m": [
+                  0.0266918,
+                  -0.08675677428520547,
+                  1.0219
+                ],
+                "quat": [
+                  -0.7071067811865475,
+                  0.0,
+                  0.7071067811865475,
+                  0.0
+                ]
+              }
+            ],
+            "joint_names": [
+              "wooden_cabinet_1_middle_level"
+            ],
+            "joint_values": [
+              -0.15983322571479452
+            ],
+            "predicate": "Close",
+            "value": false
+          },
+          "detail_status": "passed",
+          "predicate": "Close",
+          "truth_status": "passed",
+          "value": false
+        }
+      ],
+      "true_count": 0,
+      "truth_complete": true
+    },
+    "source": {
+      "all_false": false,
+      "all_true": true,
+      "count": 1,
+      "detail_complete": true,
+      "label": "initial_source",
+      "predicates": [
+        {
+          "args": [
+            "wooden_cabinet_1_middle_region"
+          ],
+          "atom": "(Open wooden_cabinet_1_middle_region)",
+          "detail": {
+            "args": [
+              "wooden_cabinet_1_middle_region"
+            ],
+            "detail_status": "passed",
+            "geometry": [
+              {
+                "kind": "site",
+                "name": "wooden_cabinet_1_middle_region",
+                "pos_m": [
+                  0.0266918,
+                  -0.08675677428520547,
+                  1.0219
+                ],
+                "quat": [
+                  -0.7071067811865475,
+                  0.0,
+                  0.7071067811865475,
+                  0.0
+                ]
+              }
+            ],
+            "joint_names": [
+              "wooden_cabinet_1_middle_level"
+            ],
+            "joint_values": [
+              -0.15983322571479452
+            ],
+            "predicate": "Open",
+            "value": true
+          },
+          "detail_status": "passed",
+          "predicate": "Open",
+          "truth_status": "passed",
+          "value": true
+        }
+      ],
+      "true_count": 1,
+      "truth_complete": true
+    }
+  },
+  "metrics": {
+    "action_saturation_count": 10,
+    "contact_sample_count": 180,
+    "controller_clip": false,
+    "eef_error_max_m": 0.1102436036990598,
+    "subject_robot_contact_samples": 0
+  },
+  "mode": "CPU_no_renderer",
+  "model": {
+    "hdf5": "/home/huang/code/PARC2026_final/data/raw/public/libero_official_hdf5/libero_goal/open_the_middle_drawer_of_the_cabinet_demo.hdf5",
+    "model_file_sha256": "ccf958ea89aa0e84e32cb90b99e31faf66f3cd5e33082f7d2a1d4444c4660257",
+    "resolved_model_xml_sha256": "32e9c8562f8b79a7764ab0feead506d54772fa5c5986c1f5660d66b88a3b3281",
+    "snapshot": "data/reports/axis_libero_30k/track3_public_terminal_recovery/snapshots/task_19/attempt_1/terminal_state.npy",
+    "snapshot_sha256": "0e2ee6afffe27c3ed8811b79a368111562b968ed381f3fb7388c68f2a6b1708e"
+  },
+  "official_track3_claim": false,
+  "parent_pid": 1573225,
+  "process_returncode": 0,
+  "profile_id": "articulation_pull_a",
+  "schema_version": "track3_tonight_worker_v1",
+  "seed": 43019,
+  "source_false_step": null,
+  "stage_results": [
+    {
+      "action_saturation_count": 10,
+      "last_eef_error_m": 0.07632811107425967,
+      "reached": false,
+      "stage": "approach_drawer_region",
+      "steps": 180
+    }
+  ],
+  "start_at_utc": "2026-09-06T05:05:25.466382+00:00",
+  "status": "failed_gate",
+  "stderr_tail": "[robosuite WARNING] No private macro file found! (__init__.py:7)\n[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)\n[robosuite WARNING] To setup, run: python /home/huang/code/PARC2026_final/.venv_axis_pi05/lib/python3.12/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)\n",
+  "stdout_tail": "\": false, \"unrelated_contact\": false}, \"gpu_policy\": \"no_gpu_cpu\", \"initial\": {\"goal\": {\"all_false\": true, \"all_true\": false, \"count\": 1, \"detail_complete\": true, \"label\": \"initial_goal\", \"predicates\": [{\"args\": [\"wooden_cabinet_1_middle_region\"], \"atom\": \"(Close wooden_cabinet_1_middle_region)\", \"detail\": {\"args\": [\"wooden_cabinet_1_middle_region\"], \"detail_status\": \"passed\", \"geometry\": [{\"kind\": \"site\", \"name\": \"wooden_cabinet_1_middle_region\", \"pos_m\": [0.0266918, -0.08675677428520547, 1.0219], \"quat\": [-0.7071067811865475, 0.0, 0.7071067811865475, 0.0]}], \"joint_names\": [\"wooden_cabinet_1_middle_level\"], \"joint_values\": [-0.15983322571479452], \"predicate\": \"Close\", \"value\": false}, \"detail_status\": \"passed\", \"predicate\": \"Close\", \"truth_status\": \"passed\", \"value\": false}], \"true_count\": 0, \"truth_complete\": true}, \"source\": {\"all_false\": false, \"all_true\": true, \"count\": 1, \"detail_complete\": true, \"label\": \"initial_source\", \"predicates\": [{\"args\": [\"wooden_cabinet_1_middle_region\"], \"atom\": \"(Open wooden_cabinet_1_middle_region)\", \"detail\": {\"args\": [\"wooden_cabinet_1_middle_region\"], \"detail_status\": \"passed\", \"geometry\": [{\"kind\": \"site\", \"name\": \"wooden_cabinet_1_middle_region\", \"pos_m\": [0.0266918, -0.08675677428520547, 1.0219], \"quat\": [-0.7071067811865475, 0.0, 0.7071067811865475, 0.0]}], \"joint_names\": [\"wooden_cabinet_1_middle_level\"], \"joint_values\": [-0.15983322571479452], \"predicate\": \"Open\", \"value\": true}, \"detail_status\": \"passed\", \"predicate\": \"Open\", \"truth_status\": \"passed\", \"value\": true}], \"true_count\": 1, \"truth_complete\": true}}, \"metrics\": {\"action_saturation_count\": 10, \"contact_sample_count\": 180, \"controller_clip\": false, \"eef_error_max_m\": 0.1102436036990598, \"subject_robot_contact_samples\": 0}, \"mode\": \"CPU_no_renderer\", \"model\": {\"hdf5\": \"/home/huang/code/PARC2026_final/data/raw/public/libero_official_hdf5/libero_goal/open_the_middle_drawer_of_the_cabinet_demo.hdf5\", \"model_file_sha256\": \"ccf958ea89aa0e84e32cb90b99e31faf66f3cd5e33082f7d2a1d4444c4660257\", \"resolved_model_xml_sha256\": \"32e9c8562f8b79a7764ab0feead506d54772fa5c5986c1f5660d66b88a3b3281\", \"snapshot\": \"data/reports/axis_libero_30k/track3_public_terminal_recovery/snapshots/task_19/attempt_1/terminal_state.npy\", \"snapshot_sha256\": \"0e2ee6afffe27c3ed8811b79a368111562b968ed381f3fb7388c68f2a6b1708e\"}, \"official_track3_claim\": false, \"profile_id\": \"articulation_pull_a\", \"schema_version\": \"track3_tonight_worker_v1\", \"seed\": 43019, \"source_false_step\": null, \"stage_results\": [{\"action_saturation_count\": 10, \"last_eef_error_m\": 0.07632811107425967, \"reached\": false, \"stage\": \"approach_drawer_region\", \"steps\": 180}], \"start_at_utc\": \"2026-09-06T05:05:25.466382+00:00\", \"status\": \"failed_gate\", \"steps\": 180, \"task_index\": 19, \"trace\": {\"path\": \"data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/traces/articulation_pull_a_demo0.npz\", \"sha256\": \"269a2c5a9630381a91e64389c189e6c4e1547b404308d844d92b37be23479b17\"}, \"training_eligible\": false}\n",
+  "steps": 180,
+  "task_index": 19,
+  "timed_out": false,
+  "trace": {
+    "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/traces/articulation_pull_a_demo0.npz",
+    "sha256": "269a2c5a9630381a91e64389c189e6c4e1547b404308d844d92b37be23479b17"
+  },
+  "training_eligible": false
+}

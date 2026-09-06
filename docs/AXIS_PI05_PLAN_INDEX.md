@@ -3,7 +3,7 @@
 > 更新日期：2026-09-06（Asia/Tokyo）
 > 跨session入口：先完整读取根目录`AGENTS.md`与`MEMORY.md`，再读取本索引、handoff、machine JSON、唯一活动计划和最新审核；先查live PID/cursor，禁止重复启动。
 > 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md`
-> 当前状态：`track3_tonight_zip_and_crossfamily_recovery_planned`
+> 当前状态：`track3_tonight_zip_and_crossfamily_recovery_completed_fallback_hard_stop_pending_review`
 > 最新审核：`docs/reviews/axis_pi05/TRACK3_AA0_AA14_AND_TONIGHT_ZIP_AUDIT_20260906.md`
 
 ## 1. 本轮执行停止点
@@ -22,12 +22,12 @@ Z0–Z4的runtime/identity/phase-ledger修复成立；Z5只运行一次task10/de
 
 ## 2. 当前计划与停止点
 
-- `AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md`
+- `AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md`（TZ9已收尾，等待新审核）
   - `TZ`是Tonight ZIP范围代号，不再累计字母进度；TZ0先复验并物化明确标注`fallback_no_track3_improvement`的本地R6 ZIP；
   - TZ1在任何physics前实现全链入口、family隔离和离线抓取诊断，一次性冻结support≤3、containment≤2、articulation≤2个新identity；
   - TZ2–TZ4最多7条CPU pilot、每族最多1条GPU3 camera、总generation≤6/fresh replay≤18；单个family failure不得停止其他family；
   - TZ5–TZ8仅在至少一个family有2条accepted数据后执行20Hz `80/20` mixture/fresh QUANTILES、单臂R6 L2 LoRA 100步、条件500步、holdout/C20、fold/FAST和T3 candidate ZIP；
-  - 22:30停止启动长训练，23:00前交付合格T3 candidate或诚实fallback；TZ9 hard stop。GPU0、官方GPU、Teleop、dense full-FT、自动上传/提交均不授权。
+  - 本轮已在23:00 JST截止前交付诚实fallback并TZ9 hard stop；GPU0、官方GPU、Teleop、dense full-FT、自动上传/提交均未授权。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准，不得从归档计划的未执行尾部自行恢复任务。
 
@@ -249,6 +249,16 @@ AA5严格只运行一次task10/demo0、seed3121、CPU/no-renderer、无参数变
 AA14已执行hard stop：AA6–AA13均为`not_evaluated`，`exact/pending/accepted=0/0/0`，没有GPU3、generation、replay、training、ZIP、Teleop、上传或提交。执行证据位于`data/reports/axis_libero_30k/track3_z5_derived_release_and_conservative_continuation/`，最终closeout、manifest、validation和outer hash均exact；执行root为`cf27e7b1fe9276eaf0d4285128d56586e049d28f`，nested OpenPI仍为`b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`。AA4记录的定向/全量测试为`5/287 passed`（全量`7 skipped, 23 warnings`）；文档同步后的最终测试另行复核。
 
 当前唯一活动计划仍是`docs/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md`，但执行授权已消耗并硬停止；下一步唯一权限是`new_reviewed_plan_required`。LIBERO-plus既有dirty保持原样，root/OpenPI clean，GPU0–3无计算进程。
+
+## 3.21 Tonight TZ0–TZ9 执行收尾（2026-09-06）
+
+TZ0完成R6 FAST来源与本地fallback的全量SHA/CRC/布局复验：3401 entries，`model_fast`唯一、无slow权重，来源与物化ZIP均为`9383571677` bytes、SHA `95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a`，并明确标注`fallback_no_track3_improvement`。C5 source-success为`3/3`，没有上传或提交。
+
+TZ1完成全部TZ0–TZ9与worker CLI的静态入口、原子cursor/heartbeat/结果协议、TERM→KILL合同和7个新identity冻结。TZ2实际完成7/7 CPU/no-renderer fresh children：support `3`（其中1个执行器自身import bug被保留为infrastructure、2个正常family failure）、containment `2/2 family_failure`、articulation `2/2 family_failure`；修复import bug后未重跑已消耗的首个identity，故仍严格不超过7次。三族成功均为`0`，且旧nominal/conservative没有重跑。
+
+由于没有成功family，TZ3 GPU3 camera、TZ4 generation/replay、TZ5 mixture/QUANTILES、TZ6 LoRA、TZ7 holdout/C20与TZ8 candidate均为`not_evaluated`，不是失败或成功。TZ9选择并再次CRC/SHA复验fallback，accepted reverse为`0/0/0`、candidate为false、training为false，写入`data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/`并hard stop；下一权限为`new_reviewed_plan_required`。
+
+最终验证：目标测试`50 passed`；项目全量`293 passed, 7 skipped, 23 warnings`；项目外部缓存/nested测试树未纳入项目口径且未修改。namespace strict JSON为`22/22`，phase CSV为LF，py_compile、diff-check、无partial和GPU0–3空闲均通过。
 
 ## 4. 保留但非活动的研究线
 

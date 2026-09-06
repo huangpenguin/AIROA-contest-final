@@ -37,9 +37,9 @@ If these disagree, stop mutation, audit the discrepancy and repair the handoff i
 - Latest audited execution: `0e7e495d6a8c4dd9abb32525d117eda8166d1a8c` (AA0–AA14 execution and lifecycle handoff).
 - Nested OpenPI: `third_party/axis_openpi` at `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`, clean at review.
 - `LIBERO-plus` has pre-existing dirty files. They belong to the user/project and must not be reset, cleaned, overwritten or silently committed.
-- Current planned state at this refresh: `track3_tonight_zip_and_crossfamily_recovery_planned`.
+- Current state at this refresh: `track3_tonight_zip_and_crossfamily_recovery_completed_fallback_hard_stop_pending_review`.
 - Active plan: `docs/AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md`.
-- Authorized chain: `TZ0_to_TZ9_then_hard_stop`. It must first revalidate/materialize an explicitly labeled R6 fallback ZIP, then implement full family isolation and run the bounded support/containment/articulation matrix. A T3 candidate ZIP requires accepted reverse data and holdout/C20/fold/FAST gates; otherwise the only tonight deliverable is the honest fallback. No upload/submission is authorized.
+- Tonight chain `TZ0_to_TZ9` is complete and hard-stopped. The local deliverable is the explicitly labeled `fallback_no_track3_improvement` R6 ZIP; no accepted reverse data or candidate ZIP exists. No upload/submission is authorized; any new work requires a new reviewed plan.
 - Z0–Z14 execution evidence is in `data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/`; its audit is `docs/reviews/axis_pi05/TRACK3_Y3_LAUNCH_Z0_Z14_AUDIT_20260906.md`. Historical parent remains infrastructure while physical result is derived nominal family failure. Z6–Z13 remain `not_evaluated`; before any AA execution, recheck live supervisor/PID/cursor, dirty worktree and GPU boundaries. Never start a duplicate run.
 
 The snapshot above becomes historical as soon as execution advances. Always refresh from Git, machine JSON and the live cursor rather than treating this paragraph as a lock.
@@ -55,7 +55,15 @@ The snapshot above becomes historical as soon as execution advances. Always refr
 
 - AA5 evidence is valid, but the AA executor implemented only AA0–AA5 and AA14. Its closeout incorrectly made all AA6–AA13 depend on support success, contrary to the plan's family-isolation rule; containment and articulation remain untested, not failed.
 - Current accepted reverse data and new T3 ZIP counts are zero. The existing Aug-31 R6 FAST ZIP remains mechanically usable and hashes to `95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a`, but user-reported Track3 score for that model is zero.
-- The active TZ plan uses a 23:00 JST deadline: materialize a clearly labeled fallback first, then pursue a real T3 candidate through a bounded cross-family matrix and minimal single-arm LoRA. Do not present the fallback as Track3 improvement.
+- The TZ plan used a 23:00 JST deadline. It delivered the clearly labeled fallback after the bounded cross-family matrix found no successful family; the fallback is not Track3 improvement.
+
+## 13. Tonight TZ0–TZ9 execution result (2026-09-06)
+
+- Evidence namespace: `data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/`; final state is `fallback_delivered`/hard stop pending review.
+- TZ0 passed full fallback ZIP revalidation: 3401 entries, CRC passed, FAST-only layout, C5 source-success `3/3`; source and materialized ZIP are both `9383571677` bytes with SHA `95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a`.
+- TZ1 passed and froze 7 new identities. TZ2 consumed exactly 7 CPU/no-renderer identities: support 2 normal family failures plus 1 preserved executor infrastructure failure, containment 2 family failures, articulation 2 family failures. The executor bug was fixed without rerunning the consumed identity. No family succeeded.
+- TZ3–TZ8 are `not_evaluated` because no family succeeded: GPU3 0, generation 0, replay 0, accepted reverse `0/0/0`, training false, candidate false. GPU0/official GPU/Teleop/dense full-FT/upload/submission were not used. `LIBERO-plus` pre-existing dirty was preserved.
+- Final validation after the execution evidence was written: targeted `50 passed`; project `293 passed, 7 skipped, 23 warnings`; Tonight namespace strict JSON `22/22`, LF phase CSV, py_compile/diff-check, no partial residue, and GPU0–3 empty.
 
 ## 3. Stable competition/model facts
 

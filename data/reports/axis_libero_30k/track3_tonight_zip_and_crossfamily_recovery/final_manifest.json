@@ -1,0 +1,119 @@
+{
+  "accepted_data_count": 0,
+  "candidate_zip": null,
+  "chosen_zip": {
+    "bytes": 9383571677,
+    "crc_test": "passed",
+    "entry_count": 3401,
+    "has_model_fast": true,
+    "has_slow_model": false,
+    "path": "artifacts/submission_axis_r6_fallback_revalidated_20260906.zip",
+    "sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a"
+  },
+  "created_at_utc": "2026-09-06T05:15:29.041545+00:00",
+  "fallback_zip": "artifacts/submission_axis_r6_fallback_revalidated_20260906.zip",
+  "hard_stop": {
+    "deadline_jst": "2026-09-06T23:00:00+09:00",
+    "next_authority": "new_reviewed_plan_required",
+    "status": "hard_stop"
+  },
+  "official_track3_claim": false,
+  "phase_ledger": [
+    {
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/tz0_summary.json",
+      "phase": "TZ0",
+      "status": "passed"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/tz1_cli_and_profile_lock.json",
+      "phase": "TZ1",
+      "status": "passed"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/tz2_cpu_matrix.json",
+      "phase": "TZ2",
+      "status": "completed"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/tz3_summary.json",
+      "phase": "TZ3",
+      "status": "not_evaluated"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/tz4_summary.json",
+      "phase": "TZ4",
+      "status": "not_evaluated"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/tz5_summary.json",
+      "phase": "TZ5",
+      "status": "not_evaluated"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/tz6_summary.json",
+      "phase": "TZ6",
+      "status": "not_evaluated"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/tz7_summary.json",
+      "phase": "TZ7",
+      "status": "not_evaluated"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/tz8_summary.json",
+      "phase": "TZ8",
+      "status": "not_evaluated"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/final_manifest.json",
+      "phase": "TZ9",
+      "status": "fallback_delivered"
+    }
+  ],
+  "phase_ledger_csv": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/phase_ledger.csv",
+  "readiness": "fallback_no_track3_improvement",
+  "repository": {
+    "libero_plus_porcelain": [
+      "M libero/libero/benchmark/__init__.py",
+      "?? libero/__init__.py",
+      "?? libero/libero/assets",
+      "?? libero/libero/bddl_files/libero_t3",
+      "?? libero/libero/init_files/libero_t3"
+    ],
+    "openpi_head": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "openpi_porcelain": [],
+    "root_head": "343c5a554b0bfa05839b145f48a8c785d38edd19",
+    "root_porcelain": [
+      "M MEMORY.md",
+      " M data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json",
+      " M docs/AXIS_PI05_PLAN_INDEX.md",
+      " M docs/AXIS_PI05_PROJECT_HANDOFF_20260831.md",
+      " M docs/AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md",
+      " M tests/test_dense_fullft_accumulation_lifetime.py",
+      " M tests/test_track3_matched_terminal_state_release_plan.py",
+      " M tests/test_track3_object_frame_executor_and_bounded_autogen_lora.py",
+      " M tests/test_track3_runtime_preflight_and_bounded_continuation.py",
+      " M tests/test_track3_support_autogen_v2.py",
+      " M tests/test_track3_y3_launch_phase_ledger_remediation.py",
+      " M tests/test_track3_z5_derived_release_and_conservative_continuation.py",
+      " M tools/axis_pi05/track3_tonight_zip_and_crossfamily_recovery.py"
+    ]
+  },
+  "resource_boundary": {
+    "dense_full_ft": false,
+    "gpu0_compute": false,
+    "official_gpu": false,
+    "teleop": false,
+    "upload_or_submission": false
+  },
+  "schema_version": "track3_tonight_tz9_final_v1",
+  "status": "fallback_delivered",
+  "submission": false,
+  "track3_improvement": false,
+  "training": false,
+  "upload": false,
+  "validation": {
+    "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/tz9_validation.json",
+    "status": "passed"
+  }
+}

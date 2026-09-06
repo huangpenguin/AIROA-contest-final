@@ -3,7 +3,7 @@
 > 制定日期：2026-09-06（Asia/Tokyo）
 > 审核输入：root `0e7e495d6a8c4dd9abb32525d117eda8166d1a8c`
 > nested OpenPI：`b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`
-> 当前状态：`track3_tonight_zip_and_crossfamily_recovery_planned`
+> 当前状态：`track3_tonight_zip_and_crossfamily_recovery_completed_fallback_hard_stop_pending_review`
 > 唯一授权链：`TZ0_to_TZ9_then_hard_stop`
 > 当晚截止：2026-09-06 23:00 JST 前必须留下至少一个经过CRC/SHA/布局复验的本地ZIP
 > 用户人工操作：`not_required`
@@ -74,3 +74,11 @@
 - 停worker并释放GPU，写phase/family/episode/checkpoint/ZIP summary、inactive cursor、LF CSV、complete manifest、outer hash和final validation。
 - 重验strict JSON、NPY/NPZ/parquet、CSV LF、ffprobe、ZIP CRC、checkout hashes、py_compile、targeted/full tests、`git diff --check`；root/OpenPI clean commit，LIBERO-plus既有dirty不改。
 - 不论交付candidate还是fallback，23:00 JST前hard stop等待审核；不自动上传或比赛提交。
+
+## 11. 本轮执行结果（2026-09-06，TZ9 hard stop）
+
+- TZ0/TZ1通过；fallback已物化并完成全包CRC/SHA/布局复验，交付标签为`fallback_no_track3_improvement`。来源和物化ZIP均为`9383571677` bytes、SHA `95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a`，entry count `3401`，C5 source-success `3/3`。
+- TZ2执行上限内的7/7 CPU children。support为1条执行器infrastructure failure（numpy延迟导入bug，已修复且不重跑该identity）加2条正常family failure；containment `2/2`、articulation `2/2`均为正常family failure。没有family success，family isolation保留；旧nominal/conservative identity未重跑。
+- 因无成功family，TZ3–TZ8全部为`not_evaluated`；GPU3、generation、replay、accepted reverse data、training和T3 candidate均为0/false。TZ9交付本地R6 fallback并hard stop，下一权限为`new_reviewed_plan_required`。
+- 机器证据：`data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/summary.json`；本轮没有上传或提交，`LIBERO-plus`既有dirty未触碰。
+- 最终测试为目标`50 passed`、项目全量`293 passed, 7 skipped, 23 warnings`；namespace strict JSON `22/22`、LF CSV、py_compile、diff-check、无partial和GPU0–3空闲均通过。

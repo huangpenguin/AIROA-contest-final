@@ -17,6 +17,7 @@ from __future__ import annotations
 import argparse
 import csv
 import hashlib
+import io
 import json
 import os
 import re
@@ -666,15 +667,45 @@ def run_tz9() -> dict[str, Any]:
         raise FileNotFoundError(chosen)
     inventory = _zip_inventory(chosen)
     fallback_label = not candidate_ready
+    phase_paths = {
+        0: OUT_ROOT / "tz0_summary.json",
+        1: OUT_ROOT / "tz1_cli_and_profile_lock.json",
+        2: OUT_ROOT / "tz2_cpu_matrix.json",
+        3: OUT_ROOT / "tz3_summary.json",
+        4: OUT_ROOT / "tz4_summary.json",
+        5: OUT_ROOT / "tz5_summary.json",
+        6: OUT_ROOT / "tz6_summary.json",
+        7: OUT_ROOT / "tz7_summary.json",
+        8: OUT_ROOT / "tz8_summary.json",
+        9: OUT_ROOT / "final_manifest.json",
+    }
     phases = []
     for index in range(10):
-        path = OUT_ROOT / f"tz{index}_summary.json"
+        path = phase_paths[index]
         if path.is_file():
             value = strict_json(path)
             phases.append({"phase": f"TZ{index}", "status": value.get("status"), "path": rel(path)})
         else:
             phases.append({"phase": f"TZ{index}", "status": "not_evaluated", "path": None})
-    final = {"schema_version": "track3_tonight_tz9_final_v1", "status": "fallback_delivered" if fallback_label else "candidate_delivered", "created_at_utc": now(), "readiness": "fallback_no_track3_improvement" if fallback_label else "track3_candidate", "track3_improvement": not fallback_label, "chosen_zip": inventory, "candidate_zip": None if fallback_label else inventory["path"], "fallback_zip": rel(FALLBACK_ZIP), "phase_ledger": phases, "accepted_data_count": 0, "training": False, "upload": False, "submission": False, "official_track3_claim": False if fallback_label else True, "resource_boundary": {"gpu0_compute": False, "official_gpu": False, "teleop": False, "dense_full_ft": False, "upload_or_submission": False}, "hard_stop": {"status": "hard_stop", "next_authority": "new_reviewed_plan_required", "deadline_jst": "2026-09-06T23:00:00+09:00"}, "repository": {"root_head": git(("rev-parse", "HEAD")), "root_porcelain": porcelain(ROOT), "openpi_head": git(("rev-parse", "HEAD"), OPENPI) if OPENPI.is_dir() else None, "openpi_porcelain": porcelain(OPENPI) if OPENPI.is_dir() else [], "libero_plus_porcelain": porcelain(LIBERO_PLUS)}}
+    ledger_csv = OUT_ROOT / "phase_ledger.csv"
+    stream = io.StringIO(newline="")
+    writer = csv.DictWriter(stream, fieldnames=["phase", "status", "path"], lineterminator="\n")
+    writer.writeheader()
+    writer.writerows(phases)
+    atomic_bytes(ledger_csv, stream.getvalue().encode("utf-8"))
+    json_errors: list[str] = []
+    json_count = 0
+    for json_path in sorted(OUT_ROOT.rglob("*.json")):
+        try:
+            strict_json(json_path)
+            json_count += 1
+        except Exception as exc:
+            json_errors.append(f"{rel(json_path)}:{type(exc).__name__}:{exc}")
+    compile_result = subprocess.run([sys.executable, "-m", "py_compile", str(Path(__file__).resolve())], cwd=ROOT, capture_output=True, text=True, check=False)
+    diff_result = subprocess.run(["git", "-C", str(ROOT), "diff", "--check"], capture_output=True, text=True, check=False)
+    validation = {"schema_version": "track3_tonight_tz9_validation_v1", "status": "passed" if not json_errors and compile_result.returncode == 0 and diff_result.returncode == 0 and not list(OUT_ROOT.rglob("*.partial*")) else "failed", "strict_json": {"state": "passed" if not json_errors else "failed", "files": json_count, "errors": json_errors}, "py_compile": {"state": "passed" if compile_result.returncode == 0 else "failed", "stderr": compile_result.stderr[-2000:]}, "git_diff_check": {"state": "passed" if diff_result.returncode == 0 else "failed", "stderr": diff_result.stderr[-2000:]}, "phase_csv": {"path": rel(ledger_csv), "encoding": "UTF-8", "line_ending": "LF", "sha256": sha256_file(ledger_csv)}, "partial_residue": [], "gpu": {str(index): gpu_snapshot(index) for index in range(4)}, "created_at_utc": now()}
+    write_json(OUT_ROOT / "tz9_validation.json", validation)
+    final = {"schema_version": "track3_tonight_tz9_final_v1", "status": "fallback_delivered" if fallback_label else "candidate_delivered", "created_at_utc": now(), "readiness": "fallback_no_track3_improvement" if fallback_label else "track3_candidate", "track3_improvement": not fallback_label, "chosen_zip": inventory, "candidate_zip": None if fallback_label else inventory["path"], "fallback_zip": rel(FALLBACK_ZIP), "phase_ledger": phases, "phase_ledger_csv": rel(ledger_csv), "validation": {"path": rel(OUT_ROOT / "tz9_validation.json"), "status": validation["status"]}, "accepted_data_count": 0, "training": False, "upload": False, "submission": False, "official_track3_claim": False if fallback_label else True, "resource_boundary": {"gpu0_compute": False, "official_gpu": False, "teleop": False, "dense_full_ft": False, "upload_or_submission": False}, "hard_stop": {"status": "hard_stop", "next_authority": "new_reviewed_plan_required", "deadline_jst": "2026-09-06T23:00:00+09:00"}, "repository": {"root_head": git(("rev-parse", "HEAD")), "root_porcelain": porcelain(ROOT), "openpi_head": git(("rev-parse", "HEAD"), OPENPI) if OPENPI.is_dir() else None, "openpi_porcelain": porcelain(OPENPI) if OPENPI.is_dir() else [], "libero_plus_porcelain": porcelain(LIBERO_PLUS)}}
     write_json(OUT_ROOT / "final_manifest.json", final)
     write_json(OUT_ROOT / "summary.json", final)
     _heartbeat("final", chosen=inventory["path"], readiness=final["readiness"])

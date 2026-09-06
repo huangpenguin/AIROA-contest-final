@@ -1,0 +1,328 @@
+{
+  "category": "family_failure",
+  "child_pid": 1573262,
+  "completed_at_utc": "2026-09-06T05:04:27.801857+00:00",
+  "family": "support_remove",
+  "final": {
+    "all_false": false,
+    "all_true": false,
+    "count": 2,
+    "detail_complete": true,
+    "label": "final",
+    "predicates": [
+      {
+        "args": [
+          "akita_black_bowl_1",
+          "plate_1"
+        ],
+        "atom": "(On akita_black_bowl_1 plate_1)",
+        "detail": {
+          "args": [
+            "akita_black_bowl_1",
+            "plate_1"
+          ],
+          "contact_information": {
+            "ontop_xy_threshold_m": 0.03,
+            "predicate_contact_is_model_defined": true,
+            "site_contact_is_logical_true": false
+          },
+          "detail_status": "passed",
+          "geometry": [
+            {
+              "kind": "object",
+              "name": "akita_black_bowl_1",
+              "pos_m": [
+                0.050851756165475055,
+                -0.04128641205675317,
+                0.9112600701940583
+              ],
+              "quat": [
+                0.8760240984800529,
+                -0.06282882658437969,
+                0.11971149056236395,
+                0.4629292348292315
+              ]
+            },
+            {
+              "kind": "object",
+              "name": "plate_1",
+              "pos_m": [
+                0.04860214572216419,
+                -0.025065434794973668,
+                0.9012497393469318
+              ],
+              "quat": [
+                0.7393323228267473,
+                -0.0022294098629001657,
+                0.004692224028859243,
+                0.6733206733711157
+              ]
+            }
+          ],
+          "predicate": "On",
+          "value": true
+        },
+        "detail_status": "passed",
+        "predicate": "On",
+        "truth_status": "passed",
+        "value": true
+      },
+      {
+        "args": [
+          "akita_black_bowl_1",
+          "main_table_akita_black_bowl_region"
+        ],
+        "atom": "(On akita_black_bowl_1 main_table_akita_black_bowl_region)",
+        "detail": {
+          "args": [
+            "akita_black_bowl_1",
+            "main_table_akita_black_bowl_region"
+          ],
+          "contact_information": {
+            "ontop_xy_threshold_m": 0.03,
+            "predicate_contact_is_model_defined": true,
+            "site_contact_is_logical_true": true
+          },
+          "detail_status": "passed",
+          "geometry": [
+            {
+              "kind": "object",
+              "name": "akita_black_bowl_1",
+              "pos_m": [
+                0.050851756165475055,
+                -0.04128641205675317,
+                0.9112600701940583
+              ],
+              "quat": [
+                0.8760240984800529,
+                -0.06282882658437969,
+                0.11971149056236395,
+                0.4629292348292315
+              ]
+            },
+            {
+              "kind": "site",
+              "name": "main_table_akita_black_bowl_region",
+              "pos_m": [
+                -0.09,
+                0.0,
+                0.895
+              ],
+              "quat": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            }
+          ],
+          "predicate": "On",
+          "value": false
+        },
+        "detail_status": "passed",
+        "predicate": "On",
+        "truth_status": "passed",
+        "value": false
+      }
+    ],
+    "true_count": 1,
+    "truth_complete": true
+  },
+  "fresh_process": true,
+  "gates": {
+    "all_stages_reached": false,
+    "controller_clip": false,
+    "goal_true": false,
+    "source_released": false,
+    "unrelated_contact": false
+  },
+  "gpu_policy": "no_gpu_cpu",
+  "initial": {
+    "goal": {
+      "all_false": true,
+      "all_true": false,
+      "count": 1,
+      "detail_complete": true,
+      "label": "initial_goal",
+      "predicates": [
+        {
+          "args": [
+            "akita_black_bowl_1",
+            "main_table_akita_black_bowl_region"
+          ],
+          "atom": "(On akita_black_bowl_1 main_table_akita_black_bowl_region)",
+          "detail": {
+            "args": [
+              "akita_black_bowl_1",
+              "main_table_akita_black_bowl_region"
+            ],
+            "contact_information": {
+              "ontop_xy_threshold_m": 0.03,
+              "predicate_contact_is_model_defined": true,
+              "site_contact_is_logical_true": true
+            },
+            "detail_status": "passed",
+            "geometry": [
+              {
+                "kind": "object",
+                "name": "akita_black_bowl_1",
+                "pos_m": [
+                  0.04815065816491454,
+                  -0.03741754274461852,
+                  0.9075601102501377
+                ],
+                "quat": [
+                  0.8926568046826804,
+                  -0.005581268478061381,
+                  0.025976952113356003,
+                  0.4499531936266076
+                ]
+              },
+              {
+                "kind": "site",
+                "name": "main_table_akita_black_bowl_region",
+                "pos_m": [
+                  -0.09,
+                  0.0,
+                  0.895
+                ],
+                "quat": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              }
+            ],
+            "predicate": "On",
+            "value": false
+          },
+          "detail_status": "passed",
+          "predicate": "On",
+          "truth_status": "passed",
+          "value": false
+        }
+      ],
+      "true_count": 0,
+      "truth_complete": true
+    },
+    "source": {
+      "all_false": false,
+      "all_true": true,
+      "count": 1,
+      "detail_complete": true,
+      "label": "initial_source",
+      "predicates": [
+        {
+          "args": [
+            "akita_black_bowl_1",
+            "plate_1"
+          ],
+          "atom": "(On akita_black_bowl_1 plate_1)",
+          "detail": {
+            "args": [
+              "akita_black_bowl_1",
+              "plate_1"
+            ],
+            "contact_information": {
+              "ontop_xy_threshold_m": 0.03,
+              "predicate_contact_is_model_defined": true,
+              "site_contact_is_logical_true": false
+            },
+            "detail_status": "passed",
+            "geometry": [
+              {
+                "kind": "object",
+                "name": "akita_black_bowl_1",
+                "pos_m": [
+                  0.04815065816491454,
+                  -0.03741754274461852,
+                  0.9075601102501377
+                ],
+                "quat": [
+                  0.8926568046826804,
+                  -0.005581268478061381,
+                  0.025976952113356003,
+                  0.4499531936266076
+                ]
+              },
+              {
+                "kind": "object",
+                "name": "plate_1",
+                "pos_m": [
+                  0.04752450452563262,
+                  -0.021967800160151027,
+                  0.902493556607918
+                ],
+                "quat": [
+                  0.737299690217243,
+                  2.017281281462442e-05,
+                  7.277475697015797e-06,
+                  0.6755658120018018
+                ]
+              }
+            ],
+            "predicate": "On",
+            "value": true
+          },
+          "detail_status": "passed",
+          "predicate": "On",
+          "truth_status": "passed",
+          "value": true
+        }
+      ],
+      "true_count": 1,
+      "truth_complete": true
+    }
+  },
+  "metrics": {
+    "action_saturation_count": 10,
+    "contact_sample_count": 155,
+    "controller_clip": false,
+    "eef_error_max_m": 0.09072207366652604,
+    "subject_robot_contact_samples": 132
+  },
+  "mode": "CPU_no_renderer",
+  "model": {
+    "hdf5": "/home/huang/code/PARC2026_final/data/raw/public/libero_official_hdf5/libero_goal/put_the_bowl_on_the_plate_demo.hdf5",
+    "model_file_sha256": "e9a508e1e98a7bd2631796a4c41476a449fd9821fb45837a27d2ebefd87c8830",
+    "resolved_model_xml_sha256": "d637223bfe311c2ae6daeb0572f0a75528f2613f54eff1ef3acbe540167ea099",
+    "snapshot": "data/reports/axis_libero_30k/track3_public_terminal_recovery/snapshots/task_10/attempt_1/terminal_state.npy",
+    "snapshot_sha256": "34e0c70edac11ce668e548c5cca308a9fbd16b64afc8726e8800280c8c82c66d"
+  },
+  "official_track3_claim": false,
+  "parent_pid": 1573225,
+  "process_returncode": 0,
+  "profile_id": "support_contact_repair_c",
+  "schema_version": "track3_tonight_worker_v1",
+  "seed": 41012,
+  "source_false_step": null,
+  "stage_results": [
+    {
+      "action_saturation_count": 2,
+      "last_eef_error_m": 0.012652119994018857,
+      "reached": true,
+      "stage": "approach_object",
+      "steps": 15
+    },
+    {
+      "action_saturation_count": 8,
+      "last_eef_error_m": 0.03090702971102987,
+      "reached": false,
+      "stage": "descend_object",
+      "steps": 140
+    }
+  ],
+  "start_at_utc": "2026-09-06T05:03:59.693705+00:00",
+  "status": "failed_gate",
+  "stderr_tail": "[robosuite WARNING] No private macro file found! (__init__.py:7)\n[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)\n[robosuite WARNING] To setup, run: python /home/huang/code/PARC2026_final/.venv_axis_pi05/lib/python3.12/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)\n",
+  "stdout_tail": "61852, 0.9075601102501377], \"quat\": [0.8926568046826804, -0.005581268478061381, 0.025976952113356003, 0.4499531936266076]}, {\"kind\": \"site\", \"name\": \"main_table_akita_black_bowl_region\", \"pos_m\": [-0.09, 0.0, 0.895], \"quat\": [0.0, 0.0, 0.0, 1.0]}], \"predicate\": \"On\", \"value\": false}, \"detail_status\": \"passed\", \"predicate\": \"On\", \"truth_status\": \"passed\", \"value\": false}], \"true_count\": 0, \"truth_complete\": true}, \"source\": {\"all_false\": false, \"all_true\": true, \"count\": 1, \"detail_complete\": true, \"label\": \"initial_source\", \"predicates\": [{\"args\": [\"akita_black_bowl_1\", \"plate_1\"], \"atom\": \"(On akita_black_bowl_1 plate_1)\", \"detail\": {\"args\": [\"akita_black_bowl_1\", \"plate_1\"], \"contact_information\": {\"ontop_xy_threshold_m\": 0.03, \"predicate_contact_is_model_defined\": true, \"site_contact_is_logical_true\": false}, \"detail_status\": \"passed\", \"geometry\": [{\"kind\": \"object\", \"name\": \"akita_black_bowl_1\", \"pos_m\": [0.04815065816491454, -0.03741754274461852, 0.9075601102501377], \"quat\": [0.8926568046826804, -0.005581268478061381, 0.025976952113356003, 0.4499531936266076]}, {\"kind\": \"object\", \"name\": \"plate_1\", \"pos_m\": [0.04752450452563262, -0.021967800160151027, 0.902493556607918], \"quat\": [0.737299690217243, 2.017281281462442e-05, 7.277475697015797e-06, 0.6755658120018018]}], \"predicate\": \"On\", \"value\": true}, \"detail_status\": \"passed\", \"predicate\": \"On\", \"truth_status\": \"passed\", \"value\": true}], \"true_count\": 1, \"truth_complete\": true}}, \"metrics\": {\"action_saturation_count\": 10, \"contact_sample_count\": 155, \"controller_clip\": false, \"eef_error_max_m\": 0.09072207366652604, \"subject_robot_contact_samples\": 132}, \"mode\": \"CPU_no_renderer\", \"model\": {\"hdf5\": \"/home/huang/code/PARC2026_final/data/raw/public/libero_official_hdf5/libero_goal/put_the_bowl_on_the_plate_demo.hdf5\", \"model_file_sha256\": \"e9a508e1e98a7bd2631796a4c41476a449fd9821fb45837a27d2ebefd87c8830\", \"resolved_model_xml_sha256\": \"d637223bfe311c2ae6daeb0572f0a75528f2613f54eff1ef3acbe540167ea099\", \"snapshot\": \"data/reports/axis_libero_30k/track3_public_terminal_recovery/snapshots/task_10/attempt_1/terminal_state.npy\", \"snapshot_sha256\": \"34e0c70edac11ce668e548c5cca308a9fbd16b64afc8726e8800280c8c82c66d\"}, \"official_track3_claim\": false, \"profile_id\": \"support_contact_repair_c\", \"schema_version\": \"track3_tonight_worker_v1\", \"seed\": 41012, \"source_false_step\": null, \"stage_results\": [{\"action_saturation_count\": 2, \"last_eef_error_m\": 0.012652119994018857, \"reached\": true, \"stage\": \"approach_object\", \"steps\": 15}, {\"action_saturation_count\": 8, \"last_eef_error_m\": 0.03090702971102987, \"reached\": false, \"stage\": \"descend_object\", \"steps\": 140}], \"start_at_utc\": \"2026-09-06T05:03:59.693705+00:00\", \"status\": \"failed_gate\", \"steps\": 155, \"task_index\": 10, \"trace\": {\"path\": \"data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/traces/support_contact_repair_c_demo0.npz\", \"sha256\": \"5ac8ae9a849a6a5588eb49c2e00d26e88d75116e9d05e2e6cc59a9df60d3f6c7\"}, \"training_eligible\": false}\n",
+  "steps": 155,
+  "task_index": 10,
+  "timed_out": false,
+  "trace": {
+    "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/runs/traces/support_contact_repair_c_demo0.npz",
+    "sha256": "5ac8ae9a849a6a5588eb49c2e00d26e88d75116e9d05e2e6cc59a9df60d3f6c7"
+  },
+  "training_eligible": false
+}

@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 HANDOFF = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
 AUDIT = ROOT / "data/reports/axis_libero_30k/track3_ac0_ac6_independent_audit_20260907/summary.json"
 AC_ROOT = ROOT / "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary"
-PLAN = "docs/AXIS_PI05_TRACK3_CONTACT_TRUTH_AND_SUPPORT_GOLD_DEMO_PLAN.md"
+PLAN = "docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_AND_GOLD_CONTINUATION_PLAN.md"
 ARCHIVED_BR_PLAN = ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ACQUISITION_GATE_AND_ATTEMPT_LIFECYCLE_REMEDIATION_PLAN.md"
 ARCHIVED_AUDIT_PLAN = ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_INDEPENDENT_AUDIT_PLAN.md"
 
@@ -72,9 +72,9 @@ def test_contract_findings_cannot_be_silently_cleared() -> None:
 
 def test_lifecycle_releases_exactly_one_br_plan() -> None:
     handoff = strict_json(HANDOFF)
-    assert handoff["status"] == "track3_contact_truth_and_support_gold_demo_planned"
+    assert handoff["status"] == "track3_support_runtime_gate_remediation_and_gold_continuation_planned"
     assert handoff["next_plan"] == PLAN
-    assert handoff["next_phase_only"] == "SG0_to_SG12_then_hard_stop"
+    assert handoff["next_phase_only"] == "SR0_to_SR13_then_hard_stop"
     assert (ROOT / PLAN).is_file()
     assert ARCHIVED_BR_PLAN.is_file()
     assert ARCHIVED_AUDIT_PLAN.is_file()

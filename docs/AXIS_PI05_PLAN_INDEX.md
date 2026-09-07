@@ -2,9 +2,9 @@
 
 > 更新日期：2026-09-07（Asia/Tokyo）
 > 跨session入口：先完整读取根目录`AGENTS.md`与`MEMORY.md`，再读取本索引、handoff、machine JSON、唯一活动计划和最新审核；先查live PID/cursor，禁止重复启动。
-> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_CONTACT_TRUTH_AND_SUPPORT_GOLD_DEMO_PLAN.md`
-> 当前状态：`track3_contact_truth_and_support_gold_demo_planned`
-> 最新审核：`docs/reviews/axis_pi05/TRACK3_CR0_CR14_INDEPENDENT_AUDIT_20260907.md`
+> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_AND_GOLD_CONTINUATION_PLAN.md`
+> 当前状态：`track3_support_runtime_gate_remediation_and_gold_continuation_planned`
+> 最新审核：`docs/reviews/axis_pi05/TRACK3_SG0_SG6_INDEPENDENT_AUDIT_20260907.md`
 
 ## 1. 本轮执行停止点
 
@@ -33,7 +33,9 @@ ER审核确认三条新CPU/no-renderer canary均为有效诊断性`family_failur
 - BR remediation 已执行并 hard stop。独立审核确认 code/fixture attempts `0005/0006`、Git bytes、测试和资源边界，但唯一结论为 `remediation_required`：BR9 launch path 没有实时 clean-source gate；六个 attempt manifest 均漏后生成文件；43-byte actual partial 未入 manifest而39-byte固定 synthetic observation被误称 raw provenance；telemetry unknown 会落成 family failure；normalized actions 被 double-normalize。
 - 旧 BR9–BR10 attempt `0004` 的三条轨迹继续保留为诊断性 `family_failure`。它们不仅在 `clean_root=false` 下运行，而且与 AC 对应 NPZ 的 SHA 逐字节相同，没有新行为信息；已消耗 identity 不重跑，不能 promotion。
 - CR 执行与只读独立审核计划均已归档。六条 CR CPU/no-renderer trace 的文件、identity、hash 和 acquisition 前 `family_failure` 分类成立，但 contact wrapper 把 schema completeness 复制成 required contact、把 unrelated contact 固定为 false；alternative 只有静态 target 偏移，没有冻结计划要求的分轴 waypoint/microstep/较低 cap；CR12 recorder argv 也不可执行。唯一审核结论为 `remediation_required`。
-- 唯一活动计划为 `docs/AXIS_PI05_TRACK3_CONTACT_TRUTH_AND_SUPPORT_GOLD_DEMO_PLAN.md`。先修真实 contact-v3、failure-injection、waypoint/orientation 与 Teleop handoff；再只对 support 运行最多2条 fresh CPU/no-renderer identity。自动失败后等待用户在线人工接管；真实 success 后才允许 GPU3 exact-action replay `3/3`，结果最多到 `pending_gold_review`。
+- `AXIS_PI05_TRACK3_CONTACT_TRUTH_AND_SUPPORT_GOLD_DEMO_PLAN.md` 已归档。SG0–SG5 的 code/fixture 与 clean-source release成立；SG6 在创建 simulator env 前因参数签名 TypeError 正确 infrastructure hard stop。旧 attempt `0001–0004`、日志、manifest 与 failure label保持只读。
+- SG 独立审核唯一结论为 `remediation_required`：已有签名修复成立，但 acquisition gate错误要求整段 precontact 都有夹爪接触、source在lift前就必须释放、合法goal contact `bowl↔main_table` 被标unrelated，goal continuity又只看末帧。直接重跑不能产生合格gold。
+- 唯一活动计划为 `docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_AND_GOLD_CONTINUATION_PLAN.md`。先做contact role、阶段窗口、pre-env integration与分级stop合同的code-only修复；clean release后仅运行1条corrected primary，正常且有进展的family failure才允许1条alternative。真实success后才GPU3 exact replay `3/3`与视觉审核包；自动失败才等待用户在线Teleop。
 - 所有 AC/BR/CR/ER/TZ 等已消耗 identity 禁止重跑。containment/articulation 新 physics、GPU0–2、official GPU、unattended Teleop、accepted promotion、规模生成、训练/norm、FAST/export、新 candidate ZIP、上传/提交均不授权。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准；不得从归档计划的未执行尾部自行恢复任务。
@@ -91,6 +93,7 @@ ER审核确认三条新CPU/no-renderer canary均为有效诊断性`family_failur
 45. `AXIS_PI05_TRACK3_ACQUISITION_GATE_AND_ATTEMPT_LIFECYCLE_REMEDIATION_PLAN.md`：BR0–BR8 code/fixture remediation、clean-source rerun `0005/0006` 与 BR11 closeout 已执行；BR9–BR10 的 attempt `0004` 因 dirty-root lifecycle defect 仅保留诊断性 family failures，等待独立审核。
 46. `AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_PLAN.md`：CR0–CR8 clean-source remediation 与 CR9–CR10 六条 fresh CPU/no-renderer canary 已执行；六条均为 acquisition 前诊断性 family failure，CR11–CR13 没有 replay/数据/训练/ZIP。
 47. `AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_INDEPENDENT_AUDIT_PLAN.md`：审核已完成并归档；结论 `remediation_required`，转入 contact truth 与 support gold demo 最小恢复。
+48. `AXIS_PI05_TRACK3_CONTACT_TRUTH_AND_SUPPORT_GOLD_DEMO_PLAN.md`：SG0–SG5通过；SG6在env创建前发生TypeError并按infrastructure hard stop。独立审核确认零physics/零episode，但发现success-path阶段与contact门不可达，转入support runtime gate最小修复。
 
 归档不表示旧计划所有尾部阶段都完成；只表示该文件不再是活动授权入口。旧 failure、阈值、hash 和未执行阶段必须继续保留。
 
@@ -405,6 +408,18 @@ CR 计划已归档至 `docs/archive/axis_pi05/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_
 唯一活动计划为 `docs/AXIS_PI05_TRACK3_CONTACT_TRUTH_AND_SUPPORT_GOLD_DEMO_PLAN.md`。SG0–SG5 先完成 failure matrix、真实 contact-v3、实际 waypoint/orientation、failure-injection、可执行 Teleop/replay handoff 与 clean-source release；SG6–SG7 最多2条 fresh support CPU/no-renderer identity。仍无成功则 SG8 等待用户在线 Teleop；真实 success 才释放 GPU3 exact replay `3/3`，且只到 `pending_gold_review`。SG11 可在等待人工时完成数据/loader/tiny-overfit CLI 的 code-only readiness，不启动训练。SG12 closure 后 hard stop；accepted promotion、训练、新 ZIP、上传和提交仍禁止。
 
 生命周期最终验证为 CR strict JSON `69/69`、audit summary `1/1`、machine handoff `1/1`、targeted `22 passed`、项目全量 `388 passed, 7 skipped, 23 warnings`；diff-check、process/GPU 与 nested Git 边界通过。
+
+## 3.36 SG0–SG6 独立审核与 Support Runtime Gate 修复授权（2026-09-07）
+
+本轮审核边界为 execution record/audit input `55acd39c17d82c89b4f8e809b8f84d9623c3eb81`、SG implementation `710183a7983e300759c85e3c0a97e1afdbdb67f0`、SG5/SG6 source `d5c319b055431d2ec46681775438c91ad64a2be0`、post-failure签名修复 `3e156dd6177e435316b721a79ff7a0da6d0359f8` 与 nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`。attempt_0003 SG0–SG5通过；attempt_0004 的 `37/37` strict JSON、`8/8` manifest、outer/closure、inactive cursor/final heartbeat与无partial均独立通过。TypeError发生在 `_configure_public_env`/`ControlEnv`之前，因此是1次launch、0 env、0 physics、0 trajectory/episode；SG7–SG12=`not_evaluated`。
+
+唯一审核结论是 `remediation_required`。`3e156dd`修好了offset参数签名且单测通过，但runtime仍有四个gold blocker：required-contact门检查episode整段前缀；grasp_dwell后、lift前就要求source=false；goal receiver `main_table`未进入允许角色而会被当成unrelated；所谓goal continuous只检查末帧。直接重跑最多产生诊断trace，不能成为gold。
+
+“运行遇到错误立即停”继续保留；提高效率的方式是缩小停止作用域：identity/hash/telemetry/GPU/partial/supervisor unknown仍sticky global stop；可证明env前零physics的deterministic code exception先停child并封存，但新计划预授权一次code-only修复与pre-env integration test，形成新clean release后才可重新进入physics，绝不自动retry。正常行为失败按family路由。
+
+当前人工episode审核队列为0：没有SG6 trajectory、camera/replay video、Teleop recording或pending gold。唯一活动计划为 `docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_AND_GOLD_CONTINUATION_PLAN.md`，阶段SR0–SR13。code-only修复通过后最多1条corrected primary和1条有条件alternative；自动失败才由用户在线Teleop最多1条，真实success才GPU3 exact replay `3/3`并生成双视角审核卡。accepted、训练、新ZIP、upload和submission仍禁止。
+
+审核前测试独立复现定向 `11 passed`、全量 `399 passed, 7 skipped, 23 warnings`；生命周期最终验证为SG strict JSON `37/37`、audit summary与machine handoff各 `1/1`、定向 `19 passed`、全量 `407 passed, 7 skipped, 23 warnings`，py_compile、diff-check、process/GPU与nested Git边界通过。
 
 ## 4. 保留但非活动的研究线
 

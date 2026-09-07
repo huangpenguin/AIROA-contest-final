@@ -1,10 +1,11 @@
 # AXIS Pi0.5 Track 3：Contact Truth 与 Support Gold Demo 获取计划
 
 > 创建日期：2026-09-07（Asia/Tokyo）
-> 唯一活动计划：是
+> 唯一活动计划：否（SG0–SG6 已执行并按 infrastructure failure hard stop；独立审核为 `remediation_required`）
 > 审核输入：`0ce605cf33d33a0d670d190ecf7013d122d8a1a0`
 > 策略参考：`PARC_TRACK3_MASTER_PLAN_20260907.md`，SHA-256 `8c2f87ebdb4c3bfccfe1a2e80294ad3d23e300f76da869f8d7db13b9e52715f5`
 > 前置审核：`docs/reviews/axis_pi05/TRACK3_CR0_CR14_INDEPENDENT_AUDIT_20260907.md`（`remediation_required`）
+> 后续审核：`docs/reviews/axis_pi05/TRACK3_SG0_SG6_INDEPENDENT_AUDIT_20260907.md`
 
 本计划落实总体方案的“数据优先、一族先打通”。当前 KPI 不是再产生更多失败 trace，也不是立刻训练或再打一个 fallback ZIP，而是取得第一条真实、可重放、可视觉审核的 support reverse gold candidate。CR 六条历史 trace/identity 全部只读，不重跑、不改标签。
 

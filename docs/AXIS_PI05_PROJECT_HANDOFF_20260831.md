@@ -2,17 +2,17 @@
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
 > 新session先读：根目录`AGENTS.md`、`MEMORY.md`，然后按其中顺序核对本handoff、machine JSON、活动计划、最新审核与live cursor/PID。
-> 最新审核状态：`remediation_required`（CR0–CR14 独立审核已完成）
+> 最新审核状态：`remediation_required`（SG0–SG6 独立审核已完成）
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
-> branch：`codex/axis-pi05-repository-status-20260907`（upstream：origin 同名分支）
+> branch：`codex/axis-pi05-sg0-sg12-support-gold-20260907`（审核输入时 upstream：origin 同名分支）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_contact_truth_and_support_gold_demo_planned`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_CONTACT_TRUTH_AND_SUPPORT_GOLD_DEMO_PLAN.md`
-> 下一停止点：`SG0_to_SG12_then_hard_stop`
+> 当前总状态：`track3_support_runtime_gate_remediation_and_gold_continuation_planned`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_AND_GOLD_CONTINUATION_PLAN.md`
+> 下一停止点：`SR0_to_SR13_then_hard_stop`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
-> latest audit input：`0ce605c`；CR evidence/closeout：`760dc65`；execution source：`02bbac2`；finalizer correction：`ec1f3f4`
+> latest audit input / SG execution record：`55acd39`；SG6 source：`d5c319b`；post-failure fix：`3e156dd`
 
 ## 1. 一句话结论
 
@@ -23,6 +23,8 @@ canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成�
 AC0–AC6 后续确实运行了三族各一条 CPU/no-renderer canary并得到三个诊断性 family failure；BR0–BR11 随后完成 code/fixture 尝试和 hard stop，但本轮独立审核仍为 `remediation_required`。BR9 launch path 没有真正接上 clean-source gate，manifest/finalizer和actual partial provenance未闭合，telemetry unknown分类及normalized-action单位有误；BR三条轨迹又与AC逐字节相同，没有生成新的reverse成功数据。当前转入CR0–CR14：先修上述门，再最多运行三族各一套primary和一套结构不同alternative；CPU success后才允许GPU3 exact-action replay。训练、新ZIP、上传或提交仍不授权。
 
 CR0–CR14 随后确实生成6条新的 CPU/no-renderer trace，且文件/identity/hash、manifest/closure与 acquisition 前 `family_failure` 分类成立；但独立审核发现 required contact 被错误地从 telemetry completeness 推断、unrelated contact 被硬编码 false，alternative 未实现所声明的分轴 waypoint/microstep，人工 handoff argv 也不可运行。当前转入 support-only：先修 contact truth/控制器/Teleop，再最多两条自动 identity；仍失败就由用户在线人工接管。只有真实 success 才做 GPU3 exact replay，训练和新 ZIP 继续冻结。
+
+SG0–SG5 后续完成并通过 clean-source release；SG6 child 在创建 `ControlEnv` 前因 `compose_object_to_eef` 参数签名 TypeError fail-close，attempt evidence完整且未重跑。虽然 `3e156dd` 已修签名，独立审核又发现 runtime 的 contact/阶段门会让success不可达：整段precontact都被要求夹爪接触、lift前就要求source释放、合法bowl↔main_table目标接触被当unrelated、goal continuity只看末帧。当前没有任何SG trajectory、camera/replay video、Teleop candidate或pending gold episode需要人工审核。先按SR计划做code-only修复与pre-env预检，再允许新的bounded support identity。
 
 ## 2. 数据与复现基础
 
@@ -979,3 +981,19 @@ CR 执行计划已归档至 `/home/huang/code/PARC2026_final/docs/archive/axis_p
 唯一活动计划为 [Contact Truth 与 Support Gold Demo 计划](/home/huang/code/PARC2026_final/docs/AXIS_PI05_TRACK3_CONTACT_TRUTH_AND_SUPPORT_GOLD_DEMO_PLAN.md)。SG0–SG5 修 contact-v3、真实 failure-injection、分轴 waypoint/orientation、可执行 Teleop/replay handoff 和 clean-source；SG6–SG7 最多两条 fresh support CPU/no-renderer identity。无自动 success 则 SG8 等用户在线人工操作；有真实 success 才允许 GPU3 exact-action replay `3/3`，结果最多 `pending_gold_review`。等待人工时 SG11 可做数据链路/tiny-overfit CLI 的 code-only readiness，但 accepted promotion、训练、FAST/ZIP、上传和提交仍不授权。SG12 统一闭包并 hard stop。
 
 生命周期最终验证：CR strict JSON `69/69`、audit summary `1/1`、machine handoff `1/1`、定向 `22 passed`、项目规范全量 `388 passed, 7 skipped, 23 warnings`；diff-check、process/GPU、nested OpenPI 与 `LIBERO-plus` 保留边界通过。
+
+## 87. SG0–SG6 独立审核与 Support Runtime Gate 修复计划（2026-09-07）
+
+SG implementation 为 `710183a7983e300759c85e3c0a97e1afdbdb67f0`；SG0–SG5 在 attempt `0003` 与 clean-source commit `d5c319b055431d2ec46681775438c91ad64a2be0` 通过。SG6 attempt `0004` 启动一个fresh child后因offset参数签名TypeError返回 `infrastructure_failure`；执行者按旧计划sticky hard stop，随后只在 `3e156dd6177e435316b721a79ff7a0da6d0359f8` 修复签名，没有重跑。最终执行记录为 `55acd39c17d82c89b4f8e809b8f84d9623c3eb81`。
+
+独立复核通过SG namespace `37/37` strict JSON、attempt单调 `0001–0004`、attempt_0004 manifest `8/8`、outer/closure、无partial、cursor inactive/heartbeat final、tool blob hash、branch upstream、root/OpenPI/process/GPU边界。异常位于 `_configure_public_env` 和 `ControlEnv` 创建之前，因此账本是 `launch_attempt=1`、`environment_created=0`、`physics_identity=0`；没有trajectory、camera/replay/Teleop episode。SG7–SG12保持 `not_evaluated`。定向与全量在生命周期编辑前独立复现 `11 passed` 和 `399 passed, 7 skipped, 23 warnings`。
+
+唯一审核结论为 `remediation_required`。`3e156dd` 的签名修复成立但不足以释放physics：当前contact barrier错误地要求从起点到grasp的全部样本都有demonstrator contact；grasp_dwell结束、lift开始前就要求source=false；goal receiver `main_table`未列入合法receiver而会被标unrelated；goal continuous门只看末帧。直接重跑无法得到符合计划合同的gold candidate。
+
+旧SG计划已归档至 `docs/archive/axis_pi05/AXIS_PI05_TRACK3_CONTACT_TRUTH_AND_SUPPORT_GOLD_DEMO_PLAN.md`。唯一活动计划是 [Support Runtime Gate 修复与 Gold Continuation](/home/huang/code/PARC2026_final/docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_AND_GOLD_CONTINUATION_PLAN.md)：SR0–SR5先修role/window/pre-env integration/计数与分级停止，再clean release；SR6最多一条corrected primary，只有正常且有进展的family failure才允许SR7一条alternative。自动失败后才进入用户在线Teleop；真实success才GPU3 exact replay `3/3`，随后才生成front/wrist人工审核卡。SR12可在等待用户时做code-only数据链ready检查，accepted、训练、FAST/ZIP、上传和提交仍不授权。
+
+当前人工episode审核队列明确为0。现在不需要用户判断旧视频；后续只有在exact replay `3/3`后才会收到包含Episode ID、source/start/action hash、machine gates、front/wrist绝对路径及 `approve_visual | reject_visual | needs_rerecord` 选项的审核卡。
+
+审核报告：[SG0–SG6 独立审核](/home/huang/code/PARC2026_final/docs/reviews/axis_pi05/TRACK3_SG0_SG6_INDEPENDENT_AUDIT_20260907.md)；机器摘要：[SG audit summary](/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_sg0_sg6_independent_audit_20260907/summary.json)。
+
+生命周期最终验证为SG strict JSON `37/37`、audit summary与machine handoff各 `1/1`、定向 `19 passed`、项目全量 `407 passed, 7 skipped, 23 warnings`；py_compile、diff-check、无partial、无live worker/GPU compute、nested OpenPI clean与 `LIBERO-plus` 原dirty保持均通过。

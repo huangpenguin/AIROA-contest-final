@@ -1,0 +1,68 @@
+{
+  "audit_input_root_commit": "55acd39c17d82c89b4f8e809b8f84d9623c3eb81",
+  "branch": "codex/axis-pi05-sg0-sg12-support-gold-20260907",
+  "classification": "remediation_required",
+  "execution_record_commit": "55acd39c17d82c89b4f8e809b8f84d9623c3eb81",
+  "execution_source_commit": "d5c319b055431d2ec46681775438c91ad64a2be0",
+  "findings": {
+    "acquisition_gate_requires_entire_precontact_prefix": true,
+    "goal_continuity_is_only_final_frame": true,
+    "goal_receiver_main_table_misclassified_unrelated": true,
+    "signature_fix_is_valid_but_not_sufficient_for_physics_release": true,
+    "source_release_required_before_lift": true
+  },
+  "implementation_commit": "710183a7983e300759c85e3c0a97e1afdbdb67f0",
+  "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "next_phase_only": "SR0_to_SR13_then_hard_stop",
+  "next_plan": "docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_AND_GOLD_CONTINUATION_PLAN.md",
+  "post_failure_signature_fix_commit": "3e156dd6177e435316b721a79ff7a0da6d0359f8",
+  "post_lifecycle_validation": {
+    "diff_check": true,
+    "gpu_compute_apps": 0,
+    "libero_plus_preexisting_dirty_preserved": true,
+    "live_track3_workers": 0,
+    "nested_openpi_clean": true,
+    "project_suite": "407 passed, 7 skipped, 23 warnings",
+    "root_clean_after_commit": true,
+    "status": "passed",
+    "strict_json": "SG 37/37; audit summary 1/1; machine handoff 1/1",
+    "targeted_tests": "19 passed"
+  },
+  "schema_version": "track3_sg0_sg6_independent_audit_v1",
+  "status": "remediation_required",
+  "stop_policy": {
+    "deterministic_pre_env_code_exception": "runtime_lane_stop_then_one_preauthorized_code_only_remediation_no_auto_retry",
+    "family_failure": "conditional_family_route",
+    "identity_telemetry_gpu_partial_or_supervisor_unknown": "sticky_global_hard_stop",
+    "immediate_child_stop_preserved": true
+  },
+  "tests_before_lifecycle": {
+    "project_suite": "399 passed, 7 skipped, 23 warnings",
+    "targeted": "11 passed"
+  },
+  "verified": {
+    "accepted_count": 0,
+    "attempt_ids": [1, 2, 3, 4],
+    "attempt_0004_final_manifest": "8/8",
+    "attempt_0004_outer_and_closure": true,
+    "branch_upstream_exact": true,
+    "current_attempt_active": false,
+    "current_attempt_status": "hard_stop",
+    "environment_created_count": 0,
+    "gpu_compute_apps": 0,
+    "human_episode_review_queue_count": 0,
+    "launch_attempt_count": 1,
+    "live_track3_workers": 0,
+    "no_partial": true,
+    "pending_gold_review_count": 0,
+    "physics_identity_count": 0,
+    "replay_video_count": 0,
+    "sg0_to_sg5_status": "passed_on_attempt_0003",
+    "sg6_category": "infrastructure_failure",
+    "sg6_failure_before_control_env_creation": true,
+    "sg6_trajectory_count": 0,
+    "strict_json_sg_namespace": "37/37",
+    "teleop_recorded_candidate_count": 0,
+    "training_eligible_count": 0
+  }
+}

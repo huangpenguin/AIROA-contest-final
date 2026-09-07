@@ -11,9 +11,9 @@ CANARY = ROOT / "data/reports/axis_libero_30k/track3_background_predicate_conver
 
 def test_only_the_track3_tonight_zip_plan_is_active() -> None:
     handoff = json.loads(HANDOFF.read_text(encoding="utf-8"))
-    assert handoff["status"] == "track3_contact_truth_and_support_gold_demo_planned"
-    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_CONTACT_TRUTH_AND_SUPPORT_GOLD_DEMO_PLAN.md"
-    assert handoff["next_phase_only"] == "SG0_to_SG12_then_hard_stop"
+    assert handoff["status"] == "track3_support_runtime_gate_remediation_and_gold_continuation_planned"
+    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_AND_GOLD_CONTINUATION_PLAN.md"
+    assert handoff["next_phase_only"] == "SR0_to_SR13_then_hard_stop"
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md").is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md").exists()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md").is_file()

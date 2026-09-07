@@ -77,7 +77,7 @@ def test_duplicate_json_keys_are_rejected(tmp_path: Path) -> None:
 def test_current_plan_is_the_only_active_plan() -> None:
     plan = Path(ac.PLAN)
     assert not plan.is_file()
-    active = Path(ac.ROOT) / "docs/AXIS_PI05_TRACK3_CONTACT_TRUTH_AND_SUPPORT_GOLD_DEMO_PLAN.md"
+    active = Path(ac.ROOT) / "docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_AND_GOLD_CONTINUATION_PLAN.md"
     archived_br = Path(ac.ROOT) / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ACQUISITION_GATE_AND_ATTEMPT_LIFECYCLE_REMEDIATION_PLAN.md"
     archived = Path(ac.ROOT) / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_PLAN.md"
     archived_audit = Path(ac.ROOT) / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_INDEPENDENT_AUDIT_PLAN.md"
@@ -86,5 +86,5 @@ def test_current_plan_is_the_only_active_plan() -> None:
     assert archived.is_file()
     assert archived_audit.is_file()
     text = active.read_text(encoding="utf-8")
-    assert "SG0" in text and "SG12" in text
-    assert "CR 六条历史 trace/identity 全部只读，不重跑" in text
+    assert "SR0" in text and "SR13" in text
+    assert "旧 SG attempt `0001–0004`" in text

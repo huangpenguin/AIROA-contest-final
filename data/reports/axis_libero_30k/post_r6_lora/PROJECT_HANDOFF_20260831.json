@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-07",
-  "status": "track3_contact_truth_and_support_gold_demo_planned",
+  "status": "track3_support_runtime_gate_remediation_and_gold_continuation_planned",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
-  "latest_audited_execution_commit": "0ce605cf33d33a0d670d190ecf7013d122d8a1a0",
-  "latest_audit_input_commit": "0ce605cf33d33a0d670d190ecf7013d122d8a1a0",
-  "latest_execution_root_commit": "ec1f3f4f99aa8d74ddc45ac454914a54b99f1c4a",
+  "latest_audited_execution_commit": "55acd39c17d82c89b4f8e809b8f84d9623c3eb81",
+  "latest_audit_input_commit": "55acd39c17d82c89b4f8e809b8f84d9623c3eb81",
+  "latest_execution_root_commit": "d5c319b055431d2ec46681775438c91ad64a2be0",
   "latest_execution_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
-  "branch": "codex/axis-pi05-repository-status-20260907",
+  "branch": "codex/axis-pi05-sg0-sg12-support-gold-20260907",
   "branch_has_upstream": true,
   "session_entrypoint": {
     "instructions": "AGENTS.md",
@@ -225,9 +225,9 @@
   },
   "tests": {
     "command": "PYTHONPATH=. JAX_PLATFORMS=cpu .venv_axis_pi05/bin/pytest -q tests",
-    "passed": 380,
+    "passed": 407,
     "skipped": 7,
-    "warnings": 26,
+    "warnings": 23,
     "pynvml_is_collection_blocker": false
   },
   "resources": {
@@ -259,8 +259,8 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_TRACK3_CONTACT_TRUTH_AND_SUPPORT_GOLD_DEMO_PLAN.md",
-  "next_phase_only": "SG0_to_SG12_then_hard_stop",
+  "next_plan": "docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_AND_GOLD_CONTINUATION_PLAN.md",
+  "next_phase_only": "SR0_to_SR13_then_hard_stop",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -4995,8 +4995,8 @@
     "next_phase_only": "SG0_to_SG12_then_hard_stop"
   },
   "track3_contact_truth_and_support_gold_demo_authorization": {
-    "status": "planned",
-    "plan": "docs/AXIS_PI05_TRACK3_CONTACT_TRUTH_AND_SUPPORT_GOLD_DEMO_PLAN.md",
+    "status": "completed_hard_stop_audited_remediation_required",
+    "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_CONTACT_TRUTH_AND_SUPPORT_GOLD_DEMO_PLAN.md",
     "audit_input_root_commit": "0ce605cf33d33a0d670d190ecf7013d122d8a1a0",
     "authorized_phases": ["SG0", "SG1", "SG2", "SG3", "SG4", "SG5", "SG6", "SG7", "SG8", "SG9", "SG10", "SG11", "SG12"],
     "priority_family": "support_remove",
@@ -5032,6 +5032,136 @@
       "upload": false,
       "submission": false
     },
-    "next_phase_only": "SG0_to_SG12_then_hard_stop"
+    "next_phase_only": "superseded_by_track3_support_runtime_gate_remediation_and_gold_continuation_plan"
+  },
+  "track3_contact_truth_and_support_gold_demo_execution": {
+    "status": "completed_hard_stop_audited_remediation_required",
+    "implementation_commit": "710183a7983e300759c85e3c0a97e1afdbdb67f0",
+    "clean_source_commit": "d5c319b055431d2ec46681775438c91ad64a2be0",
+    "post_failure_signature_fix_commit": "3e156dd6177e435316b721a79ff7a0da6d0359f8",
+    "execution_record_commit": "55acd39c17d82c89b4f8e809b8f84d9623c3eb81",
+    "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "evidence_root": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo",
+    "closeout_report": "docs/reviews/axis_pi05/TRACK3_SG0_SG6_EXECUTION_20260907.md",
+    "attempts": {
+      "code_fixture_attempts": [1, 2, 3],
+      "sg0_to_sg5_passed_attempt": 3,
+      "sg6_attempt": 4,
+      "current_attempt_active": false
+    },
+    "sg6": {
+      "status": "infrastructure_failure",
+      "failure_stage": "before_configure_public_env_and_control_env_creation",
+      "launch_attempt_count": 1,
+      "environment_created_count": 0,
+      "physics_identity_count": 0,
+      "trajectory_count": 0,
+      "second_identity_started": false,
+      "signature_fixed_after_stop": true,
+      "rerun_after_fix": false
+    },
+    "unexecuted": ["SG7", "SG8", "SG9", "SG10", "SG11", "SG12"],
+    "counts": {
+      "success": 0,
+      "camera_replay": 0,
+      "teleop_recorded_candidate": 0,
+      "pending_gold_review": 0,
+      "accepted": 0,
+      "training_eligible": 0,
+      "new_candidate_zip": 0
+    },
+    "validation": {
+      "strict_json": "37/37",
+      "attempt_0004_manifest": "8/8",
+      "attempt_0004_outer_and_closure": true,
+      "targeted_tests": "11 passed",
+      "full_tests": "399 passed, 7 skipped, 23 warnings",
+      "py_compile": true,
+      "diff_check": true,
+      "no_partial": true,
+      "live_track3_workers": 0,
+      "gpu_compute_apps": 0,
+      "nested_openpi_clean": true,
+      "libero_plus_preexisting_dirty_preserved": true
+    }
+  },
+  "track3_sg0_sg6_independent_audit": {
+    "status": "remediation_required",
+    "classification": "remediation_required",
+    "audit_input_root_commit": "55acd39c17d82c89b4f8e809b8f84d9623c3eb81",
+    "execution_source_commit": "d5c319b055431d2ec46681775438c91ad64a2be0",
+    "post_failure_signature_fix_commit": "3e156dd6177e435316b721a79ff7a0da6d0359f8",
+    "report": "docs/reviews/axis_pi05/TRACK3_SG0_SG6_INDEPENDENT_AUDIT_20260907.md",
+    "summary": "data/reports/axis_libero_30k/track3_sg0_sg6_independent_audit_20260907/summary.json",
+    "verified": {
+      "strict_json_sg_namespace": "37/37",
+      "attempt_0004_manifest": "8/8",
+      "attempt_0004_outer_and_closure": true,
+      "launch_attempt_count": 1,
+      "environment_created_count": 0,
+      "physics_identity_count": 0,
+      "human_episode_review_queue_count": 0,
+      "accepted_count": 0,
+      "training_started": false,
+      "new_candidate_zip_count": 0
+    },
+    "findings": {
+      "acquisition_gate_requires_entire_precontact_prefix": true,
+      "source_release_required_before_lift": true,
+      "goal_receiver_main_table_misclassified_unrelated": true,
+      "goal_continuity_is_only_final_frame": true,
+      "signature_fix_is_valid_but_not_sufficient_for_physics_release": true
+    },
+    "next_phase_only": "SR0_to_SR13_then_hard_stop"
+  },
+  "track3_support_runtime_gate_remediation_and_gold_continuation_authorization": {
+    "status": "planned",
+    "plan": "docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_AND_GOLD_CONTINUATION_PLAN.md",
+    "audit_input_root_commit": "55acd39c17d82c89b4f8e809b8f84d9623c3eb81",
+    "authorized_phases": ["SR0", "SR1", "SR2", "SR3", "SR4", "SR5", "SR6", "SR7", "SR8", "SR9", "SR10", "SR11", "SR12", "SR13"],
+    "priority_family": "support_remove",
+    "old_sg_launch_attempt_count": 1,
+    "old_sg_physics_identity_count": 0,
+    "corrected_primary_physics_identities_max": 1,
+    "conditional_alternative_physics_identities_max": 1,
+    "same_strategy_retry_allowed": false,
+    "second_identity_requires_measured_progress": true,
+    "human_episode_review_queue_count_at_authorization": 0,
+    "human_teleop_recorded_candidates_max": 1,
+    "human_teleop_requires_user_online_control": true,
+    "gpu3_exact_action_replays_per_success_max": 3,
+    "success_disposition": "pending_gold_review_only",
+    "stop_policy": {
+      "global_hard_stop": ["dirty_or_identity_hash_drift", "telemetry_unknown", "gpu_violation", "partial_or_manifest_failure", "supervisor_or_physics_state_unknown"],
+      "runtime_lane_stop": "proven_pre_env_zero_physics_deterministic_code_exception_then_one_preauthorized_code_only_remediation_no_auto_retry",
+      "family_outcome": "normal_process_behavior_failure_uses_conditional_route"
+    },
+    "authorization": {
+      "historical_evidence_read_only": true,
+      "contact_role_and_phase_window_remediation": true,
+      "pre_env_integration_test": true,
+      "clean_source_commit": true,
+      "new_support_cpu_no_renderer_physics": true,
+      "user_controlled_support_teleop": true,
+      "gpu3_exact_action_replay_after_success": true,
+      "visual_review_package_after_exact_replay": true,
+      "data_loader_and_tiny_overfit_cli_dry_run": true,
+      "containment_or_articulation_physics": false,
+      "old_identity_rerun": false,
+      "gpu0": false,
+      "gpu1": false,
+      "gpu2": false,
+      "official_gpu": false,
+      "unattended_teleop": false,
+      "accepted_promotion": false,
+      "scale_generation": false,
+      "norm": false,
+      "training": false,
+      "fast_export": false,
+      "new_candidate_zip": false,
+      "upload": false,
+      "submission": false
+    },
+    "next_phase_only": "SR0_to_SR13_then_hard_stop"
   }
 }

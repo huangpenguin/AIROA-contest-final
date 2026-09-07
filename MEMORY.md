@@ -1,7 +1,7 @@
 # PARC2026_final Project Memory
 
 > Purpose: durable cross-session context for Codex and human handoff. Read this file before major work. This is an index and rulebook, not a substitute for current machine evidence.
-> Last memory refresh: 2026-09-07 (Asia/Tokyo), CR independent audit / support-gold plan lifecycle.
+> Last memory refresh: 2026-09-07 (Asia/Tokyo), SG0–SG6 independent audit / support runtime-gate lifecycle.
 
 ## 1. Canonical session entrypoint
 
@@ -32,14 +32,14 @@ If these disagree, stop mutation, audit the discrepancy and repair the handoff i
 ## 2. Current snapshot at this memory refresh
 
 - Repository: `/home/huang/code/PARC2026_final`
-- Branch: `codex/axis-pi05-repository-status-20260907`; upstream is the same-name origin branch.
+- Branch at latest audit input: `codex/axis-pi05-sg0-sg12-support-gold-20260907`; upstream was the same-name origin branch at `55acd39c17d82c89b4f8e809b8f84d9623c3eb81`.
 - EF0 anchor input HEAD: `38635fbf08e4e8df8c4877ddcb6b2b2ec8b9b118`; its historical lifecycle is closed.
-- Latest audit input is `0ce605cf33d33a0d670d190ecf7013d122d8a1a0`; CR evidence/closeout is `760dc65adc74193112692ab003e19a74d588ea9f`, execution source is `02bbac24857168826557a0aa23b8698111e1be92`, and finalizer correction is `ec1f3f4f99aa8d74ddc45ac454914a54b99f1c4a`. CR0–CR14 is independently audited `remediation_required`.
+- Latest audit input / SG execution record is `55acd39c17d82c89b4f8e809b8f84d9623c3eb81`; SG6 source is `d5c319b055431d2ec46681775438c91ad64a2be0`, and the post-failure signature fix is `3e156dd6177e435316b721a79ff7a0da6d0359f8`. SG0–SG6 is independently audited `remediation_required`.
 - Nested OpenPI: `third_party/axis_openpi` at `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`, clean at review.
 - `LIBERO-plus` has pre-existing dirty files. They belong to the user/project and must not be reset, cleaned, overwritten or silently committed.
-- Current state at this refresh: `track3_contact_truth_and_support_gold_demo_planned`.
-- Active plan: `docs/AXIS_PI05_TRACK3_CONTACT_TRUTH_AND_SUPPORT_GOLD_DEMO_PLAN.md`; SG0–SG12 is the only authority.
-- CR produced six byte/action-new CPU/no-renderer traces and valid acquisition-before-barrier diagnostic family failures. Their contact arrays are not physical truth: telemetry completeness was copied to required contact (`966/966` true) and unrelated contact was hardcoded false. The named microstep alternative only changed static targets and all rotation actions were zero. The old CR12 Teleop argv is invalid. The next plan fixes these gates, then permits at most two fresh support-only CPU identities, one user-controlled Teleop candidate, and GPU3 exact replay only after real success; results stop at pending gold review. Accepted promotion, training and a new ZIP remain unauthorized.
+- Current state at this refresh: `track3_support_runtime_gate_remediation_and_gold_continuation_planned`.
+- Active plan: `docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_AND_GOLD_CONTINUATION_PLAN.md`; SR0–SR13 is the only authority.
+- SG0–SG5 passed and SG6 correctly fail-closed on a pre-`ControlEnv` TypeError. That launch produced zero physics and zero episode; there is currently nothing for the user to visually review. The signature fix is valid but not sufficient: the acquisition gate incorrectly requires the entire precontact prefix to have gripper contact, source release is required before lift, legitimate bowl↔main_table goal contact is marked unrelated, and goal continuity is only a final-frame check. The active plan repairs these code-only contracts and adds a real pre-env integration test before allowing one corrected primary and at most one progress-gated alternative. Accepted promotion, training and a new ZIP remain unauthorized.
 - Z0–Z14 execution evidence is in `data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/`; its audit is `docs/reviews/axis_pi05/TRACK3_Y3_LAUNCH_Z0_Z14_AUDIT_20260906.md`. Historical parent remains infrastructure while physical result is derived nominal family failure. Z6–Z13 remain `not_evaluated`; before any AA execution, recheck live supervisor/PID/cursor, dirty worktree and GPU boundaries. Never start a duplicate run.
 
 The snapshot above becomes historical as soon as execution advances. Always refresh from Git, machine JSON and the live cursor rather than treating this paragraph as a lock.
@@ -235,3 +235,11 @@ After a phase completes, the reviewing agent must refresh this file only when st
 - User strategy input `PARC_TRACK3_MASTER_PLAN_20260907.md` is tracked unchanged at SHA `8c2f87ebdb4c3bfccfe1a2e80294ad3d23e300f76da869f8d7db13b9e52715f5`. Its data-first/one-family/gold-demo path is adopted; its external sources and deadline claim were not independently verified by this audit.
 - The sole active authority is `docs/AXIS_PI05_TRACK3_CONTACT_TRUTH_AND_SUPPORT_GOLD_DEMO_PLAN.md`: fix contact truth, real failure injection, waypoint/orientation and executable Teleop/replay handoff, then run at most two fresh support CPU/no-renderer identities. If automatic acquisition fails, wait for explicit online human control; only real success releases up to three GPU3 exact-action replays. Stop at `pending_gold_review`; no accepted promotion, training, new ZIP, upload or submission.
 - Post-lifecycle validation: CR strict JSON `69/69`, audit summary and machine handoff `1/1` each, targeted `22 passed`, project suite `388 passed, 7 skipped, 23 warnings`; diff/process/GPU/nested Git boundaries passed.
+
+## 23. SG0–SG6 independent audit and support runtime-gate authority (2026-09-07)
+
+- Verdict: `remediation_required`. SG0–SG5 passed on attempt `0003`; SG6 attempt `0004` failed on an offset keyword TypeError before `_configure_public_env` and `ControlEnv` creation. Its 37 JSON files, 8-entry final manifest, outer/closure, cursor/heartbeat and zero-partial state pass. It is one launch attempt but zero environment/physics identities and generated no trajectory or episode.
+- The `3e156dd` signature fix is valid but does not make the success path releasable. The runtime contact gate requires every sample since episode start to have demonstrator contact; it requires source=false at grasp dwell before lift; it classifies legal bowl↔main_table goal contact as unrelated; and its continuous-goal gate checks only the final frame.
+- There is no current human episode review queue: no SG trajectory, camera/replay video, Teleop recording or pending gold candidate. Human action is needed only later for explicit Teleop takeover after automatic failure, or visual review after exact replay `3/3`.
+- The sole active authority is `docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_AND_GOLD_CONTINUATION_PLAN.md`. SR0–SR5 repairs contact roles, phase windows, pre-env integration and scoped stop accounting, then creates a new clean release. It allows one corrected primary physics identity and at most one progress-gated structural alternative; no same-strategy retry. A proven pre-env deterministic exception stops the child but may use one preauthorized code-only repair; identity/hash/telemetry/GPU/partial/supervisor uncertainty remains a sticky global stop.
+- Real success alone may release GPU3 exact-action replay `3/3` and a front/wrist visual review card. Automatic failure may request one user-controlled Teleop candidate. Accepted promotion, training/norm, FAST/ZIP, upload and submission remain prohibited.

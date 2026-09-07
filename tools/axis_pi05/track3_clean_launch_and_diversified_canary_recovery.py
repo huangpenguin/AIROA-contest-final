@@ -42,6 +42,7 @@ P1_ROOT = ROOT / "data/reports/axis_libero_30k/track3_public_terminal_recovery"
 ACTION_DIM = 7
 CONTACT_WINDOW = 4
 FIXTURE_TIMEOUT = 0.35
+NORMAL_FIXTURE_TIMEOUT = 2.0
 TERM_GRACE_SECONDS = 0.25
 CPU_TIMEOUT_SECONDS = 240.0
 
@@ -434,9 +435,9 @@ def _run_fixture(mode: str, attempt: Path, label: str) -> dict[str, Any]:
     fixture = attempt / "fixtures" / label; fixture.mkdir(parents=True, exist_ok=True)
     partial_path = fixture / "heartbeat.json.partial" if mode == "partial" else None; heartbeat = fixture / "heartbeat.json"
     command = [sys.executable, "-m", MODULE, "--cr-fixture-child", "--mode", mode, "--partial-output", str(partial_path or heartbeat), "--heartbeat-output", str(heartbeat)]
-    started = time.monotonic(); process = subprocess.Popen(command, cwd=ROOT, env={**os.environ, "CUDA_VISIBLE_DEVICES": "", "JAX_PLATFORMS": "cpu", "MUJOCO_GL": "disable"}, start_new_session=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True); pgid = os.getpgid(process.pid); timed_out = False
+    started = time.monotonic(); process = subprocess.Popen(command, cwd=ROOT, env={**os.environ, "CUDA_VISIBLE_DEVICES": "", "JAX_PLATFORMS": "cpu", "MUJOCO_GL": "disable"}, start_new_session=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True); pgid = os.getpgid(process.pid); timed_out = False; timeout_limit = FIXTURE_TIMEOUT if mode == "partial" else NORMAL_FIXTURE_TIMEOUT
     while process.poll() is None:
-        if time.monotonic() - started > FIXTURE_TIMEOUT:
+        if time.monotonic() - started > timeout_limit:
             timed_out = True; os.killpg(pgid, signal.SIGTERM)
             try: process.wait(timeout=TERM_GRACE_SECONDS)
             except subprocess.TimeoutExpired: os.killpg(pgid, signal.SIGKILL); process.wait()

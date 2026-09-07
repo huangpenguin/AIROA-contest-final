@@ -56,6 +56,11 @@ def test_waypoint_contract_has_real_axis_split_and_orientation_stage() -> None:
     assert contract["keypose_is_not_trajectory"] is True
 
 
+def test_object_frame_composition_accepts_transport_offset() -> None:
+    result = sg.compose_object_to_eef({"pos_m": [0.0, 0.0, 0.0], "quat": [0.0, 0.0, 0.0, 1.0]}, {"translation_m": [0.0, 0.0, 0.0], "quaternion_xyzw": [0.0, 0.0, 0.0, 1.0]}, object_position_offset_m=(0.0, 0.0, 0.12))
+    assert result["pos_m"] == [0.0, 0.0, 0.12]
+
+
 def test_manifest_detects_post_seal_new_nested_file(tmp_path: Path) -> None:
     (tmp_path / "nested").mkdir()
     (tmp_path / "nested" / "heartbeat.json").write_text("{}\n", encoding="utf-8")

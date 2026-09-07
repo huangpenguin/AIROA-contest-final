@@ -824,14 +824,14 @@ def sg6_worker(profile: Mapping[str, Any], result_path: Path, attempt: Path) -> 
     return 0
 
 
-def compose_object_to_eef(object_pose: Mapping[str, Any], relative_pose: Mapping[str, Any]) -> dict[str, Any]:
+def compose_object_to_eef(object_pose: Mapping[str, Any], relative_pose: Mapping[str, Any], *, object_position_offset_m: Sequence[float] = (0.0, 0.0, 0.0)) -> dict[str, Any]:
     from tools.axis_pi05 import track3_support_release_anchor_and_osc_scale_recovery as control
 
     object_quat = control.quat_normalize_xyzw(object_pose["quat"])
     relative_position = [float(item) for item in relative_pose["translation_m"]]
     rotation = control.quat_to_matrix_xyzw(object_quat)
     world_delta = [sum(rotation[row][column] * relative_position[column] for column in range(3)) for row in range(3)]
-    return {"pos_m": [float(object_pose["pos_m"][index]) + world_delta[index] for index in range(3)], "quat": list(control.quat_mul_xyzw(object_quat, relative_pose["quaternion_xyzw"]))}
+    return {"pos_m": [float(object_pose["pos_m"][index]) + float(object_position_offset_m[index]) + world_delta[index] for index in range(3)], "quat": list(control.quat_mul_xyzw(object_quat, relative_pose["quaternion_xyzw"]))}
 
 
 def _terminate_group(process: subprocess.Popen[Any]) -> str:

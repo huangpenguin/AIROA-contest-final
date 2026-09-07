@@ -1,7 +1,7 @@
 # PARC2026_final Project Memory
 
 > Purpose: durable cross-session context for Codex and human handoff. Read this file before major work. This is an index and rulebook, not a substitute for current machine evidence.
-> Last memory refresh: 2026-09-07 (Asia/Tokyo), SG0–SG6 independent audit / support runtime-gate lifecycle.
+> Last memory refresh: 2026-09-07 (Asia/Tokyo), SR0–SR13 independent audit / task10 user-Teleop gold lifecycle.
 
 ## 1. Canonical session entrypoint
 
@@ -32,14 +32,14 @@ If these disagree, stop mutation, audit the discrepancy and repair the handoff i
 ## 2. Current snapshot at this memory refresh
 
 - Repository: `/home/huang/code/PARC2026_final`
-- Branch at latest audit input: `codex/axis-pi05-sg0-sg12-support-gold-20260907`; upstream was the same-name origin branch at `55acd39c17d82c89b4f8e809b8f84d9623c3eb81`.
+- Branch at latest audit input: `codex/axis-pi05-sg0-sg12-support-gold-20260907`; upstream remains the same-name origin branch at `55acd39c17d82c89b4f8e809b8f84d9623c3eb81`.
 - EF0 anchor input HEAD: `38635fbf08e4e8df8c4877ddcb6b2b2ec8b9b118`; its historical lifecycle is closed.
-- Latest audit input / SG execution record is `55acd39c17d82c89b4f8e809b8f84d9623c3eb81`; SG6 source is `d5c319b055431d2ec46681775438c91ad64a2be0`, and the post-failure signature fix is `3e156dd6177e435316b721a79ff7a0da6d0359f8`. SG0–SG6 is independently audited `remediation_required`.
+- Latest audit input / SR execution record is `64f278c7f59dc70f17770e1980522d0313ccda27`; SR physics source is `5c5c74641ba39e41709e2c51ce576e7c065060fc`. SR0–SR13 is independently audited `remediation_required`.
 - Nested OpenPI: `third_party/axis_openpi` at `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`, clean at review.
 - `LIBERO-plus` has pre-existing dirty files. They belong to the user/project and must not be reset, cleaned, overwritten or silently committed.
-- Current state at this refresh: `track3_support_runtime_gate_remediation_executed_pending_independent_audit`.
-- Active plan: `docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_INDEPENDENT_AUDIT_PLAN.md`; read-only independent audit is the only authority.
-- SR0–SR13 executed and hard-stopped. Clean-source freeze is `5c5c746`. Two CPU/no-renderer support identities in attempt `0004` are normal `family_failure` at `grasp_dwell` with no dwell-window demonstrator contact. success/accepted/training remain 0. Teleop was not started; the user must come online for any SR9 candidate. GPU3 replay was not released.
+- Current state at this refresh: `track3_sr_closure_and_task10_user_teleop_gold_canary_planned`.
+- Active plan: `docs/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md`; UT0–UT3 code-only readiness is the next executable authority.
+- SR0–SR13 executed and hard-stopped. Two CPU/no-renderer support identities are diagnostic `family_failure`, but the old closure sealed before three tail producers, SR13 omitted the unexecuted list, SR7 was not structurally distinct, and the old Teleop recorder lacks gold telemetry. The user should not start Teleop until UT3 reports `ready_for_user_calibration`.
 - Z0–Z14 execution evidence is in `data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/`; its audit is `docs/reviews/axis_pi05/TRACK3_Y3_LAUNCH_Z0_Z14_AUDIT_20260906.md`. Historical parent remains infrastructure while physical result is derived nominal family failure. Z6–Z13 remain `not_evaluated`; before any AA execution, recheck live supervisor/PID/cursor, dirty worktree and GPU boundaries. Never start a duplicate run.
 
 The snapshot above becomes historical as soon as execution advances. Always refresh from Git, machine JSON and the live cursor rather than treating this paragraph as a lock.
@@ -243,3 +243,13 @@ After a phase completes, the reviewing agent must refresh this file only when st
 - There is no current human episode review queue: no SG trajectory, camera/replay video, Teleop recording or pending gold candidate. Human action is needed only later for explicit Teleop takeover after automatic failure, or visual review after exact replay `3/3`.
 - The sole active authority is `docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_AND_GOLD_CONTINUATION_PLAN.md`. SR0–SR5 repairs contact roles, phase windows, pre-env integration and scoped stop accounting, then creates a new clean release. It allows one corrected primary physics identity and at most one progress-gated structural alternative; no same-strategy retry. A proven pre-env deterministic exception stops the child but may use one preauthorized code-only repair; identity/hash/telemetry/GPU/partial/supervisor uncertainty remains a sticky global stop.
 - Real success alone may release GPU3 exact-action replay `3/3` and a front/wrist visual review card. Automatic failure may request one user-controlled Teleop candidate. Accepted promotion, training/norm, FAST/ZIP, upload and submission remain prohibited.
+
+## 24. SR0–SR13 independent audit and user-Teleop gold authority (2026-09-07)
+
+- Verdict: `remediation_required`. Audit input/execution record is `64f278c7f59dc70f17770e1980522d0313ccda27`; physics clean source is `5c5c74641ba39e41709e2c51ce576e7c065060fc`; nested OpenPI remains `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`.
+- Both fresh support CPU/no-renderer traces are valid diagnostic `family_failure`: 96/112 steps, typed no-pickle finite states/actions, grasp-dwell reached, and the final four dwell samples have complete telemetry but no required/demonstrator contact. Lift/place are `not_evaluated`; success/pending/accepted/training remain zero.
+- The SR finalizer sealed a 15-entry set before SR8/SR12/SR13 wrote three more producer files, so old closure exactness is stale. SR13 also incorrectly stores an empty `not_evaluated` list although SR9–SR11 did not run. Preserve those files and correct them only in a derived namespace.
+- SR7 did not implement its claimed structural alternative: both actual phase orders are XY→Z→orientation→descent→dwell; only step/clip/budget values differ. Do not rerun either identity.
+- Do not start the old Teleop argv yet. The recorder defaults to gripper `+1`, exposes only a toggle, does not persist per-step raw contact/source/goal gates, and lacks the current attempt identity/finalizer lifecycle. There is no episode for human visual review now.
+- The sole active plan is `docs/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md`. UT0–UT3 perform derived closure and recorder readiness with no simulator/GPU; after `ready_for_user_calibration`, the user may explicitly take over, calibrate without saving, and record at most one task10 candidate. Only machine success releases GPU3 exact replay `3/3` and a visual-review card. Accepted promotion, training/norm, FAST/ZIP, upload and submission remain prohibited.
+- Post-lifecycle validation: SR strict JSON `27/27`, audit `2/2`, machine handoff `1/1`, targeted `18 passed`, full `425 passed, 7 skipped, 23 warnings`; py_compile/diff-check/no-partial/process boundaries passed. Public LIBERO and nested OpenPI are clean; the pre-existing `LIBERO-plus` dirty set is preserved. GPU0 has an external job and was not touched; GPU1–3 are idle.

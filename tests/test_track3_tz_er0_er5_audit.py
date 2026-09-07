@@ -16,8 +16,8 @@ def test_er_audit_has_one_remediation_verdict_and_ef_is_closed() -> None:
     handoff = json.loads(HANDOFF.read_text(encoding="utf-8"))
     audit = json.loads(AUDIT.read_text(encoding="utf-8"))
     assert audit["classification"] == audit["status"] == "remediation_required"
-    assert handoff["status"] == "track3_support_runtime_gate_remediation_executed_pending_independent_audit"
-    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_INDEPENDENT_AUDIT_PLAN.md"
+    assert handoff["status"] == "track3_sr_closure_and_task10_user_teleop_gold_canary_planned"
+    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md"
     assert audit["next_plan"] == PLAN
     assert audit["next_phase_only"] == "EF0_to_EF4_then_hard_stop"
     assert (ROOT / ARCHIVED_PLAN).is_file()

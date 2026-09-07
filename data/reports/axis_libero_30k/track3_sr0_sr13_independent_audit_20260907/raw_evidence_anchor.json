@@ -1,0 +1,21 @@
+{
+  "audit_input_commit": "64f278c7f59dc70f17770e1980522d0313ccda27",
+  "entries": [
+    {"bytes": 316, "path": "data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/attempts/attempt_0004/canary/support_se3_microstep_lateral_first_v2/child.stderr.log", "sha256": "b64f85f67048e258074975a341f381ae84f788926051563a6e509c7cb5191add"},
+    {"bytes": 0, "path": "data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/attempts/attempt_0004/canary/support_se3_microstep_lateral_first_v2/child.stdout.log", "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},
+    {"bytes": 760, "path": "data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/attempts/attempt_0004/canary/support_se3_microstep_lateral_first_v2/start_state.npy", "sha256": "f5b4d5dd93a42cd133994d23eaeae0bc21bcdc970ba6c03e15a5c37f0928b9b3"},
+    {"bytes": 52852, "path": "data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/attempts/attempt_0004/canary/support_se3_microstep_lateral_first_v2/trajectory.npz", "sha256": "1f46ad76c6e11df0268d2c24ecaf3fc9af9a9e9ad9e79012f15cd0546359728e"},
+    {"bytes": 316, "path": "data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/attempts/attempt_0004/canary/support_se3_microstep_primary_v1/child.stderr.log", "sha256": "b64f85f67048e258074975a341f381ae84f788926051563a6e509c7cb5191add"},
+    {"bytes": 0, "path": "data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/attempts/attempt_0004/canary/support_se3_microstep_primary_v1/child.stdout.log", "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},
+    {"bytes": 760, "path": "data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/attempts/attempt_0004/canary/support_se3_microstep_primary_v1/start_state.npy", "sha256": "f5b4d5dd93a42cd133994d23eaeae0bc21bcdc970ba6c03e15a5c37f0928b9b3"},
+    {"bytes": 45809, "path": "data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/attempts/attempt_0004/canary/support_se3_microstep_primary_v1/trajectory.npz", "sha256": "2e68809900bb98d2f93648298370dd1abc571e4e9a7c09a440a60e19de2d46dc"},
+    {"bytes": 0, "path": "data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/sr6_supervisor.stderr.log", "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},
+    {"bytes": 17286, "path": "data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/sr6_supervisor.stdout.log", "sha256": "0f308563842499bce5b2e46d2bd5c7b5c2033fc9bf3f6816024eb9e35d33032d"},
+    {"bytes": 8, "path": "data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/supervisor.pid", "sha256": "d6da81b1f136d6fcd3294018a93ade67c7515f9784dc0f6d2b5a83e51ed55ef5"}
+  ],
+  "entry_count": 11,
+  "git_tracked_at_audit_input": 0,
+  "original_bytes_modified": false,
+  "schema_version": "track3_sr_raw_evidence_anchor_v1",
+  "status": "anchored_unchanged_by_audit_lifecycle"
+}

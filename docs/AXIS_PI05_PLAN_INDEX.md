@@ -2,9 +2,9 @@
 
 > 更新日期：2026-09-07（Asia/Tokyo）
 > 跨session入口：先完整读取根目录`AGENTS.md`与`MEMORY.md`，再读取本索引、handoff、machine JSON、唯一活动计划和最新审核；先查live PID/cursor，禁止重复启动。
-> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_INDEPENDENT_AUDIT_PLAN.md`
-> 当前状态：`track3_support_runtime_gate_remediation_executed_pending_independent_audit`
-> 最新审核：`docs/reviews/axis_pi05/TRACK3_SG0_SG6_INDEPENDENT_AUDIT_20260907.md`
+> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md`
+> 当前状态：`track3_sr_closure_and_task10_user_teleop_gold_canary_planned`
+> 最新审核：`docs/reviews/axis_pi05/TRACK3_SR0_SR13_INDEPENDENT_AUDIT_20260907.md`
 > 最新执行闭包：`docs/reviews/axis_pi05/TRACK3_SR0_SR13_EXECUTION_CLOSEOUT_20260907.md`
 
 ## 1. 本轮执行停止点
@@ -37,7 +37,8 @@ ER审核确认三条新CPU/no-renderer canary均为有效诊断性`family_failur
 - `AXIS_PI05_TRACK3_CONTACT_TRUTH_AND_SUPPORT_GOLD_DEMO_PLAN.md` 已归档。SG0–SG5 的 code/fixture 与 clean-source release成立；SG6 在创建 simulator env 前因参数签名 TypeError 正确 infrastructure hard stop。旧 attempt `0001–0004`、日志、manifest 与 failure label保持只读。
 - SG 独立审核唯一结论为 `remediation_required`：已有签名修复成立，但 acquisition gate错误要求整段 precontact 都有夹爪接触、source在lift前就必须释放、合法goal contact `bowl↔main_table` 被标unrelated，goal continuity又只看末帧。直接重跑不能产生合格gold。
 - `docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_AND_GOLD_CONTINUATION_PLAN.md` 已归档。SR0–SR5 形成 clean-source `5c5c746`；两次 env 前 SR5 失败 attempt 保留。SR6/SR7 各一条 CPU/no-renderer identity，均为走到 `grasp_dwell` 的正常 `family_failure`，dwell 窗口无夹爪接触，success=0。SR8 等待用户在线 Teleop；SR9–SR11 未执行。SR12 code-only 通过后 SR13 hard stop。
-- 唯一活动计划为 `docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_INDEPENDENT_AUDIT_PLAN.md`，只授权独立只读审核。所有已消耗 identity 禁止重跑。containment/articulation 新 physics、GPU0–2、official GPU、unattended Teleop、accepted promotion、规模生成、训练/norm、FAST/export、新 candidate ZIP、上传/提交均不授权。
+- SR 独立审核计划已归档；唯一结论为 `remediation_required`。两条物理失败可保留，但旧 closure 提前封口、SR13 三态列表、SR7 结构差异和 Teleop gold telemetry 均需修复。
+- 唯一活动计划为 `docs/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md`。UT0–UT3 先做 code-only closure/finalizer/recorder readiness；ready 后才允许用户在线校准与最多一条 task10 candidate。所有已消耗 identity 禁止重跑。containment/articulation、新自动 physics、GPU0–2、official GPU、unattended Teleop、accepted promotion、规模生成、训练/norm、FAST/export、新 candidate ZIP、上传/提交均不授权。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准；不得从归档计划的未执行尾部自行恢复任务。
 
@@ -96,6 +97,8 @@ ER审核确认三条新CPU/no-renderer canary均为有效诊断性`family_failur
 47. `AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_INDEPENDENT_AUDIT_PLAN.md`：审核已完成并归档；结论 `remediation_required`，转入 contact truth 与 support gold demo 最小恢复。
 48. `AXIS_PI05_TRACK3_CONTACT_TRUTH_AND_SUPPORT_GOLD_DEMO_PLAN.md`：SG0–SG5通过；SG6在env创建前发生TypeError并按infrastructure hard stop。独立审核确认零physics/零episode，但发现success-path阶段与contact门不可达，转入support runtime gate最小修复。
 49. `AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_AND_GOLD_CONTINUATION_PLAN.md`：SR0–SR13已执行并 hard stop。四门与pre-env修复后跑了1+1条 support CPU identity，均为 grasp_dwell 后 family failure；无 success、无 Teleop/replay/训练/ZIP。
+50. `AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_INDEPENDENT_AUDIT_PLAN.md`：审核已完成并归档；结论 `remediation_required`。物理失败可保留，但 finalizer 提前封口、SR13 三态、SR7 结构差异与 Teleop gold telemetry 尚未闭合。
+51. `AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md`：当前唯一活动计划。先完成派生 closure/finalizer/Teleop readiness；ready 后由用户校准并最多录一条 task10，success 才 GPU3 replay `3/3` 和视觉审核包。
 
 归档不表示旧计划所有尾部阶段都完成；只表示该文件不再是活动授权入口。旧 failure、阈值、hash 和未执行阶段必须继续保留。
 
@@ -422,6 +425,18 @@ CR 计划已归档至 `docs/archive/axis_pi05/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_
 当前人工episode审核队列为0：没有SG6 trajectory、camera/replay video、Teleop recording或pending gold。唯一活动计划为 `docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_AND_GOLD_CONTINUATION_PLAN.md`，阶段SR0–SR13。code-only修复通过后最多1条corrected primary和1条有条件alternative；自动失败才由用户在线Teleop最多1条，真实success才GPU3 exact replay `3/3`并生成双视角审核卡。accepted、训练、新ZIP、upload和submission仍禁止。
 
 审核前测试独立复现定向 `11 passed`、全量 `399 passed, 7 skipped, 23 warnings`；生命周期最终验证为SG strict JSON `37/37`、audit summary与machine handoff各 `1/1`、定向 `19 passed`、全量 `407 passed, 7 skipped, 23 warnings`，py_compile、diff-check、process/GPU与nested Git边界通过。
+
+## 3.37 SR0–SR13 独立审核与用户 Teleop Gold Canary 授权（2026-09-07）
+
+本轮以 execution record/audit input `64f278c7f59dc70f17770e1980522d0313ccda27`、physics clean source `5c5c74641ba39e41709e2c51ce576e7c065060fc` 和 nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1` 为边界。SR `27/27` strict JSON、两条 child identity/returncode、两份 typed no-pickle/finite NPZ、固定 `float64[79]` start state 与 hashes 均独立通过。primary/alternative 分别运行 96/112 步，均进入 grasp_dwell；最后四帧 telemetry complete 但 required/demonstrator contact 全 false，source=true、goal=false，lift/place 未进入。两条正常诊断性 `family_failure` 成立，success/pending/accepted/training 均为0；没有 Teleop、replay、GPU、generation、ZIP、upload 或 submission。
+
+唯一审核结论为 `remediation_required`。`run_sr6_sr7()` 在 SR8/SR12/SR13 之前 seal，旧 manifest 只有15项，而最终 producer set实际为18项；`sr13_closeout.not_evaluated=[]` 又与 SR9–SR11 未执行冲突。SR7 虽 trace hash不同，但 actual stage order与primary相同，仅改步长/clip/budget，不是所声明的结构不同 alternative。现有 Teleop recorder 默认gripper `+1`且只有toggle，也不保存逐帧raw contact/source/goal，因此不能直接满足gold门；当前没有可供用户视觉审核的episode。
+
+旧审核计划已归档。唯一活动计划为 `docs/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md`：UT0–UT3 先派生修正旧 closure、修 finalizer 顺序与Teleop identity/逐帧gold telemetry/显式夹爪UI，并形成clean release；此后用户在线先做不保存校准，再最多录一条task10 candidate。只有machine success才允许GPU3 fresh-process exact-action replay `3/3`与双视角审核包；accepted、训练/norm、FAST/ZIP、upload和submission仍禁止。用户现在无需操作，也不要自行启动旧argv；待状态为`ready_for_user_calibration`时回复“接管 Teleop”并保持15–30分钟在线。
+
+审核前独立测试为 targeted `10 passed`、CPU规范全量 `417 passed, 7 skipped, 23 warnings`。11项原本被ignore的小型raw以原字节force-add并由新anchor锁定；旧manifest/closure不改写。
+
+生命周期最终验证为 SR strict JSON `27/27`、audit `2/2`、machine handoff `1/1`、targeted `18 passed`、项目规范全量 `425 passed, 7 skipped, 23 warnings`；py_compile、diff-check、无 partial、process/GPU 与 nested Git 边界通过。GPU0 外部作业仅只读保留，GPU1–3 idle。
 
 ## 4. 保留但非活动的研究线
 

@@ -1,0 +1,90 @@
+{
+  "audit_input_commit": "64f278c7f59dc70f17770e1980522d0313ccda27",
+  "branch": "codex/axis-pi05-sg0-sg12-support-gold-20260907",
+  "classification": "remediation_required",
+  "clean_physics_source_commit": "5c5c74641ba39e41709e2c51ce576e7c065060fc",
+  "execution_record_commit": "64f278c7f59dc70f17770e1980522d0313ccda27",
+  "findings": {
+    "contact_pair_names_not_persisted_in_trace": true,
+    "finalizer_sealed_before_three_late_producers": true,
+    "sr13_not_evaluated_list_incorrectly_empty": true,
+    "sr7_claimed_structural_alternative_not_implemented": true,
+    "teleop_default_gripper_and_explicit_state_not_ready": true,
+    "teleop_lacks_per_step_gold_gate_telemetry": true,
+    "teleop_lacks_attempt_identity_and_finalizer_lifecycle": true
+  },
+  "master_plan_reference": {
+    "external_claims_independently_verified": false,
+    "path": "PARC_TRACK3_MASTER_PLAN_20260907.md",
+    "sha256": "8c2f87ebdb4c3bfccfe1a2e80294ad3d23e300f76da869f8d7db13b9e52715f5"
+  },
+  "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "next_phase_only": "UT0_to_UT9_then_hard_stop",
+  "next_plan": "docs/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md",
+  "post_lifecycle_validation": {
+    "diff_check": true,
+    "libero_plus_preexisting_dirty_preserved": true,
+    "live_track3_workers": 0,
+    "nested_openpi_clean": true,
+    "public_libero_clean": true,
+    "project_suite": "425 passed, 7 skipped, 23 warnings",
+    "project_gpu_compute_apps": 0,
+    "root_clean_after_commit": true,
+    "status": "passed",
+    "strict_json": "SR 27/27; audit 2/2; machine handoff 1/1",
+    "targeted_tests": "18 passed"
+  },
+  "raw_anchor": {
+    "entry_count": 11,
+    "git_tracked_at_audit_input": 0,
+    "original_bytes_modified": false,
+    "path": "data/reports/axis_libero_30k/track3_sr0_sr13_independent_audit_20260907/raw_evidence_anchor.json"
+  },
+  "schema_version": "track3_sr0_sr13_independent_audit_v1",
+  "status": "remediation_required",
+  "tests_before_lifecycle": {
+    "project_suite": "417 passed, 7 skipped, 23 warnings",
+    "targeted": "10 passed"
+  },
+  "user_action": {
+    "action_now": "none_do_not_start_old_teleop_argv",
+    "action_when_ready": "reply_take_over_teleop_and_remain_online_15_to_30_minutes",
+    "human_episode_review_queue_count": 0,
+    "required_after_phase": "UT3_ready_for_user_calibration"
+  },
+  "verified": {
+    "accepted_count": 0,
+    "attempt_0004_current_complete_set": 18,
+    "attempt_0004_manifest_entries": 15,
+    "attempt_0004_manifest_extra_current_files": [
+      "sr12_readiness/sr12_code_only_readiness.json",
+      "sr13_closeout.json",
+      "sr8_route.json"
+    ],
+    "automatic_phase_orders": {
+      "alternative": ["precontact_xy", "precontact_z", "orientation_align", "contact_descent", "grasp_dwell"],
+      "primary": ["precontact_xy", "precontact_z", "orientation_align", "contact_descent", "grasp_dwell"]
+    },
+    "current_attempt_active": false,
+    "dwell_demonstrator_contact": {"alternative": [false, false, false, false], "primary": [false, false, false, false]},
+    "dwell_required_contact": {"alternative": [false, false, false, false], "primary": [false, false, false, false]},
+    "dwell_telemetry_complete": {"alternative": [true, true, true, true], "primary": [true, true, true, true]},
+    "family_categories": {"alternative": "family_failure", "primary": "family_failure"},
+    "gpu3_replay_started": false,
+    "launch_attempt_count": 2,
+    "live_track3_workers": 0,
+    "no_partial": true,
+    "pending_gold_review_count": 0,
+    "physics_identity_count": 2,
+    "physics_steps": {"alternative": 112, "primary": 96},
+    "project_gpu_compute_apps": 0,
+    "raw_contact_pairs_persisted": false,
+    "sr9_sr11_not_evaluated": true,
+    "strict_json_sr_namespace": "27/27",
+    "success_count": 0,
+    "teleop_started": false,
+    "training_started": false,
+    "trajectory_saturation_count": {"alternative": 83, "primary": 66},
+    "typed_npz_no_pickle_finite": "2/2"
+  }
+}

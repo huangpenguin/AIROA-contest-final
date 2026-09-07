@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 AUDIT = ROOT / "data/reports/axis_libero_30k/track3_sg0_sg6_independent_audit_20260907/summary.json"
 HANDOFF = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
 SG_ROOT = ROOT / "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo"
-PLAN = "docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_INDEPENDENT_AUDIT_PLAN.md"
+PLAN = "docs/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md"
 ARCHIVED_SG_PLAN = ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_CONTACT_TRUTH_AND_SUPPORT_GOLD_DEMO_PLAN.md"
 
 
@@ -79,9 +79,9 @@ def test_no_human_episode_is_waiting_for_review() -> None:
 
 def test_lifecycle_has_exactly_one_recovery_plan() -> None:
     handoff = strict_json(HANDOFF)
-    assert handoff["status"] == "track3_support_runtime_gate_remediation_executed_pending_independent_audit"
+    assert handoff["status"] == "track3_sr_closure_and_task10_user_teleop_gold_canary_planned"
     assert handoff["next_plan"] == PLAN
-    assert handoff["next_phase_only"] == "independent_audit_required"
+    assert handoff["next_phase_only"] == "UT0_to_UT9_then_hard_stop"
     assert (ROOT / PLAN).is_file()
     assert ARCHIVED_SG_PLAN.is_file()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_AND_GOLD_CONTINUATION_PLAN.md").is_file()

@@ -2,18 +2,18 @@
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
 > 新session先读：根目录`AGENTS.md`、`MEMORY.md`，然后按其中顺序核对本handoff、machine JSON、活动计划、最新审核与live cursor/PID。
-> 最新审核状态：`remediation_required`（SG0–SG6 独立审核已完成；SR0–SR13 执行已闭包，等待独立审核）
+> 最新审核状态：`remediation_required`（SR0–SR13 独立审核已完成；进入 closure/Teleop gold readiness）
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-sg0-sg12-support-gold-20260907`
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_support_runtime_gate_remediation_executed_pending_independent_audit`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_INDEPENDENT_AUDIT_PLAN.md`
-> 下一停止点：`independent_audit_required`
+> 当前总状态：`track3_sr_closure_and_task10_user_teleop_gold_canary_planned`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md`
+> 下一停止点：`UT0_to_UT9_then_hard_stop`
 > 最新执行闭包：`docs/reviews/axis_pi05/TRACK3_SR0_SR13_EXECUTION_CLOSEOUT_20260907.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
-> latest audit input / SG execution record：`55acd39`；SG6 source：`d5c319b`；post-failure fix：`3e156dd`
+> latest audit input / SR execution record：`64f278c`；SR physics source：`5c5c746`
 
 ## 1. 一句话结论
 
@@ -25,7 +25,7 @@ AC0–AC6 后续确实运行了三族各一条 CPU/no-renderer canary并得到�
 
 CR0–CR14 随后确实生成6条新的 CPU/no-renderer trace，且文件/identity/hash、manifest/closure与 acquisition 前 `family_failure` 分类成立；但独立审核发现 required contact 被错误地从 telemetry completeness 推断、unrelated contact 被硬编码 false，alternative 未实现所声明的分轴 waypoint/microstep，人工 handoff argv 也不可运行。当前转入 support-only：先修 contact truth/控制器/Teleop，再最多两条自动 identity；仍失败就由用户在线人工接管。只有真实 success 才做 GPU3 exact replay，训练和新 ZIP 继续冻结。
 
-SG0–SG5 后续完成并通过 clean-source release；SG6 child 在创建 `ControlEnv` 前因 `compose_object_to_eef` 参数签名 TypeError fail-close。SR0–SR13 已按后续计划执行：四门与 pre-env 修复后，SR6/SR7 各跑一条 task10 CPU/no-renderer identity，均为 `grasp_dwell` 上的正常 family failure（dwell 窗口无夹爪接触），success=0。当前没有 replay 视频或 pending gold；若继续采集需要用户在线 Teleop。执行已 hard stop，等待独立审核。
+SG0–SG5 后续完成并通过 clean-source release；SG6 child 在创建 `ControlEnv` 前因 `compose_object_to_eef` 参数签名 TypeError fail-close。SR0–SR13 已按后续计划执行：四门与 pre-env 修复后，SR6/SR7 各跑一条 task10 CPU/no-renderer identity，均为 `grasp_dwell` 上的正常 family failure，success=0。独立审核确认物理失败可保留，但 finalizer 在 SR8/SR12/SR13 之前提前封口、SR13 未执行列表为空、SR7 实际阶段拓扑与 primary 相同，且旧 Teleop recorder 缺逐帧 gold gate。当前转入 code-only closure/recorder readiness；用户现在不要运行旧命令，ready 后再在线接管一条。
 
 ## 2. 数据与复现基础
 
@@ -1004,3 +1004,15 @@ SG implementation 为 `710183a7983e300759c85e3c0a97e1afdbdb67f0`；SG0–SG5 在
 SR0–SR4 在 attempt `0001` 通过。两次 env 前 SR5 失败保留在 attempt `0001/0002`。clean-source freeze 为 attempt `0003` / `5c5c746`。SR6/SR7 attempt `0004` 两条 CPU/no-renderer identity 均为正常 `family_failure`：进入 `grasp_dwell` 且相对 CR descend 有进展，但 dwell 窗口无 demonstrator contact；success=0。SR8 等待用户在线 Teleop；SR9–SR11 未执行；SR12 code-only 通过；SR13 hard stop。没有 GPU、accepted、训练、ZIP、上传或提交。
 
 执行计划已归档。唯一活动计划为只读独立审核计划。完整记录见 [SR0–SR13 执行闭包](/home/huang/code/PARC2026_final/docs/reviews/axis_pi05/TRACK3_SR0_SR13_EXECUTION_CLOSEOUT_20260907.md)。
+
+## 89. SR0–SR13 独立审核与 Task10 用户 Teleop Gold 计划（2026-09-07）
+
+独立审核输入为 execution record `64f278c7f59dc70f17770e1980522d0313ccda27`、physics clean source `5c5c74641ba39e41709e2c51ce576e7c065060fc` 与 nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`。SR namespace `27/27` strict JSON、两条 child identity、96/112步 typed NPZ、固定 start-state 与 hash 成立。两条 dwell 末4帧均为 telemetry complete、required/demonstrator contact=false、source=true、goal=false，因此只能保留为诊断性 `family_failure`；success/pending/accepted/training均为0。
+
+唯一审核结论为 `remediation_required`。旧 attempt manifest 在 tail producer 写入前封口，仅15项而当前实际18项；`sr13_closeout.not_evaluated=[]` 与 SR9–SR11 未执行冲突。SR7 的实际阶段顺序和primary相同，不满足结构不同alternative合同。旧 Teleop recorder默认gripper `+1`、只有toggle，且没有逐帧raw contact/source/goal、attempt identity与late-producer finalizer，因此不能直接运行旧argv取得合格gold。
+
+忽略目录中的两条轨迹、start-state、child log及root supervisor记录共11项已由新audit anchor锁定并以原字节force-add；旧SR文件未改写。审核报告：[SR0–SR13 独立审核](/home/huang/code/PARC2026_final/docs/reviews/axis_pi05/TRACK3_SR0_SR13_INDEPENDENT_AUDIT_20260907.md)；机器摘要：[SR audit summary](/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_sr0_sr13_independent_audit_20260907/summary.json)。
+
+唯一活动计划为 [SR Closure 与 Task10 用户 Teleop Gold Canary](/home/huang/code/PARC2026_final/docs/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md)。UT0–UT3先做派生closure、finalizer和Teleop逐帧gold门/显式夹爪UI/clean release；只有ready后才要求用户回复“接管 Teleop”，先不保存校准，再最多录一条。machine success才GPU3 exact replay `3/3`和双视角审核包；accepted promotion、训练/norm、FAST/ZIP、upload和submission仍冻结。
+
+生命周期最终验证为 SR strict JSON `27/27`、audit `2/2`、machine handoff `1/1`、targeted `18 passed`、项目规范全量 `425 passed, 7 skipped, 23 warnings`；py_compile、diff-check、无 partial、无 live Track3、project GPU compute=0、public LIBERO/OpenPI clean、`LIBERO-plus` 原 dirty 保持不变。GPU0 外部训练 PID 未触碰，GPU1–3 idle。

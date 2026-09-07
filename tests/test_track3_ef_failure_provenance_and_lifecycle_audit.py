@@ -40,9 +40,9 @@ def test_independent_eg_audit_is_approved_and_separate() -> None:
     assert current["audit_report_commit"] == audit["audit_report_commit"]
     assert current["next_plan"] is None
     assert current["next_phase_only"] == "new_reviewed_plan_required"
-    assert handoff["status"] == "track3_clean_launch_and_diversified_canary_recovery_completed_hard_stop_pending_independent_audit"
-    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_INDEPENDENT_AUDIT_PLAN.md"
-    assert handoff["next_phase_only"] == "independent_audit_only_then_hard_stop"
+    assert handoff["status"] == "track3_contact_truth_and_support_gold_demo_planned"
+    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_CONTACT_TRUTH_AND_SUPPORT_GOLD_DEMO_PLAN.md"
+    assert handoff["next_phase_only"] == "SG0_to_SG12_then_hard_stop"
 
 
 def test_eg_audit_preserves_unavailable_gap_and_final_closure() -> None:

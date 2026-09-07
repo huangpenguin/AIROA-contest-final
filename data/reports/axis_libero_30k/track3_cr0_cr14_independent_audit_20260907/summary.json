@@ -1,0 +1,125 @@
+{
+  "audit_input_root_commit": "0ce605cf33d33a0d670d190ecf7013d122d8a1a0",
+  "audited_execution_evidence_commit": "760dc65adc74193112692ab003e19a74d588ea9f",
+  "classification": "remediation_required",
+  "execution_source_commit": "02bbac24857168826557a0aa23b8698111e1be92",
+  "failure_matrix": [
+    {
+      "category": "family_failure",
+      "family": "support_remove",
+      "last_eef_error_m": 0.03477036512599705,
+      "last_stage": "descend_object",
+      "profile_id": "cr_support_primary_20260907_0001",
+      "source_false_steps": 0,
+      "steps": 153,
+      "strategy": "object_frame_contact_aligned_v1"
+    },
+    {
+      "category": "family_failure",
+      "family": "support_remove",
+      "last_eef_error_m": 0.013362138900100747,
+      "last_stage": "descend_object",
+      "profile_id": "cr_support_alternative_20260907_0001",
+      "source_false_steps": 3,
+      "steps": 154,
+      "strategy": "waypoint_guarded_microstep_v1"
+    },
+    {
+      "category": "family_failure",
+      "family": "containment_remove",
+      "last_eef_error_m": 0.03990591339504137,
+      "last_stage": "descend_object",
+      "profile_id": "cr_containment_primary_20260907_0001",
+      "source_false_steps": 0,
+      "steps": 149,
+      "strategy": "object_frame_contact_aligned_v1"
+    },
+    {
+      "category": "family_failure",
+      "family": "containment_remove",
+      "last_eef_error_m": 0.04476288499539106,
+      "last_stage": "descend_object",
+      "profile_id": "cr_containment_alternative_20260907_0001",
+      "source_false_steps": 0,
+      "steps": 150,
+      "strategy": "waypoint_guarded_microstep_v1"
+    },
+    {
+      "category": "family_failure",
+      "family": "articulation_close",
+      "last_eef_error_m": 0.07513203865077471,
+      "last_stage": "approach_drawer_region",
+      "profile_id": "cr_articulation_primary_20260907_0001",
+      "source_false_steps": 0,
+      "steps": 180,
+      "strategy": "object_frame_contact_aligned_v1"
+    },
+    {
+      "category": "family_failure",
+      "family": "articulation_close",
+      "last_eef_error_m": 0.08025819196913135,
+      "last_stage": "approach_drawer_region",
+      "profile_id": "cr_articulation_alternative_20260907_0001",
+      "source_false_steps": 0,
+      "steps": 180,
+      "strategy": "waypoint_guarded_microstep_v1"
+    }
+  ],
+  "finalizer_correction_commit": "ec1f3f4f99aa8d74ddc45ac454914a54b99f1c4a",
+  "findings": {
+    "alternative_strategy_contract_not_implemented": true,
+    "cr12_recorder_command_not_executable": true,
+    "cr13_machine_ready_bundle_incomplete": true,
+    "failure_injection_claims_include_unexecuted_constants": true,
+    "required_contact_conflated_with_telemetry_completeness": true,
+    "unrelated_contact_hardcoded_false": true
+  },
+  "master_plan_reference": {
+    "bytes": 24677,
+    "external_claims_independently_verified": false,
+    "path": "PARC_TRACK3_MASTER_PLAN_20260907.md",
+    "role": "advisory_strategy_input",
+    "sha256": "8c2f87ebdb4c3bfccfe1a2e80294ad3d23e300f76da869f8d7db13b9e52715f5"
+  },
+  "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "next_phase_only": "SG0_to_SG12_then_hard_stop",
+  "next_plan": "docs/AXIS_PI05_TRACK3_CONTACT_TRUTH_AND_SUPPORT_GOLD_DEMO_PLAN.md",
+  "post_lifecycle_validation": {
+    "audit_summary_strict_json": "1/1",
+    "cr_namespace_strict_json": "69/69",
+    "diff_check": true,
+    "gpu_compute_apps": 0,
+    "libero_plus_preexisting_dirty_preserved": true,
+    "live_track3_workers": 0,
+    "machine_handoff_strict_json": "1/1",
+    "nested_openpi_clean": true,
+    "project_suite": "388 passed, 7 skipped, 23 warnings",
+    "status": "passed",
+    "targeted_tests": "22 passed"
+  },
+  "priority_family": "support_remove",
+  "report": "docs/reviews/axis_pi05/TRACK3_CR0_CR14_INDEPENDENT_AUDIT_20260907.md",
+  "schema_version": "track3_cr0_cr14_independent_audit_v1",
+  "status": "remediation_required",
+  "tests_before_lifecycle": {
+    "project_suite": "380 passed, 7 skipped, 23 warnings",
+    "targeted_cr_and_recorder": "14 passed"
+  },
+  "verified": {
+    "accepted_data_count": 0,
+    "correction_complete_set": "6/6",
+    "correction_manifest": "2/2",
+    "cr_strict_json": "69/69",
+    "diagnostic_family_failures": 6,
+    "gpu_compute_apps": 0,
+    "live_track3_workers": 0,
+    "new_action_hashes": "6/6",
+    "new_candidate_zip_count": 0,
+    "new_trace_hashes": "6/6",
+    "physics_identity_count": 6,
+    "replay_count": 0,
+    "source_complete_set": "38/38",
+    "source_manifest": "34/34",
+    "training_started": false
+  }
+}

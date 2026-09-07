@@ -1,7 +1,7 @@
 # PARC2026_final Project Memory
 
 > Purpose: durable cross-session context for Codex and human handoff. Read this file before major work. This is an index and rulebook, not a substitute for current machine evidence.
-> Last memory refresh: 2026-09-07 (Asia/Tokyo), memory commit pending at authoring time.
+> Last memory refresh: 2026-09-07 (Asia/Tokyo), CR independent audit / support-gold plan lifecycle.
 
 ## 1. Canonical session entrypoint
 
@@ -32,14 +32,14 @@ If these disagree, stop mutation, audit the discrepancy and repair the handoff i
 ## 2. Current snapshot at this memory refresh
 
 - Repository: `/home/huang/code/PARC2026_final`
-- Branch: `codex/axis-pi05-audit-remediation`; no upstream recorded.
+- Branch: `codex/axis-pi05-repository-status-20260907`; upstream is the same-name origin branch.
 - EF0 anchor input HEAD: `38635fbf08e4e8df8c4877ddcb6b2b2ec8b9b118`; its historical lifecycle is closed.
-- Latest audited execution evidence: `474d36d7e36aa3f428c8fff3fbf38b8d5db03f05`; BR execution root is `80d98a8471509581971335fb627d7b6faa4544c1` and clean-source code commit is `cba0b12c578412d741b6e071c09b19caf3cbe405`. BR0–BR11 is independently audited `remediation_required`.
+- Latest audit input is `0ce605cf33d33a0d670d190ecf7013d122d8a1a0`; CR evidence/closeout is `760dc65adc74193112692ab003e19a74d588ea9f`, execution source is `02bbac24857168826557a0aa23b8698111e1be92`, and finalizer correction is `ec1f3f4f99aa8d74ddc45ac454914a54b99f1c4a`. CR0–CR14 is independently audited `remediation_required`.
 - Nested OpenPI: `third_party/axis_openpi` at `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`, clean at review.
 - `LIBERO-plus` has pre-existing dirty files. They belong to the user/project and must not be reset, cleaned, overwritten or silently committed.
-- Current state at this refresh: `track3_clean_launch_and_diversified_canary_recovery_planned`.
-- Active plan: `docs/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_PLAN.md`; CR0–CR14 is the only authority.
-- BR code/fixture attempts `0005/0006` are useful partial engineering evidence, but launch-time clean gating, full manifest/finalizer ordering, actual partial provenance, telemetry infrastructure classification and normalized-action units remain defective. BR's three dirty-source traces are byte-identical to AC and add no new behavior. CR0–CR8 repairs these contracts; only after a clean commit may CR9–CR10 run at most two genuinely different CPU/no-renderer strategies per family, six identities total. CPU success alone may release GPU3 exact-action camera replay; training, accepted data, new ZIP, upload and submission remain unauthorized.
+- Current state at this refresh: `track3_contact_truth_and_support_gold_demo_planned`.
+- Active plan: `docs/AXIS_PI05_TRACK3_CONTACT_TRUTH_AND_SUPPORT_GOLD_DEMO_PLAN.md`; SG0–SG12 is the only authority.
+- CR produced six byte/action-new CPU/no-renderer traces and valid acquisition-before-barrier diagnostic family failures. Their contact arrays are not physical truth: telemetry completeness was copied to required contact (`966/966` true) and unrelated contact was hardcoded false. The named microstep alternative only changed static targets and all rotation actions were zero. The old CR12 Teleop argv is invalid. The next plan fixes these gates, then permits at most two fresh support-only CPU identities, one user-controlled Teleop candidate, and GPU3 exact replay only after real success; results stop at pending gold review. Accepted promotion, training and a new ZIP remain unauthorized.
 - Z0–Z14 execution evidence is in `data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/`; its audit is `docs/reviews/axis_pi05/TRACK3_Y3_LAUNCH_Z0_Z14_AUDIT_20260906.md`. Historical parent remains infrastructure while physical result is derived nominal family failure. Z6–Z13 remain `not_evaluated`; before any AA execution, recheck live supervisor/PID/cursor, dirty worktree and GPU boundaries. Never start a duplicate run.
 
 The snapshot above becomes historical as soon as execution advances. Always refresh from Git, machine JSON and the live cursor rather than treating this paragraph as a lock.
@@ -226,3 +226,12 @@ After a phase completes, the reviewing agent must refresh this file only when st
 - Telemetry schema unknown is incorrectly mapped to `family_failure`; normalized controller actions are divided by physical scales a second time, producing `normalized_action_abs_max=20.0`. BR's three traces are byte-identical to the corresponding AC traces and add no behavioral diversity. They remain diagnostic dirty-source family failures, never training data.
 - The sole active plan is `docs/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_PLAN.md`. CR0–CR8 is code/fixture/clean-source remediation. Only after those gates pass may CR9–CR10 run one primary plus at most one structurally different alternative per family, six CPU/no-renderer identities total. A normal family failure may use its frozen alternative; any shared infrastructure failure stops globally.
 - CPU success may release GPU3 exact-action camera replay only and remains pending human review. With no success, prepare a human handoff but do not run unattended Teleop. GPU0–2, official GPU, generation, accepted data, training/norm, new ZIP, upload and submission remain prohibited; CR13 only prepares a machine-ready dry-run bundle.
+
+## 22. CR0–CR14 independent audit and support-gold authority (2026-09-07)
+
+- Verdict: `remediation_required`. CR `69/69` strict JSON, source manifest `34/34` and complete set `38/38`, derived correction manifest `2/2` and complete set `6/6`, closure/pointers, six child identities/self-hashes/typed traces/action hashes and zero process/GPU boundary pass. Six traces are byte/action-new and remain valid acquisition-before-barrier diagnostic family failures; accepted/training/new ZIP remain zero.
+- Runtime contact evidence is invalid: `contact_matrix.complete` was copied to required contact and telemetry-known while unrelated contact was hardcoded false. The six traces therefore report required contact for all `966/966` steps. Do not use those fields for gold/accepted/training decisions.
+- The frozen `waypoint_guarded_microstep_v1` contract was not implemented: only static target coordinates changed, with no XY/Z microstep state machine or lower cap, and every CR trace has zero rotation action. CR12's recorder argv is also not executable (`--task` instead of `--record --task-index`, missing project venv); CR13 is not a full machine-ready bundle.
+- User strategy input `PARC_TRACK3_MASTER_PLAN_20260907.md` is tracked unchanged at SHA `8c2f87ebdb4c3bfccfe1a2e80294ad3d23e300f76da869f8d7db13b9e52715f5`. Its data-first/one-family/gold-demo path is adopted; its external sources and deadline claim were not independently verified by this audit.
+- The sole active authority is `docs/AXIS_PI05_TRACK3_CONTACT_TRUTH_AND_SUPPORT_GOLD_DEMO_PLAN.md`: fix contact truth, real failure injection, waypoint/orientation and executable Teleop/replay handoff, then run at most two fresh support CPU/no-renderer identities. If automatic acquisition fails, wait for explicit online human control; only real success releases up to three GPU3 exact-action replays. Stop at `pending_gold_review`; no accepted promotion, training, new ZIP, upload or submission.
+- Post-lifecycle validation: CR strict JSON `69/69`, audit summary and machine handoff `1/1` each, targeted `22 passed`, project suite `388 passed, 7 skipped, 23 warnings`; diff/process/GPU/nested Git boundaries passed.

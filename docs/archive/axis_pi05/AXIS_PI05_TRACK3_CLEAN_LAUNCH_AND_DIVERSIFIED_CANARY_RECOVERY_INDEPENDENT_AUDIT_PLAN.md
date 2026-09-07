@@ -1,9 +1,9 @@
 # AXIS Pi0.5 Track 3：CR0–CR14 独立审核计划
 
 > 创建日期：2026-09-07（Asia/Tokyo）
-> 唯一活动计划：是
+> 唯一活动计划：否；2026-09-07 已完成并归档
 > 审核对象：CR0–CR14 执行闭包及其 derived CR14 finalizer correction
-> 审核结论：待独立审核；不得从本计划推断 approved
+> 审核结论：`remediation_required`；详见 `docs/reviews/axis_pi05/TRACK3_CR0_CR14_INDEPENDENT_AUDIT_20260907.md`
 
 本计划是只读审核计划。CR0–CR14 已按授权执行并 hard stop；旧 identity 一律不得重跑。本计划不授权新 physics、GPU replay、Teleop、generation、accepted data、training、norm、FAST/export、新 ZIP、upload 或 submission。BR、AC、ER、EG、TZ 以及 CR 历史 attempt 均保持不可变。
 

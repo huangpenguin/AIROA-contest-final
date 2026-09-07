@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 HANDOFF = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
 SUMMARY = ROOT / "data/reports/axis_libero_30k/track3_eg0_eg4_reaudit_20260906/summary.json"
 EG_ROOT = ROOT / "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation"
-PLAN = "docs/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_INDEPENDENT_AUDIT_PLAN.md"
+PLAN = "docs/AXIS_PI05_TRACK3_CONTACT_TRUTH_AND_SUPPORT_GOLD_DEMO_PLAN.md"
 ARCHIVED_AC_PLAN = "docs/archive/axis_pi05/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_PLAN.md"
 ARCHIVED_AC_AUDIT_PLAN = "docs/archive/axis_pi05/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_INDEPENDENT_AUDIT_PLAN.md"
 ARCHIVED_BR_PLAN = "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ACQUISITION_GATE_AND_ATTEMPT_LIFECYCLE_REMEDIATION_PLAN.md"
@@ -52,9 +52,9 @@ def test_shared_root_attempt3_is_historical_and_root_attempt5_is_current() -> No
 
 def test_lifecycle_releases_exactly_one_acquisition_plan() -> None:
     handoff = strict_json(HANDOFF)
-    assert handoff["status"] == "track3_clean_launch_and_diversified_canary_recovery_completed_hard_stop_pending_independent_audit"
+    assert handoff["status"] == "track3_contact_truth_and_support_gold_demo_planned"
     assert handoff["next_plan"] == PLAN
-    assert handoff["next_phase_only"] == "independent_audit_only_then_hard_stop"
+    assert handoff["next_phase_only"] == "SG0_to_SG12_then_hard_stop"
     assert (ROOT / PLAN).is_file()
     assert (ROOT / ARCHIVED_AC_PLAN).is_file()
     assert (ROOT / ARCHIVED_AC_AUDIT_PLAN).is_file()
@@ -65,8 +65,8 @@ def test_lifecycle_releases_exactly_one_acquisition_plan() -> None:
 
 def test_machine_latest_commits_name_actual_eg_boundaries() -> None:
     handoff = strict_json(HANDOFF)
-    assert handoff["latest_audited_execution_commit"] == "474d36d7e36aa3f428c8fff3fbf38b8d5db03f05"
-    assert handoff["latest_audit_input_commit"] == "474d36d7e36aa3f428c8fff3fbf38b8d5db03f05"
+    assert handoff["latest_audited_execution_commit"] == "0ce605cf33d33a0d670d190ecf7013d122d8a1a0"
+    assert handoff["latest_audit_input_commit"] == "0ce605cf33d33a0d670d190ecf7013d122d8a1a0"
     assert handoff["latest_execution_root_commit"] == "ec1f3f4f99aa8d74ddc45ac454914a54b99f1c4a"
 
 

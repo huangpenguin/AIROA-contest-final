@@ -2,17 +2,17 @@
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
 > 新session先读：根目录`AGENTS.md`、`MEMORY.md`，然后按其中顺序核对本handoff、machine JSON、活动计划、最新审核与live cursor/PID。
-> 最新审核状态：`remediation_required`（BR0–BR11 独立审核已完成）
+> 最新审核状态：`remediation_required`（CR0–CR14 独立审核已完成）
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
-> branch：`codex/axis-pi05-audit-remediation`（当前无 upstream）
+> branch：`codex/axis-pi05-repository-status-20260907`（upstream：origin 同名分支）
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_clean_launch_and_diversified_canary_recovery_completed_hard_stop_pending_independent_audit`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_INDEPENDENT_AUDIT_PLAN.md`
-> 下一停止点：`independent_audit_only_then_hard_stop`
+> 当前总状态：`track3_contact_truth_and_support_gold_demo_planned`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_CONTACT_TRUTH_AND_SUPPORT_GOLD_DEMO_PLAN.md`
+> 下一停止点：`SG0_to_SG12_then_hard_stop`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
 > closure input：`78109647e95d79690511c922845141ff492a395f`
-> latest audited evidence commit：`474d36d`；CR clean-source execution commit：`02bbac2`；finalizer correction commit：`ec1f3f4`
+> latest audit input：`0ce605c`；CR evidence/closeout：`760dc65`；execution source：`02bbac2`；finalizer correction：`ec1f3f4`
 
 ## 1. 一句话结论
 
@@ -21,6 +21,8 @@ canonical LIBERO、R6 LoRA500-step、folded PyTorch与FAST-only ZIP均已完成�
 前一轮审核确认 fallback、旧 TZ 派生事实、三条 ER4 family failure、EF0–EF3 技术合同及 corrected EF4 checkout closure 有效；但首次 EF4 失败的原始 validation/test/partial 证据被 corrected attempt 覆盖，只留下派生说明，故转入 EG0–EG4 remediation。EG0–EG4 已在新的 evidence-governance/code/no-physics fixture namespace 完成并通过再次独立复核；本轮唯一结论为 `approved`。唯一下一计划先做旧 trace 只读 acquisition 诊断和 code/fixture gate，再最多运行三族各一条全新 CPU/no-renderer canary；不授权旧 identity 重跑、GPU、数据生成、replay、训练、candidate ZIP、上传或提交。
 
 AC0–AC6 后续确实运行了三族各一条 CPU/no-renderer canary并得到三个诊断性 family failure；BR0–BR11 随后完成 code/fixture 尝试和 hard stop，但本轮独立审核仍为 `remediation_required`。BR9 launch path 没有真正接上 clean-source gate，manifest/finalizer和actual partial provenance未闭合，telemetry unknown分类及normalized-action单位有误；BR三条轨迹又与AC逐字节相同，没有生成新的reverse成功数据。当前转入CR0–CR14：先修上述门，再最多运行三族各一套primary和一套结构不同alternative；CPU success后才允许GPU3 exact-action replay。训练、新ZIP、上传或提交仍不授权。
+
+CR0–CR14 随后确实生成6条新的 CPU/no-renderer trace，且文件/identity/hash、manifest/closure与 acquisition 前 `family_failure` 分类成立；但独立审核发现 required contact 被错误地从 telemetry completeness 推断、unrelated contact 被硬编码 false，alternative 未实现所声明的分轴 waypoint/microstep，人工 handoff argv 也不可运行。当前转入 support-only：先修 contact truth/控制器/Teleop，再最多两条自动 identity；仍失败就由用户在线人工接管。只有真实 success 才做 GPU3 exact replay，训练和新 ZIP 继续冻结。
 
 ## 2. 数据与复现基础
 
@@ -965,3 +967,15 @@ CR11 因 success=0 为 `not_evaluated`，GPU3 replay 未启动；CR12 仅生成�
 CR14 原 attempt_0004 finalizer 的错误 complete-set 结果保持为历史 failed evidence；derived correction 在不重跑 physics、不消耗 identity 的情况下重算并通过 current set、manifest、strict JSON、process/GPU、closed cursor/heartbeat 和 closure。完整执行记录为 [CR0–CR14 执行闭包](/home/huang/code/PARC2026_final/docs/reviews/axis_pi05/TRACK3_CR0_CR14_EXECUTION_CLOSEOUT_20260907.md)，机器摘要为 [CR 执行 summary](/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_cr0_cr14_execution_20260907/summary.json)。
 
 CR 执行计划已归档至 `/home/huang/code/PARC2026_final/docs/archive/axis_pi05/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_PLAN.md`。当前唯一活动计划为 [CR0–CR14 独立审核计划](/home/huang/code/PARC2026_final/docs/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_INDEPENDENT_AUDIT_PLAN.md)，只授权独立只读审核；在独立审核前不释放任何新 physics、GPU replay、Teleop、generation、accepted data、training、ZIP、upload 或 submission。
+
+## 86. CR0–CR14 独立审核与 Support Gold Demo 计划（2026-09-07）
+
+独立审核边界为 root `0ce605cf33d33a0d670d190ecf7013d122d8a1a0`、CR evidence/closeout `760dc65adc74193112692ab003e19a74d588ea9f`、execution source `02bbac24857168826557a0aa23b8698111e1be92`、derived correction `ec1f3f4f99aa8d74ddc45ac454914a54b99f1c4a` 和 nested OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`。CR `69/69` JSON、manifest/outer/closure/pointer、source complete set `38/38`、correction `6/6`、六条 child/self-hash/NPZ/action hash与无进程/GPU边界成立。六条均为新的 acquisition 前诊断性 `family_failure`；success/accepted/training/new ZIP 均为0。
+
+唯一结论为 `remediation_required`。六个 NPZ 的 `required_contact` 从第一步起全部为 true（总计 `966/966`），因为 runtime 把 contact schema completeness 复制为 required contact，并把 unrelated contact 固定为 false；这些字段不可 promotion。alternative 只改静态 target，未实现冻结的 XY/Z microstep/pre-contact/低 cap，rotation action 全为0。CR12 recorder command 还用了不存在的 `--task` 且漏虚拟环境、`--record`、`--task-index`；人工接管目前并非 machine-ready。
+
+总体方案 `PARC_TRACK3_MASTER_PLAN_20260907.md`（SHA `8c2f87ebdb4c3bfccfe1a2e80294ad3d23e300f76da869f8d7db13b9e52715f5`）作为 advisory strategy input；其外部信息未独立确认。依据失败矩阵，support alternative 的 descend 末端误差 `0.0133621389 m` 最接近门槛，因此新计划只打通 support，不再三族平均撒网。
+
+唯一活动计划为 [Contact Truth 与 Support Gold Demo 计划](/home/huang/code/PARC2026_final/docs/AXIS_PI05_TRACK3_CONTACT_TRUTH_AND_SUPPORT_GOLD_DEMO_PLAN.md)。SG0–SG5 修 contact-v3、真实 failure-injection、分轴 waypoint/orientation、可执行 Teleop/replay handoff 和 clean-source；SG6–SG7 最多两条 fresh support CPU/no-renderer identity。无自动 success 则 SG8 等用户在线人工操作；有真实 success 才允许 GPU3 exact-action replay `3/3`，结果最多 `pending_gold_review`。等待人工时 SG11 可做数据链路/tiny-overfit CLI 的 code-only readiness，但 accepted promotion、训练、FAST/ZIP、上传和提交仍不授权。SG12 统一闭包并 hard stop。
+
+生命周期最终验证：CR strict JSON `69/69`、audit summary `1/1`、machine handoff `1/1`、定向 `22 passed`、项目规范全量 `388 passed, 7 skipped, 23 warnings`；diff-check、process/GPU、nested OpenPI 与 `LIBERO-plus` 保留边界通过。

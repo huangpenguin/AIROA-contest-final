@@ -111,9 +111,9 @@ def test_worker_exit_contract_keeps_family_failure_normal() -> None:
 
 def test_er_execution_handoff_is_hard_stopped_and_fallback_only() -> None:
     handoff = tool.strict_json(ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json")
-    assert handoff["status"] == "track3_clean_launch_and_diversified_canary_recovery_completed_hard_stop_pending_independent_audit"
-    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_INDEPENDENT_AUDIT_PLAN.md"
-    assert handoff["next_phase_only"] == "independent_audit_only_then_hard_stop"
+    assert handoff["status"] == "track3_contact_truth_and_support_gold_demo_planned"
+    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_CONTACT_TRUTH_AND_SUPPORT_GOLD_DEMO_PLAN.md"
+    assert handoff["next_phase_only"] == "SG0_to_SG12_then_hard_stop"
     execution = handoff["track3_tz_evidence_and_executor_contract_remediation_execution"]
     assert execution["status"] == "track3_tz_evidence_and_executor_contract_remediation_completed_hard_stop_pending_review"
     assert execution["phase_status"] == {"ER0": "passed", "ER1": "passed", "ER2": "passed", "ER3": "passed", "ER4": "completed_three_family_failures", "ER5": "hard_stop"}

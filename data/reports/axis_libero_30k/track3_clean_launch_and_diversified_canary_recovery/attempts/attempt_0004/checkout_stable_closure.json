@@ -1,0 +1,13 @@
+{
+  "attempt_id": 4,
+  "cursor_active": false,
+  "cursor_sha256": "e6dd1a6f6de0df1722224fea8f296bb9abe53ddf40997ee8709108c9b321df65",
+  "final_validation_sha256": "1ede94f2a6c68bcf6ab1cfbcac40b719251a40acb2410018161123452a50b81b",
+  "heartbeat_sha256": "13f026f103a5ae0d0dfbef639fbcfa72b79a5bc833475fb5ad7068cb2d8aeaf5",
+  "next_authority": "independent_review_required",
+  "no_partial": true,
+  "outer_hash_sha256": "2fae6911e19c13ed53964cf67a8fc32189dd3a0628914bd54e30d72b263bd5f5",
+  "producer_manifest_sha256": "60a1746f98580a310a1a0479cc5c92ce85a5e305d3950cc9fb2e616cf0c7659f",
+  "schema_version": "track3_cr14_checkout_stable_closure_v1",
+  "status": "failed"
+}

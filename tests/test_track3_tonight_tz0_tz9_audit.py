@@ -11,9 +11,9 @@ AUDIT = ROOT / "data/reports/axis_libero_30k/track3_tonight_tz0_tz9_audit_202609
 
 def test_tonight_audit_archives_old_plan_and_releases_one_remediation_plan() -> None:
     handoff = json.loads(HANDOFF.read_text(encoding="utf-8"))
-    assert handoff["status"] == "track3_clean_launch_and_diversified_canary_recovery_planned"
-    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_PLAN.md"
-    assert handoff["next_phase_only"] == "CR0_to_CR14_then_hard_stop"
+    assert handoff["status"] == "track3_clean_launch_and_diversified_canary_recovery_completed_hard_stop_pending_independent_audit"
+    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_INDEPENDENT_AUDIT_PLAN.md"
+    assert handoff["next_phase_only"] == "independent_audit_only_then_hard_stop"
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md").is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md").exists()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md").is_file()

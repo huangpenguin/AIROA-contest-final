@@ -1,0 +1,183 @@
+{
+  "current_complete_set_rechecked": false,
+  "entries": [
+    {
+      "bytes": 21534,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/canaries/01_cr_support_primary_20260907_0001.child.json",
+      "sha256": "07da9c20b12f7299830edc1bd6ec8e055c279bb550244c979439ad0870317ce3"
+    },
+    {
+      "bytes": 316,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/canaries/01_cr_support_primary_20260907_0001.child.stderr.log",
+      "sha256": "b64f85f67048e258074975a341f381ae84f788926051563a6e509c7cb5191add"
+    },
+    {
+      "bytes": 14310,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/canaries/01_cr_support_primary_20260907_0001.child.stdout.log",
+      "sha256": "3078f6936b3258f6495d5af1bacad1cdaebc34d111085c6859b227a6d7812c14"
+    },
+    {
+      "bytes": 21554,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/canaries/02_cr_support_alternative_20260907_0001.child.json",
+      "sha256": "97387c3aef3d29e6bb1fae61a578df1c7157dc5320cf699f5b2fbf256b56d66e"
+    },
+    {
+      "bytes": 316,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/canaries/02_cr_support_alternative_20260907_0001.child.stderr.log",
+      "sha256": "b64f85f67048e258074975a341f381ae84f788926051563a6e509c7cb5191add"
+    },
+    {
+      "bytes": 14330,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/canaries/02_cr_support_alternative_20260907_0001.child.stdout.log",
+      "sha256": "3acde8b0b415695cf8bbdc35a5c9fb92a66ba85722ef29076b5a451e570d7842"
+    },
+    {
+      "bytes": 21568,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/canaries/03_cr_containment_primary_20260907_0001.child.json",
+      "sha256": "ed646af12a8c766ea83638412fc44e8e3686c4e503ff0ac7f82f23f5467c12de"
+    },
+    {
+      "bytes": 316,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/canaries/03_cr_containment_primary_20260907_0001.child.stderr.log",
+      "sha256": "b64f85f67048e258074975a341f381ae84f788926051563a6e509c7cb5191add"
+    },
+    {
+      "bytes": 14344,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/canaries/03_cr_containment_primary_20260907_0001.child.stdout.log",
+      "sha256": "647067aa255879e73780cd8514faeab7af809683949542ec85b479166bc9807b"
+    },
+    {
+      "bytes": 21596,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/canaries/04_cr_containment_alternative_20260907_0001.child.json",
+      "sha256": "389562a99a572c56f44a95485c37f5c57ba125c4f9987228f3a3e771692f2abd"
+    },
+    {
+      "bytes": 316,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/canaries/04_cr_containment_alternative_20260907_0001.child.stderr.log",
+      "sha256": "b64f85f67048e258074975a341f381ae84f788926051563a6e509c7cb5191add"
+    },
+    {
+      "bytes": 14372,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/canaries/04_cr_containment_alternative_20260907_0001.child.stdout.log",
+      "sha256": "7199f6a48d65517f79032d8d1a33a6079f095e6f45125b605a00b9ad76031dcb"
+    },
+    {
+      "bytes": 18695,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/canaries/05_cr_articulation_primary_20260907_0001.child.json",
+      "sha256": "1a65188ef2325637e1dd8d1942177686d1764ec1abe614c9f3a88ff02b1ac965"
+    },
+    {
+      "bytes": 316,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/canaries/05_cr_articulation_primary_20260907_0001.child.stderr.log",
+      "sha256": "b64f85f67048e258074975a341f381ae84f788926051563a6e509c7cb5191add"
+    },
+    {
+      "bytes": 12703,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/canaries/05_cr_articulation_primary_20260907_0001.child.stdout.log",
+      "sha256": "8b12d1b4d034c7d651f0d0ca65d9c878285ee26e2b32d150d08d3f61cb6c9fe0"
+    },
+    {
+      "bytes": 18720,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/canaries/06_cr_articulation_alternative_20260907_0001.child.json",
+      "sha256": "1d4eadbc1183280c11dc7ee6cc5c78a0877c176b7f6132b07ffdd6d0a9a36256"
+    },
+    {
+      "bytes": 316,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/canaries/06_cr_articulation_alternative_20260907_0001.child.stderr.log",
+      "sha256": "b64f85f67048e258074975a341f381ae84f788926051563a6e509c7cb5191add"
+    },
+    {
+      "bytes": 12728,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/canaries/06_cr_articulation_alternative_20260907_0001.child.stdout.log",
+      "sha256": "b1f1f7d090d149b3bdb4592860c2fe18b210704e5daff5616296a61135ec965f"
+    },
+    {
+      "bytes": 181,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/cr11_camera_replay.json",
+      "sha256": "bce6296bf15dd6861a2a367c8904312858f677dffe18320f228756489fae2eae"
+    },
+    {
+      "bytes": 1882,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/cr12_human_handoff.json",
+      "sha256": "37add69468f6301c1c1aac380f93b4df7963ba50f6c2ca380f6826e57c17430f"
+    },
+    {
+      "bytes": 689,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/cr13_machine_ready_dry_run.json",
+      "sha256": "5d3987e6dab330d8cf3bc4b397c001be2d06aa575b57705373f60e0eaf1b6cbf"
+    },
+    {
+      "bytes": 520,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/cr14_closeout.json",
+      "sha256": "67f7b7af883f3c04c8618075c4a28010980f6198d8a72d70830cc0adb686f014"
+    },
+    {
+      "bytes": 195,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/current_attempt.json",
+      "sha256": "772658b66671d71d2926f3f77fcb512b3893a77061e5a070aa66d32080a43029"
+    },
+    {
+      "bytes": 130,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/cursor.json",
+      "sha256": "e6dd1a6f6de0df1722224fea8f296bb9abe53ddf40997ee8709108c9b321df65"
+    },
+    {
+      "bytes": 118,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/heartbeat.json",
+      "sha256": "13f026f103a5ae0d0dfbef639fbcfa72b79a5bc833475fb5ad7068cb2d8aeaf5"
+    },
+    {
+      "bytes": 94,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/phase_ledger.csv",
+      "sha256": "41c139cc684cc8ca2e27c43d0d6ccc6c0b648f2a68a205559798228f3f808e59"
+    },
+    {
+      "bytes": 4156,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/profile_lock.json",
+      "sha256": "f31c6517ea48d9b514614f4834855e09b6812f2ab3de8fcffd271ff8e46f6f67"
+    },
+    {
+      "bytes": 5063,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/runs/traces/cr_articulation_alternative_20260907_0001_demo0.npz",
+      "sha256": "16e01ebb6cd37afb4caa9da3eea483ca07cdea003d2308f6dabad643d0c97031"
+    },
+    {
+      "bytes": 5573,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/runs/traces/cr_articulation_primary_20260907_0001_demo0.npz",
+      "sha256": "7c395ba83cfc5402af445d8f2691030a387bfee04aedc8f7309c04dc34c00431"
+    },
+    {
+      "bytes": 5511,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/runs/traces/cr_containment_alternative_20260907_0001_demo0.npz",
+      "sha256": "cb853fa3efb4d4009470561fccffb905d4969f7b47993763f4e7a5c2a0816bda"
+    },
+    {
+      "bytes": 5524,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/runs/traces/cr_containment_primary_20260907_0001_demo0.npz",
+      "sha256": "5d8b4b110b68a86249156814f3e80d012aade1ba78481a3f862f9cfb1f81ec50"
+    },
+    {
+      "bytes": 5772,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/runs/traces/cr_support_alternative_20260907_0001_demo0.npz",
+      "sha256": "89c6811a993a2d2d96b2ca97c8ccea04cf0a63e4a9fda0f9f92efb80365cf419"
+    },
+    {
+      "bytes": 5584,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/runs/traces/cr_support_primary_20260907_0001_demo0.npz",
+      "sha256": "c4434b0dee6ea0d9e38525345c5d774a3b5b243c547a65d87bac5f16870081be"
+    },
+    {
+      "bytes": 165049,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/summary.json",
+      "sha256": "7ffbccee874a6fed0325abf092b045919086d00888425ea47929637d88c6f7ca"
+    }
+  ],
+  "excluded_exact_relative_paths": [
+    "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/producer_manifest.json",
+    "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/outer_hash.json",
+    "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/final_validation.json",
+    "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/checkout_stable_closure.json"
+  ],
+  "schema_version": "track3_cr3_producer_manifest_v1",
+  "sealed_after_all_producers": true
+}

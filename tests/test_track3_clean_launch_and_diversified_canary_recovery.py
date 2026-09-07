@@ -64,6 +64,15 @@ def test_profile_lock_has_six_distinct_new_identities_and_strategies() -> None:
     }
 
 
+def test_action_hash_deduplication_is_checked_separately_from_trace_bytes() -> None:
+    historical = cr._historical_action_hashes()
+    current = set()
+    for path in (cr.CR_ROOT / "attempts/attempt_0004/runs/traces").glob("*.npz"):
+        current.add(cr.sha256_bytes(cr._load_trace(path)["actions"].tobytes()))
+    assert current
+    assert not current & historical
+
+
 def test_manifest_is_sealed_after_nested_producers_exist(tmp_path: Path, monkeypatch) -> None:
     monkeypatch.setattr(cr, "ROOT", tmp_path)
     attempt = tmp_path / "attempts" / "attempt_0001"

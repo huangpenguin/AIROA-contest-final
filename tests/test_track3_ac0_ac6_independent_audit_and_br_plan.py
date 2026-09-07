@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 HANDOFF = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
 AUDIT = ROOT / "data/reports/axis_libero_30k/track3_ac0_ac6_independent_audit_20260907/summary.json"
 AC_ROOT = ROOT / "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary"
-PLAN = "docs/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_PLAN.md"
+PLAN = "docs/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_INDEPENDENT_AUDIT_PLAN.md"
 ARCHIVED_BR_PLAN = ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ACQUISITION_GATE_AND_ATTEMPT_LIFECYCLE_REMEDIATION_PLAN.md"
 ARCHIVED_AUDIT_PLAN = ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_INDEPENDENT_AUDIT_PLAN.md"
 
@@ -72,9 +72,9 @@ def test_contract_findings_cannot_be_silently_cleared() -> None:
 
 def test_lifecycle_releases_exactly_one_br_plan() -> None:
     handoff = strict_json(HANDOFF)
-    assert handoff["status"] == "track3_clean_launch_and_diversified_canary_recovery_planned"
+    assert handoff["status"] == "track3_clean_launch_and_diversified_canary_recovery_completed_hard_stop_pending_independent_audit"
     assert handoff["next_plan"] == PLAN
-    assert handoff["next_phase_only"] == "CR0_to_CR14_then_hard_stop"
+    assert handoff["next_phase_only"] == "independent_audit_only_then_hard_stop"
     assert (ROOT / PLAN).is_file()
     assert ARCHIVED_BR_PLAN.is_file()
     assert ARCHIVED_AUDIT_PLAN.is_file()

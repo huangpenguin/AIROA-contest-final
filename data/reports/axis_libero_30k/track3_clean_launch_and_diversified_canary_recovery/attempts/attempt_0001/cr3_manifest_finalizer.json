@@ -1,0 +1,25 @@
+{
+  "finalizer_order": [
+    "all_producers_complete",
+    "producer_fsync",
+    "producer_manifest",
+    "outer_hash",
+    "strict_json",
+    "tests",
+    "final_validation",
+    "closed_heartbeat",
+    "closure",
+    "pointer"
+  ],
+  "manifest_sealed_later": true,
+  "mutation_and_missing_file_probes": {
+    "active_cursor_rejected": true,
+    "after_seal_mutation_rejected": true,
+    "bad_outer_rejected": true,
+    "leftover_partial_rejected": true,
+    "missing_log_rejected": true
+  },
+  "schema_version": "track3_cr3_two_layer_finalizer_fixture_v1",
+  "self_referential_exclusions_explicit": true,
+  "status": "passed"
+}

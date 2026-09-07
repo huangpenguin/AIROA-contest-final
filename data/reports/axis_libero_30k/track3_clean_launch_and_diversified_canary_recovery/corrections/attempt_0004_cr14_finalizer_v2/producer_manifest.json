@@ -1,0 +1,23 @@
+{
+  "current_complete_set_rechecked": false,
+  "entries": [
+    {
+      "bytes": 260,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/corrections/attempt_0004_cr14_finalizer_v2/cr14_repair_summary.json",
+      "sha256": "d28707a11ca67b322a55fb820460e043719747fda424b97f5b44f381d4dcee5a"
+    },
+    {
+      "bytes": 745,
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/corrections/attempt_0004_cr14_finalizer_v2/source_attempt_basis.json",
+      "sha256": "77a9f66b8d94d59889b126705df3d05d697a756ac672b3763e08365168afa4ed"
+    }
+  ],
+  "excluded_exact_relative_paths": [
+    "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/corrections/attempt_0004_cr14_finalizer_v2/producer_manifest.json",
+    "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/corrections/attempt_0004_cr14_finalizer_v2/outer_hash.json",
+    "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/corrections/attempt_0004_cr14_finalizer_v2/final_validation.json",
+    "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/corrections/attempt_0004_cr14_finalizer_v2/checkout_stable_closure.json"
+  ],
+  "schema_version": "track3_cr3_producer_manifest_v1",
+  "sealed_after_all_producers": true
+}

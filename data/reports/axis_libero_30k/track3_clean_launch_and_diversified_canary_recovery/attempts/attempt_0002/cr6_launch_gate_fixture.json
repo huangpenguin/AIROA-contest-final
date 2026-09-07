@@ -1,0 +1,25 @@
+{
+  "child_gate_rechecks": true,
+  "clean_source_observed": {
+    "checks": {
+      "expected_commit": true,
+      "expected_tool": true,
+      "openpi_clean": true,
+      "root_clean": true,
+      "tool_matches_head_path": true
+    },
+    "head_tool_sha256": "577f45ff5dd5f4280ebc8b6bfb2c388d1a305fa1af4a58bb2c017001e8177ae9",
+    "openpi_porcelain": [],
+    "openpi_porcelain_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "reason": null,
+    "root_commit": "0f15405cdb6a6d2d15e772e8a0cf42cc9e00b1b1",
+    "root_porcelain": [],
+    "root_porcelain_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "state": "passed",
+    "tool_sha256": "577f45ff5dd5f4280ebc8b6bfb2c388d1a305fa1af4a58bb2c017001e8177ae9"
+  },
+  "dirty_expected_observed_cannot_pass": true,
+  "pre_spawn_gate_required": true,
+  "schema_version": "track3_cr6_launch_gate_v1",
+  "status": "passed"
+}

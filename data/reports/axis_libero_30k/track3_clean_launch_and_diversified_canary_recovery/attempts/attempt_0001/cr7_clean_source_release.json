@@ -1,0 +1,30 @@
+{
+  "clean_source_gate": {
+    "checks": {
+      "expected_commit": true,
+      "expected_tool": true,
+      "openpi_clean": true,
+      "root_clean": true,
+      "tool_matches_head_path": true
+    },
+    "head_tool_sha256": "7a6d0de982919d9a38ce80d5e50e91acd3ccf88c3b245e71c5bf8a2e5e58dea7",
+    "openpi_porcelain": [],
+    "openpi_porcelain_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "reason": null,
+    "root_commit": "8dcec3f15ea0477197c7f5d6cd3afaaeb9ae680d",
+    "root_porcelain": [],
+    "root_porcelain_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "state": "passed",
+    "tool_sha256": "7a6d0de982919d9a38ce80d5e50e91acd3ccf88c3b245e71c5bf8a2e5e58dea7"
+  },
+  "git_diff_check_required": true,
+  "physics_started": false,
+  "py_compile_required": true,
+  "schema_version": "track3_cr7_clean_source_release_v1",
+  "status": "passed",
+  "strict_json_before_commit": {
+    "errors": [],
+    "files": 10,
+    "status": "passed"
+  }
+}

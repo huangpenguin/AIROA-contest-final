@@ -1,0 +1,139 @@
+{
+  "history_overlap": [],
+  "physics_started": false,
+  "primary_alternative_structurally_distinct": true,
+  "profile_lock": {
+    "family_order": [
+      "support_remove",
+      "containment_remove",
+      "articulation_close"
+    ],
+    "limits": {
+      "alternative": 3,
+      "per_family": 2,
+      "primary": 3,
+      "total": 6
+    },
+    "lock_sha256": "34bd84d30e768af3009282db73275ebffed126d482cbaac9f4446dce67ee8b08",
+    "official_track3_claim": false,
+    "old_profile_ids_denylist": [
+      "ac_articulation_close_20260906_0001",
+      "ac_containment_remove_20260906_0001",
+      "ac_support_remove_20260906_0001",
+      "br_articulation_close_20260907_0001",
+      "br_containment_remove_20260907_0001",
+      "br_support_remove_20260907_0001",
+      "er_articulation_pull_fresh",
+      "er_containment_extract_fresh",
+      "er_support_contact_repair_fresh"
+    ],
+    "profile_order": [
+      "cr_support_primary_20260907_0001",
+      "cr_containment_primary_20260907_0001",
+      "cr_articulation_primary_20260907_0001",
+      "cr_support_alternative_20260907_0001",
+      "cr_containment_alternative_20260907_0001",
+      "cr_articulation_alternative_20260907_0001"
+    ],
+    "profiles": [
+      {
+        "close_dwell": 3,
+        "command_hash": "09b00b09dfaa26f56ff03ea212a2300692914d6d38566137d8d6520beb49b3f3",
+        "family": "support_remove",
+        "gpu": false,
+        "grasp_z_m": 0.02,
+        "old_identity_rerun": false,
+        "profile_id": "cr_support_primary_20260907_0001",
+        "release_dwell": 2,
+        "renderer": false,
+        "seed": 81010,
+        "strategy": "object_frame_contact_aligned_v1",
+        "task_index": 10,
+        "training_eligible": false
+      },
+      {
+        "close_dwell": 3,
+        "command_hash": "1cab4d301a971a499ecee99ac0767d079b4317bfb19b7c4fc374c281d231c921",
+        "family": "containment_remove",
+        "gpu": false,
+        "grasp_z_m": 0.02,
+        "old_identity_rerun": false,
+        "profile_id": "cr_containment_primary_20260907_0001",
+        "release_dwell": 2,
+        "renderer": false,
+        "seed": 82020,
+        "strategy": "object_frame_contact_aligned_v1",
+        "task_index": 20,
+        "training_eligible": false
+      },
+      {
+        "close_dwell": 3,
+        "command_hash": "f42128a7f1e2a7124ed8061b56a647bf39ff58f522664c1451c6c0a9d0b578b1",
+        "family": "articulation_close",
+        "gpu": false,
+        "grasp_z_m": 0.01,
+        "old_identity_rerun": false,
+        "profile_id": "cr_articulation_primary_20260907_0001",
+        "release_dwell": 2,
+        "renderer": false,
+        "seed": 83019,
+        "strategy": "object_frame_contact_aligned_v1",
+        "task_index": 19,
+        "training_eligible": false
+      },
+      {
+        "close_dwell": 4,
+        "command_hash": "324e53ea722c1bb3fd680255f248df9661fc3a44a3068be1cac01aef86311baa",
+        "family": "support_remove",
+        "gpu": false,
+        "grasp_z_m": 0.017,
+        "old_identity_rerun": false,
+        "profile_id": "cr_support_alternative_20260907_0001",
+        "release_dwell": 2,
+        "renderer": false,
+        "seed": 84010,
+        "strategy": "waypoint_guarded_microstep_v1",
+        "task_index": 10,
+        "training_eligible": false
+      },
+      {
+        "close_dwell": 4,
+        "command_hash": "99dc15e118cdd948904c3465ac2b848e8809c5a4547588034b6c71a406bdbed2",
+        "family": "containment_remove",
+        "gpu": false,
+        "grasp_z_m": 0.017,
+        "old_identity_rerun": false,
+        "profile_id": "cr_containment_alternative_20260907_0001",
+        "release_dwell": 2,
+        "renderer": false,
+        "seed": 85020,
+        "strategy": "waypoint_guarded_microstep_v1",
+        "task_index": 20,
+        "training_eligible": false
+      },
+      {
+        "close_dwell": 4,
+        "command_hash": "c8f0f301c31b470737183d872141a30b4fcae0b5e8d109876277b6dd6c2aaa15",
+        "family": "articulation_close",
+        "gpu": false,
+        "grasp_z_m": 0.008,
+        "old_identity_rerun": false,
+        "profile_id": "cr_articulation_alternative_20260907_0001",
+        "release_dwell": 2,
+        "renderer": false,
+        "seed": 86019,
+        "strategy": "waypoint_guarded_microstep_v1",
+        "task_index": 19,
+        "training_eligible": false
+      }
+    ],
+    "same_strategy_retry_allowed": false,
+    "schema_version": "track3_cr8_profile_lock_v1",
+    "strategies": {
+      "alternative": "waypoint_guarded_microstep_v1",
+      "primary": "object_frame_contact_aligned_v1"
+    }
+  },
+  "schema_version": "track3_cr8_strategy_freeze_v1",
+  "status": "passed"
+}

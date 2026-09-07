@@ -1,0 +1,8 @@
+{
+  "normal_missing_required_contact": "family_failure",
+  "schema_version": "track3_cr5_telemetry_classification_v1",
+  "status": "passed",
+  "sticky_global_stop": true,
+  "unentered_stage": "not_evaluated",
+  "unknown_state": "infrastructure_failure"
+}

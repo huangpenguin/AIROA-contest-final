@@ -1,0 +1,47 @@
+{
+  "complete_set_projection": {
+    "late_finalizer_paths": [
+      "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/corrections/attempt_0004_cr14_finalizer_v2/checkout_stable_closure.json",
+      "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/corrections/attempt_0004_cr14_finalizer_v2/final_validation.json"
+    ],
+    "observed_before_late_finalizer": 4,
+    "projected_after_late_finalizer": 6
+  },
+  "csv": {
+    "files": [],
+    "status": "passed"
+  },
+  "current_complete_set_rechecked": true,
+  "expected_file_count": 6,
+  "git_diff_check": 0,
+  "gpu_boundary": {
+    "compute_apps": [],
+    "returncode": 0,
+    "status": "passed"
+  },
+  "manifest_check": {
+    "entries": 2,
+    "errors": [],
+    "status": "passed"
+  },
+  "observed_file_count": 6,
+  "physics_rerun": false,
+  "process_scan": {
+    "live_worker_rows": [],
+    "status": "passed"
+  },
+  "schema_version": "track3_cr14_final_validation_correction_v1",
+  "source_attempt_complete_set_rechecked": true,
+  "source_final_validation_status_preserved": "failed",
+  "source_manifest_check": {
+    "entries": 34,
+    "errors": [],
+    "status": "passed"
+  },
+  "status": "passed",
+  "strict_json": {
+    "errors": [],
+    "files": 4,
+    "status": "passed"
+  }
+}

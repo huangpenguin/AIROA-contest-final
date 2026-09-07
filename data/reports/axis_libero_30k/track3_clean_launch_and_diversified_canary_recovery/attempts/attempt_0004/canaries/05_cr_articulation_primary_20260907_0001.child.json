@@ -1,0 +1,693 @@
+{
+  "action_sha256": "57ac87b40c119a4cc93ca575b08f3aba42a6f0ef520fd15bcb618e1e2a830fe9",
+  "behavior_trace_sha256": "7c395ba83cfc5402af445d8f2691030a387bfee04aedc8f7309c04dc34c00431",
+  "category": "family_failure",
+  "completed_at_utc": "2026-09-07T01:26:06.941132+00:00",
+  "cr_gate": {
+    "barrier_index": null,
+    "category": "family_failure",
+    "gates": {
+      "all_stages_reached": {
+        "executed": true,
+        "state": "failed",
+        "value": false
+      },
+      "controller_clip": {
+        "executed": true,
+        "state": "failed",
+        "value": false
+      },
+      "finite_trace": {
+        "executed": true,
+        "state": "passed",
+        "value": true
+      },
+      "goal_continuous_true": {
+        "executed": false,
+        "reason": "goal_stage_not_entered",
+        "state": "not_evaluated",
+        "value": null
+      },
+      "normalized_action_limit": {
+        "executed": true,
+        "state": "passed",
+        "value": true
+      },
+      "required_contact_continuous": {
+        "barrier_index": null,
+        "contact_window": 0,
+        "executed": false,
+        "reason": "stage_not_entered",
+        "state": "not_evaluated",
+        "value": null
+      },
+      "source_released": {
+        "executed": false,
+        "reason": "acquisition_not_passed",
+        "state": "not_evaluated",
+        "value": null
+      },
+      "unrelated_contact": {
+        "executed": true,
+        "state": "passed",
+        "value": true
+      }
+    },
+    "late_contact_excluded": false,
+    "metrics": {
+      "controller_clip_count": 12,
+      "finite": true,
+      "normalized_action_abs_max": 1.0,
+      "normalized_rotation_l2_max": 0.0,
+      "normalized_translation_l2_max": 1.7320508075688772
+    },
+    "stage_gates": {
+      "approach_drawer_region": {
+        "executed": true,
+        "state": "passed",
+        "value": true
+      },
+      "grasp_drawer_region": {
+        "executed": false,
+        "reason": "stage_not_entered",
+        "state": "not_evaluated",
+        "value": null
+      },
+      "hold_closed": {
+        "executed": false,
+        "reason": "stage_not_entered",
+        "state": "not_evaluated",
+        "value": null
+      },
+      "pull_drawer_closed": {
+        "executed": false,
+        "reason": "stage_not_entered",
+        "state": "not_evaluated",
+        "value": null
+      }
+    },
+    "status": "family_failure",
+    "steps": 180,
+    "typed_trace": {
+      "allow_pickle_false": true,
+      "arrays": {
+        "action_saturated": {
+          "dtype": "bool",
+          "shape": [
+            180
+          ]
+        },
+        "actions": {
+          "dtype": "float32",
+          "shape": [
+            180,
+            7
+          ]
+        },
+        "contact_complete": {
+          "dtype": "bool",
+          "shape": [
+            180
+          ]
+        },
+        "contact_ncon": {
+          "dtype": "int32",
+          "shape": [
+            180
+          ]
+        },
+        "contact_telemetry_complete": {
+          "dtype": "bool",
+          "shape": [
+            180
+          ]
+        },
+        "eef_error": {
+          "dtype": "float32",
+          "shape": [
+            180
+          ]
+        },
+        "goal_known": {
+          "dtype": "bool",
+          "shape": [
+            180
+          ]
+        },
+        "goal_value": {
+          "dtype": "int8",
+          "shape": [
+            180
+          ]
+        },
+        "phase": {
+          "dtype": "<U64",
+          "shape": [
+            180
+          ]
+        },
+        "required_contact": {
+          "dtype": "bool",
+          "shape": [
+            180
+          ]
+        },
+        "source_known": {
+          "dtype": "bool",
+          "shape": [
+            180
+          ]
+        },
+        "source_value": {
+          "dtype": "int8",
+          "shape": [
+            180
+          ]
+        },
+        "telemetry_known": {
+          "dtype": "bool",
+          "shape": [
+            180
+          ]
+        },
+        "unrelated_contact": {
+          "dtype": "bool",
+          "shape": [
+            180
+          ]
+        },
+        "unrelated_contact_runtime": {
+          "dtype": "bool",
+          "shape": [
+            180
+          ]
+        }
+      },
+      "errors": [],
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/runs/traces/cr_articulation_primary_20260907_0001_demo0.npz",
+      "status": "passed"
+    }
+  },
+  "family": "articulation_close",
+  "final": {
+    "all_false": false,
+    "all_true": false,
+    "count": 2,
+    "detail_complete": true,
+    "label": "final",
+    "predicates": [
+      {
+        "args": [
+          "wooden_cabinet_1_middle_region"
+        ],
+        "atom": "(Open wooden_cabinet_1_middle_region)",
+        "detail": {
+          "args": [
+            "wooden_cabinet_1_middle_region"
+          ],
+          "detail_status": "passed",
+          "geometry": [
+            {
+              "kind": "site",
+              "name": "wooden_cabinet_1_middle_region",
+              "pos_m": [
+                0.0266918,
+                -0.08675677429082455,
+                1.0219
+              ],
+              "quat": [
+                -0.7071067811865475,
+                0.0,
+                0.7071067811865475,
+                0.0
+              ]
+            }
+          ],
+          "joint_names": [
+            "wooden_cabinet_1_middle_level"
+          ],
+          "joint_values": [
+            -0.15983322570917544
+          ],
+          "predicate": "Open",
+          "value": true
+        },
+        "detail_status": "passed",
+        "predicate": "Open",
+        "truth_status": "passed",
+        "value": true
+      },
+      {
+        "args": [
+          "wooden_cabinet_1_middle_region"
+        ],
+        "atom": "(Close wooden_cabinet_1_middle_region)",
+        "detail": {
+          "args": [
+            "wooden_cabinet_1_middle_region"
+          ],
+          "detail_status": "passed",
+          "geometry": [
+            {
+              "kind": "site",
+              "name": "wooden_cabinet_1_middle_region",
+              "pos_m": [
+                0.0266918,
+                -0.08675677429082455,
+                1.0219
+              ],
+              "quat": [
+                -0.7071067811865475,
+                0.0,
+                0.7071067811865475,
+                0.0
+              ]
+            }
+          ],
+          "joint_names": [
+            "wooden_cabinet_1_middle_level"
+          ],
+          "joint_values": [
+            -0.15983322570917544
+          ],
+          "predicate": "Close",
+          "value": false
+        },
+        "detail_status": "passed",
+        "predicate": "Close",
+        "truth_status": "passed",
+        "value": false
+      }
+    ],
+    "true_count": 1,
+    "truth_complete": true
+  },
+  "fresh_process": true,
+  "gates": {
+    "all_stages_reached": {
+      "executed": true,
+      "required": true,
+      "state": "failed",
+      "value": false
+    },
+    "contact_complete": {
+      "executed": true,
+      "required": true,
+      "state": "passed",
+      "value": true
+    },
+    "controller_clip": {
+      "executed": true,
+      "required": true,
+      "state": "failed",
+      "value": false
+    },
+    "finite_telemetry": {
+      "executed": true,
+      "required": true,
+      "state": "passed",
+      "value": true
+    },
+    "goal_true": {
+      "executed": true,
+      "required": true,
+      "state": "failed",
+      "value": false
+    },
+    "source_released": {
+      "executed": true,
+      "required": true,
+      "state": "failed",
+      "value": false
+    },
+    "trace_typed_no_pickle": {
+      "executed": true,
+      "required": true,
+      "state": "passed",
+      "value": true
+    },
+    "unrelated_contact": {
+      "executed": true,
+      "required": true,
+      "state": "passed",
+      "value": true
+    }
+  },
+  "gpu": false,
+  "identity": {
+    "clean_root": true,
+    "command": [
+      "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+      "-m",
+      "tools.axis_pi05.track3_clean_launch_and_diversified_canary_recovery",
+      "--cr-cpu-worker",
+      "--profile-id",
+      "cr_articulation_primary_20260907_0001",
+      "--attempt-root",
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004",
+      "--result-output",
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/canaries/05_cr_articulation_primary_20260907_0001.child.json",
+      "--expected-root-commit",
+      "02bbac24857168826557a0aa23b8698111e1be92",
+      "--expected-tool-sha256",
+      "874edd5b3a520f2ce52be3aae356680ef409fe76096c9f7d78a01fc65f3a6902",
+      "--expected-openpi-commit",
+      "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+      "--expected-profile-lock-sha256",
+      "34bd84d30e768af3009282db73275ebffed126d482cbaac9f4446dce67ee8b08",
+      "--expected-command-sha256",
+      "9de9a7beaf35a955a78ef5e62b312d59e205135041c077480a98d6f1a1ad5691"
+    ],
+    "command_hash": "9de9a7beaf35a955a78ef5e62b312d59e205135041c077480a98d6f1a1ad5691",
+    "cuda_visible_devices": "",
+    "head_tool_sha256": "874edd5b3a520f2ce52be3aae356680ef409fe76096c9f7d78a01fc65f3a6902",
+    "jax_platforms": "cpu",
+    "libero_plus_porcelain": [
+      "M libero/libero/benchmark/__init__.py",
+      "?? libero/__init__.py",
+      "?? libero/libero/assets",
+      "?? libero/libero/bddl_files/libero_t3",
+      "?? libero/libero/init_files/libero_t3"
+    ],
+    "libero_plus_porcelain_sha256": "e34630b50279fe065af3a9a90a431e91b3faa6331b04aea35165e712dabf083b",
+    "mujoco_gl": "disable",
+    "openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "openpi_porcelain": [],
+    "openpi_porcelain_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "pgid": 1705935,
+    "pid": 1705935,
+    "profile_lock_sha256": "34bd84d30e768af3009282db73275ebffed126d482cbaac9f4446dce67ee8b08",
+    "root_commit": "02bbac24857168826557a0aa23b8698111e1be92",
+    "root_porcelain": [],
+    "root_porcelain_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "tool_sha256": "874edd5b3a520f2ce52be3aae356680ef409fe76096c9f7d78a01fc65f3a6902"
+  },
+  "identity_gate": {
+    "checked_fields": [
+      "root_commit",
+      "tool_sha256",
+      "head_tool_sha256",
+      "openpi_commit",
+      "profile_lock_sha256",
+      "cuda_visible_devices",
+      "jax_platforms",
+      "mujoco_gl",
+      "root_porcelain_sha256",
+      "openpi_porcelain_sha256",
+      "libero_plus_porcelain_sha256",
+      "clean_root",
+      "command",
+      "command_hash"
+    ],
+    "mismatches": [],
+    "state": "passed"
+  },
+  "initial": {
+    "goal": {
+      "all_false": true,
+      "all_true": false,
+      "count": 1,
+      "detail_complete": true,
+      "label": "initial_goal",
+      "predicates": [
+        {
+          "args": [
+            "wooden_cabinet_1_middle_region"
+          ],
+          "atom": "(Close wooden_cabinet_1_middle_region)",
+          "detail": {
+            "args": [
+              "wooden_cabinet_1_middle_region"
+            ],
+            "detail_status": "passed",
+            "geometry": [
+              {
+                "kind": "site",
+                "name": "wooden_cabinet_1_middle_region",
+                "pos_m": [
+                  0.0266918,
+                  -0.08675677428520547,
+                  1.0219
+                ],
+                "quat": [
+                  -0.7071067811865475,
+                  0.0,
+                  0.7071067811865475,
+                  0.0
+                ]
+              }
+            ],
+            "joint_names": [
+              "wooden_cabinet_1_middle_level"
+            ],
+            "joint_values": [
+              -0.15983322571479452
+            ],
+            "predicate": "Close",
+            "value": false
+          },
+          "detail_status": "passed",
+          "predicate": "Close",
+          "truth_status": "passed",
+          "value": false
+        }
+      ],
+      "true_count": 0,
+      "truth_complete": true
+    },
+    "source": {
+      "all_false": false,
+      "all_true": true,
+      "count": 1,
+      "detail_complete": true,
+      "label": "initial_source",
+      "predicates": [
+        {
+          "args": [
+            "wooden_cabinet_1_middle_region"
+          ],
+          "atom": "(Open wooden_cabinet_1_middle_region)",
+          "detail": {
+            "args": [
+              "wooden_cabinet_1_middle_region"
+            ],
+            "detail_status": "passed",
+            "geometry": [
+              {
+                "kind": "site",
+                "name": "wooden_cabinet_1_middle_region",
+                "pos_m": [
+                  0.0266918,
+                  -0.08675677428520547,
+                  1.0219
+                ],
+                "quat": [
+                  -0.7071067811865475,
+                  0.0,
+                  0.7071067811865475,
+                  0.0
+                ]
+              }
+            ],
+            "joint_names": [
+              "wooden_cabinet_1_middle_level"
+            ],
+            "joint_values": [
+              -0.15983322571479452
+            ],
+            "predicate": "Open",
+            "value": true
+          },
+          "detail_status": "passed",
+          "predicate": "Open",
+          "truth_status": "passed",
+          "value": true
+        }
+      ],
+      "true_count": 1,
+      "truth_complete": true
+    }
+  },
+  "metrics": {
+    "action_saturation_count": 12,
+    "contact_complete_samples": 180,
+    "contact_sample_count": 180,
+    "controller_clip": true,
+    "eef_error_max_m": 0.10283247026538947,
+    "unrelated_contact_samples": 0
+  },
+  "mode": "CPU_no_renderer",
+  "model": {
+    "hdf5": "/home/huang/code/PARC2026_final/data/raw/public/libero_official_hdf5/libero_goal/open_the_middle_drawer_of_the_cabinet_demo.hdf5",
+    "model_file_sha256": "ccf958ea89aa0e84e32cb90b99e31faf66f3cd5e33082f7d2a1d4444c4660257",
+    "resolved_model_xml_sha256": "32e9c8562f8b79a7764ab0feead506d54772fa5c5986c1f5660d66b88a3b3281",
+    "snapshot": "data/reports/axis_libero_30k/track3_public_terminal_recovery/snapshots/task_19/attempt_1/terminal_state.npy",
+    "snapshot_sha256": "0e2ee6afffe27c3ed8811b79a368111562b968ed381f3fb7388c68f2a6b1708e"
+  },
+  "official_track3_claim": false,
+  "profile_id": "cr_articulation_primary_20260907_0001",
+  "records_count": 180,
+  "result_sha256": "1a0bd8dd9332354ee5d29c20010125a179734eb1afec292e16c579565602c0a0",
+  "schema_version": "track3_tz_er_child_result_v1",
+  "seed": 83019,
+  "seed_application": {
+    "applied": true,
+    "determinism_contract": "fixed_snapshot_and_fixed_action_policy_after_process_seed",
+    "environment_reset_seed_argument": "unsupported_by_ControlEnv_wrapper",
+    "methods": [
+      "python_random.seed",
+      "numpy.random.seed",
+      "PYTHONHASHSEED_child_environment"
+    ],
+    "seed": 83019
+  },
+  "source_false_step": null,
+  "stage_results": [
+    {
+      "action_saturation_count": 12,
+      "last_eef_error_m": 0.07513203865077471,
+      "reached": false,
+      "stage": "approach_drawer_region",
+      "steps": 180
+    }
+  ],
+  "started_at_utc": "2026-09-07T01:25:37.019239+00:00",
+  "status": "family_failure",
+  "steps": 180,
+  "strategy": "object_frame_contact_aligned_v1",
+  "task_index": 19,
+  "trace": {
+    "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/runs/traces/cr_articulation_primary_20260907_0001_demo0.npz",
+    "sha256": "7c395ba83cfc5402af445d8f2691030a387bfee04aedc8f7309c04dc34c00431",
+    "validation": {
+      "allow_pickle_false": true,
+      "arrays": {
+        "action_saturated": {
+          "dtype": "bool",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            180
+          ]
+        },
+        "actions": {
+          "dtype": "float32",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            180,
+            7
+          ]
+        },
+        "contact_complete": {
+          "dtype": "bool",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            180
+          ]
+        },
+        "contact_ncon": {
+          "dtype": "int32",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            180
+          ]
+        },
+        "contact_telemetry_complete": {
+          "dtype": "bool",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            180
+          ]
+        },
+        "eef_error": {
+          "dtype": "float32",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            180
+          ]
+        },
+        "goal_known": {
+          "dtype": "bool",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            180
+          ]
+        },
+        "goal_value": {
+          "dtype": "int8",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            180
+          ]
+        },
+        "phase": {
+          "dtype": "<U64",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            180
+          ]
+        },
+        "required_contact": {
+          "dtype": "bool",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            180
+          ]
+        },
+        "source_known": {
+          "dtype": "bool",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            180
+          ]
+        },
+        "source_value": {
+          "dtype": "int8",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            180
+          ]
+        },
+        "telemetry_known": {
+          "dtype": "bool",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            180
+          ]
+        },
+        "unrelated_contact": {
+          "dtype": "bool",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            180
+          ]
+        },
+        "unrelated_contact_runtime": {
+          "dtype": "bool",
+          "finite": true,
+          "object_dtype": false,
+          "shape": [
+            180
+          ]
+        }
+      },
+      "errors": [],
+      "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/runs/traces/cr_articulation_primary_20260907_0001_demo0.npz",
+      "status": "passed"
+    }
+  },
+  "training_eligible": false
+}

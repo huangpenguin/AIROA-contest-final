@@ -1,0 +1,21 @@
+{
+  "forbidden_actions": {
+    "accepted_data": false,
+    "generation": false,
+    "gpu0": false,
+    "gpu1": false,
+    "gpu2": false,
+    "new_candidate_zip": false,
+    "replay": false,
+    "submission": false,
+    "training": false,
+    "upload": false
+  },
+  "human_input_required": true,
+  "next_authority": "independent_review_required",
+  "old_namespaces_modified": false,
+  "pending_replay_review_count": 0,
+  "schema_version": "track3_cr14_closeout_v1",
+  "status": "passed_hard_stop",
+  "success_count": 0
+}

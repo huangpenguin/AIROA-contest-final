@@ -1,0 +1,13 @@
+{
+  "attempt_id": 4,
+  "current_complete_set_rechecked": true,
+  "cursor_active": false,
+  "final_validation_sha256": "497b706c182d06da535038bee030fbe94f6c996c2a783b87dc88026881601e04",
+  "next_authority": "independent_review_required",
+  "no_partial": true,
+  "outer_hash_sha256": "8a41031f744346d0d6d087898774961142951f00d6db8c0807b6b6b5682f7a84",
+  "producer_manifest_sha256": "daf189d4f55b2b72d74f2f99f8b822ce02f5046c6419b345972dee14bca6336d",
+  "schema_version": "track3_cr14_checkout_stable_closure_correction_v1",
+  "source_attempt_root": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004",
+  "status": "passed"
+}

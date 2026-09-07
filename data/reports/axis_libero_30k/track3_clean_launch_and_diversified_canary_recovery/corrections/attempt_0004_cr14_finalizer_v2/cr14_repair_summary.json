@@ -1,0 +1,9 @@
+{
+  "identities_consumed": 0,
+  "next_authority": "independent_review_required",
+  "physics_rerun": false,
+  "schema_version": "track3_cr14_repair_summary_v1",
+  "source_attempt_unchanged": true,
+  "source_complete_set_rechecked": true,
+  "status": "passed"
+}

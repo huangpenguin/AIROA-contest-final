@@ -537,6 +537,17 @@ def _historical_trace_hashes() -> set[str]:
     return values
 
 
+def _historical_action_hashes() -> set[str]:
+    values: set[str] = set()
+    for family in FAMILIES:
+        br = next((BR_ROOT / "attempts/attempt_0004/runs/traces").glob(f"br_{family}*_demo0.npz"), None)
+        ac = next((AC_ROOT / "attempts/attempt_0001/runs/traces").glob(f"ac_{family}*_demo0.npz"), None)
+        for path in (br, ac):
+            if path and path.is_file():
+                values.add(sha256_bytes(_load_trace(path)["actions"].tobytes()))
+    return values
+
+
 def _prepare_legacy(profile_id: str, attempt: Path, records: list[dict[str, Any]]) -> Any:
     import tools.axis_pi05.track3_tz_evidence_and_executor_contract_remediation as old
     import tools.axis_pi05.track3_composed_reverse_start_stabilization as composed
@@ -627,17 +638,17 @@ def _latch(attempt: Path, reason: str, profile_id: str) -> None:
 def run_cr9_to_cr10() -> dict[str, Any]:
     latest = strict_json(CR_ROOT / "latest_cr8.json"); cr8 = strict_json(ROOT / latest["target"])
     if cr8.get("status") != "passed": return {"status": "blocked_cr8_failed", "physics_started": False}
-    attempt_id, attempt = allocate_attempt(); lock = strict_json(ROOT / latest["profile_lock"]); write_json_immutable(attempt / "profile_lock.json", lock); history = _historical_trace_hashes(); rows: list[dict[str, Any]] = []; stop_reason = None; index = 0
+    attempt_id, attempt = allocate_attempt(); lock = strict_json(ROOT / latest["profile_lock"]); write_json_immutable(attempt / "profile_lock.json", lock); history = _historical_trace_hashes(); action_history = _historical_action_hashes(); rows: list[dict[str, Any]] = []; stop_reason = None; index = 0
     for family in FAMILIES:
         primary = PRIMARY_BY_FAMILY[family]
         if stop_reason: rows.append({"profile_id": primary, "family": family, "category": "not_evaluated", "reason": stop_reason}); rows.append({"profile_id": ALTERNATIVE_BY_FAMILY[family], "family": family, "category": "not_evaluated", "reason": stop_reason}); continue
-        index += 1; row = _run_canary(primary, attempt, lock, index); row["phase"] = "CR9"; row["new_behavior"] = row.get("trace_sha256") not in history if row.get("trace_sha256") else False
-        if row["trace_sha256"] in history: row["category"] = "family_failure"; row["no_effect_variant"] = True; row["reason"] = "byte_identical_to_historical_ac_or_br"; rows.append(row); continue
+        index += 1; row = _run_canary(primary, attempt, lock, index); row["phase"] = "CR9"; row["new_behavior"] = bool(row.get("trace_sha256") and row.get("trace_sha256") not in history and row.get("action_sha256") not in action_history)
+        if row.get("trace_sha256") in history or row.get("action_sha256") in action_history: row["category"] = "family_failure"; row["no_effect_variant"] = True; row["reason"] = "byte_or_action_identical_to_historical_ac_or_br"; rows.append(row); continue
         rows.append(row)
         if row["category"] == "infrastructure_failure": stop_reason = f"shared_infrastructure_failure:{primary}"; _latch(attempt, stop_reason, primary); continue
         if row["category"] == "success": continue
         alternative = ALTERNATIVE_BY_FAMILY[family]; index += 1; alt = _run_canary(alternative, attempt, lock, index); alt["phase"] = "CR10"; alt["new_behavior"] = alt.get("trace_sha256") not in history and alt.get("trace_sha256") != row.get("trace_sha256") if alt.get("trace_sha256") else False
-        if alt.get("trace_sha256") in history or alt.get("trace_sha256") == row.get("trace_sha256"): alt["category"] = "family_failure"; alt["no_effect_variant"] = True; alt["reason"] = "byte_or_action_identical_to_history_or_primary"
+        if alt.get("trace_sha256") in history or alt.get("action_sha256") in action_history or alt.get("trace_sha256") == row.get("trace_sha256") or alt.get("action_sha256") == row.get("action_sha256"): alt["category"] = "family_failure"; alt["no_effect_variant"] = True; alt["reason"] = "byte_or_action_identical_to_history_or_primary"
         rows.append(alt)
         if alt["category"] == "infrastructure_failure": stop_reason = f"shared_infrastructure_failure:{alternative}"; _latch(attempt, stop_reason, alternative)
     families = {family: {category: [row["profile_id"] for row in rows if row.get("family") == family and row.get("category") == category] for category in ("success", "family_failure", "infrastructure_failure", "not_evaluated")} for family in FAMILIES}

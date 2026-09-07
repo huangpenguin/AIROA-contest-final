@@ -1,0 +1,12 @@
+{
+  "attempt_id": 4,
+  "attempt_root": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004",
+  "correction_root": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/corrections/attempt_0004_cr14_finalizer_v2",
+  "derived_correction": true,
+  "immutable": false,
+  "schema_version": "track3_cr_latest_attempt_pointer_v1",
+  "target_closure": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/corrections/attempt_0004_cr14_finalizer_v2/checkout_stable_closure.json",
+  "target_closure_sha256": "020f0feae9f81224c8b4ff55e205f1369b16ebdddbf8dce2ce551bd74dc4469d",
+  "target_final_validation": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/corrections/attempt_0004_cr14_finalizer_v2/final_validation.json",
+  "target_final_validation_sha256": "497b706c182d06da535038bee030fbe94f6c996c2a783b87dc88026881601e04"
+}

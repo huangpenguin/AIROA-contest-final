@@ -1,10 +1,10 @@
 # AXIS Pi0.5 Track 3：Clean Launch 与 Diversified Canary 今夜恢复计划
 
 > 创建日期：2026-09-07（Asia/Tokyo）
-> 唯一活动计划：是
+> 唯一活动计划：否（CR0–CR14 已执行并 hard stop）
 > 审核输入：root `474d36d7e36aa3f428c8fff3fbf38b8d5db03f05`
 > 审核结论：`remediation_required`
-> 授权范围：CR0–CR14；先 code/fixture 与 clean-source commit，再最多 6 条真正不同的 CPU/no-renderer identity；条件式 GPU3 replay；之后 hard stop
+> 执行状态：CR0–CR14 已执行；0 success；等待独立只读审核
 
 本计划不改写 BR attempts `0001–0006`、AC/ER/EG/TZ 等历史 evidence 或 failure label。目标是先修复真正阻止可信 acquisition canary 的五个合同缺口，再利用夜间窗口运行有界 primary/alternative 策略，而不是继续只改 seed/profile ID。
 

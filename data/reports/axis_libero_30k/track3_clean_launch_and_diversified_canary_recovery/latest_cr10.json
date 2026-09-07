@@ -1,0 +1,8 @@
+{
+  "attempt_id": 4,
+  "attempt_root": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004",
+  "immutable": false,
+  "profile_lock": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/profile_lock.json",
+  "schema_version": "track3_cr_latest_cr10_pointer_v1",
+  "target": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/summary.json"
+}

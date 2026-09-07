@@ -1,0 +1,12 @@
+{
+  "clip_fixture": {
+    "axis_combined_l2_checked": true,
+    "preclip_checked": true
+  },
+  "component_abs_max": 1.0,
+  "double_normalization": false,
+  "normalized_input_limit": 1.0,
+  "physical_arrays_separate": true,
+  "schema_version": "track3_cr4_normalized_action_units_v1",
+  "status": "passed"
+}

@@ -1,0 +1,38 @@
+{
+  "csv": {
+    "files": [
+      {
+        "lf_only": true,
+        "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0004/phase_ledger.csv",
+        "sha256": "41c139cc684cc8ca2e27c43d0d6ccc6c0b648f2a68a205559798228f3f808e59"
+      }
+    ],
+    "status": "passed"
+  },
+  "current_complete_set_rechecked": false,
+  "expected_file_count": 38,
+  "git_diff_check": 0,
+  "gpu_boundary": {
+    "compute_apps": [],
+    "returncode": 0,
+    "status": "passed"
+  },
+  "manifest_check": {
+    "entries": 34,
+    "errors": [],
+    "status": "passed"
+  },
+  "observed_file_count": 36,
+  "process_scan": {
+    "live_worker_rows": [],
+    "status": "passed"
+  },
+  "schema_version": "track3_cr14_final_validation_v1",
+  "status": "failed",
+  "strict_json": {
+    "errors": [],
+    "files": 17,
+    "status": "passed"
+  },
+  "summary_final_state": "passed_hard_stop"
+}

@@ -1,0 +1,73 @@
+{
+  "families": [
+    {
+      "family": "support_remove",
+      "recorder_command": [
+        "python",
+        "-m",
+        "tools.axis_pi05.track3_public_teleop",
+        "--task",
+        "10"
+      ],
+      "required_contact": "demonstrator_to_object_or_handle_before_barrier",
+      "source": "public_task_and_start_state_only",
+      "started": false,
+      "status": "human_input_required",
+      "stop_conditions": [
+        "telemetry_unknown",
+        "timeout",
+        "collision",
+        "loss_of_source_or_goal",
+        "operator_abort"
+      ],
+      "task_index": 10
+    },
+    {
+      "family": "containment_remove",
+      "recorder_command": [
+        "python",
+        "-m",
+        "tools.axis_pi05.track3_public_teleop",
+        "--task",
+        "20"
+      ],
+      "required_contact": "demonstrator_to_object_or_handle_before_barrier",
+      "source": "public_task_and_start_state_only",
+      "started": false,
+      "status": "human_input_required",
+      "stop_conditions": [
+        "telemetry_unknown",
+        "timeout",
+        "collision",
+        "loss_of_source_or_goal",
+        "operator_abort"
+      ],
+      "task_index": 20
+    },
+    {
+      "family": "articulation_close",
+      "recorder_command": [
+        "python",
+        "-m",
+        "tools.axis_pi05.track3_public_teleop",
+        "--task",
+        "19"
+      ],
+      "required_contact": "demonstrator_to_object_or_handle_before_barrier",
+      "source": "public_task_and_start_state_only",
+      "started": false,
+      "status": "human_input_required",
+      "stop_conditions": [
+        "telemetry_unknown",
+        "timeout",
+        "collision",
+        "loss_of_source_or_goal",
+        "operator_abort"
+      ],
+      "task_index": 19
+    }
+  ],
+  "schema_version": "track3_cr12_human_handoff_v1",
+  "status": "human_input_required",
+  "unattended_teleop_started": false
+}

@@ -2,8 +2,8 @@
 
 > 更新日期：2026-09-07（Asia/Tokyo）
 > 跨session入口：先完整读取根目录`AGENTS.md`与`MEMORY.md`，再读取本索引、handoff、machine JSON、唯一活动计划和最新审核；先查live PID/cursor，禁止重复启动。
-> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_PLAN.md`
-> 当前状态：`track3_clean_launch_and_diversified_canary_recovery_planned`
+> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_INDEPENDENT_AUDIT_PLAN.md`
+> 当前状态：`track3_clean_launch_and_diversified_canary_recovery_completed_hard_stop_pending_independent_audit`
 > 最新审核：`docs/reviews/axis_pi05/TRACK3_BR0_BR11_INDEPENDENT_AUDIT_20260907.md`
 
 ## 1. 本轮执行停止点
@@ -380,6 +380,16 @@ BR11 attempt `0004` 仍保留原样作为历史闭包：summary/ledger 为 `pass
 旧只读审核计划已归档。唯一活动计划为 `docs/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_PLAN.md`：CR0–CR8 修复真实 partial、两层 finalizer、normalized-action单位、telemetry infrastructure分类与 launch-time clean gate；clean commit后冻结并运行真正不同的 primary/alternative，每族最多2、总上限6。正常 family failure允许该族一条预冻结 alternative；共享 infrastructure failure全局 sticky stop。CPU success 后才允许GPU3 exact-action camera replay；无 success则只准备 human handoff。generation、accepted data、训练、新 candidate ZIP、upload和submission均未授权，CR13只做下一阶段machine-ready dry-run bundle。
 
 完整审核见 `docs/reviews/axis_pi05/TRACK3_BR0_BR11_INDEPENDENT_AUDIT_20260907.md`，机器摘要见 `data/reports/axis_libero_30k/track3_br0_br11_independent_audit_20260907/summary.json`。生命周期最终验证为 strict JSON `73/73`、targeted `24 passed`、项目全量 `370 passed, 7 skipped, 23 warnings`；py_compile、diff-check、引用、process/GPU与nested Git边界通过。
+
+## 3.34 CR0–CR14 Clean Launch / Diversified Canary 执行收尾（2026-09-07）
+
+CR0–CR8 在第3个 code-only attempt 通过：root/OpenPI clean-source gate、dirty identity fail-close、43-byte actual partial、39-byte synthetic provenance、telemetry unknown、stage-aware `not_evaluated`、barrier 前 contact、direct normalized action limit、两套结构不同策略与 six-profile lock 均成立。第1/2个 CR fixture/pointer 失败 attempt 原样保留；没有在其上启动 physics。
+
+CR9–CR10 attempt `0004` 按 support→containment→articulation 运行三条 primary，并对三个正常 `family_failure` 各运行一次预冻结 alternative，总计 `6/6` CPU/no-renderer identity、无 retry。六条均为真正不同的诊断性 `family_failure`；trace/action hash 与历史 AC/BR 及本轮 primary 均不相同。没有 timeout、partial、telemetry unknown、identity/process 或 GPU failure，也没有 success。
+
+CR11 因 success=0 为 `not_evaluated`；CR12 仅生成三族 `human_input_required` handoff；CR13 仅生成 machine-ready dry-run；accepted data、训练、新 ZIP、上传和提交均为0/未执行。CR14 原始 finalizer 的 late-artifact 检查失败证据保留；derived correction 在不重跑 physics、不消耗 identity 的情况下重算 current set，manifest `2/2`、expected/observed `6/6`、strict JSON、process/GPU 和 closure 均通过。完整执行记录见 `docs/reviews/axis_pi05/TRACK3_CR0_CR14_EXECUTION_CLOSEOUT_20260907.md` 与 `data/reports/axis_libero_30k/track3_cr0_cr14_execution_20260907/summary.json`。
+
+CR 计划已归档至 `docs/archive/axis_pi05/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_PLAN.md`。当前唯一活动计划为 `docs/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_INDEPENDENT_AUDIT_PLAN.md`，只授权独立只读审核；当前 hard stop，不释放 GPU replay、Teleop、generation、accepted data、training、norm、FAST/export、新 ZIP、upload 或 submission。
 
 ## 4. 保留但非活动的研究线
 

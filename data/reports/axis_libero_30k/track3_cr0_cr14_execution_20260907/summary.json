@@ -1,0 +1,99 @@
+{
+  "schema_version": "track3_cr0_cr14_execution_closeout_v1",
+  "status": "completed_hard_stop_pending_independent_audit",
+  "execution_source_commit": "02bbac24857168826557a0aa23b8698111e1be92",
+  "finalizer_correction_commit": "ec1f3f4f99aa8d74ddc45ac454914a54b99f1c4a",
+  "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "cr0_to_cr8": {
+    "attempts": [
+      {"attempt_id": 1, "status": "failed", "physics_started": false, "reason": "normal_fixture_startup_timeout"},
+      {"attempt_id": 2, "status": "failed", "physics_started": false, "reason": "stale_latest_pointer_write_rejected"},
+      {"attempt_id": 3, "status": "passed_clean_source_release", "physics_started": false, "clean_source_gate": "passed", "raw_partial_bytes": 43, "synthetic_observation_bytes": 39}
+    ],
+    "successful_attempt_id": 3,
+    "profile_lock_sha256": "34bd84d30e768af3009282db73275ebffed126d482cbaac9f4446dce67ee8b08",
+    "primary_strategy": "object_frame_contact_aligned_v1",
+    "alternative_strategy": "waypoint_guarded_microstep_v1"
+  },
+  "cr9_to_cr10": {
+    "attempt_id": 4,
+    "status": "hard_stop",
+    "primary_count": 3,
+    "alternative_count": 3,
+    "total_physics_identities": 6,
+    "retry_count": 0,
+    "success_count": 0,
+    "family_failure_count": 6,
+    "infrastructure_failure_count": 0,
+    "no_effect_variant_count": 0,
+    "families": {
+      "support_remove": {"primary": "family_failure", "alternative": "family_failure"},
+      "containment_remove": {"primary": "family_failure", "alternative": "family_failure"},
+      "articulation_close": {"primary": "family_failure", "alternative": "family_failure"}
+    },
+    "all_identity_gates_passed": true,
+    "all_cpu_no_renderer": true,
+    "all_new_trace_and_action_hashes": true,
+    "shared_infrastructure_stop_latched": false,
+    "stop_after_family_budgets": true
+  },
+  "cr11_to_cr14": {
+    "attempt_id": 4,
+    "cr11_camera_replay": "not_evaluated",
+    "cr12_human_handoff": "human_input_required",
+    "cr13_machine_ready_dry_run": "machine_ready_not_executed",
+    "cr14_closeout": "passed_hard_stop",
+    "human_input_required": true,
+    "physics_rerun_for_correction": false,
+    "identity_consumed_for_correction": 0
+  },
+  "finalizer": {
+    "original_final_validation_status": "failed",
+    "original_failure_preserved": true,
+    "correction_root": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/corrections/attempt_0004_cr14_finalizer_v2",
+    "correction_final_validation_status": "passed",
+    "correction_current_complete_set_rechecked": true,
+    "correction_manifest_entries": 2,
+    "correction_expected_file_count": 6,
+    "correction_observed_file_count": 6
+  },
+  "counts": {
+    "success": 0,
+    "pending_replay_review": 0,
+    "exact": 0,
+    "accepted": 0,
+    "training_eligible": 0,
+    "new_candidate_zip": 0
+  },
+  "forbidden_actions": {
+    "old_identity_rerun": false,
+    "gpu0": false,
+    "gpu1": false,
+    "gpu2": false,
+    "gpu3_replay": false,
+    "official_gpu": false,
+    "unattended_teleop": false,
+    "generation": false,
+    "accepted_data": false,
+    "training": false,
+    "norm": false,
+    "fast_export": false,
+    "new_candidate_zip": false,
+    "upload": false,
+    "submission": false
+  },
+  "validation": {
+    "strict_json": "CR namespace 69/69; machine handoff 1/1; execution summary 1/1",
+    "targeted_tests": "17 passed",
+    "full_tests": "380 passed, 7 skipped, 26 warnings",
+    "py_compile": true,
+    "diff_check": true,
+    "no_partial": true,
+    "live_track3_workers": 0,
+    "gpu_compute_apps": 0,
+    "nested_openpi_clean": true,
+    "libero_plus_preexisting_dirty_preserved": true
+  },
+  "next_plan": "docs/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_INDEPENDENT_AUDIT_PLAN.md",
+  "next_phase_only": "independent_audit_only_then_hard_stop"
+}

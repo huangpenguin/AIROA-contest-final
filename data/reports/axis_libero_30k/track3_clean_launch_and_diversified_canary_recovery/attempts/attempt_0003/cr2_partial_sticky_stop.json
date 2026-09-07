@@ -1,0 +1,68 @@
+{
+  "actual_fixture_partial": {
+    "bytes": 43,
+    "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0003/raw_partial.bin",
+    "sha256": "e77dcf6b8603c76b6636bfc9b0d5b499dbf68e2e566d7745c30284b4d329bd3b",
+    "source": "timeout_child_raw_partial",
+    "synthetic": false
+  },
+  "normal_fixture": {
+    "command": [
+      "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+      "-m",
+      "tools.axis_pi05.track3_clean_launch_and_diversified_canary_recovery",
+      "--cr-fixture-child",
+      "--mode",
+      "normal",
+      "--partial-output",
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0003/fixtures/normal_fixture/heartbeat.json",
+      "--heartbeat-output",
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0003/fixtures/normal_fixture/heartbeat.json"
+    ],
+    "descendants_after_stop": [],
+    "heartbeat_sequences": [],
+    "label": "normal_fixture",
+    "mode": "normal",
+    "partial_path": null,
+    "returncode": 0,
+    "stderr_tail": "",
+    "stdout_tail": "",
+    "term_sent": false,
+    "timed_out": false
+  },
+  "physics_started": false,
+  "schema_version": "track3_cr2_partial_sticky_stop_v1",
+  "status": "passed",
+  "stop_latched": true,
+  "synthetic_observation": {
+    "bytes": 39,
+    "path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0003/synthetic_sequence_999_observation.bin",
+    "sha256": "4c6ec1f8e48050eea51474b21db130ae0cbf3ad49f1f6a1e7443955b9f6bfdf7",
+    "source": "explicit_regression_fixture",
+    "synthetic": true
+  },
+  "timeout": {
+    "command": [
+      "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+      "-m",
+      "tools.axis_pi05.track3_clean_launch_and_diversified_canary_recovery",
+      "--cr-fixture-child",
+      "--mode",
+      "partial",
+      "--partial-output",
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0003/fixtures/partial_timeout/heartbeat.json.partial",
+      "--heartbeat-output",
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0003/fixtures/partial_timeout/heartbeat.json"
+    ],
+    "descendants_after_stop": [],
+    "heartbeat_sequences": [],
+    "label": "partial_timeout",
+    "mode": "partial",
+    "partial_path": "data/reports/axis_libero_30k/track3_clean_launch_and_diversified_canary_recovery/attempts/attempt_0003/fixtures/partial_timeout/heartbeat.json.partial",
+    "returncode": -15,
+    "stderr_tail": "",
+    "stdout_tail": "",
+    "term_sent": true,
+    "timed_out": true
+  }
+}

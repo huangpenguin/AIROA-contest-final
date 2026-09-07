@@ -1,0 +1,43 @@
+{
+  "audit_input": {
+    "audit_status": "remediation_required",
+    "audit_summary": {
+      "bytes": 4326,
+      "path": "data/reports/axis_libero_30k/track3_br0_br11_independent_audit_20260907/summary.json",
+      "sha256": "015c8c3855694c0e97277bcc5d17e621e01bc54526401e6a2c047eb51d3b54a3"
+    },
+    "historical_partial": {
+      "bytes": 43,
+      "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0002/br3_fixtures/timeout_term_kill_descendant/heartbeat.json.partial",
+      "sha256": "e77dcf6b8603c76b6636bfc9b0d5b499dbf68e2e566d7745c30284b4d329bd3b"
+    },
+    "historical_trace_hashes": {
+      "articulation_close": {
+        "ac_path": "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/attempts/attempt_0001/runs/traces/ac_articulation_close_20260906_0001_demo0.npz",
+        "ac_sha256": "9a1db8e5809ea1b6b80f807d37888ee357a5f1e5cd7e98e9148da53b0285ce81",
+        "br_path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/runs/traces/br_articulation_close_20260907_0001_demo0.npz",
+        "br_sha256": "9a1db8e5809ea1b6b80f807d37888ee357a5f1e5cd7e98e9148da53b0285ce81",
+        "byte_identical": true
+      },
+      "containment_remove": {
+        "ac_path": "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/attempts/attempt_0001/runs/traces/ac_containment_remove_20260906_0001_demo0.npz",
+        "ac_sha256": "186019af04aa679ba02294374028b251b11c4cee012752caa94bb3f22db91b21",
+        "br_path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/runs/traces/br_containment_remove_20260907_0001_demo0.npz",
+        "br_sha256": "186019af04aa679ba02294374028b251b11c4cee012752caa94bb3f22db91b21",
+        "byte_identical": true
+      },
+      "support_remove": {
+        "ac_path": "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/attempts/attempt_0001/runs/traces/ac_support_remove_20260906_0001_demo0.npz",
+        "ac_sha256": "3537623df2e2e91a341714b27a198d08c45ce3a844ef77a4d0e18bd0c768ad50",
+        "br_path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0004/runs/traces/br_support_remove_20260907_0001_demo0.npz",
+        "br_sha256": "3537623df2e2e91a341714b27a198d08c45ce3a844ef77a4d0e18bd0c768ad50",
+        "byte_identical": true
+      }
+    },
+    "old_namespace_write_allowed": false
+  },
+  "consumed_identity_count": 0,
+  "old_namespace_write_allowed": false,
+  "schema_version": "track3_cr0_input_lock_v1",
+  "status": "passed"
+}

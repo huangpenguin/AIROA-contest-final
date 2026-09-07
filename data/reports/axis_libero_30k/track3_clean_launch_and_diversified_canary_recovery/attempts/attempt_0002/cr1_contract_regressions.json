@@ -1,0 +1,52 @@
+{
+  "actual_partial_not_synthetic": {
+    "historical_actual": {
+      "bytes": 43,
+      "path": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/attempts/attempt_0002/br3_fixtures/timeout_term_kill_descendant/heartbeat.json.partial",
+      "sha256": "e77dcf6b8603c76b6636bfc9b0d5b499dbf68e2e566d7745c30284b4d329bd3b"
+    },
+    "synthetic_observation": {
+      "bytes": 39,
+      "is_actual": false,
+      "sha256": "4c6ec1f8e48050eea51474b21db130ae0cbf3ad49f1f6a1e7443955b9f6bfdf7"
+    }
+  },
+  "dirty_expected_identity_rejected": {
+    "checked_fields": [
+      "root_commit",
+      "tool_sha256",
+      "head_tool_sha256",
+      "openpi_commit",
+      "profile_lock_sha256",
+      "cuda_visible_devices",
+      "jax_platforms",
+      "mujoco_gl",
+      "root_porcelain_sha256",
+      "openpi_porcelain_sha256",
+      "libero_plus_porcelain_sha256",
+      "clean_root",
+      "command",
+      "command_hash"
+    ],
+    "mismatches": [
+      "clean_root",
+      "command"
+    ],
+    "state": "infrastructure_failure"
+  },
+  "normalized_action_units": {
+    "controller_clip_count": 0,
+    "finite": true,
+    "normalized_action_abs_max": 1.0,
+    "normalized_rotation_l2_max": 0.33541019662496846,
+    "normalized_translation_l2_max": 1.5
+  },
+  "schema_version": "track3_cr1_regression_contracts_v1",
+  "status": "passed",
+  "telemetry_unknown": {
+    "executed": true,
+    "reason": "sample_0",
+    "state": "infrastructure_failure",
+    "value": true
+  }
+}

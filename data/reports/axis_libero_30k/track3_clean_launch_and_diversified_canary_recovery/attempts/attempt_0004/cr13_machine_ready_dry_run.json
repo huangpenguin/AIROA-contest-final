@@ -1,0 +1,23 @@
+{
+  "counts": {
+    "accepted": "not_evaluated",
+    "new_candidate_zip": "not_evaluated",
+    "replay": "not_evaluated",
+    "training": "not_evaluated"
+  },
+  "gpu0_gpu1_gpu2_official_gpu": false,
+  "input_hashes": {
+    "cr10_summary": "7ffbccee874a6fed0325abf092b045919086d00888425ea47929637d88c6f7ca"
+  },
+  "old_r6_fallback_reused": false,
+  "pipeline": [
+    "gpu3_exact_action_replay_after_cpu_success",
+    "human_review",
+    "accepted_manifest_after_review",
+    "bounded_lora_after_authorization",
+    "fast_candidate_after_training",
+    "zip_crc_sha_after_candidate"
+  ],
+  "schema_version": "track3_cr13_machine_ready_dry_run_v1",
+  "status": "machine_ready_not_executed"
+}

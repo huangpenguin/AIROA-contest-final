@@ -9,8 +9,10 @@ ROOT = Path(__file__).resolve().parents[1]
 HANDOFF = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
 AUDIT = ROOT / "data/reports/axis_libero_30k/track3_br0_br11_independent_audit_20260907/summary.json"
 BR_ROOT = ROOT / "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation"
-PLAN = "docs/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_PLAN.md"
+PLAN = "docs/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_INDEPENDENT_AUDIT_PLAN.md"
 ARCHIVED_AUDIT_PLAN = ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ACQUISITION_GATE_ATTEMPT_LIFECYCLE_REMEDIATION_INDEPENDENT_AUDIT_PLAN.md"
+ARCHIVED_CR_PLAN = ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_PLAN.md"
+CR_SUMMARY = ROOT / "data/reports/axis_libero_30k/track3_cr0_cr14_execution_20260907/summary.json"
 
 
 def strict_json(path: Path) -> dict:
@@ -73,17 +75,19 @@ def test_findings_cannot_be_silently_cleared() -> None:
 
 def test_lifecycle_releases_exactly_one_cr_plan() -> None:
     handoff = strict_json(HANDOFF)
-    assert handoff["status"] == "track3_clean_launch_and_diversified_canary_recovery_planned"
+    assert handoff["status"] == "track3_clean_launch_and_diversified_canary_recovery_completed_hard_stop_pending_independent_audit"
     assert handoff["next_plan"] == PLAN
-    assert handoff["next_phase_only"] == "CR0_to_CR14_then_hard_stop"
+    assert handoff["next_phase_only"] == "independent_audit_only_then_hard_stop"
     assert (ROOT / PLAN).is_file()
+    assert ARCHIVED_CR_PLAN.is_file()
     assert ARCHIVED_AUDIT_PLAN.is_file()
-    assert not (ROOT / "docs/AXIS_PI05_TRACK3_ACQUISITION_GATE_ATTEMPT_LIFECYCLE_REMEDIATION_INDEPENDENT_AUDIT_PLAN.md").exists()
+    assert not (ROOT / "docs/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_PLAN.md").exists()
 
 
 def test_cr_authority_is_code_first_and_bounded() -> None:
     auth = strict_json(HANDOFF)["track3_clean_launch_and_diversified_canary_recovery_authorization"]
-    assert auth["status"] == "authorized"
+    assert auth["status"] == "completed_hard_stop"
+    assert auth["plan"] == "docs/archive/axis_pi05/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_PLAN.md"
     assert auth["authorized_phases"] == [f"CR{i}" for i in range(15)]
     assert auth["physics_requires_cr0_through_cr8_passed"] is True
     assert auth["new_cpu_physics_identities_max"] == 6
@@ -106,3 +110,14 @@ def test_cr_authority_does_not_release_training_zip_or_submission() -> None:
     assert permissions["gpu3_exact_action_camera_replay"] is True
     for key in ("old_identity_rerun", "gpu0", "gpu1", "gpu2", "official_gpu", "unattended_teleop", "generation", "accepted_data", "training", "norm", "fast_export", "new_candidate_zip", "upload", "submission"):
         assert permissions[key] is False
+
+
+def test_cr_execution_is_closed_with_zero_success_and_no_replay() -> None:
+    summary = strict_json(CR_SUMMARY)
+    assert summary["status"] == "completed_hard_stop_pending_independent_audit"
+    assert summary["cr9_to_cr10"]["total_physics_identities"] == 6
+    assert summary["cr9_to_cr10"]["family_failure_count"] == 6
+    assert summary["cr9_to_cr10"]["retry_count"] == 0
+    assert summary["counts"] == {"success": 0, "pending_replay_review": 0, "exact": 0, "accepted": 0, "training_eligible": 0, "new_candidate_zip": 0}
+    assert summary["cr11_to_cr14"]["cr11_camera_replay"] == "not_evaluated"
+    assert summary["cr11_to_cr14"]["physics_rerun_for_correction"] is False

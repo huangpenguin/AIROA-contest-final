@@ -1,0 +1,62 @@
+{
+  "cases": {
+    "after_lift": {
+      "executed": true,
+      "required": true,
+      "stable_ticks": 4,
+      "state": "passed",
+      "window": [
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    "dwell_source_true": {
+      "executed": false,
+      "reason": "lift_not_entered",
+      "required": true,
+      "state": "not_evaluated"
+    },
+    "final_only": {
+      "check_success": true,
+      "executed": true,
+      "goal_final": true,
+      "not_final_frame_only": true,
+      "reason": "goal_not_continuously_true",
+      "required": true,
+      "stable_ticks": 4,
+      "state": "failed",
+      "window": [
+        false,
+        false,
+        false,
+        true
+      ]
+    },
+    "window": {
+      "check_success": true,
+      "executed": true,
+      "goal_final": true,
+      "not_final_frame_only": true,
+      "required": true,
+      "stable_ticks": 4,
+      "state": "passed",
+      "window": [
+        true,
+        true,
+        true,
+        true
+      ]
+    }
+  },
+  "checks": {
+    "dwell_source_true_not_evaluated_release": true,
+    "goal_rejects_final_frame_only": true,
+    "goal_window_and_check_success": true,
+    "lift_required_for_source_release": true,
+    "stage_order": true
+  },
+  "schema_version": "track3_sr2_phase_window_fixtures_v1",
+  "status": "passed"
+}

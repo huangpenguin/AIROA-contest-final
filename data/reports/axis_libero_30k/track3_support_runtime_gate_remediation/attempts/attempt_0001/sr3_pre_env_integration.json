@@ -1,0 +1,126 @@
+{
+  "checks": {
+    "budget_sum": true,
+    "no_control_env_import": true,
+    "no_env_created": true,
+    "orientation_nonzero": true,
+    "start_state_finite": true,
+    "targets_finite": true,
+    "transport_offset_used": true,
+    "zero_physics": true
+  },
+  "prepared": {
+    "budget_matches_profile": true,
+    "budget_sum": 1105,
+    "control_env_created": false,
+    "control_env_imported_after": false,
+    "control_env_imported_before": false,
+    "destination": {
+      "pos_m": [
+        -0.09212732490075308,
+        0.0434092668848339,
+        0.8923486793522427
+      ],
+      "quat": [
+        -0.6846775458597673,
+        -0.6565673578160552,
+        0.25651938157804177,
+        -0.18529373902188273
+      ]
+    },
+    "environment_created": false,
+    "grasp": {
+      "pos_m": [
+        0.030914021257368945,
+        0.00793726265472558,
+        0.9332073740994794
+      ],
+      "quat": [
+        -0.7041931718105557,
+        -0.7094403058685832,
+        0.020077925203136802,
+        0.02008248251630337
+      ]
+    },
+    "hdf5": {
+      "actions_dtype": "float64",
+      "actions_shape": [
+        90,
+        7
+      ],
+      "demo_id": "demo_0",
+      "demo_index": 0,
+      "family": "support_remove",
+      "hdf5_bytes": 468246288,
+      "hdf5_path": "/home/huang/code/PARC2026_final/data/raw/public/libero_official_hdf5/libero_goal/put_the_bowl_on_the_plate_demo.hdf5",
+      "hdf5_sha256": "e69528b0cf10dfc59b20698e12ec2affc03f3887309034d3eb74cac3ec929406",
+      "init_state_sha256": "8c4ae412e216181c736f16a73ef8cd3bb8ecbd32e8ae49836e7f8b40eec0516c",
+      "model_file_bytes": 91305,
+      "model_file_sha256": "e9a508e1e98a7bd2631796a4c41476a449fd9821fb45837a27d2ebefd87c8830",
+      "positive_suffix_exactly_one": true,
+      "predicate_oracle": "never_hdf5; runtime_only_in_same_demo_model_xml",
+      "rewards_dtype": "uint8",
+      "rewards_shape": [
+        90
+      ],
+      "selection": {
+        "action_index": 89,
+        "alignment": "state_index_equals_action_index",
+        "positive_count": 1,
+        "reward_at_selection": 1.0,
+        "state_index": 89,
+        "suffix_length": 1,
+        "suffix_start_action_index": 89
+      },
+      "states0_equals_init_state": true,
+      "states_dtype": "float64",
+      "states_shape": [
+        90,
+        79
+      ],
+      "task_index": 10,
+      "terminal_state_dtype": "float64",
+      "terminal_state_sha256": "f5e437011d7f4eb0f0b0f7da2a15d05ce525d38f4331ab4a8e83db82a87daf89",
+      "terminal_state_shape": [
+        79
+      ]
+    },
+    "orientation_error_nonzero": true,
+    "physics_started": false,
+    "physics_steps": 0,
+    "profile_step_budget": 1105,
+    "resolved_model_xml_sha256": "d637223bfe311c2ae6daeb0572f0a75528f2613f54eff1ef3acbe540167ea099",
+    "schema_version": "track3_sr3_prepare_only_v1",
+    "start_state_finite": true,
+    "start_state_len": 79,
+    "targets_finite_except_precontact_xy_z_placeholder": true,
+    "transport": {
+      "pos_m": [
+        -0.09212732490075308,
+        0.0434092668848339,
+        1.0123486793522427
+      ],
+      "quat": [
+        -0.6846775458597673,
+        -0.6565673578160552,
+        0.25651938157804177,
+        -0.18529373902188273
+      ]
+    },
+    "transport_offset_used_by_stage_target": true
+  },
+  "schema_version": "track3_sr3_pre_env_integration_v1",
+  "stage_names": [
+    "precontact_xy",
+    "precontact_z",
+    "orientation_align",
+    "contact_descent",
+    "grasp_dwell",
+    "lift",
+    "transport",
+    "place",
+    "release",
+    "retreat"
+  ],
+  "status": "passed"
+}

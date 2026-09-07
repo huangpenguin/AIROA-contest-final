@@ -1,0 +1,146 @@
+{
+  "checks": {
+    "bowl_main_table_is_goal": true,
+    "bowl_plate_is_source": true,
+    "late_contact_cannot_backfill": true,
+    "precontact_zeros_ignored": true,
+    "roles_frozen": true,
+    "source_not_required_before_lift": true,
+    "success_path_reachable": true,
+    "telemetry_not_contact": true,
+    "unknown_infrastructure": true,
+    "unrelated_negative": true
+  },
+  "negatives": {
+    "late": {
+      "barrier_index": 11,
+      "executed": true,
+      "late_contact_excluded": true,
+      "prefix_without_contact_ignored": true,
+      "reason": "zero_required_contact_in_dwell_window",
+      "required": true,
+      "required_contact_values": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "samples": 4,
+      "stable_ticks": 4,
+      "state": "failed",
+      "window_start": 8
+    },
+    "unknown": {
+      "executed": true,
+      "reason": "contact_truth_unknown_in_acquisition_window",
+      "required": true,
+      "samples": 4,
+      "state": "infrastructure_failure"
+    },
+    "unrelated": {
+      "check_success": false,
+      "executed": true,
+      "goal_final": false,
+      "not_final_frame_only": true,
+      "reason": "goal_not_continuously_true",
+      "required": true,
+      "stable_ticks": 4,
+      "state": "failed",
+      "window": [
+        false,
+        false,
+        false,
+        false
+      ]
+    }
+  },
+  "positive": {
+    "goal_continuous_true": {
+      "check_success": true,
+      "executed": true,
+      "goal_final": true,
+      "not_final_frame_only": true,
+      "required": true,
+      "stable_ticks": 4,
+      "state": "passed",
+      "window": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    "goal_receiver": {
+      "categories": {
+        "background_contact": [],
+        "demonstrator_contact": [],
+        "goal_receiver_contact": [
+          {
+            "body_pair": [
+              "akita_black_bowl_1",
+              "main_table"
+            ],
+            "distance_m": -0.001,
+            "geom_pair": [
+              "akita_black_bowl_1",
+              "main_table"
+            ],
+            "role": "goal_receiver_contact"
+          }
+        ],
+        "source_receiver_contact": [],
+        "unrelated_background_contact": []
+      },
+      "contact_telemetry_complete": true,
+      "counts": {
+        "background_contact": 0,
+        "demonstrator_contact": 0,
+        "goal_receiver_contact": 1,
+        "source_receiver_contact": 0,
+        "unrelated_background_contact": 0
+      },
+      "demonstrator_contact": false,
+      "derivation": "MuJoCo pair roles; telemetry completeness never implies contact",
+      "executed": true,
+      "goal_receiver_contact": true,
+      "required": true,
+      "required_contact": false,
+      "schema_version": "track3_sr_contact_truth_v3",
+      "source_receiver_contact": false,
+      "state": "classified",
+      "telemetry_known": true,
+      "unrelated_contact_runtime": false
+    },
+    "required_contact": {
+      "barrier_index": 11,
+      "executed": true,
+      "late_contact_excluded": true,
+      "prefix_without_contact_ignored": true,
+      "required": true,
+      "required_contact_values": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "samples": 4,
+      "stable_ticks": 4,
+      "state": "passed",
+      "window_start": 8
+    },
+    "source_released": {
+      "executed": true,
+      "required": true,
+      "stable_ticks": 4,
+      "state": "passed",
+      "window": [
+        false,
+        false,
+        false,
+        false
+      ]
+    }
+  },
+  "schema_version": "track3_sr1_contact_role_fixtures_v1",
+  "status": "passed"
+}

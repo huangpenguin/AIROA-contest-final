@@ -1,0 +1,41 @@
+{
+  "cases": {
+    "child_accounting_fields": {
+      "rejected": true
+    },
+    "family_outcome": {
+      "rejected": true,
+      "stop": "family_outcome"
+    },
+    "identity_global": {
+      "rejected": true,
+      "stop": "global_hard_stop"
+    },
+    "partial_is_global": {
+      "rejected": true
+    },
+    "pre_env_runtime_lane": {
+      "rejected": true,
+      "stop": "runtime_lane_stop"
+    },
+    "timeout_term_kill": {
+      "rejected": true,
+      "termination_stage": "TERM"
+    },
+    "unknown_env_global": {
+      "rejected": true,
+      "stop": "global_hard_stop"
+    }
+  },
+  "checks": {
+    "child_accounting_fields": true,
+    "family_outcome": true,
+    "identity_global": true,
+    "partial_is_global": true,
+    "pre_env_runtime_lane": true,
+    "timeout_term_kill": true,
+    "unknown_env_global": true
+  },
+  "schema_version": "track3_sr4_stop_contract_v1",
+  "status": "passed"
+}

@@ -1,0 +1,247 @@
+{
+  "attempt_0004": {
+    "child": {
+      "bytes": 1353,
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0004/canary/child_result.json",
+      "sha256": "409e26ac0bcde905915d497e45da97e50ce043a1cc44f5f68a2b1a1dfb38072c"
+    },
+    "closure": {
+      "bytes": 238,
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0004/closure.json",
+      "sha256": "2ca89cfbcbf7a40d384c24558826ba34ecd5845989af0da126995c7d98c25679"
+    },
+    "outer": {
+      "bytes": 165,
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0004/outer_hash.json",
+      "sha256": "fab620b496650f53ec43fb3ba5053eb4d6440bec877991d6168975d17cb16fd9"
+    },
+    "producer_or_final": {
+      "bytes": 1561,
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0004/final_manifest.json",
+      "sha256": "0fa168dc8726a33fbb12872fc325bbd41e91482d6f2297a343550d363254dc89"
+    },
+    "stderr": {
+      "bytes": 316,
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0004/canary/child.stderr.log",
+      "sha256": "b64f85f67048e258074975a341f381ae84f788926051563a6e509c7cb5191add"
+    },
+    "stdout": {
+      "bytes": 0,
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0004/canary/child.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "audit": {
+    "path": "docs/reviews/axis_pi05/TRACK3_SG0_SG6_INDEPENDENT_AUDIT_20260907.md",
+    "sha256": "9f0057d62b584a0b65fc07357f8029590a4b6437fee3c47fc3e29e95846211ac"
+  },
+  "checks": {
+    "attempt4_manifest_8": true,
+    "gpu_empty": true,
+    "no_live_workers": true,
+    "no_partial": true,
+    "openpi_exact": true,
+    "sg_cursor_inactive": true,
+    "sg_json_37": true
+  },
+  "live_boundary": {
+    "gpu": {
+      "empty": true,
+      "returncode": 0,
+      "rows": []
+    },
+    "partials": [],
+    "sg_cursor": {
+      "active": false,
+      "attempt_id": 4,
+      "attempt_root": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0004",
+      "schema_version": "track3_sg_current_attempt_v1",
+      "status": "hard_stop",
+      "updated_at_utc": "2026-09-07T09:00:39.910409+00:00"
+    },
+    "workers": []
+  },
+  "locked_commits": {
+    "audit_input": "55acd39c17d82c89b4f8e809b8f84d9623c3eb81",
+    "openpi": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "sg5_sg6_source": "d5c319b055431d2ec46681775438c91ad64a2be0",
+    "sg_implementation": "710183a7983e300759c85e3c0a97e1afdbdb67f0",
+    "signature_fix": "3e156dd6177e435316b721a79ff7a0da6d0359f8"
+  },
+  "observed_openpi": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "observed_root": "ea1552bbe816ea134004eb38cbf0efc907413520",
+  "old_sg_immutable": true,
+  "plan": {
+    "path": "docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_AND_GOLD_CONTINUATION_PLAN.md",
+    "sha256": "2c48b21880eb0275a2fd8f5f48a9ce5cd748320b2031c4c307559443eaa141ac"
+  },
+  "schema_version": "track3_sr0_input_lock_v1",
+  "sg_json": [
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0001/sg0_input_lock.json",
+      "sha256": "97b041ffdacc2848cd3994e4b9d4234daa5902215cf17317c20b75a767335b64"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0001/sg1_contact_truth_fixtures.json",
+      "sha256": "e4c102fc1d8a9d1941ec2c527516a7c86ba7f18711fdb32f9a25883865bd26a2"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0001/sg2_waypoint_controller_contract.json",
+      "sha256": "455eb36e4e668324cfb85e9790715f507303540c52a917fb2c686163461e3a0b"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0001/sg3_failure_injection_fixtures.json",
+      "sha256": "4de0abdf80946ce294566db40f11f805c08ded6827cb66cfb2a39c7459a310cc"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0001/sg3_fixtures/stale_pointer.json",
+      "sha256": "7a5d38850d0078404fafe4e2a73025a187c59e2abdbd030d5b7f246b979c5fec"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0001/sg4_machine_handoff.json",
+      "sha256": "3dcd850e7872fad22b248a29da198ddae95618e73a31660d383d55c6e33ba2ee"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0002/sg0_input_lock.json",
+      "sha256": "df632e242ef19f56853375050f795be746829e7a4f589c5faef2c426ebf7cde0"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0002/sg1_contact_truth_fixtures.json",
+      "sha256": "823bb908b0b24d9f5806894cd2bd26a93ba080cbb4d027b3c4ec0596dd1c024d"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0002/sg2_waypoint_controller_contract.json",
+      "sha256": "455eb36e4e668324cfb85e9790715f507303540c52a917fb2c686163461e3a0b"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0002/sg3_failure_injection_fixtures.json",
+      "sha256": "6b1ea8609b92dcbde8bc99b2c1be54363b598e47ed51afbd5a2f02015d3f5f7a"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0002/sg3_fixtures/stale_pointer.json",
+      "sha256": "7a5d38850d0078404fafe4e2a73025a187c59e2abdbd030d5b7f246b979c5fec"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0002/sg4_machine_handoff.json",
+      "sha256": "3dcd850e7872fad22b248a29da198ddae95618e73a31660d383d55c6e33ba2ee"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0002/sg5_clean_source_release.json",
+      "sha256": "5d22bb161f8bf77e66aade26ca3aace50f2d3173940c86a97b16871de4e9a938"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0003/sg0_input_lock.json",
+      "sha256": "ecfb084590c5475a823c4d1181fc238922107edbdd040e3d61fd7ae2bed36019"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0003/sg1_contact_truth_fixtures.json",
+      "sha256": "823bb908b0b24d9f5806894cd2bd26a93ba080cbb4d027b3c4ec0596dd1c024d"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0003/sg2_waypoint_controller_contract.json",
+      "sha256": "455eb36e4e668324cfb85e9790715f507303540c52a917fb2c686163461e3a0b"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0003/sg3_failure_injection_fixtures.json",
+      "sha256": "3bb1a30324725c62c9a99844cf14caff97ba0fc5eeb291ec8e9601ebcd5f7251"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0003/sg3_fixtures/stale_pointer.json",
+      "sha256": "7a5d38850d0078404fafe4e2a73025a187c59e2abdbd030d5b7f246b979c5fec"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0003/sg4_machine_handoff.json",
+      "sha256": "3dcd850e7872fad22b248a29da198ddae95618e73a31660d383d55c6e33ba2ee"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0003/sg5_clean_source_release.json",
+      "sha256": "718c66f13537098a35d426ae8a0e8ca2ea92a203d43197892a1f76e5212e0e7f"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0004/canary/child_result.json",
+      "sha256": "409e26ac0bcde905915d497e45da97e50ce043a1cc44f5f68a2b1a1dfb38072c"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0004/canary/identity_preflight.json",
+      "sha256": "8f239aec55dd6ed70623da824b99ce91541ec886e16d706eb1fd324c2021f14c"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0004/closure.json",
+      "sha256": "2ca89cfbcbf7a40d384c24558826ba34ecd5845989af0da126995c7d98c25679"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0004/cursor.json",
+      "sha256": "29173b1d89c3097ae08fab00625b845f3ad771fe70c48c55bc4f958065ca6fbd"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0004/final_manifest.json",
+      "sha256": "0fa168dc8726a33fbb12872fc325bbd41e91482d6f2297a343550d363254dc89"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0004/heartbeat.json",
+      "sha256": "feff8a486226c7f6b4d5d0479aa2a7cf30cfbc83b0d5ae2261d39163bd2ffd47"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0004/outer_hash.json",
+      "sha256": "fab620b496650f53ec43fb3ba5053eb4d6440bec877991d6168975d17cb16fd9"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0004/producer_manifest.json",
+      "sha256": "a2f2a9a6ed0e467d059607f9ca9d2753d44ab65aa12fb1f947b210101b319f72"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0004/sg0_input_lock.json",
+      "sha256": "ecfb084590c5475a823c4d1181fc238922107edbdd040e3d61fd7ae2bed36019"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/attempts/attempt_0004/summary.json",
+      "sha256": "b147ecae6c90d0138b87fa189da2dd602a4fb68050dd3d6089d1f7282c4c4e55"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/current_attempt.json",
+      "sha256": "d870c4af24b57b52bb0a6dace35390453c2a38159f24c6f5381e4c687f0eead2"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/sg0_input_lock.json",
+      "sha256": "630325eea556d2dcb9cf90b3df4d47a9850cee5d2395af3f44eb4deff6dd2f39"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/sg1_contact_truth_fixtures.json",
+      "sha256": "0add09517cf1803a180ac3d9e02ec78f03e969f68e20c8484f5fb850a37e80e1"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/sg2_waypoint_controller_contract.json",
+      "sha256": "97cf7521374585e92c995165238974a54e7b9ea1c9eb32619421b4bbf4452db4"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/sg3_failure_injection_fixtures.json",
+      "sha256": "a2095631b65ccb623bf9881c9cec52f1c481511b96e0432f037a10ed8f0867af"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/sg4_machine_handoff.json",
+      "sha256": "1ebef8c573d1375f3ba4894d75942add0457a65a8ddc8ba3ae969662936b1e18"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo/sg5_clean_source_release.json",
+      "sha256": "f6363980361a35b9dea112741c84b29876b5160112d58975293af828de3edbcd"
+    }
+  ],
+  "sg_json_count": 37,
+  "source_snapshot": {
+    "libero_plus_porcelain": [
+      "M libero/libero/benchmark/__init__.py",
+      "?? libero/__init__.py",
+      "?? libero/libero/assets",
+      "?? libero/libero/bddl_files/libero_t3",
+      "?? libero/libero/init_files/libero_t3"
+    ],
+    "libero_plus_porcelain_sha256": "e34630b50279fe065af3a9a90a431e91b3faa6331b04aea35165e712dabf083b",
+    "openpi_porcelain": [],
+    "root_porcelain": [
+      "?? tests/test_track3_support_runtime_gate_remediation.py",
+      "?? tools/axis_pi05/track3_support_runtime_gate_remediation.py"
+    ],
+    "tool_sha256": "ee0279d26b933cc57e30f21d32a1ac4a25eb8081effa5d01f74e692949d1b230"
+  },
+  "status": "passed"
+}

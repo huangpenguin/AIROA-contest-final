@@ -85,6 +85,14 @@ def test_prepare_only_uses_real_assets_without_control_env() -> None:
     assert payload["start_state_finite"] is True
 
 
+def test_identity_uses_this_module_tool_hash() -> None:
+    tool_sha = sr.sha256_file(Path(sr.__file__))
+    result = sr.identity_gate(expected_commit="a", expected_tool_sha256=tool_sha, expected_openpi="c", expected_command=["worker"], observed_commit="a", observed_openpi="c", observed_command=["worker"], dirty=False)
+    assert result["checks"]["tool_sha256_exact"] is True
+    wrong = sr.identity_gate(expected_commit="a", expected_tool_sha256="dead", expected_openpi="c", expected_command=["worker"], observed_commit="a", observed_openpi="c", observed_command=["worker"], dirty=False)
+    assert wrong["checks"]["tool_sha256_exact"] is False
+
+
 def test_quantified_progress_requires_real_gain() -> None:
     no_gain = sr.quantified_progress({"metrics": {"last_stage": "contact_descent", "last_translation_error_m": 0.02, "acquisition_entered": False, "lift_entered": False, "place_entered": False}})
     gain = sr.quantified_progress({"metrics": {"last_stage": "grasp_dwell", "last_translation_error_m": 0.02, "acquisition_entered": True, "lift_entered": False, "place_entered": False}})

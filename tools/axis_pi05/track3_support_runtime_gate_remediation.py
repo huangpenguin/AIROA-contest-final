@@ -358,6 +358,7 @@ def success_path_fixture(*, unrelated: bool = False, unknown: bool = False, late
 def identity_gate(**kwargs: Any) -> dict[str, Any]:
     kwargs.setdefault("expected_cuda_visible_devices", "")
     kwargs.setdefault("gpu_policy", "cpu_no_renderer")
+    kwargs.setdefault("observed_tool_sha256", sha256_file(Path(__file__)))
     if kwargs.get("dirty") is None:
         kwargs["dirty"] = bool(source_porcelain(ROOT))
     return sg_identity_gate(**kwargs)
@@ -708,6 +709,12 @@ def run_sr5() -> dict[str, Any]:
     if latest is None:
         return {"status": "not_evaluated", "reason": "sr0_to_sr4_missing"}
     attempt_id, attempt = latest
+    if (attempt / "sr5_clean_source_release.json").is_file():
+        parent_id, parent = attempt_id, attempt
+        attempt_id, attempt = allocate_attempt()
+        write_json(attempt / "sr5_parent_attempt.json", {"parent_attempt_id": parent_id, "parent_attempt_root": rel(parent), "reason": "prior_sr5_artifact_immutable_allocate_new"})
+    else:
+        parent_id, parent = attempt_id, attempt
     dirty = source_porcelain(ROOT)
     gpu = gpu_compute_snapshot()
     live = live_workers()

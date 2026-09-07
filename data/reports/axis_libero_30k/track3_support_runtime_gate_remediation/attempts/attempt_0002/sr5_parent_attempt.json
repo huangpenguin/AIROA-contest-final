@@ -1,0 +1,5 @@
+{
+  "parent_attempt_id": 1,
+  "parent_attempt_root": "data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/attempts/attempt_0001",
+  "reason": "prior_sr5_artifact_immutable_allocate_new"
+}

@@ -139,7 +139,7 @@ def write_text(path: Path, value: str) -> None:
 
 def git(args: Sequence[str], repo: Path = ROOT) -> str:
     result = subprocess.run(["git", "-C", str(repo), *args], capture_output=True, text=True, check=False)
-    return result.stdout.strip()
+    return result.stdout.rstrip("\n")
 
 
 def porcelain(repo: Path = ROOT) -> list[str]:
@@ -150,12 +150,12 @@ def source_porcelain(repo: Path = ROOT) -> list[str]:
     rows = porcelain(repo)
     if repo.resolve() != ROOT.resolve():
         return rows
-    prefixes = (rel(SR_ROOT).rstrip("/") + "/", rel(SG_ROOT).rstrip("/") + "/")
+    evidence_roots = (rel(SR_ROOT), rel(SG_ROOT))
     result: list[str] = []
     for row in rows:
-        path_field = row[3:].strip() if len(row) >= 3 else row.strip()
+        path_field = row[3:].strip() if len(row) >= 4 else row.strip()
         paths = [part.strip().strip('"') for part in path_field.split(" -> ")]
-        if any(not any(path.startswith(prefix) for prefix in prefixes) for path in paths):
+        if any(not any(path == root or path.startswith(root + "/") for root in evidence_roots) for path in paths):
             result.append(row)
     return result
 

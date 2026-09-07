@@ -85,6 +85,17 @@ def test_prepare_only_uses_real_assets_without_control_env() -> None:
     assert payload["start_state_finite"] is True
 
 
+def test_source_porcelain_excludes_sr_evidence_rows() -> None:
+    row = " M data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/current_attempt.json"
+    path_field = row[3:].strip()
+    roots = (sr.rel(sr.SR_ROOT), sr.rel(sr.SG_ROOT))
+    assert any(path_field == root or path_field.startswith(root + "/") for root in roots)
+    stripped = row.strip()
+    assert stripped[3:].strip().startswith("ata/") is True
+    live = sr.source_porcelain()
+    assert not any("track3_support_runtime_gate_remediation/current_attempt.json" in item for item in live)
+
+
 def test_identity_uses_this_module_tool_hash() -> None:
     tool_sha = sr.sha256_file(Path(sr.__file__))
     result = sr.identity_gate(expected_commit="a", expected_tool_sha256=tool_sha, expected_openpi="c", expected_command=["worker"], observed_commit="a", observed_openpi="c", observed_command=["worker"], dirty=False)

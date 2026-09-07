@@ -110,3 +110,31 @@ def test_quantified_progress_requires_real_gain() -> None:
     assert no_gain["eligible"] is False
     assert gain["eligible"] is True
     assert "entered_acquisition" in gain["reasons"]
+
+
+def test_finalizer_uses_relative_paths_and_rejects_late_or_repeat() -> None:
+    import tempfile
+
+    with tempfile.TemporaryDirectory(prefix="sr_finalizer_") as temporary:
+        root = Path(temporary)
+        sr.write_json(root / "early.json", {"n": 1})
+        sr.write_json(root / "nested" / "closure.json", {"producer": True})
+        manifest = sr.make_manifest(root)
+        assert any(row["relative_path"] == "nested/closure.json" for row in manifest["entries"])
+        sr.write_json(root / "late.json", {"n": 2})
+        assert sr.verify_complete_set(root, manifest)["exact"] is False
+    with tempfile.TemporaryDirectory(prefix="sr_finalizer_ok_") as temporary:
+        root = Path(temporary)
+        sr.write_json(root / "only.json", {"n": 1})
+        sr.make_manifest(root)
+        first = sr.finalize_attempt(root)
+        second = sr.finalize_attempt(root)
+        assert first["status"] == "passed"
+        assert second["reason"] == "repeat_finalization"
+
+
+def test_not_evaluated_is_derived_not_hardcoded_empty() -> None:
+    assert sr.derive_not_evaluated(sr.SR_ROOT / "attempts/attempt_0004", success_count=0) == ["SR9", "SR10", "SR11"]
+    topology = sr.alternative_topology_is_structurally_distinct()
+    assert topology["actual_stage_order_identical"] is True
+    assert topology["structurally_distinct"] is False

@@ -1,0 +1,26 @@
+{
+  "attempt_id": 3,
+  "attempt_root": "data/reports/axis_libero_30k/track3_sr_closure_and_task10_user_teleop_gold_canary/attempts/attempt_0003",
+  "calibration_consumed_candidate": false,
+  "next_user_action": "fix_failed_phase",
+  "recorded_candidates": 0,
+  "schema_version": "track3_ut0_ut3_summary_v1",
+  "status": "failed",
+  "ut0": {
+    "status": "passed"
+  },
+  "ut1": {
+    "not_evaluated": [
+      "SR9",
+      "SR10",
+      "SR11"
+    ],
+    "status": "passed"
+  },
+  "ut2": {
+    "status": "passed"
+  },
+  "ut3": {
+    "status": "failed"
+  }
+}

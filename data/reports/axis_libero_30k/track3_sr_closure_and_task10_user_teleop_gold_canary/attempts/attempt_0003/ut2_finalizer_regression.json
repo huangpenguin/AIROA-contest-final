@@ -1,0 +1,19 @@
+{
+  "cases": {
+    "exact_after_all_producers": true,
+    "late_producer_rejected": true,
+    "nested_finalizer_name_not_excluded": true,
+    "old_sr_attempt_readonly": true,
+    "repeat_finalization_fail_close": true,
+    "term_kill": true
+  },
+  "old_sr_not_rewritten": true,
+  "schema_version": "track3_ut2_finalizer_regression_v1",
+  "status": "passed",
+  "term_kill": {
+    "alive": false,
+    "descendants": [],
+    "status": "passed",
+    "termination_stage": "TERM"
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "checks": {
+    "default_open": true,
+    "dual_camera": true,
+    "explicit_open_close": true,
+    "final_boolean_insufficient": true,
+    "gold_gates": true,
+    "gpu_touched": true,
+    "gripper_open": false,
+    "no_duplicate_pid": false,
+    "no_toggle_only": true,
+    "partial_detected": true,
+    "self_test": true,
+    "simulator_started": true
+  },
+  "identity": {
+    "command": [
+      "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+      "-m",
+      "tools.axis_pi05.track3_sr_closure_and_task10_user_teleop_gold_canary",
+      "--ut0-to-ut3"
+    ],
+    "cuda_visible_devices_policy": "GPU3_only_after_explicit_user_takeover",
+    "gpu3_idle_required_before_record": true,
+    "openpi": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "root_head": "f8d7cca3cf995e4ded71b617cee5ebac0fb1635f",
+    "sr_tool_sha256": "72e5169c1c916d5ae1fb76088a402f124fcbb3debca720bc2decf6a58a9dd33f",
+    "task_index": 10,
+    "teleop_sha256": "2ce707610b750f3c4d715a4a3c1083223f3aabf21b1a24a750b159d820b31f67",
+    "tool_sha256": "523f788583517a5cc4437aba2ed28c4a78665a92aae079b0f59f9e531e4b32a9"
+  },
+  "old_teleop_argv_forbidden_until_takeover": true,
+  "resource_boundary": {
+    "gpu0": false,
+    "gpu1": false,
+    "gpu2": false,
+    "gpu3": false,
+    "simulator": false,
+    "training": false,
+    "unattended_teleop": false,
+    "zip": false
+  },
+  "schema_version": "track3_ut3_teleop_gold_readiness_v1",
+  "self_test": {
+    "accepted_episode_count": 0,
+    "default_gripper_open": true,
+    "explicit_open_close": true,
+    "final_boolean_insufficient": true,
+    "fps": 20.0,
+    "gold_gates_fixture_passed": true,
+    "gpu_touched": false,
+    "gripper_values": [
+      -1.0
+    ],
+    "invalid_action_rejected": true,
+    "no_key_ticks": 50,
+    "pause_camera_reset_save_abort": true,
+    "preview_bind_host": "127.0.0.1",
+    "schema_version": "track3_reverse_pilot_v3",
+    "simulator_started": false,
+    "status": "passed"
+  },
+  "start_gripper": {
+    "after_sign": -1.0,
+    "before_sign": 1.0,
+    "checks": {
+      "close_then_open": true,
+      "default_open": true,
+      "release_transition_index": true,
+      "simulator_started": false,
+      "w1_release_exact": true
+    },
+    "gripper": -1.0,
+    "label": "OPEN",
+    "release_transition_index": 76,
+    "schema_version": "track3_ut3_start_gripper_v1",
+    "status": "failed"
+  },
+  "status": "failed",
+  "user_must_reply": "接管 Teleop"
+}

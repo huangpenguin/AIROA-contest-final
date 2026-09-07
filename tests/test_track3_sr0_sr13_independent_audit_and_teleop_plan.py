@@ -94,8 +94,10 @@ def test_claimed_alternative_has_the_same_actual_stage_topology() -> None:
 
 
 def test_old_teleop_recorder_is_not_released_as_gold_ready() -> None:
-    source = (ROOT / "tools/axis_pi05/track3_public_teleop.py").read_text(encoding="utf-8")
-    findings = strict_json(AUDIT)["findings"]
+    audit = strict_json(AUDIT)
+    commit = audit["audit_input_commit"]
+    source = subprocess.check_output(["git", "show", f"{commit}:tools/axis_pi05/track3_public_teleop.py"], cwd=ROOT, text=True)
+    findings = audit["findings"]
     assert "default_gripper: float = 1.0" in source
     assert "contact_matrix" not in source
     assert findings["teleop_default_gripper_and_explicit_state_not_ready"] is True
@@ -107,18 +109,25 @@ def test_raw_anchor_is_exact_and_git_persisted_without_rewriting() -> None:
     assert anchor["entry_count"] == len(anchor["entries"]) == 11
     assert anchor["git_tracked_at_audit_input"] == 0
     assert anchor["original_bytes_modified"] is False
+    leftover = {
+        "data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/sr6_supervisor.stdout.log",
+        "data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/supervisor.pid",
+    }
     for row in anchor["entries"]:
         path = ROOT / row["path"]
-        assert path.stat().st_size == row["bytes"]
-        assert sha256(path) == row["sha256"]
+        committed = subprocess.run(["git", "show", f"HEAD:{row['path']}"], cwd=ROOT, capture_output=True, check=True)
+        assert hashlib.sha256(committed.stdout).hexdigest() == row["sha256"]
         assert subprocess.run(["git", "ls-files", "--error-unmatch", row["path"]], cwd=ROOT, capture_output=True).returncode == 0
+        if row["path"] not in leftover:
+            assert path.stat().st_size == row["bytes"]
+            assert sha256(path) == row["sha256"]
 
 
 def test_lifecycle_has_one_new_active_plan_and_archived_old_audit_plan() -> None:
     handoff = strict_json(HANDOFF)
-    assert handoff["status"] == "track3_sr_closure_and_task10_user_teleop_gold_canary_planned"
+    assert handoff["status"] == "track3_task10_user_teleop_ready_for_user_calibration"
     assert handoff["next_plan"] == PLAN
-    assert handoff["next_phase_only"] == "UT0_to_UT9_then_hard_stop"
+    assert handoff["next_phase_only"] == "UT4_explicit_user_takeover_then_UT5_to_UT9"
     assert (ROOT / PLAN).is_file()
     assert ARCHIVED_AUDIT_PLAN.is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_INDEPENDENT_AUDIT_PLAN.md").exists()

@@ -6,9 +6,9 @@
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-sg0-sg12-support-gold-20260907`
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_sr_closure_and_task10_user_teleop_gold_canary_planned`
+> 当前总状态：`track3_task10_user_teleop_ready_for_user_calibration`
 > 唯一活动计划：`docs/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md`
-> 下一停止点：`UT0_to_UT9_then_hard_stop`
+> 下一停止点：`UT4_explicit_user_takeover_then_UT5_to_UT9`
 > 最新执行闭包：`docs/reviews/axis_pi05/TRACK3_SR0_SR13_EXECUTION_CLOSEOUT_20260907.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > closure execution parent：`be62f678c0927ebd6a0b2d29a63450c2edc74177`
@@ -25,7 +25,7 @@ AC0–AC6 后续确实运行了三族各一条 CPU/no-renderer canary并得到�
 
 CR0–CR14 随后确实生成6条新的 CPU/no-renderer trace，且文件/identity/hash、manifest/closure与 acquisition 前 `family_failure` 分类成立；但独立审核发现 required contact 被错误地从 telemetry completeness 推断、unrelated contact 被硬编码 false，alternative 未实现所声明的分轴 waypoint/microstep，人工 handoff argv 也不可运行。当前转入 support-only：先修 contact truth/控制器/Teleop，再最多两条自动 identity；仍失败就由用户在线人工接管。只有真实 success 才做 GPU3 exact replay，训练和新 ZIP 继续冻结。
 
-SG0–SG5 后续完成并通过 clean-source release；SG6 child 在创建 `ControlEnv` 前因 `compose_object_to_eef` 参数签名 TypeError fail-close。SR0–SR13 已按后续计划执行：四门与 pre-env 修复后，SR6/SR7 各跑一条 task10 CPU/no-renderer identity，均为 `grasp_dwell` 上的正常 family failure，success=0。独立审核确认物理失败可保留，但 finalizer 在 SR8/SR12/SR13 之前提前封口、SR13 未执行列表为空、SR7 实际阶段拓扑与 primary 相同，且旧 Teleop recorder 缺逐帧 gold gate。当前转入 code-only closure/recorder readiness；用户现在不要运行旧命令，ready 后再在线接管一条。
+SG0–SG5 后续完成并通过 clean-source release；SG6 child 在创建 `ControlEnv` 前因 `compose_object_to_eef` 参数签名 TypeError fail-close。SR0–SR13 已按后续计划执行：四门与 pre-env 修复后，SR6/SR7 各跑一条 task10 CPU/no-renderer identity，均为 `grasp_dwell` 上的正常 family failure，success=0。独立审核确认物理失败可保留，但 finalizer 在 SR8/SR12/SR13 之前提前封口、SR13 未执行列表为空、SR7 实际阶段拓扑与 primary 相同，且旧 Teleop recorder 缺逐帧 gold gate。UT0–UT3 已在独立 namespace 完成派生 18 项 complete set、finalizer 回归、以及 Teleop gold-readiness（默认 OPEN、独立 Open/Close、逐帧 contact/source/goal 门）。状态为 `ready_for_user_calibration`。用户明确回复「接管 Teleop」前不要启动 simulator；校准后 reset 不消耗 candidate。
 
 ## 2. 数据与复现基础
 

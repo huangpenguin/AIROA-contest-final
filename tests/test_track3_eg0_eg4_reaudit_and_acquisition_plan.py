@@ -52,9 +52,9 @@ def test_shared_root_attempt3_is_historical_and_root_attempt5_is_current() -> No
 
 def test_lifecycle_releases_exactly_one_acquisition_plan() -> None:
     handoff = strict_json(HANDOFF)
-    assert handoff["status"] == "track3_sr_closure_and_task10_user_teleop_gold_canary_planned"
+    assert handoff["status"] == "track3_task10_user_teleop_ready_for_user_calibration"
     assert handoff["next_plan"] == PLAN
-    assert handoff["next_phase_only"] == "UT0_to_UT9_then_hard_stop"
+    assert handoff["next_phase_only"] == "UT4_explicit_user_takeover_then_UT5_to_UT9"
     assert (ROOT / PLAN).is_file()
     assert (ROOT / ARCHIVED_AC_PLAN).is_file()
     assert (ROOT / ARCHIVED_AC_AUDIT_PLAN).is_file()

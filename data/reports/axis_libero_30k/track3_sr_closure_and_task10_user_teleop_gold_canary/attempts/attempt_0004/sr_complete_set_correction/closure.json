@@ -1,0 +1,12 @@
+{
+  "complete_set": {
+    "exact": true,
+    "extra": [],
+    "hash_or_size_mismatch": [],
+    "missing": [],
+    "partial_residue": []
+  },
+  "outer_hash_matches": true,
+  "schema_version": "track3_sr_closure_v1",
+  "status": "passed"
+}

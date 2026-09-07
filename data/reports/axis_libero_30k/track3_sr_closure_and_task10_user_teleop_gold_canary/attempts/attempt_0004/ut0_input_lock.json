@@ -1,0 +1,72 @@
+{
+  "checks": {
+    "audit_input_commit": true,
+    "cursor_inactive": true,
+    "did_not_write_old_sr": true,
+    "heartbeat_final": true,
+    "late_producers": true,
+    "leftover_sr_runtime_not_restored": true,
+    "no_partial": true,
+    "no_ut_worker": true,
+    "observed_18": true,
+    "old_manifest_15": true,
+    "old_supervisor_inactive": true,
+    "openpi": true,
+    "physics_source_present": true,
+    "raw_anchor_11_head": true,
+    "sr_json_strict": true
+  },
+  "complete_set": {
+    "late_producers": [
+      "sr12_readiness/sr12_code_only_readiness.json",
+      "sr13_closeout.json",
+      "sr8_route.json"
+    ],
+    "observed_count": 18,
+    "observed_paths": [
+      "canary/support_se3_microstep_lateral_first_v2/child.stderr.log",
+      "canary/support_se3_microstep_lateral_first_v2/child.stdout.log",
+      "canary/support_se3_microstep_lateral_first_v2/child_result.json",
+      "canary/support_se3_microstep_lateral_first_v2/identity_preflight.json",
+      "canary/support_se3_microstep_lateral_first_v2/start_state.npy",
+      "canary/support_se3_microstep_lateral_first_v2/trajectory.npz",
+      "canary/support_se3_microstep_primary_v1/child.stderr.log",
+      "canary/support_se3_microstep_primary_v1/child.stdout.log",
+      "canary/support_se3_microstep_primary_v1/child_result.json",
+      "canary/support_se3_microstep_primary_v1/identity_preflight.json",
+      "canary/support_se3_microstep_primary_v1/start_state.npy",
+      "canary/support_se3_microstep_primary_v1/trajectory.npz",
+      "cursor.json",
+      "heartbeat.json",
+      "sr12_readiness/sr12_code_only_readiness.json",
+      "sr13_closeout.json",
+      "sr8_route.json",
+      "summary.json"
+    ],
+    "old_manifest_count": 15
+  },
+  "gpu0_external_protected": true,
+  "head": "f8d7cca3cf995e4ded71b617cee5ebac0fb1635f",
+  "locked": {
+    "audit_input": "64f278c7f59dc70f17770e1980522d0313ccda27",
+    "openpi": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "physics_source": "5c5c74641ba39e41709e2c51ce576e7c065060fc"
+  },
+  "openpi": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "raw_anchor_worktree_drift": [
+    "data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/sr6_supervisor.stdout.log",
+    "data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/supervisor.pid"
+  ],
+  "schema_version": "track3_ut0_input_lock_v1",
+  "source_porcelain": [
+    " M tests/test_track3_public_terminal_recovery.py",
+    " M tests/test_track3_sr0_sr13_independent_audit_and_teleop_plan.py",
+    " M tests/test_track3_support_runtime_gate_remediation.py",
+    " M tools/axis_pi05/track3_public_teleop.py",
+    " M tools/axis_pi05/track3_support_runtime_gate_remediation.py",
+    "?? tests/test_track3_sr_closure_and_task10_user_teleop_gold_canary.py",
+    "?? tools/axis_pi05/track3_sr_closure_and_task10_user_teleop_gold_canary.py"
+  ],
+  "sr_json_count": 33,
+  "status": "passed"
+}

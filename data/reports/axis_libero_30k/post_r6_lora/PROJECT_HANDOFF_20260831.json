@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-07",
-  "status": "track3_sr_closure_and_task10_user_teleop_gold_canary_planned",
+  "status": "track3_task10_user_teleop_ready_for_user_calibration",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
@@ -260,7 +260,7 @@
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
   "next_plan": "docs/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md",
-  "next_phase_only": "UT0_to_UT9_then_hard_stop",
+  "next_phase_only": "UT4_explicit_user_takeover_then_UT5_to_UT9",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -5214,11 +5214,11 @@
       "targeted": "10 passed",
       "project_suite": "417 passed, 7 skipped, 23 warnings"
     },
-    "user_action_now": "none_do_not_start_old_teleop_argv",
-    "next_phase_only": "UT0_to_UT9_then_hard_stop"
+    "user_action_now": "wait_for_explicit_user_takeover_接管_Teleop",
+    "next_phase_only": "UT4_explicit_user_takeover_then_UT5_to_UT9"
   },
   "track3_sr_closure_and_task10_user_teleop_gold_canary_authorization": {
-    "status": "planned",
+    "status": "ready_for_user_calibration",
     "plan": "docs/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md",
     "audit_input_commit": "64f278c7f59dc70f17770e1980522d0313ccda27",
     "authorized_phases": ["UT0", "UT1", "UT2", "UT3", "UT4", "UT5", "UT6", "UT7", "UT8", "UT9"],
@@ -5263,6 +5263,6 @@
       "upload": false,
       "submission": false
     },
-    "next_phase_only": "UT0_to_UT9_then_hard_stop"
+    "next_phase_only": "UT4_explicit_user_takeover_then_UT5_to_UT9"
   }
 }

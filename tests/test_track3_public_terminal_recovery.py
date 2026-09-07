@@ -40,11 +40,11 @@ def test_teleop_action_contract_and_cpu_self_test():
         action = machine.next_action("")
         module.validate_action(action)
         assert np.allclose(action[:6], 0)
-        assert action[-1] == 1
+        assert action[-1] == -1
+    machine.event("keydown", "h")
+    assert machine.next_action("")[-1] == 1
     machine.event("keydown", "g")
     assert machine.next_action("")[-1] == -1
-    machine.event("keydown", "g")
-    assert machine.next_action("")[-1] == 1
     machine.event("keydown", "p")
     assert np.allclose(machine.next_action("w")[:6], 0)
     machine.event("keydown", "p")

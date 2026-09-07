@@ -390,13 +390,19 @@ def set_attempt_active(attempt_id: int, attempt: Path, active: bool, *, status: 
     write_json(CURRENT_ATTEMPT, {"schema_version": "track3_sr_current_attempt_v1", "attempt_id": attempt_id, "attempt_root": rel(attempt), "active": active, "status": status, "updated_at_utc": now()})
 
 
-FINALIZER_NAMES = {"producer_manifest.json", "final_manifest.json", "outer_hash.json", "closure.json"}
+FINALIZER_RELATIVE_PATHS = frozenset({"producer_manifest.json", "final_manifest.json", "outer_hash.json", "closure.json"})
+SR_PHASE_NAMES = tuple(f"SR{index}" for index in range(14))
+SR9_SR11 = ("SR9", "SR10", "SR11")
+
+
+def _is_finalizer_relative(root: Path, path: Path) -> bool:
+    return path.relative_to(root).as_posix() in FINALIZER_RELATIVE_PATHS
 
 
 def _artifact_entries(root: Path) -> list[dict[str, Any]]:
     entries: list[dict[str, Any]] = []
     for path in sorted(root.rglob("*")):
-        if not path.is_file() or path.name in FINALIZER_NAMES or path.name.endswith(".partial"):
+        if not path.is_file() or _is_finalizer_relative(root, path) or path.name.endswith(".partial"):
             continue
         entries.append({"relative_path": path.relative_to(root).as_posix(), "bytes": path.stat().st_size, "sha256": sha256_file(path)})
     return entries
@@ -404,14 +410,25 @@ def _artifact_entries(root: Path) -> list[dict[str, Any]]:
 
 def make_manifest(root: Path, filename: str = "producer_manifest.json") -> dict[str, Any]:
     entries = _artifact_entries(root)
-    result = {"schema_version": "track3_sr_producer_manifest_v1", "manifest_role": "producer_closed_set", "entries": entries, "excluded_finalizer_names": sorted(FINALIZER_NAMES), "producer_closed_before_seal": True}
+    result = {
+        "schema_version": "track3_sr_producer_manifest_v1",
+        "manifest_role": "producer_closed_set",
+        "entries": entries,
+        "excluded_finalizer_relative_paths": sorted(FINALIZER_RELATIVE_PATHS),
+        "excluded_finalizer_names": sorted(FINALIZER_RELATIVE_PATHS),
+        "producer_closed_before_seal": True,
+    }
     write_json(root / filename, result, immutable=True)
     return result
 
 
 def verify_complete_set(root: Path, manifest: Mapping[str, Any]) -> dict[str, Any]:
     expected = {str(row["relative_path"]): row for row in manifest.get("entries", [])}
-    actual = {path.relative_to(root).as_posix(): path for path in root.rglob("*") if path.is_file() and path.name not in FINALIZER_NAMES and not path.name.endswith(".partial")}
+    actual = {
+        path.relative_to(root).as_posix(): path
+        for path in root.rglob("*")
+        if path.is_file() and not _is_finalizer_relative(root, path) and not path.name.endswith(".partial")
+    }
     missing = sorted(set(expected) - set(actual))
     extra = sorted(set(actual) - set(expected))
     mismatches: list[str] = []
@@ -423,13 +440,52 @@ def verify_complete_set(root: Path, manifest: Mapping[str, Any]) -> dict[str, An
     return {"exact": not missing and not extra and not mismatches and not partials, "missing": missing, "extra": extra, "hash_or_size_mismatch": mismatches, "partial_residue": partials}
 
 
+def derive_not_evaluated(root: Path, *, success_count: int = 0, teleop_recorded: bool = False, replay_completed: bool = False, review_completed: bool = False) -> list[str]:
+    """Derive unexecuted phases from producers. Never hard-code an empty list when SR9–SR11 are absent."""
+    missing: list[str] = []
+    if not teleop_recorded and not (root / "sr9_teleop.json").is_file():
+        missing.append("SR9")
+    if int(success_count) <= 0 and not replay_completed and not (root / "sr10_replay.json").is_file():
+        missing.append("SR10")
+    if not review_completed and not (root / "sr11_review.json").is_file():
+        missing.append("SR11")
+    return [name for name in SR_PHASE_NAMES if name in missing]
+
+
+def prepared_stage_names(profile: Mapping[str, Any]) -> list[str]:
+    return [str(row["name"]) for row in prepare_support_identity(profile)["stages"]]
+
+
+def alternative_topology_is_structurally_distinct() -> dict[str, Any]:
+    primary = prepared_stage_names(PRIMARY_PROFILE)
+    alternative = prepared_stage_names(ALTERNATIVE_PROFILE)
+    return {
+        "claimed_alternative_topology": ALTERNATIVE_PROFILE.get("topology"),
+        "claimed_primary_topology": PRIMARY_PROFILE.get("topology"),
+        "actual_primary_stages": primary,
+        "actual_alternative_stages": alternative,
+        "actual_stage_order_identical": primary == alternative,
+        "structurally_distinct": primary != alternative,
+        "consumed_identities_must_not_rerun": True,
+    }
+
+
 def finalize_attempt(root: Path) -> dict[str, Any]:
+    sealed = [name for name in ("final_manifest.json", "outer_hash.json", "closure.json") if (root / name).is_file()]
+    if sealed:
+        return {"status": "failed", "reason": "repeat_finalization", "already_present": sealed}
     producer_path = root / "producer_manifest.json"
     producer = strict_json(producer_path) if producer_path.is_file() else make_manifest(root)
     producer_check = verify_complete_set(root, producer)
     if not producer_check["exact"]:
         return {"status": "failed", "producer_manifest": producer_check, "reason": "producer_set_changed_before_finalizer"}
-    final = {"schema_version": "track3_sr_final_manifest_v1", "manifest_role": "post_producer_complete_set", "entries": _artifact_entries(root), "excluded_finalizer_names": sorted(FINALIZER_NAMES)}
+    final = {
+        "schema_version": "track3_sr_final_manifest_v1",
+        "manifest_role": "post_producer_complete_set",
+        "entries": _artifact_entries(root),
+        "excluded_finalizer_relative_paths": sorted(FINALIZER_RELATIVE_PATHS),
+        "excluded_finalizer_names": sorted(FINALIZER_RELATIVE_PATHS),
+    }
     write_json(root / "final_manifest.json", final, immutable=True)
     outer = {"schema_version": "track3_sr_outer_hash_v1", "final_manifest_sha256": sha256_file(root / "final_manifest.json"), "entry_count": len(final["entries"])}
     write_json(root / "outer_hash.json", outer, immutable=True)
@@ -1132,9 +1188,8 @@ def run_sr6_sr7() -> dict[str, Any]:
     if alternative.get("launch_attempt_id"):
         summary["launch_attempt_count"] = 2
     write_json(attempt / "summary.json", summary, immutable=True)
-    finalizer = finalize_attempt(attempt)
     set_attempt_active(attempt_id, attempt, False, status=str(summary["status"]))
-    return {**summary, "finalizer": finalizer, "primary_child": primary.get("child"), "alternative_child": alternative.get("child")}
+    return {**summary, "finalizer": {"status": "deferred_until_all_producers_closed", "sealed": False}, "primary_child": primary.get("child"), "alternative_child": alternative.get("child")}
 
 
 def run_sr8() -> dict[str, Any]:
@@ -1193,12 +1248,13 @@ def run_sr13() -> dict[str, Any]:
         "success_count": summary.get("success_count", 0),
         "accepted_count": 0,
         "training_eligible_count": 0,
-        "not_evaluated": [],
+        "not_evaluated": derive_not_evaluated(root, success_count=int(summary.get("success_count") or 0)),
         "resource_boundary": {"gpu0": False, "gpu1": False, "gpu2": False, "gpu3": False, "generation": False, "replay": False, "training": False, "zip": False, "upload": False, "submission": False},
         "next_authority": "independent_review_required",
     }
     write_json(root / "sr13_closeout.json", result, immutable=True)
-    return result
+    finalizer = finalize_attempt(root)
+    return {**result, "finalizer": finalizer}
 
 
 def main(argv: Sequence[str] | None = None) -> int:

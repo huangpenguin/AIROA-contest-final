@@ -1,0 +1,6 @@
+{
+  "attempt_id": 4,
+  "schema_version": "track3_ut_latest_pointer_v1",
+  "status": "ready_for_user_calibration",
+  "target": "data/reports/axis_libero_30k/track3_sr_closure_and_task10_user_teleop_gold_canary/attempts/attempt_0004/summary.json"
+}

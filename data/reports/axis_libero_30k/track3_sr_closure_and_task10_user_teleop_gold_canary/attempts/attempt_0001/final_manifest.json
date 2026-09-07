@@ -1,0 +1,28 @@
+{
+  "entries": [
+    {
+      "bytes": 2825,
+      "relative_path": "summary.json",
+      "sha256": "6b44136023efd92cd93384c971c7a473b77d3b5f56f4f0cc9a1e8e7e71685e98"
+    },
+    {
+      "bytes": 2630,
+      "relative_path": "ut0_input_lock.json",
+      "sha256": "41cd6a39a34e1f9eb68f49d7a9f7dd0b356b1eb935678b5f59cf63abdc4a9146"
+    }
+  ],
+  "excluded_finalizer_names": [
+    "closure.json",
+    "final_manifest.json",
+    "outer_hash.json",
+    "producer_manifest.json"
+  ],
+  "excluded_finalizer_relative_paths": [
+    "closure.json",
+    "final_manifest.json",
+    "outer_hash.json",
+    "producer_manifest.json"
+  ],
+  "manifest_role": "post_producer_complete_set",
+  "schema_version": "track3_sr_final_manifest_v1"
+}

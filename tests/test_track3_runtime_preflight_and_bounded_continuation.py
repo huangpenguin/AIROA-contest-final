@@ -82,9 +82,9 @@ def test_identity_gate_rejects_dirty_or_command_drift() -> None:
 
 def test_y_audit_archives_y_and_releases_exactly_one_z_plan() -> None:
     handoff = json.loads((ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json").read_text(encoding="utf-8"))
-    assert handoff["status"] == "track3_sr_closure_and_task10_user_teleop_gold_canary_planned"
+    assert handoff["status"] == "track3_task10_user_teleop_ready_for_user_calibration"
     assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md"
-    assert handoff["next_phase_only"] == "UT0_to_UT9_then_hard_stop"
+    assert handoff["next_phase_only"] == "UT4_explicit_user_takeover_then_UT5_to_UT9"
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md").is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_RUNTIME_PREFLIGHT_AND_BOUNDED_CONTINUATION_PLAN.md").exists()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_RUNTIME_PREFLIGHT_AND_BOUNDED_CONTINUATION_PLAN.md").is_file()

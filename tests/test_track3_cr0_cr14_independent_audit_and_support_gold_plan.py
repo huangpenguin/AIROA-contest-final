@@ -79,9 +79,9 @@ def test_support_is_selected_from_measured_failure_progress() -> None:
 
 def test_lifecycle_has_exactly_one_new_active_plan() -> None:
     handoff = strict_json(HANDOFF)
-    assert handoff["status"] == "track3_sr_closure_and_task10_user_teleop_gold_canary_planned"
+    assert handoff["status"] == "track3_task10_user_teleop_ready_for_user_calibration"
     assert handoff["next_plan"] == PLAN
-    assert handoff["next_phase_only"] == "UT0_to_UT9_then_hard_stop"
+    assert handoff["next_phase_only"] == "UT4_explicit_user_takeover_then_UT5_to_UT9"
     assert (ROOT / PLAN).is_file()
     assert ARCHIVED_AUDIT_PLAN.is_file()
     assert ARCHIVED_EXECUTION_PLAN.is_file()

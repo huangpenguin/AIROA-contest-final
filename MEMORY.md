@@ -37,9 +37,9 @@ If these disagree, stop mutation, audit the discrepancy and repair the handoff i
 - Latest audit input / SR execution record is `64f278c7f59dc70f17770e1980522d0313ccda27`; SR physics source is `5c5c74641ba39e41709e2c51ce576e7c065060fc`. SR0–SR13 is independently audited `remediation_required`.
 - Nested OpenPI: `third_party/axis_openpi` at `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`, clean at review.
 - `LIBERO-plus` has pre-existing dirty files. They belong to the user/project and must not be reset, cleaned, overwritten or silently committed.
-- Current state at this refresh: `track3_sr_closure_and_task10_user_teleop_gold_canary_planned`.
-- Active plan: `docs/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md`; UT0–UT3 code-only readiness is the next executable authority.
-- SR0–SR13 executed and hard-stopped. Two CPU/no-renderer support identities are diagnostic `family_failure`, but the old closure sealed before three tail producers, SR13 omitted the unexecuted list, SR7 was not structurally distinct, and the old Teleop recorder lacks gold telemetry. The user should not start Teleop until UT3 reports `ready_for_user_calibration`.
+- Current state at this refresh: `track3_task10_user_teleop_ready_for_user_calibration`.
+- Active plan: `docs/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md`; UT0–UT3 passed. Next executable authority is explicit user takeover (`接管 Teleop`) for UT4/UT5.
+- SR0–SR13 executed and hard-stopped. Two CPU/no-renderer support identities remain diagnostic `family_failure`. UT1 derived the 18-file complete set and SR9–SR11 `not_evaluated` without rewriting attempt_0004. UT2 repaired relative-path finalizer/`not_evaluated` derivation. UT3 Teleop defaults to OPEN with explicit Open/Close and per-step gold telemetry. Do not start the simulator until the user replies `接管 Teleop`.
 - Z0–Z14 execution evidence is in `data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/`; its audit is `docs/reviews/axis_pi05/TRACK3_Y3_LAUNCH_Z0_Z14_AUDIT_20260906.md`. Historical parent remains infrastructure while physical result is derived nominal family failure. Z6–Z13 remain `not_evaluated`; before any AA execution, recheck live supervisor/PID/cursor, dirty worktree and GPU boundaries. Never start a duplicate run.
 
 The snapshot above becomes historical as soon as execution advances. Always refresh from Git, machine JSON and the live cursor rather than treating this paragraph as a lock.

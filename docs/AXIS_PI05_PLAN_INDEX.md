@@ -3,7 +3,7 @@
 > 更新日期：2026-09-07（Asia/Tokyo）
 > 跨session入口：先完整读取根目录`AGENTS.md`与`MEMORY.md`，再读取本索引、handoff、machine JSON、唯一活动计划和最新审核；先查live PID/cursor，禁止重复启动。
 > 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md`
-> 当前状态：`track3_sr_closure_and_task10_user_teleop_gold_canary_planned`
+> 当前状态：`track3_task10_user_teleop_ready_for_user_calibration`
 > 最新审核：`docs/reviews/axis_pi05/TRACK3_SR0_SR13_INDEPENDENT_AUDIT_20260907.md`
 > 最新执行闭包：`docs/reviews/axis_pi05/TRACK3_SR0_SR13_EXECUTION_CLOSEOUT_20260907.md`
 
@@ -38,7 +38,7 @@ ER审核确认三条新CPU/no-renderer canary均为有效诊断性`family_failur
 - SG 独立审核唯一结论为 `remediation_required`：已有签名修复成立，但 acquisition gate错误要求整段 precontact 都有夹爪接触、source在lift前就必须释放、合法goal contact `bowl↔main_table` 被标unrelated，goal continuity又只看末帧。直接重跑不能产生合格gold。
 - `docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_AND_GOLD_CONTINUATION_PLAN.md` 已归档。SR0–SR5 形成 clean-source `5c5c746`；两次 env 前 SR5 失败 attempt 保留。SR6/SR7 各一条 CPU/no-renderer identity，均为走到 `grasp_dwell` 的正常 `family_failure`，dwell 窗口无夹爪接触，success=0。SR8 等待用户在线 Teleop；SR9–SR11 未执行。SR12 code-only 通过后 SR13 hard stop。
 - SR 独立审核计划已归档；唯一结论为 `remediation_required`。两条物理失败可保留，但旧 closure 提前封口、SR13 三态列表、SR7 结构差异和 Teleop gold telemetry 均需修复。
-- 唯一活动计划为 `docs/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md`。UT0–UT3 先做 code-only closure/finalizer/recorder readiness；ready 后才允许用户在线校准与最多一条 task10 candidate。所有已消耗 identity 禁止重跑。containment/articulation、新自动 physics、GPU0–2、official GPU、unattended Teleop、accepted promotion、规模生成、训练/norm、FAST/export、新 candidate ZIP、上传/提交均不授权。
+- 唯一活动计划为 `docs/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md`。UT0–UT3 已通过，状态 `ready_for_user_calibration`。下一停止点是用户明确回复「接管 Teleop」后的 UT4 校准与最多一条 UT5 task10 candidate。所有已消耗 identity 禁止重跑。containment/articulation、新自动 physics、GPU0–2、official GPU、unattended Teleop、accepted promotion、规模生成、训练/norm、FAST/export、新 candidate ZIP、上传/提交均不授权。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准；不得从归档计划的未执行尾部自行恢复任务。
 

@@ -1,0 +1,116 @@
+{
+  "alternative": {
+    "category": "family_failure",
+    "child_path": "data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/attempts/attempt_0004/canary/support_se3_microstep_lateral_first_v2/child_result.json",
+    "identity_gate": {
+      "checks": {
+        "command_exact": true,
+        "command_hash_exact": true,
+        "cuda_visible_devices_exact": true,
+        "cursor_inactive": true,
+        "gpu_policy_allowed": true,
+        "libero_plus_baseline_exact": true,
+        "openpi_commit_exact": true,
+        "pid_inactive": true,
+        "root_clean_now": true,
+        "root_commit_exact": true,
+        "tool_sha256_exact": true
+      },
+      "command_hash": "8640eef34db0195b3a39bc9896394fbc973aa307078ac3ff177dbe2b18afbd2e",
+      "errors": [],
+      "expected_command": [
+        "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+        "-m",
+        "tools.axis_pi05.track3_support_runtime_gate_remediation",
+        "--sr6-worker",
+        "--attempt-root",
+        "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/attempts/attempt_0004",
+        "--result-output",
+        "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/attempts/attempt_0004/canary/support_se3_microstep_lateral_first_v2/child_result.json",
+        "--profile",
+        "support_se3_microstep_lateral_first_v2",
+        "--launch-attempt-id",
+        "2"
+      ],
+      "expected_root_commit": "5c5c74641ba39e41709e2c51ce576e7c065060fc",
+      "gpu_policy": "cpu_no_renderer",
+      "observed_command": [
+        "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+        "-m",
+        "tools.axis_pi05.track3_support_runtime_gate_remediation",
+        "--sr6-worker",
+        "--attempt-root",
+        "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/attempts/attempt_0004",
+        "--result-output",
+        "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/attempts/attempt_0004/canary/support_se3_microstep_lateral_first_v2/child_result.json",
+        "--profile",
+        "support_se3_microstep_lateral_first_v2",
+        "--launch-attempt-id",
+        "2"
+      ],
+      "observed_root_commit": "5c5c74641ba39e41709e2c51ce576e7c065060fc",
+      "state": "passed"
+    },
+    "launch_attempt_id": 2,
+    "physics_identity_consumed": true,
+    "process": {
+      "returncode": 0,
+      "termination_stage": null,
+      "timed_out": false
+    },
+    "progress": {
+      "eligible": true,
+      "historical_error_m": 0.013362138900100747,
+      "historical_stage": "descend_object",
+      "last_stage": "grasp_dwell",
+      "last_translation_error_m": 0.0,
+      "reasons": [
+        "later_failure_stage",
+        "entered_acquisition",
+        "terminal_eef_error_decreased"
+      ]
+    },
+    "status": "completed",
+    "stop_class": "family_outcome"
+  },
+  "attempt_id": 4,
+  "launch_attempt_count": 2,
+  "physics_identity_count": 2,
+  "primary": {
+    "category": "family_failure",
+    "child_path": "data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/attempts/attempt_0004/canary/support_se3_microstep_primary_v1/child_result.json",
+    "launch_attempt_id": 1,
+    "physics_identity_consumed": true,
+    "process": {
+      "returncode": 0,
+      "termination_stage": null,
+      "timed_out": false
+    },
+    "progress": {
+      "eligible": true,
+      "historical_error_m": 0.013362138900100747,
+      "historical_stage": "descend_object",
+      "last_stage": "grasp_dwell",
+      "last_translation_error_m": 0.0,
+      "reasons": [
+        "later_failure_stage",
+        "entered_acquisition",
+        "terminal_eef_error_decreased"
+      ]
+    },
+    "status": "completed",
+    "stop_class": "family_outcome"
+  },
+  "resource_boundary": {
+    "gpu0": false,
+    "gpu1": false,
+    "gpu2": false,
+    "gpu3": false,
+    "replay": false,
+    "training": false,
+    "zip": false
+  },
+  "schema_version": "track3_sr6_sr7_summary_v1",
+  "status": "completed",
+  "success_count": 0
+}

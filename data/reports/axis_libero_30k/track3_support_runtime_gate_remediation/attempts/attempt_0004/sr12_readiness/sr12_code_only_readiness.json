@@ -1,0 +1,62 @@
+{
+  "allowed_transitions": [
+    [
+      "raw",
+      "pending_replay"
+    ],
+    [
+      "pending_replay",
+      "pending_gold_review"
+    ],
+    [
+      "pending_gold_review",
+      "accepted"
+    ],
+    [
+      "accepted",
+      "training_eligible"
+    ]
+  ],
+  "fail_closed": {
+    "diagnostic_to_accepted": true,
+    "family_failure_to_training": true,
+    "no_accepted_demo_no_norm": true,
+    "no_accepted_demo_no_training": true
+  },
+  "failed_traces_used": false,
+  "loader_dry_run": {
+    "reason": "no_accepted_demo",
+    "started": false
+  },
+  "norm_cli": {
+    "fail_closed": true,
+    "would_start": false
+  },
+  "resource_boundary": {
+    "gpu0": false,
+    "gpu1": false,
+    "gpu2": false,
+    "gpu3": false,
+    "training": false,
+    "zip": false
+  },
+  "schema_version": "track3_sr12_code_only_readiness_v1",
+  "schemas": [
+    "raw",
+    "pending_replay",
+    "pending_gold_review",
+    "accepted",
+    "training_eligible"
+  ],
+  "split": {
+    "dedup_before_split": true,
+    "holdout_isolated": true,
+    "source_group_isolation": true
+  },
+  "status": "passed",
+  "tiny_overfit_cli": {
+    "fail_closed": true,
+    "would_start": false
+  },
+  "training_started": false
+}

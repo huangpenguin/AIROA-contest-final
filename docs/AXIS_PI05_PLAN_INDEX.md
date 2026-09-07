@@ -2,9 +2,10 @@
 
 > 更新日期：2026-09-07（Asia/Tokyo）
 > 跨session入口：先完整读取根目录`AGENTS.md`与`MEMORY.md`，再读取本索引、handoff、machine JSON、唯一活动计划和最新审核；先查live PID/cursor，禁止重复启动。
-> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_AND_GOLD_CONTINUATION_PLAN.md`
-> 当前状态：`track3_support_runtime_gate_remediation_and_gold_continuation_planned`
+> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_INDEPENDENT_AUDIT_PLAN.md`
+> 当前状态：`track3_support_runtime_gate_remediation_executed_pending_independent_audit`
 > 最新审核：`docs/reviews/axis_pi05/TRACK3_SG0_SG6_INDEPENDENT_AUDIT_20260907.md`
+> 最新执行闭包：`docs/reviews/axis_pi05/TRACK3_SR0_SR13_EXECUTION_CLOSEOUT_20260907.md`
 
 ## 1. 本轮执行停止点
 
@@ -35,8 +36,8 @@ ER审核确认三条新CPU/no-renderer canary均为有效诊断性`family_failur
 - CR 执行与只读独立审核计划均已归档。六条 CR CPU/no-renderer trace 的文件、identity、hash 和 acquisition 前 `family_failure` 分类成立，但 contact wrapper 把 schema completeness 复制成 required contact、把 unrelated contact 固定为 false；alternative 只有静态 target 偏移，没有冻结计划要求的分轴 waypoint/microstep/较低 cap；CR12 recorder argv 也不可执行。唯一审核结论为 `remediation_required`。
 - `AXIS_PI05_TRACK3_CONTACT_TRUTH_AND_SUPPORT_GOLD_DEMO_PLAN.md` 已归档。SG0–SG5 的 code/fixture 与 clean-source release成立；SG6 在创建 simulator env 前因参数签名 TypeError 正确 infrastructure hard stop。旧 attempt `0001–0004`、日志、manifest 与 failure label保持只读。
 - SG 独立审核唯一结论为 `remediation_required`：已有签名修复成立，但 acquisition gate错误要求整段 precontact 都有夹爪接触、source在lift前就必须释放、合法goal contact `bowl↔main_table` 被标unrelated，goal continuity又只看末帧。直接重跑不能产生合格gold。
-- 唯一活动计划为 `docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_AND_GOLD_CONTINUATION_PLAN.md`。先做contact role、阶段窗口、pre-env integration与分级stop合同的code-only修复；clean release后仅运行1条corrected primary，正常且有进展的family failure才允许1条alternative。真实success后才GPU3 exact replay `3/3`与视觉审核包；自动失败才等待用户在线Teleop。
-- 所有 AC/BR/CR/ER/TZ 等已消耗 identity 禁止重跑。containment/articulation 新 physics、GPU0–2、official GPU、unattended Teleop、accepted promotion、规模生成、训练/norm、FAST/export、新 candidate ZIP、上传/提交均不授权。
+- `docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_AND_GOLD_CONTINUATION_PLAN.md` 已归档。SR0–SR5 形成 clean-source `5c5c746`；两次 env 前 SR5 失败 attempt 保留。SR6/SR7 各一条 CPU/no-renderer identity，均为走到 `grasp_dwell` 的正常 `family_failure`，dwell 窗口无夹爪接触，success=0。SR8 等待用户在线 Teleop；SR9–SR11 未执行。SR12 code-only 通过后 SR13 hard stop。
+- 唯一活动计划为 `docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_INDEPENDENT_AUDIT_PLAN.md`，只授权独立只读审核。所有已消耗 identity 禁止重跑。containment/articulation 新 physics、GPU0–2、official GPU、unattended Teleop、accepted promotion、规模生成、训练/norm、FAST/export、新 candidate ZIP、上传/提交均不授权。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准；不得从归档计划的未执行尾部自行恢复任务。
 
@@ -94,6 +95,7 @@ ER审核确认三条新CPU/no-renderer canary均为有效诊断性`family_failur
 46. `AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_PLAN.md`：CR0–CR8 clean-source remediation 与 CR9–CR10 六条 fresh CPU/no-renderer canary 已执行；六条均为 acquisition 前诊断性 family failure，CR11–CR13 没有 replay/数据/训练/ZIP。
 47. `AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_INDEPENDENT_AUDIT_PLAN.md`：审核已完成并归档；结论 `remediation_required`，转入 contact truth 与 support gold demo 最小恢复。
 48. `AXIS_PI05_TRACK3_CONTACT_TRUTH_AND_SUPPORT_GOLD_DEMO_PLAN.md`：SG0–SG5通过；SG6在env创建前发生TypeError并按infrastructure hard stop。独立审核确认零physics/零episode，但发现success-path阶段与contact门不可达，转入support runtime gate最小修复。
+49. `AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_AND_GOLD_CONTINUATION_PLAN.md`：SR0–SR13已执行并 hard stop。四门与pre-env修复后跑了1+1条 support CPU identity，均为 grasp_dwell 后 family failure；无 success、无 Teleop/replay/训练/ZIP。
 
 归档不表示旧计划所有尾部阶段都完成；只表示该文件不再是活动授权入口。旧 failure、阈值、hash 和未执行阶段必须继续保留。
 

@@ -1,0 +1,66 @@
+{
+  "command": [
+    "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+    "-m",
+    "tools.axis_pi05.track3_support_runtime_gate_remediation",
+    "--sr6-worker",
+    "--attempt-root",
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/attempts/attempt_0004",
+    "--result-output",
+    "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/attempts/attempt_0004/canary/support_se3_microstep_primary_v1/child_result.json",
+    "--profile",
+    "support_se3_microstep_primary_v1",
+    "--launch-attempt-id",
+    "1"
+  ],
+  "identity": {
+    "checks": {
+      "command_exact": true,
+      "command_hash_exact": true,
+      "cuda_visible_devices_exact": true,
+      "cursor_inactive": true,
+      "gpu_policy_allowed": true,
+      "libero_plus_baseline_exact": true,
+      "openpi_commit_exact": true,
+      "pid_inactive": true,
+      "root_clean_now": true,
+      "root_commit_exact": true,
+      "tool_sha256_exact": true
+    },
+    "command_hash": "354b64a5c2f03619bd65b34d61e94c4a40484fab9d83d9bd8da8ed75c079d315",
+    "errors": [],
+    "expected_command": [
+      "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+      "-m",
+      "tools.axis_pi05.track3_support_runtime_gate_remediation",
+      "--sr6-worker",
+      "--attempt-root",
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/attempts/attempt_0004",
+      "--result-output",
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/attempts/attempt_0004/canary/support_se3_microstep_primary_v1/child_result.json",
+      "--profile",
+      "support_se3_microstep_primary_v1",
+      "--launch-attempt-id",
+      "1"
+    ],
+    "expected_root_commit": "5c5c74641ba39e41709e2c51ce576e7c065060fc",
+    "gpu_policy": "cpu_no_renderer",
+    "observed_command": [
+      "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+      "-m",
+      "tools.axis_pi05.track3_support_runtime_gate_remediation",
+      "--sr6-worker",
+      "--attempt-root",
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/attempts/attempt_0004",
+      "--result-output",
+      "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/attempts/attempt_0004/canary/support_se3_microstep_primary_v1/child_result.json",
+      "--profile",
+      "support_se3_microstep_primary_v1",
+      "--launch-attempt-id",
+      "1"
+    ],
+    "observed_root_commit": "5c5c74641ba39e41709e2c51ce576e7c065060fc",
+    "state": "passed"
+  },
+  "launch_attempt_id": 1
+}

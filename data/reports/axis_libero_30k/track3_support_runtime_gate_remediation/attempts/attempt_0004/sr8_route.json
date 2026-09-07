@@ -1,0 +1,22 @@
+{
+  "agent_generated_key_input": false,
+  "exact_recorder_argv": [
+    "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+    "-m",
+    "tools.axis_pi05.track3_public_teleop",
+    "--record",
+    "--task-index",
+    "10",
+    "--operator",
+    "operator-local",
+    "--preview-port",
+    "8765"
+  ],
+  "next_action": "wait_for_explicit_user_online_control",
+  "recorded_candidates_max": 1,
+  "recording_started": false,
+  "schema_version": "track3_sr8_route_v1",
+  "sr12_may_continue": true,
+  "status": "human_input_required",
+  "user_online_takeover_required": true
+}

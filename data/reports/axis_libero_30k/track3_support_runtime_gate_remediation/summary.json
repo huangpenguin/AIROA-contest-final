@@ -1,0 +1,19 @@
+{
+  "schema_version": "track3_sr0_sr13_execution_summary_v1",
+  "status": "hard_stop",
+  "clean_source_commit": "5c5c74641ba39e41709e2c51ce576e7c065060fc",
+  "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "physics_attempt_id": 4,
+  "launch_attempt_count": 2,
+  "physics_identity_count": 2,
+  "success_count": 0,
+  "accepted_count": 0,
+  "training_started": false,
+  "teleop_started": false,
+  "gpu3_replay_started": false,
+  "primary_category": "family_failure",
+  "alternative_category": "family_failure",
+  "last_stage": "grasp_dwell",
+  "not_evaluated": ["SR9", "SR10", "SR11"],
+  "next_authority": "independent_review_required"
+}

@@ -1,0 +1,129 @@
+{
+  "attempt_id": 3,
+  "clean_source_identity": {
+    "checks": {
+      "command_exact": true,
+      "command_hash_exact": true,
+      "cuda_visible_devices_exact": true,
+      "cursor_inactive": true,
+      "gpu_policy_allowed": true,
+      "libero_plus_baseline_exact": true,
+      "openpi_commit_exact": true,
+      "pid_inactive": true,
+      "root_clean_now": true,
+      "root_commit_exact": true,
+      "tool_sha256_exact": true
+    },
+    "command_hash": "89dabb09f1769d5bb61be24f45f110e638dc07dc926011a7fd6107374981ad1d",
+    "errors": [],
+    "expected_command": [
+      "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+      "-m",
+      "tools.axis_pi05.track3_support_runtime_gate_remediation",
+      "--sr6-worker"
+    ],
+    "expected_root_commit": "5c5c74641ba39e41709e2c51ce576e7c065060fc",
+    "gpu_policy": "cpu_no_renderer",
+    "observed_command": [
+      "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+      "-m",
+      "tools.axis_pi05.track3_support_runtime_gate_remediation",
+      "--sr6-worker"
+    ],
+    "observed_root_commit": "5c5c74641ba39e41709e2c51ce576e7c065060fc",
+    "state": "passed"
+  },
+  "command": [
+    "/home/huang/code/PARC2026_final/.venv_axis_pi05/bin/python",
+    "-m",
+    "tools.axis_pi05.track3_support_runtime_gate_remediation",
+    "--sr6-worker",
+    "--profile",
+    "support_se3_microstep_primary_v1",
+    "--launch-attempt-id",
+    "1"
+  ],
+  "command_hash": "2d412c75095f70349257c3766f5a141dcde0edb4ce4e24450011af9921adf747",
+  "do_not_reuse_d5c319b": true,
+  "live_boundary": {
+    "dirty_rows": [],
+    "gpu": {
+      "empty": true,
+      "returncode": 0,
+      "rows": []
+    },
+    "workers": []
+  },
+  "openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "physics_authorized_after_this_pass": true,
+  "profile_lock": {
+    "alternative": {
+      "controller_rotation_scale_rad": 0.5,
+      "controller_translation_scale_m": 0.05,
+      "microstep_rotation_rad": 0.08,
+      "microstep_translation_m": 0.02,
+      "name": "support_se3_microstep_lateral_first_v2",
+      "rotation_clip_rad": 0.08,
+      "rotation_tolerance_rad": 0.03,
+      "stable_ticks": 4,
+      "stage_budgets": [
+        120,
+        100,
+        90,
+        150,
+        40,
+        150,
+        190,
+        150,
+        35,
+        80
+      ],
+      "step_budget": 1105,
+      "topology": "xy_lateral_then_orientation_then_z_then_contact_then_lift_transport_place",
+      "translation_clip_m": 0.02,
+      "translation_tolerance_m": 0.012
+    },
+    "max_support_identities": 2,
+    "primary": {
+      "controller_rotation_scale_rad": 0.5,
+      "controller_translation_scale_m": 0.05,
+      "microstep_rotation_rad": 0.06,
+      "microstep_translation_m": 0.025,
+      "name": "support_se3_microstep_primary_v1",
+      "rotation_clip_rad": 0.06,
+      "rotation_tolerance_rad": 0.03,
+      "stable_ticks": 4,
+      "stage_budgets": [
+        120,
+        100,
+        100,
+        150,
+        40,
+        150,
+        180,
+        150,
+        35,
+        80
+      ],
+      "step_budget": 1105,
+      "topology": "xy_then_z_then_orientation_then_contact_then_lift_transport_place",
+      "translation_clip_m": 0.025,
+      "translation_tolerance_m": 0.012
+    }
+  },
+  "resource_boundary": {
+    "gpu0": false,
+    "gpu1": false,
+    "gpu2": false,
+    "gpu3": false,
+    "physics_started": false,
+    "replay": false,
+    "teleop": false,
+    "training": false,
+    "zip": false
+  },
+  "root_commit": "5c5c74641ba39e41709e2c51ce576e7c065060fc",
+  "schema_version": "track3_sr5_clean_source_release_v1",
+  "status": "passed",
+  "tool_sha256": "c2795e847ca4f2a5c7aa4f40927c7c7194967da058010d0107f13900ebd1b775"
+}

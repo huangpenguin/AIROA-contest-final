@@ -1,0 +1,87 @@
+{
+  "entries": [
+    {
+      "bytes": 316,
+      "relative_path": "canary/support_se3_microstep_lateral_first_v2/child.stderr.log",
+      "sha256": "b64f85f67048e258074975a341f381ae84f788926051563a6e509c7cb5191add"
+    },
+    {
+      "bytes": 0,
+      "relative_path": "canary/support_se3_microstep_lateral_first_v2/child.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 8177,
+      "relative_path": "canary/support_se3_microstep_lateral_first_v2/child_result.json",
+      "sha256": "4c15314edf786ff886ed2cfd86028cd809e51ba1390a1ba0911c55d354d40a61"
+    },
+    {
+      "bytes": 2764,
+      "relative_path": "canary/support_se3_microstep_lateral_first_v2/identity_preflight.json",
+      "sha256": "56f52b7f8a5c7f66cf3c2daf75fb47c38d496294aac3a627809b8a42c642984a"
+    },
+    {
+      "bytes": 760,
+      "relative_path": "canary/support_se3_microstep_lateral_first_v2/start_state.npy",
+      "sha256": "f5b4d5dd93a42cd133994d23eaeae0bc21bcdc970ba6c03e15a5c37f0928b9b3"
+    },
+    {
+      "bytes": 52852,
+      "relative_path": "canary/support_se3_microstep_lateral_first_v2/trajectory.npz",
+      "sha256": "1f46ad76c6e11df0268d2c24ecaf3fc9af9a9e9ad9e79012f15cd0546359728e"
+    },
+    {
+      "bytes": 316,
+      "relative_path": "canary/support_se3_microstep_primary_v1/child.stderr.log",
+      "sha256": "b64f85f67048e258074975a341f381ae84f788926051563a6e509c7cb5191add"
+    },
+    {
+      "bytes": 0,
+      "relative_path": "canary/support_se3_microstep_primary_v1/child.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 8128,
+      "relative_path": "canary/support_se3_microstep_primary_v1/child_result.json",
+      "sha256": "14f3420d391dbc4f6c933a44405215f727d7d52bdbb4c1641a9adc47e4361fac"
+    },
+    {
+      "bytes": 2728,
+      "relative_path": "canary/support_se3_microstep_primary_v1/identity_preflight.json",
+      "sha256": "731d5cf361a27429e38d364183f191fe86d5815853a8248d6bbfdb76f87edeae"
+    },
+    {
+      "bytes": 760,
+      "relative_path": "canary/support_se3_microstep_primary_v1/start_state.npy",
+      "sha256": "f5b4d5dd93a42cd133994d23eaeae0bc21bcdc970ba6c03e15a5c37f0928b9b3"
+    },
+    {
+      "bytes": 45809,
+      "relative_path": "canary/support_se3_microstep_primary_v1/trajectory.npz",
+      "sha256": "2e68809900bb98d2f93648298370dd1abc571e4e9a7c09a440a60e19de2d46dc"
+    },
+    {
+      "bytes": 157,
+      "relative_path": "cursor.json",
+      "sha256": "89f7169ddf4e8bc11814c10606048eba004a45c584be5f1e74ce1af9de27d9f1"
+    },
+    {
+      "bytes": 176,
+      "relative_path": "heartbeat.json",
+      "sha256": "348c67716500457357bb7304c16b038805e5f8ba28cf77cc7485b081fc146c52"
+    },
+    {
+      "bytes": 4153,
+      "relative_path": "summary.json",
+      "sha256": "26d7e19e8b461fb6bfcb15e97bc63a431aa75a8254339e9f65e00568d03e81fb"
+    }
+  ],
+  "excluded_finalizer_names": [
+    "closure.json",
+    "final_manifest.json",
+    "outer_hash.json",
+    "producer_manifest.json"
+  ],
+  "manifest_role": "post_producer_complete_set",
+  "schema_version": "track3_sr_final_manifest_v1"
+}

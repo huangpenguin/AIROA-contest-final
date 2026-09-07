@@ -1,0 +1,24 @@
+{
+  "accepted_count": 0,
+  "attempt_id": 4,
+  "launch_attempt_count": 2,
+  "next_authority": "independent_review_required",
+  "not_evaluated": [],
+  "physics_identity_count": 2,
+  "resource_boundary": {
+    "generation": false,
+    "gpu0": false,
+    "gpu1": false,
+    "gpu2": false,
+    "gpu3": false,
+    "replay": false,
+    "submission": false,
+    "training": false,
+    "upload": false,
+    "zip": false
+  },
+  "schema_version": "track3_sr13_closeout_v1",
+  "status": "hard_stop",
+  "success_count": 0,
+  "training_eligible_count": 0
+}

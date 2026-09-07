@@ -848,7 +848,8 @@ def _terminate_group(process: subprocess.Popen[Any]) -> str:
 
 
 def run_sg6() -> dict[str, Any]:
-    sg5 = strict_json(SG5_REPORT) if SG5_REPORT.is_file() else {}
+    sg5_pointer = strict_json(SG5_REPORT) if SG5_REPORT.is_file() else {}
+    sg5 = strict_json(ROOT / str(sg5_pointer["target"])) if sg5_pointer.get("target") else sg5_pointer
     if sg5.get("status") != "passed":
         return {"status": "not_evaluated", "reason": "sg5_clean_source_release_not_passed", "physics_started": False}
     previous = _latest_attempt()

@@ -37,3 +37,5 @@ attempt 0005 的 reset.goal_false 仅是摘要字段写反；其运行时 guard 
 项目规范测试套件为 436 passed、7 skipped、26 warnings；O1.1 定向测试为 9 passed。strict duplicate-key JSON（10 个 O1.1 相关 JSON）、canary py_compile 与 git diff --check 通过；O1.1 namespace 没有 partial 文件，candidate inventory 的实际文件 bytes/SHA 与成功 attempt 完全一致，display :3 可用，结束时无 Track3/MuJoCo/Teleop 进程。
 
 仓库根目录的无范围 pytest 还会递归到缓存的 libero-infinity 和 third_party OpenPI 测试，因环境缺少 scenic/pynvml 在 collection 阶段失败；它不是项目规范全量门。既有的 2026-09-07 BR fixture partial 保留原位，未由 O1.1 产生、删除或移动。
+
+Execution commit: `36457d5`.

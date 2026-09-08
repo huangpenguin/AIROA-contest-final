@@ -5359,6 +5359,7 @@
     "next_phase_only": "O1_1_native_mujoco_turbovnc_no_save_canary_requires_user_online"
   },
   "track3_operations_o1_1_execution": {
+    "execution_commit": "36457d5",
     "status": "passed_native_vnc_no_save_canary",
     "phase": "O1.1",
     "report": "docs/reviews/axis_pi05/TRACK3_O1_1_NATIVE_VNC_NO_SAVE_CANARY_20260909.md",

@@ -921,5 +921,6 @@
   },
   "replay": "not_evaluated",
   "formal_recording": "not_started",
-  "next_phase": "O1_2_explicit_user_takeover_one_canonical_recording"
+  "next_phase": "O1_2_explicit_user_takeover_one_canonical_recording",
+  "execution_commit": "36457d5"
 }

@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 HANDOFF = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
 AUDIT = ROOT / "data/reports/axis_libero_30k/track3_br0_br11_independent_audit_20260907/summary.json"
 BR_ROOT = ROOT / "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation"
-PLAN = "docs/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md"
+PLAN = "docs/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md"
 ARCHIVED_AUDIT_PLAN = ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ACQUISITION_GATE_ATTEMPT_LIFECYCLE_REMEDIATION_INDEPENDENT_AUDIT_PLAN.md"
 ARCHIVED_CR_PLAN = ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_PLAN.md"
 CR_SUMMARY = ROOT / "data/reports/axis_libero_30k/track3_cr0_cr14_execution_20260907/summary.json"
@@ -75,9 +75,9 @@ def test_findings_cannot_be_silently_cleared() -> None:
 
 def test_lifecycle_releases_exactly_one_cr_plan() -> None:
     handoff = strict_json(HANDOFF)
-    assert handoff["status"] == "track3_task10_user_teleop_ready_for_user_calibration"
+    assert handoff["status"] == "track3_operations_o1_o2_active_pending_o1_start"
     assert handoff["next_plan"] == PLAN
-    assert handoff["next_phase_only"] == "UT4_explicit_user_takeover_then_UT5_to_UT9"
+    assert handoff["next_phase_only"] == "O1_red_mug_388_seed_then_O2_native_mujoco_and_tiny_overfit"
     assert (ROOT / PLAN).is_file()
     assert ARCHIVED_CR_PLAN.is_file()
     assert ARCHIVED_AUDIT_PLAN.is_file()

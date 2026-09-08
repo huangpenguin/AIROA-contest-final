@@ -1,6 +1,24 @@
 {
   "audit_class": "approved",
   "created_at_utc": "2026-09-08T11:56:53.096567+00:00",
+  "dirty_anchor": "data/reports/axis_libero_30k/track3_operations_o0r_remediation_20260908/dirty_anchor.json",
+  "dirty_file_hashes_before_commit": [
+    {
+      "bytes": 286,
+      "path": "data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/current_attempt.json",
+      "sha256": "b49aacf2a6168752c94ab21e74dcd7d7bb1bb77a3990aace6a2ef577da7489d2"
+    },
+    {
+      "bytes": 1141,
+      "path": "data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/sr6_supervisor.stdout.log",
+      "sha256": "692ef566e4b4f3d970660fe9d184e32b830558658a456f3498759025510a70cb"
+    },
+    {
+      "bytes": 8,
+      "path": "data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/supervisor.pid",
+      "sha256": "ceb34a4bdd231bac5618d375d497a310902731cdd2f936881c8291d8cc887030"
+    }
+  ],
   "eligibility_reports": [
     "eligibility/official_t3_red_mug_1788838293.json",
     "eligibility/official_t3_red_mug_1788838632.json"

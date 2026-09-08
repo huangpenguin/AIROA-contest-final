@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_date": "2026-09-07",
-  "status": "track3_task10_user_teleop_ready_for_user_calibration",
+  "generated_date": "2026-09-08",
+  "status": "track3_operations_o1_o2_active_pending_o1_start",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
@@ -259,8 +259,8 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md",
-  "next_phase_only": "UT4_explicit_user_takeover_then_UT5_to_UT9",
+  "next_plan": "docs/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md",
+  "next_phase_only": "O1_red_mug_388_seed_then_O2_native_mujoco_and_tiny_overfit",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -5264,5 +5264,72 @@
       "submission": false
     },
     "next_phase_only": "UT4_explicit_user_takeover_then_UT5_to_UT9"
+  }
+,
+  "track3_operations_o0r_remediation_20260908": {
+    "status": "approved",
+    "audit_class": "approved",
+    "prior_o0_audit_class": "remediation_required",
+    "remediation_commit": "20662dd",
+    "report": "docs/reviews/axis_pi05/TRACK3_O0R_REMEDIATION_20260908.md",
+    "summary": "data/reports/axis_libero_30k/track3_operations_o0r_remediation_20260908/summary.json",
+    "path_resolution": "data/reports/axis_libero_30k/track3_operations_o0r_remediation_20260908/path_resolution.json",
+    "dirty_anchor": "data/reports/axis_libero_30k/track3_operations_o0r_remediation_20260908/dirty_anchor.json",
+    "raw_inventory_sha256": "3a385f0a56a58c9082d74cc33f1a1f7552401b3eb0caa1e98f5c22399fff86b1",
+    "historical_metadata_mutated": false,
+    "targeted_tests": "12 passed",
+    "full_tests": "434 passed, 7 skipped, 26 warnings",
+    "py_compile": true,
+    "diff_check": true,
+    "next_phase_only": "O1_red_mug_388_seed_then_O2_native_mujoco_and_tiny_overfit"
+  },
+  "track3_operations_o1_o2_authorization": {
+    "status": "active",
+    "plan": "docs/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md",
+    "audit_class": "approved",
+    "authorized_phases": [
+      "O1",
+      "O2"
+    ],
+    "preferred_seed": "pending/official_t3_red_mug_1788838632",
+    "reference_seed": "pending/official_t3_red_mug_1788838293",
+    "o1": {
+      "canonical_gold_max": 1,
+      "canonical_step_budget": 300,
+      "fresh_replay_runs_required": 3,
+      "fresh_replay_success_required": "3/3",
+      "user_online_takeover_required": true,
+      "native_mujoco_turbovnc_no_save_canary": true
+    },
+    "o2": {
+      "requires_o1_accepted": true,
+      "disjoint_reverse_dev_required": true,
+      "tiny_overfit_first": true,
+      "r6_short_requires": {
+        "accepted_gold_count": 3,
+        "independent_source_groups": 2,
+        "steps": [
+          100,
+          300
+        ]
+      },
+      "daily_candidate_freeze": true
+    },
+    "authorization": {
+      "historical_raw_read_only": true,
+      "historical_metadata_mutation": false,
+      "gpu0": false,
+      "gpu1": false,
+      "gpu2": false,
+      "gpu3_conditional_replay_or_short_experiment": true,
+      "unattended_teleop": false,
+      "new_recording_without_user_takeover": false,
+      "infinity_reversal_before_canonical_gold": false,
+      "scenic_augmentation_before_canonical_gold": false,
+      "libero_pro_mixing_before_heldout_eval": false,
+      "automatic_upload": false,
+      "submission": false
+    },
+    "next_phase_only": "O1_red_mug_388_seed_then_O2_native_mujoco_and_tiny_overfit"
   }
 }

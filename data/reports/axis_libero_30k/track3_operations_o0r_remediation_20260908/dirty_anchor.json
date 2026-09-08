@@ -1,0 +1,22 @@
+{
+  "schema_version": "track3_o0r_dirty_anchor_v1",
+  "source_commit": "20662dd",
+  "entries": [
+    {
+      "path": "data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/current_attempt.json",
+      "bytes": 286,
+      "sha256": "b49aacf2a6168752c94ab21e74dcd7d7bb1bb77a3990aace6a2ef577da7489d2"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/sr6_supervisor.stdout.log",
+      "bytes": 1141,
+      "sha256": "692ef566e4b4f3d970660fe9d184e32b830558658a456f3498759025510a70cb"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/supervisor.pid",
+      "bytes": 8,
+      "sha256": "ceb34a4bdd231bac5618d375d497a310902731cdd2f936881c8291d8cc887030"
+    }
+  ],
+  "user_changes_preserved": true
+}

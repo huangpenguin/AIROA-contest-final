@@ -14,7 +14,7 @@ from tools.axis_pi05 import track3_support_runtime_gate_remediation as sr
 
 ROOT = Path(__file__).resolve().parents[1]
 HANDOFF = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
-PLAN = ROOT / "docs/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md"
+PLAN = ROOT / "docs/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md"
 UT_ROOT = ROOT / "data/reports/axis_libero_30k/track3_sr_closure_and_task10_user_teleop_gold_canary"
 
 
@@ -91,14 +91,22 @@ def test_teleop_gold_npz_and_explicit_gripper() -> None:
 
 def test_handoff_waits_for_explicit_takeover() -> None:
     handoff = strict_json(HANDOFF)
-    assert handoff["status"] == "track3_task10_user_teleop_ready_for_user_calibration"
-    assert handoff["next_phase_only"] == "UT4_explicit_user_takeover_then_UT5_to_UT9"
+    assert handoff["status"] == "track3_operations_o1_o2_active_pending_o1_start"
+    assert handoff["next_phase_only"] == "O1_red_mug_388_seed_then_O2_native_mujoco_and_tiny_overfit"
     assert PLAN.is_file()
-    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md"
-    auth = handoff["track3_sr_closure_and_task10_user_teleop_gold_canary_authorization"]
-    assert auth["human_teleop_requires_explicit_user_online_takeover"] is True
+    assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md").is_file()
+    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md"
+    o0r = handoff["track3_operations_o0r_remediation_20260908"]
+    assert o0r["audit_class"] == "approved"
+    assert o0r["historical_metadata_mutated"] is False
+    auth = handoff["track3_operations_o1_o2_authorization"]
+    assert auth["status"] == "active"
+    assert auth["preferred_seed"].endswith("1788838632")
+    assert auth["o1"]["fresh_replay_success_required"] == "3/3"
+    assert auth["o1"]["user_online_takeover_required"] is True
+    assert auth["o2"]["requires_o1_accepted"] is True
     assert auth["authorization"]["unattended_teleop"] is False
-    assert auth["authorization"]["training"] is False
+    assert auth["authorization"]["gpu0"] is False
     assert np.isfinite(1.0)
     assert ut.LOCKED["audit_input"].startswith("64f278c")
     assert sr.derive_not_evaluated(sr.SR_ROOT / "attempts/attempt_0004") == ["SR9", "SR10", "SR11"]

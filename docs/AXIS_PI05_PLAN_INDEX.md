@@ -1,11 +1,11 @@
 # AXIS Pi0.5 计划索引与审核生命周期
 
-> 更新日期：2026-09-07（Asia/Tokyo）
+> 更新日期：2026-09-08（Asia/Tokyo）
 > 跨session入口：先完整读取根目录`AGENTS.md`与`MEMORY.md`，再读取本索引、handoff、machine JSON、唯一活动计划和最新审核；先查live PID/cursor，禁止重复启动。
-> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md`
-> 当前状态：`track3_task10_user_teleop_ready_for_user_calibration`
-> 最新审核：`docs/reviews/axis_pi05/TRACK3_SR0_SR13_INDEPENDENT_AUDIT_20260907.md`
-> 最新执行闭包：`docs/reviews/axis_pi05/TRACK3_SR0_SR13_EXECUTION_CLOSEOUT_20260907.md`
+> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md`
+> 当前状态：`track3_operations_o1_o2_active_pending_o1_start`
+> 最新审核：`docs/reviews/axis_pi05/TRACK3_O0R_REMEDIATION_20260908.md`
+> 最新执行闭包：`docs/reviews/axis_pi05/TRACK3_O0R_REMEDIATION_20260908.md`
 
 ## 1. 本轮执行停止点
 
@@ -38,7 +38,7 @@ ER审核确认三条新CPU/no-renderer canary均为有效诊断性`family_failur
 - SG 独立审核唯一结论为 `remediation_required`：已有签名修复成立，但 acquisition gate错误要求整段 precontact 都有夹爪接触、source在lift前就必须释放、合法goal contact `bowl↔main_table` 被标unrelated，goal continuity又只看末帧。直接重跑不能产生合格gold。
 - `docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_AND_GOLD_CONTINUATION_PLAN.md` 已归档。SR0–SR5 形成 clean-source `5c5c746`；两次 env 前 SR5 失败 attempt 保留。SR6/SR7 各一条 CPU/no-renderer identity，均为走到 `grasp_dwell` 的正常 `family_failure`，dwell 窗口无夹爪接触，success=0。SR8 等待用户在线 Teleop；SR9–SR11 未执行。SR12 code-only 通过后 SR13 hard stop。
 - SR 独立审核计划已归档；唯一结论为 `remediation_required`。两条物理失败可保留，但旧 closure 提前封口、SR13 三态列表、SR7 结构差异和 Teleop gold telemetry 均需修复。
-- 唯一活动计划为 `docs/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md`。UT0–UT3 已通过，状态 `ready_for_user_calibration`。下一停止点是用户明确回复「接管 Teleop」后的 UT4 校准与最多一条 UT5 task10 candidate。所有已消耗 identity 禁止重跑。containment/articulation、新自动 physics、GPU0–2、official GPU、unattended Teleop、accepted promotion、规模生成、训练/norm、FAST/export、新 candidate ZIP、上传/提交均不授权。
+- O0R remediation 已获 approved：历史 raw/metadata 保持只读，未来 writer 已升级 v4，contact 动态表与 forward acquisition gate 已修复。旧 UT 计划已归档。当前唯一活动计划为 docs/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md，只释放 O1/O2；388-step red-mug 是首选 derived seed，468-step 仅参考。O1 首条 canonical gold、GPU3 fresh replay 3/3 和 O2 tiny-overfit/R6 条件门均未执行。
 
 任何执行者看到多个计划时，以本索引的“唯一活动计划”为准；不得从归档计划的未执行尾部自行恢复任务。
 
@@ -98,7 +98,7 @@ ER审核确认三条新CPU/no-renderer canary均为有效诊断性`family_failur
 48. `AXIS_PI05_TRACK3_CONTACT_TRUTH_AND_SUPPORT_GOLD_DEMO_PLAN.md`：SG0–SG5通过；SG6在env创建前发生TypeError并按infrastructure hard stop。独立审核确认零physics/零episode，但发现success-path阶段与contact门不可达，转入support runtime gate最小修复。
 49. `AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_AND_GOLD_CONTINUATION_PLAN.md`：SR0–SR13已执行并 hard stop。四门与pre-env修复后跑了1+1条 support CPU identity，均为 grasp_dwell 后 family failure；无 success、无 Teleop/replay/训练/ZIP。
 50. `AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_INDEPENDENT_AUDIT_PLAN.md`：审核已完成并归档；结论 `remediation_required`。物理失败可保留，但 finalizer 提前封口、SR13 三态、SR7 结构差异与 Teleop gold telemetry 尚未闭合。
-51. `AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md`：当前唯一活动计划。先完成派生 closure/finalizer/Teleop readiness；ready 后由用户校准并最多录一条 task10，success 才 GPU3 replay `3/3` 和视觉审核包。
+51. `AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md`：UT0–UT3 已完成，旧计划已由 O0R remediation 取代并归档；其历史 closure、failure label 与未执行阶段保留。
 
 归档不表示旧计划所有尾部阶段都完成；只表示该文件不再是活动授权入口。旧 failure、阈值、hash 和未执行阶段必须继续保留。
 
@@ -437,6 +437,16 @@ CR 计划已归档至 `docs/archive/axis_pi05/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_
 审核前独立测试为 targeted `10 passed`、CPU规范全量 `417 passed, 7 skipped, 23 warnings`。11项原本被ignore的小型raw以原字节force-add并由新anchor锁定；旧manifest/closure不改写。
 
 生命周期最终验证为 SR strict JSON `27/27`、audit `2/2`、machine handoff `1/1`、targeted `18 passed`、项目规范全量 `425 passed, 7 skipped, 23 warnings`；py_compile、diff-check、无 partial、process/GPU 与 nested Git 边界通过。GPU0 外部作业仅只读保留，GPU1–3 idle。
+
+## 3.38 O0R remediation 与 O1/O2 active plan（2026-09-08）
+
+O0R 的唯一审核结论为 approved。前一轮 O0 审核的 remediation_required 保持为历史结论；新的派生证据位于 data/reports/axis_libero_30k/track3_operations_o0r_remediation_20260908/。69 个 raw 文件的 inventory、每个 episode 的最终相对路径/bytes/SHA、两条 pending eligibility、实际测试 argv、HEAD/dirty/PDF hash 和 process/GPU boundary 均已持久化。历史 metadata 没有修改。
+
+两条 pending 继续标为 pending_historical_raw、replay=not_evaluated、gold_eligible=false，reason 为 over_budget + contact_raw_incomplete + acquisition_gate_invalid。388-step 作为后续 keypose/re-timing 首选 seed，468-step 仅参考。Future writer schema v4 禁止 metadata 保存 absolute、.. 或 partial 路径；contact 采用 flat typed table + offsets，要求 saved_contact_n 等于每帧实际 contact_n；acquisition 只接受 close/grasp_dwell 期间、首次 source release 前的 gripper↔subject 接触。
+
+O0R remediation commit 为 20662dd。生命周期更新后旧 UT 计划归档至 docs/archive/axis_pi05/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md，唯一 active plan 为 docs/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md。O1/O2 仅作计划授权，当前尚未启动 replay、GPU、Teleop、新录制、Infinity/Scenic、训练或 submission。
+
+O0R validation：targeted 12 passed；full 434 passed, 7 skipped, 26 warnings；py_compile、strict duplicate-key JSON 和 git diff --check 通过。下一次阶段审核必须继续使用新的 O1/O2 plan，不能恢复旧 UT 计划。
 
 ## 4. 保留但非活动的研究线
 

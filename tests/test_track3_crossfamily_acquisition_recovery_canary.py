@@ -77,7 +77,7 @@ def test_duplicate_json_keys_are_rejected(tmp_path: Path) -> None:
 def test_current_plan_is_the_only_active_plan() -> None:
     plan = Path(ac.PLAN)
     assert not plan.is_file()
-    active = Path(ac.ROOT) / "docs/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md"
+    active = Path(ac.ROOT) / "docs/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md"
     archived_br = Path(ac.ROOT) / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ACQUISITION_GATE_AND_ATTEMPT_LIFECYCLE_REMEDIATION_PLAN.md"
     archived = Path(ac.ROOT) / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_PLAN.md"
     archived_audit = Path(ac.ROOT) / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_INDEPENDENT_AUDIT_PLAN.md"
@@ -86,6 +86,6 @@ def test_current_plan_is_the_only_active_plan() -> None:
     assert archived.is_file()
     assert archived_audit.is_file()
     text = active.read_text(encoding="utf-8")
-    assert "独立审核" in text
-    assert "旧 SR/SG/CR/BR/AC/TZ physics identity" in text
-    assert "UT0" in text and "UT9" in text
+    assert "O1/O2" in text
+    assert "388-step red-mug" in text
+    assert "native MuJoCo" in text

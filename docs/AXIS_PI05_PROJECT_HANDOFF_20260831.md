@@ -6,10 +6,10 @@
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-sg0-sg12-support-gold-20260907`
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_operations_o1_0_ready_for_native_vnc_no_save_canary`
+> 当前总状态：`track3_operations_o1_1_no_save_canary_passed_ready_for_explicit_user_takeover`
 > 唯一活动计划：`docs/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md`
-> 下一停止点：`O1_1_native_mujoco_turbovnc_no_save_canary_requires_user_online`
-> 最新执行闭包：`docs/reviews/axis_pi05/TRACK3_O1_0_RED_MUG_RETIMING_20260908.md`
+> 下一停止点：`O1_2_explicit_user_takeover_one_canonical_recording`
+> 最新执行闭包：`docs/reviews/axis_pi05/TRACK3_O1_1_NATIVE_VNC_NO_SAVE_CANARY_20260909.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > O0R remediation commit：`20662dd`
 > O0R evidence：`data/reports/axis_libero_30k/track3_operations_o0r_remediation_20260908/`
@@ -1049,3 +1049,13 @@ review 位于
 `docs/reviews/axis_pi05/TRACK3_O1_0_RED_MUG_RETIMING_20260908.md`。下一步
 必须由用户在线后执行 native MuJoCo/TurboVNC no-save canary；O2 继续冻结，
 直到 O1 accepted 且 fresh replay=3/3。
+
+## 92. O1.1 native VNC no-save canary（2026-09-09）
+
+O1.1 no-save canary 已通过并 hard stop。VNC display :3、native MuJoCo、物理 GPU3、20 Hz preview 与控制接口均通过；使用 O1.0 冻结的 388-step red-mug start state 验证 source=true、goal=false、success=false 和重复 reset 一致。临时 writer 验证了无 object array 且每帧 contact offsets 与 contact_n 一致。
+
+没有调用正式 record_episode，没有保存 candidate/pending，没有 replay、GPU 训练或 O2。candidate inventory 未变化；replay=not_evaluated，formal recording=not_started。五个 canary attempt 全部保留，attempt 0005 的派生摘要字段倒置通过独立 correction namespace 修正，历史 summary 未改写。
+
+当前唯一活动计划仍为 O1/O2 计划。下一停止点是 O1_2_explicit_user_takeover_one_canonical_recording：必须由用户明确接管 Teleop 后才可最多录一条 canonical red-mug formal recording；VNC 已连接本身不构成接管。O2 仍冻结，直到 O1 accepted 且 fresh replay=3/3。
+
+报告：docs/reviews/axis_pi05/TRACK3_O1_1_NATIVE_VNC_NO_SAVE_CANARY_20260909.md；derived correction：data/reports/axis_libero_30k/track3_operations_o1_1_native_vnc_canary_20260909_derived_correction_20260909/summary.json。

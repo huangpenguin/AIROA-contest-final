@@ -40,9 +40,9 @@ def test_independent_eg_audit_is_approved_and_separate() -> None:
     assert current["audit_report_commit"] == audit["audit_report_commit"]
     assert current["next_plan"] is None
     assert current["next_phase_only"] == "new_reviewed_plan_required"
-    assert handoff["status"] == "track3_operations_o1_0_ready_for_native_vnc_no_save_canary"
+    assert handoff["status"] == "track3_operations_o1_1_no_save_canary_passed_ready_for_explicit_user_takeover"
     assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md"
-    assert handoff["next_phase_only"] == "O1_1_native_mujoco_turbovnc_no_save_canary_requires_user_online"
+    assert handoff["next_phase_only"] == "O1_2_explicit_user_takeover_one_canonical_recording"
 
 
 def test_eg_audit_preserves_unavailable_gap_and_final_closure() -> None:

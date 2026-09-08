@@ -126,9 +126,9 @@ def test_raw_anchor_is_exact_and_git_persisted_without_rewriting() -> None:
 
 def test_lifecycle_has_one_new_active_plan_and_archived_old_audit_plan() -> None:
     handoff = strict_json(HANDOFF)
-    assert handoff["status"] == "track3_operations_o1_0_ready_for_native_vnc_no_save_canary"
+    assert handoff["status"] == "track3_operations_o1_1_no_save_canary_passed_ready_for_explicit_user_takeover"
     assert handoff["next_plan"] == PLAN
-    assert handoff["next_phase_only"] == "O1_1_native_mujoco_turbovnc_no_save_canary_requires_user_online"
+    assert handoff["next_phase_only"] == "O1_2_explicit_user_takeover_one_canonical_recording"
     assert (ROOT / PLAN).is_file()
     assert ARCHIVED_AUDIT_PLAN.is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_INDEPENDENT_AUDIT_PLAN.md").exists()

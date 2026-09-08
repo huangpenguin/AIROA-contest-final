@@ -1,0 +1,11 @@
+{
+  "active_plan": "docs/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md",
+  "candidate_created": false,
+  "created_at_utc": "2026-09-08T18:51:04.927565+00:00",
+  "error": "KeyError: 'contact_n'",
+  "formal_recording": "not_started",
+  "replay": "not_evaluated",
+  "root_commit": "e6d538f276299ce80fadbaaab92929e52da87407",
+  "schema_version": "track3_o1_1_native_vnc_no_save_canary_v1",
+  "status": "blocked_or_failed_before_closeout"
+}

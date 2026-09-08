@@ -79,9 +79,9 @@ def test_support_is_selected_from_measured_failure_progress() -> None:
 
 def test_lifecycle_has_exactly_one_new_active_plan() -> None:
     handoff = strict_json(HANDOFF)
-    assert handoff["status"] == "track3_operations_o1_0_ready_for_native_vnc_no_save_canary"
+    assert handoff["status"] == "track3_operations_o1_1_no_save_canary_passed_ready_for_explicit_user_takeover"
     assert handoff["next_plan"] == PLAN
-    assert handoff["next_phase_only"] == "O1_1_native_mujoco_turbovnc_no_save_canary_requires_user_online"
+    assert handoff["next_phase_only"] == "O1_2_explicit_user_takeover_one_canonical_recording"
     assert (ROOT / PLAN).is_file()
     assert ARCHIVED_AUDIT_PLAN.is_file()
     assert ARCHIVED_EXECUTION_PLAN.is_file()

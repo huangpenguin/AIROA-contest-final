@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-08",
-  "status": "track3_operations_o1_0_ready_for_native_vnc_no_save_canary",
+  "status": "track3_operations_o1_1_no_save_canary_passed_ready_for_explicit_user_takeover",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
@@ -260,7 +260,7 @@
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
   "next_plan": "docs/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md",
-  "next_phase_only": "O1_1_native_mujoco_turbovnc_no_save_canary_requires_user_online",
+  "next_phase_only": "O1_2_explicit_user_takeover_one_canonical_recording",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -5330,7 +5330,7 @@
       "automatic_upload": false,
       "submission": false
     },
-    "next_phase_only": "O1_1_native_mujoco_turbovnc_no_save_canary_requires_user_online"
+    "next_phase_only": "O1_2_explicit_user_takeover_one_canonical_recording"
   },
   "track3_operations_o1_0_execution": {
     "status": "ready_for_native_vnc_no_save_canary",
@@ -5357,5 +5357,36 @@
     "teleop": "not_started",
     "o2": "frozen_until_o1_accepted_fresh_replay_3_of_3",
     "next_phase_only": "O1_1_native_mujoco_turbovnc_no_save_canary_requires_user_online"
+  },
+  "track3_operations_o1_1_execution": {
+    "status": "passed_native_vnc_no_save_canary",
+    "phase": "O1.1",
+    "report": "docs/reviews/axis_pi05/TRACK3_O1_1_NATIVE_VNC_NO_SAVE_CANARY_20260909.md",
+    "successful_source_attempt": "data/reports/axis_libero_30k/track3_operations_o1_1_native_vnc_canary_20260909_attempt_0005/summary.json",
+    "derived_correction_summary": "data/reports/axis_libero_30k/track3_operations_o1_1_native_vnc_canary_20260909_derived_correction_20260909/summary.json",
+    "attempt_index": "data/reports/axis_libero_30k/track3_operations_o1_1_native_vnc_canary_20260909_derived_correction_20260909/attempt_index.json",
+    "root_source_commit": "e6d538f276299ce80fadbaaab92929e52da87407",
+    "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "display": ":3",
+    "physical_gpu": 3,
+    "historical_raw_modified": false,
+    "historical_metadata_modified": false,
+    "candidate_created": false,
+    "pending_created": false,
+    "save_event_seen": false,
+    "record_episode_called": false,
+    "formal_recording": "not_started",
+    "replay": "not_evaluated",
+    "o2": "frozen_until_o1_accepted_fresh_replay_3_of_3",
+    "next_phase_only": "O1_2_explicit_user_takeover_one_canonical_recording",
+    "targeted_tests": "9 passed",
+    "full_tests": "436 passed, 7 skipped, 26 warnings",
+    "strict_json": "10 passed duplicate-key rejection",
+    "py_compile": true,
+    "diff_check": true,
+    "scoped_o1_1_partial_files": false,
+    "candidate_inventory_hashes": true,
+    "track3_mujoco_teleop_processes": false,
+    "gpu3_after_mib": 5
   }
 }

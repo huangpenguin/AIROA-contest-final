@@ -1,11 +1,11 @@
 # AXIS Pi0.5 计划索引与审核生命周期
 
-> 更新日期：2026-09-08（Asia/Tokyo）
+> 更新日期：2026-09-09（Asia/Tokyo）
 > 跨session入口：先完整读取根目录`AGENTS.md`与`MEMORY.md`，再读取本索引、handoff、machine JSON、唯一活动计划和最新审核；先查live PID/cursor，禁止重复启动。
 > 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md`
-> 当前状态：`track3_operations_o1_0_ready_for_native_vnc_no_save_canary`
+> 当前状态：`track3_operations_o1_1_no_save_canary_passed_ready_for_explicit_user_takeover`
 > 最新审核：`docs/reviews/axis_pi05/TRACK3_O0R_REMEDIATION_20260908.md`
-> 最新执行闭包：`docs/reviews/axis_pi05/TRACK3_O1_0_RED_MUG_RETIMING_20260908.md`
+> 最新执行闭包：`docs/reviews/axis_pi05/TRACK3_O1_1_NATIVE_VNC_NO_SAVE_CANARY_20260909.md`
 
 ## 1. 本轮执行停止点
 
@@ -493,3 +493,13 @@ replay、GPU、MuJoCo、Teleop、新录制、Infinity/Scenic 和 O2 均为
 machine namespace 为
 `data/reports/axis_libero_30k/track3_operations_o1_0_red_mug_retiming_20260908/`。
 下一授权仅为用户在线后的 native MuJoCo/TurboVNC no-save canary。
+
+## 92. O1.1 native VNC no-save canary（2026-09-09）
+
+O1.1 已通过并在正式人工录制前 hard stop。display :3 可用，native MuJoCo 使用物理 GPU3 启动；基于 O1.0 冻结的 388-step red-mug start state，source=true、goal=false、success=false，连续 reset 一致。front/wrist preview、open/close、abort fail-closed、临时 v4 NPZ writer、动态 contact offsets 均通过。
+
+本次没有调用 record_episode，没有生成 candidate/pending，没有 replay 或训练；candidate inventory 前后不变，replay=not_evaluated、formal recording=not_started。前 4 个失败 attempt 和 attempt 0005 原始 summary 均保留不改；摘要字段倒置只在 derived correction namespace 纠正。
+
+当前 hard stop 为 track3_operations_o1_1_no_save_canary_passed_ready_for_explicit_user_takeover。下一步是 O1.2，必须等待用户明确接管 Teleop，最多录制一条 canonical red-mug candidate；O2 继续冻结，直到 O1 accepted 且 fresh replay 3/3。
+
+执行闭包：docs/reviews/axis_pi05/TRACK3_O1_1_NATIVE_VNC_NO_SAVE_CANARY_20260909.md；派生修正：data/reports/axis_libero_30k/track3_operations_o1_1_native_vnc_canary_20260909_derived_correction_20260909/summary.json。

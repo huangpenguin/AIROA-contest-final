@@ -1,0 +1,50 @@
+{
+  "schema_version": "track3_o1_1_canary_attempt_index_v1",
+  "attempts": [
+    {
+      "attempt": "track3_operations_o1_1_native_vnc_canary_20260909",
+      "summary": "data/reports/axis_libero_30k/track3_operations_o1_1_native_vnc_canary_20260909/summary.json",
+      "summary_sha256": "617a01d31512109d2ef1ce9bc876b185429cbcb73f942eb133e235c800c75cea",
+      "status": "blocked_or_failed_before_closeout",
+      "error": "ModuleNotFoundError: No module named 'libero'",
+      "historical_unchanged": true
+    },
+    {
+      "attempt": "track3_operations_o1_1_native_vnc_canary_20260909_attempt_0002",
+      "summary": "data/reports/axis_libero_30k/track3_operations_o1_1_native_vnc_canary_20260909_attempt_0002/summary.json",
+      "summary_sha256": "b20ae94b087ef075e7d9121b47cf0eaf255c61cfcf0c5e68339b8fd448fbbc53",
+      "status": "blocked_or_failed_before_closeout",
+      "error": "RuntimeError: invalid red-mug reset predicates: source=False goal=False success=False",
+      "historical_unchanged": true
+    },
+    {
+      "attempt": "track3_operations_o1_1_native_vnc_canary_20260909_attempt_0003",
+      "summary": "data/reports/axis_libero_30k/track3_operations_o1_1_native_vnc_canary_20260909_attempt_0003/summary.json",
+      "summary_sha256": "50ecbe73e1f8030770b6f2950e389132a64e88921194dba830dab1c68d228204",
+      "status": "blocked_or_failed_before_closeout",
+      "error": "ValueError: unknown control event: keyup",
+      "historical_unchanged": true
+    },
+    {
+      "attempt": "track3_operations_o1_1_native_vnc_canary_20260909_attempt_0004",
+      "summary": "data/reports/axis_libero_30k/track3_operations_o1_1_native_vnc_canary_20260909_attempt_0004/summary.json",
+      "summary_sha256": "283903bf0a029c3d8b9589382efac20b65789f3bbbbbd84d226e94c7d2046cfc",
+      "status": "blocked_or_failed_before_closeout",
+      "error": "KeyError: 'contact_n'",
+      "historical_unchanged": true
+    },
+    {
+      "attempt": "track3_operations_o1_1_native_vnc_canary_20260909_attempt_0005",
+      "summary": "data/reports/axis_libero_30k/track3_operations_o1_1_native_vnc_canary_20260909_attempt_0005/summary.json",
+      "summary_sha256": "a7ea65d76e38238ef47fc82e1afed143610da67e81c46fa945d2a5182596b3b9",
+      "status": "passed_native_vnc_no_save_canary",
+      "error": null,
+      "historical_unchanged": true
+    }
+  ],
+  "successful_attempt": "track3_operations_o1_1_native_vnc_canary_20260909_attempt_0005",
+  "successful_attempt_summary": "data/reports/axis_libero_30k/track3_operations_o1_1_native_vnc_canary_20260909_attempt_0005/summary.json",
+  "successful_attempt_sha256": "a7ea65d76e38238ef47fc82e1afed143610da67e81c46fa945d2a5182596b3b9",
+  "correction_summary": "data/reports/axis_libero_30k/track3_operations_o1_1_native_vnc_canary_20260909_derived_correction_20260909/summary.json",
+  "no_attempt_overwritten": true
+}

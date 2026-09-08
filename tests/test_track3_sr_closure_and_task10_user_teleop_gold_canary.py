@@ -91,8 +91,8 @@ def test_teleop_gold_npz_and_explicit_gripper() -> None:
 
 def test_handoff_waits_for_explicit_takeover() -> None:
     handoff = strict_json(HANDOFF)
-    assert handoff["status"] == "track3_operations_o1_0_ready_for_native_vnc_no_save_canary"
-    assert handoff["next_phase_only"] == "O1_1_native_mujoco_turbovnc_no_save_canary_requires_user_online"
+    assert handoff["status"] == "track3_operations_o1_1_no_save_canary_passed_ready_for_explicit_user_takeover"
+    assert handoff["next_phase_only"] == "O1_2_explicit_user_takeover_one_canonical_recording"
     assert PLAN.is_file()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md").is_file()
     assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md"
@@ -135,6 +135,20 @@ def test_o1_0_red_mug_retiming_is_derived_and_hard_stopped() -> None:
     assert blueprint["budgets"]["planned_goal_predicate_frame"] == 220
     assert blueprint["budgets"]["total_target_max_frames"] == 260
     assert blueprint["budgets"]["hard_max_frames"] == 300
+
+
+def test_o1_1_native_vnc_no_save_canary_passed() -> None:
+    handoff = strict_json(HANDOFF)
+    execution = handoff["track3_operations_o1_1_execution"]
+    assert execution["status"] == "passed_native_vnc_no_save_canary"
+    assert execution["formal_recording"] == "not_started"
+    assert execution["replay"] == "not_evaluated"
+    assert execution["candidate_created"] is False
+    correction = strict_json(ROOT / execution["derived_correction_summary"])
+    assert correction["reset"]["source_true"] is True
+    assert correction["reset"]["goal_false"] is True
+    assert correction["save"]["save_event_seen"] is False
+    assert correction["writer"]["contact_offsets_equal_contact_n"] is True
 
 
 def test_dynamic_contact_table_preserves_every_contact_and_offsets() -> None:

@@ -5343,6 +5343,7 @@
     "retiming_blueprint": "data/reports/axis_libero_30k/track3_operations_o1_0_red_mug_retiming_20260908/retiming_blueprint.json",
     "canonical_attempt_lock": "data/reports/axis_libero_30k/track3_operations_o1_0_red_mug_retiming_20260908/canonical_attempt_lock.json",
     "root_source_commit": "3efd449c2275271ee9a84e68195f888481449565",
+    "execution_commit": "bef338d5885ef0e0d3355784a0ac6780dd90ffa0",
     "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
     "preferred_seed": "pending/official_t3_red_mug_1788838632",
     "reference_seed": "pending/official_t3_red_mug_1788838293",

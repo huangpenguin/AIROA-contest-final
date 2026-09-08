@@ -489,6 +489,7 @@ replay、GPU、MuJoCo、Teleop、新录制、Infinity/Scenic 和 O2 均为
 `canonical_red_mug_attempt_0001`。
 
 执行证据：`docs/reviews/axis_pi05/TRACK3_O1_0_RED_MUG_RETIMING_20260908.md`；
+执行提交：`bef338d5885ef0e0d3355784a0ac6780dd90ffa0`；
 machine namespace 为
 `data/reports/axis_libero_30k/track3_operations_o1_0_red_mug_retiming_20260908/`。
 下一授权仅为用户在线后的 native MuJoCo/TurboVNC no-save canary。

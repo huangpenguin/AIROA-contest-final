@@ -44,6 +44,8 @@ contact and a final-frame backward inference cannot satisfy it.
 
 ## Evidence
 
+Execution commit: `bef338d5885ef0e0d3355784a0ac6780dd90ffa0`.
+
 - Machine namespace: `data/reports/axis_libero_30k/track3_operations_o1_0_red_mug_retiming_20260908/`
 - Summary: `summary.json`
 - Input/hash lock: `input_lock.json`

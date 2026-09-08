@@ -1,0 +1,59 @@
+{
+  "evidence_generation": [
+    "env",
+    "PYTHONPATH=.",
+    ".venv_axis_pi05/bin/python",
+    "tools/axis_pi05/track3_operations_o0r_remediation.py",
+    "--run",
+    "--targeted-result",
+    "12 passed",
+    "--full-result",
+    "434 passed, 7 skipped, 26 warnings in 85.51s",
+    "--compile-result",
+    "passed",
+    "--diff-check-result",
+    "passed"
+  ],
+  "full": [
+    "env",
+    "PYTHONPATH=.",
+    "JAX_PLATFORMS=cpu",
+    ".venv_axis_pi05/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests"
+  ],
+  "git_diff_check": [
+    "git",
+    "diff",
+    "--check"
+  ],
+  "py_compile": [
+    "env",
+    "PYTHONPATH=.",
+    ".venv_axis_pi05/bin/python",
+    "-m",
+    "py_compile",
+    "tools/axis_pi05/track3_public_teleop.py",
+    "tools/axis_pi05/track3_operations_o0r_remediation.py"
+  ],
+  "strict_json": [
+    "env",
+    "PYTHONPATH=.",
+    ".venv_axis_pi05/bin/python",
+    "tools/axis_pi05/track3_operations_o0r_remediation.py",
+    "--run"
+  ],
+  "targeted": [
+    "env",
+    "PYTHONPATH=.",
+    "JAX_PLATFORMS=cpu",
+    ".venv_axis_pi05/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_track3_public_terminal_recovery.py",
+    "tests/test_track3_sr_closure_and_task10_user_teleop_gold_canary.py"
+  ]
+}

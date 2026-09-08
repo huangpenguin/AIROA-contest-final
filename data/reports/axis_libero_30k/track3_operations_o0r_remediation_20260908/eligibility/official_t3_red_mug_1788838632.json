@@ -1,0 +1,69 @@
+{
+  "acquisition_gate_historical": {
+    "acquisition_gate_invalid": true,
+    "last_frame_index": 387,
+    "metadata_candidate_gate": "passed",
+    "required_contact_barrier_index": 387,
+    "source_release_safe": false,
+    "subject_goal_table_contact_cannot_substitute": true
+  },
+  "contact_storage_historical": {
+    "capacity": 32,
+    "contact_n_max": 52,
+    "contact_n_min": 42,
+    "contact_raw_incomplete": true,
+    "format": "fixed_contact_slots_v1",
+    "saved_contact_n_equals_contact_count": false,
+    "total_frames": 388,
+    "truncated_frames": 388
+  },
+  "episode": "pending/official_t3_red_mug_1788838632",
+  "eval_step_budget": 300,
+  "frame_count": 388,
+  "gold_eligible": false,
+  "historical_metadata_sha256": "3c91aea6849c2f33f1941e766833f31b9a8cacffb5171928d5b69d1818ca5e48",
+  "historical_metadata_unchanged": true,
+  "npz_validation": {
+    "allow_pickle": false,
+    "keys": [
+      "actions",
+      "check_success",
+      "contact_body1",
+      "contact_body2",
+      "contact_geom1",
+      "contact_geom2",
+      "contact_n",
+      "contact_role",
+      "deadline_miss",
+      "demonstrator_contact",
+      "dones",
+      "eef_pos",
+      "front",
+      "goal_predicate",
+      "goal_receiver_contact",
+      "gripper",
+      "phase",
+      "required_contact",
+      "rewards",
+      "source_predicate",
+      "source_receiver_contact",
+      "states",
+      "success",
+      "timestamps_monotonic",
+      "unrelated_contact",
+      "wrist"
+    ],
+    "object_arrays": []
+  },
+  "over_budget": true,
+  "preferred_seed": true,
+  "reason": [
+    "over_budget",
+    "contact_raw_incomplete",
+    "acquisition_gate_invalid"
+  ],
+  "reference_only": false,
+  "replay": "not_evaluated",
+  "schema_version": "track3_o0r_derived_eligibility_v1",
+  "status": "pending_historical_raw"
+}

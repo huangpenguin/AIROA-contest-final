@@ -1,0 +1,22 @@
+{
+  "captured_at_utc": "2026-09-08T11:56:53.114373+00:00",
+  "gpu_scan_argv": [
+    "nvidia-smi",
+    "--query-compute-apps=pid,process_name,used_memory",
+    "--format=csv,noheader"
+  ],
+  "gpu_scan_stdout": "1784099, /mnt/home/moriyama/workspace/ros2_project/mmdetection/.venv-yolo26/bin/python, 15354 MiB\n2024269, /mnt/home/moriyama/workspace/ros2_project/mmdetection/.venv-yolo26/bin/python, 14398 MiB\n2043891, /mnt/home/moriyama/workspace/ros2_project/mmdetection/.venv-yolo26/bin/python, 14794 MiB",
+  "non_actions": {
+    "gpu_not_used": true,
+    "historical_raw_not_mutated": true,
+    "new_recording_not_created": true,
+    "replay_not_run": true,
+    "teleop_not_run": true
+  },
+  "track3_process_scan_argv": [
+    "pgrep",
+    "-af",
+    "track3_public_teleop|track3_public_replay|mujoco"
+  ],
+  "track3_process_scan_stdout": ""
+}

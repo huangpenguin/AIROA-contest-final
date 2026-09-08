@@ -36,6 +36,12 @@ def test_public_hdf5_mapping_covers_locked_40_tasks_without_spaces():
 def test_teleop_action_contract_and_cpu_self_test():
     module = _load("track3_public_teleop", "tools/axis_pi05/track3_public_teleop.py")
     machine = module.ActionStateMachine(config=module.RecorderConfig())
+    assert module.RecorderConfig().hz == 20.0
+    assert module.RecorderConfig().operator_hz == 2.0
+    assert module.RecorderConfig().tick_ms() == 500
+    assert "tick=${s.tick_ms||500}ms" in module.PREVIEW_HTML
+    assert "setInterval(refresh,50)" in module.PREVIEW_HTML
+    assert module.RecorderConfig().translation_step >= 0.30
     for _ in range(50):
         action = machine.next_action("")
         module.validate_action(action)
@@ -50,8 +56,11 @@ def test_teleop_action_contract_and_cpu_self_test():
     machine.event("keydown", "p")
     machine.event("connect")
     machine.event("keydown", "w")
-    assert machine.next_action()[0] > 0
+    assert machine.next_action()[0] < 0
     machine.event("keyup", "w")
+    assert machine.next_action()[0] < 0
+    machine.event("keydown", "s")
+    assert machine.next_action()[0] > 0
     machine.event("keydown", "c")
     assert machine.state.camera == "wrist"
     machine.event("keydown", "z")

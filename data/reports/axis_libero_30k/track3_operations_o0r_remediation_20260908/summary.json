@@ -1,0 +1,105 @@
+{
+  "audit_class": "approved",
+  "created_at_utc": "2026-09-08T11:56:53.096567+00:00",
+  "eligibility_reports": [
+    "eligibility/official_t3_red_mug_1788838293.json",
+    "eligibility/official_t3_red_mug_1788838632.json"
+  ],
+  "historical_metadata_mutated": false,
+  "nested_openpi_dirty_status": [],
+  "nested_openpi_head_before_o0r": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "path_resolution_report": "path_resolution.json",
+  "pdf_hashes": {
+    "operations_kickoff": {
+      "bytes": 6091703,
+      "path": "/home/huang/code/PARC2026_final/slack/松尾研PAIコンペ2026_キックオフ全体スライド.pdf",
+      "sha256": "dfd187350f492002a70c4989776973d50090a92123dae4561903e9c382e0e77b"
+    },
+    "upper_share": {
+      "bytes": 1285162,
+      "path": "/home/huang/code/PARC2026_final/slack/上位発表者Track1_yoshinari1209様.pdf",
+      "sha256": "251f7698238d7c9388e7059a92bed5a4625b32334a4616803012acca133f3d6a"
+    }
+  },
+  "prior_o0_audit_class": "remediation_required",
+  "raw_file_count": 69,
+  "raw_inventory_sha256": "3a385f0a56a58c9082d74cc33f1a1f7552401b3eb0caa1e98f5c22399fff86b1",
+  "raw_root": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_pilot_v2",
+  "remediation_namespace": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operations_o0r_remediation_20260908",
+  "resource_boundary": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_operations_o0r_remediation_20260908/resource_boundary.json",
+  "root_dirty_status_before_commit": [
+    "M data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/current_attempt.json",
+    " M data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/sr6_supervisor.stdout.log",
+    " M data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/supervisor.pid",
+    " M tests/test_track3_public_terminal_recovery.py",
+    " M tests/test_track3_sr_closure_and_task10_user_teleop_gold_canary.py",
+    " M tools/axis_pi05/track3_public_teleop.py",
+    "?? MUJOCO_LOG.TXT",
+    "?? docs/strategy/",
+    "?? slack/",
+    "?? tools/axis_pi05/track3_operations_o0r_remediation.py"
+  ],
+  "root_head_before_o0r": "bb0793f5f8558115d2fc20b07044c252d2c50efa",
+  "schema_version": "track3_o0r_summary_v1",
+  "status": "approved",
+  "strategy_draft_sha256": "233b2c7d194b621ab791285b5988983d8f6d0763506de2bdcf5c609e18bf30db",
+  "validation": {
+    "full": {
+      "argv": [
+        "env",
+        "PYTHONPATH=.",
+        "JAX_PLATFORMS=cpu",
+        ".venv_axis_pi05/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests"
+      ],
+      "result": "434 passed, 7 skipped, 26 warnings in 85.51s"
+    },
+    "git_diff_check": {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "result": "passed"
+    },
+    "py_compile": {
+      "argv": [
+        "env",
+        "PYTHONPATH=.",
+        ".venv_axis_pi05/bin/python",
+        "-m",
+        "py_compile",
+        "tools/axis_pi05/track3_public_teleop.py",
+        "tools/axis_pi05/track3_operations_o0r_remediation.py"
+      ],
+      "result": "passed"
+    },
+    "strict_json": {
+      "argv": [
+        "env",
+        "PYTHONPATH=.",
+        ".venv_axis_pi05/bin/python",
+        "tools/axis_pi05/track3_operations_o0r_remediation.py",
+        "--run"
+      ],
+      "result": "passed"
+    },
+    "targeted": {
+      "argv": [
+        "env",
+        "PYTHONPATH=.",
+        "JAX_PLATFORMS=cpu",
+        ".venv_axis_pi05/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_track3_public_terminal_recovery.py",
+        "tests/test_track3_sr_closure_and_task10_user_teleop_gold_canary.py"
+      ],
+      "result": "12 passed"
+    }
+  }
+}

@@ -1,8 +1,8 @@
 {
   "active": false,
-  "attempt_id": 4,
-  "attempt_root": "data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/attempts/attempt_0004",
+  "attempt_id": 5,
+  "attempt_root": "data/reports/axis_libero_30k/track3_support_runtime_gate_remediation/attempts/attempt_0005",
   "schema_version": "track3_sr_current_attempt_v1",
-  "status": "completed",
-  "updated_at_utc": "2026-09-07T10:30:32.925470+00:00"
+  "status": "hard_stop",
+  "updated_at_utc": "2026-09-07T13:53:04.240487+00:00"
 }

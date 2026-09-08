@@ -1,0 +1,776 @@
+{
+  "episodes": [
+    {
+      "all_expected_sha_match": true,
+      "artifacts": {
+        "end_state": {
+          "actual_bytes": 760,
+          "actual_sha256": "34e0c70edac11ce668e548c5cca308a9fbd16b64afc8726e8800280c8c82c66d",
+          "episode_relative_safe": true,
+          "expected_sha256": "34e0c70edac11ce668e548c5cca308a9fbd16b64afc8726e8800280c8c82c66d",
+          "expected_sha_match": true,
+          "final_relative_path": "end_state.npy",
+          "old_metadata_path": "end_state.npy",
+          "old_path_exists": true,
+          "old_path_is_partial": false
+        },
+        "front": {
+          "actual_bytes": null,
+          "actual_sha256": null,
+          "episode_relative_safe": true,
+          "expected_sha256": null,
+          "expected_sha_match": true,
+          "final_relative_path": null,
+          "old_metadata_path": null,
+          "old_path_exists": false
+        },
+        "start_state": {
+          "actual_bytes": 760,
+          "actual_sha256": "34e0c70edac11ce668e548c5cca308a9fbd16b64afc8726e8800280c8c82c66d",
+          "episode_relative_safe": true,
+          "expected_sha256": "34e0c70edac11ce668e548c5cca308a9fbd16b64afc8726e8800280c8c82c66d",
+          "expected_sha_match": true,
+          "final_relative_path": "start_state.npy",
+          "old_metadata_path": "start_state.npy",
+          "old_path_exists": true,
+          "old_path_is_partial": false
+        },
+        "trajectory": {
+          "actual_bytes": 3610,
+          "actual_sha256": "ad20bb2cb3bd1e735132d8b500d4da264dd5f339ede078fae97f6a1b10c3829d",
+          "episode_relative_safe": true,
+          "expected_sha256": "ad20bb2cb3bd1e735132d8b500d4da264dd5f339ede078fae97f6a1b10c3829d",
+          "expected_sha_match": true,
+          "final_relative_path": "trajectory.npz",
+          "old_metadata_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_pilot_v2/diagnostic/.task_10_1788832271.partial/trajectory.npz",
+          "old_path_exists": false,
+          "old_path_is_partial": true
+        },
+        "wrist": {
+          "actual_bytes": null,
+          "actual_sha256": null,
+          "episode_relative_safe": true,
+          "expected_sha256": null,
+          "expected_sha_match": true,
+          "final_relative_path": null,
+          "old_metadata_path": null,
+          "old_path_exists": false
+        }
+      },
+      "episode": "diagnostic/task_10_1788832271",
+      "historical_metadata_unchanged": true,
+      "metadata_path": "diagnostic/task_10_1788832271/metadata.json",
+      "metadata_sha256_after": "8669ad1d665b2d2a66f407af8363368627c11ba211ad8c4c917a5103d57cf1bc",
+      "metadata_sha256_before": "8669ad1d665b2d2a66f407af8363368627c11ba211ad8c4c917a5103d57cf1bc"
+    },
+    {
+      "all_expected_sha_match": true,
+      "artifacts": {
+        "end_state": {
+          "actual_bytes": 800,
+          "actual_sha256": "c4c6dd6f110c5a16816646e3a4bf203167e784226ce8222b014e9ccfa30063f3",
+          "episode_relative_safe": true,
+          "expected_sha256": "c4c6dd6f110c5a16816646e3a4bf203167e784226ce8222b014e9ccfa30063f3",
+          "expected_sha_match": true,
+          "final_relative_path": "end_state.npy",
+          "old_metadata_path": "end_state.npy",
+          "old_path_exists": true,
+          "old_path_is_partial": false
+        },
+        "front": {
+          "actual_bytes": 630893,
+          "actual_sha256": "e2322b403393bcf639871c6dce652103eadf2ce6e19fd4c944828db53438eb3a",
+          "episode_relative_safe": true,
+          "expected_sha256": "e2322b403393bcf639871c6dce652103eadf2ce6e19fd4c944828db53438eb3a",
+          "expected_sha_match": true,
+          "final_relative_path": "front.mp4",
+          "old_metadata_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_pilot_v2/pending/.official_t3_red_mug_1788838293.partial/front.mp4",
+          "old_path_exists": false,
+          "old_path_is_partial": true
+        },
+        "start_state": {
+          "actual_bytes": 800,
+          "actual_sha256": "59d8be9bc6732839a15c568d9d13294d6358e6f9ae3f664859ac146cd4b975b5",
+          "episode_relative_safe": true,
+          "expected_sha256": "59d8be9bc6732839a15c568d9d13294d6358e6f9ae3f664859ac146cd4b975b5",
+          "expected_sha_match": true,
+          "final_relative_path": "start_state.npy",
+          "old_metadata_path": "start_state.npy",
+          "old_path_exists": true,
+          "old_path_is_partial": false
+        },
+        "trajectory": {
+          "actual_bytes": 80111631,
+          "actual_sha256": "444f70c6d2abfdf3ad63b6f10523390bd282a8c8434a3d66f45608c522ff3a61",
+          "episode_relative_safe": true,
+          "expected_sha256": "444f70c6d2abfdf3ad63b6f10523390bd282a8c8434a3d66f45608c522ff3a61",
+          "expected_sha_match": true,
+          "final_relative_path": "trajectory.npz",
+          "old_metadata_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_pilot_v2/pending/.official_t3_red_mug_1788838293.partial/trajectory.npz",
+          "old_path_exists": false,
+          "old_path_is_partial": true
+        },
+        "wrist": {
+          "actual_bytes": 730126,
+          "actual_sha256": "1b8b031ca8de6441354dbb44d75fb3de119b40ab6ab912428845f71b8c441002",
+          "episode_relative_safe": true,
+          "expected_sha256": "1b8b031ca8de6441354dbb44d75fb3de119b40ab6ab912428845f71b8c441002",
+          "expected_sha_match": true,
+          "final_relative_path": "wrist.mp4",
+          "old_metadata_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_pilot_v2/pending/.official_t3_red_mug_1788838293.partial/wrist.mp4",
+          "old_path_exists": false,
+          "old_path_is_partial": true
+        }
+      },
+      "episode": "pending/official_t3_red_mug_1788838293",
+      "historical_metadata_unchanged": true,
+      "metadata_path": "pending/official_t3_red_mug_1788838293/metadata.json",
+      "metadata_sha256_after": "4c7f3aef5ec9d92950ad46b5ddce5a0d48001a394b9a92ec64676e1f979f2c0c",
+      "metadata_sha256_before": "4c7f3aef5ec9d92950ad46b5ddce5a0d48001a394b9a92ec64676e1f979f2c0c"
+    },
+    {
+      "all_expected_sha_match": true,
+      "artifacts": {
+        "end_state": {
+          "actual_bytes": 800,
+          "actual_sha256": "b1ff66a459bc83c526f438aa6ef6a95ba6634c09415490800118b489a3010127",
+          "episode_relative_safe": true,
+          "expected_sha256": "b1ff66a459bc83c526f438aa6ef6a95ba6634c09415490800118b489a3010127",
+          "expected_sha_match": true,
+          "final_relative_path": "end_state.npy",
+          "old_metadata_path": "end_state.npy",
+          "old_path_exists": true,
+          "old_path_is_partial": false
+        },
+        "front": {
+          "actual_bytes": 598548,
+          "actual_sha256": "8f701a0deb0adafded6bd3510e31f9d6b3ede47ac1b3b008c3fd8e3b56e3202b",
+          "episode_relative_safe": true,
+          "expected_sha256": "8f701a0deb0adafded6bd3510e31f9d6b3ede47ac1b3b008c3fd8e3b56e3202b",
+          "expected_sha_match": true,
+          "final_relative_path": "front.mp4",
+          "old_metadata_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_pilot_v2/pending/.official_t3_red_mug_1788838632.partial/front.mp4",
+          "old_path_exists": false,
+          "old_path_is_partial": true
+        },
+        "start_state": {
+          "actual_bytes": 800,
+          "actual_sha256": "299bc6d0589f2d08b9a502f1507247e97a2cdae6309bc4714244ab0dd6236f9e",
+          "episode_relative_safe": true,
+          "expected_sha256": "299bc6d0589f2d08b9a502f1507247e97a2cdae6309bc4714244ab0dd6236f9e",
+          "expected_sha_match": true,
+          "final_relative_path": "start_state.npy",
+          "old_metadata_path": "start_state.npy",
+          "old_path_exists": true,
+          "old_path_is_partial": false
+        },
+        "trajectory": {
+          "actual_bytes": 66220125,
+          "actual_sha256": "2e6f9b34fb2337cbaedfd4ed1d79853e731f307aa6be1488c05c56c580e7ea5e",
+          "episode_relative_safe": true,
+          "expected_sha256": "2e6f9b34fb2337cbaedfd4ed1d79853e731f307aa6be1488c05c56c580e7ea5e",
+          "expected_sha_match": true,
+          "final_relative_path": "trajectory.npz",
+          "old_metadata_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_pilot_v2/pending/.official_t3_red_mug_1788838632.partial/trajectory.npz",
+          "old_path_exists": false,
+          "old_path_is_partial": true
+        },
+        "wrist": {
+          "actual_bytes": 664305,
+          "actual_sha256": "4401bb8d37ec0d8df02b7d04b2a977ec2791c44ac276ab3165e01a5e48c30c56",
+          "episode_relative_safe": true,
+          "expected_sha256": "4401bb8d37ec0d8df02b7d04b2a977ec2791c44ac276ab3165e01a5e48c30c56",
+          "expected_sha_match": true,
+          "final_relative_path": "wrist.mp4",
+          "old_metadata_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_pilot_v2/pending/.official_t3_red_mug_1788838632.partial/wrist.mp4",
+          "old_path_exists": false,
+          "old_path_is_partial": true
+        }
+      },
+      "episode": "pending/official_t3_red_mug_1788838632",
+      "historical_metadata_unchanged": true,
+      "metadata_path": "pending/official_t3_red_mug_1788838632/metadata.json",
+      "metadata_sha256_after": "3c91aea6849c2f33f1941e766833f31b9a8cacffb5171928d5b69d1818ca5e48",
+      "metadata_sha256_before": "3c91aea6849c2f33f1941e766833f31b9a8cacffb5171928d5b69d1818ca5e48"
+    },
+    {
+      "all_expected_sha_match": true,
+      "artifacts": {
+        "end_state": {
+          "actual_bytes": 800,
+          "actual_sha256": "632d25ed0098d49c6d44d1b9e192eebbb3740b48d654c06afa364560e860f56e",
+          "episode_relative_safe": true,
+          "expected_sha256": "632d25ed0098d49c6d44d1b9e192eebbb3740b48d654c06afa364560e860f56e",
+          "expected_sha_match": true,
+          "final_relative_path": "end_state.npy",
+          "old_metadata_path": "end_state.npy",
+          "old_path_exists": true,
+          "old_path_is_partial": false
+        },
+        "front": {
+          "actual_bytes": 650594,
+          "actual_sha256": "7928b945c1fdde486de08455012a4277bda0ca4a5dc2ea70eff1f4fb418b9b4d",
+          "episode_relative_safe": true,
+          "expected_sha256": "7928b945c1fdde486de08455012a4277bda0ca4a5dc2ea70eff1f4fb418b9b4d",
+          "expected_sha_match": true,
+          "final_relative_path": "front.mp4",
+          "old_metadata_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/.official_t3_red_mug_1788836713.partial/front.mp4",
+          "old_path_exists": false,
+          "old_path_is_partial": true
+        },
+        "start_state": {
+          "actual_bytes": 800,
+          "actual_sha256": "2e61ec0da34e9fbb90dc2530cc17611457b381e5f5aeb0a3c283b872b154189b",
+          "episode_relative_safe": true,
+          "expected_sha256": "2e61ec0da34e9fbb90dc2530cc17611457b381e5f5aeb0a3c283b872b154189b",
+          "expected_sha_match": true,
+          "final_relative_path": "start_state.npy",
+          "old_metadata_path": "start_state.npy",
+          "old_path_exists": true,
+          "old_path_is_partial": false
+        },
+        "trajectory": {
+          "actual_bytes": 91812375,
+          "actual_sha256": "3e0585ffd78c8df6b08fdbfab8582e6be16b63b59e096f7600790416647b5b8d",
+          "episode_relative_safe": true,
+          "expected_sha256": "3e0585ffd78c8df6b08fdbfab8582e6be16b63b59e096f7600790416647b5b8d",
+          "expected_sha_match": true,
+          "final_relative_path": "trajectory.npz",
+          "old_metadata_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/.official_t3_red_mug_1788836713.partial/trajectory.npz",
+          "old_path_exists": false,
+          "old_path_is_partial": true
+        },
+        "wrist": {
+          "actual_bytes": 735403,
+          "actual_sha256": "bfabacccaafe79488267564db9c8bad36cfe023e960968daed164467ddd71350",
+          "episode_relative_safe": true,
+          "expected_sha256": "bfabacccaafe79488267564db9c8bad36cfe023e960968daed164467ddd71350",
+          "expected_sha_match": true,
+          "final_relative_path": "wrist.mp4",
+          "old_metadata_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/.official_t3_red_mug_1788836713.partial/wrist.mp4",
+          "old_path_exists": false,
+          "old_path_is_partial": true
+        }
+      },
+      "episode": "rejected/official_t3_red_mug_1788836713",
+      "historical_metadata_unchanged": true,
+      "metadata_path": "rejected/official_t3_red_mug_1788836713/metadata.json",
+      "metadata_sha256_after": "15e4bfe08ac308706c4322e183e4d6dc69a74114746a175fa98a9cd11f15b9c7",
+      "metadata_sha256_before": "15e4bfe08ac308706c4322e183e4d6dc69a74114746a175fa98a9cd11f15b9c7"
+    },
+    {
+      "all_expected_sha_match": true,
+      "artifacts": {
+        "end_state": {
+          "actual_bytes": 800,
+          "actual_sha256": "a7d66054de334b2d3508930e2f45faa0a1809eed2e5b261b632d272ed84afbdf",
+          "episode_relative_safe": true,
+          "expected_sha256": "a7d66054de334b2d3508930e2f45faa0a1809eed2e5b261b632d272ed84afbdf",
+          "expected_sha_match": true,
+          "final_relative_path": "end_state.npy",
+          "old_metadata_path": "end_state.npy",
+          "old_path_exists": true,
+          "old_path_is_partial": false
+        },
+        "front": {
+          "actual_bytes": 767231,
+          "actual_sha256": "e5e60cb956d9d6582c2e10cd8605db0dd49a0a283136d3ab1ca134863f32308a",
+          "episode_relative_safe": true,
+          "expected_sha256": "e5e60cb956d9d6582c2e10cd8605db0dd49a0a283136d3ab1ca134863f32308a",
+          "expected_sha_match": true,
+          "final_relative_path": "front.mp4",
+          "old_metadata_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/.official_t3_red_mug_1788836873.partial/front.mp4",
+          "old_path_exists": false,
+          "old_path_is_partial": true
+        },
+        "start_state": {
+          "actual_bytes": 800,
+          "actual_sha256": "a096c12bc8738331b0178363804906cfc345e19ca1201448b3b90486b726cc47",
+          "episode_relative_safe": true,
+          "expected_sha256": "a096c12bc8738331b0178363804906cfc345e19ca1201448b3b90486b726cc47",
+          "expected_sha_match": true,
+          "final_relative_path": "start_state.npy",
+          "old_metadata_path": "start_state.npy",
+          "old_path_exists": true,
+          "old_path_is_partial": false
+        },
+        "trajectory": {
+          "actual_bytes": 97420731,
+          "actual_sha256": "d35bd1a68c74723cc45a43aa13e6d7c0a17208239230f4a55d29f0568fbcc382",
+          "episode_relative_safe": true,
+          "expected_sha256": "d35bd1a68c74723cc45a43aa13e6d7c0a17208239230f4a55d29f0568fbcc382",
+          "expected_sha_match": true,
+          "final_relative_path": "trajectory.npz",
+          "old_metadata_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/.official_t3_red_mug_1788836873.partial/trajectory.npz",
+          "old_path_exists": false,
+          "old_path_is_partial": true
+        },
+        "wrist": {
+          "actual_bytes": 830429,
+          "actual_sha256": "37b0e6efa9e956fccee3f19d09008e6d6db27d0196dc1f5c7f7d6a0b7d75630d",
+          "episode_relative_safe": true,
+          "expected_sha256": "37b0e6efa9e956fccee3f19d09008e6d6db27d0196dc1f5c7f7d6a0b7d75630d",
+          "expected_sha_match": true,
+          "final_relative_path": "wrist.mp4",
+          "old_metadata_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/.official_t3_red_mug_1788836873.partial/wrist.mp4",
+          "old_path_exists": false,
+          "old_path_is_partial": true
+        }
+      },
+      "episode": "rejected/official_t3_red_mug_1788836873",
+      "historical_metadata_unchanged": true,
+      "metadata_path": "rejected/official_t3_red_mug_1788836873/metadata.json",
+      "metadata_sha256_after": "1d490f0875e6d949d22dbfa34099bf2716b6e280956f129e766fb636d482b799",
+      "metadata_sha256_before": "1d490f0875e6d949d22dbfa34099bf2716b6e280956f129e766fb636d482b799"
+    },
+    {
+      "all_expected_sha_match": true,
+      "artifacts": {
+        "end_state": {
+          "actual_bytes": 800,
+          "actual_sha256": "eb4c386aa938fc34b72387e72a4cb435aefdd413e22a1457a1a11980be6a9fcb",
+          "episode_relative_safe": true,
+          "expected_sha256": "eb4c386aa938fc34b72387e72a4cb435aefdd413e22a1457a1a11980be6a9fcb",
+          "expected_sha_match": true,
+          "final_relative_path": "end_state.npy",
+          "old_metadata_path": "end_state.npy",
+          "old_path_exists": true,
+          "old_path_is_partial": false
+        },
+        "front": {
+          "actual_bytes": 628220,
+          "actual_sha256": "bf954c7f8117b608e2a8ca31c6cca1f6c8cfd9f89d2a8add1c989c8519d7449e",
+          "episode_relative_safe": true,
+          "expected_sha256": "bf954c7f8117b608e2a8ca31c6cca1f6c8cfd9f89d2a8add1c989c8519d7449e",
+          "expected_sha_match": true,
+          "final_relative_path": "front.mp4",
+          "old_metadata_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/.official_t3_red_mug_1788837289.partial/front.mp4",
+          "old_path_exists": false,
+          "old_path_is_partial": true
+        },
+        "start_state": {
+          "actual_bytes": 800,
+          "actual_sha256": "3fc7930b5b7baa505411daa49e04fd540643d9f1707c8bbdfd5e49e6988e98c1",
+          "episode_relative_safe": true,
+          "expected_sha256": "3fc7930b5b7baa505411daa49e04fd540643d9f1707c8bbdfd5e49e6988e98c1",
+          "expected_sha_match": true,
+          "final_relative_path": "start_state.npy",
+          "old_metadata_path": "start_state.npy",
+          "old_path_exists": true,
+          "old_path_is_partial": false
+        },
+        "trajectory": {
+          "actual_bytes": 71037500,
+          "actual_sha256": "0e78e46e8089670087ba6adb26fb4ef60093bb74bdb70a3f81cfb2a5a66e7adb",
+          "episode_relative_safe": true,
+          "expected_sha256": "0e78e46e8089670087ba6adb26fb4ef60093bb74bdb70a3f81cfb2a5a66e7adb",
+          "expected_sha_match": true,
+          "final_relative_path": "trajectory.npz",
+          "old_metadata_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/.official_t3_red_mug_1788837289.partial/trajectory.npz",
+          "old_path_exists": false,
+          "old_path_is_partial": true
+        },
+        "wrist": {
+          "actual_bytes": 570728,
+          "actual_sha256": "16e225819f4614dba621909bdfc467659581fbd915ec9e760411da421fbd3897",
+          "episode_relative_safe": true,
+          "expected_sha256": "16e225819f4614dba621909bdfc467659581fbd915ec9e760411da421fbd3897",
+          "expected_sha_match": true,
+          "final_relative_path": "wrist.mp4",
+          "old_metadata_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/.official_t3_red_mug_1788837289.partial/wrist.mp4",
+          "old_path_exists": false,
+          "old_path_is_partial": true
+        }
+      },
+      "episode": "rejected/official_t3_red_mug_1788837289",
+      "historical_metadata_unchanged": true,
+      "metadata_path": "rejected/official_t3_red_mug_1788837289/metadata.json",
+      "metadata_sha256_after": "423493f01a7e93add4ba9ed1e80a2320f250ef2e631cc613a0d149dc639d3026",
+      "metadata_sha256_before": "423493f01a7e93add4ba9ed1e80a2320f250ef2e631cc613a0d149dc639d3026"
+    },
+    {
+      "all_expected_sha_match": true,
+      "artifacts": {
+        "end_state": {
+          "actual_bytes": 800,
+          "actual_sha256": "1017256fb865a195f85bde2ae0a440d7610389119d85f602b54be478ca6d74f6",
+          "episode_relative_safe": true,
+          "expected_sha256": "1017256fb865a195f85bde2ae0a440d7610389119d85f602b54be478ca6d74f6",
+          "expected_sha_match": true,
+          "final_relative_path": "end_state.npy",
+          "old_metadata_path": "end_state.npy",
+          "old_path_exists": true,
+          "old_path_is_partial": false
+        },
+        "front": {
+          "actual_bytes": 698480,
+          "actual_sha256": "aa560da178ac248be36ab04699ab31d3bb848ea8dcff9e8f78411aa2c2a187f8",
+          "episode_relative_safe": true,
+          "expected_sha256": "aa560da178ac248be36ab04699ab31d3bb848ea8dcff9e8f78411aa2c2a187f8",
+          "expected_sha_match": true,
+          "final_relative_path": "front.mp4",
+          "old_metadata_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/.official_t3_red_mug_1788837429.partial/front.mp4",
+          "old_path_exists": false,
+          "old_path_is_partial": true
+        },
+        "start_state": {
+          "actual_bytes": 800,
+          "actual_sha256": "70e4f5e28cc5aa7b9344b60f76cd06d4f522cac799efe41357ca6a4bfcf23879",
+          "episode_relative_safe": true,
+          "expected_sha256": "70e4f5e28cc5aa7b9344b60f76cd06d4f522cac799efe41357ca6a4bfcf23879",
+          "expected_sha_match": true,
+          "final_relative_path": "start_state.npy",
+          "old_metadata_path": "start_state.npy",
+          "old_path_exists": true,
+          "old_path_is_partial": false
+        },
+        "trajectory": {
+          "actual_bytes": 72939653,
+          "actual_sha256": "e6f94daeb0031dbb45c4a40a52c5bf7e35aef153a78b182140bbe5151d953021",
+          "episode_relative_safe": true,
+          "expected_sha256": "e6f94daeb0031dbb45c4a40a52c5bf7e35aef153a78b182140bbe5151d953021",
+          "expected_sha_match": true,
+          "final_relative_path": "trajectory.npz",
+          "old_metadata_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/.official_t3_red_mug_1788837429.partial/trajectory.npz",
+          "old_path_exists": false,
+          "old_path_is_partial": true
+        },
+        "wrist": {
+          "actual_bytes": 606788,
+          "actual_sha256": "3bdf5e856295056bd5affc1556a78ba1793aadc0320b7016e0eea3ac21c7be28",
+          "episode_relative_safe": true,
+          "expected_sha256": "3bdf5e856295056bd5affc1556a78ba1793aadc0320b7016e0eea3ac21c7be28",
+          "expected_sha_match": true,
+          "final_relative_path": "wrist.mp4",
+          "old_metadata_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/.official_t3_red_mug_1788837429.partial/wrist.mp4",
+          "old_path_exists": false,
+          "old_path_is_partial": true
+        }
+      },
+      "episode": "rejected/official_t3_red_mug_1788837429",
+      "historical_metadata_unchanged": true,
+      "metadata_path": "rejected/official_t3_red_mug_1788837429/metadata.json",
+      "metadata_sha256_after": "2f5d3a834ffc57e8ae6b1a30857093d393a6cf059e3f5f34c17dfa1f17ef8615",
+      "metadata_sha256_before": "2f5d3a834ffc57e8ae6b1a30857093d393a6cf059e3f5f34c17dfa1f17ef8615"
+    },
+    {
+      "all_expected_sha_match": true,
+      "artifacts": {
+        "end_state": {
+          "actual_bytes": 592,
+          "actual_sha256": "204e12be2bfb9a2b1e69f14d8359b203d7f0cf0bc72447ce927dfdd2d6b1b425",
+          "episode_relative_safe": true,
+          "expected_sha256": "204e12be2bfb9a2b1e69f14d8359b203d7f0cf0bc72447ce927dfdd2d6b1b425",
+          "expected_sha_match": true,
+          "final_relative_path": "end_state.npy",
+          "old_metadata_path": "end_state.npy",
+          "old_path_exists": true,
+          "old_path_is_partial": false
+        },
+        "front": {
+          "actual_bytes": null,
+          "actual_sha256": null,
+          "episode_relative_safe": true,
+          "expected_sha256": null,
+          "expected_sha_match": true,
+          "final_relative_path": null,
+          "old_metadata_path": null,
+          "old_path_exists": false
+        },
+        "start_state": {
+          "actual_bytes": 592,
+          "actual_sha256": "204e12be2bfb9a2b1e69f14d8359b203d7f0cf0bc72447ce927dfdd2d6b1b425",
+          "episode_relative_safe": true,
+          "expected_sha256": "204e12be2bfb9a2b1e69f14d8359b203d7f0cf0bc72447ce927dfdd2d6b1b425",
+          "expected_sha_match": true,
+          "final_relative_path": "start_state.npy",
+          "old_metadata_path": "start_state.npy",
+          "old_path_exists": true,
+          "old_path_is_partial": false
+        },
+        "trajectory": {
+          "actual_bytes": 3610,
+          "actual_sha256": "ad20bb2cb3bd1e735132d8b500d4da264dd5f339ede078fae97f6a1b10c3829d",
+          "episode_relative_safe": true,
+          "expected_sha256": "ad20bb2cb3bd1e735132d8b500d4da264dd5f339ede078fae97f6a1b10c3829d",
+          "expected_sha_match": true,
+          "final_relative_path": "trajectory.npz",
+          "old_metadata_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/.official_t3_yellow_book_1788840869.partial/trajectory.npz",
+          "old_path_exists": false,
+          "old_path_is_partial": true
+        },
+        "wrist": {
+          "actual_bytes": null,
+          "actual_sha256": null,
+          "episode_relative_safe": true,
+          "expected_sha256": null,
+          "expected_sha_match": true,
+          "final_relative_path": null,
+          "old_metadata_path": null,
+          "old_path_exists": false
+        }
+      },
+      "episode": "rejected/official_t3_yellow_book_1788840869",
+      "historical_metadata_unchanged": true,
+      "metadata_path": "rejected/official_t3_yellow_book_1788840869/metadata.json",
+      "metadata_sha256_after": "f02c47617236d9bb3e474ce0935fb5842f25ffaffb03f3024634bb96c898a9a9",
+      "metadata_sha256_before": "f02c47617236d9bb3e474ce0935fb5842f25ffaffb03f3024634bb96c898a9a9"
+    },
+    {
+      "all_expected_sha_match": true,
+      "artifacts": {
+        "end_state": {
+          "actual_bytes": 592,
+          "actual_sha256": "8c3c1bba8460c7246723c1c626a62d2a6eb9dd551c8d9448ba9cab642f736d59",
+          "episode_relative_safe": true,
+          "expected_sha256": "8c3c1bba8460c7246723c1c626a62d2a6eb9dd551c8d9448ba9cab642f736d59",
+          "expected_sha_match": true,
+          "final_relative_path": "end_state.npy",
+          "old_metadata_path": "end_state.npy",
+          "old_path_exists": true,
+          "old_path_is_partial": false
+        },
+        "front": {
+          "actual_bytes": null,
+          "actual_sha256": null,
+          "episode_relative_safe": true,
+          "expected_sha256": null,
+          "expected_sha_match": true,
+          "final_relative_path": null,
+          "old_metadata_path": null,
+          "old_path_exists": false
+        },
+        "start_state": {
+          "actual_bytes": 592,
+          "actual_sha256": "8c3c1bba8460c7246723c1c626a62d2a6eb9dd551c8d9448ba9cab642f736d59",
+          "episode_relative_safe": true,
+          "expected_sha256": "8c3c1bba8460c7246723c1c626a62d2a6eb9dd551c8d9448ba9cab642f736d59",
+          "expected_sha_match": true,
+          "final_relative_path": "start_state.npy",
+          "old_metadata_path": "start_state.npy",
+          "old_path_exists": true,
+          "old_path_is_partial": false
+        },
+        "trajectory": {
+          "actual_bytes": 3610,
+          "actual_sha256": "ad20bb2cb3bd1e735132d8b500d4da264dd5f339ede078fae97f6a1b10c3829d",
+          "episode_relative_safe": true,
+          "expected_sha256": "ad20bb2cb3bd1e735132d8b500d4da264dd5f339ede078fae97f6a1b10c3829d",
+          "expected_sha_match": true,
+          "final_relative_path": "trajectory.npz",
+          "old_metadata_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/.official_t3_yellow_book_1788845038.partial/trajectory.npz",
+          "old_path_exists": false,
+          "old_path_is_partial": true
+        },
+        "wrist": {
+          "actual_bytes": null,
+          "actual_sha256": null,
+          "episode_relative_safe": true,
+          "expected_sha256": null,
+          "expected_sha_match": true,
+          "final_relative_path": null,
+          "old_metadata_path": null,
+          "old_path_exists": false
+        }
+      },
+      "episode": "rejected/official_t3_yellow_book_1788845038",
+      "historical_metadata_unchanged": true,
+      "metadata_path": "rejected/official_t3_yellow_book_1788845038/metadata.json",
+      "metadata_sha256_after": "f725786fc822ac31aef7e921a63f4ba3100d33ead7caa4256de1b4c5c7d2063f",
+      "metadata_sha256_before": "f725786fc822ac31aef7e921a63f4ba3100d33ead7caa4256de1b4c5c7d2063f"
+    },
+    {
+      "all_expected_sha_match": true,
+      "artifacts": {
+        "end_state": {
+          "actual_bytes": 592,
+          "actual_sha256": "29d4b7ececa6814f709bc42bf9200a68c474ab4d2e9fd30e2e8e9abd563f22b6",
+          "episode_relative_safe": true,
+          "expected_sha256": "29d4b7ececa6814f709bc42bf9200a68c474ab4d2e9fd30e2e8e9abd563f22b6",
+          "expected_sha_match": true,
+          "final_relative_path": "end_state.npy",
+          "old_metadata_path": "end_state.npy",
+          "old_path_exists": true,
+          "old_path_is_partial": false
+        },
+        "front": {
+          "actual_bytes": 1481832,
+          "actual_sha256": "57831edbf9c90a64b31fbc7c76b2fef845a7d676cd2259f786a386f4ab452d91",
+          "episode_relative_safe": true,
+          "expected_sha256": "57831edbf9c90a64b31fbc7c76b2fef845a7d676cd2259f786a386f4ab452d91",
+          "expected_sha_match": true,
+          "final_relative_path": "front.mp4",
+          "old_metadata_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/.official_t3_yellow_book_1788845929.partial/front.mp4",
+          "old_path_exists": false,
+          "old_path_is_partial": true
+        },
+        "start_state": {
+          "actual_bytes": 592,
+          "actual_sha256": "f1f1441cf8f2c23933f496711c823126d054a7e466d9d2c9ee4be6344a8a94f7",
+          "episode_relative_safe": true,
+          "expected_sha256": "f1f1441cf8f2c23933f496711c823126d054a7e466d9d2c9ee4be6344a8a94f7",
+          "expected_sha_match": true,
+          "final_relative_path": "start_state.npy",
+          "old_metadata_path": "start_state.npy",
+          "old_path_exists": true,
+          "old_path_is_partial": false
+        },
+        "trajectory": {
+          "actual_bytes": 128324177,
+          "actual_sha256": "6b8493e360f789d4e56f85226d3243a4623d0d752823b333d9fcb1f074c696ab",
+          "episode_relative_safe": true,
+          "expected_sha256": "6b8493e360f789d4e56f85226d3243a4623d0d752823b333d9fcb1f074c696ab",
+          "expected_sha_match": true,
+          "final_relative_path": "trajectory.npz",
+          "old_metadata_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/.official_t3_yellow_book_1788845929.partial/trajectory.npz",
+          "old_path_exists": false,
+          "old_path_is_partial": true
+        },
+        "wrist": {
+          "actual_bytes": 1044716,
+          "actual_sha256": "d90bfac03bf704a807bd9b77820fd0b857c7f8e28b1ec20d3566c98dc2aad591",
+          "episode_relative_safe": true,
+          "expected_sha256": "d90bfac03bf704a807bd9b77820fd0b857c7f8e28b1ec20d3566c98dc2aad591",
+          "expected_sha_match": true,
+          "final_relative_path": "wrist.mp4",
+          "old_metadata_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/.official_t3_yellow_book_1788845929.partial/wrist.mp4",
+          "old_path_exists": false,
+          "old_path_is_partial": true
+        }
+      },
+      "episode": "rejected/official_t3_yellow_book_1788845929",
+      "historical_metadata_unchanged": true,
+      "metadata_path": "rejected/official_t3_yellow_book_1788845929/metadata.json",
+      "metadata_sha256_after": "a618fcefc92c88cf7911b4943589b4aab175ee57ea0e73c64f6b76a183ce5ced",
+      "metadata_sha256_before": "a618fcefc92c88cf7911b4943589b4aab175ee57ea0e73c64f6b76a183ce5ced"
+    },
+    {
+      "all_expected_sha_match": true,
+      "artifacts": {
+        "end_state": {
+          "actual_bytes": 592,
+          "actual_sha256": "fa1e3c5c7d6dd868de1ce59e0d1734a6d02773d148fc1af8b08ea8a415459281",
+          "episode_relative_safe": true,
+          "expected_sha256": "fa1e3c5c7d6dd868de1ce59e0d1734a6d02773d148fc1af8b08ea8a415459281",
+          "expected_sha_match": true,
+          "final_relative_path": "end_state.npy",
+          "old_metadata_path": "end_state.npy",
+          "old_path_exists": true,
+          "old_path_is_partial": false
+        },
+        "front": {
+          "actual_bytes": null,
+          "actual_sha256": null,
+          "episode_relative_safe": true,
+          "expected_sha256": null,
+          "expected_sha_match": true,
+          "final_relative_path": null,
+          "old_metadata_path": null,
+          "old_path_exists": false
+        },
+        "start_state": {
+          "actual_bytes": 592,
+          "actual_sha256": "fa1e3c5c7d6dd868de1ce59e0d1734a6d02773d148fc1af8b08ea8a415459281",
+          "episode_relative_safe": true,
+          "expected_sha256": "fa1e3c5c7d6dd868de1ce59e0d1734a6d02773d148fc1af8b08ea8a415459281",
+          "expected_sha_match": true,
+          "final_relative_path": "start_state.npy",
+          "old_metadata_path": "start_state.npy",
+          "old_path_exists": true,
+          "old_path_is_partial": false
+        },
+        "trajectory": {
+          "actual_bytes": 3610,
+          "actual_sha256": "ad20bb2cb3bd1e735132d8b500d4da264dd5f339ede078fae97f6a1b10c3829d",
+          "episode_relative_safe": true,
+          "expected_sha256": "ad20bb2cb3bd1e735132d8b500d4da264dd5f339ede078fae97f6a1b10c3829d",
+          "expected_sha_match": true,
+          "final_relative_path": "trajectory.npz",
+          "old_metadata_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/.official_t3_yellow_book_1788847819.partial/trajectory.npz",
+          "old_path_exists": false,
+          "old_path_is_partial": true
+        },
+        "wrist": {
+          "actual_bytes": null,
+          "actual_sha256": null,
+          "episode_relative_safe": true,
+          "expected_sha256": null,
+          "expected_sha_match": true,
+          "final_relative_path": null,
+          "old_metadata_path": null,
+          "old_path_exists": false
+        }
+      },
+      "episode": "rejected/official_t3_yellow_book_1788847819",
+      "historical_metadata_unchanged": true,
+      "metadata_path": "rejected/official_t3_yellow_book_1788847819/metadata.json",
+      "metadata_sha256_after": "5086be562c8adc5bcb13532b086cf4cc57fecddf5609c790735e09fb542e99ec",
+      "metadata_sha256_before": "5086be562c8adc5bcb13532b086cf4cc57fecddf5609c790735e09fb542e99ec"
+    },
+    {
+      "all_expected_sha_match": true,
+      "artifacts": {
+        "end_state": {
+          "actual_bytes": 760,
+          "actual_sha256": "34e0c70edac11ce668e548c5cca308a9fbd16b64afc8726e8800280c8c82c66d",
+          "episode_relative_safe": true,
+          "expected_sha256": "34e0c70edac11ce668e548c5cca308a9fbd16b64afc8726e8800280c8c82c66d",
+          "expected_sha_match": true,
+          "final_relative_path": "end_state.npy",
+          "old_metadata_path": "end_state.npy",
+          "old_path_exists": true,
+          "old_path_is_partial": false
+        },
+        "front": {
+          "actual_bytes": null,
+          "actual_sha256": null,
+          "episode_relative_safe": true,
+          "expected_sha256": null,
+          "expected_sha_match": true,
+          "final_relative_path": null,
+          "old_metadata_path": null,
+          "old_path_exists": false
+        },
+        "start_state": {
+          "actual_bytes": 760,
+          "actual_sha256": "34e0c70edac11ce668e548c5cca308a9fbd16b64afc8726e8800280c8c82c66d",
+          "episode_relative_safe": true,
+          "expected_sha256": "34e0c70edac11ce668e548c5cca308a9fbd16b64afc8726e8800280c8c82c66d",
+          "expected_sha_match": true,
+          "final_relative_path": "start_state.npy",
+          "old_metadata_path": "start_state.npy",
+          "old_path_exists": true,
+          "old_path_is_partial": false
+        },
+        "trajectory": {
+          "actual_bytes": 3610,
+          "actual_sha256": "ad20bb2cb3bd1e735132d8b500d4da264dd5f339ede078fae97f6a1b10c3829d",
+          "episode_relative_safe": true,
+          "expected_sha256": "ad20bb2cb3bd1e735132d8b500d4da264dd5f339ede078fae97f6a1b10c3829d",
+          "expected_sha_match": true,
+          "final_relative_path": "trajectory.npz",
+          "old_metadata_path": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/.task_10_1788830474.partial/trajectory.npz",
+          "old_path_exists": false,
+          "old_path_is_partial": true
+        },
+        "wrist": {
+          "actual_bytes": null,
+          "actual_sha256": null,
+          "episode_relative_safe": true,
+          "expected_sha256": null,
+          "expected_sha_match": true,
+          "final_relative_path": null,
+          "old_metadata_path": null,
+          "old_path_exists": false
+        }
+      },
+      "episode": "rejected/task_10_1788830474",
+      "historical_metadata_unchanged": true,
+      "metadata_path": "rejected/task_10_1788830474/metadata.json",
+      "metadata_sha256_after": "a0130a2784daa935dbee5bbf2aa92c7be789e72f622af10bd6c72831c8b6d830",
+      "metadata_sha256_before": "a0130a2784daa935dbee5bbf2aa92c7be789e72f622af10bd6c72831c8b6d830"
+    }
+  ],
+  "historical_metadata_unchanged_required": true,
+  "schema_version": "track3_o0r_derived_path_resolution_v1"
+}

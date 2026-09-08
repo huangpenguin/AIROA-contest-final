@@ -1,2 +1,5 @@
 /data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/**/tests_stdout.txt -diff
 /data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation/attempts/**/tests_stderr.txt -diff
+*.pdf binary
+MUJOCO_LOG.TXT -diff
+docs/strategy/TRACK3_OPERATIONS_SIGNAL_TO_EXECUTION_DRAFT_20260908.md -diff

@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import json
+import shutil
 from pathlib import Path
 
 import numpy as np
+import pytest
 
 from tools.axis_pi05 import track3_public_teleop as teleop
 from tools.axis_pi05 import track3_sr_closure_and_task10_user_teleop_gold_canary as ut
@@ -54,13 +56,37 @@ def test_teleop_gold_npz_and_explicit_gripper() -> None:
     result = teleop.self_test()
     assert result["default_gripper_open"] is True
     assert result["gold_gates_fixture_passed"] is True
-    assert teleop.RecorderConfig().default_gripper == -1.0
+    assert teleop.RecorderConfig().hz == 20.0
+    assert teleop.RecorderConfig().operator_hz == 2.0
+    assert teleop.RecorderConfig().tick_ms() == 500
+    assert teleop.RecorderConfig().preview_refresh_ms <= 50
+    assert teleop.RecorderConfig().translation_step >= 0.30
+    assert teleop.RecorderConfig().eval_step_budget == 300
     machine = teleop.ActionStateMachine()
     assert machine.snapshot()["gripper_label"] == "OPEN"
     machine.event("keydown", "close")
     assert machine.snapshot()["gripper_label"] == "CLOSED"
     machine.event("disconnect")
     assert machine.snapshot()["paused"] is True
+    red = teleop.resolve_record_profile(task_id="official_t3_red_mug")
+    assert red["instruction"].startswith("take the red mug")
+    assert not red["instruction"].lower().startswith("reverse")
+    assert red["language_gold_ok"] is True
+    two = teleop.resolve_record_profile(task_id="official_t3_two_mugs")
+    assert two["recordable"] is True
+    assert two["training_holdout"] is False
+    assert two["instruction"].startswith("take the white mug")
+    assert teleop.resolve_record_profile(task_id="official_t3_yellow_book")["instruction"].startswith("take the yellow book")
+    book = teleop.resolve_record_profile(task_id="official_t3_yellow_book")
+    assert book["init_height_sites"][0] == ("yellow_book_2", "wooden_two_layer_shelf_1_top_side")
+    assert teleop.resolve_record_profile(task_id="official_t3_alphabet_soup")["instruction"].startswith("take the alphabet soup")
+    assert all(bool(row["recordable"]) and not bool(row["training_holdout"]) for row in teleop.OFFICIAL_T3_TASKS.values())
+    preview = teleop.flip_front_preview(np.arange(12, dtype=np.uint8).reshape(2, 2, 3))
+    assert int(preview[0, 0, 0]) == 9
+    blank = np.zeros((32, 32, 3), dtype=np.uint8)
+    marked = teleop.overlay_goal_box(blank, np.array([[4, 4], [28, 4], [28, 28], [4, 28]], dtype=np.int32))
+    assert marked[16, 16].sum() > 0
+    assert "red_coffee_mug_init_region" in teleop.goal_site_name_candidates(red)[-1]
 
 
 def test_handoff_waits_for_explicit_takeover() -> None:
@@ -76,3 +102,155 @@ def test_handoff_waits_for_explicit_takeover() -> None:
     assert np.isfinite(1.0)
     assert ut.LOCKED["audit_input"].startswith("64f278c")
     assert sr.derive_not_evaluated(sr.SR_ROOT / "attempts/attempt_0004") == ["SR9", "SR10", "SR11"]
+
+def test_dynamic_contact_table_preserves_every_contact_and_offsets() -> None:
+    contacts = [
+        {
+            "body1_name": "red_coffee_mug_1",
+            "body2_name": f"contact_body_{index}",
+            "geom1_name": "mug_geom",
+            "geom2_name": f"contact_geom_{index}",
+            "distance_m": -0.001,
+        }
+        for index in range(54)
+    ]
+    frames = teleop.empty_gold_buffers()
+    action = np.array([0, 0, 0, 0, 0, 0, 1], dtype=np.float32)
+    teleop.append_gold_frame(
+        frames,
+        action=action,
+        state=np.zeros(84, dtype=np.float64),
+        reward=0,
+        done=False,
+        success=False,
+        front=np.zeros((2, 2, 3), dtype=np.uint8),
+        wrist=np.zeros((2, 2, 3), dtype=np.uint8),
+        timestamp=0,
+        deadline_miss=False,
+        contact_matrix={"complete": True, "contacts": contacts},
+        source=True,
+        goal=False,
+        eef_pos=[0, 0, 0],
+        gripper=1,
+        check_success=False,
+        contact_roles=teleop.OFFICIAL_T3_TASKS["official_t3_red_mug"]["roles"],
+    )
+    arrays = teleop.typed_npz_arrays(frames)
+    assert arrays["contact_n"].tolist() == [54]
+    assert arrays["contact_offsets"].tolist() == [0, 54]
+    assert arrays["contact_body1"].shape == (54,)
+    assert arrays["contact_body2"].shape == (54,)
+    assert arrays["contact_role"].shape == (54,)
+
+
+def test_acquisition_gate_uses_first_dwell_and_rejects_late_goal_contact() -> None:
+    samples = []
+    for index in range(4):
+        samples.append({
+            "phase": "precontact_xy",
+            "source_predicate": True,
+            "demonstrator_contact": False,
+            "contact_telemetry_complete": True,
+            "contact_raw_complete": True,
+        })
+    for index in range(4):
+        samples.append({
+            "phase": "grasp_dwell",
+            "source_predicate": True,
+            "demonstrator_contact": True,
+            "contact_telemetry_complete": True,
+            "contact_raw_complete": True,
+        })
+    for index in range(4):
+        samples.append({
+            "phase": "place",
+            "source_predicate": False,
+            "demonstrator_contact": False,
+            "contact_telemetry_complete": True,
+            "contact_raw_complete": True,
+            "required_contact": True,
+        })
+    result = teleop.acquisition_contact_gate_v4(samples, stable_ticks=4)
+    assert result["state"] == "passed"
+    assert result["window_start"] == 4
+    assert result["barrier_index"] == 7
+
+    goal_only = [
+        {
+            "phase": "place",
+            "source_predicate": True,
+            "demonstrator_contact": False,
+            "contact_telemetry_complete": True,
+            "contact_raw_complete": True,
+            "required_contact": True,
+        }
+        for _ in range(4)
+    ]
+    rejected = teleop.acquisition_contact_gate_v4(goal_only, stable_ticks=4)
+    assert rejected["state"] == "failed"
+    assert rejected["barrier_index"] is None
+
+
+def test_atomic_episode_move_and_clone_keep_relative_final_paths(tmp_path, monkeypatch) -> None:
+    frames = teleop.empty_gold_buffers()
+    teleop.append_gold_frame(
+        frames,
+        action=np.array([0, 0, 0, 0, 0, 0, -1], dtype=np.float32),
+        state=np.zeros(84, dtype=np.float64),
+        reward=0,
+        done=True,
+        success=False,
+        front=np.zeros((2, 2, 3), dtype=np.uint8),
+        wrist=np.zeros((2, 2, 3), dtype=np.uint8),
+        timestamp=0,
+        deadline_miss=False,
+        contact_matrix={"complete": True, "contacts": []},
+        source=True,
+        goal=False,
+        eef_pos=[0, 0, 0],
+        gripper=-1,
+        check_success=False,
+        contact_roles=teleop.OFFICIAL_T3_TASKS["official_t3_red_mug"]["roles"],
+    )
+
+    def no_video(path, frames, fps):
+        return {"status": "no_frames", "path": teleop.validate_episode_relative_path(path.name)}
+
+    monkeypatch.setattr(teleop, "_save_video", no_video)
+    metadata = {"status": "recording"}
+    target = teleop._atomic_episode(
+        tmp_path / "pending",
+        "episode",
+        lambda directory: teleop._write_episode(
+            directory,
+            metadata,
+            frames,
+            np.zeros(84, dtype=np.float64),
+            np.zeros(84, dtype=np.float64),
+            teleop.RecorderConfig(),
+        ),
+    )
+    saved = json.loads((target / "metadata.json").read_text(encoding="utf-8"))
+    assert saved["schema_version"] == "track3_reverse_pilot_v4"
+    assert saved["trajectory"]["path"] == "trajectory.npz"
+    assert saved["videos"]["front"]["path"] == "front.mp4"
+    assert saved["videos"]["wrist"]["path"] == "wrist.mp4"
+    assert not list(tmp_path.rglob("*.partial"))
+
+    clone_root = tmp_path / "clone"
+    clone_root.mkdir()
+    shutil.copytree(target, clone_root / "episode")
+    cloned = json.loads((clone_root / "episode" / "metadata.json").read_text(encoding="utf-8"))
+    for value in (
+        cloned["trajectory"]["path"],
+        cloned["videos"]["front"]["path"],
+        cloned["videos"]["wrist"]["path"],
+    ):
+        assert teleop.validate_episode_relative_path(value) == value
+    assert (clone_root / "episode" / cloned["trajectory"]["path"]).is_file()
+
+
+def test_episode_metadata_rejects_absolute_parent_and_partial_paths() -> None:
+    for value in ("/tmp/front.mp4", "../front.mp4", "front.mp4.partial"):
+        with pytest.raises(ValueError):
+            teleop.validate_episode_relative_path(value)

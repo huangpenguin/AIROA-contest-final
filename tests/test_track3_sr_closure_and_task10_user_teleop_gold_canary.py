@@ -91,8 +91,8 @@ def test_teleop_gold_npz_and_explicit_gripper() -> None:
 
 def test_handoff_waits_for_explicit_takeover() -> None:
     handoff = strict_json(HANDOFF)
-    assert handoff["status"] == "track3_operations_o1_o2_active_pending_o1_start"
-    assert handoff["next_phase_only"] == "O1_red_mug_388_seed_then_O2_native_mujoco_and_tiny_overfit"
+    assert handoff["status"] == "track3_operations_o1_0_ready_for_native_vnc_no_save_canary"
+    assert handoff["next_phase_only"] == "O1_1_native_mujoco_turbovnc_no_save_canary_requires_user_online"
     assert PLAN.is_file()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md").is_file()
     assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md"
@@ -110,6 +110,32 @@ def test_handoff_waits_for_explicit_takeover() -> None:
     assert np.isfinite(1.0)
     assert ut.LOCKED["audit_input"].startswith("64f278c")
     assert sr.derive_not_evaluated(sr.SR_ROOT / "attempts/attempt_0004") == ["SR9", "SR10", "SR11"]
+
+def test_o1_0_red_mug_retiming_is_derived_and_hard_stopped() -> None:
+    handoff = strict_json(HANDOFF)
+    execution = handoff["track3_operations_o1_0_execution"]
+    assert execution["status"] == "ready_for_native_vnc_no_save_canary"
+    assert execution["preferred_seed"].endswith("1788838632")
+    assert execution["reference_seed"].endswith("1788838293")
+    assert execution["keyposes"] == {
+        "approach": 145,
+        "grasp": [146, 156],
+        "lift": 157,
+        "transport": 278,
+        "place": 365,
+        "release": 373,
+    }
+    assert execution["historical_raw_modified"] is False
+    assert execution["replay"] == "not_evaluated"
+    lock = strict_json(ROOT / execution["canonical_attempt_lock"])
+    blueprint = strict_json(ROOT / execution["retiming_blueprint"])
+    assert lock["lock_id"] == "canonical_red_mug_attempt_0001"
+    assert lock["unique_canonical_attempt_count"] == 1
+    assert lock["hard_stop_after_o1_0"] is True
+    assert blueprint["budgets"]["planned_goal_predicate_frame"] == 220
+    assert blueprint["budgets"]["total_target_max_frames"] == 260
+    assert blueprint["budgets"]["hard_max_frames"] == 300
+
 
 def test_dynamic_contact_table_preserves_every_contact_and_offsets() -> None:
     contacts = [

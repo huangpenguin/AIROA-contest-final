@@ -52,9 +52,9 @@ def test_shared_root_attempt3_is_historical_and_root_attempt5_is_current() -> No
 
 def test_lifecycle_releases_exactly_one_acquisition_plan() -> None:
     handoff = strict_json(HANDOFF)
-    assert handoff["status"] == "track3_operations_o1_o2_active_pending_o1_start"
+    assert handoff["status"] == "track3_operations_o1_0_ready_for_native_vnc_no_save_canary"
     assert handoff["next_plan"] == PLAN
-    assert handoff["next_phase_only"] == "O1_red_mug_388_seed_then_O2_native_mujoco_and_tiny_overfit"
+    assert handoff["next_phase_only"] == "O1_1_native_mujoco_turbovnc_no_save_canary_requires_user_online"
     assert (ROOT / PLAN).is_file()
     assert (ROOT / ARCHIVED_AC_PLAN).is_file()
     assert (ROOT / ARCHIVED_AC_AUDIT_PLAN).is_file()

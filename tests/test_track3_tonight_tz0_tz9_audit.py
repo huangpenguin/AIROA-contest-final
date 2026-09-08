@@ -11,9 +11,9 @@ AUDIT = ROOT / "data/reports/axis_libero_30k/track3_tonight_tz0_tz9_audit_202609
 
 def test_tonight_audit_archives_old_plan_and_releases_one_remediation_plan() -> None:
     handoff = json.loads(HANDOFF.read_text(encoding="utf-8"))
-    assert handoff["status"] == "track3_operations_o1_o2_active_pending_o1_start"
+    assert handoff["status"] == "track3_operations_o1_0_ready_for_native_vnc_no_save_canary"
     assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md"
-    assert handoff["next_phase_only"] == "O1_red_mug_388_seed_then_O2_native_mujoco_and_tiny_overfit"
+    assert handoff["next_phase_only"] == "O1_1_native_mujoco_turbovnc_no_save_canary_requires_user_online"
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md").is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md").exists()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md").is_file()

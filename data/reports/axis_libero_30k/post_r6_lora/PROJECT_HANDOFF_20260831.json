@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-08",
-  "status": "track3_operations_o1_o2_active_pending_o1_start",
+  "status": "track3_operations_o1_0_ready_for_native_vnc_no_save_canary",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
@@ -260,7 +260,7 @@
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
   "next_plan": "docs/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md",
-  "next_phase_only": "O1_red_mug_388_seed_then_O2_native_mujoco_and_tiny_overfit",
+  "next_phase_only": "O1_1_native_mujoco_turbovnc_no_save_canary_requires_user_online",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -5330,6 +5330,31 @@
       "automatic_upload": false,
       "submission": false
     },
-    "next_phase_only": "O1_red_mug_388_seed_then_O2_native_mujoco_and_tiny_overfit"
+    "next_phase_only": "O1_1_native_mujoco_turbovnc_no_save_canary_requires_user_online"
+  },
+  "track3_operations_o1_0_execution": {
+    "status": "ready_for_native_vnc_no_save_canary",
+    "phase": "O1.0",
+    "report": "docs/reviews/axis_pi05/TRACK3_O1_0_RED_MUG_RETIMING_20260908.md",
+    "namespace": "data/reports/axis_libero_30k/track3_operations_o1_0_red_mug_retiming_20260908",
+    "summary": "data/reports/axis_libero_30k/track3_operations_o1_0_red_mug_retiming_20260908/summary.json",
+    "input_lock": "data/reports/axis_libero_30k/track3_operations_o1_0_red_mug_retiming_20260908/input_lock.json",
+    "keypose_report": "data/reports/axis_libero_30k/track3_operations_o1_0_red_mug_retiming_20260908/keypose_report.json",
+    "retiming_blueprint": "data/reports/axis_libero_30k/track3_operations_o1_0_red_mug_retiming_20260908/retiming_blueprint.json",
+    "canonical_attempt_lock": "data/reports/axis_libero_30k/track3_operations_o1_0_red_mug_retiming_20260908/canonical_attempt_lock.json",
+    "root_source_commit": "3efd449c2275271ee9a84e68195f888481449565",
+    "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "preferred_seed": "pending/official_t3_red_mug_1788838632",
+    "reference_seed": "pending/official_t3_red_mug_1788838293",
+    "keyposes": {"approach": 145, "grasp": [146, 156], "lift": 157, "transport": 278, "place": 365, "release": 373},
+    "goal_first_target": {"goal_frame": 220, "release_frame": 230, "settle_frame": 240, "total_target_max": 260, "hard_max": 300},
+    "historical_raw_modified": false,
+    "historical_metadata_modified": false,
+    "replay": "not_evaluated",
+    "gpu": "not_used",
+    "mujoco": "not_started",
+    "teleop": "not_started",
+    "o2": "frozen_until_o1_accepted_fresh_replay_3_of_3",
+    "next_phase_only": "O1_1_native_mujoco_turbovnc_no_save_canary_requires_user_online"
   }
 }

@@ -1,0 +1,330 @@
+{
+  "schema_version": "track3_o1_0_keypose_report_v1",
+  "status": "derived_not_executed",
+  "preferred": {
+    "episode_id": "official_t3_red_mug_1788838632",
+    "role": "preferred_seed",
+    "frame_count": 388,
+    "metadata_schema": "track3_reverse_pilot_v3",
+    "historical_status": "pending_replay",
+    "candidate_gate_historical": "passed",
+    "historical_metadata_unchanged": true,
+    "replay": "not_evaluated",
+    "gold_eligible": false,
+    "contact_raw": {
+      "contact_n_min": 42,
+      "contact_n_max": 52,
+      "capacity": 32,
+      "truncated_frames": 388,
+      "complete": false,
+      "usable_for_keypose_only": true
+    },
+    "phase_runs": {
+      "grasp_dwell": [
+        [
+          135,
+          137
+        ],
+        [
+          140,
+          140
+        ],
+        [
+          142,
+          142
+        ],
+        [
+          146,
+          156
+        ]
+      ],
+      "lift": [
+        [
+          157,
+          364
+        ]
+      ],
+      "place": [
+        [
+          365,
+          372
+        ]
+      ],
+      "precontact_xy": [
+        [
+          0,
+          134
+        ],
+        [
+          138,
+          139
+        ],
+        [
+          141,
+          141
+        ],
+        [
+          143,
+          145
+        ]
+      ],
+      "release": [
+        [
+          373,
+          387
+        ]
+      ]
+    },
+    "keyposes": {
+      "approach": {
+        "frame": 145,
+        "evidence": [
+          "phase=precontact_xy",
+          "immediately_before_first_grasp_dwell"
+        ],
+        "confidence": "derived_phase_boundary"
+      },
+      "grasp": {
+        "frame": 146,
+        "window": [
+          146,
+          156
+        ],
+        "evidence": [
+          "phase=grasp_dwell",
+          "source_predicate=true",
+          "goal_predicate=false"
+        ],
+        "gripper_close_frame": 138,
+        "confidence": "derived_only_contact_raw_truncated"
+      },
+      "lift": {
+        "frame": 157,
+        "evidence": [
+          "first source_predicate=false"
+        ],
+        "confidence": "derived_predicate_boundary"
+      },
+      "transport": {
+        "frame": 278,
+        "evidence": [
+          "maximum_eef_z_between_source_release_and_goal"
+        ],
+        "confidence": "derived_kinematic_clearance_apex"
+      },
+      "place": {
+        "frame": 365,
+        "evidence": [
+          "first goal_predicate=true",
+          "phase=place"
+        ],
+        "confidence": "derived_goal_boundary"
+      },
+      "release": {
+        "frame": 373,
+        "evidence": [
+          "post-place gripper transition to OPEN"
+        ],
+        "confidence": "derived_gripper_boundary"
+      },
+      "settle_end": {
+        "frame": 387,
+        "evidence": [
+          "historical final frame only"
+        ],
+        "confidence": "historical_reference_not_gold"
+      }
+    },
+    "artifacts": {
+      "metadata.json": {
+        "path": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/pending/official_t3_red_mug_1788838632/metadata.json",
+        "bytes": 4454,
+        "sha256": "3c91aea6849c2f33f1941e766833f31b9a8cacffb5171928d5b69d1818ca5e48"
+      },
+      "trajectory.npz": {
+        "path": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/pending/official_t3_red_mug_1788838632/trajectory.npz",
+        "bytes": 66220125,
+        "sha256": "2e6f9b34fb2337cbaedfd4ed1d79853e731f307aa6be1488c05c56c580e7ea5e"
+      },
+      "start_state.npy": {
+        "path": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/pending/official_t3_red_mug_1788838632/start_state.npy",
+        "bytes": 800,
+        "sha256": "299bc6d0589f2d08b9a502f1507247e97a2cdae6309bc4714244ab0dd6236f9e"
+      },
+      "end_state.npy": {
+        "path": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/pending/official_t3_red_mug_1788838632/end_state.npy",
+        "bytes": 800,
+        "sha256": "b1ff66a459bc83c526f438aa6ef6a95ba6634c09415490800118b489a3010127"
+      },
+      "front.mp4": {
+        "path": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/pending/official_t3_red_mug_1788838632/front.mp4",
+        "bytes": 598548,
+        "sha256": "8f701a0deb0adafded6bd3510e31f9d6b3ede47ac1b3b008c3fd8e3b56e3202b"
+      },
+      "wrist.mp4": {
+        "path": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/pending/official_t3_red_mug_1788838632/wrist.mp4",
+        "bytes": 664305,
+        "sha256": "4401bb8d37ec0d8df02b7d04b2a977ec2791c44ac276ab3165e01a5e48c30c56"
+      }
+    }
+  },
+  "reference": {
+    "episode_id": "official_t3_red_mug_1788838293",
+    "role": "reference_only",
+    "frame_count": 468,
+    "metadata_schema": "track3_reverse_pilot_v3",
+    "historical_status": "pending_replay",
+    "candidate_gate_historical": "passed",
+    "historical_metadata_unchanged": true,
+    "replay": "not_evaluated",
+    "gold_eligible": false,
+    "contact_raw": {
+      "contact_n_min": 41,
+      "contact_n_max": 54,
+      "capacity": 32,
+      "truncated_frames": 468,
+      "complete": false,
+      "usable_for_keypose_only": true
+    },
+    "phase_runs": {
+      "grasp_dwell": [
+        [
+          162,
+          171
+        ],
+        [
+          173,
+          182
+        ]
+      ],
+      "lift": [
+        [
+          183,
+          437
+        ]
+      ],
+      "place": [
+        [
+          438,
+          446
+        ]
+      ],
+      "precontact_xy": [
+        [
+          0,
+          161
+        ],
+        [
+          172,
+          172
+        ]
+      ],
+      "release": [
+        [
+          447,
+          467
+        ]
+      ]
+    },
+    "keyposes": {
+      "approach": {
+        "frame": 172,
+        "evidence": [
+          "phase=precontact_xy",
+          "immediately_before_first_grasp_dwell"
+        ],
+        "confidence": "derived_phase_boundary"
+      },
+      "grasp": {
+        "frame": 173,
+        "window": [
+          173,
+          182
+        ],
+        "evidence": [
+          "phase=grasp_dwell",
+          "source_predicate=true",
+          "goal_predicate=false"
+        ],
+        "gripper_close_frame": 166,
+        "confidence": "derived_only_contact_raw_truncated"
+      },
+      "lift": {
+        "frame": 183,
+        "evidence": [
+          "first source_predicate=false"
+        ],
+        "confidence": "derived_predicate_boundary"
+      },
+      "transport": {
+        "frame": 310,
+        "evidence": [
+          "maximum_eef_z_between_source_release_and_goal"
+        ],
+        "confidence": "derived_kinematic_clearance_apex"
+      },
+      "place": {
+        "frame": 438,
+        "evidence": [
+          "first goal_predicate=true",
+          "phase=place"
+        ],
+        "confidence": "derived_goal_boundary"
+      },
+      "release": {
+        "frame": 447,
+        "evidence": [
+          "post-place gripper transition to OPEN"
+        ],
+        "confidence": "derived_gripper_boundary"
+      },
+      "settle_end": {
+        "frame": 467,
+        "evidence": [
+          "historical final frame only"
+        ],
+        "confidence": "historical_reference_not_gold"
+      }
+    },
+    "artifacts": {
+      "metadata.json": {
+        "path": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/pending/official_t3_red_mug_1788838293/metadata.json",
+        "bytes": 4454,
+        "sha256": "4c7f3aef5ec9d92950ad46b5ddce5a0d48001a394b9a92ec64676e1f979f2c0c"
+      },
+      "trajectory.npz": {
+        "path": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/pending/official_t3_red_mug_1788838293/trajectory.npz",
+        "bytes": 80111631,
+        "sha256": "444f70c6d2abfdf3ad63b6f10523390bd282a8c8434a3d66f45608c522ff3a61"
+      },
+      "start_state.npy": {
+        "path": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/pending/official_t3_red_mug_1788838293/start_state.npy",
+        "bytes": 800,
+        "sha256": "59d8be9bc6732839a15c568d9d13294d6358e6f9ae3f664859ac146cd4b975b5"
+      },
+      "end_state.npy": {
+        "path": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/pending/official_t3_red_mug_1788838293/end_state.npy",
+        "bytes": 800,
+        "sha256": "c4c6dd6f110c5a16816646e3a4bf203167e784226ce8222b014e9ccfa30063f3"
+      },
+      "front.mp4": {
+        "path": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/pending/official_t3_red_mug_1788838293/front.mp4",
+        "bytes": 630893,
+        "sha256": "e2322b403393bcf639871c6dce652103eadf2ce6e19fd4c944828db53438eb3a"
+      },
+      "wrist.mp4": {
+        "path": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/pending/official_t3_red_mug_1788838293/wrist.mp4",
+        "bytes": 730126,
+        "sha256": "1b8b031ca8de6441354dbb44d75fb3de119b40ab6ab912428845f71b8c441002"
+      }
+    }
+  },
+  "interpretation": {
+    "approach": "last precontact_xy frame before first grasp_dwell window",
+    "grasp": "start of final stable source-side grasp_dwell window; contact raw is diagnostic only",
+    "lift": "first source_predicate=false frame",
+    "transport": "maximum EEF z between source release and first goal predicate",
+    "place": "first goal_predicate=true frame",
+    "release": "first post-place gripper transition to OPEN"
+  }
+}

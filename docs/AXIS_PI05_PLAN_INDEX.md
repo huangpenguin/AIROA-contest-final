@@ -3,9 +3,9 @@
 > 更新日期：2026-09-08（Asia/Tokyo）
 > 跨session入口：先完整读取根目录`AGENTS.md`与`MEMORY.md`，再读取本索引、handoff、machine JSON、唯一活动计划和最新审核；先查live PID/cursor，禁止重复启动。
 > 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md`
-> 当前状态：`track3_operations_o1_o2_active_pending_o1_start`
+> 当前状态：`track3_operations_o1_0_ready_for_native_vnc_no_save_canary`
 > 最新审核：`docs/reviews/axis_pi05/TRACK3_O0R_REMEDIATION_20260908.md`
-> 最新执行闭包：`docs/reviews/axis_pi05/TRACK3_O0R_REMEDIATION_20260908.md`
+> 最新执行闭包：`docs/reviews/axis_pi05/TRACK3_O1_0_RED_MUG_RETIMING_20260908.md`
 
 ## 1. 本轮执行停止点
 
@@ -472,3 +472,23 @@ O0R validation：targeted 12 passed；full 434 passed, 7 skipped, 26 warnings；
 8. 下一执行者只运行新计划明确授权的阶段，结束后再次 hard stop 等待审核。
 
 若本轮审核失败，下一计划应是最小 remediation，而不是跳到原定后续阶段。
+
+## 3.39 O1.0 red-mug read-only retiming（2026-09-08）
+
+O1.0 已完成并 hard-stop 在 `ready_for_native_vnc_no_save_canary`。388-step
+`official_t3_red_mug_1788838632` 是唯一 preferred seed；468-step
+`official_t3_red_mug_1788838293` 仅作 reference。派生 keypose 为 approach
+145、grasp 146–156、lift 157、transport clearance apex 278、place 365、
+release 373。goal-first blueprint 将目标规划为 frame 220、release 230、
+settle 240，总目标 260，硬上限 300。
+
+两条历史 contact raw 仍分别 388/388 和 468/468 全帧超出固定容量 32，
+所以仅用于 keypose 诊断，不能作为 canonical gold。历史 raw/metadata 未修改；
+replay、GPU、MuJoCo、Teleop、新录制、Infinity/Scenic 和 O2 均为
+`not_evaluated`/未启动。唯一 canonical attempt lock 为
+`canonical_red_mug_attempt_0001`。
+
+执行证据：`docs/reviews/axis_pi05/TRACK3_O1_0_RED_MUG_RETIMING_20260908.md`；
+machine namespace 为
+`data/reports/axis_libero_30k/track3_operations_o1_0_red_mug_retiming_20260908/`。
+下一授权仅为用户在线后的 native MuJoCo/TurboVNC no-save canary。

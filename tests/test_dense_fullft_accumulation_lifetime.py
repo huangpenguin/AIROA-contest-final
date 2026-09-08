@@ -156,7 +156,7 @@ def test_m0_summary_is_fail_closed_and_machine_handoff_advances_without_losing_e
     handoff = __import__("json").loads(handoff_path.read_text(encoding="utf-8"))
     execution = handoff["dense_fullft_allocator_fraction_recovery_execution"]
     assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md"
-    assert handoff["next_phase_only"] == "O1_red_mug_388_seed_then_O2_native_mujoco_and_tiny_overfit"
+    assert handoff["next_phase_only"] == "O1_1_native_mujoco_turbovnc_no_save_canary_requires_user_online"
     autogen = handoff["track3_public_primitive_autogen_planning"]
     assert autogen["accepted_reverse_episode_count"] == 0
     assert autogen["superseded_plan_executed"] is False

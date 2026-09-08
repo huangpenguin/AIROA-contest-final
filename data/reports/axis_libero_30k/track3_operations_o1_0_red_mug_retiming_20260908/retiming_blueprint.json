@@ -1,0 +1,75 @@
+{
+  "schema_version": "track3_o1_0_red_mug_goal_first_retiming_blueprint_v1",
+  "status": "derived_not_executed",
+  "source_seed": "official_t3_red_mug_1788838632",
+  "reference_seed": "official_t3_red_mug_1788838293",
+  "method": "goal_first_phase_boundary_and_clearance_apex_mapping",
+  "historical_raw_modified": false,
+  "action_generation": "not_evaluated",
+  "replay": "not_evaluated",
+  "gpu_used": false,
+  "mujoco_started": false,
+  "teleop_started": false,
+  "budgets": {
+    "goal_first_target_max_frames": 240,
+    "total_target_max_frames": 260,
+    "hard_max_frames": 300,
+    "planned_goal_predicate_frame": 220,
+    "planned_release_frame": 230,
+    "planned_settle_frame": 240,
+    "post_goal_reserve_frames": 20
+  },
+  "contact_contract": {
+    "schema": "track3_reverse_pilot_v4",
+    "storage": "typed_flat_table_with_offsets",
+    "saved_contact_n_equals_contact_n": true,
+    "acquisition": "first stable gripper_robot_subject contact during close/grasp_dwell before source release",
+    "historical_contact_is_not_canonical_evidence": true
+  },
+  "keyposes": {
+    "approach": {
+      "source_frame": 145,
+      "target_frame": 80,
+      "target_frame_is_planning_only": true,
+      "source_evidence_confidence": "derived_phase_boundary"
+    },
+    "grasp": {
+      "source_frame": 146,
+      "target_frame": 91,
+      "target_frame_is_planning_only": true,
+      "source_evidence_confidence": "derived_only_contact_raw_truncated"
+    },
+    "lift": {
+      "source_frame": 157,
+      "target_frame": 102,
+      "target_frame_is_planning_only": true,
+      "source_evidence_confidence": "derived_predicate_boundary"
+    },
+    "transport": {
+      "source_frame": 278,
+      "target_frame": 160,
+      "target_frame_is_planning_only": true,
+      "source_evidence_confidence": "derived_kinematic_clearance_apex"
+    },
+    "place": {
+      "source_frame": 365,
+      "target_frame": 220,
+      "target_frame_is_planning_only": true,
+      "source_evidence_confidence": "derived_goal_boundary"
+    },
+    "release": {
+      "source_frame": 373,
+      "target_frame": 230,
+      "target_frame_is_planning_only": true,
+      "source_evidence_confidence": "derived_gripper_boundary"
+    },
+    "settle_end": {
+      "source_frame": 387,
+      "target_frame": 240,
+      "target_frame_is_planning_only": true,
+      "source_evidence_confidence": "historical_reference_not_gold"
+    }
+  },
+  "target_frame_order_valid": true,
+  "next_gate": "ready_for_native_vnc_no_save_canary"
+}

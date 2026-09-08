@@ -6,10 +6,10 @@
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-sg0-sg12-support-gold-20260907`
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_operations_o1_o2_active_pending_o1_start`
+> 当前总状态：`track3_operations_o1_0_ready_for_native_vnc_no_save_canary`
 > 唯一活动计划：`docs/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md`
-> 下一停止点：`O1_red_mug_388_seed_then_O2_native_mujoco_and_tiny_overfit`
-> 最新执行闭包：`docs/reviews/axis_pi05/TRACK3_O0R_REMEDIATION_20260908.md`
+> 下一停止点：`O1_1_native_mujoco_turbovnc_no_save_canary_requires_user_online`
+> 最新执行闭包：`docs/reviews/axis_pi05/TRACK3_O1_0_RED_MUG_RETIMING_20260908.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > O0R remediation commit：`20662dd`
 > O0R evidence：`data/reports/axis_libero_30k/track3_operations_o0r_remediation_20260908/`
@@ -1027,3 +1027,25 @@ O0R 复核结论为 approved，历史 O0 的 remediation_required 保持不变�
 Future writer 已升级 schema v4：metadata 只写 episode-relative final paths；contact 用 dynamic flat table + offsets；acquisition 只接受 close/grasp_dwell 的首次稳定 gripper↔subject 窗口，goal-table contact 和末帧倒推均无效。定向测试 12 passed，全量 434 passed、7 skipped、26 warnings，py_compile、strict JSON 与 diff-check 均通过。
 
 旧 UT plan 已归档。唯一 active plan 是 docs/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md。O1 只授权 red-mug 388 seed 的 derived keypose/re-timing、native MuJoCo/TurboVNC no-save canary、用户明确接管后的最多一条 canonical gold 及条件式 GPU3 fresh replay 3/3；O2 只在 O1 accepted 后做 disjoint reverse dev、tiny-overfit，3 条/2 source groups 后才可 R6 100/300-step 短续训。当前 O1/O2 尚未执行。
+
+## 91. O1.0 red-mug read-only retiming（2026-09-08）
+
+O1.0 已完成，当前 hard-stop 为 `ready_for_native_vnc_no_save_canary`。只读
+分析了 388-step preferred seed `official_t3_red_mug_1788838632`，并以
+468-step `official_t3_red_mug_1788838293` 作 reference。派生 keypose：
+approach 145、grasp 146–156、lift 157、transport clearance apex 278、
+place 365、release 373；规划目标为 approach 80、grasp 91、lift 102、
+transport 160、place 220、release 230、settle 240。
+
+这不是 gold 或 replay 证据。两条历史 contact raw 仍不完整（388/388 与
+468/468 帧超出容量 32），replay=not_evaluated、gold eligible=false；
+历史 raw/metadata 未修改。没有启动 GPU、MuJoCo、Teleop、录制、replay、
+Infinity、Scenic、训练或 O2。唯一 canonical lock 是
+`canonical_red_mug_attempt_0001`。
+
+证据位于
+`data/reports/axis_libero_30k/track3_operations_o1_0_red_mug_retiming_20260908/`，
+review 位于
+`docs/reviews/axis_pi05/TRACK3_O1_0_RED_MUG_RETIMING_20260908.md`。下一步
+必须由用户在线后执行 native MuJoCo/TurboVNC no-save canary；O2 继续冻结，
+直到 O1 accepted 且 fresh replay=3/3。

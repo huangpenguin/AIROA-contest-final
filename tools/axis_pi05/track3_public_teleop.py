@@ -1764,6 +1764,8 @@ def record_episode(task_index: int | None, operator: str, config: RecorderConfig
             else:
                 metadata["status"] = "no_save_canary_timeout" if no_save else "rejected_timeout"
         if no_save:
+            timestamps = np.asarray(frames["timestamps_monotonic"], dtype=np.float64)
+            intervals = np.diff(timestamps) if timestamps.size > 1 else np.asarray([], dtype=np.float64)
             return {
                 "status": metadata["status"],
                 "phase": "MG0_no_save_canary",
@@ -1782,6 +1784,11 @@ def record_episode(task_index: int | None, operator: str, config: RecorderConfig
                 "budget": config.budget_status(len(frames["actions"])),
                 "deadline_miss_count": int(sum(bool(value) for value in frames["deadline_miss"])),
                 "reset_count": machine.state.reset_count,
+                "wall_duration_s": float(timestamps[-1] - timestamps[0]) if timestamps.size > 1 else 0.0,
+                "observed_tick_interval_mean_s": float(np.mean(intervals)) if intervals.size else None,
+                "observed_tick_interval_median_s": float(np.median(intervals)) if intervals.size else None,
+                "observed_tick_interval_min_s": float(np.min(intervals)) if intervals.size else None,
+                "observed_tick_interval_max_s": float(np.max(intervals)) if intervals.size else None,
                 "no_formal_episode_written": True,
             }
         bucket = "pending" if metadata["status"] == "pending_replay" else ("diagnostic" if metadata["status"] == "rejected_abort" else "rejected")

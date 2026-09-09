@@ -1,0 +1,20 @@
+{
+  "schema_version": "track3_mg1_launch_failure_v1",
+  "status": "infrastructure_failure_code_only",
+  "actual_argv": [
+    "env",
+    "PYTHONPATH=.",
+    ".venv_axis_pi05/bin/python",
+    "tools/axis_pi05/track3_operations_mg1_red_mug_assisted.py",
+    "--run"
+  ],
+  "error_type": "ModuleNotFoundError",
+  "error": "No module named 'libero'",
+  "failure_site": "compe/t3/register.py:_install_table_contact_guard",
+  "physics_started": false,
+  "mujoco_env_created": false,
+  "manual_quota_consumed": false,
+  "historical_raw_modified": false,
+  "retry_authorization": "one code-only launch-path remediation under MG1",
+  "retry_namespace": "data/reports/axis_libero_30k/track3_operations_mg1_red_mug_assisted_retry_20260909"
+}

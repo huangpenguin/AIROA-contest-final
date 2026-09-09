@@ -28,8 +28,11 @@ SEED_ID = "official_t3_red_mug_1788921471"
 SEED_DIR = ROOT / "data/reports/axis_libero_30k/track3_reverse_pilot_v2/pending" / SEED_ID
 O10_DIR = ROOT / "data/reports/axis_libero_30k/track3_operations_o1_0_red_mug_retiming_20260908"
 PLAN = ROOT / "docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md"
-NAMESPACE = ROOT / "data/reports/axis_libero_30k/track3_operations_mg1_red_mug_assisted_20260909"
+NAMESPACE = ROOT / "data/reports/axis_libero_30k/track3_operations_mg1_red_mug_assisted_retry_20260909"
 OUTPUT_ROOT = ROOT / "data/reports/axis_libero_30k/track3_reverse_pilot_v2"
+LIBERO_ROOT = ROOT / "LIBERO"
+if str(LIBERO_ROOT) not in sys.path:
+    sys.path.insert(0, str(LIBERO_ROOT))
 HISTORICAL_HASHES = {
     "metadata.json": "7828256a84e286058d6d602196166732e39b535e6842f2944056a612b70d5a33",
     "trajectory.npz": "91ddeeddb98f424c88f9c87edaa190a0cdad2f7af466d390d7cd859e77f3e6d8",

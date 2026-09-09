@@ -1,0 +1,12 @@
+{
+  "schema_version": "track3_mg1_assisted_launch_failure_summary_v1",
+  "status": "code_only_launch_failure_preserved",
+  "physics_started": false,
+  "mujoco_started": false,
+  "teleop_started": false,
+  "manual_quota_consumed": false,
+  "replay": "not_evaluated",
+  "historical_raw_modified": false,
+  "failure": "launch_failure.json",
+  "retry_namespace": "data/reports/axis_libero_30k/track3_operations_mg1_red_mug_assisted_retry_20260909"
+}

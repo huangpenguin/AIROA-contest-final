@@ -1,0 +1,44 @@
+{
+  "historical_metadata_modified": false,
+  "historical_raw_modified": false,
+  "human_review": "not_evaluated",
+  "mg1_schedule_sha256": "08cf763b7c2c06383637d7a27dcb5a99aa0b8b2e64c1261389f2027805dca3ae",
+  "o1_0_blueprint": "data/reports/axis_libero_30k/track3_operations_o1_0_red_mug_retiming_20260908/retiming_blueprint.json",
+  "o1_0_blueprint_sha256": "9e07cc83ea888039c85c5a94b9ddada769add7bd74189b04f70a83deefe53903",
+  "official_bddl": "compe/t3/assets/bddl_files/libero_t3/take_the_red_mug_off_the_left_plate_and_put_it_on_the_table.bddl",
+  "official_bddl_sha256": "7b35f8fad5defe6d7952973e5916e102b6db56b6abf353e0d6e6d6579664f559",
+  "plan": "docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md",
+  "recorder_sha256": "dee3cd22abae4adc3e118e7c472642f9e4730bb0ec2e1cc0aa01c62800c83d5a",
+  "replay": "not_evaluated",
+  "schema_version": "track3_mg1_assisted_input_lock_v1",
+  "source_episode": "official_t3_red_mug_1788921471",
+  "source_episode_artifacts": [
+    {
+      "path": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/pending/official_t3_red_mug_1788921471/metadata.json",
+      "sha256": "7828256a84e286058d6d602196166732e39b535e6842f2944056a612b70d5a33"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/pending/official_t3_red_mug_1788921471/trajectory.npz",
+      "sha256": "91ddeeddb98f424c88f9c87edaa190a0cdad2f7af466d390d7cd859e77f3e6d8"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/pending/official_t3_red_mug_1788921471/start_state.npy",
+      "sha256": "5774476328e5d655b1b7b428a1bf0732ec964f72d9a7d4b105fefd781bc0b3a2"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/pending/official_t3_red_mug_1788921471/end_state.npy",
+      "sha256": "3276587f38c5e94b9572c253948b45a326ed625c150e80bd8422457bd974c1e2"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/pending/official_t3_red_mug_1788921471/front.mp4",
+      "sha256": "73e5838a3dc37f8887b0fe4a47a330c3dfd79d67b014be9cad82a4092c1ee9eb"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/pending/official_t3_red_mug_1788921471/wrist.mp4",
+      "sha256": "f73ec9f99e6b23cb43bf1656aa1eff57f43d17540c982320e90545c223581357"
+    }
+  ],
+  "source_frame_count": 314,
+  "source_metadata_status": "pending_replay",
+  "status": "locked"
+}

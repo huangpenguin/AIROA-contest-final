@@ -1,0 +1,112 @@
+{
+  "action_interpolation": false,
+  "budgets": {
+    "goal_first_target_max_frames": 240,
+    "hard_max_frames": 300,
+    "post_goal_stable_frames": 4,
+    "total_target_max_frames": 260
+  },
+  "controller": {
+    "control_gain_m": 0.0125,
+    "orientation_action": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "position_tolerance_m": 0.006,
+    "sim_control_hz": 20.0,
+    "simultaneous_xyz": true,
+    "translation_action_cap": 0.3
+  },
+  "execution": "fresh_continuous_mujoco_from_frozen_start_state",
+  "historical_frame_deletion": false,
+  "next_gate": "fresh_physics_attempt",
+  "schema_version": "track3_mg1_assisted_waypoint_schedule_v1",
+  "source_episode": "official_t3_red_mug_1788921471",
+  "source_frame_count": 314,
+  "source_frames_are_read_only": true,
+  "source_keypose_mapping": {
+    "approach": 108,
+    "grasp": 117,
+    "lift": 163,
+    "place": 308,
+    "transport": 255
+  },
+  "source_metadata_status": "pending_replay",
+  "status": "derived_not_executed",
+  "waypoints": [
+    {
+      "gripper": -1.0,
+      "source_frame": 108,
+      "stage": "approach",
+      "stage_budget": 75,
+      "target": [
+        -0.013798441,
+        -0.223513654,
+        0.580402961
+      ]
+    },
+    {
+      "gripper": -1.0,
+      "source_frame": 117,
+      "stage": "grasp_approach",
+      "stage_budget": 18,
+      "target": [
+        -0.011000364,
+        -0.225158672,
+        0.548518879
+      ]
+    },
+    {
+      "gripper": 1.0,
+      "source_frame": 117,
+      "stage": "grasp_close_dwell",
+      "stage_budget": 8,
+      "target": [
+        -0.011000364,
+        -0.225158672,
+        0.548518879
+      ]
+    },
+    {
+      "gripper": 1.0,
+      "source_frame": 163,
+      "stage": "lift",
+      "stage_budget": 55,
+      "target": [
+        -0.014073127,
+        -0.224945264,
+        0.710616632
+      ]
+    },
+    {
+      "gripper": 1.0,
+      "source_frame": 255,
+      "stage": "transport",
+      "stage_budget": 65,
+      "target": [
+        -0.116448301,
+        0.004942008,
+        0.735185098
+      ]
+    },
+    {
+      "gripper": 1.0,
+      "source_frame": 308,
+      "stage": "place",
+      "stage_budget": 55,
+      "target": [
+        -0.130828572,
+        0.028169585,
+        0.555830647
+      ]
+    },
+    {
+      "gripper": -1.0,
+      "source_frame": 308,
+      "stage": "release_settle",
+      "stage_budget": 10,
+      "target": null
+    }
+  ]
+}

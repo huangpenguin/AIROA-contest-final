@@ -5430,6 +5430,6 @@
     "deadline_miss_count": 314,
     "o2": "not_evaluated_frozen_until_o1_accepted_fresh_replay_3_of_3",
     "next_phase_only": "new_reviewed_plan_required",
-    "execution_commit": "pending_closeout_commit"
+    "execution_commit": "d5ee290"
   }
 }

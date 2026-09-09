@@ -8,7 +8,7 @@
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
 > 当前总状态：`track3_multitask_gold_and_r6_short_continuation_ready_for_user_calibration`
 > 唯一活动计划：`docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md`
-> 下一停止点：`MG0_evidence_lock_and_recorder_budget_remediation`
+> 下一停止点：`MG1_red_mug_assisted_reexecution`
 > 最新执行闭包：`docs/reviews/axis_pi05/TRACK3_MG0_RECORDER_BUDGET_TIMING_20260909.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > O0R remediation commit：`20662dd`

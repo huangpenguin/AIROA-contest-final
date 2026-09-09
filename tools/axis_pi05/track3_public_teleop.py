@@ -610,12 +610,15 @@ def gpu3_guard(max_used_mib: int = 1024) -> dict[str, Any]:
 @dataclass
 class RecorderConfig:
     hz: float = 20.0
+    sim_control_hz: float = 20.0
+    video_fps: float = 20.0
     operator_hz: float = 2.0
     translation_step: float = 0.30
     rotation_step: float = 0.36
     default_gripper: float = -1.0
     max_steps: int = 1200
     eval_step_budget: int = 300
+    deadline_tolerance_ms: float = 5.0
     camera_height: int = 256
     camera_width: int = 256
     motion_pulse_ticks: int = 4
@@ -625,12 +628,35 @@ class RecorderConfig:
     preview_wait_seconds: float = 45.0
     preview_refresh_ms: int = 50
 
+    def __post_init__(self) -> None:
+        if float(self.operator_hz) <= 0 or float(self.operator_hz) >= float(self.sim_control_hz):
+            raise ValueError("operator_hz must be positive and below sim_control_hz")
+        if int(self.max_steps) <= 0 or int(self.eval_step_budget) <= 0:
+            raise ValueError("step limits must be positive")
+
     def tick_period(self) -> float:
-        """Wall-clock seconds between operator ticks; saved data stays at ``hz``."""
+        """Wall-clock seconds between operator ticks; simulator control is separate."""
         return 1.0 / max(float(self.operator_hz), 1e-6)
 
     def tick_ms(self) -> int:
         return int(round(self.tick_period() * 1000))
+
+    def recording_step_limit(self) -> int:
+        """The formal writer's hard limit; it can never exceed the plan budget."""
+        return min(int(self.max_steps), int(self.eval_step_budget))
+
+    def budget_status(self, step_count: int) -> dict[str, Any]:
+        limit = self.recording_step_limit()
+        count = int(step_count)
+        if count >= limit:
+            return {"stage": "hard_stop", "warning": "formal_step_budget_exhausted", "step_limit": limit, "step_count": count}
+        if count >= min(290, limit):
+            return {"stage": "hard_warning", "warning": "formal_step_budget_near_limit", "step_limit": limit, "step_count": count}
+        if count >= min(260, limit):
+            return {"stage": "target_window", "warning": "goal_first_target_window", "step_limit": limit, "step_count": count}
+        if count >= min(220, limit):
+            return {"stage": "early_warning", "warning": "formal_step_budget_warning", "step_limit": limit, "step_count": count}
+        return {"stage": "normal", "warning": None, "step_limit": limit, "step_count": count}
 
 
 @dataclass
@@ -907,6 +933,9 @@ class ActionStateMachine:
                 self.state.pulse_key = None
             elif event == "release_motion":
                 self.state.held_keys.clear()
+                self.state.last_motion_key = None
+                self.state.pulse_key = None
+                self.state.pulse_remaining = 0
             elif event == "keydown":
                 if normalized in MOTION_KEYS:
                     self.state.held_keys.add(normalized)
@@ -930,6 +959,10 @@ class ActionStateMachine:
                     self.state.abort = True
             elif event == "keyup" and normalized in MOTION_KEYS:
                 self.state.held_keys.discard(normalized)
+                if self.state.last_motion_key == normalized:
+                    self.state.last_motion_key = None
+                self.state.pulse_key = None
+                self.state.pulse_remaining = 0
             elif event == "button":
                 return self.event("keydown", normalized)
             else:
@@ -1006,7 +1039,7 @@ PREVIEW_HTML = """<!doctype html>
 <style>body{font:14px sans-serif;background:#171717;color:#eee;margin:12px}main{display:flex;gap:12px;flex-wrap:wrap}figure{margin:0}img{width:640px;max-width:48vw;image-rendering:auto;background:#333}button{margin:3px;padding:8px 12px}#state{white-space:pre;font-family:monospace;background:#222;padding:8px}#hud,#instruction{font:16px monospace;margin:8px 0}.open{background:#14532d;color:#fff}.close{background:#7f1d1d;color:#fff}.go{background:#1e3a5f;color:#fff}</style>
 <h2>AXIS Track3 official teleop — localhost only</h2>
 <p>FRONT 预览旋转 180° 方便看；W/S 已对调。绿色半透明框是官方放置目标区。框只画在预览上，保存的帧不带框。语言用官方原文，不要 Reverse 前缀。</p>
-<p>先看 <b>paused=false</b> 再动。短按方向也会走一步。切走浏览器标签会暂停；点按钮不会。瞄准时请暂停：未暂停即使不按键也会记步。当前墙钟约 2 Hz（每步 500ms），预览按新帧刷新；存盘仍是 20 Hz。官方评测约 300 步，录制上限 1200。</p>
+<p>先看 <b>paused=false</b> 再动。短按方向也会走一步。切走浏览器标签会暂停；点按钮不会。暂停期间不推进仿真、不记步。当前默认墙钟约 2 Hz（每步 500ms）；MuJoCo 控制频率和视频 fps 独立记录。正式录制最多 300 步，未保存校准可随时 Abort。</p>
 <div id="instruction">waiting instruction</div>
 <div id="hud">waiting</div>
 <div id="state">waiting for simulator</div>
@@ -1105,7 +1138,7 @@ class PreviewServer:
             "success": False, "source": None, "goal": None, "required_contact": False, "demonstrator_contact": False,
             "source_receiver_contact": False, "goal_receiver_contact": False, "unrelated_contact": False,
             "candidate_gate": "not_evaluated", "cameras": ["FRONT", "WRIST"],
-            "max_steps": 1200, "eval_step_budget": 300, "operator_hz": 2.0, "tick_ms": 500, "frame_seq": 0,
+            "max_steps": 1200, "eval_step_budget": 300, "step_limit": 300, "sim_control_hz": 20.0, "operator_hz": 2.0, "operator_tick_period_s": 0.5, "video_fps": 20.0, "tick_ms": 500, "budget_stage": "normal", "budget_warning": None, "frame_seq": 0,
             "physics_guard": "ok",
         }
         self.httpd = ThreadingHTTPServer((host, port), _PreviewHandler)
@@ -1291,6 +1324,23 @@ def _metadata(profile: dict[str, Any], operator: str, config: RecorderConfig, lo
         "operator": operator,
         "input_device": "keyboard_or_localhost_browser",
         "fps": config.hz,
+        "video_fps": config.video_fps,
+        "sim_control_hz": config.sim_control_hz,
+        "operator_tick_hz": config.operator_hz,
+        "operator_tick_period_s": config.tick_period(),
+        "timing": {
+            "sim_control_hz": config.sim_control_hz,
+            "operator_tick_hz": config.operator_hz,
+            "operator_tick_period_s": config.tick_period(),
+            "video_fps": config.video_fps,
+            "deadline_tolerance_ms": config.deadline_tolerance_ms,
+            "deadline_basis": "operator_tick_start_vs_scheduled_tick",
+        },
+        "budget": {
+            "step_limit": config.recording_step_limit(),
+            "warning_steps": [220, 260, 290],
+            "hard_stop_at_step": config.recording_step_limit(),
+        },
         "action_contract": "7D OSC_POSE; translation/rotation delta; gripper exactly -1 or +1",
         "state_contract": "complete simulator state at start/end and every frame",
         "source": profile.get("start_source", "official_t3_bddl_reset"),
@@ -1379,8 +1429,8 @@ def _write_episode(directory: Path, metadata: dict[str, Any], frames: dict[str, 
     _save_npy(directory / "start_state.npy", start_state)
     _save_npy(directory / "end_state.npy", end_state)
     videos = {
-        "front": _save_video(directory / "front.mp4", [v for v in frames["front"] if v is not None], config.hz),
-        "wrist": _save_video(directory / "wrist.mp4", [v for v in frames["wrist"] if v is not None], config.hz),
+        "front": _save_video(directory / "front.mp4", [v for v in frames["front"] if v is not None], config.video_fps),
+        "wrist": _save_video(directory / "wrist.mp4", [v for v in frames["wrist"] if v is not None], config.video_fps),
     }
     expected_paths = {
         "trajectory": "trajectory.npz",
@@ -1394,14 +1444,32 @@ def _write_episode(directory: Path, metadata: dict[str, Any], frames: dict[str, 
         if validate_episode_relative_path(str(video_path)) != expected_paths[camera]:
             raise ValueError(f"{camera} metadata path must be episode-relative")
     metadata["schema_version"] = "track3_reverse_pilot_v4"
+    frame_count = len(frames["actions"])
+    deadline_miss_count = int(sum(bool(value) for value in frames["deadline_miss"]))
+    timestamps = np.asarray(frames.get("timestamps_monotonic", []), dtype=np.float64)
     metadata.update({
-        "frame_count": len(frames["actions"]),
+        "frame_count": frame_count,
         "trajectory": arrays,
         "start_state_sha256": sha256_file(directory / "start_state.npy"),
         "end_state_sha256": sha256_file(directory / "end_state.npy"),
         "end_success": bool(frames["success"][-1]) if frames["success"] else False,
-        "deadline_miss_count": int(sum(bool(value) for value in frames["deadline_miss"])),
+        "deadline_miss_count": deadline_miss_count,
         "videos": videos,
+        "video_fps": config.video_fps,
+        "sim_control_hz": config.sim_control_hz,
+        "operator_tick_hz": config.operator_hz,
+        "timing": {
+            **dict(metadata.get("timing") or {}),
+            "frame_count": frame_count,
+            "deadline_miss_count": deadline_miss_count,
+            "wall_timestamp_start_s": float(timestamps[0]) if timestamps.size else None,
+            "wall_timestamp_end_s": float(timestamps[-1]) if timestamps.size else None,
+        },
+        "budget": {
+            **dict(metadata.get("budget") or {}),
+            "recorded_frames": frame_count,
+            "hard_stop_reached": frame_count >= config.recording_step_limit(),
+        },
     })
     write_json(directory / "metadata.json", metadata)
 
@@ -1437,7 +1505,7 @@ def _eval_profile_predicates(env: Any, profile: dict[str, Any]) -> tuple[bool, b
         return False, bool(env.check_success())
 
 
-def record_episode(task_index: int | None, operator: str, config: RecorderConfig, *, task_id: str | None = None) -> dict[str, Any]:
+def record_episode(task_index: int | None, operator: str, config: RecorderConfig, *, task_id: str | None = None, no_save: bool = False) -> dict[str, Any]:
     """Run only with explicit human ``--record``; no automatic input is used."""
     try:
         profile = resolve_record_profile(task_id=task_id, task_index=task_index)
@@ -1452,7 +1520,7 @@ def record_episode(task_index: int | None, operator: str, config: RecorderConfig
         register_t3()
     from libero.libero.envs import OffScreenRenderEnv
 
-    env = OffScreenRenderEnv(bddl_file_name=str(profile["bddl_path"]), control_freq=20, use_camera_obs=True,
+    env = OffScreenRenderEnv(bddl_file_name=str(profile["bddl_path"]), control_freq=int(config.sim_control_hz), use_camera_obs=True,
                              camera_names=["agentview", "robot0_eye_in_hand"], camera_heights=config.camera_height,
                              camera_widths=config.camera_width, render_gpu_device_id=0,
                              horizon=max(int(config.max_steps) + 20, 1200), ignore_done=True)
@@ -1544,8 +1612,10 @@ def record_episode(task_index: int | None, operator: str, config: RecorderConfig
                        hz=0.0, lag_ms=0.0, success=bool(env.check_success()), source=True, goal=False,
                        required_contact=False, demonstrator_contact=False, source_receiver_contact=True,
                        goal_receiver_contact=False, unrelated_contact=False, candidate_gate="not_evaluated",
-                       max_steps=config.max_steps, eval_step_budget=config.eval_step_budget,
-                       operator_hz=config.operator_hz, tick_ms=config.tick_ms(), physics_guard="ok")
+                       max_steps=config.max_steps, eval_step_budget=config.eval_step_budget, step_limit=config.recording_step_limit(),
+                       sim_control_hz=config.sim_control_hz, operator_hz=config.operator_hz,
+                       operator_tick_period_s=config.tick_period(), video_fps=config.video_fps,
+                       budget_stage="normal", budget_warning=None, tick_ms=config.tick_ms(), physics_guard="ok")
         if not server.wait_for_first_frame(config.preview_wait_seconds):
             return {"status": "track3_teleop_preview_blocked", "reason": "preview did not connect and fetch a first frame", "preview_url": server.url}
         machine.event("connect")
@@ -1555,14 +1625,17 @@ def record_episode(task_index: int | None, operator: str, config: RecorderConfig
         recording_start = time.monotonic()
         next_tick = recording_start
         session_deadline = recording_start + float(config.session_timeout_seconds)
+        step_limit = config.recording_step_limit()
+        save_event_seen = False
         step = 0
         with raw_terminal():
-            while step < int(config.max_steps):
+            while step < step_limit:
                 if time.monotonic() >= session_deadline:
                     metadata["status"] = "rejected_timeout"
                     metadata["timeout_reason"] = "session_wall_clock"
                     break
-                terminal_key = _read_key(max(0.0, next_tick - time.monotonic()))
+                scheduled_tick = next_tick
+                terminal_key = _read_key(max(0.0, scheduled_tick - time.monotonic()))
                 if terminal_key is not None:
                     if terminal_key in {"\n", "\r"}:
                         machine.event("keydown", "enter")
@@ -1581,25 +1654,30 @@ def record_episode(task_index: int | None, operator: str, config: RecorderConfig
                     step = 0
                     machine.state.reset_count += 1
                     machine.state.gripper = _safe_gripper(config.default_gripper)
+                    next_tick = time.monotonic()
+                    scheduled_tick = next_tick
                     server.publish(_image_from_obs(reset_obs, "agentview"), _image_from_obs(reset_obs, "robot0_eye_in_hand"),
                                    env=env, profile=profile,
                                    task_index=profile.get("task_index"), task_id=profile["task_id"], instruction=profile["instruction"],
                                    goal_predicate="; ".join(profile.get("goal_predicates") or []), step=0,
                                    hz=0.0, lag_ms=0.0, success=bool(env.check_success()), source=True, goal=False,
                                    required_contact=False, candidate_gate="not_evaluated",
-                                   max_steps=config.max_steps, eval_step_budget=config.eval_step_budget,
-                                   operator_hz=config.operator_hz, tick_ms=config.tick_ms(), physics_guard="ok")
+                                   max_steps=config.max_steps, eval_step_budget=config.eval_step_budget, step_limit=config.recording_step_limit(),
+                                   sim_control_hz=config.sim_control_hz, operator_hz=config.operator_hz,
+                                   operator_tick_period_s=config.tick_period(), video_fps=config.video_fps,
+                                   budget_stage="normal", budget_warning=None, tick_ms=config.tick_ms(), physics_guard="ok")
                 action = machine.next_action()
                 validate_action(action)
                 if machine.state.abort:
                     metadata["status"] = "rejected_abort"
                     break
                 if machine.state.paused:
-                    time.sleep(min(0.05, max(0.0, next_tick - time.monotonic())))
-                    if time.monotonic() >= next_tick:
-                        next_tick += config.tick_period()
+                    time.sleep(0.05)
+                    next_tick = time.monotonic()
                     continue
                 tick = time.monotonic()
+                operator_lag_ms = max(0.0, (tick - scheduled_tick) * 1000.0)
+                deadline_miss = operator_lag_ms > float(config.deadline_tolerance_ms)
                 obs, reward, done, info = env.step(action)
                 now = time.monotonic()
                 watched = [str(subject) for subject, _ in (profile.get("init_height_sites") or ())] or [str(name) for name in ((profile.get("roles") or {}).get("subject") or ())]
@@ -1616,8 +1694,10 @@ def record_episode(task_index: int | None, operator: str, config: RecorderConfig
                         goal_predicate="; ".join(profile.get("goal_predicates") or []), step=step,
                         hz=0.0, lag_ms=0.0, success=bool(env.check_success()), source=True, goal=False,
                         required_contact=False, candidate_gate="not_evaluated",
-                        max_steps=config.max_steps, eval_step_budget=config.eval_step_budget,
-                        operator_hz=config.operator_hz, tick_ms=config.tick_ms(),
+                        max_steps=config.max_steps, eval_step_budget=config.eval_step_budget, step_limit=config.recording_step_limit(),
+                        sim_control_hz=config.sim_control_hz, operator_hz=config.operator_hz,
+                        operator_tick_period_s=config.tick_period(), video_fps=config.video_fps,
+                        budget_stage="normal", budget_warning=None, tick_ms=config.tick_ms(),
                         physics_guard="restored_after_unstable",
                     )
                     next_tick += config.tick_period()
@@ -1631,7 +1711,7 @@ def record_episode(task_index: int | None, operator: str, config: RecorderConfig
                 sample = append_gold_frame(
                     frames, action=action, state=np.asarray(env.get_sim_state()), reward=float(reward), done=bool(done),
                     success=check_success, front=_image_from_obs(obs, "agentview"), wrist=_image_from_obs(obs, "robot0_eye_in_hand"),
-                    timestamp=now - recording_start, deadline_miss=bool(now > next_tick + 0.005), contact_matrix=contact_matrix,
+                    timestamp=now - recording_start, deadline_miss=deadline_miss, contact_matrix=contact_matrix,
                     source=source, goal=goal, eef_pos=eef, gripper=float(action[-1]), check_success=check_success,
                     contact_roles=profile.get("roles"),
                 )
@@ -1639,33 +1719,65 @@ def record_episode(task_index: int | None, operator: str, config: RecorderConfig
                 gates = evaluate_gold_gates(samples)
                 if not profile.get("language_gold_ok"):
                     gates = {**gates, "save_allowed": False, "candidate_gate": "failed", "language_unqualified": True}
+                budget = config.budget_status(step + 1)
                 server.publish(
                     frames["front"][-1], frames["wrist"][-1], env=env, profile=profile,
                     task_index=profile.get("task_index"), task_id=profile["task_id"], instruction=profile["instruction"],
                     goal_predicate="; ".join(profile.get("goal_predicates") or []), step=step + 1, hz=1.0 / max(now - tick, 1e-6),
-                    lag_ms=max(0.0, (now - next_tick) * 1000), success=check_success, source=source, goal=goal,
+                    lag_ms=operator_lag_ms, success=check_success, source=source, goal=goal,
                     required_contact=bool(sample["required_contact"]), demonstrator_contact=bool(frames["demonstrator_contact"][-1]),
                     source_receiver_contact=bool(frames["source_receiver_contact"][-1]), goal_receiver_contact=bool(frames["goal_receiver_contact"][-1]),
                     unrelated_contact=bool(frames["unrelated_contact"][-1]), candidate_gate=gates["candidate_gate"],
-                    max_steps=config.max_steps, eval_step_budget=config.eval_step_budget,
-                    operator_hz=config.operator_hz, tick_ms=config.tick_ms(), physics_guard="ok",
+                    max_steps=config.max_steps, eval_step_budget=config.eval_step_budget, step_limit=step_limit,
+                    sim_control_hz=config.sim_control_hz, operator_hz=config.operator_hz,
+                    operator_tick_period_s=config.tick_period(), video_fps=config.video_fps,
+                    budget_stage=budget["stage"], budget_warning=budget["warning"], tick_ms=config.tick_ms(), physics_guard="ok",
                 )
                 if terminal_key is not None and terminal_key.lower() in MOTION_KEYS:
                     machine.event("keyup", terminal_key.lower())
                 if machine.consume("save"):
-                    metadata["gold_gates"] = gates
-                    if not profile.get("language_gold_ok"):
-                        metadata["status"] = "rejected_language_unqualified"
+                    save_event_seen = True
+                    if no_save:
+                        metadata["status"] = "no_save_save_event_ignored"
                     else:
-                        metadata["status"] = "pending_replay" if gates.get("save_allowed") else "rejected_predicate_fail"
+                        metadata["gold_gates"] = gates
+                        if not profile.get("language_gold_ok"):
+                            metadata["status"] = "rejected_language_unqualified"
+                        else:
+                            metadata["status"] = "pending_replay" if gates.get("save_allowed") else "rejected_predicate_fail"
                     break
                 if machine.state.abort:
-                    metadata["status"] = "rejected_abort"
+                    metadata["status"] = "no_save_canary_aborted" if no_save else "rejected_abort"
                     break
                 step += 1
-                next_tick += config.tick_period()
+                next_tick = scheduled_tick + config.tick_period()
         if metadata["status"] == "recording":
-            metadata["status"] = "rejected_timeout"
+            if step >= step_limit:
+                metadata["status"] = "no_save_canary_step_limit" if no_save else "rejected_over_budget"
+                metadata["budget_stop_reason"] = "formal_step_budget_exhausted"
+            else:
+                metadata["status"] = "no_save_canary_timeout" if no_save else "rejected_timeout"
+        if no_save:
+            return {
+                "status": metadata["status"],
+                "phase": "MG0_no_save_canary",
+                "task_id": profile["task_id"],
+                "operator": operator,
+                "sim_control_hz": config.sim_control_hz,
+                "operator_tick_hz": config.operator_hz,
+                "operator_tick_period_s": config.tick_period(),
+                "video_fps": config.video_fps,
+                "frame_count": len(frames["actions"]),
+                "step_limit": step_limit,
+                "save_event_seen": save_event_seen,
+                "candidate_created": False,
+                "pending_created": False,
+                "replay": "not_evaluated",
+                "budget": config.budget_status(len(frames["actions"])),
+                "deadline_miss_count": int(sum(bool(value) for value in frames["deadline_miss"])),
+                "reset_count": machine.state.reset_count,
+                "no_formal_episode_written": True,
+            }
         bucket = "pending" if metadata["status"] == "pending_replay" else ("diagnostic" if metadata["status"] == "rejected_abort" else "rejected")
         name = f"{profile['task_id']}_{int(time.time())}"
         end_state = np.asarray(env.get_sim_state(), dtype=np.float64).copy()
@@ -1700,9 +1812,10 @@ def self_test() -> dict[str, Any]:
     machine.event("keydown", "p"); assert machine.next_action("w")[0] == 0
     machine.event("keydown", "p"); machine.event("connect"); machine.event("keydown", "w"); assert machine.next_action()[0] < 0
     machine.event("keyup", "w")
-    assert machine.next_action()[0] < 0
+    assert machine.next_action()[0] == 0
     machine.event("keydown", "s"); assert machine.next_action()[0] > 0
     assert machine.snapshot()["axis"] == "X" and machine.snapshot()["sign"] == "+"
+    machine.event("keyup", "s"); assert machine.next_action()[0] == 0
     machine.event("disconnect"); assert machine.snapshot()["paused"] is True and machine.snapshot()["held_keys"] == []
     machine.event("connect"); machine.event("keydown", "c"); assert machine.state.camera == "wrist"
     machine.event("keydown", "z"); assert machine.consume("reset"); machine.event("keydown", "enter"); assert machine.consume("save")
@@ -1775,9 +1888,19 @@ def self_test() -> dict[str, Any]:
         assert int(preview_no_env[0, 0, 0]) == 9
         assert float(local_z_world((1.0, 0.0, 0.0, 0.0))[2]) == 1.0
         assert config.hz == 20.0
+        assert config.sim_control_hz == 20.0
+        assert config.video_fps == 20.0
         assert config.operator_hz == 2.0
-        assert 1.0 <= config.operator_hz < config.hz
+        assert 1.0 <= config.operator_hz < config.sim_control_hz
         assert config.tick_ms() == 500
+        assert config.recording_step_limit() == 300
+        assert config.budget_status(220)["stage"] == "early_warning"
+        assert config.budget_status(260)["stage"] == "target_window"
+        assert config.budget_status(290)["stage"] == "hard_warning"
+        assert config.budget_status(300)["stage"] == "hard_stop"
+        fast_config = RecorderConfig(operator_hz=4.0)
+        assert fast_config.tick_ms() == 250
+        assert fast_config.recording_step_limit() == 300
         assert config.preview_refresh_ms <= 50
         assert config.translation_step >= 0.30
         assert config.motion_pulse_ticks <= 4
@@ -1790,6 +1913,8 @@ def self_test() -> dict[str, Any]:
             "no_key_ticks": 50, "gripper_values": sorted(set(no_key_grippers)),
             "default_gripper_open": True, "explicit_open_close": True,
             "pause_camera_reset_save_abort": True, "invalid_action_rejected": non_finite_or_invalid_rejected,
+            "keyup_clears_motion_pulse": True, "pause_consumes_zero_steps": True,
+            "formal_hard_step_limit": config.recording_step_limit(), "timing_fields_separated": True,
             "preview_bind_host": "127.0.0.1", "accepted_episode_count": 0,
             "simulator_started": False, "gpu_touched": False,
             "gold_gates_fixture_passed": passed_gates["status"] == "passed",
@@ -1808,17 +1933,27 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--self-test", action="store_true")
     parser.add_argument("--record", action="store_true")
+    parser.add_argument("--no-save", "--canary", dest="no_save", action="store_true")
     parser.add_argument("--task-id", default=DEFAULT_TASK_ID, choices=sorted(OFFICIAL_T3_TASKS))
     parser.add_argument("--task-index", type=int, default=None, choices=ALLOWED_TASKS)
     parser.add_argument("--operator", default="operator-local")
+    parser.add_argument("--operator-hz", type=float, default=2.0)
     parser.add_argument("--preview-port", type=int, default=8765)
     parser.add_argument("--preview-wait-seconds", type=float, default=900.0)
     args = parser.parse_args()
     if args.self_test:
         self_test(); return 0
-    if args.record:
-        result = record_episode(args.task_index, args.operator, RecorderConfig(preview_port=args.preview_port, preview_wait_seconds=args.preview_wait_seconds), task_id=None if args.task_index is not None else args.task_id)
+    if args.record or args.no_save:
+        if args.record and args.no_save:
+            parser.error("choose --record or --no-save, not both")
+        try:
+            config = RecorderConfig(operator_hz=args.operator_hz, preview_port=args.preview_port, preview_wait_seconds=args.preview_wait_seconds)
+        except ValueError as exc:
+            parser.error(str(exc))
+        result = record_episode(args.task_index, args.operator, config, task_id=None if args.task_index is not None else args.task_id, no_save=args.no_save)
         print(json.dumps(result, ensure_ascii=False, indent=2))
+        if args.no_save:
+            return 0 if result.get("status", "").startswith("no_save_") else 2
         return 0 if result.get("status") == "pending_replay" else 2
     parser.error("choose --self-test or --record")
     return 2

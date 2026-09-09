@@ -68,11 +68,24 @@ def load_row(task_index: int) -> dict[str, Any]:
     raise RuntimeError(f"task {task_index} is absent from locked public mapping")
 
 
+def load_replay_profile(metadata: dict[str, Any]) -> tuple[int | None, Path]:
+    task_id = str(metadata.get("task_id") or "")
+    if task_id in {"official_t3_red_mug", "official_t3_alphabet_soup", "official_t3_yellow_book", "official_t3_two_mugs"}:
+        recorder = load_recorder()
+        profile = recorder.resolve_record_profile(task_id=task_id)
+        return None, Path(profile["bddl_path"])
+    task_index = int(metadata["task_index"])
+    row = load_row(task_index)
+    return task_index, Path(row["reverse_bddl_path"])
+
+
 def replay_worker(episode_dir: Path, run_index: int) -> dict[str, Any]:
     recorder = load_recorder()
     metadata = json.loads((episode_dir / "metadata.json").read_text(encoding="utf-8"))
-    task_index = int(metadata["task_index"])
-    row = load_row(task_index)
+    task_index, bddl_path = load_replay_profile(metadata)
+    if task_index is None:
+        from compe.t3 import register_t3
+        register_t3()
     data = np.load(episode_dir / "trajectory.npz", allow_pickle=False)
     actions = np.asarray(data["actions"], dtype=np.float32)
     start_state = np.asarray(np.load(episode_dir / "start_state.npy"), dtype=np.float64)
@@ -80,7 +93,7 @@ def replay_worker(episode_dir: Path, run_index: int) -> dict[str, Any]:
         recorder.validate_action(action)
     from libero.libero.envs import OffScreenRenderEnv
 
-    env = OffScreenRenderEnv(bddl_file_name=row["reverse_bddl_path"], control_freq=20, use_camera_obs=False, render_gpu_device_id=0)
+    env = OffScreenRenderEnv(bddl_file_name=str(bddl_path), control_freq=20, use_camera_obs=False, render_gpu_device_id=0)
     try:
         env.reset()
         env.set_init_state(start_state)

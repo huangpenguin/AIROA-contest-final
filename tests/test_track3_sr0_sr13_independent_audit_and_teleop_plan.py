@@ -13,7 +13,7 @@ SR = ROOT / "data/reports/axis_libero_30k/track3_support_runtime_gate_remediatio
 AUDIT = ROOT / "data/reports/axis_libero_30k/track3_sr0_sr13_independent_audit_20260907/summary.json"
 ANCHOR = ROOT / "data/reports/axis_libero_30k/track3_sr0_sr13_independent_audit_20260907/raw_evidence_anchor.json"
 HANDOFF = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
-PLAN = "docs/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md"
+PLAN = "docs/archive/axis_pi05/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md"
 ARCHIVED_AUDIT_PLAN = ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_INDEPENDENT_AUDIT_PLAN.md"
 O0R_DIR = ROOT / "data/reports/axis_libero_30k/track3_operations_o0r_remediation_20260908"
 
@@ -126,9 +126,9 @@ def test_raw_anchor_is_exact_and_git_persisted_without_rewriting() -> None:
 
 def test_lifecycle_has_one_new_active_plan_and_archived_old_audit_plan() -> None:
     handoff = strict_json(HANDOFF)
-    assert handoff["status"] == "track3_operations_o1_1_no_save_canary_passed_ready_for_explicit_user_takeover"
-    assert handoff["next_plan"] == PLAN
-    assert handoff["next_phase_only"] == "O1_2_explicit_user_takeover_one_canonical_recording"
+    assert handoff["status"] == "track3_operations_o1_2_user_recorded_over_budget_hard_stop"
+    assert handoff["next_plan"] is None
+    assert handoff["next_phase_only"] == "new_reviewed_plan_required"
     assert (ROOT / PLAN).is_file()
     assert ARCHIVED_AUDIT_PLAN.is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_INDEPENDENT_AUDIT_PLAN.md").exists()

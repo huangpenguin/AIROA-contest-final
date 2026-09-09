@@ -1,0 +1,43 @@
+{
+  "schema_version": "track3_o1_2_derived_eligibility_validation_v1",
+  "source_artifact_unchanged": true,
+  "metadata_mutated": false,
+  "replay_started": false,
+  "additional_recording_started": false,
+  "commands": [
+    [
+      "./.venv_axis_pi05/bin/python",
+      "-c",
+      "np.load trajectory.npz allow_pickle=False and verify typed arrays/contact_offsets"
+    ],
+    [
+      "git",
+      "status",
+      "--short"
+    ],
+    [
+      "nvidia-smi",
+      "--query-gpu=index,memory.used"
+    ],
+    [
+      "xdpyinfo",
+      "-display",
+      ":3"
+    ]
+  ],
+  "results": {
+    "metadata_status": "pending_replay",
+    "recorder_gate": "passed",
+    "plan_step_gate": "failed_over_budget",
+    "frame_count": 314,
+    "hard_max": 300,
+    "end_success": true,
+    "typed_npz": "passed",
+    "object_arrays": [],
+    "contact_offsets_equal_contact_n": true,
+    "no_active_recorder": true,
+    "gpu3_after_mib": 5,
+    "historical_raw_modified": false,
+    "historical_metadata_modified": false
+  }
+}

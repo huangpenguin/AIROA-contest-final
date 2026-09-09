@@ -1,0 +1,130 @@
+{
+  "action_contract": "7D OSC_POSE; translation/rotation delta; gripper exactly -1 or +1",
+  "created_at_utc": "2026-09-09T02:27:42.482713+00:00",
+  "deadline_miss_count": 314,
+  "end_state_sha256": "3276587f38c5e94b9572c253948b45a326ed625c150e80bd8422457bd974c1e2",
+  "end_success": true,
+  "fps": 20.0,
+  "frame_count": 314,
+  "gold_gates": {
+    "candidate_gate": "passed",
+    "final_success_boolean_insufficient": true,
+    "finite_actions": true,
+    "goal_continuous_true": {
+      "check_success": true,
+      "executed": true,
+      "goal_final": true,
+      "not_final_frame_only": true,
+      "required": true,
+      "stable_ticks": 4,
+      "state": "passed",
+      "window": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    "initial_goal_false": true,
+    "initial_source_true": true,
+    "required_contact": {
+      "barrier_index": 119,
+      "contact_kind": "demonstrator_subject",
+      "schema": "acquisition_contact_gate_v4",
+      "source_before_release": true,
+      "stable_ticks": 4,
+      "state": "passed",
+      "window_end": 119,
+      "window_start": 116
+    },
+    "save_allowed": true,
+    "source_released": {
+      "executed": true,
+      "required": true,
+      "stable_ticks": 4,
+      "state": "passed",
+      "window": [
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    "status": "passed",
+    "unknown_any": false,
+    "unrelated_any": false
+  },
+  "human_review": "pending",
+  "input_device": "keyboard_or_localhost_browser",
+  "instruction": "take the red mug off the left plate and put it back on the table behind the other two mugs",
+  "language_gold_ok": true,
+  "lock": {
+    "official_t3_bddl": "/home/huang/code/PARC2026_final/compe/t3/assets/bddl_files/libero_t3/take_the_red_mug_off_the_left_plate_and_put_it_on_the_table.bddl",
+    "official_t3_bddl_sha256": "7b35f8fad5defe6d7952973e5916e102b6db56b6abf353e0d6e6d6579664f559",
+    "preview_url": "http://127.0.0.1:39899/",
+    "training_holdout_examples": []
+  },
+  "official_public_example": true,
+  "operator": "operator-local",
+  "replay": "pending_fresh_process_3_of_3",
+  "reverse_goal_predicates": [
+    "(On red_coffee_mug_1 living_room_table_red_coffee_mug_init_region)"
+  ],
+  "reverse_instruction": "take the red mug off the left plate and put it back on the table behind the other two mugs",
+  "schema_version": "track3_reverse_pilot_v4",
+  "source": "official_t3_bddl_reset_frozen",
+  "start_state_sha256": "5774476328e5d655b1b7b428a1bf0732ec964f72d9a7d4b105fefd781bc0b3a2",
+  "state_contract": "complete simulator state at start/end and every frame",
+  "status": "pending_replay",
+  "task_id": "official_t3_red_mug",
+  "task_index": null,
+  "training_holdout": false,
+  "trajectory": {
+    "frames": 314,
+    "keys": [
+      "actions",
+      "check_success",
+      "contact_body1",
+      "contact_body2",
+      "contact_geom1",
+      "contact_geom2",
+      "contact_n",
+      "contact_offsets",
+      "contact_role",
+      "deadline_miss",
+      "demonstrator_contact",
+      "dones",
+      "eef_pos",
+      "front",
+      "goal_predicate",
+      "goal_receiver_contact",
+      "gripper",
+      "phase",
+      "required_contact",
+      "rewards",
+      "source_predicate",
+      "source_receiver_contact",
+      "states",
+      "success",
+      "timestamps_monotonic",
+      "unrelated_contact",
+      "wrist"
+    ],
+    "path": "trajectory.npz",
+    "sha256": "91ddeeddb98f424c88f9c87edaa190a0cdad2f7af466d390d7cd859e77f3e6d8"
+  },
+  "videos": {
+    "front": {
+      "codec": "mp4v",
+      "path": "front.mp4",
+      "sha256": "73e5838a3dc37f8887b0fe4a47a330c3dfd79d67b014be9cad82a4092c1ee9eb",
+      "status": "written"
+    },
+    "wrist": {
+      "codec": "mp4v",
+      "path": "wrist.mp4",
+      "sha256": "f73ec9f99e6b23cb43bf1656aa1eff57f43d17540c982320e90545c223581357",
+      "status": "written"
+    }
+  }
+}

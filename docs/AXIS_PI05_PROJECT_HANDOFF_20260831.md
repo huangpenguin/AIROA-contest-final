@@ -6,10 +6,10 @@
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-sg0-sg12-support-gold-20260907`
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_operations_o1_1_no_save_canary_passed_ready_for_explicit_user_takeover`
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md`
-> 下一停止点：`O1_2_explicit_user_takeover_one_canonical_recording`
-> 最新执行闭包：`docs/reviews/axis_pi05/TRACK3_O1_1_NATIVE_VNC_NO_SAVE_CANARY_20260909.md`
+> 当前总状态：`track3_operations_o1_2_user_recorded_over_budget_hard_stop`
+> 唯一活动计划：无（等待新 reviewed plan）
+> 下一停止点：`new_reviewed_plan_required`
+> 最新执行闭包：`docs/reviews/axis_pi05/TRACK3_O1_2_USER_TELEOP_OVER_BUDGET_20260909.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > O0R remediation commit：`20662dd`
 > O0R evidence：`data/reports/axis_libero_30k/track3_operations_o0r_remediation_20260908/`
@@ -1059,3 +1059,12 @@ O1.1 no-save canary 已通过并 hard stop。VNC display :3、native MuJoCo、�
 当前唯一活动计划仍为 O1/O2 计划。下一停止点是 O1_2_explicit_user_takeover_one_canonical_recording：必须由用户明确接管 Teleop 后才可最多录一条 canonical red-mug formal recording；VNC 已连接本身不构成接管。O2 仍冻结，直到 O1 accepted 且 fresh replay=3/3。
 
 报告：docs/reviews/axis_pi05/TRACK3_O1_1_NATIVE_VNC_NO_SAVE_CANARY_20260909.md；derived correction：data/reports/axis_libero_30k/track3_operations_o1_1_native_vnc_canary_20260909_derived_correction_20260909/summary.json。
+
+
+## 93. O1.2 user Teleop recording closeout（2026-09-09）
+
+用户已明确接管并完成唯一一条 red-mug formal recording。录制结果的物理目标成功，但 314 帧超过 300-step 硬上限 14 帧；因此不能升格为 canonical gold。recorder 的 pending_replay 与内部 candidate_gate=passed 是历史原始 metadata，不能覆盖 O1 计划硬门。
+
+该 episode 的 NPZ 可用 allow_pickle=false 读取、无 object array、动态 contact offsets 与 contact_n 一致；required contact、source release、goal continuous、success 均通过。现有 operator timing 为约 0.5 秒一帧，314 帧均被 deadline_miss 标记；提速需要新 reviewed plan 和明确 recorder 改动。没有 replay、accepted、训练或 O2，GPU3 已释放。
+
+O1/O2 计划已归档：docs/archive/axis_pi05/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md。derived eligibility：data/reports/axis_libero_30k/track3_operations_o1_2_red_mug_user_takeover_20260909/derived_eligibility/summary.json；执行报告：docs/reviews/axis_pi05/TRACK3_O1_2_USER_TELEOP_OVER_BUDGET_20260909.md。当前没有活动计划，下一权限为 new_reviewed_plan_required；不允许直接开始第二条 formal recording。

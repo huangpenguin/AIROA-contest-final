@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 HANDOFF = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
 AUDIT = ROOT / "data/reports/axis_libero_30k/track3_ac0_ac6_independent_audit_20260907/summary.json"
 AC_ROOT = ROOT / "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary"
-PLAN = "docs/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md"
+PLAN = "docs/archive/axis_pi05/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md"
 ARCHIVED_BR_PLAN = ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ACQUISITION_GATE_AND_ATTEMPT_LIFECYCLE_REMEDIATION_PLAN.md"
 ARCHIVED_AUDIT_PLAN = ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_INDEPENDENT_AUDIT_PLAN.md"
 
@@ -72,9 +72,9 @@ def test_contract_findings_cannot_be_silently_cleared() -> None:
 
 def test_lifecycle_releases_exactly_one_br_plan() -> None:
     handoff = strict_json(HANDOFF)
-    assert handoff["status"] == "track3_operations_o1_1_no_save_canary_passed_ready_for_explicit_user_takeover"
-    assert handoff["next_plan"] == PLAN
-    assert handoff["next_phase_only"] == "O1_2_explicit_user_takeover_one_canonical_recording"
+    assert handoff["status"] == "track3_operations_o1_2_user_recorded_over_budget_hard_stop"
+    assert handoff["next_plan"] is None
+    assert handoff["next_phase_only"] == "new_reviewed_plan_required"
     assert (ROOT / PLAN).is_file()
     assert ARCHIVED_BR_PLAN.is_file()
     assert ARCHIVED_AUDIT_PLAN.is_file()

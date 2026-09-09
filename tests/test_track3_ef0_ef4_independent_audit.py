@@ -43,9 +43,9 @@ def test_existing_corrected_checkout_closure_remains_exact() -> None:
 
 def test_lifecycle_closes_eg_after_independent_audit() -> None:
     handoff = json.loads(HANDOFF.read_text(encoding="utf-8"))
-    assert handoff["status"] == "track3_operations_o1_1_no_save_canary_passed_ready_for_explicit_user_takeover"
-    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md"
-    assert handoff["next_phase_only"] == "O1_2_explicit_user_takeover_one_canonical_recording"
+    assert handoff["status"] == "track3_operations_o1_2_user_recorded_over_budget_hard_stop"
+    assert handoff["next_plan"] is None
+    assert handoff["next_phase_only"] == "new_reviewed_plan_required"
     assert not (ROOT / PLAN).exists()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md").exists()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md").is_file()

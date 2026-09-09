@@ -14,7 +14,7 @@ from tools.axis_pi05 import track3_support_runtime_gate_remediation as sr
 
 ROOT = Path(__file__).resolve().parents[1]
 HANDOFF = ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
-PLAN = ROOT / "docs/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md"
+PLAN = ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md"
 UT_ROOT = ROOT / "data/reports/axis_libero_30k/track3_sr_closure_and_task10_user_teleop_gold_canary"
 
 
@@ -91,16 +91,16 @@ def test_teleop_gold_npz_and_explicit_gripper() -> None:
 
 def test_handoff_waits_for_explicit_takeover() -> None:
     handoff = strict_json(HANDOFF)
-    assert handoff["status"] == "track3_operations_o1_1_no_save_canary_passed_ready_for_explicit_user_takeover"
-    assert handoff["next_phase_only"] == "O1_2_explicit_user_takeover_one_canonical_recording"
+    assert handoff["status"] == "track3_operations_o1_2_user_recorded_over_budget_hard_stop"
+    assert handoff["next_phase_only"] == "new_reviewed_plan_required"
     assert PLAN.is_file()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md").is_file()
-    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md"
+    assert handoff["next_plan"] is None
     o0r = handoff["track3_operations_o0r_remediation_20260908"]
     assert o0r["audit_class"] == "approved"
     assert o0r["historical_metadata_mutated"] is False
     auth = handoff["track3_operations_o1_o2_authorization"]
-    assert auth["status"] == "active"
+    assert auth["status"] == "consumed_hard_stop"
     assert auth["preferred_seed"].endswith("1788838632")
     assert auth["o1"]["fresh_replay_success_required"] == "3/3"
     assert auth["o1"]["user_online_takeover_required"] is True
@@ -149,6 +149,22 @@ def test_o1_1_native_vnc_no_save_canary_passed() -> None:
     assert correction["reset"]["goal_false"] is True
     assert correction["save"]["save_event_seen"] is False
     assert correction["writer"]["contact_offsets_equal_contact_n"] is True
+
+
+def test_o1_2_user_recording_over_budget_is_not_gold() -> None:
+    handoff = strict_json(HANDOFF)
+    execution = handoff["track3_operations_o1_2_execution"]
+    assert execution["status"] == "pending_over_budget_hard_stop"
+    assert execution["frame_count"] == 314
+    assert execution["step_budget"] == 300
+    assert execution["gold_eligible"] is False
+    assert execution["plan_gate"] == "failed_over_budget"
+    assert execution["replay"] == "not_evaluated"
+    assert execution["additional_formal_recording_authorized"] is False
+    derived = strict_json(ROOT / execution["derived_eligibility"])
+    assert derived["physics"]["end_success"] is True
+    assert derived["over_budget_by"] == 14
+    assert derived["historical_metadata_unchanged"] is True
 
 
 def test_dynamic_contact_table_preserves_every_contact_and_offsets() -> None:

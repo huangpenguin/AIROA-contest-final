@@ -1,0 +1,23 @@
+{
+  "schema_version": "track3_o1_2_record_command_v1",
+  "argv": [
+    "env",
+    "DISPLAY=:3",
+    "MUJOCO_GL=egl",
+    "CUDA_VISIBLE_DEVICES=3",
+    "MUJOCO_EGL_DEVICE_ID=3",
+    "PYTHONPATH=LIBERO:.",
+    "./.venv_axis_pi05/bin/python",
+    "tools/axis_pi05/track3_public_teleop.py",
+    "--record",
+    "--task-id",
+    "official_t3_red_mug",
+    "--operator",
+    "operator-local",
+    "--preview-port",
+    "0",
+    "--preview-wait-seconds",
+    "900"
+  ],
+  "note": "Interactive PTY; browser/VNC input is the authorized user takeover. At most one formal candidate."
+}

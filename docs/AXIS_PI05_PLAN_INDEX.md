@@ -2,10 +2,10 @@
 
 > 更新日期：2026-09-09（Asia/Tokyo）
 > 跨session入口：先完整读取根目录`AGENTS.md`与`MEMORY.md`，再读取本索引、handoff、machine JSON、唯一活动计划和最新审核；先查live PID/cursor，禁止重复启动。
-> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md`
-> 当前状态：`track3_operations_o1_1_no_save_canary_passed_ready_for_explicit_user_takeover`
+> 当前唯一活动计划：无（等待新 reviewed plan）
+> 当前状态：`track3_operations_o1_2_user_recorded_over_budget_hard_stop`
 > 最新审核：`docs/reviews/axis_pi05/TRACK3_O0R_REMEDIATION_20260908.md`
-> 最新执行闭包：`docs/reviews/axis_pi05/TRACK3_O1_1_NATIVE_VNC_NO_SAVE_CANARY_20260909.md`
+> 最新执行闭包：`docs/reviews/axis_pi05/TRACK3_O1_2_USER_TELEOP_OVER_BUDGET_20260909.md`
 
 ## 1. 本轮执行停止点
 
@@ -503,3 +503,12 @@ O1.1 已通过并在正式人工录制前 hard stop。display :3 可用，native
 当前 hard stop 为 track3_operations_o1_1_no_save_canary_passed_ready_for_explicit_user_takeover。下一步是 O1.2，必须等待用户明确接管 Teleop，最多录制一条 canonical red-mug candidate；O2 继续冻结，直到 O1 accepted 且 fresh replay 3/3。
 
 执行闭包：docs/reviews/axis_pi05/TRACK3_O1_1_NATIVE_VNC_NO_SAVE_CANARY_20260909.md；派生修正：data/reports/axis_libero_30k/track3_operations_o1_1_native_vnc_canary_20260909_derived_correction_20260909/summary.json。
+
+
+## 93. O1.2 user Teleop recording closeout（2026-09-09）
+
+用户明确接管后完成了唯一一条 O1.2 formal recording。物理结果成立：end_success=true、goal 连续窗口、source release、required demonstrator↔subject contact、finite actions 和 typed NPZ 均通过；但 frame_count=314，超过 O1 规定的 300-step 硬上限 14 帧。
+
+recorder 原始 metadata/status=pending_replay、candidate_gate=passed 仍原样保留；派生计划 gate 为 failed_over_budget，因此该 episode 只能是 pending_historical_raw，gold_eligible=false，replay=not_evaluated。没有 accepted promotion、replay、训练或 O2。当前 O1 formal recording 额度已消耗，不能直接开始下一条，也不能仅为提速绕过新 reviewed plan。
+
+O1/O2 计划已归档至 docs/archive/axis_pi05/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md。派生资格证据：data/reports/axis_libero_30k/track3_operations_o1_2_red_mug_user_takeover_20260909/derived_eligibility/summary.json；完整执行记录：docs/reviews/axis_pi05/TRACK3_O1_2_USER_TELEOP_OVER_BUDGET_20260909.md。下一权限为 new_reviewed_plan_required，需新计划明确更快的 timing/waypoint 方案、300-step gate 和是否重新授权录制；O2 继续冻结。

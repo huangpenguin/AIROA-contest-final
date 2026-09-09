@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-08",
-  "status": "track3_operations_o1_1_no_save_canary_passed_ready_for_explicit_user_takeover",
+  "status": "track3_operations_o1_2_user_recorded_over_budget_hard_stop",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
@@ -259,8 +259,8 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md",
-  "next_phase_only": "O1_2_explicit_user_takeover_one_canonical_recording",
+  "next_plan": null,
+  "next_phase_only": "new_reviewed_plan_required",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -5284,8 +5284,8 @@
     "next_phase_only": "O1_red_mug_388_seed_then_O2_native_mujoco_and_tiny_overfit"
   },
   "track3_operations_o1_o2_authorization": {
-    "status": "active",
-    "plan": "docs/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md",
+    "status": "consumed_hard_stop",
+    "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md",
     "audit_class": "approved",
     "authorized_phases": [
       "O1",
@@ -5330,7 +5330,7 @@
       "automatic_upload": false,
       "submission": false
     },
-    "next_phase_only": "O1_2_explicit_user_takeover_one_canonical_recording"
+    "next_phase_only": "new_reviewed_plan_required"
   },
   "track3_operations_o1_0_execution": {
     "status": "ready_for_native_vnc_no_save_canary",
@@ -5389,5 +5389,47 @@
     "candidate_inventory_hashes": true,
     "track3_mujoco_teleop_processes": false,
     "gpu3_after_mib": 5
+  },
+  "track3_operations_o1_2_execution": {
+    "status": "pending_over_budget_hard_stop",
+    "phase": "O1.2",
+    "report": "docs/reviews/axis_pi05/TRACK3_O1_2_USER_TELEOP_OVER_BUDGET_20260909.md",
+    "namespace": "data/reports/axis_libero_30k/track3_operations_o1_2_red_mug_user_takeover_20260909",
+    "attempt_id": "canonical_red_mug_attempt_0001",
+    "attempt_lock": "data/reports/axis_libero_30k/track3_operations_o1_2_red_mug_user_takeover_20260909/canonical_attempt_lock.json",
+    "preflight": "data/reports/axis_libero_30k/track3_operations_o1_2_red_mug_user_takeover_20260909/preflight.json",
+    "record_command": "data/reports/axis_libero_30k/track3_operations_o1_2_red_mug_user_takeover_20260909/record_command.json",
+    "pending_artifact": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/pending/official_t3_red_mug_1788921471",
+    "metadata": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/pending/official_t3_red_mug_1788921471/metadata.json",
+    "derived_eligibility": "data/reports/axis_libero_30k/track3_operations_o1_2_red_mug_user_takeover_20260909/derived_eligibility/summary.json",
+    "root_source_commit": "f884da83255a763aa3db80fdb7928f0ba70a84c6",
+    "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "user_takeover_confirmed": true,
+    "task_id": "official_t3_red_mug",
+    "frame_count": 314,
+    "step_budget": 300,
+    "over_budget_by": 14,
+    "recorder_gate": "passed",
+    "plan_gate": "failed_over_budget",
+    "physical_success": true,
+    "required_contact": "passed",
+    "source_released": "passed",
+    "goal_continuous_true": "passed",
+    "collision": false,
+    "unrelated_any": false,
+    "unknown_any": false,
+    "pending_created": true,
+    "candidate_created": false,
+    "accepted_created": false,
+    "historical_raw_modified": false,
+    "historical_metadata_modified": false,
+    "gold_eligible": false,
+    "replay": "not_evaluated",
+    "formal_recording": "completed_one_attempt",
+    "additional_formal_recording_authorized": false,
+    "deadline_miss_count": 314,
+    "o2": "not_evaluated_frozen_until_o1_accepted_fresh_replay_3_of_3",
+    "next_phase_only": "new_reviewed_plan_required",
+    "execution_commit": "pending_closeout_commit"
   }
 }

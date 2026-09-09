@@ -16,8 +16,8 @@ def test_er_audit_has_one_remediation_verdict_and_ef_is_closed() -> None:
     handoff = json.loads(HANDOFF.read_text(encoding="utf-8"))
     audit = json.loads(AUDIT.read_text(encoding="utf-8"))
     assert audit["classification"] == audit["status"] == "remediation_required"
-    assert handoff["status"] == "track3_operations_o1_1_no_save_canary_passed_ready_for_explicit_user_takeover"
-    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md"
+    assert handoff["status"] == "track3_operations_o1_2_user_recorded_over_budget_hard_stop"
+    assert handoff["next_plan"] is None
     assert audit["next_plan"] == PLAN
     assert audit["next_phase_only"] == "EF0_to_EF4_then_hard_stop"
     assert (ROOT / ARCHIVED_PLAN).is_file()

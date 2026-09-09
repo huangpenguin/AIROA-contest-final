@@ -1,0 +1,126 @@
+{
+  "schema_version": "track3_o1_2_derived_eligibility_v1",
+  "status": "pending_over_budget_hard_stop",
+  "phase": "O1.2",
+  "attempt_id": "canonical_red_mug_attempt_0001",
+  "source_artifact": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/pending/official_t3_red_mug_1788921471",
+  "metadata_path": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/pending/official_t3_red_mug_1788921471/metadata.json",
+  "metadata_sha256": "7828256a84e286058d6d602196166732e39b535e6842f2944056a612b70d5a33",
+  "historical_metadata_unchanged": true,
+  "recorder_status": "pending_replay",
+  "recorder_candidate_gate": "passed",
+  "plan_gate": "failed_over_budget",
+  "step_budget": 300,
+  "frame_count": 314,
+  "over_budget_by": 14,
+  "gold_eligible": false,
+  "replay": "not_evaluated",
+  "accepted": false,
+  "reasons": [
+    "over_budget_314_gt_300",
+    "recorder_deadline_miss_count_314"
+  ],
+  "physics": {
+    "end_success": true,
+    "required_contact": {
+      "barrier_index": 119,
+      "contact_kind": "demonstrator_subject",
+      "schema": "acquisition_contact_gate_v4",
+      "source_before_release": true,
+      "stable_ticks": 4,
+      "state": "passed",
+      "window_end": 119,
+      "window_start": 116
+    },
+    "source_released": {
+      "executed": true,
+      "required": true,
+      "stable_ticks": 4,
+      "state": "passed",
+      "window": [
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    "goal_continuous_true": {
+      "check_success": true,
+      "executed": true,
+      "goal_final": true,
+      "not_final_frame_only": true,
+      "required": true,
+      "stable_ticks": 4,
+      "state": "passed",
+      "window": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    "unrelated_any": false,
+    "unknown_any": false,
+    "finite_actions": true
+  },
+  "npz": {
+    "frames": 314,
+    "object_arrays": [],
+    "contact_offsets_equal_contact_n": true,
+    "timestamp_start_s": 452.59432920301333,
+    "timestamp_end_s": 609.0678298979765,
+    "dt_mean_s": 0.4999153376835883,
+    "deadline_miss_count": 314,
+    "success_tail": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "goal_tail": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "source_tail": [
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "files": {
+    "end_state.npy": {
+      "bytes": 800,
+      "sha256": "3276587f38c5e94b9572c253948b45a326ed625c150e80bd8422457bd974c1e2"
+    },
+    "front.mp4": {
+      "bytes": 504622,
+      "sha256": "73e5838a3dc37f8887b0fe4a47a330c3dfd79d67b014be9cad82a4092c1ee9eb"
+    },
+    "metadata.json": {
+      "bytes": 3884,
+      "sha256": "7828256a84e286058d6d602196166732e39b535e6842f2944056a612b70d5a33"
+    },
+    "start_state.npy": {
+      "bytes": 800,
+      "sha256": "5774476328e5d655b1b7b428a1bf0732ec964f72d9a7d4b105fefd781bc0b3a2"
+    },
+    "trajectory.npz": {
+      "bytes": 54111146,
+      "sha256": "91ddeeddb98f424c88f9c87edaa190a0cdad2f7af466d390d7cd859e77f3e6d8"
+    },
+    "wrist.mp4": {
+      "bytes": 563617,
+      "sha256": "f73ec9f99e6b23cb43bf1656aa1eff57f43d17540c982320e90545c223581357"
+    }
+  },
+  "timing": {
+    "operator_hz": 2.0,
+    "note": "Every saved frame was marked deadline_miss by the existing operator-tick timing check; faster time-flow needs a new reviewed plan and recorder change."
+  },
+  "next_authority": "new_reviewed_plan_required",
+  "o2": "not_evaluated_frozen_until_o1_accepted_fresh_replay_3_of_3",
+  "created_at_utc": "2026-09-09T02:42:58.048600+00:00"
+}

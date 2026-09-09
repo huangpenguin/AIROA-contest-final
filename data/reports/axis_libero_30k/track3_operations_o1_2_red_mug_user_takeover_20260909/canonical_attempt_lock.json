@@ -1,0 +1,23 @@
+{
+  "schema_version": "track3_o1_2_canonical_attempt_lock_v1",
+  "status": "active_user_takeover",
+  "phase": "O1.2",
+  "attempt_id": "canonical_red_mug_attempt_0001",
+  "user_takeover_confirmed": true,
+  "task_id": "official_t3_red_mug",
+  "canonical_gold_max": 1,
+  "canonical_step_budget": 300,
+  "max_steps_recorder": 1200,
+  "fresh_replay_required": "3/3",
+  "root_source_commit": "f884da83255a763aa3db80fdb7928f0ba70a84c6",
+  "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "display": ":3",
+  "physical_gpu": 3,
+  "recording_output_root": "data/reports/axis_libero_30k/track3_reverse_pilot_v2",
+  "historical_raw_read_only": true,
+  "historical_metadata_mutation": false,
+  "unattended_teleop": false,
+  "replay": "not_evaluated",
+  "o2": "frozen_until_o1_accepted_fresh_replay_3_of_3",
+  "created_at_utc": "2026-09-09T02:24:44.019197+00:00"
+}

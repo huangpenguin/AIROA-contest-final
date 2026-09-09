@@ -6,10 +6,10 @@
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-sg0-sg12-support-gold-20260907`
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_multitask_gold_and_r6_short_continuation_ready_for_user_calibration`
+> 当前总状态：track3_mg1_red_mug_attempts_exhausted_ready_for_user_decision
 > 唯一活动计划：`docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md`
-> 下一停止点：`MG1_red_mug_assisted_reexecution`
-> 最新执行闭包：`docs/reviews/axis_pi05/TRACK3_MG0_RECORDER_BUDGET_TIMING_20260909.md`
+> 下一停止点：MG2_alphabet_soup_requires_explicit_user_takeover
+> 最新执行闭包：docs/reviews/axis_pi05/TRACK3_MG1_RED_MUG_ATTEMPTS_20260909.md
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > O0R remediation commit：`20662dd`
 > O0R evidence：`data/reports/axis_libero_30k/track3_operations_o0r_remediation_20260908/`
@@ -1076,3 +1076,11 @@ O1/O2 计划已归档：docs/archive/axis_pi05/AXIS_PI05_TRACK3_OPERATIONS_O1_O2
 墙钟 dt 中位数约 0.500 秒，与 `operator_hz=2` 一致；没有证据表明 TigerVNC 导致超预算。314-step raw 可作为 read-only retiming seed，但不得删帧/插值/改 metadata 直接入训。新计划先修 formal 300-step hard stop、pause-zero-step、timing 字段和 no-save calibration，再做新 physics re-execution。
 
 唯一活动计划为 `docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md`。顺序为 red-mug → alphabet-soup → yellow-book → 条件式 two-mugs，每个正常行为失败允许一次针对性修正，不冻结其他题；每条 machine success 立即 fresh replay `3/3` 与用户审核。tiny-overfit 需至少 1 条 accepted；R6 100/300-step 需至少 3 条 accepted、2 task、2 family、3 lineage。GPU0 禁止，GPU1/2 当前外部占用且只能等自然释放，GPU3 保留 simulator/replay。达到 reverse `+1`、C20 loss `<=2/20` 后当天生成本地 FAST ZIP；不自动上传或提交。
+
+## 95. MG1 red-mug assisted and manual attempt closeout (2026-09-09)
+
+The deterministic assisted attempt used the frozen 314-frame seed only as a read-only waypoint source. It started from the frozen start state, created fresh physics telemetry, and stopped at frame 77 after no valid four-frame acquisition window was observed. This was a complete-telemetry family failure.
+
+The authorized manual fallback first passed a 4 Hz no-save canary, then ran the formal recorder from a reset state. The localhost control driver encountered one HTTP 400 around step 167; no reset or retry was issued. The recorder remained fail-closed and wrote a rejected 300/300 hard-stop episode with source true, goal false, success false. It is not pending, not replayed, and not gold.
+
+MG1 red-mug quotas are exhausted: assisted 1/1 and manual 1/1. Historical seed bytes were unchanged. No accepted episode, fresh replay, training, ZIP, upload, or submission exists. The active plan remains the sole authorization; the next stop is MG2 only after an explicit user takeover.

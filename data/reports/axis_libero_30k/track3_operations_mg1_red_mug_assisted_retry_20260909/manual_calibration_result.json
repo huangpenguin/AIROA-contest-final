@@ -1,0 +1,17 @@
+{
+  "candidate_created": false,
+  "deadline_miss_count": 0,
+  "frame_count": 118,
+  "keyup_cleared_motion": true,
+  "no_formal_episode_written": true,
+  "operator": "mg1-manual-calibration",
+  "operator_hz": 4.0,
+  "pause_probe": true,
+  "pending_created": false,
+  "replay": "not_evaluated",
+  "save_event_seen": false,
+  "schema_version": "track3_mg1_manual_calibration_result_v1",
+  "sim_control_hz": 20.0,
+  "status": "no_save_canary_aborted",
+  "step_limit": 300
+}

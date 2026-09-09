@@ -1,0 +1,177 @@
+{
+  "attempt": {
+    "episode_dir": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/official_t3_red_mug_mg1_assisted_1788934220",
+    "episode_id": "official_t3_red_mug_mg1_assisted_1788934220",
+    "failure": "family_failure_acquisition_window_not_observed",
+    "frame_count": 77,
+    "gates": {
+      "candidate_gate": "failed",
+      "final_success_boolean_insufficient": true,
+      "finite_actions": true,
+      "goal_continuous_true": {
+        "executed": false,
+        "reason": "place_stage_not_entered",
+        "required": true,
+        "state": "not_evaluated"
+      },
+      "initial_goal_false": true,
+      "initial_source_true": true,
+      "required_contact": {
+        "barrier_index": null,
+        "contact_kind": "demonstrator_subject_only",
+        "reason": "no_stable_gripper_subject_contact_during_close_or_dwell_before_source_release",
+        "schema": "acquisition_contact_gate_v4",
+        "stable_ticks": 4,
+        "state": "failed"
+      },
+      "save_allowed": false,
+      "source_released": {
+        "executed": true,
+        "required": true,
+        "stable_ticks": 4,
+        "state": "passed",
+        "window": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "status": "failed",
+      "unknown_any": false,
+      "unrelated_any": false
+    },
+    "gpu3_guard": {
+      "command": [
+        "nvidia-smi",
+        "-i",
+        "3",
+        "--query-gpu=index,memory.used,memory.total",
+        "--format=csv,noheader,nounits"
+      ],
+      "gpu": 3,
+      "status": "passed",
+      "threshold_mib": 1024,
+      "total_mib": 32768,
+      "used_mib": 5
+    },
+    "historical_hashes_unchanged": true,
+    "historical_raw_modified": false,
+    "physics_started": true,
+    "stage_results": [
+      {
+        "failure": null,
+        "ok": true,
+        "stage": "approach",
+        "total_frames": 59,
+        "used_frames": 59
+      },
+      {
+        "failure": null,
+        "ok": true,
+        "stage": "grasp_approach",
+        "total_frames": 69,
+        "used_frames": 10
+      },
+      {
+        "failure": "family_failure_acquisition_window_not_observed",
+        "ok": false,
+        "stage": "grasp_close_dwell",
+        "total_frames": 77,
+        "used_frames": 8
+      }
+    ],
+    "status": "rejected_assisted_failure",
+    "success": false
+  },
+  "fresh_replay": "not_evaluated",
+  "historical_raw_modified": false,
+  "manual_calibration": "manual_calibration_result.json",
+  "manual_fallback": {
+    "artifacts": [
+      {
+        "bytes": 3519,
+        "path": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/official_t3_red_mug_1788934804/metadata.json",
+        "sha256": "9edd69118b3d38029588f58304b44a0f124aaac081c34158d8f857960fd15a41"
+      },
+      {
+        "bytes": 50858188,
+        "path": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/official_t3_red_mug_1788934804/trajectory.npz",
+        "sha256": "143059b36719570f4061c231b635230fa162e2bfeef7de1d40a4af516058e39a"
+      },
+      {
+        "bytes": 800,
+        "path": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/official_t3_red_mug_1788934804/start_state.npy",
+        "sha256": "bf9c52a60bdae01933c4cf5ae786e57cc0dfde1c52871959c29477b9860ab386"
+      },
+      {
+        "bytes": 800,
+        "path": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/official_t3_red_mug_1788934804/end_state.npy",
+        "sha256": "4f86339fcbd41d8aeb46371b7b9292e740eae8f2e77ce3480ee71f4ef9579c6f"
+      },
+      {
+        "bytes": 343954,
+        "path": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/official_t3_red_mug_1788934804/front.mp4",
+        "sha256": "5435bdc38ee324a722029fdd007e2efbad258ec04bce84e9071a159fd35b84ab"
+      },
+      {
+        "bytes": 360348,
+        "path": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/official_t3_red_mug_1788934804/wrist.mp4",
+        "sha256": "3fbbe9fb39ed8d6559229bcb2ef887f2eb7a6d9455aa0c0811cc9eab6f7d3d6c"
+      }
+    ],
+    "candidate_gate": "not_evaluated_at_hard_stop",
+    "complete_telemetry": true,
+    "control_note": "The localhost driver hit one HTTP 400 at approximately step 167; the live recorder remained fail-closed and reached its formal 300-step hard stop. No reset or retry was issued.",
+    "deadline_miss_count": 1,
+    "end_success": false,
+    "episode_dir": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/official_t3_red_mug_1788934804",
+    "episode_id": "official_t3_red_mug_1788934804",
+    "frame_count": 300,
+    "gold_eligible": false,
+    "hard_budget_frames": 300,
+    "hard_stop_reached": true,
+    "historical_raw_modified": false,
+    "human_review": "not_evaluated",
+    "operator_hz": 4.0,
+    "over_target_by": 40,
+    "recorder_status": "rejected_over_budget",
+    "replay": "not_evaluated",
+    "schema_version": "track3_mg1_manual_fallback_result_v1",
+    "status": "family_failure_rejected_over_budget",
+    "target_budget_frames": 260,
+    "telemetry": {
+      "array_count": 27,
+      "check_success_frames": 0,
+      "contact_offsets_equal_contact_n": true,
+      "demonstrator_contact_frames": 19,
+      "frame_count": 300,
+      "goal_true_frames": 0,
+      "gripper_transition_indices": [
+        112
+      ],
+      "object_arrays": [],
+      "required_contact_frames": 19,
+      "source_true_frames": 300,
+      "success_frames": 0,
+      "unrelated_contact_frames": 0
+    }
+  },
+  "manual_fallback_result": "manual_fallback_result.json",
+  "next_action": "hard_stop_user_decision_before_mg2",
+  "red_mug_attempts": {
+    "assisted": "official_t3_red_mug_mg1_assisted_1788934220",
+    "assisted_quota": "consumed",
+    "assisted_status": "rejected_assisted_failure",
+    "manual": "official_t3_red_mug_1788934804",
+    "manual_quota": "consumed",
+    "manual_status": "rejected_over_budget",
+    "remaining_red_mug_quota": 0
+  },
+  "review_card": "not_evaluated",
+  "schema_version": "track3_mg1_assisted_summary_v1",
+  "source_episode": "official_t3_red_mug_1788921471",
+  "status": "mg1_red_mug_attempts_exhausted_family_failure",
+  "training": "not_evaluated",
+  "upload_or_submission": "not_evaluated"
+}

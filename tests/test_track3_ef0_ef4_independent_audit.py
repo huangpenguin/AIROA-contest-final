@@ -43,9 +43,9 @@ def test_existing_corrected_checkout_closure_remains_exact() -> None:
 
 def test_lifecycle_closes_eg_after_independent_audit() -> None:
     handoff = json.loads(HANDOFF.read_text(encoding="utf-8"))
-    assert handoff["status"] == "track3_multitask_gold_and_r6_short_continuation_ready_for_user_calibration"
+    assert handoff["status"] == "track3_mg1_red_mug_attempts_exhausted_ready_for_user_decision"
     assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md"
-    assert handoff["next_phase_only"] == "MG1_red_mug_assisted_reexecution"
+    assert handoff["next_phase_only"] == "MG2_alphabet_soup_requires_explicit_user_takeover"
     assert not (ROOT / PLAN).exists()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md").exists()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md").is_file()

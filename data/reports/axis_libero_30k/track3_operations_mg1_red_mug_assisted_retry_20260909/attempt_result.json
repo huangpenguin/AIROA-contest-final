@@ -1,0 +1,85 @@
+{
+  "episode_dir": "/home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/official_t3_red_mug_mg1_assisted_1788934220",
+  "episode_id": "official_t3_red_mug_mg1_assisted_1788934220",
+  "failure": "family_failure_acquisition_window_not_observed",
+  "frame_count": 77,
+  "gates": {
+    "candidate_gate": "failed",
+    "final_success_boolean_insufficient": true,
+    "finite_actions": true,
+    "goal_continuous_true": {
+      "executed": false,
+      "reason": "place_stage_not_entered",
+      "required": true,
+      "state": "not_evaluated"
+    },
+    "initial_goal_false": true,
+    "initial_source_true": true,
+    "required_contact": {
+      "barrier_index": null,
+      "contact_kind": "demonstrator_subject_only",
+      "reason": "no_stable_gripper_subject_contact_during_close_or_dwell_before_source_release",
+      "schema": "acquisition_contact_gate_v4",
+      "stable_ticks": 4,
+      "state": "failed"
+    },
+    "save_allowed": false,
+    "source_released": {
+      "executed": true,
+      "required": true,
+      "stable_ticks": 4,
+      "state": "passed",
+      "window": [
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    "status": "failed",
+    "unknown_any": false,
+    "unrelated_any": false
+  },
+  "gpu3_guard": {
+    "command": [
+      "nvidia-smi",
+      "-i",
+      "3",
+      "--query-gpu=index,memory.used,memory.total",
+      "--format=csv,noheader,nounits"
+    ],
+    "gpu": 3,
+    "status": "passed",
+    "threshold_mib": 1024,
+    "total_mib": 32768,
+    "used_mib": 5
+  },
+  "historical_hashes_unchanged": true,
+  "historical_raw_modified": false,
+  "physics_started": true,
+  "stage_results": [
+    {
+      "failure": null,
+      "ok": true,
+      "stage": "approach",
+      "total_frames": 59,
+      "used_frames": 59
+    },
+    {
+      "failure": null,
+      "ok": true,
+      "stage": "grasp_approach",
+      "total_frames": 69,
+      "used_frames": 10
+    },
+    {
+      "failure": "family_failure_acquisition_window_not_observed",
+      "ok": false,
+      "stage": "grasp_close_dwell",
+      "total_frames": 77,
+      "used_frames": 8
+    }
+  ],
+  "status": "rejected_assisted_failure",
+  "success": false
+}

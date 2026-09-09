@@ -1,0 +1,25 @@
+{
+  "gpu3_guard": {
+    "command": [
+      "nvidia-smi",
+      "-i",
+      "3",
+      "--query-gpu=index,memory.used,memory.total",
+      "--format=csv,noheader,nounits"
+    ],
+    "gpu": 3,
+    "status": "passed",
+    "threshold_mib": 1024,
+    "total_mib": 32768,
+    "used_mib": 5
+  },
+  "historical_metadata_modified": false,
+  "historical_raw_modified": false,
+  "nested_openpi_head": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "replay": "not_evaluated",
+  "root_head": "37d315d695279d2c1631c7c16c231424f695d113",
+  "schema_version": "track3_mg1_assisted_preflight_v1",
+  "status": "passed",
+  "teleop_manual_started": false,
+  "training_started": false
+}

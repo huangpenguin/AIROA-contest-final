@@ -1,0 +1,43 @@
+{
+  "entries": [
+    {
+      "bytes": 2211,
+      "path": "attempt_result.json",
+      "sha256": "99fd7e1de9c1fc91b32be95d0ab2fefec474c804faf456efd820e5080b67dae5"
+    },
+    {
+      "bytes": 2401,
+      "path": "input_lock.json",
+      "sha256": "5b27233fd7ddbd09b48340a28a2007f8a87a05eacd17bd49b86e1bf61726c9cf"
+    },
+    {
+      "bytes": 470,
+      "path": "manual_calibration_result.json",
+      "sha256": "045021a5a6ea65cfa0a8770f6614f3fe929eb3f42b1090724097c4c43999c7dc"
+    },
+    {
+      "bytes": 2817,
+      "path": "manual_fallback_result.json",
+      "sha256": "996cb4222eaa972c0ce6971cea93f6604b4468ac29c41682159cd3e397044aed"
+    },
+    {
+      "bytes": 664,
+      "path": "preflight.json",
+      "sha256": "161dcb7685f32308c49600c223580e67ac40e11bd08f46b94b88e664043a4af6"
+    },
+    {
+      "bytes": 2385,
+      "path": "schedule_blueprint.json",
+      "sha256": "08c59a728e13b107f6b7d05955528f7e7e0dbf602b78de6e5f93c3b118197683"
+    },
+    {
+      "bytes": 6229,
+      "path": "summary.json",
+      "sha256": "b51f29afeb4e3ba5efc1d61f639bf530bea8239fcf607d47d233fd31a6f2efc3"
+    }
+  ],
+  "entry_count": 7,
+  "no_partial": true,
+  "schema_version": "track3_mg1_assisted_manifest_v1",
+  "status": "closed"
+}

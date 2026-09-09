@@ -79,9 +79,9 @@ def test_no_human_episode_is_waiting_for_review() -> None:
 
 def test_lifecycle_has_exactly_one_recovery_plan() -> None:
     handoff = strict_json(HANDOFF)
-    assert handoff["status"] == "track3_multitask_gold_and_r6_short_continuation_ready_for_user_calibration"
+    assert handoff["status"] == "track3_mg1_red_mug_attempts_exhausted_ready_for_user_decision"
     assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md"
-    assert handoff["next_phase_only"] == "MG1_red_mug_assisted_reexecution"
+    assert handoff["next_phase_only"] == "MG2_alphabet_soup_requires_explicit_user_takeover"
     assert (ROOT / PLAN).is_file()
     assert ARCHIVED_SG_PLAN.is_file()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_AND_GOLD_CONTINUATION_PLAN.md").is_file()

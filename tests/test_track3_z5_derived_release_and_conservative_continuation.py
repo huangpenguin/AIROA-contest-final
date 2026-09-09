@@ -59,9 +59,9 @@ def test_aa_audit_archives_plan_and_releases_tonight_zip_plan() -> None:
     handoff = tool.strict_json(
         ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json"
     )
-    assert handoff["status"] == "track3_multitask_gold_and_r6_short_continuation_ready_for_user_calibration"
+    assert handoff["status"] == "track3_mg1_red_mug_attempts_exhausted_ready_for_user_decision"
     assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md"
-    assert handoff["next_phase_only"] == "MG1_red_mug_assisted_reexecution"
+    assert handoff["next_phase_only"] == "MG2_alphabet_soup_requires_explicit_user_takeover"
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md").is_file()
     assert not (ROOT / "docs/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md").exists()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md").is_file()

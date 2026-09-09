@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-09",
-  "status": "track3_multitask_gold_and_r6_short_continuation_ready_for_user_calibration",
+  "status": "track3_mg1_red_mug_attempts_exhausted_ready_for_user_decision",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
@@ -260,7 +260,7 @@
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
   "next_plan": "docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md",
-  "next_phase_only": "MG1_red_mug_assisted_reexecution",
+  "next_phase_only": "MG2_alphabet_soup_requires_explicit_user_takeover",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -5611,5 +5611,44 @@
   "user_action": "接管 Teleop：official_t3_red_mug",
   "next_phase_only": "MG1_red_mug_assisted_reexecution",
   "lifecycle_validation": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/validation.json"
-}
+},
+  "track3_multitask_gold_and_r6_short_continuation_mg1_execution": {
+    "status": "mg1_red_mug_attempts_exhausted_family_failure",
+    "phase": "MG1_red_mug_assisted_reexecution",
+    "root_source_commit": "37d315d695279d2c1631c7c16c231424f695d113",
+    "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "plan": "docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md",
+    "report": "docs/reviews/axis_pi05/TRACK3_MG1_RED_MUG_ATTEMPTS_20260909.md",
+    "evidence_namespace": "data/reports/axis_libero_30k/track3_operations_mg1_red_mug_assisted_retry_20260909/",
+    "assisted": {
+      "status": "rejected_assisted_failure",
+      "episode_id": "official_t3_red_mug_mg1_assisted_1788934220",
+      "frame_count": 77,
+      "failure": "family_failure_acquisition_window_not_observed",
+      "complete_telemetry": true,
+      "replay": "not_evaluated"
+    },
+    "manual": {
+      "status": "rejected_over_budget",
+      "episode_id": "official_t3_red_mug_1788934804",
+      "frame_count": 300,
+      "hard_stop": true,
+      "end_success": false,
+      "source_true_frames": 300,
+      "goal_true_frames": 0,
+      "replay": "not_evaluated"
+    },
+    "assisted_quota": "consumed_1_of_1",
+    "manual_quota": "consumed_1_of_1",
+    "accepted_count": 0,
+    "pending_count": 0,
+    "gold_eligible_count": 0,
+    "fresh_replay": "not_evaluated",
+    "human_review": "not_evaluated",
+    "training": "not_evaluated",
+    "candidate_zip": "not_evaluated",
+    "upload_or_submission": "not_evaluated",
+    "historical_raw_modified": false,
+    "next_phase_only": "MG2_alphabet_soup_requires_explicit_user_takeover"
+  }
 }

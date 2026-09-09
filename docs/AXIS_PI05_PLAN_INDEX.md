@@ -520,3 +520,18 @@ O1/O2 计划已归档至 docs/archive/axis_pi05/AXIS_PI05_TRACK3_OPERATIONS_O1_O
 TigerVNC 不是已证明的超预算原因；wall dt 中位数 `0.499955 s` 与 `operator_hz=2.0` 一致。该 raw 只能作为 read-only retiming seed，须重新连续物理执行，禁止删帧或改 metadata 直接 promotion。
 
 唯一活动计划为 `docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md`。MG0 修复 formal 300-step hard stop、pause-zero-step 与 timing；随后按 red-mug、alphabet-soup、yellow-book、条件式 two-mugs 采集，每条 success 立即 replay `3/3` 与用户审核。R6 短训门为 3 accepted、2 task、3 lineage；2 family 为优先目标而非硬门；GPU1/2 仅空闲后训练，GPU3 用于 simulator/replay，不自动上传或提交。机器摘要：`data/reports/axis_libero_30k/track3_o1_2_over_budget_independent_audit_20260909/summary.json`。
+
+## 3.40 MG1 red-mug assisted and manual attempt closeout (2026-09-09)
+
+MG1 consumed its one assisted and one manual red-mug attempt. The assisted
+attempt was a fresh continuous MuJoCo run from the frozen 314-frame seed start
+state; it failed before acquisition at frame 77 with complete telemetry. The
+manual fallback passed a 4 Hz no-save canary but ended as a strict 300/300
+hard-stop rejected episode with source true, goal false, and success false.
+Neither attempt is pending, replayed, accepted, or training eligible.
+
+Evidence namespace:
+data/reports/axis_libero_30k/track3_operations_mg1_red_mug_assisted_retry_20260909/.
+The historical seed hashes remained unchanged. The current stop is
+MG2_alphabet_soup_requires_explicit_user_takeover; no MG2 physics, replay,
+training, ZIP, upload, or submission has been started.

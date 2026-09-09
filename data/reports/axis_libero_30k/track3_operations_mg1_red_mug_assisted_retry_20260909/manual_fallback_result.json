@@ -1,0 +1,70 @@
+{
+  "artifacts": [
+    {
+      "bytes": 3519,
+      "path": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/official_t3_red_mug_1788934804/metadata.json",
+      "sha256": "9edd69118b3d38029588f58304b44a0f124aaac081c34158d8f857960fd15a41"
+    },
+    {
+      "bytes": 50858188,
+      "path": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/official_t3_red_mug_1788934804/trajectory.npz",
+      "sha256": "143059b36719570f4061c231b635230fa162e2bfeef7de1d40a4af516058e39a"
+    },
+    {
+      "bytes": 800,
+      "path": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/official_t3_red_mug_1788934804/start_state.npy",
+      "sha256": "bf9c52a60bdae01933c4cf5ae786e57cc0dfde1c52871959c29477b9860ab386"
+    },
+    {
+      "bytes": 800,
+      "path": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/official_t3_red_mug_1788934804/end_state.npy",
+      "sha256": "4f86339fcbd41d8aeb46371b7b9292e740eae8f2e77ce3480ee71f4ef9579c6f"
+    },
+    {
+      "bytes": 343954,
+      "path": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/official_t3_red_mug_1788934804/front.mp4",
+      "sha256": "5435bdc38ee324a722029fdd007e2efbad258ec04bce84e9071a159fd35b84ab"
+    },
+    {
+      "bytes": 360348,
+      "path": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/official_t3_red_mug_1788934804/wrist.mp4",
+      "sha256": "3fbbe9fb39ed8d6559229bcb2ef887f2eb7a6d9455aa0c0811cc9eab6f7d3d6c"
+    }
+  ],
+  "candidate_gate": "not_evaluated_at_hard_stop",
+  "complete_telemetry": true,
+  "control_note": "The localhost driver hit one HTTP 400 at approximately step 167; the live recorder remained fail-closed and reached its formal 300-step hard stop. No reset or retry was issued.",
+  "deadline_miss_count": 1,
+  "end_success": false,
+  "episode_dir": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/rejected/official_t3_red_mug_1788934804",
+  "episode_id": "official_t3_red_mug_1788934804",
+  "frame_count": 300,
+  "gold_eligible": false,
+  "hard_budget_frames": 300,
+  "hard_stop_reached": true,
+  "historical_raw_modified": false,
+  "human_review": "not_evaluated",
+  "operator_hz": 4.0,
+  "over_target_by": 40,
+  "recorder_status": "rejected_over_budget",
+  "replay": "not_evaluated",
+  "schema_version": "track3_mg1_manual_fallback_result_v1",
+  "status": "family_failure_rejected_over_budget",
+  "target_budget_frames": 260,
+  "telemetry": {
+    "array_count": 27,
+    "check_success_frames": 0,
+    "contact_offsets_equal_contact_n": true,
+    "demonstrator_contact_frames": 19,
+    "frame_count": 300,
+    "goal_true_frames": 0,
+    "gripper_transition_indices": [
+      112
+    ],
+    "object_arrays": [],
+    "required_contact_frames": 19,
+    "source_true_frames": 300,
+    "success_frames": 0,
+    "unrelated_contact_frames": 0
+  }
+}

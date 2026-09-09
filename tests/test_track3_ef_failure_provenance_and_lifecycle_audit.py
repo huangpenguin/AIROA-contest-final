@@ -40,9 +40,9 @@ def test_independent_eg_audit_is_approved_and_separate() -> None:
     assert current["audit_report_commit"] == audit["audit_report_commit"]
     assert current["next_plan"] is None
     assert current["next_phase_only"] == "new_reviewed_plan_required"
-    assert handoff["status"] == "track3_multitask_gold_and_r6_short_continuation_ready_for_user_calibration"
+    assert handoff["status"] == "track3_mg1_red_mug_attempts_exhausted_ready_for_user_decision"
     assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md"
-    assert handoff["next_phase_only"] == "MG1_red_mug_assisted_reexecution"
+    assert handoff["next_phase_only"] == "MG2_alphabet_soup_requires_explicit_user_takeover"
 
 
 def test_eg_audit_preserves_unavailable_gap_and_final_closure() -> None:

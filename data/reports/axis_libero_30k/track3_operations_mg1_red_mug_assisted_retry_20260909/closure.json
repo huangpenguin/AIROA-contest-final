@@ -1,0 +1,16 @@
+{
+  "assisted": "family_failure",
+  "complete": true,
+  "historical_raw_modified": false,
+  "human_review": "not_evaluated",
+  "manifest": "manifest.json",
+  "manifest_sha256": "a358e80e3f96300e0a11c736eaf559ce7a03ed5b9cd03ffd1b3d46560b9db352",
+  "manual": "family_failure",
+  "manual_quota_consumed": true,
+  "nested_openpi_head": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "replay": "not_evaluated",
+  "root_head": "37d315d695279d2c1631c7c16c231424f695d113",
+  "schema_version": "track3_mg1_assisted_closure_v1",
+  "status": "passed_family_failure_closed",
+  "training": "not_evaluated"
+}

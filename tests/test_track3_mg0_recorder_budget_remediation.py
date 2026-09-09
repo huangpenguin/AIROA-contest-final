@@ -14,6 +14,8 @@ def test_mg0_budget_and_frequency_contract() -> None:
     fast = teleop.RecorderConfig(operator_hz=4.0)
     assert fast.tick_ms() == 250
     assert fast.recording_step_limit() == 300
+    assert fast.operator_tick_wait_seconds(10.25, now=10.0) == 0.25
+    assert fast.operator_tick_wait_seconds(10.0, now=10.25) == 0.0
 
 
 def test_mg0_keyup_and_pause_are_fail_safe() -> None:

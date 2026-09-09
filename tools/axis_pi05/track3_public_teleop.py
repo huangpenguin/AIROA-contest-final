@@ -641,6 +641,11 @@ class RecorderConfig:
     def tick_ms(self) -> int:
         return int(round(self.tick_period() * 1000))
 
+    def operator_tick_wait_seconds(self, scheduled_tick: float, now: float | None = None) -> float:
+        """Return the wall-clock wait needed to preserve the operator tick rate."""
+        current = time.monotonic() if now is None else float(now)
+        return max(0.0, float(scheduled_tick) - current)
+
     def recording_step_limit(self) -> int:
         """The formal writer's hard limit; it can never exceed the plan budget."""
         return min(int(self.max_steps), int(self.eval_step_budget))
@@ -1635,7 +1640,8 @@ def record_episode(task_index: int | None, operator: str, config: RecorderConfig
                     metadata["timeout_reason"] = "session_wall_clock"
                     break
                 scheduled_tick = next_tick
-                terminal_key = _read_key(max(0.0, scheduled_tick - time.monotonic()))
+                time.sleep(config.operator_tick_wait_seconds(scheduled_tick))
+                terminal_key = _read_key(0.0)
                 if terminal_key is not None:
                     if terminal_key in {"\n", "\r"}:
                         machine.event("keydown", "enter")
@@ -1669,7 +1675,7 @@ def record_episode(task_index: int | None, operator: str, config: RecorderConfig
                 action = machine.next_action()
                 validate_action(action)
                 if machine.state.abort:
-                    metadata["status"] = "rejected_abort"
+                    metadata["status"] = "no_save_canary_aborted" if no_save else "rejected_abort"
                     break
                 if machine.state.paused:
                     time.sleep(0.05)

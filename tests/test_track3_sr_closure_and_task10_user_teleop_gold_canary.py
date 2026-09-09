@@ -91,11 +91,11 @@ def test_teleop_gold_npz_and_explicit_gripper() -> None:
 
 def test_handoff_waits_for_explicit_takeover() -> None:
     handoff = strict_json(HANDOFF)
-    assert handoff["status"] == "track3_operations_o1_2_user_recorded_over_budget_hard_stop"
-    assert handoff["next_phase_only"] == "new_reviewed_plan_required"
+    assert handoff["status"] == "track3_multitask_gold_and_r6_short_continuation_reviewed_ready_for_mg0"
+    assert handoff["next_phase_only"] == "MG0_evidence_lock_and_recorder_budget_remediation"
     assert PLAN.is_file()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md").is_file()
-    assert handoff["next_plan"] is None
+    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md"
     o0r = handoff["track3_operations_o0r_remediation_20260908"]
     assert o0r["audit_class"] == "approved"
     assert o0r["historical_metadata_mutated"] is False

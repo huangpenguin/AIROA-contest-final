@@ -1,0 +1,46 @@
+{
+  "automatic_upload_or_submission": false,
+  "formal_attempt_max_total": 7,
+  "gpu_policy": {
+    "gpu0": "forbidden",
+    "gpu1_gpu2_training": "conditional_on_external_jobs_naturally_exited_and_idle_guard",
+    "gpu3": "simulator_replay_and_small_evaluation_only"
+  },
+  "human_review_required": true,
+  "next_phase_only": "MG0_evidence_lock_and_recorder_budget_remediation",
+  "plan": "docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md",
+  "recording_quota": {
+    "official_t3_alphabet_soup": 2,
+    "official_t3_red_mug_assisted": 1,
+    "official_t3_red_mug_manual": 1,
+    "official_t3_two_mugs_conditional": 1,
+    "official_t3_yellow_book": 2
+  },
+  "status": "reviewed_ready_for_mg0",
+  "task_order": [
+    "official_t3_red_mug",
+    "official_t3_alphabet_soup",
+    "official_t3_yellow_book",
+    "official_t3_two_mugs_conditional"
+  ],
+  "training_gate": {
+    "accepted_min": 3,
+    "family_min": 1,
+    "family_target": 2,
+    "source_or_init_lineage_min": 3,
+    "task_id_min": 2,
+    "tiny_overfit_accepted_min": 1
+  },
+  "training_recipe": {
+    "checkpoint_steps": [
+      0,
+      100,
+      300
+    ],
+    "initialization": "r6_dual_l2_fresh500_r1",
+    "normalization": "QUANTILES",
+    "primary_forward_reverse_chunk_ratio": "80/20",
+    "topology": "L2_action_lora_heads"
+  },
+  "unexecuted": "not_evaluated"
+}

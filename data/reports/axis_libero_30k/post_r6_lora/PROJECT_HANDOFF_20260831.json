@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
-  "generated_date": "2026-09-08",
-  "status": "track3_operations_o1_2_user_recorded_over_budget_hard_stop",
+  "generated_date": "2026-09-09",
+  "status": "track3_multitask_gold_and_r6_short_continuation_reviewed_ready_for_mg0",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
-  "latest_audited_execution_commit": "64f278c7f59dc70f17770e1980522d0313ccda27",
-  "latest_audit_input_commit": "64f278c7f59dc70f17770e1980522d0313ccda27",
-  "latest_execution_root_commit": "5c5c74641ba39e41709e2c51ce576e7c065060fc",
+  "latest_audited_execution_commit": "d5ee290",
+  "latest_audit_input_commit": "2b544b110189324b3db71070dcfadbf2634eccd7",
+  "latest_execution_root_commit": "f884da83255a763aa3db80fdb7928f0ba70a84c6",
   "latest_execution_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-sg0-sg12-support-gold-20260907",
@@ -259,8 +259,8 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": null,
-  "next_phase_only": "new_reviewed_plan_required",
+  "next_plan": "docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md",
+  "next_phase_only": "MG0_evidence_lock_and_recorder_budget_remediation",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -5431,5 +5431,132 @@
     "o2": "not_evaluated_frozen_until_o1_accepted_fresh_replay_3_of_3",
     "next_phase_only": "new_reviewed_plan_required",
     "execution_commit": "d5ee290"
+  },
+  "track3_o1_2_over_budget_independent_audit": {
+    "audit_class": "approved",
+    "audit_input_commit": "2b544b110189324b3db71070dcfadbf2634eccd7",
+    "execution_closeout_commit": "d5ee290",
+    "next_plan": "docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md",
+    "next_phase_only": "MG0_evidence_lock_and_recorder_budget_remediation",
+    "o1_2": {
+      "accepted": false,
+      "adjacent_identical_action_pairs": 284,
+      "contact_entry_count": 16232,
+      "contact_offsets_count": 315,
+      "deadline_miss_count": 314,
+      "frame_count": 314,
+      "fresh_replay": "not_evaluated",
+      "gold_eligible": false,
+      "goal_true_run": [
+        308,
+        313
+      ],
+      "numeric_arrays_finite": true,
+      "npz_array_count": 26,
+      "npz_object_arrays": [],
+      "over_budget_by": 14,
+      "physical_success": true,
+      "required_contact_barrier": [
+        116,
+        119
+      ],
+      "step_budget": 300,
+      "trajectory_sha256": "91ddeeddb98f424c88f9c87edaa190a0cdad2f7af466d390d7cd859e77f3e6d8",
+      "wall_dt_mean_seconds": 0.4999153376835883,
+      "wall_dt_median_seconds": 0.4999546289909631,
+      "zero_motion_action_count": 15
+    },
+    "raw_files": {
+      "end_state.npy": {
+        "bytes": 800,
+        "sha256": "3276587f38c5e94b9572c253948b45a326ed625c150e80bd8422457bd974c1e2"
+      },
+      "front.mp4": {
+        "bytes": 504622,
+        "frames": 314,
+        "sha256": "73e5838a3dc37f8887b0fe4a47a330c3dfd79d67b014be9cad82a4092c1ee9eb"
+      },
+      "metadata.json": {
+        "bytes": 3884,
+        "sha256": "7828256a84e286058d6d602196166732e39b535e6842f2944056a612b70d5a33"
+      },
+      "start_state.npy": {
+        "bytes": 800,
+        "sha256": "5774476328e5d655b1b7b428a1bf0732ec964f72d9a7d4b105fefd781bc0b3a2"
+      },
+      "trajectory.npz": {
+        "bytes": 54111146,
+        "sha256": "91ddeeddb98f424c88f9c87edaa190a0cdad2f7af466d390d7cd859e77f3e6d8"
+      },
+      "wrist.mp4": {
+        "bytes": 563617,
+        "frames": 314,
+        "sha256": "f73ec9f99e6b23cb43bf1656aa1eff57f43d17540c982320e90545c223581357"
+      }
+    },
+    "resource_boundary": {
+      "gpu0_to_gpu2": "externally_occupied_not_touched",
+      "gpu3": "idle_5_mib_0_percent",
+      "libero_plus_preexisting_dirty_preserved": true,
+      "live_track3_process": false,
+      "nested_openpi_clean": true,
+      "root_clean_before_lifecycle_change": true
+    },
+    "schema_version": "track3_o1_2_over_budget_independent_audit_v1",
+    "status": "approved_closeout_not_gold",
+    "unexecuted": {
+      "accepted_promotion": "not_evaluated",
+      "candidate_zip": "not_evaluated",
+      "fresh_replay": "not_evaluated",
+      "mg0_to_mg9": "not_evaluated",
+      "track3_training": "not_evaluated",
+      "upload_or_submission": "not_evaluated"
+    }
+  },
+  "track3_multitask_gold_and_r6_short_continuation_authorization": {
+    "automatic_upload_or_submission": false,
+    "formal_attempt_max_total": 7,
+    "gpu_policy": {
+      "gpu0": "forbidden",
+      "gpu1_gpu2_training": "conditional_on_external_jobs_naturally_exited_and_idle_guard",
+      "gpu3": "simulator_replay_and_small_evaluation_only"
+    },
+    "human_review_required": true,
+    "next_phase_only": "MG0_evidence_lock_and_recorder_budget_remediation",
+    "plan": "docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md",
+    "recording_quota": {
+      "official_t3_alphabet_soup": 2,
+      "official_t3_red_mug_assisted": 1,
+      "official_t3_red_mug_manual": 1,
+      "official_t3_two_mugs_conditional": 1,
+      "official_t3_yellow_book": 2
+    },
+    "status": "reviewed_ready_for_mg0",
+    "task_order": [
+      "official_t3_red_mug",
+      "official_t3_alphabet_soup",
+      "official_t3_yellow_book",
+      "official_t3_two_mugs_conditional"
+    ],
+    "training_gate": {
+      "accepted_min": 3,
+      "family_min": 1,
+      "family_target": 2,
+      "source_or_init_lineage_min": 3,
+      "task_id_min": 2,
+      "tiny_overfit_accepted_min": 1
+    },
+    "training_recipe": {
+      "checkpoint_steps": [
+        0,
+        100,
+        300
+      ],
+      "initialization": "r6_dual_l2_fresh500_r1",
+      "normalization": "QUANTILES",
+      "primary_forward_reverse_chunk_ratio": "80/20",
+      "topology": "L2_action_lora_heads"
+    },
+    "unexecuted": "not_evaluated"
   }
 }

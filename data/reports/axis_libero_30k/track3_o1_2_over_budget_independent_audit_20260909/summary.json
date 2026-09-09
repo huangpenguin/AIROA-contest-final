@@ -1,0 +1,81 @@
+{
+  "audit_class": "approved",
+  "audit_input_commit": "2b544b110189324b3db71070dcfadbf2634eccd7",
+  "execution_closeout_commit": "d5ee290",
+  "next_plan": "docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md",
+  "next_phase_only": "MG0_evidence_lock_and_recorder_budget_remediation",
+  "o1_2": {
+    "accepted": false,
+    "adjacent_identical_action_pairs": 284,
+    "contact_entry_count": 16232,
+    "contact_offsets_count": 315,
+    "deadline_miss_count": 314,
+    "frame_count": 314,
+    "fresh_replay": "not_evaluated",
+    "gold_eligible": false,
+    "goal_true_run": [
+      308,
+      313
+    ],
+    "numeric_arrays_finite": true,
+    "npz_array_count": 26,
+    "npz_object_arrays": [],
+    "over_budget_by": 14,
+    "physical_success": true,
+    "required_contact_barrier": [
+      116,
+      119
+    ],
+    "step_budget": 300,
+    "trajectory_sha256": "91ddeeddb98f424c88f9c87edaa190a0cdad2f7af466d390d7cd859e77f3e6d8",
+    "wall_dt_mean_seconds": 0.4999153376835883,
+    "wall_dt_median_seconds": 0.4999546289909631,
+    "zero_motion_action_count": 15
+  },
+  "raw_files": {
+    "end_state.npy": {
+      "bytes": 800,
+      "sha256": "3276587f38c5e94b9572c253948b45a326ed625c150e80bd8422457bd974c1e2"
+    },
+    "front.mp4": {
+      "bytes": 504622,
+      "frames": 314,
+      "sha256": "73e5838a3dc37f8887b0fe4a47a330c3dfd79d67b014be9cad82a4092c1ee9eb"
+    },
+    "metadata.json": {
+      "bytes": 3884,
+      "sha256": "7828256a84e286058d6d602196166732e39b535e6842f2944056a612b70d5a33"
+    },
+    "start_state.npy": {
+      "bytes": 800,
+      "sha256": "5774476328e5d655b1b7b428a1bf0732ec964f72d9a7d4b105fefd781bc0b3a2"
+    },
+    "trajectory.npz": {
+      "bytes": 54111146,
+      "sha256": "91ddeeddb98f424c88f9c87edaa190a0cdad2f7af466d390d7cd859e77f3e6d8"
+    },
+    "wrist.mp4": {
+      "bytes": 563617,
+      "frames": 314,
+      "sha256": "f73ec9f99e6b23cb43bf1656aa1eff57f43d17540c982320e90545c223581357"
+    }
+  },
+  "resource_boundary": {
+    "gpu0_to_gpu2": "externally_occupied_not_touched",
+    "gpu3": "idle_5_mib_0_percent",
+    "libero_plus_preexisting_dirty_preserved": true,
+    "live_track3_process": false,
+    "nested_openpi_clean": true,
+    "root_clean_before_lifecycle_change": true
+  },
+  "schema_version": "track3_o1_2_over_budget_independent_audit_v1",
+  "status": "approved_closeout_not_gold",
+  "unexecuted": {
+    "accepted_promotion": "not_evaluated",
+    "candidate_zip": "not_evaluated",
+    "fresh_replay": "not_evaluated",
+    "mg0_to_mg9": "not_evaluated",
+    "track3_training": "not_evaluated",
+    "upload_or_submission": "not_evaluated"
+  }
+}

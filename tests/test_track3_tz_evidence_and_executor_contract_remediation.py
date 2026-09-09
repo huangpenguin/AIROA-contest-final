@@ -111,9 +111,9 @@ def test_worker_exit_contract_keeps_family_failure_normal() -> None:
 
 def test_er_execution_handoff_is_hard_stopped_and_fallback_only() -> None:
     handoff = tool.strict_json(ROOT / "data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json")
-    assert handoff["status"] == "track3_operations_o1_2_user_recorded_over_budget_hard_stop"
-    assert handoff["next_plan"] is None
-    assert handoff["next_phase_only"] == "new_reviewed_plan_required"
+    assert handoff["status"] == "track3_multitask_gold_and_r6_short_continuation_reviewed_ready_for_mg0"
+    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md"
+    assert handoff["next_phase_only"] == "MG0_evidence_lock_and_recorder_budget_remediation"
     execution = handoff["track3_tz_evidence_and_executor_contract_remediation_execution"]
     assert execution["status"] == "track3_tz_evidence_and_executor_contract_remediation_completed_hard_stop_pending_review"
     assert execution["phase_status"] == {"ER0": "passed", "ER1": "passed", "ER2": "passed", "ER3": "passed", "ER4": "completed_three_family_failures", "ER5": "hard_stop"}

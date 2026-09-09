@@ -52,9 +52,9 @@ def test_shared_root_attempt3_is_historical_and_root_attempt5_is_current() -> No
 
 def test_lifecycle_releases_exactly_one_acquisition_plan() -> None:
     handoff = strict_json(HANDOFF)
-    assert handoff["status"] == "track3_operations_o1_2_user_recorded_over_budget_hard_stop"
-    assert handoff["next_plan"] is None
-    assert handoff["next_phase_only"] == "new_reviewed_plan_required"
+    assert handoff["status"] == "track3_multitask_gold_and_r6_short_continuation_reviewed_ready_for_mg0"
+    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md"
+    assert handoff["next_phase_only"] == "MG0_evidence_lock_and_recorder_budget_remediation"
     assert (ROOT / PLAN).is_file()
     assert (ROOT / ARCHIVED_AC_PLAN).is_file()
     assert (ROOT / ARCHIVED_AC_AUDIT_PLAN).is_file()
@@ -65,9 +65,9 @@ def test_lifecycle_releases_exactly_one_acquisition_plan() -> None:
 
 def test_machine_latest_commits_name_current_sr_audit_boundaries() -> None:
     handoff = strict_json(HANDOFF)
-    assert handoff["latest_audited_execution_commit"] == "64f278c7f59dc70f17770e1980522d0313ccda27"
-    assert handoff["latest_audit_input_commit"] == "64f278c7f59dc70f17770e1980522d0313ccda27"
-    assert handoff["latest_execution_root_commit"] == "5c5c74641ba39e41709e2c51ce576e7c065060fc"
+    assert handoff["latest_audited_execution_commit"] == "d5ee290"
+    assert handoff["latest_audit_input_commit"] == "2b544b110189324b3db71070dcfadbf2634eccd7"
+    assert handoff["latest_execution_root_commit"] == "f884da83255a763aa3db80fdb7928f0ba70a84c6"
 
 
 def test_acquisition_authority_is_three_cpu_identities_without_promotion() -> None:

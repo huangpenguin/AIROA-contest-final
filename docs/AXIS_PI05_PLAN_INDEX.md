@@ -2,9 +2,9 @@
 
 > 更新日期：2026-09-09（Asia/Tokyo）
 > 跨session入口：先完整读取根目录`AGENTS.md`与`MEMORY.md`，再读取本索引、handoff、machine JSON、唯一活动计划和最新审核；先查live PID/cursor，禁止重复启动。
-> 当前唯一活动计划：无（等待新 reviewed plan）
-> 当前状态：`track3_operations_o1_2_user_recorded_over_budget_hard_stop`
-> 最新审核：`docs/reviews/axis_pi05/TRACK3_O0R_REMEDIATION_20260908.md`
+> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md`
+> 当前状态：`track3_multitask_gold_and_r6_short_continuation_reviewed_ready_for_mg0`
+> 最新审核：`docs/reviews/axis_pi05/TRACK3_O1_2_OVER_BUDGET_INDEPENDENT_AUDIT_20260909.md`
 > 最新执行闭包：`docs/reviews/axis_pi05/TRACK3_O1_2_USER_TELEOP_OVER_BUDGET_20260909.md`
 
 ## 1. 本轮执行停止点
@@ -512,3 +512,11 @@ O1.1 已通过并在正式人工录制前 hard stop。display :3 可用，native
 recorder 原始 metadata/status=pending_replay、candidate_gate=passed 仍原样保留；派生计划 gate 为 failed_over_budget，因此该 episode 只能是 pending_historical_raw，gold_eligible=false，replay=not_evaluated。没有 accepted promotion、replay、训练或 O2。当前 O1 formal recording 额度已消耗，不能直接开始下一条，也不能仅为提速绕过新 reviewed plan。
 
 O1/O2 计划已归档至 docs/archive/axis_pi05/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md。派生资格证据：data/reports/axis_libero_30k/track3_operations_o1_2_red_mug_user_takeover_20260909/derived_eligibility/summary.json；完整执行记录：docs/reviews/axis_pi05/TRACK3_O1_2_USER_TELEOP_OVER_BUDGET_20260909.md。下一权限为 new_reviewed_plan_required，需新计划明确更快的 timing/waypoint 方案、300-step gate 和是否重新授权录制；O2 继续冻结。
+
+## 94. O1.2 独立审核与多题目 Gold/R6 短续训授权（2026-09-09）
+
+审核边界为 root `2b544b110189324b3db71070dcfadbf2634eccd7`、O1.2 closeout `d5ee290`、OpenPI `b58aff0750f7a9ee07f3feb5df951a20ad2c76e1`。独立核验 314 帧双视频、26 个 typed NPZ arrays、contact/source/goal gates 与 hashes 均成立；但 `314 > 300`，唯一结论为 `approved`：只批准诚实 closeout，不批准 gold。
+
+TigerVNC 不是已证明的超预算原因；wall dt 中位数 `0.499955 s` 与 `operator_hz=2.0` 一致。该 raw 只能作为 read-only retiming seed，须重新连续物理执行，禁止删帧或改 metadata 直接 promotion。
+
+唯一活动计划为 `docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md`。MG0 修复 formal 300-step hard stop、pause-zero-step 与 timing；随后按 red-mug、alphabet-soup、yellow-book、条件式 two-mugs 采集，每条 success 立即 replay `3/3` 与用户审核。R6 短训门为 3 accepted、2 task、3 lineage；2 family 为优先目标而非硬门；GPU1/2 仅空闲后训练，GPU3 用于 simulator/replay，不自动上传或提交。机器摘要：`data/reports/axis_libero_30k/track3_o1_2_over_budget_independent_audit_20260909/summary.json`。

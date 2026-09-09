@@ -2,13 +2,13 @@
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
 > 新session先读：根目录`AGENTS.md`、`MEMORY.md`，然后按其中顺序核对本handoff、machine JSON、活动计划、最新审核与live cursor/PID。
-> 最新审核状态：`approved`（O0R remediation 已完成；O1/O2 尚未执行）
+> 最新审核状态：`approved`（O1.2 closeout 合规，但 314-step episode 不是 gold）
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-sg0-sg12-support-gold-20260907`
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_operations_o1_2_user_recorded_over_budget_hard_stop`
-> 唯一活动计划：无（等待新 reviewed plan）
-> 下一停止点：`new_reviewed_plan_required`
+> 当前总状态：`track3_multitask_gold_and_r6_short_continuation_reviewed_ready_for_mg0`
+> 唯一活动计划：`docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md`
+> 下一停止点：`MG0_evidence_lock_and_recorder_budget_remediation`
 > 最新执行闭包：`docs/reviews/axis_pi05/TRACK3_O1_2_USER_TELEOP_OVER_BUDGET_20260909.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > O0R remediation commit：`20662dd`
@@ -1068,3 +1068,11 @@ O1.1 no-save canary 已通过并 hard stop。VNC display :3、native MuJoCo、�
 该 episode 的 NPZ 可用 allow_pickle=false 读取、无 object array、动态 contact offsets 与 contact_n 一致；required contact、source release、goal continuous、success 均通过。现有 operator timing 为约 0.5 秒一帧，314 帧均被 deadline_miss 标记；提速需要新 reviewed plan 和明确 recorder 改动。没有 replay、accepted、训练或 O2，GPU3 已释放。
 
 O1/O2 计划已归档：docs/archive/axis_pi05/AXIS_PI05_TRACK3_OPERATIONS_O1_O2_RED_MUG_NATIVE_MUJOCO_PLAN.md。derived eligibility：data/reports/axis_libero_30k/track3_operations_o1_2_red_mug_user_takeover_20260909/derived_eligibility/summary.json；执行报告：docs/reviews/axis_pi05/TRACK3_O1_2_USER_TELEOP_OVER_BUDGET_20260909.md。当前没有活动计划，下一权限为 new_reviewed_plan_required；不允许直接开始第二条 formal recording。
+
+## 94. O1.2 独立审核与多题目 Gold/R6 短续训交接（2026-09-09）
+
+唯一审核结论为 `approved`，含义仅是 O1.2 对 314-step physical success 的 over-budget 分类与 hard stop 合规。双视频均为 314 帧，NPZ typed/no-pickle/finite、contact/source/goal 连续门与 raw hashes 独立成立；但 `314 > 300`，所以 `gold_eligible=false`、replay/accepted/training 继续为 `not_evaluated`。审核见 `docs/reviews/axis_pi05/TRACK3_O1_2_OVER_BUDGET_INDEPENDENT_AUDIT_20260909.md`。
+
+墙钟 dt 中位数约 0.500 秒，与 `operator_hz=2` 一致；没有证据表明 TigerVNC 导致超预算。314-step raw 可作为 read-only retiming seed，但不得删帧/插值/改 metadata 直接入训。新计划先修 formal 300-step hard stop、pause-zero-step、timing 字段和 no-save calibration，再做新 physics re-execution。
+
+唯一活动计划为 `docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md`。顺序为 red-mug → alphabet-soup → yellow-book → 条件式 two-mugs，每个正常行为失败允许一次针对性修正，不冻结其他题；每条 machine success 立即 fresh replay `3/3` 与用户审核。tiny-overfit 需至少 1 条 accepted；R6 100/300-step 需至少 3 条 accepted、2 task、2 family、3 lineage。GPU0 禁止，GPU1/2 当前外部占用且只能等自然释放，GPU3 保留 simulator/replay。达到 reverse `+1`、C20 loss `<=2/20` 后当天生成本地 FAST ZIP；不自动上传或提交。

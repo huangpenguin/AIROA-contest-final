@@ -6,10 +6,10 @@
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-sg0-sg12-support-gold-20260907`
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：`track3_multitask_gold_and_r6_short_continuation_reviewed_ready_for_mg0`
+> 当前总状态：`track3_multitask_gold_and_r6_short_continuation_ready_for_user_calibration`
 > 唯一活动计划：`docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md`
 > 下一停止点：`MG0_evidence_lock_and_recorder_budget_remediation`
-> 最新执行闭包：`docs/reviews/axis_pi05/TRACK3_O1_2_USER_TELEOP_OVER_BUDGET_20260909.md`
+> 最新执行闭包：`docs/reviews/axis_pi05/TRACK3_MG0_RECORDER_BUDGET_TIMING_20260909.md`
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > O0R remediation commit：`20662dd`
 > O0R evidence：`data/reports/axis_libero_30k/track3_operations_o0r_remediation_20260908/`

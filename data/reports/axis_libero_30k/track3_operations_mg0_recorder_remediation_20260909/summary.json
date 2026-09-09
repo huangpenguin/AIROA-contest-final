@@ -1,0 +1,88 @@
+{
+  "schema_version": "track3_mg0_recorder_remediation_summary_v1",
+  "status": "passed_hard_stop_ready_for_user_calibration",
+  "phase": "MG0",
+  "root_source_commit": "20fe0014c19b725feb77cf858a1d1f872aea926b",
+  "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "recorder_source_sha256": "dee3cd22abae4adc3e118e7c472642f9e4730bb0ec2e1cc0aa01c62800c83d5a",
+  "evidence_namespace": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909",
+  "manifest": {
+    "path": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/manifest.json",
+    "sha256": "46ab0872ca135cfcf2dab5919e9e6428536231b4f84d15fcb36ec55596e5d989"
+  },
+  "input_lock": {
+    "path": "data/reports/axis_libero_30k/track3_operations_o1_0_red_mug_retiming_20260908/input_lock.json",
+    "sha256": "41c2fa144afc20eb2c3b639af3983f2dff6b6b637848fd5cda33b1680da41298"
+  },
+  "preferred_seed": {
+    "episode_id": "official_t3_red_mug_1788838632",
+    "frame_count": 388,
+    "role": "read_only_retiming_seed",
+    "gold_eligible": false,
+    "replay": "not_evaluated"
+  },
+  "reference_seed": {
+    "episode_id": "official_t3_red_mug_1788838293",
+    "frame_count": 468,
+    "role": "reference_only",
+    "gold_eligible": false,
+    "replay": "not_evaluated"
+  },
+  "implementation_commits": [
+    "a298897",
+    "4b697e4",
+    "20fe001"
+  ],
+  "hard_stop_contract": {
+    "formal_step_limit": 300,
+    "warning_steps": [
+      220,
+      260,
+      290
+    ],
+    "pause_consumes_zero_steps": true,
+    "keyup_clears_motion_immediately": true,
+    "timing_fields_separated": true
+  },
+  "canary_attempts": [
+    {
+      "attempt": "0003",
+      "operator_hz": 2.0,
+      "input_lock": "attempt_0003_2hz_input_lock.json",
+      "behavior_probe": "attempt_0003_2hz_behavior_probe.json",
+      "result": "attempt_0003_2hz_no_save_result.json",
+      "frame_count": 4,
+      "interval_mean_s": 0.4987287516705692,
+      "interval_median_s": 0.49654953996650875,
+      "interval_min_s": 0.49647016904782504,
+      "interval_max_s": 0.5031665459973738,
+      "deadline_miss_count": 0,
+      "formal_episode_written": false
+    },
+    {
+      "attempt": "0004",
+      "operator_hz": 4.0,
+      "input_lock": "attempt_0004_4hz_input_lock.json",
+      "behavior_probe": "attempt_0004_4hz_behavior_probe.json",
+      "result": "attempt_0004_4hz_no_save_result.json",
+      "frame_count": 6,
+      "interval_mean_s": 0.24905802118591963,
+      "interval_median_s": 0.24873874092008919,
+      "interval_min_s": 0.24415043194312602,
+      "interval_max_s": 0.25454833707772195,
+      "deadline_miss_count": 0,
+      "formal_episode_written": false
+    }
+  ],
+  "preserved_observation": "attempt_0001_browser_only_pacing_observation.json",
+  "formal_recording_started": false,
+  "candidate_created": false,
+  "pending_created": false,
+  "replay": "not_evaluated",
+  "accepted_count": 0,
+  "training_started": false,
+  "historical_raw_modified": false,
+  "resource_scan": "final_resource_scan.json",
+  "next_phase_only": "MG1_red_mug_assisted_reexecution",
+  "user_action": "接管 Teleop：official_t3_red_mug"
+}

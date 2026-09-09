@@ -1,0 +1,39 @@
+{
+  "schema_version": "track3_mg0_recorder_remediation_lock_v1",
+  "status": "locked_ready_for_no_save_ab",
+  "phase": "MG0",
+  "root_source_commit": "a298897f24a6dac7866e5e4e296189110137d56b",
+  "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "recorder_source": "tools/axis_pi05/track3_public_teleop.py",
+  "recorder_source_sha256": "821edf3c8866d6290a0e3edcd0996fbe349ebda99d36d528df9c4041c2588242",
+  "active_plan": "docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md",
+  "audit_input": "2b544b110189324b3db71070dcfadbf2634eccd7",
+  "o1_2_seed": {
+    "episode": "data/reports/axis_libero_30k/track3_reverse_pilot_v2/pending/official_t3_red_mug_1788921471",
+    "metadata_sha256": "7828256a84e286058d6d602196166732e39b535e6842f2944056a612b70d5a33",
+    "trajectory_sha256": "91ddeeddb98f424c88f9c87edaa190a0cdad2f7af466d390d7cd859e77f3e6d8",
+    "frame_count": 314,
+    "gold_eligible": false,
+    "replay": "not_evaluated"
+  },
+  "contract": {
+    "formal_step_budget": 300,
+    "budget_warning_steps": [
+      220,
+      260,
+      290
+    ],
+    "sim_control_hz": 20.0,
+    "operator_ab_variants_hz": [
+      2.0,
+      4.0
+    ],
+    "video_fps": 20.0,
+    "pause_consumes_zero_steps": true,
+    "keyup_clears_motion_pulse": true,
+    "no_save_candidate_or_pending": true
+  },
+  "display": ":3",
+  "physical_gpu": 3,
+  "created_at_utc": "2026-09-09T04:40:11.200673+00:00"
+}

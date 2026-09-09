@@ -1,0 +1,21 @@
+{
+  "schema_version": "track3_mg0_no_save_ab_attempt_lock_v2",
+  "status": "executed_no_save",
+  "phase": "MG0",
+  "attempt": "0004",
+  "variant": "operator_4hz_final",
+  "root_source_commit": "20fe001",
+  "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "recorder_source_sha256": "dee3cd22abae4adc3e118e7c472642f9e4730bb0ec2e1cc0aa01c62800c83d5a",
+  "previous_observation": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/attempt_0001_browser_only_pacing_observation.json",
+  "no_save": true,
+  "formal_episode_write": false,
+  "operator_hz": 4,
+  "sim_control_hz": 20,
+  "video_fps": 20,
+  "step_limit": 300,
+  "display": ":3",
+  "physical_gpu": 3,
+  "preview_url": "http://127.0.0.1:34503/",
+  "session_id": 90661
+}

@@ -6,6 +6,8 @@
 > 前置审核结论：`approved`
 > 审核输入：`2b544b110189324b3db71070dcfadbf2634eccd7`
 > 第一执行阶段：`MG0_evidence_lock_and_recorder_budget_remediation`
+> MG0 执行状态：`passed_hard_stop_ready_for_user_calibration`；下一阶段：`MG1_red_mug_assisted_reexecution`
+> MG0 执行报告：`docs/reviews/axis_pi05/TRACK3_MG0_RECORDER_BUDGET_TIMING_20260909.md`
 
 本计划把主线从单条 red-mug canary 扩展到“多题目 accepted gold → 数据冻结 → tiny-overfit → R6 100/300-step 短续训 → 当日候选 ZIP”。目标是在不牺牲 provenance、物理门和正向 retention 的前提下提高最后一周的有效吞吐。
 

@@ -3,9 +3,9 @@
 > 更新日期：2026-09-09（Asia/Tokyo）
 > 跨session入口：先完整读取根目录`AGENTS.md`与`MEMORY.md`，再读取本索引、handoff、machine JSON、唯一活动计划和最新审核；先查live PID/cursor，禁止重复启动。
 > 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md`
-> 当前状态：`track3_multitask_gold_and_r6_short_continuation_reviewed_ready_for_mg0`
+> 当前状态：`track3_multitask_gold_and_r6_short_continuation_ready_for_user_calibration`
 > 最新审核：`docs/reviews/axis_pi05/TRACK3_O1_2_OVER_BUDGET_INDEPENDENT_AUDIT_20260909.md`
-> 最新执行闭包：`docs/reviews/axis_pi05/TRACK3_O1_2_USER_TELEOP_OVER_BUDGET_20260909.md`
+> 最新执行闭包：`docs/reviews/axis_pi05/TRACK3_MG0_RECORDER_BUDGET_TIMING_20260909.md`
 
 ## 1. 本轮执行停止点
 

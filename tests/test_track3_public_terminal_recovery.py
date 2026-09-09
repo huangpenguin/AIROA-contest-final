@@ -58,7 +58,7 @@ def test_teleop_action_contract_and_cpu_self_test():
     machine.event("keydown", "w")
     assert machine.next_action()[0] < 0
     machine.event("keyup", "w")
-    assert machine.next_action()[0] < 0
+    assert machine.next_action()[0] == 0
     machine.event("keydown", "s")
     assert machine.next_action()[0] > 0
     machine.event("keydown", "c")

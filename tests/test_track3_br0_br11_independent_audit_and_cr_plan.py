@@ -75,9 +75,9 @@ def test_findings_cannot_be_silently_cleared() -> None:
 
 def test_lifecycle_releases_exactly_one_cr_plan() -> None:
     handoff = strict_json(HANDOFF)
-    assert handoff["status"] == "track3_multitask_gold_and_r6_short_continuation_reviewed_ready_for_mg0"
+    assert handoff["status"] == "track3_multitask_gold_and_r6_short_continuation_ready_for_user_calibration"
     assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md"
-    assert handoff["next_phase_only"] == "MG0_evidence_lock_and_recorder_budget_remediation"
+    assert handoff["next_phase_only"] == "MG1_red_mug_assisted_reexecution"
     assert (ROOT / PLAN).is_file()
     assert ARCHIVED_CR_PLAN.is_file()
     assert ARCHIVED_AUDIT_PLAN.is_file()

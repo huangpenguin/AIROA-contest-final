@@ -1,0 +1,55 @@
+{
+  "schema_version": "track3_mg0_validation_v1",
+  "status": "passed",
+  "phase": "MG0_evidence_lock_and_recorder_budget_remediation",
+  "root_source_commit": "20fe0014c19b725feb77cf858a1d1f872aea926b",
+  "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "checks": {
+    "strict_json": {
+      "status": "passed",
+      "scope": "all tracked JSON plus MG0 namespace JSON, excluding the repository's intentional malformed fixture",
+      "passed_files": 868,
+      "excluded_known_malformed": 1,
+      "excluded_path": "data/reports/axis_libero_30k/track3_p3_io_recovery_and_support_executor_canary/r1_io_tests/malformed/result.json",
+      "duplicate_keys_rejected": true
+    },
+    "targeted_tests": {
+      "status": "passed",
+      "command": "PYTHONPATH=. ./.venv_axis_pi05/bin/pytest -q tests/test_track3_public_terminal_recovery.py tests/test_track3_mg0_recorder_budget_remediation.py tests/test_track3_o1_2_audit_and_multitask_plan.py",
+      "passed": 12,
+      "skipped": 0,
+      "warnings": 0
+    },
+    "full_tests": {
+      "status": "passed",
+      "command": "PYTHONPATH=. ./.venv_axis_pi05/bin/pytest -q tests",
+      "passed": 444,
+      "skipped": 7,
+      "warnings": 26
+    },
+    "py_compile": {
+      "status": "passed",
+      "command": "PYTHONPATH=. ./.venv_axis_pi05/bin/python -m compileall -q tools tests"
+    },
+    "diff_check": {
+      "status": "passed",
+      "command": "git diff --check"
+    }
+  },
+  "resource_boundary": {
+    "status": "passed",
+    "evidence": "final_resource_scan.json",
+    "live_track3_mujoco_teleop_processes": 0,
+    "display": ":3",
+    "gpu0_to_gpu2": "externally_occupied_not_touched",
+    "gpu3": "idle_after_canary",
+    "nested_openpi_clean": true
+  },
+  "no_formal_recording": true,
+  "no_candidate_or_pending_created": true,
+  "replay": "not_evaluated",
+  "training_started": false,
+  "historical_raw_modified": false,
+  "next_phase_only": "MG1_red_mug_assisted_reexecution",
+  "hard_stop": "ready_for_user_calibration"
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": "track3_mg0_no_save_observation_v1",
+  "attempt": "0001",
+  "operator_hz": 2.0,
+  "intended_tick_period_s": 0.5,
+  "observed_frame_count_before_abort": 153,
+  "observation": "browser-only PTY returned from _read_key without pacing; no-save abort occurred before any episode write",
+  "candidate_created": false,
+  "pending_created": false,
+  "replay": "not_evaluated",
+  "classification": "infrastructure_failure_browser_only_tick_busy_loop",
+  "historical_raw_modified": false,
+  "created_at_utc": "2026-09-09T04:50:24.568205+00:00"
+}

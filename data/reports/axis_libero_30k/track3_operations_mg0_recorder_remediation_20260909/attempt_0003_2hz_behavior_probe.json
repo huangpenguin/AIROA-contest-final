@@ -1,0 +1,47 @@
+{
+  "schema_version": "track3_mg0_no_save_behavior_probe_v1",
+  "attempt": "0003",
+  "operator_hz": 2,
+  "sim_control_hz": 20,
+  "no_save": true,
+  "initial": {
+    "step": 0,
+    "paused": true,
+    "axis": "none",
+    "held_keys": []
+  },
+  "before_keyup": {
+    "step": 4,
+    "paused": false,
+    "axis": "X",
+    "sign": "-",
+    "held_keys": [
+      "w"
+    ]
+  },
+  "after_keyup_immediate": {
+    "step": 4,
+    "paused": false,
+    "axis": "none",
+    "held_keys": []
+  },
+  "after_pause_immediate": {
+    "step": 4,
+    "paused": true,
+    "axis": "none",
+    "held_keys": []
+  },
+  "after_pause": {
+    "step": 4,
+    "paused": true,
+    "axis": "none",
+    "held_keys": []
+  },
+  "assertions": {
+    "keyup_clears_motion_immediately": true,
+    "pause_consumes_zero_steps": true,
+    "save_event_sent": false,
+    "abort_sent": true
+  },
+  "source_commit": "20fe001"
+}

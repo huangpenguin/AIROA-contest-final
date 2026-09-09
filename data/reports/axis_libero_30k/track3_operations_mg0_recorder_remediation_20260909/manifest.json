@@ -1,0 +1,79 @@
+{
+  "schema_version": "track3_mg0_evidence_manifest_v1",
+  "status": "closed",
+  "phase": "MG0",
+  "root_source_commit": "20fe0014c19b725feb77cf858a1d1f872aea926b",
+  "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "entries": [
+    {
+      "path": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/input_lock.json",
+      "bytes": 1423,
+      "sha256": "aac45b69933e75e7fb155d44bf403d08de9494c5e1636b5dedc743fb732bcedb"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/preflight_before_canary.json",
+      "bytes": 76107,
+      "sha256": "55e305edc8502394670356fb84075538b8d64184d380a46514360f35fac3418c"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/attempt_0001_browser_only_pacing_observation.json",
+      "bytes": 558,
+      "sha256": "486462072e7c78696c49b5a42d5cbfc838cc4fafe844a0e7434ec1a6dc251cf6"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/attempt_0002_2hz_input_lock.json",
+      "bytes": 799,
+      "sha256": "12f6c4a8d40269125ac20018aa389f9a31887bec830d3283d8605a63e3947e79"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/attempt_0002_preflight.json",
+      "bytes": 76191,
+      "sha256": "91da8df407be671b20b48bd44a3a3bcaf769d3f76dd67a915ef3a0ba89031cb6"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/attempt_0003_2hz_input_lock.json",
+      "bytes": 774,
+      "sha256": "e1515946dc126a8a89506ceeb07979e6c5397653cdb49fb0d8680ea0adb0d202"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/attempt_0003_2hz_behavior_probe.json",
+      "bytes": 880,
+      "sha256": "192e5636016a757af92904a2c9a1b95c8b88fbb4cf8824806d2227c45968edf2"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/attempt_0003_2hz_no_save_result.json",
+      "bytes": 1009,
+      "sha256": "d1139441a6d172e3d61bd9471d4868ba9597ef990ad9e14b61b668d3b0490db3"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/attempt_0004_4hz_input_lock.json",
+      "bytes": 774,
+      "sha256": "18d0822f85baee5faff70aea86350e892838a8e559154ff2b76cf4b1ed3106cb"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/attempt_0004_4hz_behavior_probe.json",
+      "bytes": 880,
+      "sha256": "6db9ee80cf1346e33a817dc749e6bc21e8ce7aa808eae85b423ddb431b7dce2f"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/attempt_0004_4hz_no_save_result.json",
+      "bytes": 1012,
+      "sha256": "18a9dbee388ab952a4092d8c1a8b693085ef8046029fa6fd2e0965827591201f"
+    },
+    {
+      "path": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/final_resource_scan.json",
+      "bytes": 2155,
+      "sha256": "8c1fceb7485ec7bad6e8f7b7c7ac68bef943116d0320e07a055455181db4bb23"
+    },
+    {
+      "path": "docs/reviews/axis_pi05/TRACK3_MG0_RECORDER_BUDGET_TIMING_20260909.md",
+      "bytes": 3104,
+      "sha256": "d1a15ea9128ffef8b639523d737e47d14ac1d7cb6eb268df62e202cca16300d0"
+    }
+  ],
+  "manifest_excludes": [
+    "manifest.json",
+    "summary.json",
+    "validation.json"
+  ]
+}

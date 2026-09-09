@@ -1,0 +1,94 @@
+{
+  "schema_version": "track3_mg0_resource_boundary_scan_v1",
+  "phase": "MG0_closeout",
+  "captured_at": "2026-09-09",
+  "root_status": {
+    "argv": [
+      "git",
+      "status",
+      "--short"
+    ],
+    "returncode": 0,
+    "stdout": "?? docs/reviews/axis_pi05/TRACK3_MG0_RECORDER_BUDGET_TIMING_20260909.md",
+    "stderr": ""
+  },
+  "nested_openpi_status": {
+    "argv": [
+      "git",
+      "-C",
+      "third_party/axis_openpi",
+      "status",
+      "--short"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "process_scan": {
+    "argv": [
+      "ps",
+      "-eo",
+      "pid=,args=",
+      "|",
+      "rg",
+      "[t]rack3_public_teleop|[m]ujoco"
+    ],
+    "returncode": 1,
+    "matched_lines": [],
+    "note": "No Track3/MuJoCo/Teleop process; rg returned 1 for no match."
+  },
+  "gpu_scan": {
+    "argv": [
+      "nvidia-smi",
+      "--query-gpu=index,memory.used,memory.total,utilization.gpu",
+      "--format=csv,noheader,nounits"
+    ],
+    "returncode": 0,
+    "rows": [
+      {
+        "index": 0,
+        "memory_used_mib": 16139,
+        "memory_total_mib": 32768,
+        "utilization_gpu_percent": 10,
+        "classification": "external_occupied_not_touched"
+      },
+      {
+        "index": 1,
+        "memory_used_mib": 14437,
+        "memory_total_mib": 32768,
+        "utilization_gpu_percent": 10,
+        "classification": "external_occupied_not_touched"
+      },
+      {
+        "index": 2,
+        "memory_used_mib": 15583,
+        "memory_total_mib": 32768,
+        "utilization_gpu_percent": 100,
+        "classification": "external_occupied_not_touched"
+      },
+      {
+        "index": 3,
+        "memory_used_mib": 5,
+        "memory_total_mib": 32768,
+        "utilization_gpu_percent": 0,
+        "classification": "idle_after_canary"
+      }
+    ]
+  },
+  "display_scan": {
+    "argv": [
+      "xdpyinfo",
+      "-display",
+      ":3"
+    ],
+    "returncode": 0,
+    "display": ":3",
+    "first_lines": [
+      "name of display: :3",
+      "version number: 11.0",
+      "vendor string: The X.Org Foundation"
+    ]
+  },
+  "no_formal_episode_written": true,
+  "historical_raw_modified": false
+}

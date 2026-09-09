@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "generated_date": "2026-09-09",
-  "status": "track3_multitask_gold_and_r6_short_continuation_reviewed_ready_for_mg0",
+  "status": "track3_multitask_gold_and_r6_short_continuation_ready_for_user_calibration",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
@@ -260,7 +260,7 @@
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
   "next_plan": "docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md",
-  "next_phase_only": "MG0_evidence_lock_and_recorder_budget_remediation",
+  "next_phase_only": "MG1_red_mug_assisted_reexecution",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -5522,7 +5522,7 @@
       "gpu3": "simulator_replay_and_small_evaluation_only"
     },
     "human_review_required": true,
-    "next_phase_only": "MG0_evidence_lock_and_recorder_budget_remediation",
+    "next_phase_only": "MG1_red_mug_assisted_reexecution",
     "plan": "docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md",
     "recording_quota": {
       "official_t3_alphabet_soup": 2,
@@ -5531,7 +5531,7 @@
       "official_t3_two_mugs_conditional": 1,
       "official_t3_yellow_book": 2
     },
-    "status": "reviewed_ready_for_mg0",
+    "status": "mg0_passed_ready_for_user_calibration",
     "task_order": [
       "official_t3_red_mug",
       "official_t3_alphabet_soup",
@@ -5559,4 +5559,57 @@
     },
     "unexecuted": "not_evaluated"
   }
+,
+  "track3_multitask_gold_and_r6_short_continuation_mg0_execution": {
+  "status": "passed_hard_stop_ready_for_user_calibration",
+  "phase": "MG0_evidence_lock_and_recorder_budget_remediation",
+  "root_source_commit": "20fe0014c19b725feb77cf858a1d1f872aea926b",
+  "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+  "recorder_source_sha256": "dee3cd22abae4adc3e118e7c472642f9e4730bb0ec2e1cc0aa01c62800c83d5a",
+  "plan": "docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md",
+  "report": "docs/reviews/axis_pi05/TRACK3_MG0_RECORDER_BUDGET_TIMING_20260909.md",
+  "evidence_namespace": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/",
+  "summary": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/summary.json",
+  "manifest": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/manifest.json",
+  "formal_recording_started": false,
+  "no_save_canary_attempts": [
+    "0001",
+    "0002",
+    "0003",
+    "0004"
+  ],
+  "final_ab_attempts": {
+    "2hz": {
+      "attempt": "0003",
+      "result": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/attempt_0003_2hz_no_save_result.json",
+      "interval_mean_s": 0.4987287516705692,
+      "interval_median_s": 0.49654953996650875,
+      "interval_min_s": 0.49647016904782504,
+      "interval_max_s": 0.5031665459973738,
+      "deadline_miss_count": 0,
+      "formal_episode_written": false
+    },
+    "4hz": {
+      "attempt": "0004",
+      "result": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/attempt_0004_4hz_no_save_result.json",
+      "interval_mean_s": 0.24905802118591963,
+      "interval_median_s": 0.24873874092008919,
+      "interval_min_s": 0.24415043194312602,
+      "interval_max_s": 0.25454833707772195,
+      "deadline_miss_count": 0,
+      "formal_episode_written": false
+    }
+  },
+  "historical_pacing_failure_preserved": "attempt_0001_browser_only_pacing_observation.json",
+  "candidate_created": false,
+  "pending_created": false,
+  "replay": "not_evaluated",
+  "accepted_count": 0,
+  "training_started": false,
+  "historical_raw_modified": false,
+  "resource_boundary": "final_resource_scan.json",
+  "user_action": "接管 Teleop：official_t3_red_mug",
+  "next_phase_only": "MG1_red_mug_assisted_reexecution",
+  "lifecycle_validation": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/validation.json"
+}
 }

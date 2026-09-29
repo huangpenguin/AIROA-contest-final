@@ -1,0 +1,25 @@
+{
+  "schema_version": "official_canary100_hf_v1",
+  "private": true,
+  "repo_type": "model",
+  "required_members": ["params", "train_state", "_CHECKPOINT_METADATA"],
+  "upload_order": ["T3", "T1", "T2"],
+  "note": "Upload T3 first so local GPU3 N5 can start before T1/T2 finish. Do not start optimizer continuation from these uploads.",
+  "tracks": {
+    "T3": {
+      "repo_id": "Huangpenguin/parc2026-t3-four-gold-canary100-step100",
+      "persist_rel": "t3_four_gold_canary100/100",
+      "local_dir": "outputs/axis_pi05/official_canary100/t3_four_gold_canary100/100"
+    },
+    "T1": {
+      "repo_id": "Huangpenguin/parc2026-t1-p20-canary100-step100",
+      "persist_rel": "t1_p20_canary100/100",
+      "local_dir": "outputs/axis_pi05/official_canary100/t1_p20_canary100/100"
+    },
+    "T2": {
+      "repo_id": "Huangpenguin/parc2026-t2-p30-canary100-step100",
+      "persist_rel": "t2_p30_canary100/100",
+      "local_dir": "outputs/axis_pi05/official_canary100/t2_p30_canary100/100"
+    }
+  }
+}

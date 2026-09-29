@@ -1,0 +1,59 @@
+schema_version: 1
+plan: docs/AXIS_PI05_TRACK1_TRACK2_OFFICIAL_BLACKWELL_LORA_PLAN_20260910.md
+status: official_blackwell_t1_t2_lora_only
+track3_training: forbidden
+reused_m0_m1_m2: false
+
+initialization:
+  run_id: r6_dual_l2_fresh500_r1
+  step: 500
+  load: params_only
+  optimizer: fresh
+  scheduler: fresh
+  ema: false
+
+lora:
+  arm: L2_action_lora_heads
+  objective: valid7_temporal
+  action_horizon: 10
+  protocol: {primary: execute8, chunk: 10, fast_only: true}
+
+optimizer:
+  type: AdamW
+  beta1: 0.9
+  beta2: 0.95
+  epsilon: 1.0e-8
+  weight_decay: 1.0e-10
+  peak_lr: 3.0e-7
+  parked_second_arm_lr: 1.0e-6
+  warmup_steps_canary100: 10
+  clip_gradient_norm: 0.1
+  ema: false
+  precision: float32
+  v100_or_blackwell_bfloat16: forbidden
+  effective_global_batch: 64
+  microbatch: 4
+  accumulation: 16
+  blackwell_canary_verified: true
+
+wandb:
+  project: parc2026-axis-pi05
+  default_mode: disabled
+  launch_config: configs/axis_pi05/official_blackwell_launch.yaml
+
+checkpoints: [0, 1, 10, 25, 50, 100, 250, 500]
+first_round_steps: 100
+
+mixes:
+  T1-P20:
+    standard: 0.80
+    plus: {lighting: 0.10, env: 0.10}
+  T2-P30:
+    standard: 0.70
+    plus: {camera_pose: 0.10, sensor_noise: 0.10, env: 0.10}
+
+gates:
+  c20_max_loss: 2
+  dedicated_panel_no_net_regression: true
+  min_paired_success_gain: 2
+  do_not_promote_on_loss: true

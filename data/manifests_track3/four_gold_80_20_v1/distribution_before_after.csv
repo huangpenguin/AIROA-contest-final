@@ -1,0 +1,5 @@
+scope,family,episode_count,frame_count,mass
+forward,forward_libero_plus,12832,1998905,0.8
+reverse,containment_removal,1,278,0.06666666666666667
+reverse,multi_object_support_removal,1,282,0.06666666666666667
+reverse,support_removal,2,500,0.06666666666666667

@@ -144,20 +144,17 @@ Latest audit correction:
 - Retention uses fixed C20 standard-LIBERO manifest/seeds. Current continuation gate requires at least +1 reverse success over step0 and no more than 2/20 C20 success loss.
 - Only a selected checkpoint passing fold/parity, norm-hash, FAST latency, coverage and ZIP CRC/layout/size gates may become a local candidate ZIP.
 
-## 8. Audit and planning rules
+## 8. Lightweight review and planning rules (user override, 2026-09-09)
 
-Every review must perform all of the following:
+Routine Track3 data collection no longer triggers an automatic independent audit. The normal loop is:
 
-1. Read-only verify root/nested commits, dirty files, immutable input/artifact hashes, raw reports, claimed gates, cursor, processes, GPU boundary and prohibited actions.
-2. Distinguish model/physics failure from evaluator, renderer, wrapper, telemetry, manifest and reporting failures.
-3. Use exactly one verdict: `approved`, `remediation_required`, or `blocked`.
-4. Historical evidence is immutable. Fix labels or semantics only in a new review/derived namespace with links to old hashes.
-5. Missing/unrun work is `not_evaluated`; never infer success or failure and never manufacture absent evaluator/ZIP/training results.
-6. Archive the completed/superseded active plan; retain it in Git. Keep exactly one new active execution plan in `docs/`.
-7. Synchronize `docs/AXIS_PI05_PLAN_INDEX.md`, `docs/AXIS_PI05_PROJECT_HANDOFF_20260831.md`, machine JSON and lifecycle tests.
-8. Run strict duplicate-key JSON parsing, artifact/hash validation, targeted tests, full tests, py_compile/format checks and `git diff --check` on the final would-be commit tree.
-9. Commit a clean root tree. Verify nested OpenPI clean and explicitly record that the pre-existing `LIBERO-plus` dirty state was untouched.
-10. A hard stop ends authorization, not necessarily technical possibility. The next step requires a new reviewed plan; do not continue the tail of an archived plan.
+1. Read-only check that the previous requested artifact/result exists and that no recorder, simulator, trainer, cursor, or dirty writer would collide with the next step.
+2. Say only whether the previous step is complete, then provide or land the next practical plan.
+3. Preserve raw history and use `not_evaluated` for work that did not run. A bad episode is excluded or re-recorded; it does not automatically stop unrelated tasks.
+4. Data-only checks are schema, finite values, aligned frame counts, paths and hashes. Recorder/task code changes get focused tests. Do not run the full suite or create audit bureaucracy for every demo.
+5. Do not automatically require an audit verdict, audit plan, lifecycle archive, all-handoff synchronization, or clean commit during fast collection.
+
+The strict audit workflow is opt-in: use it only when the user explicitly requests a **formal audit**, or at a release/ZIP/upload/submission boundary where immutable provenance and broad validation are required. The safety rules for process/GPU collision and preservation of user changes remain mandatory.
 
 ## 9. Git/evidence hygiene
 
@@ -253,3 +250,69 @@ After a phase completes, the reviewing agent must refresh this file only when st
 - Do not start the old Teleop argv yet. The recorder defaults to gripper `+1`, exposes only a toggle, does not persist per-step raw contact/source/goal gates, and lacks the current attempt identity/finalizer lifecycle. There is no episode for human visual review now.
 - The sole active plan is `docs/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md`. UT0–UT3 perform derived closure and recorder readiness with no simulator/GPU; after `ready_for_user_calibration`, the user may explicitly take over, calibrate without saving, and record at most one task10 candidate. Only machine success releases GPU3 exact replay `3/3` and a visual-review card. Accepted promotion, training/norm, FAST/ZIP, upload and submission remain prohibited.
 - Post-lifecycle validation: SR strict JSON `27/27`, audit `2/2`, machine handoff `1/1`, targeted `18 passed`, full `425 passed, 7 skipped, 23 warnings`; py_compile/diff-check/no-partial/process boundaries passed. Public LIBERO and nested OpenPI are clean; the pre-existing `LIBERO-plus` dirty set is preserved. GPU0 has an external job and was not touched; GPU1–3 are idle.
+
+## 25. Step-horizon gates vs official Axis 30k (2026-09-12, open design review)
+
+User 2026-09-12: official Axis is about 30000 optimizer steps with good results, but local 100/250/no-auto-500 gates stopped continuation; the gate design may be too conservative. This is recorded for later high-level review, not as authorization.
+
+- Machine note: `data/reports/axis_libero_30k/t1_t2_dedicated_panel_and_official_250_horizon_20260911/step_horizon_gate_design_review_20260912.json`
+- Plan section: `docs/AXIS_PI05_T1_T2_DEDICATED_PANEL_AND_OFFICIAL_250_HORIZON_PLAN_20260911.md` §13
+- Do not collapse: Axis init is not a finished LIBERO 30k post-train; the parked dense 30k plan failed on V100 OOM; canary100 T1=0.30 / T2=0.31 (user-reported) only freezes those two 100-step canaries. Do not start 250/500/1k/30k from this note, and do not resume canary100 `train_state` into a longer cosine.
+
+## 26. Official Blackwell T2 H10K launch issues (2026-09-13)
+
+User 2026-09-13 ~16:42 JST: official `t2_p30_r6_h10k_r1` started. Do not reconstruct the failure taxonomy from chat. Canonical write-up:
+
+- `docs/AXIS_PI05_OFFICIAL_BLACKWELL_T2_H10K_LAUNCH_ISSUES_20260913.md`
+- `data/reports/axis_libero_30k/t2_p30_r6_h10k_r1_official_launch_issues_20260913/summary.json`
+
+Four independent classes, plus source-tree skew. Do not collapse them into “pip version mismatch”:
+
+1. JAX stack wall: official GPU requires jax 0.11.1 + CUDA 13; OpenPI pins jax 0.5.3 / orbax 0.11.13. Local V100 green tests cannot see this.
+2. Missing deps/cache: `gcsfs`, paligemma tokenizer file, uv symlink wrapper. Incomplete clean machine, not a minor bump.
+3. On-disk layout: official IPEC tar is LeRobot v3 `file-*.parquet`; local mix assumed v2.1. Same pip as V100 still explodes. Hub `RevisionNotFoundError` was this, not `create_tag`.
+4. Operational: empty run dir, paste, sleep-killed instance, no data-push.
+5. Overlay `train.py` vs public clone HEAD `utils.py` (`TrainState.rng`) is file mix, not JAX.
+
+Recipe/SHA were not the launch-failure cause. Leave the Jupyter tab; do not Stop My Server; data-push after checkpoints. Agent still does not upload or submit.
+
+## 27. T2 H10K post-train agent handoff (2026-09-13)
+
+User: after training, official server may have only ~10 hours left. Next agent must not reconstruct from chat.
+
+- Contract: `docs/AXIS_PI05_T2_H10K_POST_TRAIN_AGENT_HANDOFF_20260913.md`
+- JSON: `data/reports/axis_libero_30k/t2_p30_r6_h10k_r1_post_train_handoff_20260913/summary.json`
+
+Official Blackwell remaining uses: data-push Orbax, fold on jax 0.11.1, persist safetensors SHA, optional restore smoke, resume same run_id only. Full C20 / FAST ZIP / submit / Fast400 / T1 / T3 / dense do not get the leftover official quota. New training identity stays false; auto-submit stays false.
+
+Live ~17:10 JST: pid 6950, step≈1684, `examples_seen=64`, `micro_steps=16`, `valid_action_elements=640` constant, `temporal_padding_loss_mass=0`, `seven_d_loss_mass==loss_sum`. 640 is 16×4×10 from upstream `compute_loss` tensor size, not Axis valid7 4480. Do not stop the run for that. W&B scale vs last night is not apples-to-apples if last night had `compute_loss_components`.
+
+## 28. T2 H10K tomorrow persist/fold playbook (2026-09-13 night)
+
+User sequence for 2026-09-14 morning: read-only check → copy highest complete KEEP step via rsync staging → `parc-home-sync data-push` → fold on official trainvenv → Stop only after persist. Exact cells/commands:
+
+- `docs/AXIS_PI05_T2_H10K_TOMORROW_PERSIST_FOLD_PLAYBOOK_20260914.md`
+- `data/reports/axis_libero_30k/t2_p30_r6_h10k_r1_tomorrow_persist_fold_20260914/summary.json`
+
+Fold entry is `trainvenv_python.sh -m tools.axis_pi05.convert_for_lerobot`. Probe torch/safetensors first; do not pip-install torch into trainvenv. Docker image name is README placeholder `parc2026`; run `docker images` on site. `parc-home-sync data-push` is documented as `~/data` only.
+
+User 2026-09-14 morning (official Jupyter): training finished at step 10000; GPU empty. Persist+fold+data-push completed. Do not reconstruct from chat.
+
+```text
+last_complete_step             10000
+train_state_in_persist         true
+folded_safetensors_bytes       14467165872
+folded_safetensors_sha256      bfc678f96190c922a84aa893af111db6ed7126047274257eee449993aa2d7cd3
+norm_sha256                    39ff8a7cc2ff2a0be7d43659e708f9ec260686e876cf603c0460972b49746b41
+can_stop_server                true after final pgrep/nvidia-smi empty check
+```
+
+Official tree had no `tools.axis_pi05.convert_for_lerobot`; fold used `work/axis_fold/run_fold.py` with `checkpoint_dir="pi05"` and a copy of `transformers_replace` into trainvenv (transformers 4.53.2, no pip reinstall). Next after Stop: local GPU3 C20 / FAST ZIP. Auto-submit stays false.
+
+## 29. T2 H10K local transfer / HF 404 / GPU idle (2026-09-14)
+
+User 2026-09-14 ~12:42 JST: keep the live S3 presigned download; do not switch to HF. GPU plan: GPU3 reserved for T2 C20 after SHA; no 4-way C20 split; T3 Q4/H300 only after T2 delivery, train on GPU1+GPU2; GPU0 idle; T1/dense off.
+
+HF 404 is not a token bug. `HfApi.whoami()` is `Huangpenguin`. Private canary/R6 model repos exist. `Huangpenguin/parc2026-t2-p30-r6-h10k-r1-folded-10000` was never created (create_repo was blocked this morning). `--use-hf` against that id will 404 until a real private repo exists and the 14GB file is uploaded **from this machine after S3 completes**. Uploading from official Blackwell would compete with S3 and is slower. Do not interrupt curl PID 3587101.
+
+Live ~12:43 JST: `model.safetensors.partial` ~3.7 GiB / 13.47 GiB (~27%); formal `model.safetensors` not yet renamed. Presigned URL expiry cited by user ~23:12 JST; remaining 4–5 h fits. After SHA `bfc678f9…` matches, GPU3 FAST/C20/ZIP only.

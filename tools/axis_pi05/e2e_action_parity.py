@@ -23,6 +23,11 @@ import numpy as np
 
 from .common import ROOT, resolve_path, sha256_file, write_json
 
+R6_JAX_CHECKPOINT = (
+    ROOT
+    / "outputs/axis_pi05/axis_libero_lora_screen/L2_action_lora_heads/r6_dual_l2_fresh500_r1/500"
+)
+
 
 LEROBOT_SRC = Path(
     os.environ.get(
@@ -71,6 +76,8 @@ def run(
     seed: int = 0,
     microbatch_size: int = 1,
     same_process_replay: bool = False,
+    jax_checkpoint: Path | None = None,
+    lora_run_dir: Path | None = None,
 ) -> dict[str, Any]:
     if gpu_id == "0":
         raise ValueError("GPU0 is outside the parity boundary")
@@ -254,8 +261,12 @@ def run(
     gc.collect()
     torch.cuda.empty_cache()
 
-    # Build the folded JAX model from the same R6 raw parameter tree used by
-    # the fixed raw/folded audit.  This is the OpenPI/JAX reference boundary.
+    # Folded JAX reference must come from the same checkpoint that produced
+    # model.safetensors. Default remains R6 so historical audits stay valid.
+    jax_checkpoint = Path(jax_checkpoint) if jax_checkpoint is not None else R6_JAX_CHECKPOINT
+    lora_run_dir = Path(lora_run_dir) if lora_run_dir is not None else jax_checkpoint
+    if not (jax_checkpoint / "params").is_dir():
+        raise FileNotFoundError(jax_checkpoint / "params")
     import jax
     import jax.numpy as jnp
     import flax.nnx as nnx
@@ -270,9 +281,7 @@ def run(
     os.environ.update(
         {
             "AXIS_PI05_LORA_ARM": "L2_action_lora_heads",
-            "AXIS_PI05_LORA_RUN_DIR": str(
-                ROOT / "outputs/axis_pi05/axis_libero_lora_screen/L2_action_lora_heads/r6_dual_l2_fresh500_r1/500"
-            ),
+            "AXIS_PI05_LORA_RUN_DIR": str(lora_run_dir),
             "AXIS_PI05_LORA_NORM_STATS": str(norm_stats),
             "AXIS_PI05_LORA_AXIS_PARAMS": str(
                 ROOT / "data/models/axisrobotics/Pi0.5-Axis/c342608c489515efa9ba8281400dc648bf3970e1/params"
@@ -281,7 +290,7 @@ def run(
     )
     training_cfg = config_lib.get_config("axis_pi05_lora_screen")
     raw_params = model_lib.restore_params(
-        ROOT / "outputs/axis_pi05/axis_libero_lora_screen/L2_action_lora_heads/r6_dual_l2_fresh500_r1/500/params",
+        jax_checkpoint / "params",
         restore_type=np.ndarray,
         dtype="float32",
     )
@@ -404,6 +413,8 @@ def run(
         "status": "passed" if processor_within and model_within and post_within and same_process_within else "failed",
         "backend": "lerobot_disk_processors_and_model_safetensors_with_openpi_pytorch_core",
         "model_dir": str(model_dir),
+        "jax_checkpoint": str(jax_checkpoint),
+        "lora_run_dir": str(lora_run_dir),
         "model_sha256": sha256_file(model_dir / "model.safetensors"),
         "source_config_sha256": sha256_file(config_path),
         "source_config_contract": {
@@ -471,6 +482,8 @@ def main() -> None:
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--microbatch-size", type=int, default=1)
     parser.add_argument("--same-process-replay", action="store_true")
+    parser.add_argument("--jax-checkpoint", type=Path)
+    parser.add_argument("--lora-run-dir", type=Path)
     args = parser.parse_args()
 
     task: str | list[str]
@@ -494,6 +507,8 @@ def main() -> None:
         seed=args.seed,
         microbatch_size=args.microbatch_size,
         same_process_replay=args.same_process_replay,
+        jax_checkpoint=None if args.jax_checkpoint is None else resolve_path(args.jax_checkpoint),
+        lora_run_dir=None if args.lora_run_dir is None else resolve_path(args.lora_run_dir),
     ), indent=2))
 
 

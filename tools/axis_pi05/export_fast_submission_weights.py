@@ -61,6 +61,16 @@ R6_PROCESSOR_SHA256 = {
     "policy_preprocessor_step_2_normalizer_processor.safetensors": "d80c2ea8a253fc1b3b8d3ae4fb564d111ce125678abb36a1e0f63a8c02b05b3d",
     "policy_postprocessor_step_0_unnormalizer_processor.safetensors": "15fe7b1f1692b7046fa18c6857e8fff6d8eefc07597d235c6331b8945dd55402",
 }
+R6_FOLDED_IDENTITY: dict[str, Any] = {
+    "source_kind": R6_SOURCE_KIND,
+    "candidate": R6_CANDIDATE,
+    "topology": R6_TOPOLOGY,
+    "training_steps": 500,
+    "model_sha256": R6_MODEL_SHA256,
+    "norm_stats_sha256": R6_NORM_SHA256,
+    "processor_sha256": dict(R6_PROCESSOR_SHA256),
+    "lock_mode": "r6_locked",
+}
 
 
 def sha256_file(path: Path) -> str:
@@ -245,11 +255,20 @@ def inventory_from_model_dir(
     *,
     server_template: Path,
     vendor_source: Path,
+    identity: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    """Stage the locked on-disk R6 folded model without creating a source ZIP."""
+    """Stage a locked on-disk folded model without creating a source ZIP.
+
+    Default identity remains the R6 lock. Pass ``identity`` for a candidate
+    whose model and processor hashes were already computed for that candidate.
+    Omitting ``identity`` keeps the original R6-only gate.
+    """
 
     source_model_dir = source_model_dir.resolve()
     staging = staging.resolve()
+    lock = dict(R6_FOLDED_IDENTITY if identity is None else identity)
+    if path_missing := [key for key in ("source_kind", "candidate", "topology", "training_steps", "model_sha256", "processor_sha256") if key not in lock]:
+        raise ValueError(f"folded identity missing fields: {path_missing}")
     if not source_model_dir.is_dir():
         raise FileNotFoundError(source_model_dir)
     if staging.exists():
@@ -276,16 +295,19 @@ def inventory_from_model_dir(
             "bytes": path.stat().st_size,
             "sha256": sha256_file(path),
         }
-    if source_files["model.safetensors"]["sha256"] != R6_MODEL_SHA256:
-        raise ValueError("R6 folded source model hash does not match the locked candidate")
-    for name, expected in R6_PROCESSOR_SHA256.items():
+    if source_files["model.safetensors"]["sha256"] != lock["model_sha256"]:
+        label = "R6 folded source model hash" if identity is None else "folded source model hash"
+        raise ValueError(f"{label} does not match the locked candidate")
+    for name, expected in dict(lock["processor_sha256"]).items():
         if source_files[name]["sha256"] != expected:
-            raise ValueError(f"R6 processor hash mismatch: {name}")
+            label = "R6 processor" if identity is None else "processor"
+            raise ValueError(f"{label} hash mismatch: {name}")
     config = json.loads((source_model_dir / "config.json").read_text(encoding="utf-8"))
+    lock_label = "R6 folded source config" if identity is None else "folded source config"
     if config.get("type") != "pi05" or int(config.get("chunk_size", -1)) != 10 or int(config.get("n_action_steps", -1)) != 8:
-        raise ValueError("R6 folded source config must declare pi05/chunk=10/n_action_steps=8")
+        raise ValueError(f"{lock_label} must declare pi05/chunk=10/n_action_steps=8")
     if config.get("normalization_mapping", {}).get("ACTION") != "QUANTILES" or config.get("normalization_mapping", {}).get("STATE") != "QUANTILES":
-        raise ValueError("R6 folded source config must declare ACTION/STATE QUANTILES")
+        raise ValueError(f"{lock_label} must declare ACTION/STATE QUANTILES")
 
     model_dir = staging / "model_weights"
     model_dir.mkdir(parents=True)
@@ -316,16 +338,18 @@ def inventory_from_model_dir(
         })
     report = {
         "schema_version": 1,
-        "source_kind": R6_SOURCE_KIND,
-        "candidate": R6_CANDIDATE,
-        "topology": R6_TOPOLOGY,
-        "training_steps": 500,
+        "source_kind": lock["source_kind"],
+        "candidate": lock["candidate"],
+        "topology": lock["topology"],
+        "training_steps": int(lock["training_steps"]),
         "normalization": "QUANTILES",
+        "norm_stats_sha256": lock.get("norm_stats_sha256"),
+        "lock_mode": lock.get("lock_mode", "r6_locked" if identity is None else "candidate_locked"),
         "source_submission_zip": None,
         "source_submission_zip_sha256": None,
         "source_submission_zip_bytes": None,
         "source_model_path": str((source_model_dir / "model.safetensors")),
-        "source_model_sha256": R6_MODEL_SHA256,
+        "source_model_sha256": lock["model_sha256"],
         "source_model_bytes": source_files["model.safetensors"]["bytes"],
         "source_config_sha256": source_files["config.json"]["sha256"],
         "source_preprocessor_sha256": source_files["policy_preprocessor.json"]["sha256"],
@@ -338,7 +362,7 @@ def inventory_from_model_dir(
         "staging": str(staging),
         "members": members,
         "safety": {
-            "source_is_current_r6_on_disk_model": True,
+            "source_is_current_r6_on_disk_model": identity is None,
             "historical_fast_asset_not_used": True,
             "source_model_hardlinked_read_only": True,
             "training_performed": False,
@@ -653,12 +677,16 @@ def export_fast(staging: Path, report_root: Path) -> dict[str, Any]:
     if not all(fast_header["shapes"][vision[key]["target_key"]] == list(vision[key]["target_shape"]) for key in VISION_KEYS):
         raise RuntimeError("post-reload vision key shapes changed")
 
+    candidate = inventory.get("candidate", R6_CANDIDATE)
+    topology = inventory.get("topology", R6_TOPOLOGY)
+    training_steps = int(inventory.get("training_steps", 500))
+    norm_stats_sha256 = inventory.get("norm_stats_sha256", R6_NORM_SHA256)
     metadata = {
         "schema_version": 1,
         "format": "remapped_mixed_state_dict",
-        "candidate": R6_CANDIDATE,
-        "topology": R6_TOPOLOGY,
-        "training_steps": 500,
+        "candidate": candidate,
+        "topology": topology,
+        "training_steps": training_steps,
         "normalization": "QUANTILES",
         "source_submission_zip": inventory.get("source_submission_zip"),
         "source_submission_zip_sha256": inventory.get("source_submission_zip_sha256"),
@@ -688,11 +716,11 @@ def export_fast(staging: Path, report_root: Path) -> dict[str, Any]:
     export_report = {
         "schema_version": 1,
         "status": "passed",
-        "candidate": R6_CANDIDATE,
-        "topology": R6_TOPOLOGY,
-        "training_steps": 500,
+        "candidate": candidate,
+        "topology": topology,
+        "training_steps": training_steps,
         "normalization": "QUANTILES",
-        "norm_stats_sha256": R6_NORM_SHA256,
+        "norm_stats_sha256": norm_stats_sha256,
         "elapsed_sec": time.time() - t0,
         "source_model": source_header,
         "fast_model": fast_header,

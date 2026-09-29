@@ -1,5 +1,13 @@
 # PARC2026 正赛：可复用经验与易错点
 
+## 2026-09-29 收尾结论：为新阶段保留什么
+
+- **先验证正式运行环境。** 本地代理分数、本机 GPU 绿测和服务能启动，都不能替代正式 evaluator 下的动作结果。尽早固定依赖、输入输出契约、推理延迟和实际部署路径。
+- **把数据来源当作训练门槛。** Track3 最终 reverse 为 `0/4`，D2 lineage/dev 门槛未通过。脚本能完成动作、文件符合 schema，都不等同于可训练、可用于正式评测的数据；每条样本都要能追到录制过程、初始/目标状态与验收结果。
+- **区分局部改善与整体收益。** R6 的推理 horizon screen 未通过预设发布门；execute4 ZIP 是用户覆盖风险门后的单次候选。seam blend 可作为平滑线索，不能据此声称 reverse 或整体任务能力提升。以 [R6 T2 closeout](reviews/axis_pi05/R6_T2_LIGHT_SMOOTHING_SCREEN_AND_SEAM_BLEND_RELEASE_20260917.md) 和 [Track3 最终审查](reviews/axis_pi05/TRACK3_R0_R1_G0_FINAL_INDEPENDENT_AUDIT_20260916.md) 为准。
+- **新模型比较先固定共同接口。** 固定 LIBERO 数据版本、train/dev 划分、归一化、观察与动作契约、评测 case 和计时口径，再替换模型及其适配/导出层；否则模型差异会和数据、部署差异混在一起。
+- **证据与生成物分开保存。** 原始数据、清单、配置、源码、测试和文本/JSON 结论可支撑复核；checkpoint、视频、NPZ 与 ZIP 属于可再生成的大产物，按空间需要清理时保留 manifest/hash 和复现路径。失败结论也保留，历史记录用新版本修正，不覆写旧 attempt。
+
 这份文档只保留已与正赛仓库契约对齐的通用经验。排行榜权重和归一化公式未公开，因此本地结果只能作为公开 example 的工程门禁，不能当作 Omni 正式分数。
 
 ## 先看管线，再看模型
@@ -11,6 +19,14 @@
 3. 本地 pipeline：固定 seed、episode 数、任务列表和 max steps。
 4. validator：zip 结构、依赖、动态 smoke。
 5. 官方 Docker E2E：确认离线加载、显存、启动时间和依赖。
+
+## 官方 Blackwell 启动失败不要都写成版本问题
+
+2026-09-13 T2 H10K 在官方 RTX PRO 6000 上启动时，失败至少分成四类，外加 overlay 与公开 OpenPI clone HEAD 拼树。完整底稿：
+
+`docs/AXIS_PI05_OFFICIAL_BLACKWELL_T2_H10K_LAUNCH_ISSUES_20260913.md`
+
+不要事后把 Hub `RevisionNotFoundError`、缺 tokenizer、空 `run_dir` 或 `TrainState.rng` 都归因于 pip minor。本机 V100 旧 JAX 绿测只能证明本机栈，不能证明官方卡可训。
 
 ## 环境必须分开
 

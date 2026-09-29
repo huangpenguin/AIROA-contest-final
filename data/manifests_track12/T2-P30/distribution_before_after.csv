@@ -1,0 +1,5 @@
+stratum,sampling_probability
+camera_pose,0.10000000000000023
+env,0.1000000000000001
+sensor_noise,0.10000000000000042
+standard,0.6999999999999955

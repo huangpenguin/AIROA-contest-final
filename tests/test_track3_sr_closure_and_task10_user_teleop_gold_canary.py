@@ -57,11 +57,11 @@ def test_teleop_gold_npz_and_explicit_gripper() -> None:
     assert result["default_gripper_open"] is True
     assert result["gold_gates_fixture_passed"] is True
     assert teleop.RecorderConfig().hz == 20.0
-    assert teleop.RecorderConfig().operator_hz == 2.0
-    assert teleop.RecorderConfig().tick_ms() == 500
+    assert teleop.RecorderConfig().operator_hz == 8.0
+    assert teleop.RecorderConfig().tick_ms() == 125
     assert teleop.RecorderConfig().preview_refresh_ms <= 50
     assert teleop.RecorderConfig().translation_step >= 0.30
-    assert teleop.RecorderConfig().eval_step_budget == 300
+    assert teleop.RecorderConfig().eval_step_budget == 400
     machine = teleop.ActionStateMachine()
     assert machine.snapshot()["gripper_label"] == "OPEN"
     machine.event("keydown", "close")
@@ -79,6 +79,8 @@ def test_teleop_gold_npz_and_explicit_gripper() -> None:
     assert teleop.resolve_record_profile(task_id="official_t3_yellow_book")["instruction"].startswith("take the yellow book")
     book = teleop.resolve_record_profile(task_id="official_t3_yellow_book")
     assert book["init_height_sites"][0] == ("yellow_book_2", "wooden_two_layer_shelf_1_top_side")
+    assert book["init_height_orientation"] == "standing"
+    assert float(book["init_height_yaw_deg"]) == 90.0
     assert teleop.resolve_record_profile(task_id="official_t3_alphabet_soup")["instruction"].startswith("take the alphabet soup")
     assert all(bool(row["recordable"]) and not bool(row["training_holdout"]) for row in teleop.OFFICIAL_T3_TASKS.values())
     preview = teleop.flip_front_preview(np.arange(12, dtype=np.uint8).reshape(2, 2, 3))
@@ -91,11 +93,11 @@ def test_teleop_gold_npz_and_explicit_gripper() -> None:
 
 def test_handoff_waits_for_explicit_takeover() -> None:
     handoff = strict_json(HANDOFF)
-    assert handoff["status"] == "track3_mg1_red_mug_attempts_exhausted_ready_for_user_decision"
-    assert handoff["next_phase_only"] == "MG2_alphabet_soup_requires_explicit_user_takeover"
+    assert handoff["status"] == "track3_fast_teleop_400_plan_ready"
+    assert handoff["next_phase_only"] == "FT0_implement_fast_recorder"
     assert PLAN.is_file()
     assert (ROOT / "docs/archive/axis_pi05/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md").is_file()
-    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md"
+    assert handoff["next_plan"] == "docs/AXIS_PI05_TRACK3_FAST_TELEOP_400_AND_SHORT_TRAIN_PLAN.md"
     o0r = handoff["track3_operations_o0r_remediation_20260908"]
     assert o0r["audit_class"] == "approved"
     assert o0r["historical_metadata_mutated"] is False
@@ -253,6 +255,20 @@ def test_acquisition_gate_uses_first_dwell_and_rejects_late_goal_contact() -> No
     rejected = teleop.acquisition_contact_gate_v4(goal_only, stable_ticks=4)
     assert rejected["state"] == "failed"
     assert rejected["barrier_index"] is None
+
+
+def test_acquisition_gate_accepts_brief_contact_after_source_leaves_shelf() -> None:
+    samples = [
+        {"source_predicate": True, "goal_predicate": False, "demonstrator_contact": False, "gripper": -1, "contact_telemetry_complete": True, "contact_raw_complete": True},
+        {"source_predicate": False, "goal_predicate": False, "demonstrator_contact": True, "gripper": 1, "contact_telemetry_complete": True, "contact_raw_complete": True},
+        {"source_predicate": False, "goal_predicate": False, "demonstrator_contact": True, "gripper": 1, "contact_telemetry_complete": True, "contact_raw_complete": True},
+        {"source_predicate": False, "goal_predicate": True, "demonstrator_contact": False, "gripper": -1, "contact_telemetry_complete": True, "contact_raw_complete": True},
+    ]
+    result = teleop.acquisition_contact_gate_v4(samples)
+    assert result["state"] == "passed"
+    assert result["window_start"] == 1
+    assert result["stable_ticks"] == 2
+
 
 
 def test_atomic_episode_move_and_clone_keep_relative_final_paths(tmp_path, monkeypatch) -> None:

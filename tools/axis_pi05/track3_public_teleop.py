@@ -115,6 +115,8 @@ OFFICIAL_T3_TASKS = {
         },
         "upright_subject": "yellow_book_2",
         "require_upright": False,
+        "init_height_orientation": "standing",
+        "init_height_yaw_deg": 90.0,
         "init_height_sites": (
             ("yellow_book_2", "wooden_two_layer_shelf_1_top_side"),
             ("yellow_book_1", "study_table_yellow_book_right_init_region"),
@@ -226,7 +228,10 @@ def flip_front_preview(image: Any) -> np.ndarray:
     return np.ascontiguousarray(np.rot90(array, 2))
 
 
-GOAL_OVERLAY_COLOR = (40, 255, 90)
+GOAL_OVERLAY_COLOR = (255, 230, 0)
+GOAL_OVERLAY_EDGE = (255, 255, 255)
+GOAL_MARKER_GEOM = "teleop_goal_marker_visual"
+GOAL_MARKER_PIN = "teleop_goal_marker_pin"
 
 
 def goal_eval_triples(profile: Mapping[str, Any]) -> list[list[str]]:
@@ -319,8 +324,8 @@ def project_world_to_pixels(sim: Any, points: np.ndarray, *, camera_name: str, h
     return pix[:, :2] / pix[:, 2:3]
 
 
-def overlay_goal_box(image: np.ndarray, corners_xy: np.ndarray) -> np.ndarray:
-    """Draw a translucent GOAL rectangle. Does not mutate ``image``."""
+def overlay_goal_box(image: np.ndarray, corners_xy: np.ndarray, pillar_xy: np.ndarray | None = None) -> np.ndarray:
+    """Paint a flat table GOAL patch on preview only. Does not mutate ``image``."""
     canvas = np.ascontiguousarray(np.asarray(image).copy())
     pts = np.round(np.asarray(corners_xy, dtype=np.float64)).astype(np.int32)
     if pts.shape != (4, 2):
@@ -330,35 +335,189 @@ def overlay_goal_box(image: np.ndarray, corners_xy: np.ndarray) -> np.ndarray:
         poly = pts.reshape(-1, 1, 2)
         washed = canvas.copy()
         cv2.fillPoly(washed, [poly], GOAL_OVERLAY_COLOR)
-        canvas = cv2.addWeighted(washed, 0.22, canvas, 0.78, 0)
+        canvas = cv2.addWeighted(washed, 0.62, canvas, 0.38, 0)
+        cv2.polylines(canvas, [poly], True, GOAL_OVERLAY_EDGE, 3, cv2.LINE_AA)
         cv2.polylines(canvas, [poly], True, GOAL_OVERLAY_COLOR, 2, cv2.LINE_AA)
-        label = (int(pts[0, 0]), max(int(pts[0, 1]) - 6, 12))
-        cv2.putText(canvas, "GOAL", label, cv2.FONT_HERSHEY_SIMPLEX, 0.45, GOAL_OVERLAY_COLOR, 1, cv2.LINE_AA)
+        label = (int(pts[:, 0].min()), max(int(pts[:, 1].min()) - 8, 16))
+        cv2.putText(canvas, "GOAL", label, cv2.FONT_HERSHEY_SIMPLEX, 0.6, GOAL_OVERLAY_EDGE, 3, cv2.LINE_AA)
+        cv2.putText(canvas, "GOAL", label, cv2.FONT_HERSHEY_SIMPLEX, 0.6, GOAL_OVERLAY_COLOR, 1, cv2.LINE_AA)
     except Exception:
         return np.ascontiguousarray(np.asarray(image).copy())
     return canvas
 
 
-def make_front_preview(image: Any, env: Any = None, profile: Mapping[str, Any] | None = None) -> np.ndarray:
-    """180° FRONT preview plus the official place box. Saved gold frames stay unmarked."""
-    flipped = flip_front_preview(image)
-    if env is None or profile is None:
-        return flipped
+def _preview_site_pixels(env: Any, profile: Mapping[str, Any], image: Any, *, camera_name: str, flip_180: bool) -> list[tuple[np.ndarray, np.ndarray | None]]:
     array = np.asarray(image)
     height, width = int(array.shape[0]), int(array.shape[1])
     sim = getattr(getattr(env, "env", env), "sim", None)
     if sim is None:
-        return flipped
+        return []
+    drawn: list[tuple[np.ndarray, np.ndarray | None]] = []
     for site in resolve_goal_site_names(env, profile):
-        corners = goal_region_world_corners(env, site)
-        if corners is None:
+        floor = goal_region_world_corners(env, site)
+        if floor is None:
             continue
-        xy = project_world_to_pixels(sim, corners, camera_name="agentview", height=height, width=width)
+        xy = project_world_to_pixels(sim, floor, camera_name=camera_name, height=height, width=width)
         if xy is None or len(xy) != 4:
             continue
-        flipped_xy = np.stack([width - 1 - xy[:, 0], height - 1 - xy[:, 1]], axis=1)
-        flipped = overlay_goal_box(flipped, flipped_xy)
-    return flipped
+        if flip_180:
+            xy = np.stack([width - 1 - xy[:, 0], height - 1 - xy[:, 1]], axis=1)
+        drawn.append((xy, None))
+    return drawn
+
+
+def overlay_goal_on_preview(image: Any, env: Any, profile: Mapping[str, Any], *, camera_name: str, flip_180: bool) -> np.ndarray:
+    canvas = np.ascontiguousarray(np.asarray(image).copy())
+    for floor_xy, pillar_xy in _preview_site_pixels(env, profile, image, camera_name=camera_name, flip_180=flip_180):
+        canvas = overlay_goal_box(canvas, floor_xy, pillar_xy)
+    return canvas
+
+
+def make_front_preview(image: Any, env: Any = None, profile: Mapping[str, Any] | None = None) -> np.ndarray:
+    """180° FRONT preview. Table goal uses a world geom when installed; otherwise a 2D patch."""
+    flipped = flip_front_preview(image)
+    if env is None or profile is None or goal_marker_installed(env):
+        return flipped
+    return overlay_goal_on_preview(flipped, env, profile, camera_name="agentview", flip_180=True)
+
+
+def make_wrist_preview(image: Any, env: Any = None, profile: Mapping[str, Any] | None = None) -> np.ndarray:
+    """Wrist preview has no 2D overlay. The table geom stays on the table in 3D."""
+    return np.ascontiguousarray(np.asarray(image).copy())
+
+
+def _mujoco_sim(env: Any) -> Any:
+    inner = getattr(env, "env", env)
+    return getattr(inner, "sim", getattr(env, "sim", None))
+
+
+def goal_marker_installed(env: Any) -> bool:
+    sim = _mujoco_sim(env)
+    if sim is None:
+        return False
+    try:
+        return int(sim.model.geom_name2id(GOAL_MARKER_GEOM)) >= 0
+    except Exception:
+        return False
+
+
+def set_goal_marker_visible(env: Any, visible: bool) -> None:
+    sim = _mujoco_sim(env)
+    if sim is None:
+        return
+    alpha = 1.0 if visible else 0.0
+    for name in (GOAL_MARKER_GEOM, GOAL_MARKER_PIN):
+        with contextlib.suppress(Exception):
+            geom_id = int(sim.model.geom_name2id(name))
+            if geom_id >= 0:
+                sim.model.geom_rgba[geom_id][3] = alpha
+
+
+def observations_for_preview(env: Any) -> dict[str, Any] | None:
+    """Show the table marker, re-render cameras, then hide it so gold frames stay clean."""
+    if not goal_marker_installed(env):
+        return None
+    sim = _mujoco_sim(env)
+    inner = getattr(env, "env", env)
+    set_goal_marker_visible(env, True)
+    try:
+        sim.forward()
+        inner._update_observables(force=True)
+        return inner._get_observations(force_update=True)
+    finally:
+        set_goal_marker_visible(env, False)
+
+
+def preview_pair(env: Any, fallback_obs: Any = None) -> tuple[Any, Any]:
+    preview = observations_for_preview(env)
+    source = preview or fallback_obs
+    return _image_from_obs(source, "agentview"), _image_from_obs(source, "robot0_eye_in_hand")
+
+
+def inject_table_goal_marker_xml(xml: str | bytes, site_names: Sequence[str]) -> str | None:
+    """Insert visual-only table geoms next to an existing goal site. Does not change site size or On()."""
+    from lxml import etree
+
+    root = etree.fromstring(xml.encode("utf-8") if isinstance(xml, str) else xml)
+    site_el = None
+    for name in site_names:
+        for el in root.iter("site"):
+            if el.get("name") == name:
+                site_el = el
+                break
+        if site_el is not None:
+            break
+    parent = site_el.getparent() if site_el is not None else None
+    if site_el is None or parent is None:
+        return None
+    if any(el.get("name") == GOAL_MARKER_GEOM for el in parent.iter("geom")):
+        return etree.tostring(root, encoding="unicode")
+    parts = [float(value) for value in str(site_el.get("size") or "0.075 0.075 0.001").split()]
+    while len(parts) < 3:
+        parts.append(0.001)
+    pos = [float(value) for value in str(site_el.get("pos") or "0 0 0").split()]
+    while len(pos) < 3:
+        pos.append(0.0)
+    plate_z = pos[2] + parts[2] + 0.002
+    plate_pos = f"{pos[0]:.6f} {pos[1]:.6f} {plate_z:.6f}"
+    pin_z = plate_z + 0.08
+
+    def _visual_geom(name: str, geom_type: str, size: str, geom_pos: str) -> None:
+        geom = etree.SubElement(parent, "geom")
+        geom.set("name", name)
+        geom.set("type", geom_type)
+        geom.set("pos", geom_pos)
+        if site_el.get("quat"):
+            geom.set("quat", site_el.get("quat"))
+        geom.set("size", size)
+        geom.set("rgba", "1 0.85 0 1")
+        geom.set("contype", "0")
+        geom.set("conaffinity", "0")
+        geom.set("group", "1")
+        geom.set("mass", "0")
+        geom.set("density", "0")
+
+    _visual_geom(GOAL_MARKER_GEOM, site_el.get("type") or "box", f"{parts[0]:.6f} {parts[1]:.6f} 0.003", plate_pos)
+    _visual_geom(GOAL_MARKER_PIN, "cylinder", "0.018 0.08", f"{pos[0]:.6f} {pos[1]:.6f} {pin_z:.6f}")
+    return etree.tostring(root, encoding="unicode")
+
+
+def _authored_model_xml(env: Any) -> str | None:
+    problem = getattr(env, "env", env)
+    model = getattr(problem, "model", None)
+    if model is not None and hasattr(model, "get_xml"):
+        xml = model.get_xml()
+        if xml:
+            return xml
+    sim = _mujoco_sim(env)
+    if sim is None:
+        return None
+    if hasattr(sim.model, "get_xml"):
+        return sim.model.get_xml()
+    return sim.get_xml()
+
+
+def install_table_goal_marker(env: Any, profile: Mapping[str, Any]) -> bool:
+    """Add a visual-only yellow plate on the table at the official goal site. Does not change On()."""
+    names = resolve_goal_site_names(env, profile)
+    if not names:
+        return False
+    if goal_marker_installed(env):
+        set_goal_marker_visible(env, False)
+        return True
+    xml = _authored_model_xml(env)
+    if not xml:
+        return False
+    injected = inject_table_goal_marker_xml(xml, names)
+    if not injected:
+        return False
+    env.reset_from_xml_string(injected)
+    problem = getattr(env, "env", env)
+    problem.hard_reset = False
+    problem.deterministic_reset = False
+    env.reset()
+    set_goal_marker_visible(env, False)
+    return goal_marker_installed(env)
 
 
 def local_z_world(quat_wxyz: Sequence[float]) -> np.ndarray:
@@ -422,6 +581,25 @@ def object_half_height_z(env: Any, subject: str) -> float:
     return best
 
 
+def _quat_wxyz_mul(lhs: np.ndarray, rhs: np.ndarray) -> np.ndarray:
+    a = np.asarray(lhs, dtype=np.float64)
+    b = np.asarray(rhs, dtype=np.float64)
+    return np.array(
+        [
+            a[0] * b[0] - a[1] * b[1] - a[2] * b[2] - a[3] * b[3],
+            a[0] * b[1] + a[1] * b[0] + a[2] * b[3] - a[3] * b[2],
+            a[0] * b[2] - a[1] * b[3] + a[2] * b[0] + a[3] * b[1],
+            a[0] * b[3] + a[1] * b[2] - a[2] * b[1] + a[3] * b[0],
+        ],
+        dtype=np.float64,
+    )
+
+
+def _quat_yaw_z(degrees: float) -> np.ndarray:
+    half = 0.5 * float(np.deg2rad(degrees))
+    return np.array([np.cos(half), 0.0, 0.0, np.sin(half)], dtype=np.float64)
+
+
 def _quat_local_axis_to_world_z(axis: int) -> np.ndarray:
     """wxyz quaternion that maps a local box axis onto world +Z so a book lies flat."""
     half = float(np.sqrt(0.5))
@@ -432,7 +610,7 @@ def _quat_local_axis_to_world_z(axis: int) -> np.ndarray:
     return np.array([1.0, 0.0, 0.0, 0.0], dtype=np.float64)
 
 
-def _subject_box_thin_axis(env: Any, subject: str) -> tuple[int, float]:
+def _subject_box_extent_axis(env: Any, subject: str, *, pick: str) -> tuple[int, float]:
     sim = env.sim
     problem = _inner_env(env)
     body_id = int(problem.obj_body_id[subject])
@@ -440,25 +618,33 @@ def _subject_box_thin_axis(env: Any, subject: str) -> tuple[int, float]:
         if int(sim.model.geom_bodyid[geom_id]) != body_id or int(sim.model.geom_type[geom_id]) != 6:
             continue
         size = np.asarray(sim.model.geom_size[geom_id], dtype=np.float64)
-        axis = int(np.argmin(size[:3]))
+        axis = int(np.argmax(size[:3]) if pick == "tall" else np.argmin(size[:3]))
         return axis, float(size[axis])
     return 2, float(object_half_height_z(env, subject))
 
 
-def rest_object_to_site_height(env: Any, subject: str, site_name: str, *, clearance_m: float = 0.004) -> dict[str, Any]:
-    """Lay a free object flat on a BDDL site instead of dropping/tumbling it onto the support."""
+def _subject_box_thin_axis(env: Any, subject: str) -> tuple[int, float]:
+    return _subject_box_extent_axis(env, subject, pick="thin")
+
+
+def rest_object_to_site_height(env: Any, subject: str, site_name: str, *, clearance_m: float = 0.004, orientation: str = "flat", yaw_deg: float = 0.0) -> dict[str, Any]:
+    """Seat a free object on a BDDL site. `flat` puts the thin axis on world Z; `standing` puts the tall axis on world Z so a book remains pinchable."""
     sim = env.sim
     problem = _inner_env(env)
     joint = problem.get_object(subject).joints[0]
     qpos_slice = _joint_qpos_slice(sim, joint)
     qpos = np.asarray(sim.data.qpos[qpos_slice], dtype=np.float64).copy()
     site_z = float(sim.data.get_site_xpos(site_name)[2])
-    axis, thin = _subject_box_thin_axis(env, subject)
-    qpos[3:7] = _quat_local_axis_to_world_z(axis)
-    qpos[2] = site_z + thin + float(clearance_m)
+    pick = "tall" if str(orientation) == "standing" else "thin"
+    axis, half = _subject_box_extent_axis(env, subject, pick=pick)
+    quat = _quat_local_axis_to_world_z(axis)
+    if abs(float(yaw_deg)) > 1e-9:
+        quat = _quat_wxyz_mul(_quat_yaw_z(float(yaw_deg)), quat)
+    qpos[3:7] = quat
+    qpos[2] = site_z + half + float(clearance_m)
     sim.data.qpos[qpos_slice] = qpos
     zero_sim_velocity(env)
-    return {"subject": subject, "site": site_name, "z": float(qpos[2]), "thin_axis": axis, "thin_half": thin}
+    return {"subject": subject, "site": site_name, "z": float(qpos[2]), "axis": axis, "half": half, "orientation": str(orientation), "yaw_deg": float(yaw_deg), "thin_axis": axis, "thin_half": half}
 
 
 def scene_bodies_ok(env: Any, names: Sequence[str], *, min_z: float = 0.4) -> bool:
@@ -612,17 +798,17 @@ class RecorderConfig:
     hz: float = 20.0
     sim_control_hz: float = 20.0
     video_fps: float = 20.0
-    operator_hz: float = 2.0
+    operator_hz: float = 8.0
     translation_step: float = 0.30
     rotation_step: float = 0.36
     default_gripper: float = -1.0
-    max_steps: int = 1200
-    eval_step_budget: int = 300
+    max_steps: int = 1600
+    eval_step_budget: int = 400
     deadline_tolerance_ms: float = 5.0
     camera_height: int = 256
     camera_width: int = 256
     motion_pulse_ticks: int = 4
-    session_timeout_seconds: float = 1800.0
+    session_timeout_seconds: float = 0.0
     preview_host: str = "127.0.0.1"
     preview_port: int = 8765
     preview_wait_seconds: float = 45.0
@@ -647,21 +833,29 @@ class RecorderConfig:
         return max(0.0, float(scheduled_tick) - current)
 
     def recording_step_limit(self) -> int:
-        """The formal writer's hard limit; it can never exceed the plan budget."""
-        return min(int(self.max_steps), int(self.eval_step_budget))
+        """Direct-gold qualification length. Exceeding it does not stop the process."""
+        return int(self.eval_step_budget)
+
+    def buffer_soft_cap(self) -> int:
+        return int(self.max_steps)
 
     def budget_status(self, step_count: int) -> dict[str, Any]:
         limit = self.recording_step_limit()
+        cap = self.buffer_soft_cap()
         count = int(step_count)
+        if count >= cap:
+            return {"stage": "buffer_paused", "warning": "buffer_soft_cap", "step_limit": limit, "step_count": count, "buffer_soft_cap": cap}
+        if count > limit:
+            return {"stage": "postprocess_required", "warning": "direct_gold_limit_exceeded", "step_limit": limit, "step_count": count, "buffer_soft_cap": cap}
         if count >= limit:
-            return {"stage": "hard_stop", "warning": "formal_step_budget_exhausted", "step_limit": limit, "step_count": count}
-        if count >= min(290, limit):
-            return {"stage": "hard_warning", "warning": "formal_step_budget_near_limit", "step_limit": limit, "step_count": count}
-        if count >= min(260, limit):
-            return {"stage": "target_window", "warning": "goal_first_target_window", "step_limit": limit, "step_count": count}
-        if count >= min(220, limit):
-            return {"stage": "early_warning", "warning": "formal_step_budget_warning", "step_limit": limit, "step_count": count}
-        return {"stage": "normal", "warning": None, "step_limit": limit, "step_count": count}
+            return {"stage": "gold_limit", "warning": "direct_gold_limit_reached", "step_limit": limit, "step_count": count, "buffer_soft_cap": cap}
+        if count >= min(390, limit):
+            return {"stage": "hard_warning", "warning": "formal_step_budget_near_limit", "step_limit": limit, "step_count": count, "buffer_soft_cap": cap}
+        if count >= min(350, limit):
+            return {"stage": "target_window", "warning": "goal_first_target_window", "step_limit": limit, "step_count": count, "buffer_soft_cap": cap}
+        if count >= min(300, limit):
+            return {"stage": "early_warning", "warning": "formal_step_budget_warning", "step_limit": limit, "step_count": count, "buffer_soft_cap": cap}
+        return {"stage": "normal", "warning": None, "step_limit": limit, "step_count": count, "buffer_soft_cap": cap}
 
 
 @dataclass
@@ -679,6 +873,11 @@ class KeyboardState:
     reset_count: int = 0
     pulse_key: str | None = None
     pulse_remaining: int = 0
+    action_scale: float = 1.0
+
+
+def clamp_action_scale(value: float) -> float:
+    return float(min(2.0, max(0.5, float(value))))
 
 
 def _safe_gripper(value: float) -> float:
@@ -689,9 +888,10 @@ def key_to_action(key: str, state: KeyboardState, config: RecorderConfig) -> np.
     """Translate one motion/no-key tick, always retaining a valid gripper."""
     action = np.zeros(7, dtype=np.float32)
     binding = KEY_BINDINGS.get(str(key).lower())
+    scale = clamp_action_scale(getattr(state, "action_scale", 1.0))
     if binding is not None:
         index, direction = binding
-        action[index] = direction * (config.translation_step if index < 3 else config.rotation_step)
+        action[index] = direction * scale * (config.translation_step if index < 3 else config.rotation_step)
     action[-1] = _safe_gripper(state.gripper)
     return action
 
@@ -754,30 +954,37 @@ def typed_npz_arrays(frames: dict[str, list[Any]]) -> dict[str, np.ndarray]:
     return arrays
 
 
-def acquisition_contact_gate_v4(samples: list[dict[str, Any]], stable_ticks: int = 4) -> dict[str, Any]:
-    """Find the first stable gripper↔subject acquisition window.
+def acquisition_contact_gate_v4(samples: list[dict[str, Any]], stable_ticks: int = 2) -> dict[str, Any]:
+    """Require a short gripper↔subject contact before the book is on the goal.
 
-    This gate is intentionally forward-only.  A final-frame contact or a
-    subject↔goal-receiver contact cannot manufacture an acquisition barrier.
+    Thin standing objects leave the shelf as soon as they are touched, so this
+    no longer demands that ``source`` stay true for the whole window. A final
+    table contact still cannot pass the gate by itself.
     """
     if stable_ticks < 1:
         raise ValueError("stable_ticks must be positive")
+
+    def tick_ok(row: Mapping[str, Any]) -> bool:
+        if row.get("contact_telemetry_complete") is False or row.get("contact_raw_complete") is False:
+            return False
+        if not bool(row.get("demonstrator_contact")):
+            return False
+        if bool(row.get("goal_predicate")):
+            return False
+        gripper = row.get("gripper")
+        if gripper is not None and float(gripper) < 0:
+            return False
+        return True
+
     for start in range(0, max(0, len(samples) - stable_ticks + 1)):
         window = samples[start:start + stable_ticks]
-        if not all(
-            str(row.get("phase") or "") in {"close", "grasp_dwell"}
-            and bool(row.get("source_predicate"))
-            and bool(row.get("demonstrator_contact"))
-            and row.get("contact_telemetry_complete") is not False
-            and row.get("contact_raw_complete") is not False
-            for row in window
-        ):
+        if not all(tick_ok(row) for row in window):
             continue
-        if any(not bool(row.get("source_predicate")) for row in samples[:start]):
+        if not any(bool(row.get("source_predicate")) for row in samples[: start + stable_ticks]):
             continue
         return {
             "state": "passed",
-            "schema": "acquisition_contact_gate_v4",
+            "schema": "acquisition_contact_gate_v4_relaxed",
             "barrier_index": start + stable_ticks - 1,
             "window_start": start,
             "window_end": start + stable_ticks - 1,
@@ -787,8 +994,8 @@ def acquisition_contact_gate_v4(samples: list[dict[str, Any]], stable_ticks: int
         }
     return {
         "state": "failed",
-        "schema": "acquisition_contact_gate_v4",
-        "reason": "no_stable_gripper_subject_contact_during_close_or_dwell_before_source_release",
+        "schema": "acquisition_contact_gate_v4_relaxed",
+        "reason": "no_gripper_subject_contact_before_goal",
         "stable_ticks": stable_ticks,
         "contact_kind": "demonstrator_subject_only",
         "barrier_index": None,
@@ -805,7 +1012,7 @@ def evaluate_gold_gates(samples: list[dict[str, Any]]) -> dict[str, Any]:
     goal_values = [bool(row.get("goal_predicate")) for row in samples]
     initial_source = source_values[0] is True
     initial_goal_false = goal_values[0] is False
-    required = acquisition_contact_gate_v4(samples, stable_ticks=4)
+    required = acquisition_contact_gate_v4(samples, stable_ticks=2)
     released = sr.source_released_gate(source_values, phases, stable_ticks=4)
     check_success = bool(samples[-1].get("check_success") or samples[-1].get("success"))
     goal = sr.goal_continuous_gate(goal_values, phases, check_success=check_success, stable_ticks=4)
@@ -836,6 +1043,33 @@ def evaluate_gold_gates(samples: list[dict[str, Any]]) -> dict[str, Any]:
         "finite_actions": finite,
         "final_success_boolean_insufficient": True,
     }
+
+
+def save_block_reason(gates: Mapping[str, Any], profile: Mapping[str, Any]) -> str | None:
+    if not profile.get("language_gold_ok"):
+        return "language_unqualified"
+    if gates.get("save_allowed"):
+        return None
+    failed: list[str] = []
+    if not gates.get("initial_source_true"):
+        failed.append("initial_source")
+    if not gates.get("initial_goal_false"):
+        failed.append("initial_goal")
+    if (gates.get("required_contact") or {}).get("state") != "passed":
+        failed.append("required_contact")
+    if (gates.get("source_released") or {}).get("state") != "passed":
+        failed.append("source_released")
+    if (gates.get("goal_continuous_true") or {}).get("state") != "passed":
+        failed.append("goal_continuous")
+    if gates.get("unrelated_any"):
+        failed.append("unrelated_contact")
+    if gates.get("unknown_any"):
+        failed.append("contact_unknown")
+    if gates.get("finite_actions") is False:
+        failed.append("nonfinite_action")
+    if gates.get("reason"):
+        failed.append(str(gates["reason"]))
+    return ",".join(failed) if failed else "physics_gate_failed"
 
 
 def raw_contact_matrix_from_sim(env: Any) -> dict[str, Any]:
@@ -962,6 +1196,12 @@ class ActionStateMachine:
                     self.state.save = True
                 elif normalized in {"x", "q", "abort"}:
                     self.state.abort = True
+                elif normalized in {"-", "_"}:
+                    self.state.action_scale = clamp_action_scale(self.state.action_scale - 0.25)
+                elif normalized in {"=", "+", "fast"}:
+                    self.state.action_scale = clamp_action_scale(self.state.action_scale + 0.25)
+            elif event == "speed":
+                self.state.action_scale = clamp_action_scale(float(key))
             elif event == "keyup" and normalized in MOTION_KEYS:
                 self.state.held_keys.discard(normalized)
                 if self.state.last_motion_key == normalized:
@@ -1016,6 +1256,7 @@ class ActionStateMachine:
             "reset_count": self.state.reset_count,
             "axis": axis,
             "sign": sign,
+            "action_scale": clamp_action_scale(self.state.action_scale),
         }
 
 
@@ -1043,12 +1284,12 @@ PREVIEW_HTML = """<!doctype html>
 <meta charset="utf-8"><title>AXIS Track3 official teleop</title>
 <style>body{font:14px sans-serif;background:#171717;color:#eee;margin:12px}main{display:flex;gap:12px;flex-wrap:wrap}figure{margin:0}img{width:640px;max-width:48vw;image-rendering:auto;background:#333}button{margin:3px;padding:8px 12px}#state{white-space:pre;font-family:monospace;background:#222;padding:8px}#hud,#instruction{font:16px monospace;margin:8px 0}.open{background:#14532d;color:#fff}.close{background:#7f1d1d;color:#fff}.go{background:#1e3a5f;color:#fff}</style>
 <h2>AXIS Track3 official teleop — localhost only</h2>
-<p>FRONT 预览旋转 180° 方便看；W/S 已对调。绿色半透明框是官方放置目标区。框只画在预览上，保存的帧不带框。语言用官方原文，不要 Reverse 前缀。</p>
-<p>先看 <b>paused=false</b> 再动。短按方向也会走一步。切走浏览器标签会暂停；点按钮不会。暂停期间不推进仿真、不记步。当前默认墙钟约 2 Hz（每步 500ms）；MuJoCo 控制频率和视频 fps 独立记录。正式录制最多 300 步，未保存校准可随时 Abort。</p>
+<p>FRONT 预览旋转 180°。桌上会立一根约 16cm 的黄柱，下面有同尺寸黄板（不是镜头框）。黄柱在机器人右手边、靠近你这边。保存的训练帧不含这块标记。官方成功区不能放宽，必须把书放到黄板里并接触桌面。</p>
+<p>先看 <b>paused=false</b> 再动。短按方向也会走一步。切走浏览器标签会暂停；点按钮不会。暂停期间不推进仿真、不记步。当前默认墙钟约 8 Hz（每步 125ms）；MuJoCo 控制频率和视频 fps 独立记录为 20 Hz。400 只是 direct-gold 资格线，到 400 不退出；Save 物理门失败只暂停，可继续或 Reset。Reset 不限次数。</p>
 <div id="instruction">waiting instruction</div>
 <div id="hud">waiting</div>
 <div id="state">waiting for simulator</div>
-<main><figure><figcaption>FRONT 256px preview 180° + GOAL box</figcaption><img id="front" alt="front"></figure><figure><figcaption>WRIST 256px</figcaption><img id="wrist" alt="wrist"></figure></main>
+<main><figure><figcaption>FRONT 256px preview 180° + table mark</figcaption><img id="front" alt="front"></figure><figure><figcaption>WRIST 256px</figcaption><img id="wrist" alt="wrist"></figure></main>
 <p>
 <button class="go" onclick="button('w')">W -X</button>
 <button class="go" onclick="button('s')">S +X</button>
@@ -1065,11 +1306,13 @@ PREVIEW_HTML = """<!doctype html>
 <button onclick="button('enter')">Save Candidate</button>
 <button onclick="button('x')">Abort</button>
 </p>
-<p>Keyboard: W/S ±X, A/D ±Y, R/F ±Z; U/O ±Rx, I/K ±Ry, J/L ±Rz; G Open, H Close; P pause; Z reset; Enter save; X abort.</p>
+<p>动作幅度 <input id="scale" type="range" min="0.5" max="2.0" step="0.05" value="1.0" oninput="setScale(this.value)"> <b id="scaleVal">1.00×</b>（0.5×–2.0×；键盘 - / =。抓取/放置建议 0.75×，长程可升高）</p>
+<p>Keyboard: W/S ±X, A/D ±Y, R/F ±Z; U/O ±Rx, I/K ±Ry, J/L ±Rz; G Open, H Close; P pause; Z reset; Enter save; X abort; - slower, = faster.</p>
 <script>
-const CODES={KeyW:'w',KeyS:'s',KeyA:'a',KeyD:'d',KeyR:'r',KeyF:'f',KeyU:'u',KeyO:'o',KeyI:'i',KeyK:'k',KeyJ:'j',KeyL:'l',KeyG:'g',KeyH:'h',KeyP:'p',KeyZ:'z',KeyX:'x',KeyQ:'q',Enter:'enter'};
+const CODES={KeyW:'w',KeyS:'s',KeyA:'a',KeyD:'d',KeyR:'r',KeyF:'f',KeyU:'u',KeyO:'o',KeyI:'i',KeyK:'k',KeyJ:'j',KeyL:'l',KeyG:'g',KeyH:'h',KeyP:'p',KeyZ:'z',KeyX:'x',KeyQ:'q',Enter:'enter',Minus:'-',Equal:'='};
 const post=(event,key='')=>fetch('/event',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({event,key})});
 const button=(key)=>post('button',key);
+const setScale=v=>{document.getElementById('scaleVal').textContent=Number(v).toFixed(2)+'×';post('speed',String(v));};
 const mapKey=e=>e.key==='Enter'?'enter':(CODES[e.code]||e.key.toLowerCase());
 window.addEventListener('keydown',e=>{if(!e.repeat){post('keydown',mapKey(e));e.preventDefault();}});
 window.addEventListener('keyup',e=>{post('keyup',mapKey(e));});
@@ -1077,7 +1320,7 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden)post('disco
 window.addEventListener('blur',()=>post('release_motion'));
 window.addEventListener('focus',()=>post('connect'));
 let frameSeq=-1,busy=false;
-async function refresh(){if(busy)return;busy=true;try{const s=await fetch('/state').then(r=>r.json());document.getElementById('instruction').textContent=s.instruction||'';document.getElementById('hud').textContent=`paused=${s.paused} gripper=${s.gripper_label} axis=${s.axis}${s.sign} connected=${s.preview_connected} step=${s.step}/${s.max_steps||'?'} eval<=${s.eval_step_budget||300} tick=${s.tick_ms||500}ms gate=${s.candidate_gate} phys=${s.physics_guard||'ok'}`;document.getElementById('state').textContent=JSON.stringify(s,null,2);const seq=Number(s.frame_seq);if(Number.isFinite(seq)&&seq!==frameSeq){frameSeq=seq;for(const k of ['front','wrist'])document.getElementById(k).src='/frame/'+k+'?t='+seq;}}catch(e){}finally{busy=false;}}
+async function refresh(){if(busy)return;busy=true;try{const s=await fetch('/state').then(r=>r.json());document.getElementById('instruction').textContent=s.instruction||'';document.getElementById('hud').textContent=`paused=${s.paused} gripper=${s.gripper_label} scale=${Number(s.action_scale||1).toFixed(2)}× axis=${s.axis}${s.sign} connected=${s.preview_connected} step=${s.step}/${s.max_steps||1600} gold<=${s.eval_step_budget||400} tick=${s.tick_ms||125}ms table_mark=${s.table_mark} gate=${s.candidate_gate} phys=${s.physics_guard||'ok'} save_block=${s.last_save_blocked_reason||'none'}`;const slider=document.getElementById('scale');if(s.action_scale&&slider&&document.activeElement!==slider){slider.value=s.action_scale;document.getElementById('scaleVal').textContent=Number(s.action_scale).toFixed(2)+'×';}document.getElementById('state').textContent=JSON.stringify(s,null,2);const seq=Number(s.frame_seq);if(Number.isFinite(seq)&&seq!==frameSeq){frameSeq=seq;for(const k of ['front','wrist'])document.getElementById(k).src='/frame/'+k+'?t='+seq;}}catch(e){}finally{busy=false;}}
 setInterval(refresh,50); refresh();
 </script>"""
 
@@ -1143,8 +1386,8 @@ class PreviewServer:
             "success": False, "source": None, "goal": None, "required_contact": False, "demonstrator_contact": False,
             "source_receiver_contact": False, "goal_receiver_contact": False, "unrelated_contact": False,
             "candidate_gate": "not_evaluated", "cameras": ["FRONT", "WRIST"],
-            "max_steps": 1200, "eval_step_budget": 300, "step_limit": 300, "sim_control_hz": 20.0, "operator_hz": 2.0, "operator_tick_period_s": 0.5, "video_fps": 20.0, "tick_ms": 500, "budget_stage": "normal", "budget_warning": None, "frame_seq": 0,
-            "physics_guard": "ok",
+            "max_steps": 1600, "eval_step_budget": 400, "step_limit": 400, "sim_control_hz": 20.0, "operator_hz": 8.0, "operator_tick_period_s": 0.125, "video_fps": 20.0, "tick_ms": 125, "budget_stage": "normal", "budget_warning": None, "frame_seq": 0,
+            "physics_guard": "ok", "last_save_blocked_reason": None, "action_scale": 1.0,
         }
         self.httpd = ThreadingHTTPServer((host, port), _PreviewHandler)
         # The request handler is constructed by ThreadingHTTPServer and uses
@@ -1176,9 +1419,11 @@ class PreviewServer:
 
     def publish(self, front: Any, wrist: Any, env: Any = None, profile: Mapping[str, Any] | None = None, **status: Any) -> None:
         self.frames["front"] = _encode_jpeg(make_front_preview(front, env, profile)) if front is not None else None
-        self.frames["wrist"] = _encode_jpeg(wrist) if wrist is not None else None
+        self.frames["wrist"] = _encode_jpeg(make_wrist_preview(wrist, env, profile)) if wrist is not None else None
         self.frame_seq += 1
         self.status.update(status)
+        if env is not None:
+            self.status["table_mark"] = goal_marker_installed(env)
         self.status["frame_seq"] = self.frame_seq
 
     def payload(self) -> dict[str, Any]:
@@ -1343,8 +1588,10 @@ def _metadata(profile: dict[str, Any], operator: str, config: RecorderConfig, lo
         },
         "budget": {
             "step_limit": config.recording_step_limit(),
-            "warning_steps": [220, 260, 290],
-            "hard_stop_at_step": config.recording_step_limit(),
+            "warning_steps": [300, 350, 390],
+            "direct_gold_limit": config.recording_step_limit(),
+            "buffer_soft_cap": config.buffer_soft_cap(),
+            "hard_stop_at_step": None,
         },
         "action_contract": "7D OSC_POSE; translation/rotation delta; gripper exactly -1 or +1",
         "state_contract": "complete simulator state at start/end and every frame",
@@ -1473,7 +1720,8 @@ def _write_episode(directory: Path, metadata: dict[str, Any], frames: dict[str, 
         "budget": {
             **dict(metadata.get("budget") or {}),
             "recorded_frames": frame_count,
-            "hard_stop_reached": frame_count >= config.recording_step_limit(),
+            "direct_gold_limit_exceeded": frame_count > config.recording_step_limit(),
+            "hard_stop_reached": False,
         },
     })
     write_json(directory / "metadata.json", metadata)
@@ -1489,6 +1737,30 @@ def write_diagnostic(task_label: Any, reason: str, details: dict[str, Any] | Non
 
 def _inner_env(env: Any) -> Any:
     return getattr(env, "env", env)
+
+
+def _osc_controller(env: Any) -> Any:
+    return _inner_env(env).robots[0].controller
+
+
+def sync_osc_controller_to_sim(env: Any) -> list[str]:
+    """After restoring qpos, OSC goal pose must match the current EEF or the next hold ticks yaw the wrist."""
+    sequence = ["sim.forward"]
+    env.sim.forward()
+    controller = _osc_controller(env)
+    if hasattr(controller, "update"):
+        controller.update(force=True)
+        sequence.append("controller.update")
+    if hasattr(controller, "reset_goal"):
+        controller.reset_goal()
+        sequence.append("controller.reset_goal")
+    return sequence
+
+
+def restore_frozen_start(env: Any, start_state: np.ndarray) -> Any:
+    obs = env.set_init_state(start_state)
+    sync_osc_controller_to_sim(env)
+    return obs
 
 
 def _eval_one_predicate(problem: Any, triple: Sequence[Any]) -> bool:
@@ -1533,13 +1805,17 @@ def record_episode(task_index: int | None, operator: str, config: RecorderConfig
     task_label = profile.get("task_index") if profile.get("task_index") is not None else profile["task_id"]
     try:
         initial_obs = env.reset()
+        install_table_goal_marker(env, profile)
+        set_goal_marker_visible(env, False)
         if profile.get("start_state_path"):
             state = np.load(profile["start_state_path"])
-            initial_obs = env.set_init_state(state)
+            initial_obs = restore_frozen_start(env, state)
             start_state = np.asarray(state, dtype=np.float64).copy()
         else:
             hold = np.array([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1.0], dtype=np.float32)
             height_sites = [(str(subject), str(site)) for subject, site in (profile.get("init_height_sites") or ())]
+            height_orientation = str(profile.get("init_height_orientation") or "flat")
+            height_yaw_deg = float(profile.get("init_height_yaw_deg") or 0.0)
             pairs = upright_rest_pairs(profile)
             require_upright = bool(profile.get("require_upright", True))
             start_state = None
@@ -1547,8 +1823,10 @@ def record_episode(task_index: int | None, operator: str, config: RecorderConfig
             for _attempt in range(8):
                 if _attempt:
                     initial_obs = env.reset()
+                    install_table_goal_marker(env, profile)
+                    set_goal_marker_visible(env, False)
                 for subject, site in height_sites:
-                    rest_object_to_site_height(env, subject, site)
+                    rest_object_to_site_height(env, subject, site, orientation=height_orientation, yaw_deg=height_yaw_deg)
                 for subject, support in pairs:
                     rest_object_on_support(env, str(subject), str(support))
                 settle_steps = 16 if height_sites else (24 if pairs else 8)
@@ -1591,7 +1869,7 @@ def record_episode(task_index: int | None, operator: str, config: RecorderConfig
                 start_state = np.asarray(env.get_sim_state(), dtype=np.float64).copy()
                 if not np.isfinite(start_state).all() or not scene_bodies_ok(env, subjects):
                     continue
-                initial_obs = env.set_init_state(start_state)
+                initial_obs = restore_frozen_start(env, start_state)
                 source0, goal0 = _eval_profile_predicates(env, profile)
                 if source0 is True and goal0 is False and scene_bodies_ok(env, subjects):
                     break
@@ -1609,8 +1887,9 @@ def record_episode(task_index: int | None, operator: str, config: RecorderConfig
         machine.state.gripper = _safe_gripper(config.default_gripper)
         server = PreviewServer(machine, config.preview_host, config.preview_port)
         server.start()
-        print(json.dumps({"status": "preview_listening", "preview_url": server.url, "task_id": profile["task_id"], "task_index": profile.get("task_index"), "paused": True, "gripper_label": "OPEN", "instruction": profile["instruction"], "operator_hz": config.operator_hz, "tick_ms": config.tick_ms()}, ensure_ascii=False), flush=True)
-        server.publish(_image_from_obs(initial_obs, "agentview"), _image_from_obs(initial_obs, "robot0_eye_in_hand"),
+        print(json.dumps({"status": "preview_listening", "preview_url": server.url, "task_id": profile["task_id"], "task_index": profile.get("task_index"), "paused": True, "gripper_label": "OPEN", "instruction": profile["instruction"], "operator_hz": config.operator_hz, "tick_ms": config.tick_ms(), "table_mark": goal_marker_installed(env)}, ensure_ascii=False), flush=True)
+        preview_front, preview_wrist = preview_pair(env, initial_obs)
+        server.publish(preview_front, preview_wrist,
                        env=env, profile=profile,
                        task_index=profile.get("task_index"), task_id=profile["task_id"], instruction=profile["instruction"],
                        goal_predicate="; ".join(profile.get("goal_predicates") or []), step=0,
@@ -1620,7 +1899,8 @@ def record_episode(task_index: int | None, operator: str, config: RecorderConfig
                        max_steps=config.max_steps, eval_step_budget=config.eval_step_budget, step_limit=config.recording_step_limit(),
                        sim_control_hz=config.sim_control_hz, operator_hz=config.operator_hz,
                        operator_tick_period_s=config.tick_period(), video_fps=config.video_fps,
-                       budget_stage="normal", budget_warning=None, tick_ms=config.tick_ms(), physics_guard="ok")
+                       budget_stage="normal", budget_warning=None, tick_ms=config.tick_ms(), physics_guard="ok",
+                       last_save_blocked_reason=None)
         if not server.wait_for_first_frame(config.preview_wait_seconds):
             return {"status": "track3_teleop_preview_blocked", "reason": "preview did not connect and fetch a first frame", "preview_url": server.url}
         machine.event("connect")
@@ -1629,13 +1909,16 @@ def record_episode(task_index: int | None, operator: str, config: RecorderConfig
         samples: list[dict[str, Any]] = []
         recording_start = time.monotonic()
         next_tick = recording_start
-        session_deadline = recording_start + float(config.session_timeout_seconds)
-        step_limit = config.recording_step_limit()
+        timeout_seconds = float(config.session_timeout_seconds)
+        session_deadline = recording_start + timeout_seconds if timeout_seconds > 0 else None
+        gold_limit = config.recording_step_limit()
+        buffer_cap = config.buffer_soft_cap()
         save_event_seen = False
+        last_save_blocked_reason = None
         step = 0
         with raw_terminal():
-            while step < step_limit:
-                if time.monotonic() >= session_deadline:
+            while True:
+                if session_deadline is not None and time.monotonic() >= session_deadline:
                     metadata["status"] = "rejected_timeout"
                     metadata["timeout_reason"] = "session_wall_clock"
                     break
@@ -1651,36 +1934,70 @@ def record_episode(task_index: int | None, operator: str, config: RecorderConfig
                         key = terminal_key.lower()
                         if key in MOTION_KEYS:
                             machine.event("keydown", key)
-                        elif key in {"g", "h", "[", "]", "p", "c", "z", "x", "q"}:
+                        elif key in {"g", "h", "[", "]", "p", "c", "z", "x", "q", "-", "=", "+"}:
                             machine.event("keydown", key)
                 if machine.consume("reset"):
-                    reset_obs = env.set_init_state(start_state)
+                    reset_obs = restore_frozen_start(env, start_state)
                     frames = empty_gold_buffers()
                     samples = []
                     step = 0
+                    last_save_blocked_reason = None
                     machine.state.reset_count += 1
                     machine.state.gripper = _safe_gripper(config.default_gripper)
+                    machine.state.paused = True
+                    machine.state.held_keys.clear()
+                    machine.state.pulse_remaining = 0
+                    machine.state.pulse_key = None
                     next_tick = time.monotonic()
                     scheduled_tick = next_tick
-                    server.publish(_image_from_obs(reset_obs, "agentview"), _image_from_obs(reset_obs, "robot0_eye_in_hand"),
+                    preview_front, preview_wrist = preview_pair(env, reset_obs)
+                    server.publish(preview_front, preview_wrist,
                                    env=env, profile=profile,
                                    task_index=profile.get("task_index"), task_id=profile["task_id"], instruction=profile["instruction"],
                                    goal_predicate="; ".join(profile.get("goal_predicates") or []), step=0,
                                    hz=0.0, lag_ms=0.0, success=bool(env.check_success()), source=True, goal=False,
                                    required_contact=False, candidate_gate="not_evaluated",
-                                   max_steps=config.max_steps, eval_step_budget=config.eval_step_budget, step_limit=config.recording_step_limit(),
+                                   max_steps=config.max_steps, eval_step_budget=config.eval_step_budget, step_limit=gold_limit,
                                    sim_control_hz=config.sim_control_hz, operator_hz=config.operator_hz,
                                    operator_tick_period_s=config.tick_period(), video_fps=config.video_fps,
-                                   budget_stage="normal", budget_warning=None, tick_ms=config.tick_ms(), physics_guard="ok")
-                action = machine.next_action()
-                validate_action(action)
+                                   budget_stage="normal", budget_warning=None, tick_ms=config.tick_ms(), physics_guard="ok",
+                                   last_save_blocked_reason=None)
                 if machine.state.abort:
                     metadata["status"] = "no_save_canary_aborted" if no_save else "rejected_abort"
+                    break
+                if machine.consume("save"):
+                    save_event_seen = True
+                    if no_save:
+                        metadata["status"] = "no_save_save_event_ignored"
+                        break
+                    gates = evaluate_gold_gates(samples)
+                    if not profile.get("language_gold_ok"):
+                        gates = {**gates, "save_allowed": False, "candidate_gate": "failed", "language_unqualified": True}
+                    blocked = save_block_reason(gates, profile)
+                    if blocked:
+                        last_save_blocked_reason = blocked
+                        machine.state.paused = True
+                        machine.state.held_keys.clear()
+                        server.status["last_save_blocked_reason"] = blocked
+                        server.status["physics_guard"] = "save_blocked"
+                        server.status["candidate_gate"] = gates.get("candidate_gate")
+                        continue
+                    metadata["gold_gates"] = gates
+                    metadata["status"] = "pending_replay" if len(frames["actions"]) <= gold_limit else "pending_postprocess"
                     break
                 if machine.state.paused:
                     time.sleep(0.05)
                     next_tick = time.monotonic()
                     continue
+                if step >= buffer_cap:
+                    machine.state.paused = True
+                    last_save_blocked_reason = last_save_blocked_reason or "buffer_soft_cap"
+                    server.status["last_save_blocked_reason"] = last_save_blocked_reason
+                    server.status["physics_guard"] = "buffer_soft_cap"
+                    server.status["budget_stage"] = "buffer_paused"
+                    continue
+                action = machine.next_action()
+                validate_action(action)
                 tick = time.monotonic()
                 operator_lag_ms = max(0.0, (tick - scheduled_tick) * 1000.0)
                 deadline_miss = operator_lag_ms > float(config.deadline_tolerance_ms)
@@ -1688,23 +2005,24 @@ def record_episode(task_index: int | None, operator: str, config: RecorderConfig
                 now = time.monotonic()
                 watched = [str(subject) for subject, _ in (profile.get("init_height_sites") or ())] or [str(name) for name in ((profile.get("roles") or {}).get("subject") or ())]
                 if watched and not scene_bodies_ok(env, watched):
-                    reset_obs = env.set_init_state(start_state)
+                    reset_obs = restore_frozen_start(env, start_state)
                     machine.state.paused = True
                     machine.state.held_keys.clear()
                     machine.state.pulse_remaining = 0
                     machine.state.pulse_key = None
+                    preview_front, preview_wrist = preview_pair(env, reset_obs)
                     server.publish(
-                        _image_from_obs(reset_obs, "agentview"), _image_from_obs(reset_obs, "robot0_eye_in_hand"),
+                        preview_front, preview_wrist,
                         env=env, profile=profile,
                         task_index=profile.get("task_index"), task_id=profile["task_id"], instruction=profile["instruction"],
                         goal_predicate="; ".join(profile.get("goal_predicates") or []), step=step,
                         hz=0.0, lag_ms=0.0, success=bool(env.check_success()), source=True, goal=False,
                         required_contact=False, candidate_gate="not_evaluated",
-                        max_steps=config.max_steps, eval_step_budget=config.eval_step_budget, step_limit=config.recording_step_limit(),
+                        max_steps=config.max_steps, eval_step_budget=config.eval_step_budget, step_limit=gold_limit,
                         sim_control_hz=config.sim_control_hz, operator_hz=config.operator_hz,
                         operator_tick_period_s=config.tick_period(), video_fps=config.video_fps,
                         budget_stage="normal", budget_warning=None, tick_ms=config.tick_ms(),
-                        physics_guard="restored_after_unstable",
+                        physics_guard="restored_after_unstable", last_save_blocked_reason=last_save_blocked_reason,
                     )
                     next_tick += config.tick_period()
                     continue
@@ -1726,43 +2044,27 @@ def record_episode(task_index: int | None, operator: str, config: RecorderConfig
                 if not profile.get("language_gold_ok"):
                     gates = {**gates, "save_allowed": False, "candidate_gate": "failed", "language_unqualified": True}
                 budget = config.budget_status(step + 1)
+                preview_front, preview_wrist = preview_pair(env, obs)
                 server.publish(
-                    frames["front"][-1], frames["wrist"][-1], env=env, profile=profile,
+                    preview_front, preview_wrist, env=env, profile=profile,
                     task_index=profile.get("task_index"), task_id=profile["task_id"], instruction=profile["instruction"],
                     goal_predicate="; ".join(profile.get("goal_predicates") or []), step=step + 1, hz=1.0 / max(now - tick, 1e-6),
                     lag_ms=operator_lag_ms, success=check_success, source=source, goal=goal,
                     required_contact=bool(sample["required_contact"]), demonstrator_contact=bool(frames["demonstrator_contact"][-1]),
                     source_receiver_contact=bool(frames["source_receiver_contact"][-1]), goal_receiver_contact=bool(frames["goal_receiver_contact"][-1]),
                     unrelated_contact=bool(frames["unrelated_contact"][-1]), candidate_gate=gates["candidate_gate"],
-                    max_steps=config.max_steps, eval_step_budget=config.eval_step_budget, step_limit=step_limit,
+                    max_steps=config.max_steps, eval_step_budget=config.eval_step_budget, step_limit=gold_limit,
                     sim_control_hz=config.sim_control_hz, operator_hz=config.operator_hz,
                     operator_tick_period_s=config.tick_period(), video_fps=config.video_fps,
                     budget_stage=budget["stage"], budget_warning=budget["warning"], tick_ms=config.tick_ms(), physics_guard="ok",
+                    last_save_blocked_reason=last_save_blocked_reason,
                 )
                 if terminal_key is not None and terminal_key.lower() in MOTION_KEYS:
                     machine.event("keyup", terminal_key.lower())
-                if machine.consume("save"):
-                    save_event_seen = True
-                    if no_save:
-                        metadata["status"] = "no_save_save_event_ignored"
-                    else:
-                        metadata["gold_gates"] = gates
-                        if not profile.get("language_gold_ok"):
-                            metadata["status"] = "rejected_language_unqualified"
-                        else:
-                            metadata["status"] = "pending_replay" if gates.get("save_allowed") else "rejected_predicate_fail"
-                    break
-                if machine.state.abort:
-                    metadata["status"] = "no_save_canary_aborted" if no_save else "rejected_abort"
-                    break
                 step += 1
                 next_tick = scheduled_tick + config.tick_period()
         if metadata["status"] == "recording":
-            if step >= step_limit:
-                metadata["status"] = "no_save_canary_step_limit" if no_save else "rejected_over_budget"
-                metadata["budget_stop_reason"] = "formal_step_budget_exhausted"
-            else:
-                metadata["status"] = "no_save_canary_timeout" if no_save else "rejected_timeout"
+            metadata["status"] = "no_save_canary_open" if no_save else "rejected_abort"
         if no_save:
             timestamps = np.asarray(frames["timestamps_monotonic"], dtype=np.float64)
             intervals = np.diff(timestamps) if timestamps.size > 1 else np.asarray([], dtype=np.float64)
@@ -1776,7 +2078,8 @@ def record_episode(task_index: int | None, operator: str, config: RecorderConfig
                 "operator_tick_period_s": config.tick_period(),
                 "video_fps": config.video_fps,
                 "frame_count": len(frames["actions"]),
-                "step_limit": step_limit,
+                "step_limit": gold_limit,
+                "buffer_soft_cap": buffer_cap,
                 "save_event_seen": save_event_seen,
                 "candidate_created": False,
                 "pending_created": False,
@@ -1791,7 +2094,14 @@ def record_episode(task_index: int | None, operator: str, config: RecorderConfig
                 "observed_tick_interval_max_s": float(np.max(intervals)) if intervals.size else None,
                 "no_formal_episode_written": True,
             }
-        bucket = "pending" if metadata["status"] == "pending_replay" else ("diagnostic" if metadata["status"] == "rejected_abort" else "rejected")
+        if metadata["status"] == "pending_replay":
+            bucket = "pending"
+        elif metadata["status"] == "pending_postprocess":
+            bucket = "pending_postprocess"
+        elif metadata["status"] == "rejected_abort":
+            bucket = "diagnostic"
+        else:
+            bucket = "rejected"
         name = f"{profile['task_id']}_{int(time.time())}"
         end_state = np.asarray(env.get_sim_state(), dtype=np.float64).copy()
         target = _atomic_episode(OUTPUT_ROOT / bucket, name, lambda directory: _write_episode(directory, metadata, frames, start_state, end_state, config))
@@ -1883,7 +2193,10 @@ def self_test() -> dict[str, Any]:
         assert book["instruction"].startswith("take the yellow book")
         assert soup["instruction"].startswith("take the alphabet soup")
         assert book["init_height_sites"][0][0] == "yellow_book_2"
+        assert book["init_height_orientation"] == "standing"
+        assert float(book["init_height_yaw_deg"]) == 90.0
         assert np.allclose(_quat_local_axis_to_world_z(2), [1.0, 0.0, 0.0, 0.0])
+        assert np.allclose(_quat_wxyz_mul(_quat_yaw_z(90.0), [1.0, 0.0, 0.0, 0.0]), _quat_yaw_z(90.0))
         assert rest_object_to_site_height
         assert scene_bodies_ok
         assert all(not str(row["instruction"]).lower().startswith("reverse") for row in OFFICIAL_T3_TASKS.values())
@@ -1895,7 +2208,11 @@ def self_test() -> dict[str, Any]:
         blank = np.zeros((48, 48, 3), dtype=np.uint8)
         marked = overlay_goal_box(blank, np.array([[8, 8], [40, 8], [40, 40], [8, 40]], dtype=np.int32))
         assert marked[24, 24].sum() > 0 and int(blank[24, 24].sum()) == 0
-        assert "GOAL" in PREVIEW_HTML and "绿色" in PREVIEW_HTML
+        assert np.array_equal(make_wrist_preview(blank), blank)
+        assert "黄柱" in PREVIEW_HTML and "黄板" in PREVIEW_HTML and "table mark" in PREVIEW_HTML
+        assert "table_mark=${s.table_mark}" in PREVIEW_HTML
+        assert GOAL_MARKER_GEOM == "teleop_goal_marker_visual"
+        assert GOAL_MARKER_PIN == "teleop_goal_marker_pin"
         assert "red_coffee_mug_init_region" in goal_site_name_candidates(OFFICIAL_T3_TASKS[DEFAULT_TASK_ID])[-1]
         preview_no_env = make_front_preview(np.arange(12, dtype=np.uint8).reshape(2, 2, 3))
         assert int(preview_no_env[0, 0, 0]) == 9
@@ -1903,22 +2220,50 @@ def self_test() -> dict[str, Any]:
         assert config.hz == 20.0
         assert config.sim_control_hz == 20.0
         assert config.video_fps == 20.0
-        assert config.operator_hz == 2.0
+        assert config.operator_hz == 8.0
         assert 1.0 <= config.operator_hz < config.sim_control_hz
-        assert config.tick_ms() == 500
-        assert config.recording_step_limit() == 300
-        assert config.budget_status(220)["stage"] == "early_warning"
-        assert config.budget_status(260)["stage"] == "target_window"
-        assert config.budget_status(290)["stage"] == "hard_warning"
-        assert config.budget_status(300)["stage"] == "hard_stop"
+        assert config.tick_ms() == 125
+        assert config.recording_step_limit() == 400
+        assert config.buffer_soft_cap() == 1600
+        assert config.session_timeout_seconds == 0.0
+        assert config.budget_status(300)["stage"] == "early_warning"
+        assert config.budget_status(350)["stage"] == "target_window"
+        assert config.budget_status(390)["stage"] == "hard_warning"
+        assert config.budget_status(400)["stage"] == "gold_limit"
+        assert config.budget_status(401)["stage"] == "postprocess_required"
+        assert config.budget_status(1600)["stage"] == "buffer_paused"
+        machine.event("speed", "0.75")
+        assert machine.snapshot()["action_scale"] == 0.75
+        machine.event("keydown", "=")
+        assert machine.snapshot()["action_scale"] == 1.0
+        machine.event("speed", "2.0")
+        scaled = key_to_action("s", machine.state, config)
+        machine.event("speed", "1.0")
+        baseline = key_to_action("s", machine.state, config)
+        assert np.isclose(scaled[0], baseline[0] * 2.0)
         fast_config = RecorderConfig(operator_hz=4.0)
         assert fast_config.tick_ms() == 250
-        assert fast_config.recording_step_limit() == 300
+        assert fast_config.recording_step_limit() == 400
         assert config.preview_refresh_ms <= 50
         assert config.translation_step >= 0.30
         assert config.motion_pulse_ticks <= 4
-        assert config.eval_step_budget == 300
-        assert config.max_steps >= 1200
+        assert config.eval_step_budget == 400
+        assert config.max_steps >= 1600
+        dummy_controller = type("C", (), {})()
+        dummy_controller.events = []
+        dummy_controller.update = lambda force=False: dummy_controller.events.append(("update", force))
+        dummy_controller.reset_goal = lambda: dummy_controller.events.append("reset_goal")
+        dummy_sim = type("S", (), {})()
+        dummy_sim.forward = lambda: dummy_controller.events.append("forward")
+        dummy_env = type("E", (), {})()
+        dummy_env.sim = dummy_sim
+        dummy_env.env = type("I", (), {})()
+        dummy_env.env.robots = [type("R", (), {"controller": dummy_controller})()]
+        dummy_env.set_init_state = lambda state: "obs"
+        assert restore_frozen_start(dummy_env, np.zeros(3)) == "obs"
+        assert dummy_controller.events == ["forward", ("update", True), "reset_goal"]
+        assert "0.5×–2.0×" in PREVIEW_HTML
+        assert "tick=${s.tick_ms||125}ms" in PREVIEW_HTML
         server = PreviewServer(ActionStateMachine(config=config), port=0)
         server.start(); server.stop()
         result = {
@@ -1950,7 +2295,7 @@ def main() -> int:
     parser.add_argument("--task-id", default=DEFAULT_TASK_ID, choices=sorted(OFFICIAL_T3_TASKS))
     parser.add_argument("--task-index", type=int, default=None, choices=ALLOWED_TASKS)
     parser.add_argument("--operator", default="operator-local")
-    parser.add_argument("--operator-hz", type=float, default=2.0)
+    parser.add_argument("--operator-hz", type=float, default=8.0)
     parser.add_argument("--preview-port", type=int, default=8765)
     parser.add_argument("--preview-wait-seconds", type=float, default=900.0)
     args = parser.parse_args()
@@ -1967,7 +2312,7 @@ def main() -> int:
         print(json.dumps(result, ensure_ascii=False, indent=2))
         if args.no_save:
             return 0 if result.get("status", "").startswith("no_save_") else 2
-        return 0 if result.get("status") == "pending_replay" else 2
+        return 0 if result.get("status") in {"pending_replay", "pending_postprocess"} else 2
     parser.error("choose --self-test or --record")
     return 2
 

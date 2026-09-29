@@ -21,17 +21,15 @@ Never reconstruct current state from chat history alone. The repository handoff 
 - Observe and report unless explicitly asked to take over. Preserve user/other-agent modifications.
 - A disconnected SSH/Codex session does not imply the run stopped; verify PID, command, heartbeat, cursor, GPU and atomic artifacts.
 
-## Mandatory audit lifecycle
+## Default lightweight iteration lifecycle (user override, 2026-09-09)
 
-For every user-requested phase review:
+Automatic independent audit is disabled. For ordinary Track3 collection and rapid iteration:
 
-1. Independently verify commit, hashes, raw artifacts, gates, tests, process/GPU boundary and all claimed non-actions.
-2. Return exactly one audit class: `approved`, `remediation_required`, or `blocked`.
-3. Preserve historical reports and failure labels. Corrections go into a new audit/derived namespace; never rewrite old evidence to make it pass.
-4. Archive the completed/superseded active plan under `docs/archive/axis_pi05/`.
-5. Create exactly one new active plan under `docs/` if more work is authorized.
-6. Update the plan index, Markdown handoff, machine JSON handoff and lifecycle tests together.
-7. Re-run strict JSON, targeted tests, full tests and `git diff --check` on the final tree, then make a clean commit.
-8. Mark unexecuted work `not_evaluated`; never convert missing work to false, pass, success, zero-risk, or inferred evidence.
+1. Check only whether the previous requested outcome exists and whether a live process or another dirty writer makes continuation unsafe.
+2. Report the previous step as complete or incomplete, then land the next concrete plan requested by the user.
+3. Do not automatically create an audit plan, return an audit class, archive plans, synchronize every handoff, run the full test suite, or require a clean commit.
+4. A failed capture, blocked Save, or replay failure affects that episode only. Preserve the raw record, Reset or move to the next task, and continue the authorized queue.
+5. Keep historical evidence immutable and mark work that was not run as `not_evaluated`; never invent missing results.
+6. For data-only collection, use lightweight schema/finite/frame/hash checks. Run focused tests when recorder or task code changes. Full lifecycle tests are reserved for an explicitly requested formal audit or a release/ZIP/submission boundary.
 
-Detailed rules and current facts live in `MEMORY.md`; do not duplicate or weaken them here.
+Use the former strict audit lifecycle only when the user explicitly asks for a **formal audit**, or before an irreversible release, upload, or competition submission. This section overrides the older default-audit wording in `MEMORY.md` for routine collection work.

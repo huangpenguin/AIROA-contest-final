@@ -1,11 +1,21 @@
 # AXIS Pi0.5 计划索引与审核生命周期
-
-> 更新日期：2026-09-09（Asia/Tokyo）
-> 跨session入口：先完整读取根目录`AGENTS.md`与`MEMORY.md`，再读取本索引、handoff、machine JSON、唯一活动计划和最新审核；先查live PID/cursor，禁止重复启动。
-> 当前唯一活动计划：`docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md`
-> 当前状态：`track3_multitask_gold_and_r6_short_continuation_ready_for_user_calibration`
-> 最新审核：`docs/reviews/axis_pi05/TRACK3_O1_2_OVER_BUDGET_INDEPENDENT_AUDIT_20260909.md`
-> 最新执行闭包：`docs/reviews/axis_pi05/TRACK3_MG0_RECORDER_BUDGET_TIMING_20260909.md`
+> 更新日期：2026-09-21（Asia/Tokyo）
+> 跨session入口：先完整读取根目录`AGENTS.md`与`MEMORY.md`，再读取本索引、handoff、machine JSON、活动计划和最新审核；先查live PID/cursor，禁止重复启动。
+> T2 最后一次推理屏计划：docs/AXIS_PI05_R6_T2_LIGHT_SMOOTHING_SCREEN_PLAN_20260917.md（历史记录；生成物已按 2026-09-21 清理）
+> 当前阶段：比赛暂时结束，进入只读归档；禁止继续训练、评测、fold、FAST、ZIP、上传或提交。
+> 清理与复现说明：docs/AXIS_PI05_CLEANUP_AND_REPRODUCIBILITY_20260921.md
+> 当前保留：实验结果、参数/配置、文本与 JSON 证据、artifact manifest/SHA256 sidecar；大型 outputs、原始媒体和 ZIP 本体已删除。
+> 最新 execute4 交付：`docs/reviews/axis_pi05/R6_EXECUTE4_OFFICIAL_TRIAL_RELEASE_20260916.md`
+> 最新 inference-horizon closeout：`docs/reviews/axis_pi05/R6_FINAL_INFERENCE_HORIZON_SWEEP_CLOSEOUT_20260916.md`
+> 最新 T3 审核：`docs/reviews/axis_pi05/TRACK3_R0_R1_G0_FINAL_INDEPENDENT_AUDIT_20260916.md`
+> 上一份 H300/R6 配方复核：`docs/reviews/axis_pi05/TRACK3_FAST400_H300_GATE_FAILURE_AND_R6_RECIPE_REVIEW_20260915.md`
+> 上一份正式采集审核：`docs/reviews/axis_pi05/TRACK3_MG0_MG1_FAST_COLLECTION_AUDIT_20260909.md`
+> 最新执行闭包：`docs/reviews/axis_pi05/TRACK3_MG1_RED_MUG_ATTEMPTS_20260909.md`
+> 最新官方 canary100 本地评测交接：`docs/AXIS_PI05_OFFICIAL_CANARY100_LOCAL_GPU3_EVAL_HANDOFF_20260911.md`
+> 四天训练执行计划：`docs/AXIS_PI05_FINAL_4DAY_TRAINING_EXECUTION_PLAN_20260912.md`（用户 2026-09-13 确认 T2 H10K 已启动）
+> 官方 Blackwell T2 H10K 启动问题底稿：`docs/AXIS_PI05_OFFICIAL_BLACKWELL_T2_H10K_LAUNCH_ISSUES_20260913.md`
+> 训后下一任审核入口：`docs/AXIS_PI05_T2_H10K_POST_TRAIN_AGENT_HANDOFF_20260913.md`
+> 明早 persist/fold/Stop 执行稿：`docs/AXIS_PI05_T2_H10K_TOMORROW_PERSIST_FOLD_PLAYBOOK_20260914.md`
 
 ## 1. 本轮执行停止点
 
@@ -535,3 +545,11 @@ data/reports/axis_libero_30k/track3_operations_mg1_red_mug_assisted_retry_202609
 The historical seed hashes remained unchanged. The current stop is
 MG2_alphabet_soup_requires_explicit_user_takeover; no MG2 physics, replay,
 training, ZIP, upload, or submission has been started.
+
+## 3.41 MG0/MG1 独立审核与 fast400 录制器切换（2026-09-09）
+
+唯一审核结论为 `remediation_required`。MG0 的 JSON/manifest 与 no-save 事实、MG1 assisted 77 帧和 manual 300 帧 family failure、typed NPZ、双视频和 artifact hashes 均独立成立；但 MG1 缺少旧计划要求的 outer/cursor/heartbeat/最终 full-test evidence，且索引顶部落后于 machine handoff。
+
+用户明确要求以数据吞吐为先。本轮保留所有历史 raw/label、归档旧多题目计划，并落盘 fast400 下一计划；录制器代码尚未按该计划执行。FT0 将实现：400 只作 direct-gold 上限而不终止进程、默认 8 Hz、0.5×–2.0× 速度滑杆、Reset 不限次数、Save gate 未过只暂停，以及 >400 成功 raw 分流到 `pending_postprocess`。
+
+历史 314-step physical-success episode 仍不是 gold；完成 FT0 后才可按新派生政策 fresh replay `3/3`，通过并由用户 accept 后才 promotion。唯一活动计划为 `docs/AXIS_PI05_TRACK3_FAST_TELEOP_400_AND_SHORT_TRAIN_PLAN.md`；下一阶段 `FT0_implement_fast_recorder`。达到 2 accepted / 2 task 即进入 R6 100-step，不自动上传或提交。

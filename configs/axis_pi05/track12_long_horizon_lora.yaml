@@ -1,0 +1,63 @@
+schema_version: 1
+plan: docs/AXIS_PI05_FINAL_4DAY_TRAINING_EXECUTION_PLAN_20260912.md
+status: h0_h6_runner_ready_horizon_not_frozen
+fresh_canary_launcher: configs/axis_pi05/official_blackwell_launch.yaml
+fresh_canary_max_steps: 100
+competition_30k: not_selected
+
+initialization:
+  run_id: r6_dual_l2_fresh500_r1
+  step: 500
+  load: params_only
+  optimizer: fresh
+  scheduler: fresh
+  ema: false
+  reject: [canary100_train_state, canary100_params, axis_init]
+
+lora:
+  arm: L2_action_lora_heads
+  objective: valid7_temporal
+  action_horizon: 10
+  protocol: {primary: execute8, chunk: 10, fast_only: true}
+
+optimizer:
+  type: AdamW
+  peak_lr: 3.0e-7
+  warmup_steps: 10
+  decay_lr: 3.0e-8
+  precision: float32
+  v100_or_blackwell_bfloat16: forbidden
+  effective_global_batch: 64
+  microbatch: 4
+  accumulation: 16
+
+official_runs:
+  T2-P30:
+    preferred:
+      run_id: t2_p30_r6_h10k_r1
+      schedule_horizon_steps: 10000
+      stop_after_step: 10000
+      save_steps: [1, 10, 100, 1000, 3000, 10000]
+    fallback:
+      run_id: t2_p30_r6_h3k_r1
+      schedule_horizon_steps: 3000
+      stop_after_step: 3000
+      save_steps: [1, 10, 100, 1000, 3000]
+    mix_dir: data/manifests_track12/T2-P30
+    manifest_sha256: 85700f9d85311cdadbacadcecf2b7c9b6617b77e03f51de42a81681ffc770af4
+    norm_stats_sha256: 39ff8a7cc2ff2a0be7d43659e708f9ec260686e876cf603c0460972b49746b41
+  T1-P20:
+    authorized: false
+    reason: conditional_only_after_T2_external_gain_and_time_fit
+
+throughput_probe:
+  max_stop_after_step: 100
+  identity_separate_from_official: true
+  run_ids:
+    H10K: t2_p30_r6_h10k_throughput_probe_r1
+    H3K: t2_p30_r6_h3k_throughput_probe_r1
+
+gates:
+  lock_horizon_before_step1: true
+  forbid_midrun_horizon_change: true
+  automatic_upload_or_submission: false

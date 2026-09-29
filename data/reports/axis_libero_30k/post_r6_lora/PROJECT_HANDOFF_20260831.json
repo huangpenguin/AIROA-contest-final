@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
-  "generated_date": "2026-09-09",
-  "status": "track3_mg1_red_mug_attempts_exhausted_ready_for_user_decision",
+  "generated_date": "2026-09-21",
+  "status": "competition_closed_generated_artifacts_pruned_20260921",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
-  "latest_audited_execution_commit": "d5ee290",
-  "latest_audit_input_commit": "2b544b110189324b3db71070dcfadbf2634eccd7",
-  "latest_execution_root_commit": "f884da83255a763aa3db80fdb7928f0ba70a84c6",
+  "latest_audited_execution_commit": "36e8f269ecd30d4a2a6e555e67bd7315011e5dbf",
+  "latest_audit_input_commit": "36e8f269ecd30d4a2a6e555e67bd7315011e5dbf",
+  "latest_execution_root_commit": "36e8f269ecd30d4a2a6e555e67bd7315011e5dbf",
   "latest_execution_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
   "original_release_plan_input_commit": "be56e8edca77377b57a2941d0483564ce4112f79",
   "branch": "codex/axis-pi05-sg0-sg12-support-gold-20260907",
@@ -40,7 +40,9 @@
     "folded_model_sha256": "5c73e1e8217dbb75a934c2b0165208e851f69e66cfe2ea0430590a29901e6d5b",
     "norm_stats": "data/reports/axis_libero_30k/phase1/norm_stats.json",
     "norm_stats_sha256": "4c803bf59c52677c36b6b420c614d8a7742e0847708443863e13e67cb80b18f5",
-    "normalization": "QUANTILES"
+    "normalization": "QUANTILES",
+    "raw_checkpoint_status": "deleted_in_cleanup_20260921",
+    "folded_model_status": "deleted_in_cleanup_20260921"
   },
   "local_b80": {
     "axis_success": 48,
@@ -81,13 +83,13 @@
   "preserved_failures": {
     "raw_lora_q2": {
       "status": "n1_q2_policy_sensitivity_failed_raw_lora_fresh_replay",
-      "max_abs_diff": 0.0000010728836059570312,
+      "max_abs_diff": 1.0728836059570312e-06,
       "gripper_sign_flip": 0
     },
     "lerobot_folded_s1_3": {
       "status": "s1_real_egl_pairs_failed",
-      "old_threshold": 0.000001,
-      "max_abs_diff": 0.00005125999450683594,
+      "old_threshold": 1e-06,
+      "max_abs_diff": 5.125999450683594e-05,
       "gripper_sign_flip": 0
     }
   },
@@ -95,8 +97,8 @@
     "coverage": 32,
     "same_process_exact": true,
     "fresh_process_exact": true,
-    "jax_vs_pytorch_external_max_abs_diff": 0.000001043081283569336,
-    "jax_vs_pytorch_internal_max_abs_diff": 0.0000014007091522216797
+    "jax_vs_pytorch_external_max_abs_diff": 1.043081283569336e-06,
+    "jax_vs_pytorch_internal_max_abs_diff": 1.4007091522216797e-06
   },
   "s1_3_audit_corrections_identified_historical": [
     "axis_reference_jax_is_actually_r6_folded_jax",
@@ -259,8 +261,10 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md",
-  "next_phase_only": "MG2_alphabet_soup_requires_explicit_user_takeover",
+  "next_plan": "docs/AXIS_PI05_CLEANUP_AND_REPRODUCIBILITY_20260921.md",
+  "next_phase_only": "no_execution_competition_closed",
+  "latest_audit": "docs/reviews/axis_pi05/R6_T2_LIGHT_SMOOTHING_SCREEN_AND_SEAM_BLEND_RELEASE_20260917.md",
+  "latest_audit_sha256": "92639b12b05724dfa04a4aedbd2f7c358d22d57abb932d1d78123f30fc10a32a",
   "e1_authorization": {
     "current_execution_deferred": true,
     "input_pair_count": 170,
@@ -279,8 +283,8 @@
     "canary_observation_count": 4,
     "full_observation_count": 340,
     "fresh_replay_gate": {
-      "internal_max_abs_diff": 2.384185791015625e-7,
-      "external_max_abs_diff": 2.384185791015625e-7,
+      "internal_max_abs_diff": 2.384185791015625e-07,
+      "external_max_abs_diff": 2.384185791015625e-07,
       "all_action_sign_mismatch": 0,
       "execute8_gripper_sign_flip": 0,
       "finite_and_provenance_exact": true
@@ -391,8 +395,8 @@
       "internal_total_elements": 1280,
       "external_exact_elements": 226,
       "external_total_elements": 280,
-      "internal_max_abs_diff": 1.1920928955078125e-7,
-      "external_max_abs_diff": 1.1920928955078125e-7,
+      "internal_max_abs_diff": 1.1920928955078125e-07,
+      "external_max_abs_diff": 1.1920928955078125e-07,
       "gpu_id": 1,
       "gpu0_touched": false,
       "peak_gpu_memory_mib": 24706,
@@ -419,14 +423,14 @@
     "result": "remediation_required",
     "old_bitwise_failure_preserved": true,
     "numeric_drift_classification": "bounded_fp32_fresh_process_replay_drift",
-    "internal_max_abs_diff": 1.1920928955078125e-7,
-    "internal_p99_abs_diff": 5.960464477539063e-8,
-    "external_max_abs_diff": 1.1920928955078125e-7,
-    "external_p99_abs_diff": 1.1920928955078125e-7,
+    "internal_max_abs_diff": 1.1920928955078125e-07,
+    "internal_p99_abs_diff": 5.960464477539063e-08,
+    "external_max_abs_diff": 1.1920928955078125e-07,
+    "external_p99_abs_diff": 1.1920928955078125e-07,
     "elements_above_1e_6": 0,
     "all_action_sign_mismatch": 0,
     "external_gripper_sign_mismatch": 0,
-    "new_future_replay_max_abs_gate": 2.384185791015625e-7,
+    "new_future_replay_max_abs_gate": 2.384185791015625e-07,
     "old_shard_reuse_authorized": false,
     "root_and_nested_clean_at_review_start": true,
     "tests_reproduced": {
@@ -685,7 +689,7 @@
     "bfloat16_v100_authorized": false,
     "effective_global_batch": 64,
     "ema_decay": 0.999,
-    "peak_lr": 0.00005,
+    "peak_lr": 5e-05,
     "warmup_steps": 10000,
     "optimizer_step_limit": 100,
     "two_gpu_canary": {
@@ -1281,9 +1285,18 @@
     "d2": {
       "status": "dense_fullft_donated_two_microbatch_merge_passed_pending_review",
       "fraction": "0.95",
-      "compute_completed_indexes": [0, 1],
-      "accumulation_completed_indexes": [0, 1],
-      "temporaries_released_indexes": [0, 1],
+      "compute_completed_indexes": [
+        0,
+        1
+      ],
+      "accumulation_completed_indexes": [
+        0,
+        1
+      ],
+      "temporaries_released_indexes": [
+        0,
+        1
+      ],
       "max_absolute_drift_bytes_per_card": 512,
       "donated_alias_size_bytes": 6479127152,
       "optimizer_updates": 0,
@@ -1311,7 +1324,9 @@
       },
       "optimizer_step_before": 2,
       "failed_microbatch_index": 1,
-      "completed_microbatch_indexes": [0],
+      "completed_microbatch_indexes": [
+        0
+      ],
       "allocation_bytes": 143327232,
       "allocation_mib": 136.69,
       "continuation_return_code": 1,
@@ -1337,9 +1352,14 @@
     "audit_input_nested_openpi_commit": "5c29b0e",
     "d4_semantic_correction": {
       "restored_internal_step": 1,
-      "completed_update_transition": [1, 2],
+      "completed_update_transition": [
+        1,
+        2
+      ],
       "failed_optimizer_step_before": 2,
-      "completed_microbatch_indexes": [0],
+      "completed_microbatch_indexes": [
+        0
+      ],
       "failed_compute_microbatch_index": 1,
       "step2_checkpoint_and_restore_passed": false
     },
@@ -1377,15 +1397,26 @@
       "source_step1_tree_sha256": "9aeeb1a9b1fdf428486b476930ca9117c28d822dd108b4efaeebf911ca0fafef",
       "semantic_correction": {
         "restored_internal_step": 1,
-        "completed_update_transition": [1, 2],
+        "completed_update_transition": [
+          1,
+          2
+        ],
         "failed_optimizer_step_before": 2,
-        "completed_microbatches": [0],
+        "completed_microbatches": [
+          0
+        ],
         "failed_compute_microbatch": 1
       },
-      "external_pids": [1133706],
+      "external_pids": [
+        1133706
+      ],
       "external_gpu": 0,
       "external_gpu_memory_used_mib": 14311,
-      "local_idle_gpu_ids": [1, 2, 3]
+      "local_idle_gpu_ids": [
+        1,
+        2,
+        3
+      ]
     },
     "l1_cpu_gate_passed": true,
     "l2_started": false,
@@ -1430,8 +1461,13 @@
       "leaked_internal_mechanisms_used": false
     },
     "resource_route": {
-      "training_gpu_ids": [1, 2],
-      "rollout_gpu_ids": [3],
+      "training_gpu_ids": [
+        1,
+        2
+      ],
+      "rollout_gpu_ids": [
+        3
+      ],
       "gpu0_authorized": false,
       "official_blackwell_authorized": false
     },
@@ -1478,7 +1514,10 @@
     },
     "pilot": {
       "accepted_episode_count": 0,
-      "required_episode_range": [30, 60],
+      "required_episode_range": [
+        30,
+        60
+      ],
       "required_replay_success": "3/3",
       "status": "blocked_before_training",
       "report": "data/reports/axis_libero_30k/track3_reverse_lora/T1_PILOT_BLOCKED_REPORT_ZH.md"
@@ -1519,7 +1558,10 @@
       "live_public_forward_success_capture"
     ],
     "pilot_gate": {
-      "accepted_episode_range": [30, 60],
+      "accepted_episode_range": [
+        30,
+        60
+      ],
       "minimum_operator_families": 3,
       "minimum_base_templates": 6,
       "minimum_scenes": 2,
@@ -1558,8 +1600,16 @@
     "p1": {
       "status": "track3_terminal_snapshot_canary_passed_pending_review",
       "accepted_snapshot_count": 3,
-      "accepted_task_indices": [10, 19, 20],
-      "canary_families": ["support_remove_restore", "containment_remove_restore", "articulation_inverse"],
+      "accepted_task_indices": [
+        10,
+        19,
+        20
+      ],
+      "canary_families": [
+        "support_remove_restore",
+        "containment_remove_restore",
+        "articulation_inverse"
+      ],
       "fresh_process_replay": "3/3_each",
       "summary": "data/reports/axis_libero_30k/track3_public_terminal_recovery/p1_restore_canary_summary.json",
       "summary_sha256": "62db697a1ff6afb5d157c9fc786c77eb17a0bdf1054edb060fea50b3f3fe211e",
@@ -1604,7 +1654,11 @@
       "official_hdf5_file_count": 40,
       "official_hdf5_total_bytes": 33784856577,
       "partial_file_count": 0,
-      "p1_fresh_process_tasks": [10, 19, 20],
+      "p1_fresh_process_tasks": [
+        10,
+        19,
+        20
+      ],
       "p1_families": [
         "support_remove_restore",
         "articulation_inverse",
@@ -1678,7 +1732,11 @@
       "status": "passed_implementation_only",
       "tool": "tools/axis_pi05/track3_public_replay.py",
       "report": "data/reports/axis_libero_30k/track3_public_terminal_recovery/R3_PENDING_REPLAY_PROMOTION_REPORT_ZH.md",
-      "accepted_promotion_requires": ["fresh_process_replay_3_of_3", "human_review_approved", "atomic_directory_rename"],
+      "accepted_promotion_requires": [
+        "fresh_process_replay_3_of_3",
+        "human_review_approved",
+        "atomic_directory_rename"
+      ],
       "candidate_count_created": 0,
       "accepted_count_created": 0
     },
@@ -1686,11 +1744,19 @@
       "status": "passed",
       "tool": "tools/axis_pi05/track3_public_teleop_canary.py --run",
       "report": "data/reports/axis_libero_30k/track3_public_terminal_recovery/R4_GPU3_NONHUMAN_CANARY.json",
-      "task_order": [19, 10, 20],
+      "task_order": [
+        19,
+        10,
+        20
+      ],
       "gpu_physical": 3,
       "gpu3_before_mib": 5,
       "gpu3_after_mib": 5,
-      "preview_http_status": [200, 200, 200],
+      "preview_http_status": [
+        200,
+        200,
+        200
+      ],
       "idle_ticks_each": 20,
       "accepted_episode_count": 0,
       "human_input": false
@@ -1707,7 +1773,11 @@
     },
     "human_next_step": {
       "status": "pending_human_input",
-      "task_order": [19, 10, 20],
+      "task_order": [
+        19,
+        10,
+        20
+      ],
       "command": "PYTHONPATH=LIBERO:. CUDA_VISIBLE_DEVICES=3 MUJOCO_EGL_DEVICE_ID=3 MUJOCO_GL=egl .venv_axis_pi05/bin/python tools/axis_pi05/track3_public_teleop.py --record --task-index 19 --operator operator-local --preview-port 8765",
       "localhost_url": "http://127.0.0.1:8765/",
       "ssh_tunnel": "ssh -N -L 8765:127.0.0.1:8765 huang@gpu01"
@@ -1725,7 +1795,11 @@
       "r1_action_reset_state_machine": true,
       "r2_loopback_first_frame_preview": true,
       "r3_pending_replay_review_promotion_gate": true,
-      "r4_gpu3_task_order": [19, 10, 20],
+      "r4_gpu3_task_order": [
+        19,
+        10,
+        20
+      ],
       "r4_status": "passed",
       "accepted_count": 0,
       "pending_count": 0,
@@ -1785,7 +1859,14 @@
       "reverse_relevant_primitive",
       "generator_reference_only"
     ],
-    "authorized_phases": ["S0", "S1", "S2", "S3", "S4", "S5"],
+    "authorized_phases": [
+      "S0",
+      "S1",
+      "S2",
+      "S3",
+      "S4",
+      "S5"
+    ],
     "authorization": {
       "primary_source_verification": true,
       "local_semantic_mining": true,
@@ -1817,8 +1898,22 @@
     "execution_code_parent_commit": "b0078dc6ffc54036006c732c890f02824ca593a0",
     "execution_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
     "archived_plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_PUBLIC_PRIMITIVE_MINING_AND_AUTOGEN_PLAN.md",
-    "authorized_phases": ["S0", "S1", "S2", "S3", "S4", "S5"],
-    "completed_phases": ["S0", "S1", "S2", "S3", "S4", "S5"],
+    "authorized_phases": [
+      "S0",
+      "S1",
+      "S2",
+      "S3",
+      "S4",
+      "S5"
+    ],
+    "completed_phases": [
+      "S0",
+      "S1",
+      "S2",
+      "S3",
+      "S4",
+      "S5"
+    ],
     "reports": {
       "s0_source_verification": "data/reports/axis_libero_30k/track3_public_autogen/s0_source_verification.json",
       "s0_release_lock": "data/reports/axis_libero_30k/track3_public_autogen/s0_release_lock.json",
@@ -1860,7 +1955,9 @@
       "attempted_canaries": 1,
       "max_pending_autogen_canaries": 3,
       "pending_autogen_count": 0,
-      "attempt_order": ["support_remove"],
+      "attempt_order": [
+        "support_remove"
+      ],
       "failure_reason": "stage_timeout:descend_object",
       "failure_stage_frames": 120,
       "complete_failure_asset": "data/reports/axis_libero_30k/track3_public_autogen/diagnostics/support_remove_task_10",
@@ -1940,7 +2037,14 @@
   "track3_support_autogen_se3_recovery_authorization": {
     "status": "track3_reverse_semantic_adapter_v2_failed_support_remove",
     "plan": "docs/AXIS_PI05_TRACK3_SUPPORT_AUTOGEN_SE3_RECOVERY_PLAN.md",
-    "authorized_phases": ["G0", "G1", "G2", "G3", "G4", "G5_closeout_only"],
+    "authorized_phases": [
+      "G0",
+      "G1",
+      "G2",
+      "G3",
+      "G4",
+      "G5_closeout_only"
+    ],
     "authorization": {
       "s1_v2_separate_task_episode_accounting": true,
       "s3_v2_typed_language": true,
@@ -1968,8 +2072,18 @@
     "status": "track3_reverse_semantic_adapter_v2_failed_support_remove",
     "plan": "docs/AXIS_PI05_TRACK3_SUPPORT_AUTOGEN_SE3_RECOVERY_PLAN.md",
     "closeout_report": "docs/reports/AXIS_PI05_TRACK3_SUPPORT_AUTOGEN_SE3_RECOVERY_G1_CLOSEOUT_20260903.md",
-    "completed_phases": ["G0", "G1_s1_accounting_v2", "G1_s3_typed_language", "G1_s3_dynamic_gate"],
-    "stopped_before": ["G2_hdf5_alignment_and_se3_mining", "G2_failed_state_reconstruction", "G3_se3_executor", "G4_support_canary_retry"],
+    "completed_phases": [
+      "G0",
+      "G1_s1_accounting_v2",
+      "G1_s3_typed_language",
+      "G1_s3_dynamic_gate"
+    ],
+    "stopped_before": [
+      "G2_hdf5_alignment_and_se3_mining",
+      "G2_failed_state_reconstruction",
+      "G3_se3_executor",
+      "G4_support_canary_retry"
+    ],
     "evidence": {
       "g0_release_lock": "data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g0_release_lock.json",
       "g1_s1_accounting": "data/reports/axis_libero_30k/track3_support_autogen_se3_recovery/g1_s1_accounting_v2.json",
@@ -1993,7 +2107,11 @@
         "containment_remove": false,
         "articulation_close": false
       },
-      "failed_families": ["support_remove", "containment_remove", "articulation_close"],
+      "failed_families": [
+        "support_remove",
+        "containment_remove",
+        "articulation_close"
+      ],
       "controlled_destruction_false": true,
       "twenty_step_settle": false,
       "goal_true_false_controlled": false,
@@ -2056,8 +2174,8 @@
         "task20": "4e0497a77437ac5846c84c6bea8e08a9af66b11829f8edbe8bc692616a1be723"
       },
       "scene_drift": {
-        "task10_object_m": 1.3914997329335044e-7,
-        "task10_fixture": 1.5481181635246255e-8,
+        "task10_object_m": 1.3914997329335044e-07,
+        "task10_fixture": 1.5481181635246255e-08,
         "task20_object_m": 1.2014993166128821e-11,
         "task20_fixture": 5.271299889642034e-12,
         "task19_object_m": 8.709926868580822e-10,
@@ -2085,8 +2203,19 @@
     "status": "track3_native_reverse_dynamic_canary_failed_support",
     "plan": "docs/AXIS_PI05_TRACK3_DYNAMIC_GATE_MODEL_STATE_RECONCILIATION_PLAN.md",
     "evidence_root": "data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation",
-    "completed_phases": ["D0_input_lock", "D1_validator_cpu_schema", "D2_task10_single_fresh_process", "D4_closeout"],
-    "stopped_before": ["D3_three_family_3_of_3", "SE3", "demo_generation", "training", "human_teleop"],
+    "completed_phases": [
+      "D0_input_lock",
+      "D1_validator_cpu_schema",
+      "D2_task10_single_fresh_process",
+      "D4_closeout"
+    ],
+    "stopped_before": [
+      "D3_three_family_3_of_3",
+      "SE3",
+      "demo_generation",
+      "training",
+      "human_teleop"
+    ],
     "d0": {
       "status": "track3_dynamic_gate_reconciliation_input_locked",
       "report": "data/reports/axis_libero_30k/track3_dynamic_gate_reconciliation/d0_release_lock.json",
@@ -2116,7 +2245,11 @@
       "failure": "TargetZone has no get_geom_state",
       "rerun": false
     },
-    "d3": {"status": "not_run_due_to_d2_hard_stop", "fresh_process_runs": 0, "family_3_of_3": null},
+    "d3": {
+      "status": "not_run_due_to_d2_hard_stop",
+      "fresh_process_runs": 0,
+      "family_3_of_3": null
+    },
     "outputs": {
       "exact_reverse_demo": 0,
       "pending_autogen": 0,
@@ -2136,7 +2269,13 @@
   "track3_dynamic_gate_reconciliation_authorization": {
     "status": "track3_native_reverse_dynamic_canary_failed_support",
     "plan": "docs/AXIS_PI05_TRACK3_DYNAMIC_GATE_MODEL_STATE_RECONCILIATION_PLAN.md",
-    "authorized_phases": ["D0", "D1", "D2", "D3", "D4_closeout_only"],
+    "authorized_phases": [
+      "D0",
+      "D1",
+      "D2",
+      "D3",
+      "D4_closeout_only"
+    ],
     "authorization": {
       "hdf5_model_state_compatibility_audit": true,
       "reverse_native_reset_predicate_evaluation": true,
@@ -2218,7 +2357,13 @@
   "track3_native_reverse_validator_recovery_authorization": {
     "status": "track3_native_reverse_dynamic_failed_support_reverse_initial_or_goal",
     "plan": "docs/AXIS_PI05_TRACK3_NATIVE_REVERSE_VALIDATOR_RECOVERY_PLAN.md",
-    "authorized_phases": ["R0", "R1", "R2", "R3", "R4_closeout_only"],
+    "authorized_phases": [
+      "R0",
+      "R1",
+      "R2",
+      "R3",
+      "R4_closeout_only"
+    ],
     "authorization": {
       "runtime_no_renderer_schema_probe_families": 3,
       "predicate_truth_detail_separation": true,
@@ -2260,7 +2405,11 @@
       "status": "track3_native_reverse_validator_runtime_schema_passed",
       "report": "data/reports/axis_libero_30k/track3_native_reverse_validator_recovery/r1_runtime_schema_probe.json",
       "fresh_process_schema_runs": 3,
-      "family_3_of_3_schema": {"support_remove": true, "containment_remove": true, "articulation_close": true},
+      "family_3_of_3_schema": {
+        "support_remove": true,
+        "containment_remove": true,
+        "articulation_close": true
+      },
       "no_renderer": true,
       "truth_detail_separated": true,
       "worker_returncode_contract": true,
@@ -2280,15 +2429,40 @@
       "gpu_policy": "physical_gpu3_only",
       "attempts": 1
     },
-    "r3": {"status": "not_run_due_to_r2_hard_stop", "fresh_process_runs": 0},
+    "r3": {
+      "status": "not_run_due_to_r2_hard_stop",
+      "fresh_process_runs": 0
+    },
     "r4": {
       "status": "completed_hard_stop",
       "summary": "data/reports/axis_libero_30k/track3_native_reverse_validator_recovery/summary.json",
       "report": "data/reports/axis_libero_30k/track3_native_reverse_validator_recovery/R4_CLOSEOUT_REPORT_ZH.md"
     },
-    "counts": {"exact_reverse_demo": 0, "pending_autogen": 0, "accepted_reverse_demo": 0, "se3_grasp_attempts": 0, "training_started": false, "human_operation": false},
-    "stop_boundary": {"se3": false, "demo_generation": false, "batch_generation": false, "training_or_norm": false, "fast_or_zip": false, "official_gpu": false, "upload_or_submission": false, "libero_plus_touched": false},
-    "verification": {"targeted_tests": "17_passed", "full_tests": "182_passed_7_skipped_23_warnings", "json_parse": "passed", "py_compile": "passed", "git_diff_check": "passed"}
+    "counts": {
+      "exact_reverse_demo": 0,
+      "pending_autogen": 0,
+      "accepted_reverse_demo": 0,
+      "se3_grasp_attempts": 0,
+      "training_started": false,
+      "human_operation": false
+    },
+    "stop_boundary": {
+      "se3": false,
+      "demo_generation": false,
+      "batch_generation": false,
+      "training_or_norm": false,
+      "fast_or_zip": false,
+      "official_gpu": false,
+      "upload_or_submission": false,
+      "libero_plus_touched": false
+    },
+    "verification": {
+      "targeted_tests": "17_passed",
+      "full_tests": "182_passed_7_skipped_23_warnings",
+      "json_parse": "passed",
+      "py_compile": "passed",
+      "git_diff_check": "passed"
+    }
   },
   "track3_native_validator_r0_r4_audit": {
     "status": "remediation_required",
@@ -2362,12 +2536,24 @@
   "track3_reverse_init_stabilization_authorization": {
     "status": "track3_reverse_init_stabilization_failed_named_scene_stability",
     "plan": "docs/AXIS_PI05_TRACK3_REVERSE_INIT_STABILIZATION_SEMANTICS_PLAN.md",
-    "authorized_phases": ["I0", "I1", "I2", "I3", "I4_closeout"],
+    "authorized_phases": [
+      "I0",
+      "I1",
+      "I2",
+      "I3",
+      "I4_closeout"
+    ],
     "authorization": {
       "critical_background_predicate_classification": true,
       "tri_state_gate_reporting": true,
       "cpu_no_renderer_time_series_processes": 12,
-      "diagnostic_timepoints": [0, 1, 5, 10, 20],
+      "diagnostic_timepoints": [
+        0,
+        1,
+        5,
+        10,
+        20
+      ],
       "release_stabilization_step": 5,
       "gpu3_settled_task10_canary_max_after_i2_pass": 1,
       "gpu3_three_family_release_runs_max_after_task10_pass": 9,
@@ -2510,15 +2696,15 @@
       "containment": {
         "full_scene_failure_source": "background_salad_dressing_1",
         "background_max_translation_m": 0.0215049160334,
-        "orange_juice_max_translation_m": 5.53580088e-7,
-        "contain_region_max_translation_m": 3.13320194e-7,
+        "orange_juice_max_translation_m": 5.53580088e-07,
+        "contain_region_max_translation_m": 3.13320194e-07,
         "in_continuous": true
       },
       "articulation": {
         "full_scene_failure_source": "background_akita_black_bowl_1",
         "background_max_rotation_rad": 0.081059470021,
-        "target_site_max_translation_m": 1.12310214e-7,
-        "target_fixture_joint_max_drift": 1.09211304e-7,
+        "target_site_max_translation_m": 1.12310214e-07,
+        "target_fixture_joint_max_drift": 1.09211304e-07,
         "open_continuous": true
       },
       "handoff_top_level_tests_was_stale": true
@@ -2526,7 +2712,11 @@
     "resource_observation": {
       "gpu0_external_pid": 1133706,
       "gpu0_touched": false,
-      "gpu1_to_gpu3_memory_mib": [5, 5, 5]
+      "gpu1_to_gpu3_memory_mib": [
+        5,
+        5,
+        5
+      ]
     },
     "verification": {
       "targeted_tests": "18_passed_2_warnings",
@@ -2539,7 +2729,13 @@
   "track3_operator_scoped_stability_authorization": {
     "status": "track3_operator_scoped_stability_release_planned",
     "plan": "docs/AXIS_PI05_TRACK3_OPERATOR_SCOPED_STABILITY_RELEASE_PLAN.md",
-    "authorized_phases": ["J0", "J1", "J2", "J3", "J4_closeout"],
+    "authorized_phases": [
+      "J0",
+      "J1",
+      "J2",
+      "J3",
+      "J4_closeout"
+    ],
     "authorization": {
       "existing_i2_read_only_reanalysis": true,
       "new_reverse_cpu_processes": 9,
@@ -2570,12 +2766,58 @@
     "execution_input_root_commit": "0dec0b1930a3d2ad9f196febe1aeaabb0c89445d",
     "execution_input_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
     "execution_commit": "bc2419e62ff05a9584d1d6033d22b0e55d03a240",
-    "j0": {"status": "track3_operator_scoped_input_locked", "old_i2_sha256": "e72ae24d27b6edbba37b043a88042191f8a1c7d00c298b812653a1a2ecc17dab"},
-    "j1": {"status": "track3_operator_scoped_contract_validated", "contract_core_sha256": "deeb37ef38bbd12467e73d3b2dbe723f80b4b5ed71766d951142db654ecc142f"},
-    "j2": {"status": "track3_operator_scoped_cpu_release_failed", "fresh_processes": 15, "reverse_pass": "8/9", "forward_pass": "6/6", "full_contact_matrix": "15/15", "failed_run": "task19_reverse_run_1", "failed_gate": "truth_vector_no_transition", "old_i2_read_only_reanalysis_reverse_recorded_fields": "9/9", "old_i2_contact_matrix": "not_evaluated"},
-    "j3": {"status": "not_evaluated", "gpu3_task10_canary_runs": 0, "three_family_runs": 0, "reason": "J2 reverse gate failed 8/9"},
-    "j4": {"status": "completed_hard_stop", "summary": "data/reports/axis_libero_30k/track3_operator_scoped_stability/summary.json", "report": "data/reports/axis_libero_30k/track3_operator_scoped_stability/J4_CLOSEOUT_REPORT_ZH.md", "targeted_tests": "5_passed", "full_tests": "194_passed_7_skipped_26_warnings", "json_parse": "passed", "py_compile": "passed", "git_diff_check": "passed"},
-    "resource_boundary": {"gpu0_touched": false, "gpu3_touched": false, "se3": false, "grasp": false, "demo_generation": false, "teleop": false, "training_or_norm": false, "fast_or_zip": false, "official_gpu": false, "upload_or_submission": false, "reverse_demo_counts": {"exact": 0, "pending": 0, "accepted": 0}},
+    "j0": {
+      "status": "track3_operator_scoped_input_locked",
+      "old_i2_sha256": "e72ae24d27b6edbba37b043a88042191f8a1c7d00c298b812653a1a2ecc17dab"
+    },
+    "j1": {
+      "status": "track3_operator_scoped_contract_validated",
+      "contract_core_sha256": "deeb37ef38bbd12467e73d3b2dbe723f80b4b5ed71766d951142db654ecc142f"
+    },
+    "j2": {
+      "status": "track3_operator_scoped_cpu_release_failed",
+      "fresh_processes": 15,
+      "reverse_pass": "8/9",
+      "forward_pass": "6/6",
+      "full_contact_matrix": "15/15",
+      "failed_run": "task19_reverse_run_1",
+      "failed_gate": "truth_vector_no_transition",
+      "old_i2_read_only_reanalysis_reverse_recorded_fields": "9/9",
+      "old_i2_contact_matrix": "not_evaluated"
+    },
+    "j3": {
+      "status": "not_evaluated",
+      "gpu3_task10_canary_runs": 0,
+      "three_family_runs": 0,
+      "reason": "J2 reverse gate failed 8/9"
+    },
+    "j4": {
+      "status": "completed_hard_stop",
+      "summary": "data/reports/axis_libero_30k/track3_operator_scoped_stability/summary.json",
+      "report": "data/reports/axis_libero_30k/track3_operator_scoped_stability/J4_CLOSEOUT_REPORT_ZH.md",
+      "targeted_tests": "5_passed",
+      "full_tests": "194_passed_7_skipped_26_warnings",
+      "json_parse": "passed",
+      "py_compile": "passed",
+      "git_diff_check": "passed"
+    },
+    "resource_boundary": {
+      "gpu0_touched": false,
+      "gpu3_touched": false,
+      "se3": false,
+      "grasp": false,
+      "demo_generation": false,
+      "teleop": false,
+      "training_or_norm": false,
+      "fast_or_zip": false,
+      "official_gpu": false,
+      "upload_or_submission": false,
+      "reverse_demo_counts": {
+        "exact": 0,
+        "pending": 0,
+        "accepted": 0
+      }
+    },
     "next_action": "等待审核；不得重跑J2或进入J3、SE(3)、demo、Teleop、批量生成或训练"
   },
   "track3_operator_scoped_j0_j4_audit": {
@@ -2608,8 +2850,8 @@
       "robot_component_stability": "passed",
       "operator_participant_stability": "passed",
       "contact_matrix_and_family_rule": "passed",
-      "target_site_max_translation_m": 3.43290433136e-7,
-      "target_joint_max_drift": 3.52029122602e-7
+      "target_site_max_translation_m": 3.43290433136e-07,
+      "target_joint_max_drift": 3.52029122602e-07
     },
     "evidence_gap": {
       "raw_worker_reports_expected": 15,
@@ -2623,7 +2865,11 @@
     "resource_observation": {
       "gpu0_external_pid": 1133706,
       "gpu0_touched": false,
-      "gpu1_to_gpu3_memory_mib": [5, 5, 5]
+      "gpu1_to_gpu3_memory_mib": [
+        5,
+        5,
+        5
+      ]
     },
     "verification": {
       "targeted_tests": "16_passed_2_warnings",
@@ -2636,7 +2882,13 @@
   "track3_background_predicate_convergence_authorization": {
     "status": "track3_background_predicate_convergence_release_planned",
     "plan": "docs/AXIS_PI05_TRACK3_BACKGROUND_PREDICATE_CONVERGENCE_RELEASE_PLAN.md",
-    "authorized_phases": ["K0", "K1", "K2", "K3", "K4_closeout"],
+    "authorized_phases": [
+      "K0",
+      "K1",
+      "K2",
+      "K3",
+      "K4_closeout"
+    ],
     "authorization": {
       "raw_worker_reports_to_track": 15,
       "raw_manifest_and_fresh_checkout_verification": true,
@@ -2673,12 +2925,69 @@
   "track3_background_predicate_convergence_execution": {
     "status": "track3_background_convergence_gpu_failed_task19_canary",
     "plan": "docs/AXIS_PI05_TRACK3_BACKGROUND_PREDICATE_CONVERGENCE_RELEASE_PLAN.md",
-    "k0": {"status": "passed", "evidence_closure_commit": "00f890a95a159ee0207645b1b66c8d12a2f5644b", "fresh_checkout_commit": "52ed3d86faf0019b04c7eda1dae60b7ec1ecda81", "raw_reports": "15/15", "raw_bytes": 16072261, "manifest_sha256": "4a7e80e8dadf772b5a61062019c345b9e031e045d58419bb9838bc101343bee3"},
-    "k1": {"status": "passed", "contract_sha256": "fc672eac87fb561061fb071fe6f9e14f66c36c948ab866931e2540f22b844dbd"},
-    "k2": {"status": "passed", "execution_commit": "cb8e898640a66e9baf5a587f21d5f44a84494a8e", "reverse": "9/9", "forward": "6/6", "critical_transitions": 0, "goal_transitions": 0, "background_false_to_true": 1, "background_true_to_false": 0, "background_repeated_rise": 0, "summary_sha256": "7c1e6c6c8e9e837e2207d64b8c446f7c58ee0ae95b61fd6ae833dc352bfa6779"},
-    "k3": {"status": "track3_background_convergence_gpu_failed_task19_canary", "gpu3_task19_canary_runs": 1, "family_matrix_runs": 0, "family_matrix": "not_evaluated", "worker_exception_count": 0, "report": "data/reports/axis_libero_30k/track3_background_predicate_convergence/k3_gpu3_release/task19_canary.json", "summary": "data/reports/axis_libero_30k/track3_background_predicate_convergence/k3_summary.json"},
-    "k4": {"status": "completed_hard_stop", "summary": "data/reports/axis_libero_30k/track3_background_predicate_convergence/k4_summary.json", "report": "data/reports/axis_libero_30k/track3_background_predicate_convergence/K4_CLOSEOUT_REPORT_ZH.md", "targeted_tests": "12_passed", "full_tests": "201_passed_7_skipped_26_warnings", "json_parse": "passed", "py_compile": "passed", "git_diff_check": "passed"},
-    "resource_boundary": {"gpu3_touched": true, "gpu0_touched": false, "gpu1_touched": false, "gpu2_touched": false, "gpu0_external_pid_untouched": 1133706, "se3": false, "grasp": false, "demo_generation": false, "teleop": false, "training_or_norm": false, "fast_or_zip": false, "official_gpu": false, "upload_or_submission": false, "reverse_demo_counts": {"exact": 0, "pending": 0, "accepted": 0}},
+    "k0": {
+      "status": "passed",
+      "evidence_closure_commit": "00f890a95a159ee0207645b1b66c8d12a2f5644b",
+      "fresh_checkout_commit": "52ed3d86faf0019b04c7eda1dae60b7ec1ecda81",
+      "raw_reports": "15/15",
+      "raw_bytes": 16072261,
+      "manifest_sha256": "4a7e80e8dadf772b5a61062019c345b9e031e045d58419bb9838bc101343bee3"
+    },
+    "k1": {
+      "status": "passed",
+      "contract_sha256": "fc672eac87fb561061fb071fe6f9e14f66c36c948ab866931e2540f22b844dbd"
+    },
+    "k2": {
+      "status": "passed",
+      "execution_commit": "cb8e898640a66e9baf5a587f21d5f44a84494a8e",
+      "reverse": "9/9",
+      "forward": "6/6",
+      "critical_transitions": 0,
+      "goal_transitions": 0,
+      "background_false_to_true": 1,
+      "background_true_to_false": 0,
+      "background_repeated_rise": 0,
+      "summary_sha256": "7c1e6c6c8e9e837e2207d64b8c446f7c58ee0ae95b61fd6ae833dc352bfa6779"
+    },
+    "k3": {
+      "status": "track3_background_convergence_gpu_failed_task19_canary",
+      "gpu3_task19_canary_runs": 1,
+      "family_matrix_runs": 0,
+      "family_matrix": "not_evaluated",
+      "worker_exception_count": 0,
+      "report": "data/reports/axis_libero_30k/track3_background_predicate_convergence/k3_gpu3_release/task19_canary.json",
+      "summary": "data/reports/axis_libero_30k/track3_background_predicate_convergence/k3_summary.json"
+    },
+    "k4": {
+      "status": "completed_hard_stop",
+      "summary": "data/reports/axis_libero_30k/track3_background_predicate_convergence/k4_summary.json",
+      "report": "data/reports/axis_libero_30k/track3_background_predicate_convergence/K4_CLOSEOUT_REPORT_ZH.md",
+      "targeted_tests": "12_passed",
+      "full_tests": "201_passed_7_skipped_26_warnings",
+      "json_parse": "passed",
+      "py_compile": "passed",
+      "git_diff_check": "passed"
+    },
+    "resource_boundary": {
+      "gpu3_touched": true,
+      "gpu0_touched": false,
+      "gpu1_touched": false,
+      "gpu2_touched": false,
+      "gpu0_external_pid_untouched": 1133706,
+      "se3": false,
+      "grasp": false,
+      "demo_generation": false,
+      "teleop": false,
+      "training_or_norm": false,
+      "fast_or_zip": false,
+      "official_gpu": false,
+      "upload_or_submission": false,
+      "reverse_demo_counts": {
+        "exact": 0,
+        "pending": 0,
+        "accepted": 0
+      }
+    },
     "next_action": "等待审核；不得重跑GPU、进入SE(3)、生成demo或训练"
   },
   "track3_background_convergence_k0_k4_audit": {
@@ -2699,7 +3008,10 @@
     },
     "real_initialization_finding": {
       "task_index": 19,
-      "body_pair": ["akita_black_bowl_1_main", "wooden_cabinet_1_cabinet_middle"],
+      "body_pair": [
+        "akita_black_bowl_1_main",
+        "wooden_cabinet_1_cabinet_middle"
+      ],
       "step5_geom_contact_count": 39,
       "step5_min_penetration_m": -0.006797624546751698,
       "step20_geom_contact_count": 39,
@@ -2716,8 +3028,16 @@
       "task19_sensitivity_mutated_qpos": -0.2664321577737452,
       "public_open_threshold_qpos_lt": -0.14,
       "public_close_threshold_qpos_gt": 0.0,
-      "actual_sensitivity_truth": [true, true, true],
-      "k4_reported_sensitivity_truth_incorrect": [true, false, true],
+      "actual_sensitivity_truth": [
+        true,
+        true,
+        true
+      ],
+      "k4_reported_sensitivity_truth_incorrect": [
+        true,
+        false,
+        true
+      ],
       "explicit_seed_recorded": false,
       "gpu3_peak_or_pid_recorded": false,
       "claimed_full_test_result_reproducible_at_final_commit": false,
@@ -2726,7 +3046,11 @@
     "resource_observation": {
       "gpu0_external_pid": 1133706,
       "gpu0_touched": false,
-      "gpu1_to_gpu3_memory_mib": [5, 5, 5]
+      "gpu1_to_gpu3_memory_mib": [
+        5,
+        5,
+        5
+      ]
     },
     "verification": {
       "targeted_tests": "21_passed_2_warnings",
@@ -2739,14 +3063,29 @@
   "track3_matched_terminal_state_release_authorization": {
     "status": "track3_matched_terminal_state_release_completed_hard_stop",
     "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_MATCHED_TERMINAL_STATE_RELEASE_PLAN.md",
-    "authorized_phases": ["L0", "L1", "L2", "L3", "L4", "L5_closeout"],
+    "authorized_phases": [
+      "L0",
+      "L1",
+      "L2",
+      "L3",
+      "L4",
+      "L5_closeout"
+    ],
     "authorization": {
       "old_k0_k4_modification": false,
       "k3_errata_new_namespace": true,
       "renderer_h264_sensitivity_tool_repair": true,
       "contact_contract_v2": true,
-      "hdf5_tasks": [10, 20, 19],
-      "fixed_demo_ids": ["demo_0", "demo_1", "demo_2"],
+      "hdf5_tasks": [
+        10,
+        20,
+        19
+      ],
+      "fixed_demo_ids": [
+        "demo_0",
+        "demo_1",
+        "demo_2"
+      ],
       "same_demo_model_xml_and_full_state_required": true,
       "cpu_fresh_processes_max": 9,
       "gpu3_task19_camera_canary_max": 1,
@@ -2771,14 +3110,69 @@
     "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_MATCHED_TERMINAL_STATE_RELEASE_PLAN.md",
     "execution_input_root_commit": "c74f68bfdb2dc429fdc9f405b27ccdcc5167ee1f",
     "execution_commit": "19cb1ea",
-    "l0": {"status": "track3_matched_terminal_state_input_locked", "report": "data/reports/axis_libero_30k/track3_matched_terminal_state_release/l0_input_lock.json", "fixed_demos": "9/9", "selection": "task10/task20/task19 demo_0/demo_1/demo_2; sustained reward suffix first state"},
-    "l1": {"status": "track3_matched_terminal_state_validator_contract_passed", "report": "data/reports/axis_libero_30k/track3_matched_terminal_state_release/l1_validator_contract.json", "unit_tests": 7, "simulator_started": false, "gpu_started": false},
-    "l2": {"status": "track3_matched_terminal_state_cpu_failed_containment_remove", "report": "data/reports/axis_libero_30k/track3_matched_terminal_state_release/l2_summary.json", "fresh_processes": 9, "task10": "3/3", "task20": "0/3", "task19": "0/3", "task10_failure": null, "task20_failure": "operator participant drift and/or strict operator-background contact", "task19_failure": "robot arm/EEF stability and/or strict operator-background contact"},
-    "l3": {"status": "not_evaluated", "reason": "L2 failed; no GPU3 camera canary"},
-    "l4": {"status": "not_evaluated", "reason": "L2 failed; no GPU3 camera canaries"},
-    "l5": {"status": "completed_hard_stop", "execution_commit": "19cb1ea", "summary": "data/reports/axis_libero_30k/track3_matched_terminal_state_release/summary.json", "report": "data/reports/axis_libero_30k/track3_matched_terminal_state_release/L5_CLOSEOUT_REPORT_ZH.md", "contact_ledger": "data/reports/axis_libero_30k/track3_matched_terminal_state_release/contact_ledger.json", "tests": "211_passed_7_skipped_26_warnings", "json_parse": "passed", "py_compile": "passed", "git_diff_check": "passed"},
-    "counts": {"exact_reverse_demo": 0, "pending_autogen": 0, "accepted_reverse_demo": 0},
-    "resource_boundary": {"cpu_fresh_processes": 9, "gpu3_camera_processes": 0, "gpu0_touched": false, "gpu1_touched": false, "gpu2_touched": false, "official_gpu": false, "se3": false, "grasp": false, "teleop": false, "action_or_demo_generation": false, "training_or_norm": false, "fast_or_zip": false, "upload_or_submission": false},
+    "l0": {
+      "status": "track3_matched_terminal_state_input_locked",
+      "report": "data/reports/axis_libero_30k/track3_matched_terminal_state_release/l0_input_lock.json",
+      "fixed_demos": "9/9",
+      "selection": "task10/task20/task19 demo_0/demo_1/demo_2; sustained reward suffix first state"
+    },
+    "l1": {
+      "status": "track3_matched_terminal_state_validator_contract_passed",
+      "report": "data/reports/axis_libero_30k/track3_matched_terminal_state_release/l1_validator_contract.json",
+      "unit_tests": 7,
+      "simulator_started": false,
+      "gpu_started": false
+    },
+    "l2": {
+      "status": "track3_matched_terminal_state_cpu_failed_containment_remove",
+      "report": "data/reports/axis_libero_30k/track3_matched_terminal_state_release/l2_summary.json",
+      "fresh_processes": 9,
+      "task10": "3/3",
+      "task20": "0/3",
+      "task19": "0/3",
+      "task10_failure": null,
+      "task20_failure": "operator participant drift and/or strict operator-background contact",
+      "task19_failure": "robot arm/EEF stability and/or strict operator-background contact"
+    },
+    "l3": {
+      "status": "not_evaluated",
+      "reason": "L2 failed; no GPU3 camera canary"
+    },
+    "l4": {
+      "status": "not_evaluated",
+      "reason": "L2 failed; no GPU3 camera canaries"
+    },
+    "l5": {
+      "status": "completed_hard_stop",
+      "execution_commit": "19cb1ea",
+      "summary": "data/reports/axis_libero_30k/track3_matched_terminal_state_release/summary.json",
+      "report": "data/reports/axis_libero_30k/track3_matched_terminal_state_release/L5_CLOSEOUT_REPORT_ZH.md",
+      "contact_ledger": "data/reports/axis_libero_30k/track3_matched_terminal_state_release/contact_ledger.json",
+      "tests": "211_passed_7_skipped_26_warnings",
+      "json_parse": "passed",
+      "py_compile": "passed",
+      "git_diff_check": "passed"
+    },
+    "counts": {
+      "exact_reverse_demo": 0,
+      "pending_autogen": 0,
+      "accepted_reverse_demo": 0
+    },
+    "resource_boundary": {
+      "cpu_fresh_processes": 9,
+      "gpu3_camera_processes": 0,
+      "gpu0_touched": false,
+      "gpu1_touched": false,
+      "gpu2_touched": false,
+      "official_gpu": false,
+      "se3": false,
+      "grasp": false,
+      "teleop": false,
+      "action_or_demo_generation": false,
+      "training_or_norm": false,
+      "fast_or_zip": false,
+      "upload_or_submission": false
+    },
     "next_action": "completed_and_audited_remediation_required"
   },
   "track3_matched_terminal_l0_l5_audit": {
@@ -2799,15 +3193,25 @@
       "contact_ledger_entries": 189,
       "hard_stop_after_l2_failure": true,
       "gpu3_camera_processes": 0,
-      "reverse_demo_counts": [0, 0, 0]
+      "reverse_demo_counts": [
+        0,
+        0,
+        0
+      ]
     },
     "invalidating_findings": {
       "all_reward_positive_suffix_lengths": 1,
       "post_success_dwell_available": false,
       "task20_failure_primary": "operator object settling after one-frame success suffix",
-      "task20_orange_juice_translation_m_range": [0.002087675777122127, 0.007390234481007734],
+      "task20_orange_juice_translation_m_range": [
+        0.002087675777122127,
+        0.007390234481007734
+      ],
       "task19_failure_primary": "forward terminal robot arm/eef relaxation",
-      "task19_demo0_demo1_arm_qpos_drift_rad": [0.03380223668159458, 0.030547866583178207],
+      "task19_demo0_demo1_arm_qpos_drift_rad": [
+        0.03380223668159458,
+        0.030547866583178207
+      ],
       "contact_v2_role_bug": "robot_or_gripper_contact_misclassified_as_unrelated_background",
       "aggregate_contact_v2_failure_reason_missing": true,
       "summary_status_encodes_only_first_failed_family": true,
@@ -2821,19 +3225,46 @@
       "git_diff_check": "passed",
       "gpu0_external_pid": 1133706,
       "gpu0_touched": false,
-      "gpu1_to_gpu3_memory_mib": [5, 5, 5]
+      "gpu1_to_gpu3_memory_mib": [
+        5,
+        5,
+        5
+      ]
     }
   },
   "track3_composed_reverse_start_stabilization_authorization": {
     "status": "track3_composed_reverse_start_stabilization_completed_and_audited",
     "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_COMPOSED_REVERSE_START_STABILIZATION_PLAN.md",
-    "authorized_phases": ["M0", "M1", "M2", "M3", "M4", "M5_closeout"],
+    "authorized_phases": [
+      "M0",
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5_closeout"
+    ],
     "authorization": {
-      "fixed_tasks": [10, 20, 19],
-      "fixed_demo_ids": ["demo_0", "demo_1", "demo_2"],
+      "fixed_tasks": [
+        10,
+        20,
+        19
+      ],
+      "fixed_demo_ids": [
+        "demo_0",
+        "demo_1",
+        "demo_2"
+      ],
       "same_demo_model_xml_required": true,
       "state_composition": "terminal_scene_qpos_plus_init_robot_gripper_qpos_plus_zero_qvel",
-      "neutral_hold_action": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+      "neutral_hold_action": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
       "burn_in_steps": 20,
       "measurement_steps": 20,
       "cpu_fresh_processes_max": 9,
@@ -2861,14 +3292,79 @@
     "pre_amend_orphan_commit": "020d291fb991bd28ff4d530844abeb053af37142",
     "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_COMPOSED_REVERSE_START_STABILIZATION_PLAN.md",
     "report_root": "data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization",
-    "m0": {"status": "track3_composed_reverse_start_m0_passed", "report": "data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/m0_release_lock.json", "fixed_demos": "9/9", "immutable_revalidation": "passed"},
-    "m1": {"status": "track3_composed_reverse_start_m1_validator_contract_passed", "report": "data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/m1_validator_contract.json", "targeted_tests": "12 passed", "simulator_started": false, "gpu_started": false},
-    "m2": {"status": "track3_composed_reverse_start_cpu_canary_passed_task20_demo0", "report": "data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/m2_summary.json", "fresh_processes": 1, "start_state_candidate_report_only": 1},
-    "m3": {"status": "track3_composed_reverse_start_cpu_matrix_passed_9_of_9", "report": "data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/m3_summary.json", "fresh_processes": 9, "task10": "3/3", "task20": "3/3", "task19": "3/3", "reverse_demo_counts": [0, 0, 0]},
-    "m4": {"status": "track3_composed_reverse_start_validated_pending_executor_review", "report": "data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/m4_summary.json", "gpu3_camera_canaries": 3, "order": [10, 20, 19], "agentview_and_wrist_frames": "41 each", "h264_20fps": true},
-    "m5": {"status": "hard_stop_waiting_executor_review", "summary": "data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/summary.json", "report": "data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/M5_CLOSEOUT_REPORT_ZH.md", "tests": "223_passed_7_skipped_23_warnings", "json_parse": "passed", "py_compile": "passed", "git_diff_check": "passed"},
-    "counts": {"exact_reverse_demo": 0, "pending_autogen": 0, "accepted_reverse_demo": 0, "start_state_candidate_report_only": 1},
-    "resource_boundary": {"gpu3_only_for_m4": true, "gpu0_touched": false, "gpu1_touched": false, "gpu2_touched": false, "official_gpu": false, "se3": false, "grasp": false, "teleop": false, "action_or_demo_generation": false, "training_or_norm": false, "fast_or_zip": false, "upload_or_submission": false},
+    "m0": {
+      "status": "track3_composed_reverse_start_m0_passed",
+      "report": "data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/m0_release_lock.json",
+      "fixed_demos": "9/9",
+      "immutable_revalidation": "passed"
+    },
+    "m1": {
+      "status": "track3_composed_reverse_start_m1_validator_contract_passed",
+      "report": "data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/m1_validator_contract.json",
+      "targeted_tests": "12 passed",
+      "simulator_started": false,
+      "gpu_started": false
+    },
+    "m2": {
+      "status": "track3_composed_reverse_start_cpu_canary_passed_task20_demo0",
+      "report": "data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/m2_summary.json",
+      "fresh_processes": 1,
+      "start_state_candidate_report_only": 1
+    },
+    "m3": {
+      "status": "track3_composed_reverse_start_cpu_matrix_passed_9_of_9",
+      "report": "data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/m3_summary.json",
+      "fresh_processes": 9,
+      "task10": "3/3",
+      "task20": "3/3",
+      "task19": "3/3",
+      "reverse_demo_counts": [
+        0,
+        0,
+        0
+      ]
+    },
+    "m4": {
+      "status": "track3_composed_reverse_start_validated_pending_executor_review",
+      "report": "data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/m4_summary.json",
+      "gpu3_camera_canaries": 3,
+      "order": [
+        10,
+        20,
+        19
+      ],
+      "agentview_and_wrist_frames": "41 each",
+      "h264_20fps": true
+    },
+    "m5": {
+      "status": "hard_stop_waiting_executor_review",
+      "summary": "data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/summary.json",
+      "report": "data/reports/axis_libero_30k/track3_composed_reverse_start_stabilization/M5_CLOSEOUT_REPORT_ZH.md",
+      "tests": "223_passed_7_skipped_23_warnings",
+      "json_parse": "passed",
+      "py_compile": "passed",
+      "git_diff_check": "passed"
+    },
+    "counts": {
+      "exact_reverse_demo": 0,
+      "pending_autogen": 0,
+      "accepted_reverse_demo": 0,
+      "start_state_candidate_report_only": 1
+    },
+    "resource_boundary": {
+      "gpu3_only_for_m4": true,
+      "gpu0_touched": false,
+      "gpu1_touched": false,
+      "gpu2_touched": false,
+      "official_gpu": false,
+      "se3": false,
+      "grasp": false,
+      "teleop": false,
+      "action_or_demo_generation": false,
+      "training_or_norm": false,
+      "fast_or_zip": false,
+      "upload_or_submission": false
+    },
     "next_phase_only": "audited_with_remediation_required"
   },
   "track3_composed_reverse_start_m0_m5_audit": {
@@ -2903,7 +3399,15 @@
     "status": "track3_start_bundle_and_support_executor_completed_and_audited",
     "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_START_BUNDLE_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md",
     "audited_input_commit": "eef683b0db9629a3d917ea91ebeb46540a34fcb9",
-    "authorized_phases": ["P0", "P1", "P2", "P3", "P4", "P5", "P6_closeout"],
+    "authorized_phases": [
+      "P0",
+      "P1",
+      "P2",
+      "P3",
+      "P4",
+      "P5",
+      "P6_closeout"
+    ],
     "authorization": {
       "user_manual_action": false,
       "human_teleop": false,
@@ -2928,10 +3432,22 @@
     "next_phase_only": "superseded_by_p3_io_recovery_and_support_executor_plan",
     "execution_closeout": {
       "status": "track3_support_executor_canary_failed_worker_result_publication",
-      "phase_status": {"P0": "passed", "P1": "passed", "P2": "passed_9_of_9", "P3": "failed_worker_result_publication", "P4": "not_evaluated", "P5": "not_evaluated", "P6": "hard_stop"},
+      "phase_status": {
+        "P0": "passed",
+        "P1": "passed",
+        "P2": "passed_9_of_9",
+        "P3": "failed_worker_result_publication",
+        "P4": "not_evaluated",
+        "P5": "not_evaluated",
+        "P6": "hard_stop"
+      },
       "validated_start_state": 9,
       "camera_canaries_started": 1,
-      "exact_pending_accepted": [0, 0, 0],
+      "exact_pending_accepted": [
+        0,
+        0,
+        0
+      ],
       "pending_created": false,
       "manual_operation_required": false,
       "evidence_root": "data/reports/axis_libero_30k/track3_start_bundle_and_support_executor_canary/",
@@ -2951,7 +3467,11 @@
       "task10_grasp_geometry": true,
       "hard_stop_after_first_p3_failure": true,
       "p4_p5_not_evaluated": true,
-      "exact_pending_accepted": [0, 0, 0]
+      "exact_pending_accepted": [
+        0,
+        0,
+        0
+      ]
     },
     "p3_interpretation": "tool_result_publication_failure_not_environment_or_reverse_semantics_failure",
     "valid_p3_worker_results": 0,
@@ -2978,7 +3498,15 @@
     "status": "track3_p3_io_recovery_completed_and_audited",
     "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_P3_IO_RECOVERY_AND_SUPPORT_EXECUTOR_CANARY_PLAN.md",
     "audited_input_commit": "ad2d4ef7d6603e7b0e79a8519155de9cfdefbde2",
-    "authorized_phases": ["R0", "R1", "R2", "R3", "R4", "R5", "R6_closeout"],
+    "authorized_phases": [
+      "R0",
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6_closeout"
+    ],
     "authorization": {
       "user_manual_action": false,
       "rerun_p2": false,
@@ -3016,7 +3544,11 @@
       "task10_attempt2_child_status": "passed",
       "task10_attempt2_parent_status": "failed_closed",
       "r3_r4_r5": "not_evaluated",
-      "exact_pending_accepted": [0, 0, 0],
+      "exact_pending_accepted": [
+        0,
+        0,
+        0
+      ],
       "tests": "239_passed_7_skipped_23_warnings"
     }
   },
@@ -3035,7 +3567,11 @@
       "task10_restore_max_abs_diff": 2.220446049250313e-16,
       "hard_stop": true,
       "r3_r4_r5_not_evaluated": true,
-      "exact_pending_accepted": [0, 0, 0]
+      "exact_pending_accepted": [
+        0,
+        0,
+        0
+      ]
     },
     "root_cause": "gpu_source_commit_called_undefined_gpu_provenance_gate_causing_parent_NameError_after_child_success",
     "gpu_source_has_gpu_provenance_gate_definition": false,
@@ -3049,17 +3585,36 @@
     "status": "track3_overnight_autogen_lora_zip_completed_and_audited",
     "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_OVERNIGHT_AUTOGEN_LORA_AND_ZIP_PLAN.md",
     "audited_input_commit": "309ccafe9e6e2cddd0c9f16db111fc054478eb8b",
-    "authorized_phases": ["O0", "O1", "O2", "O3", "O4", "O5", "O6", "O7", "O8", "O9", "O10_closeout"],
+    "authorized_phases": [
+      "O0",
+      "O1",
+      "O2",
+      "O3",
+      "O4",
+      "O5",
+      "O6",
+      "O7",
+      "O8",
+      "O9",
+      "O10_closeout"
+    ],
     "authorization": {
       "unattended_runtime_hours_max": 12,
       "user_manual_action": false,
       "task10_p3_attempt_number": 3,
       "task10_p3_attempts_max": 1,
       "remaining_p3_camera_processes_max": 2,
-      "family_lanes": ["support_remove", "containment_remove", "articulation_close"],
+      "family_lanes": [
+        "support_remove",
+        "containment_remove",
+        "articulation_close"
+      ],
       "profiles_per_family_max": 2,
       "pilot_attempts_per_family_max": 2,
-      "train_sources_per_family": ["demo_0", "demo_1"],
+      "train_sources_per_family": [
+        "demo_0",
+        "demo_1"
+      ],
       "holdout_source_per_family": "demo_2",
       "train_generations_per_family_max": 4,
       "fresh_replays_per_trace": 3,
@@ -3068,16 +3623,25 @@
       "failed_trajectories_train_eligible": false,
       "forward_dataset": "data/raw/hf/lerobot/libero_plus",
       "source_fps": 20,
-      "forward_reverse_sampling": [0.8, 0.2],
+      "forward_reverse_sampling": [
+        0.8,
+        0.2
+      ],
       "normalization": "fresh_per_dimension_QUANTILES_from_effective_training_manifest",
       "initialization": "r6_dual_l2_fresh500_r1_step500_params",
       "topology": "L2_action_lora_heads",
-      "training_gpus": [1, 2],
+      "training_gpus": [
+        1,
+        2
+      ],
       "training_precision": "float32",
       "microbatch_per_device": 1,
       "gradient_accumulation_steps": 32,
       "effective_global_batch": 64,
-      "learning_rate_screen": [3e-7, 1e-6],
+      "learning_rate_screen": [
+        3e-07,
+        1e-06
+      ],
       "screen_steps": 100,
       "winner_max_steps": 1000,
       "reverse_holdout_min_improvement_successes": 1,
@@ -3109,7 +3673,11 @@
       "task10_attempt3_peak_memory_mib": 459.0,
       "task20_task19": "not_evaluated",
       "o3_o9": "not_evaluated",
-      "exact_pending_accepted": [0, 0, 0],
+      "exact_pending_accepted": [
+        0,
+        0,
+        0
+      ],
       "tests": "244_passed_7_skipped_23_warnings"
     }
   },
@@ -3121,7 +3689,12 @@
       "o0_o1": true,
       "task10_attempt3_unique_worker_runs": 1,
       "task10_child_physics_camera": true,
-      "task10_child_hard_gates": ["restore_identity", "truth", "contact_v3_full_window", "camera_schema"],
+      "task10_child_hard_gates": [
+        "restore_identity",
+        "truth",
+        "contact_v3_full_window",
+        "camera_schema"
+      ],
       "task10_camera_frames_per_view": 41,
       "task10_camera_fps": 20,
       "task10_restore_max_abs_diff": 2.220446049250313e-16,
@@ -3132,7 +3705,11 @@
       "timed_out": false,
       "hard_stop": true,
       "o3_o9_not_evaluated": true,
-      "exact_pending_accepted": [0, 0, 0]
+      "exact_pending_accepted": [
+        0,
+        0,
+        0
+      ]
     },
     "root_cause": "synchronous_nvidia_smi_query_latency_mislabeled_as_poll_interval_and_incorrectly_hard_gated_at_100ms",
     "old_query_latency_max_ms": 148.45660293940455,
@@ -3149,7 +3726,20 @@
     "status": "track3_provenance_jitter_recovery_and_overnight_continuation_completed_and_audited",
     "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_PROVENANCE_JITTER_RECOVERY_AND_OVERNIGHT_CONTINUATION_PLAN.md",
     "audited_input_commit": "8c0d296f1dfedb0c777040a733b6f9e352234111",
-    "authorized_phases": ["J0", "J1", "J2", "J3", "J4", "J5", "J6", "J7", "J8", "J9", "J10", "J11_closeout"],
+    "authorized_phases": [
+      "J0",
+      "J1",
+      "J2",
+      "J3",
+      "J4",
+      "J5",
+      "J6",
+      "J7",
+      "J8",
+      "J9",
+      "J10",
+      "J11_closeout"
+    ],
     "authorization": {
       "unattended_runtime_hours_max": 12,
       "user_manual_action": false,
@@ -3166,10 +3756,17 @@
       "sampling_min_average_hz": 0.5,
       "csv_lineterminator": "LF",
       "checkout_stable_manifest_required": true,
-      "family_lanes": ["support_remove", "containment_remove", "articulation_close"],
+      "family_lanes": [
+        "support_remove",
+        "containment_remove",
+        "articulation_close"
+      ],
       "profiles_per_family_max": 2,
       "pilot_attempts_per_family_max": 2,
-      "train_sources_per_family": ["demo_0", "demo_1"],
+      "train_sources_per_family": [
+        "demo_0",
+        "demo_1"
+      ],
       "holdout_source_per_family": "demo_2",
       "train_generations_per_family_max": 4,
       "fresh_replays_per_trace": 3,
@@ -3180,16 +3777,25 @@
       "source_fps": 20,
       "forward_dataset_episodes": 14347,
       "forward_dataset_frames": 2238036,
-      "forward_reverse_sampling": [0.8, 0.2],
+      "forward_reverse_sampling": [
+        0.8,
+        0.2
+      ],
       "normalization": "fresh_per_dimension_QUANTILES_from_effective_training_manifest",
       "initialization": "r6_dual_l2_fresh500_r1_step500_params",
       "topology": "L2_action_lora_heads",
-      "training_gpus": [1, 2],
+      "training_gpus": [
+        1,
+        2
+      ],
       "training_precision": "float32",
       "microbatch_per_device": 1,
       "gradient_accumulation_steps": 32,
       "effective_global_batch": 64,
-      "learning_rate_screen": [3e-7, 1e-6],
+      "learning_rate_screen": [
+        3e-07,
+        1e-06
+      ],
       "screen_steps": 100,
       "winner_max_steps": 1000,
       "reverse_holdout_min_improvement_successes": 1,
@@ -3236,7 +3842,11 @@
       "j5_ffmpeg_error": "agentview.mp4.partial_has_no_inferable_muxer",
       "j11_historical_status": "track3_jitter_recovery_stopped_J5_no_family_release",
       "j11_historical_reason": "no_family_release",
-      "exact_pending_accepted": [0, 0, 0],
+      "exact_pending_accepted": [
+        0,
+        0,
+        0
+      ],
       "training_or_norm": false,
       "teleop": false,
       "fast_or_zip": false,
@@ -3263,7 +3873,11 @@
       "j11_core_execution_manifest_entries": "25/25",
       "j5_hard_stop": true,
       "j6_to_j10_not_evaluated": true,
-      "exact_pending_accepted": [0, 0, 0],
+      "exact_pending_accepted": [
+        0,
+        0,
+        0
+      ],
       "root_and_openpi_clean": true,
       "libero_plus_dirty_preserved": true,
       "gpu0_external_process_preserved": true,
@@ -3272,7 +3886,7 @@
     "findings": {
       "robosuite_quaternion_convention": "xyzw",
       "historical_j5_helper_convention": "wxyz",
-      "correct_hdf5_eef_reconstruction_geodesic_rad": 2.2760074661787235e-7,
+      "correct_hdf5_eef_reconstruction_geodesic_rad": 2.2760074661787235e-07,
       "historical_helper_geodesic_error_rad": 2.210355626925068,
       "j5_last_rotation_error_rad": 3.126052229586576,
       "j5_action_saturated_frames": "180/180",
@@ -3294,7 +3908,14 @@
     "status": "track3_j5_executor_contract_and_atomic_video_recovery_completed_and_audited",
     "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_J5_EXECUTOR_CONTRACT_AND_ATOMIC_VIDEO_RECOVERY_PLAN.md",
     "audited_input_commit": "7ae488b4475169ac1cc3b586158454639e6a2be9",
-    "authorized_phases": ["V0", "V1", "V2", "V3", "V4", "V5_closeout"],
+    "authorized_phases": [
+      "V0",
+      "V1",
+      "V2",
+      "V3",
+      "V4",
+      "V5_closeout"
+    ],
     "authorization": {
       "user_manual_action": false,
       "historical_evidence_rewrite": false,
@@ -3364,7 +3985,11 @@
       "v4_parent_category": "family_failure",
       "v4_camera": "2/2_h264_150_frames_20fps",
       "manifest_hash_exact": "19/19",
-      "exact_pending_accepted": [0, 0, 0],
+      "exact_pending_accepted": [
+        0,
+        0,
+        0
+      ],
       "conservative_other_family_generation_training_zip": "not_evaluated",
       "tests": "256_passed_7_skipped_23_warnings"
     }
@@ -3385,7 +4010,11 @@
       "v4_telemetry_and_camera": true,
       "v5_hard_stop": true,
       "manifest_git_tracked_hash_exact": "19/19",
-      "exact_pending_accepted": [0, 0, 0],
+      "exact_pending_accepted": [
+        0,
+        0,
+        0
+      ],
       "root_and_openpi_clean": true,
       "libero_plus_dirty_preserved": true,
       "gpu0_external_process_preserved": true,
@@ -3398,7 +4027,11 @@
       "rotation_gain_vs_declared_profile": 4.166666666666667,
       "hdf5_close_transition_index": 32,
       "hdf5_release_transition_index": 76,
-      "release_anchor_index75_contact_counts": [3, 1, 0],
+      "release_anchor_index75_contact_counts": [
+        3,
+        1,
+        0
+      ],
       "index32_to_index75_relative_pose_drift_m": 0.038754514210142026,
       "index32_to_index75_relative_pose_drift_rad": 0.6003170154660136,
       "contact_completion_corrected_state": "not_evaluated",
@@ -3415,7 +4048,15 @@
     "status": "track3_support_release_anchor_and_osc_scale_recovery_completed_and_audited",
     "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_SUPPORT_RELEASE_ANCHOR_AND_OSC_SCALE_RECOVERY_PLAN.md",
     "audited_input_commit": "11483623b7710430a197231b8ed0662c4813c12d",
-    "authorized_phases": ["W0", "W1", "W2", "W3", "W4", "W5", "W6_closeout"],
+    "authorized_phases": [
+      "W0",
+      "W1",
+      "W2",
+      "W3",
+      "W4",
+      "W5",
+      "W6_closeout"
+    ],
     "authorization": {
       "user_manual_action": false,
       "historical_evidence_rewrite": false,
@@ -3468,7 +4109,11 @@
       "w4_transport_frames": 180,
       "w5": "not_evaluated",
       "manifest_git_tracked_hash_exact": "17/17",
-      "exact_pending_accepted": [0, 0, 0],
+      "exact_pending_accepted": [
+        0,
+        0,
+        0
+      ],
       "tests": "257_passed_7_skipped_23_warnings"
     },
     "next_phase_only": "superseded_by_object_frame_executor_and_bounded_autogen_lora_plan"
@@ -3490,7 +4135,11 @@
       "w5_not_evaluated": true,
       "manifest_git_tracked_hash_exact": "17/17",
       "final_json_strict": "14/14",
-      "exact_pending_accepted": [0, 0, 0],
+      "exact_pending_accepted": [
+        0,
+        0,
+        0
+      ],
       "root_and_openpi_clean": true,
       "libero_plus_dirty_preserved": true,
       "gpu0_external_process_preserved": true,
@@ -3517,7 +4166,22 @@
     "status": "track3_object_frame_executor_and_bounded_autogen_lora_completed_and_audited",
     "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_OBJECT_FRAME_EXECUTOR_AND_BOUNDED_AUTOGEN_LORA_PLAN.md",
     "audited_input_commit": "2997c6f5d8c5b05345d74e0e0c4b96698def727e",
-    "authorized_phases": ["X0", "X1", "X2", "X3", "X4", "X5", "X6", "X7", "X8", "X9", "X10", "X11", "X12", "X13_closeout"],
+    "authorized_phases": [
+      "X0",
+      "X1",
+      "X2",
+      "X3",
+      "X4",
+      "X5",
+      "X6",
+      "X7",
+      "X8",
+      "X9",
+      "X10",
+      "X11",
+      "X12",
+      "X13_closeout"
+    ],
     "authorization": {
       "user_manual_action": false,
       "historical_evidence_rewrite": false,
@@ -3534,10 +4198,16 @@
       "total_fresh_replays_max": 36,
       "accepted_replay_gate": "3/3",
       "holdout_demo": "demo2",
-      "forward_reverse_sampling": [0.8, 0.2],
+      "forward_reverse_sampling": [
+        0.8,
+        0.2
+      ],
       "fresh_quantiles_required": true,
       "initialization": "r6_dual_l2_fresh500_r1_step500_params",
-      "training_gpus": [1, 2],
+      "training_gpus": [
+        1,
+        2
+      ],
       "training_precision": "float32",
       "screen_steps_each": 100,
       "winner_max_steps": 1000,
@@ -3570,7 +4240,11 @@
       "x4_physics_steps": 0,
       "x5_to_x12": "not_evaluated",
       "manifest_git_tracked_hash_exact": "13/13",
-      "exact_pending_accepted": [0, 0, 0],
+      "exact_pending_accepted": [
+        0,
+        0,
+        0
+      ],
       "tests": "260_passed_7_skipped_23_warnings"
     },
     "next_phase_only": "superseded_by_track3_runtime_preflight_and_bounded_continuation_plan"
@@ -3588,7 +4262,11 @@
       "x5_to_x12_not_evaluated": true,
       "manifest_git_tracked_hash_exact": "13/13",
       "strict_json": "14/14",
-      "exact_pending_accepted": [0, 0, 0],
+      "exact_pending_accepted": [
+        0,
+        0,
+        0
+      ],
       "root_and_openpi_clean": true,
       "libero_plus_dirty_preserved": true,
       "gpu0_external_process_preserved": true,
@@ -3648,7 +4326,11 @@
       "py_compile": true,
       "git_diff_check": true
     },
-    "exact_pending_accepted": [0, 0, 0],
+    "exact_pending_accepted": [
+      0,
+      0,
+      0
+    ],
     "y3_to_y13": "not_evaluated",
     "resource_boundary": {
       "simulator_started": false,
@@ -3672,7 +4354,22 @@
     "status": "track3_runtime_preflight_and_bounded_continuation_completed_and_audited",
     "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_RUNTIME_PREFLIGHT_AND_BOUNDED_CONTINUATION_PLAN.md",
     "audited_input_commit": "64a0d31c3b2864562887044bad7ef8b522a213db",
-    "authorized_phases": ["Y0", "Y1", "Y2", "Y3", "Y4", "Y5", "Y6", "Y7", "Y8", "Y9", "Y10", "Y11", "Y12", "Y13_closeout"],
+    "authorized_phases": [
+      "Y0",
+      "Y1",
+      "Y2",
+      "Y3",
+      "Y4",
+      "Y5",
+      "Y6",
+      "Y7",
+      "Y8",
+      "Y9",
+      "Y10",
+      "Y11",
+      "Y12",
+      "Y13_closeout"
+    ],
     "authorization": {
       "user_manual_action": false,
       "historical_evidence_rewrite": false,
@@ -3691,10 +4388,16 @@
       "total_fresh_replays_max": 36,
       "accepted_replay_gate": "3/3",
       "holdout_demo": "demo2",
-      "forward_reverse_sampling": [0.8, 0.2],
+      "forward_reverse_sampling": [
+        0.8,
+        0.2
+      ],
       "fresh_quantiles_required": true,
       "initialization": "r6_dual_l2_fresh500_r1_step500_params",
-      "training_gpus": [1, 2],
+      "training_gpus": [
+        1,
+        2
+      ],
       "training_precision": "float32",
       "screen_steps_each": 100,
       "winner_max_steps": 1000,
@@ -3736,7 +4439,11 @@
       "strict_json": "9/9",
       "historical_failures_preserved": true,
       "y3_to_y13_not_evaluated": true,
-      "exact_pending_accepted": [0, 0, 0],
+      "exact_pending_accepted": [
+        0,
+        0,
+        0
+      ],
       "root_and_openpi_clean": true,
       "libero_plus_dirty_preserved": true,
       "no_live_track3_process": true,
@@ -3758,7 +4465,23 @@
     "status": "track3_y3_launch_phase_ledger_remediation_completed_and_audited",
     "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_Y3_LAUNCH_PHASE_LEDGER_REMEDIATION_PLAN.md",
     "audited_input_commit": "882958c8b863585b13f10f22445d4aa4a42b2d56",
-    "authorized_phases": ["Z0", "Z1", "Z2", "Z3", "Z4", "Z5", "Z6", "Z7", "Z8", "Z9", "Z10", "Z11", "Z12", "Z13", "Z14_closeout"],
+    "authorized_phases": [
+      "Z0",
+      "Z1",
+      "Z2",
+      "Z3",
+      "Z4",
+      "Z5",
+      "Z6",
+      "Z7",
+      "Z8",
+      "Z9",
+      "Z10",
+      "Z11",
+      "Z12",
+      "Z13",
+      "Z14_closeout"
+    ],
     "authorization": {
       "user_manual_action": false,
       "historical_evidence_rewrite": false,
@@ -3776,10 +4499,16 @@
       "total_fresh_replays_max": 36,
       "accepted_replay_gate": "3/3",
       "holdout_demo": "demo2",
-      "forward_reverse_sampling": [0.8, 0.2],
+      "forward_reverse_sampling": [
+        0.8,
+        0.2
+      ],
       "fresh_quantiles_required": true,
       "initialization": "r6_dual_l2_fresh500_r1_step500_params",
-      "training_gpus": [1, 2],
+      "training_gpus": [
+        1,
+        2
+      ],
       "training_precision": "float32",
       "screen_steps_each": 100,
       "winner_max_steps": 1000,
@@ -3812,12 +4541,98 @@
     "input_audit": "docs/reviews/axis_pi05/TRACK3_RUNTIME_PREFLIGHT_Y0_Y2_AUDIT_20260906.md",
     "input_commit_locked": "56cdffa83a530cb0dab71e4d17b7a9112a2742af",
     "namespace": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation",
-    "phase_status": {"Z0": "passed", "Z1": "passed", "Z2": "passed", "Z3": "passed", "Z4": "passed_clean_release", "Z5": "track3_runtime_stopped_Z5_infrastructure_failure", "Z6": "not_evaluated", "Z7": "not_evaluated", "Z8": "not_evaluated", "Z9": "not_evaluated", "Z10": "not_evaluated", "Z11": "not_evaluated", "Z12": "not_evaluated", "Z13": "not_evaluated", "Z14": "hard_stop"},
-    "reports": {"z0": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z0_input_lock.json", "z1": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z1_cli_dispatch_contract.json", "z2": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z2_source_identity_contract.json", "z3": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z3_phase_ledger_contract.json", "z4": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_prephysics_release.json", "z4_validation": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_final_validation.json", "z4_manifest": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_artifact_manifest.json", "z4_closeout": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_closeout.json", "z5_parent": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_cpu_task10_demo0_nominal/parent_result.json", "z5_child": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_cpu_task10_demo0_nominal/child_result.json", "z5_postmortem": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_infrastructure_postmortem.json", "z14_validation": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z14_final_validation.json", "z14_manifest": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z14_artifact_manifest.json", "z14_closeout": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z14_closeout.json"},
-    "checks": {"input_inventory": "45/45", "y2_manifest": "6/6", "y2_self_hashes": "3/3", "z4_manifest_entries": 11, "z4_manifest_exact": true, "z5_physics_steps": 28, "z5_stage": "approach_grasp", "z5_failure_reason": "stage_stall:approach_grasp", "z5_worker_result": "failed_gate", "z5_parent_classification": "infrastructure", "strict_json": true, "np_no_pickle_finite": true, "csv_lf": true, "no_partial": true, "z14_manifest_entries": 28, "z14_manifest_exact": true, "py_compile": true, "targeted_tests": "10 passed", "full_tests": "281 passed, 7 skipped, 23 warnings", "canonical_resolution": "passed_physics_steps_0"},
-    "counts": {"exact_reverse_demo": 0, "pending_autogen": 0, "accepted_reverse_demo": 0},
-    "source_identity": {"freeze_mode": "post_commit_git_note", "note_ref": "refs/notes/axis-pi05-track3-z5-source-identity", "run_root_commit": "933f4d3afb70ca31c95d55881d404b97cb3687d5", "self_assertion": false, "post_attempt_source_fix_commits": ["614220d93328de7e12e508f96917b2767e0f4be3", "89428e972671379603f0d04ebdcf94b8c449a281"], "status": "run_frozen_pre_finalizer_fix"},
-    "resource_boundary": {"simulator_created": true, "env_step_called": true, "cuda_initialized": false, "cpu_no_renderer": true, "gpu0_touched": false, "gpu1_touched": false, "gpu2_touched": false, "gpu3_touched": false, "official_gpu": false, "generation": false, "replay": false, "training": false, "norm": false, "fast": false, "zip": false, "upload": false, "submit": false, "libero_plus_existing_dirty_untouched": true, "hard_stop": true},
+    "phase_status": {
+      "Z0": "passed",
+      "Z1": "passed",
+      "Z2": "passed",
+      "Z3": "passed",
+      "Z4": "passed_clean_release",
+      "Z5": "track3_runtime_stopped_Z5_infrastructure_failure",
+      "Z6": "not_evaluated",
+      "Z7": "not_evaluated",
+      "Z8": "not_evaluated",
+      "Z9": "not_evaluated",
+      "Z10": "not_evaluated",
+      "Z11": "not_evaluated",
+      "Z12": "not_evaluated",
+      "Z13": "not_evaluated",
+      "Z14": "hard_stop"
+    },
+    "reports": {
+      "z0": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z0_input_lock.json",
+      "z1": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z1_cli_dispatch_contract.json",
+      "z2": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z2_source_identity_contract.json",
+      "z3": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z3_phase_ledger_contract.json",
+      "z4": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_prephysics_release.json",
+      "z4_validation": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_final_validation.json",
+      "z4_manifest": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_artifact_manifest.json",
+      "z4_closeout": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z4_closeout.json",
+      "z5_parent": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_cpu_task10_demo0_nominal/parent_result.json",
+      "z5_child": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_cpu_task10_demo0_nominal/child_result.json",
+      "z5_postmortem": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z5_infrastructure_postmortem.json",
+      "z14_validation": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z14_final_validation.json",
+      "z14_manifest": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z14_artifact_manifest.json",
+      "z14_closeout": "data/reports/axis_libero_30k/track3_y3_launch_phase_ledger_remediation/z14_closeout.json"
+    },
+    "checks": {
+      "input_inventory": "45/45",
+      "y2_manifest": "6/6",
+      "y2_self_hashes": "3/3",
+      "z4_manifest_entries": 11,
+      "z4_manifest_exact": true,
+      "z5_physics_steps": 28,
+      "z5_stage": "approach_grasp",
+      "z5_failure_reason": "stage_stall:approach_grasp",
+      "z5_worker_result": "failed_gate",
+      "z5_parent_classification": "infrastructure",
+      "strict_json": true,
+      "np_no_pickle_finite": true,
+      "csv_lf": true,
+      "no_partial": true,
+      "z14_manifest_entries": 28,
+      "z14_manifest_exact": true,
+      "py_compile": true,
+      "targeted_tests": "10 passed",
+      "full_tests": "281 passed, 7 skipped, 23 warnings",
+      "canonical_resolution": "passed_physics_steps_0"
+    },
+    "counts": {
+      "exact_reverse_demo": 0,
+      "pending_autogen": 0,
+      "accepted_reverse_demo": 0
+    },
+    "source_identity": {
+      "freeze_mode": "post_commit_git_note",
+      "note_ref": "refs/notes/axis-pi05-track3-z5-source-identity",
+      "run_root_commit": "933f4d3afb70ca31c95d55881d404b97cb3687d5",
+      "self_assertion": false,
+      "post_attempt_source_fix_commits": [
+        "614220d93328de7e12e508f96917b2767e0f4be3",
+        "89428e972671379603f0d04ebdcf94b8c449a281"
+      ],
+      "status": "run_frozen_pre_finalizer_fix"
+    },
+    "resource_boundary": {
+      "simulator_created": true,
+      "env_step_called": true,
+      "cuda_initialized": false,
+      "cpu_no_renderer": true,
+      "gpu0_touched": false,
+      "gpu1_touched": false,
+      "gpu2_touched": false,
+      "gpu3_touched": false,
+      "official_gpu": false,
+      "generation": false,
+      "replay": false,
+      "training": false,
+      "norm": false,
+      "fast": false,
+      "zip": false,
+      "upload": false,
+      "submit": false,
+      "libero_plus_existing_dirty_untouched": true,
+      "hard_stop": true
+    },
     "next_phase_only": "superseded_by_track3_z5_derived_release_and_conservative_continuation_plan"
   },
   "track3_y3_launch_z0_z14_audit": {
@@ -3839,7 +4654,11 @@
       "z5_identity_exact": true,
       "z5_physics_steps": 28,
       "z6_to_z13_not_evaluated": true,
-      "exact_pending_accepted": [0, 0, 0],
+      "exact_pending_accepted": [
+        0,
+        0,
+        0
+      ],
       "root_and_openpi_clean": true,
       "libero_plus_dirty_preserved": true,
       "no_live_track3_process": true,
@@ -3872,7 +4691,23 @@
     "status": "track3_z5_derived_release_and_conservative_continuation_completed_and_audited",
     "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_Z5_DERIVED_RELEASE_AND_CONSERVATIVE_CONTINUATION_PLAN.md",
     "audited_input_commit": "5a270a912362376cbfa13a7f9e9fd66c8b5d6237",
-    "authorized_phases": ["AA0", "AA1", "AA2", "AA3", "AA4", "AA5", "AA6", "AA7", "AA8", "AA9", "AA10", "AA11", "AA12", "AA13", "AA14_closeout"],
+    "authorized_phases": [
+      "AA0",
+      "AA1",
+      "AA2",
+      "AA3",
+      "AA4",
+      "AA5",
+      "AA6",
+      "AA7",
+      "AA8",
+      "AA9",
+      "AA10",
+      "AA11",
+      "AA12",
+      "AA13",
+      "AA14_closeout"
+    ],
     "authorization": {
       "user_manual_action": false,
       "historical_evidence_rewrite": false,
@@ -3890,10 +4725,16 @@
       "total_fresh_replays_max": 36,
       "accepted_replay_gate": "3/3",
       "holdout_demo": "demo2",
-      "forward_reverse_sampling": [0.8, 0.2],
+      "forward_reverse_sampling": [
+        0.8,
+        0.2
+      ],
       "fresh_quantiles_required": true,
       "initialization": "r6_dual_l2_fresh500_r1_step500_params",
-      "training_gpus": [1, 2],
+      "training_gpus": [
+        1,
+        2
+      ],
       "training_precision": "float32",
       "screen_steps_each": 100,
       "winner_max_steps": 1000,
@@ -4025,9 +4866,17 @@
       "aa5_category": "family_failure",
       "aa5_process_returncode": 0,
       "aa5_physics_steps": 76,
-      "aa5_phase_counts": {"approach_grasp": 49, "descend_grasp": 21, "close_gripper": 6},
+      "aa5_phase_counts": {
+        "approach_grasp": 49,
+        "descend_grasp": 21,
+        "close_gripper": 6
+      },
       "aa6_to_aa13_not_evaluated": true,
-      "exact_pending_accepted": [0, 0, 0],
+      "exact_pending_accepted": [
+        0,
+        0,
+        0
+      ],
       "targeted_tests_before_lifecycle_update": "44_passed",
       "full_tests_before_lifecycle_update": "287_passed_7_skipped_23_warnings",
       "targeted_tests_after_lifecycle_update": "45_passed",
@@ -4074,16 +4923,36 @@
     "cpu_matrix": {
       "executed": 7,
       "maximum": 7,
-      "support_remove": {"executed": 3, "family_success": 0, "family_failure": 2, "infrastructure_failure": 1, "old_identity_rerun": false},
-      "containment_remove": {"executed": 2, "family_success": 0, "family_failure": 2, "old_identity_rerun": false},
-      "articulation_close": {"executed": 2, "family_success": 0, "family_failure": 2, "old_identity_rerun": false},
+      "support_remove": {
+        "executed": 3,
+        "family_success": 0,
+        "family_failure": 2,
+        "infrastructure_failure": 1,
+        "old_identity_rerun": false
+      },
+      "containment_remove": {
+        "executed": 2,
+        "family_success": 0,
+        "family_failure": 2,
+        "old_identity_rerun": false
+      },
+      "articulation_close": {
+        "executed": 2,
+        "family_success": 0,
+        "family_failure": 2,
+        "old_identity_rerun": false
+      },
       "infrastructure_failure_identity": "support_contact_repair_a",
       "infrastructure_failure_reason": "executor_missing_delayed_numpy_import; preserved and did not rerun identity"
     },
     "gpu3_camera_canaries": 0,
     "generation": 0,
     "fresh_replays": 0,
-    "accepted_reverse_demos": [0, 0, 0],
+    "accepted_reverse_demos": [
+      0,
+      0,
+      0
+    ],
     "training_started": false,
     "candidate_zip_created": false,
     "fallback": {
@@ -4098,17 +4967,61 @@
     },
     "final_manifest": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/final_manifest.json",
     "phase_ledger_csv": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/phase_ledger.csv",
-    "validation": {"path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/tz9_validation.json", "status": "passed", "strict_json_files": 23, "strict_json_files_including_machine_handoff": 24, "partial_residue": 0, "gpu0_to_gpu3_compute_processes": 0},
-    "tests": {"targeted": {"passed": 50, "skipped": 0, "warnings": 2, "returncode": 0}, "project_full_tests": {"passed": 293, "skipped": 7, "warnings": 23, "returncode": 0}, "command_scope": "PYTHONPATH=. ./.venv_axis_pi05/bin/pytest -q tests", "external_nested_pytest_collection": "not_project_full_test_scope; not modified"},
-    "resource_boundary": {"gpu0_compute": false, "official_gpu": false, "teleop": false, "dense_full_ft": false, "upload": false, "submission": false},
-    "hard_stop": {"status": "hard_stop", "next_authority": "new_reviewed_plan_required", "deadline_jst": "2026-09-06T23:00:00+09:00"},
+    "validation": {
+      "path": "data/reports/axis_libero_30k/track3_tonight_zip_and_crossfamily_recovery/tz9_validation.json",
+      "status": "passed",
+      "strict_json_files": 23,
+      "strict_json_files_including_machine_handoff": 24,
+      "partial_residue": 0,
+      "gpu0_to_gpu3_compute_processes": 0
+    },
+    "tests": {
+      "targeted": {
+        "passed": 50,
+        "skipped": 0,
+        "warnings": 2,
+        "returncode": 0
+      },
+      "project_full_tests": {
+        "passed": 293,
+        "skipped": 7,
+        "warnings": 23,
+        "returncode": 0
+      },
+      "command_scope": "PYTHONPATH=. ./.venv_axis_pi05/bin/pytest -q tests",
+      "external_nested_pytest_collection": "not_project_full_test_scope; not modified"
+    },
+    "resource_boundary": {
+      "gpu0_compute": false,
+      "official_gpu": false,
+      "teleop": false,
+      "dense_full_ft": false,
+      "upload": false,
+      "submission": false
+    },
+    "hard_stop": {
+      "status": "hard_stop",
+      "next_authority": "new_reviewed_plan_required",
+      "deadline_jst": "2026-09-06T23:00:00+09:00"
+    },
     "historical_evidence_rewritten": false
   },
   "track3_tonight_zip_and_crossfamily_recovery_authorization": {
     "status": "track3_tonight_zip_and_crossfamily_recovery_completed_and_audited_remediation_required",
     "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_TONIGHT_ZIP_AND_CROSSFAMILY_RECOVERY_PLAN.md",
     "audited_input_commit": "0e7e495d6a8c4dd9abb32525d117eda8166d1a8c",
-    "authorized_phases": ["TZ0", "TZ1", "TZ2", "TZ3", "TZ4", "TZ5", "TZ6", "TZ7", "TZ8", "TZ9_closeout"],
+    "authorized_phases": [
+      "TZ0",
+      "TZ1",
+      "TZ2",
+      "TZ3",
+      "TZ4",
+      "TZ5",
+      "TZ6",
+      "TZ7",
+      "TZ8",
+      "TZ9_closeout"
+    ],
     "deadline_jst": "2026-09-06T23:00:00+09:00",
     "authorization": {
       "materialize_revalidated_r6_fallback_zip": true,
@@ -4124,13 +5037,19 @@
       "total_fresh_replays_max": 18,
       "accepted_replay_gate": "3/3",
       "holdout_demo": "demo2",
-      "forward_reverse_sampling": [0.8, 0.2],
+      "forward_reverse_sampling": [
+        0.8,
+        0.2
+      ],
       "fresh_quantiles_required": true,
       "initialization": "r6_dual_l2_fresh500_r1_step500_params",
       "lora_topology": "L2_action_lora_heads",
-      "training_gpus": [1, 2],
+      "training_gpus": [
+        1,
+        2
+      ],
       "training_precision": "float32",
-      "peak_lr": 1e-6,
+      "peak_lr": 1e-06,
       "screen_steps": 100,
       "conditional_max_steps": 500,
       "reverse_improvement_min_successes": 1,
@@ -4170,11 +5089,23 @@
       "fallback_validation_report_hashes_exact": "8/8",
       "cpu_attempts_consumed": 7,
       "first_attempt_category": "infrastructure_failure",
-      "diagnostic_family_failures": {"support_remove": 2, "containment_remove": 2, "articulation_close": 2},
+      "diagnostic_family_failures": {
+        "support_remove": 2,
+        "containment_remove": 2,
+        "articulation_close": 2
+      },
       "successful_families": 0,
       "tz3_to_tz8": "not_evaluated",
-      "gpu3_generation_replay": [0, 0, 0],
-      "exact_pending_accepted": [0, 0, 0],
+      "gpu3_generation_replay": [
+        0,
+        0,
+        0
+      ],
+      "exact_pending_accepted": [
+        0,
+        0,
+        0
+      ],
       "training_started": false,
       "candidate_zip_created": false,
       "namespace_strict_json": "23/23",
@@ -4208,7 +5139,14 @@
     "status": "track3_tz_evidence_and_executor_contract_remediation_completed_and_audited_remediation_required",
     "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_TZ_EVIDENCE_AND_EXECUTOR_CONTRACT_REMEDIATION_PLAN.md",
     "audited_input_commit": "2ae08e974d6be9ac59541236ce7ddb1d7f288dd6",
-    "authorized_phases": ["ER0", "ER1", "ER2", "ER3", "ER4", "ER5_closeout"],
+    "authorized_phases": [
+      "ER0",
+      "ER1",
+      "ER2",
+      "ER3",
+      "ER4",
+      "ER5_closeout"
+    ],
     "authorization": {
       "derived_old_tz_evidence_closure": true,
       "real_single_instance_supervisor": true,
@@ -4246,20 +5184,107 @@
     "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
     "evidence_root": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation",
     "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_TZ_EVIDENCE_AND_EXECUTOR_CONTRACT_REMEDIATION_PLAN.md",
-    "phase_status": {"ER0": "passed", "ER1": "passed", "ER2": "passed", "ER3": "passed", "ER4": "completed_three_family_failures", "ER5": "hard_stop"},
-    "derived_old_evidence": {"old_json": "23/23_strict", "old_npz": "6/6_object_dtype_no_pickle_failures_preserved", "old_trace_identical_groups": 3, "first_infrastructure_failure": "support_contact_repair_a", "diagnostic_family_failures": {"support_remove": 2, "containment_remove": 2, "articulation_close": 2}},
-    "new_cpu_canaries": {"max_authorized": 3, "executed": 3, "order": ["support_remove", "containment_remove", "articulation_close"], "statuses": {"support_remove": "family_failure", "containment_remove": "family_failure", "articulation_close": "family_failure"}, "successful_families": 0, "old_identity_rerun": false, "training_eligible": false},
-    "fallback": {"delivered_zip_kind": "r6_fallback", "readiness": "fallback_no_track3_improvement", "absolute_path": "/home/huang/code/PARC2026_final/artifacts/submission_axis_r6_fallback_revalidated_20260906.zip", "bytes": 9383571677, "sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a", "crc_test": "passed", "entry_count": 3401, "new_candidate_zip_created": false, "recommended_for_track3_submission": false},
-    "accepted_reverse_demos": [0, 0, 0],
+    "phase_status": {
+      "ER0": "passed",
+      "ER1": "passed",
+      "ER2": "passed",
+      "ER3": "passed",
+      "ER4": "completed_three_family_failures",
+      "ER5": "hard_stop"
+    },
+    "derived_old_evidence": {
+      "old_json": "23/23_strict",
+      "old_npz": "6/6_object_dtype_no_pickle_failures_preserved",
+      "old_trace_identical_groups": 3,
+      "first_infrastructure_failure": "support_contact_repair_a",
+      "diagnostic_family_failures": {
+        "support_remove": 2,
+        "containment_remove": 2,
+        "articulation_close": 2
+      }
+    },
+    "new_cpu_canaries": {
+      "max_authorized": 3,
+      "executed": 3,
+      "order": [
+        "support_remove",
+        "containment_remove",
+        "articulation_close"
+      ],
+      "statuses": {
+        "support_remove": "family_failure",
+        "containment_remove": "family_failure",
+        "articulation_close": "family_failure"
+      },
+      "successful_families": 0,
+      "old_identity_rerun": false,
+      "training_eligible": false
+    },
+    "fallback": {
+      "delivered_zip_kind": "r6_fallback",
+      "readiness": "fallback_no_track3_improvement",
+      "absolute_path": "/home/huang/code/PARC2026_final/artifacts/submission_axis_r6_fallback_revalidated_20260906.zip",
+      "bytes": 9383571677,
+      "sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a",
+      "crc_test": "passed",
+      "entry_count": 3401,
+      "new_candidate_zip_created": false,
+      "recommended_for_track3_submission": false
+    },
+    "accepted_reverse_demos": [
+      0,
+      0,
+      0
+    ],
     "training_started": false,
-    "gpu3_generation_replay": [0, 0, 0],
+    "gpu3_generation_replay": [
+      0,
+      0,
+      0
+    ],
     "final_manifest": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/artifact_manifest.json",
     "outer_hash": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/outer_hash.json",
-    "final_validation": {"path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/final_validation.json", "status": "passed", "strict_json_files": 18, "typed_npz_files": 3, "csv_lf": true, "py_compile": true, "git_diff_check": true, "gpu_compute_apps": 0},
-    "tests": {"targeted": "15 passed", "project_full": "308 passed, 7 skipped, 23 warnings"},
-    "repository": {"root_commit": "04eef24161bfe62adc9a51378235f73b34e6ac51", "root_clean_before_final_docs": true, "openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1", "openpi_clean": true, "libero_plus_preexisting_dirty_preserved": true, "live_workers": 0},
-    "resource_boundary": {"gpu0": false, "gpu1": false, "gpu2": false, "gpu3": false, "official_gpu": false, "teleop": false, "generation": false, "replay": false, "accepted_data": false, "training": false, "new_candidate_zip": false, "upload": false, "submission": false},
-    "hard_stop": {"status": "hard_stop", "next_authority": "new_reviewed_plan_required"},
+    "final_validation": {
+      "path": "data/reports/axis_libero_30k/track3_tz_evidence_and_executor_contract_remediation/final_validation.json",
+      "status": "passed",
+      "strict_json_files": 18,
+      "typed_npz_files": 3,
+      "csv_lf": true,
+      "py_compile": true,
+      "git_diff_check": true,
+      "gpu_compute_apps": 0
+    },
+    "tests": {
+      "targeted": "15 passed",
+      "project_full": "308 passed, 7 skipped, 23 warnings"
+    },
+    "repository": {
+      "root_commit": "04eef24161bfe62adc9a51378235f73b34e6ac51",
+      "root_clean_before_final_docs": true,
+      "openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+      "openpi_clean": true,
+      "libero_plus_preexisting_dirty_preserved": true,
+      "live_workers": 0
+    },
+    "resource_boundary": {
+      "gpu0": false,
+      "gpu1": false,
+      "gpu2": false,
+      "gpu3": false,
+      "official_gpu": false,
+      "teleop": false,
+      "generation": false,
+      "replay": false,
+      "accepted_data": false,
+      "training": false,
+      "new_candidate_zip": false,
+      "upload": false,
+      "submission": false
+    },
+    "hard_stop": {
+      "status": "hard_stop",
+      "next_authority": "new_reviewed_plan_required"
+    },
     "historical_evidence_rewritten": false
   },
   "track3_tz_er0_er5_audit": {
@@ -4277,11 +5302,23 @@
       "er_namespace_files": 29,
       "er_namespace_git_tracked_files": 0,
       "new_cpu_attempts": 3,
-      "new_cpu_statuses": {"support_remove": "family_failure", "containment_remove": "family_failure", "articulation_close": "family_failure"},
-      "controller_saturation_counts": {"support_remove": 10, "containment_remove": 5, "articulation_close": 10},
+      "new_cpu_statuses": {
+        "support_remove": "family_failure",
+        "containment_remove": "family_failure",
+        "articulation_close": "family_failure"
+      },
+      "controller_saturation_counts": {
+        "support_remove": 10,
+        "containment_remove": 5,
+        "articulation_close": 10
+      },
       "trace_no_pickle_finite": "3/3",
       "successful_families": 0,
-      "accepted_training_candidate": [0, false, false],
+      "accepted_training_candidate": [
+        0,
+        false,
+        false
+      ],
       "fallback_bytes": 9383571677,
       "fallback_sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a",
       "fallback_crc_entries_fast_only": "passed_3401_entries_one_fast_zero_slow",
@@ -4310,7 +5347,13 @@
     "status": "track3_er_evidence_anchor_and_finalizer_verification_completed_and_audited_approved",
     "plan": "docs/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md",
     "audited_input_commit": "c2d9f23bb0bbe13a0860aeb4fecf3a75c932ae0d",
-    "authorized_phases": ["EF0", "EF1", "EF2", "EF3", "EF4_closeout"],
+    "authorized_phases": [
+      "EF0",
+      "EF1",
+      "EF2",
+      "EF3",
+      "EF4_closeout"
+    ],
     "new_physics_identities": 0,
     "authorization": {
       "anchor_existing_er_bytes_without_rewrite": true,
@@ -4342,20 +5385,84 @@
     "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
     "evidence_root": "data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification",
     "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ER_EVIDENCE_ANCHOR_AND_FINALIZER_VERIFICATION_PLAN.md",
-    "phase_status": {"EF0": "passed", "EF1": "passed", "EF2": "passed", "EF3": "passed", "EF4": "passed_hard_stop"},
+    "phase_status": {
+      "EF0": "passed",
+      "EF1": "passed",
+      "EF2": "passed",
+      "EF3": "passed",
+      "EF4": "passed_hard_stop"
+    },
     "new_physics_identities": 0,
     "old_er_or_tz_identity_rerun": false,
-    "supervisor_fixture": {"singleton": "passed", "periodic_heartbeat_updates": ">=4", "normal_family_failure_returncode": 0, "timeout_order": ["SIGTERM", "grace", "SIGKILL"], "no_descendants": true, "sticky_stop": "passed"},
-    "identity_resume": {"complete_parent_child_fields": "passed", "drift_probes": ["root_dirty", "openpi", "libero_plus", "command", "trace_bytes_sha256"], "legal_resume": "passed"},
-    "contact_gate": {"telemetry_schema_and_physical_required_contact_separate": true, "zero_correlated_contact": "failed", "unentered_stage": "not_evaluated", "typed_no_pickle_finite": true},
-    "fallback": {"kind": "r6_fallback", "readiness": "fallback_no_track3_improvement", "bytes": 9383571677, "sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a", "crc_test": "passed", "entry_count": 3401, "new_candidate_zip_created": false},
+    "supervisor_fixture": {
+      "singleton": "passed",
+      "periodic_heartbeat_updates": ">=4",
+      "normal_family_failure_returncode": 0,
+      "timeout_order": [
+        "SIGTERM",
+        "grace",
+        "SIGKILL"
+      ],
+      "no_descendants": true,
+      "sticky_stop": "passed"
+    },
+    "identity_resume": {
+      "complete_parent_child_fields": "passed",
+      "drift_probes": [
+        "root_dirty",
+        "openpi",
+        "libero_plus",
+        "command",
+        "trace_bytes_sha256"
+      ],
+      "legal_resume": "passed"
+    },
+    "contact_gate": {
+      "telemetry_schema_and_physical_required_contact_separate": true,
+      "zero_correlated_contact": "failed",
+      "unentered_stage": "not_evaluated",
+      "typed_no_pickle_finite": true
+    },
+    "fallback": {
+      "kind": "r6_fallback",
+      "readiness": "fallback_no_track3_improvement",
+      "bytes": 9383571677,
+      "sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a",
+      "crc_test": "passed",
+      "entry_count": 3401,
+      "new_candidate_zip_created": false
+    },
     "final_manifest": "data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/artifact_manifest.json",
     "outer_hash": "data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/outer_hash.json",
     "final_validation": "data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/final_validation.json",
     "closed_heartbeat": "data/reports/axis_libero_30k/track3_er_evidence_anchor_and_finalizer_verification/heartbeat.json",
-    "tests": {"targeted": "7 passed", "full": "320 passed, 7 skipped, 23 warnings", "returncodes": {"targeted": 0, "full": 0}},
-    "resource_boundary": {"gpu0": false, "gpu1": false, "gpu2": false, "gpu3": false, "official_gpu": false, "physics": false, "generation": false, "replay": false, "accepted_data": false, "training": false, "new_candidate_zip": false, "upload": false, "submission": false},
-    "hard_stop": {"status": "hard_stop", "next_authority": "new_reviewed_plan_required"},
+    "tests": {
+      "targeted": "7 passed",
+      "full": "320 passed, 7 skipped, 23 warnings",
+      "returncodes": {
+        "targeted": 0,
+        "full": 0
+      }
+    },
+    "resource_boundary": {
+      "gpu0": false,
+      "gpu1": false,
+      "gpu2": false,
+      "gpu3": false,
+      "official_gpu": false,
+      "physics": false,
+      "generation": false,
+      "replay": false,
+      "accepted_data": false,
+      "training": false,
+      "new_candidate_zip": false,
+      "upload": false,
+      "submission": false
+    },
+    "hard_stop": {
+      "status": "hard_stop",
+      "next_authority": "new_reviewed_plan_required"
+    },
     "historical_evidence_rewritten": false
   },
   "track3_er_evidence_anchor_and_finalizer_verification_audit": {
@@ -4418,14 +5525,81 @@
     "execution_nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
     "audit_report_commit": "ad4f34e81ccaa39397f5ac550dd41f21734f47cb",
     "evidence_root": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_remediation",
-    "phase_status": {"EG0": "passed", "EG1": "passed", "EG2": "passed", "EG3": "passed", "EG4": "passed_hard_stop"},
-    "eg0_provenance_gap": {"first_failed_final_validation_raw": "unavailable", "first_failed_test_stdout_stderr_raw": "unavailable", "first_failed_partial_inventory_raw": "unavailable", "raw_recovery_candidate_found": false, "derived_record_is_not_raw": true, "reconstruction_forbidden": true},
-    "eg1_attempt_specific_finalizer": {"fixture_attempts": [1, 2], "fixture_first_attempt_bytes_unchanged_after_retry": true, "preserved_closeout_attempts": [3, 4, 5], "latest_attempt_id": 5, "attempt_0003_status": "failed_full_tests_lifecycle_expectations", "attempt_0004_status": "failed_root_aggregate_collision_preserved", "attempt_0005_status": "passed", "attempt_ids_monotonic_non_reusable": true},
-    "eg2_clean_source_and_independence": {"fixture_source_commit": "1c74589ca93cd6ab7d0a9e79c6e86ee3ca7cf9af", "finalizer_source_commit": "0799142b92ad3e799dd2d1b78ca964f07dd87587", "audit_input_commit": "b1195dd59830f7c44d831bd0007e61229446d9b5", "same_commit_audit": false, "dirty_and_command_drift_fail_closed": true, "physics_started": false},
-    "eg4_closeout": {"latest_attempt_id": 5, "targeted_tests": "7 passed", "full_tests": "332 passed, 7 skipped, 23 warnings", "strict_json_files": 72, "typed_npz_no_pickle_finite": "1/1", "csv_lf": true, "fallback": {"bytes": 9383571677, "sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a", "crc": "passed", "entries": 3401, "fast_only": true}, "process_workers": 0, "gpu_compute_apps": 0, "py_compile": true, "git_diff_check": true, "partial_files": 0, "new_physics_identities": 0, "old_identity_rerun": false, "new_candidate_zip_created": false, "generation": false, "replay": false, "training": false, "upload": false, "submission": false},
+    "phase_status": {
+      "EG0": "passed",
+      "EG1": "passed",
+      "EG2": "passed",
+      "EG3": "passed",
+      "EG4": "passed_hard_stop"
+    },
+    "eg0_provenance_gap": {
+      "first_failed_final_validation_raw": "unavailable",
+      "first_failed_test_stdout_stderr_raw": "unavailable",
+      "first_failed_partial_inventory_raw": "unavailable",
+      "raw_recovery_candidate_found": false,
+      "derived_record_is_not_raw": true,
+      "reconstruction_forbidden": true
+    },
+    "eg1_attempt_specific_finalizer": {
+      "fixture_attempts": [
+        1,
+        2
+      ],
+      "fixture_first_attempt_bytes_unchanged_after_retry": true,
+      "preserved_closeout_attempts": [
+        3,
+        4,
+        5
+      ],
+      "latest_attempt_id": 5,
+      "attempt_0003_status": "failed_full_tests_lifecycle_expectations",
+      "attempt_0004_status": "failed_root_aggregate_collision_preserved",
+      "attempt_0005_status": "passed",
+      "attempt_ids_monotonic_non_reusable": true
+    },
+    "eg2_clean_source_and_independence": {
+      "fixture_source_commit": "1c74589ca93cd6ab7d0a9e79c6e86ee3ca7cf9af",
+      "finalizer_source_commit": "0799142b92ad3e799dd2d1b78ca964f07dd87587",
+      "audit_input_commit": "b1195dd59830f7c44d831bd0007e61229446d9b5",
+      "same_commit_audit": false,
+      "dirty_and_command_drift_fail_closed": true,
+      "physics_started": false
+    },
+    "eg4_closeout": {
+      "latest_attempt_id": 5,
+      "targeted_tests": "7 passed",
+      "full_tests": "332 passed, 7 skipped, 23 warnings",
+      "strict_json_files": 72,
+      "typed_npz_no_pickle_finite": "1/1",
+      "csv_lf": true,
+      "fallback": {
+        "bytes": 9383571677,
+        "sha256": "95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a",
+        "crc": "passed",
+        "entries": 3401,
+        "fast_only": true
+      },
+      "process_workers": 0,
+      "gpu_compute_apps": 0,
+      "py_compile": true,
+      "git_diff_check": true,
+      "partial_files": 0,
+      "new_physics_identities": 0,
+      "old_identity_rerun": false,
+      "new_candidate_zip_created": false,
+      "generation": false,
+      "replay": false,
+      "training": false,
+      "upload": false,
+      "submission": false
+    },
     "historical_namespaces_modified": false,
     "libero_plus_preexisting_dirty_preserved": true,
-    "hard_stop": {"status": "hard_stop", "next_phase_only": "new_reviewed_plan_required", "automatic_resume": false}
+    "hard_stop": {
+      "status": "hard_stop",
+      "next_phase_only": "new_reviewed_plan_required",
+      "automatic_resume": false
+    }
   },
   "track3_ef_failure_provenance_and_lifecycle_remediation_audit": {
     "status": "approved",
@@ -4437,8 +5611,28 @@
     "audit_report": "docs/reviews/axis_pi05/TRACK3_EF_FAILURE_PROVENANCE_AND_LIFECYCLE_REMEDIATION_AUDIT_20260906.md",
     "audit_summary": "data/reports/axis_libero_30k/track3_ef_failure_provenance_and_lifecycle_audit_20260906/summary.json",
     "supersedes_pending_execution_review": true,
-    "verified": {"eg0_to_eg4": "passed", "attempt_0005": "passed", "root_manifest_entries": 73, "strict_json": "94/94", "targeted_tests": "7 passed", "full_tests": "332 passed, 7 skipped, 23 warnings", "post_audit_targeted_tests": "14 passed", "post_audit_full_tests": "334 passed, 7 skipped, 23 warnings", "fallback": "9383571677 bytes/SHA/CRC/3401/FAST-only passed", "process_workers": 0, "gpu_compute_apps": 0, "partial_files": 0},
-    "findings": {"first_failed_raw_unavailable_honestly_recorded": true, "attempt_specific_non_overwrite": true, "clean_source_and_identity_gates": true, "lifecycle_pointers_consistent": true, "historical_namespaces_unchanged": true, "forbidden_actions_absent": true},
+    "verified": {
+      "eg0_to_eg4": "passed",
+      "attempt_0005": "passed",
+      "root_manifest_entries": 73,
+      "strict_json": "94/94",
+      "targeted_tests": "7 passed",
+      "full_tests": "332 passed, 7 skipped, 23 warnings",
+      "post_audit_targeted_tests": "14 passed",
+      "post_audit_full_tests": "334 passed, 7 skipped, 23 warnings",
+      "fallback": "9383571677 bytes/SHA/CRC/3401/FAST-only passed",
+      "process_workers": 0,
+      "gpu_compute_apps": 0,
+      "partial_files": 0
+    },
+    "findings": {
+      "first_failed_raw_unavailable_honestly_recorded": true,
+      "attempt_specific_non_overwrite": true,
+      "clean_source_and_identity_gates": true,
+      "lifecycle_pointers_consistent": true,
+      "historical_namespaces_unchanged": true,
+      "forbidden_actions_absent": true
+    },
     "next_plan": null,
     "next_phase_only": "new_reviewed_plan_required"
   },
@@ -4446,7 +5640,13 @@
     "status": "completed_hard_stop",
     "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_EF_FAILURE_PROVENANCE_AND_LIFECYCLE_REMEDIATION_PLAN.md",
     "audit_input_root_commit": "b1195dd59830f7c44d831bd0007e61229446d9b5",
-    "authorized_phases": ["EG0", "EG1", "EG2", "EG3", "EG4_closeout"],
+    "authorized_phases": [
+      "EG0",
+      "EG1",
+      "EG2",
+      "EG3",
+      "EG4_closeout"
+    ],
     "authorization": {
       "immutable_audit_input_and_gap_record": true,
       "attempt_specific_finalizer_code_and_tests": true,
@@ -4529,10 +5729,22 @@
     "status": "completed_hard_stop_audited_remediation_required",
     "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_CROSSFAMILY_ACQUISITION_RECOVERY_CANARY_PLAN.md",
     "audit_input_root_commit": "4bbfe7eb7fdb404085f39712aae94572c9d0fbce",
-    "authorized_phases": ["AC0", "AC1", "AC2", "AC3", "AC4", "AC5", "AC6_closeout"],
+    "authorized_phases": [
+      "AC0",
+      "AC1",
+      "AC2",
+      "AC3",
+      "AC4",
+      "AC5",
+      "AC6_closeout"
+    ],
     "new_cpu_physics_identities_max": 3,
     "new_cpu_physics_identities_per_family_max": 1,
-    "family_order": ["support", "containment", "articulation"],
+    "family_order": [
+      "support",
+      "containment",
+      "articulation"
+    ],
     "retry_allowed": false,
     "family_failure_policy": "continue_other_frozen_families",
     "shared_infrastructure_failure_policy": "sticky_global_hard_stop",
@@ -4564,12 +5776,51 @@
       "source_commit": "afabffdb2124a870dd16bd9e2fcf3ba9df246327",
       "evidence_root": "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/attempts/attempt_0001",
       "attempt_id": 1,
-      "phase_status": {"AC0": "passed", "AC1": "passed", "AC2": "passed", "AC3": "passed", "AC4": "completed_three_family_failures", "AC5": "passed", "AC6": "passed_hard_stop"},
-      "actual_new_cpu_identities": ["ac_support_remove_20260906_0001", "ac_containment_remove_20260906_0001", "ac_articulation_close_20260906_0001"],
-      "family_status": {"support_remove": "family_failure", "containment_remove": "family_failure", "articulation_close": "family_failure"},
-      "counts": {"success": 0, "pending_replay_review": 0, "exact": 0, "accepted": 0, "training_eligible": 0},
-      "final_validation": {"status": "passed", "strict_json": "20/20", "targeted_tests": "7 passed", "full_tests": "346 passed, 7 skipped, 23 warnings", "manifest_entries": 28, "closed_heartbeat": true, "inactive_cursor": true, "no_partial": true, "process_workers": 0, "gpu_compute_apps": 0},
-      "partial_observation": {"path": "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/attempts/attempt_0001/ac3_partial_residue_observation.json", "derived_observation_preserved": true, "raw_partial_bytes_preserved": false, "reconstructed": false, "historical_namespaces_modified": false},
+      "phase_status": {
+        "AC0": "passed",
+        "AC1": "passed",
+        "AC2": "passed",
+        "AC3": "passed",
+        "AC4": "completed_three_family_failures",
+        "AC5": "passed",
+        "AC6": "passed_hard_stop"
+      },
+      "actual_new_cpu_identities": [
+        "ac_support_remove_20260906_0001",
+        "ac_containment_remove_20260906_0001",
+        "ac_articulation_close_20260906_0001"
+      ],
+      "family_status": {
+        "support_remove": "family_failure",
+        "containment_remove": "family_failure",
+        "articulation_close": "family_failure"
+      },
+      "counts": {
+        "success": 0,
+        "pending_replay_review": 0,
+        "exact": 0,
+        "accepted": 0,
+        "training_eligible": 0
+      },
+      "final_validation": {
+        "status": "passed",
+        "strict_json": "20/20",
+        "targeted_tests": "7 passed",
+        "full_tests": "346 passed, 7 skipped, 23 warnings",
+        "manifest_entries": 28,
+        "closed_heartbeat": true,
+        "inactive_cursor": true,
+        "no_partial": true,
+        "process_workers": 0,
+        "gpu_compute_apps": 0
+      },
+      "partial_observation": {
+        "path": "data/reports/axis_libero_30k/track3_crossfamily_acquisition_recovery_canary/attempts/attempt_0001/ac3_partial_residue_observation.json",
+        "derived_observation_preserved": true,
+        "raw_partial_bytes_preserved": false,
+        "reconstructed": false,
+        "historical_namespaces_modified": false
+      },
       "historical_er_eg_namespaces_modified": false,
       "hard_stop": true
     },
@@ -4594,9 +5845,21 @@
       "strict_json_current_ac_complete_set": "24/24",
       "typed_npz_no_pickle_finite": "4/4",
       "csv_lf_only": "1/1",
-      "family_categories": ["family_failure", "family_failure", "family_failure"],
-      "trace_steps": [155, 149, 180],
-      "saturation_counts": [10, 5, 10],
+      "family_categories": [
+        "family_failure",
+        "family_failure",
+        "family_failure"
+      ],
+      "trace_steps": [
+        155,
+        149,
+        180
+      ],
+      "saturation_counts": [
+        10,
+        5,
+        10
+      ],
       "targeted_tests_before_lifecycle": "7 passed",
       "full_tests_before_lifecycle": "346 passed, 7 skipped, 23 warnings",
       "live_track3_workers": 0,
@@ -4634,11 +5897,28 @@
     "status": "completed_hard_stop_audited_remediation_required",
     "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_ACQUISITION_GATE_AND_ATTEMPT_LIFECYCLE_REMEDIATION_PLAN.md",
     "audit_input_root_commit": "720733047a687de5cb456830467151c0102e4171",
-    "authorized_phases": ["BR0", "BR1", "BR2", "BR3", "BR4", "BR5", "BR6", "BR7", "BR8", "BR9", "BR10", "BR11_closeout"],
+    "authorized_phases": [
+      "BR0",
+      "BR1",
+      "BR2",
+      "BR3",
+      "BR4",
+      "BR5",
+      "BR6",
+      "BR7",
+      "BR8",
+      "BR9",
+      "BR10",
+      "BR11_closeout"
+    ],
     "physics_requires_br0_through_br8_passed": true,
     "new_cpu_physics_identities_max": 3,
     "new_cpu_physics_identities_per_family_max": 1,
-    "new_identity_order": ["br_support_remove_20260907_0001", "br_containment_remove_20260907_0001", "br_articulation_close_20260907_0001"],
+    "new_identity_order": [
+      "br_support_remove_20260907_0001",
+      "br_containment_remove_20260907_0001",
+      "br_articulation_close_20260907_0001"
+    ],
     "retry_allowed": false,
     "family_failure_policy": "continue_other_frozen_families",
     "shared_infrastructure_failure_policy": "sticky_global_hard_stop",
@@ -4696,7 +5976,11 @@
       "clean_root_observed": false,
       "three_identities_consumed_once": true,
       "retry": false,
-      "family_categories": ["family_failure", "family_failure", "family_failure"],
+      "family_categories": [
+        "family_failure",
+        "family_failure",
+        "family_failure"
+      ],
       "training_eligible": false,
       "promotion_allowed": false,
       "correction": "data/reports/axis_libero_30k/track3_acquisition_gate_attempt_lifecycle_remediation/br9_dirty_source_correction.json"
@@ -4763,7 +6047,14 @@
       "br_git_tracked_bytes_exact": "88/88",
       "strict_json_br_namespace": "71/71",
       "strict_json_with_machine_handoff": "72/72",
-      "attempt_ids_preserved": [1, 2, 3, 4, 5, 6],
+      "attempt_ids_preserved": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "physics_attempt_clean_root": false,
       "diagnostic_family_failures": 3,
       "br_traces_byte_identical_to_ac": 3,
@@ -4803,7 +6094,23 @@
     "status": "completed_hard_stop",
     "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_PLAN.md",
     "audit_input_root_commit": "474d36d7e36aa3f428c8fff3fbf38b8d5db03f05",
-    "authorized_phases": ["CR0", "CR1", "CR2", "CR3", "CR4", "CR5", "CR6", "CR7", "CR8", "CR9", "CR10", "CR11", "CR12", "CR13", "CR14"],
+    "authorized_phases": [
+      "CR0",
+      "CR1",
+      "CR2",
+      "CR3",
+      "CR4",
+      "CR5",
+      "CR6",
+      "CR7",
+      "CR8",
+      "CR9",
+      "CR10",
+      "CR11",
+      "CR12",
+      "CR13",
+      "CR14"
+    ],
     "physics_requires_cr0_through_cr8_passed": true,
     "new_cpu_physics_identities_max": 6,
     "new_cpu_physics_identities_per_family_max": 2,
@@ -4854,9 +6161,25 @@
     "archived_audit_plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_CLEAN_LAUNCH_AND_DIVERSIFIED_CANARY_RECOVERY_INDEPENDENT_AUDIT_PLAN.md",
     "cr0_to_cr8": {
       "attempts": [
-        {"attempt_id": 1, "status": "failed", "physics_started": false, "reason": "normal_fixture_startup_timeout"},
-        {"attempt_id": 2, "status": "failed", "physics_started": false, "reason": "stale_latest_pointer_write_rejected"},
-        {"attempt_id": 3, "status": "passed_clean_source_release", "physics_started": false, "raw_partial_bytes": 43, "synthetic_observation_bytes": 39}
+        {
+          "attempt_id": 1,
+          "status": "failed",
+          "physics_started": false,
+          "reason": "normal_fixture_startup_timeout"
+        },
+        {
+          "attempt_id": 2,
+          "status": "failed",
+          "physics_started": false,
+          "reason": "stale_latest_pointer_write_rejected"
+        },
+        {
+          "attempt_id": 3,
+          "status": "passed_clean_source_release",
+          "physics_started": false,
+          "raw_partial_bytes": 43,
+          "synthetic_observation_bytes": 39
+        }
       ],
       "successful_attempt_id": 3,
       "profile_lock_sha256": "34bd84d30e768af3009282db73275ebffed126d482cbaac9f4446dce67ee8b08",
@@ -4877,9 +6200,18 @@
       "identity_gate_failures": 0,
       "shared_infrastructure_stop_latched": false,
       "families": {
-        "support_remove": {"primary": "family_failure", "alternative": "family_failure"},
-        "containment_remove": {"primary": "family_failure", "alternative": "family_failure"},
-        "articulation_close": {"primary": "family_failure", "alternative": "family_failure"}
+        "support_remove": {
+          "primary": "family_failure",
+          "alternative": "family_failure"
+        },
+        "containment_remove": {
+          "primary": "family_failure",
+          "alternative": "family_failure"
+        },
+        "articulation_close": {
+          "primary": "family_failure",
+          "alternative": "family_failure"
+        }
       }
     },
     "cr11_to_cr14": {
@@ -4998,7 +6330,21 @@
     "status": "completed_hard_stop_audited_remediation_required",
     "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_CONTACT_TRUTH_AND_SUPPORT_GOLD_DEMO_PLAN.md",
     "audit_input_root_commit": "0ce605cf33d33a0d670d190ecf7013d122d8a1a0",
-    "authorized_phases": ["SG0", "SG1", "SG2", "SG3", "SG4", "SG5", "SG6", "SG7", "SG8", "SG9", "SG10", "SG11", "SG12"],
+    "authorized_phases": [
+      "SG0",
+      "SG1",
+      "SG2",
+      "SG3",
+      "SG4",
+      "SG5",
+      "SG6",
+      "SG7",
+      "SG8",
+      "SG9",
+      "SG10",
+      "SG11",
+      "SG12"
+    ],
     "priority_family": "support_remove",
     "fresh_cpu_support_identities_max": 2,
     "same_strategy_retry_allowed": false,
@@ -5044,7 +6390,11 @@
     "evidence_root": "data/reports/axis_libero_30k/track3_contact_truth_and_support_gold_demo",
     "closeout_report": "docs/reviews/axis_pi05/TRACK3_SG0_SG6_EXECUTION_20260907.md",
     "attempts": {
-      "code_fixture_attempts": [1, 2, 3],
+      "code_fixture_attempts": [
+        1,
+        2,
+        3
+      ],
       "sg0_to_sg5_passed_attempt": 3,
       "sg6_attempt": 4,
       "current_attempt_active": false
@@ -5060,7 +6410,14 @@
       "signature_fixed_after_stop": true,
       "rerun_after_fix": false
     },
-    "unexecuted": ["SG7", "SG8", "SG9", "SG10", "SG11", "SG12"],
+    "unexecuted": [
+      "SG7",
+      "SG8",
+      "SG9",
+      "SG10",
+      "SG11",
+      "SG12"
+    ],
     "counts": {
       "success": 0,
       "camera_replay": 0,
@@ -5118,7 +6475,22 @@
     "status": "completed_hard_stop_audited_remediation_required",
     "plan": "docs/archive/axis_pi05/AXIS_PI05_TRACK3_SUPPORT_RUNTIME_GATE_REMEDIATION_AND_GOLD_CONTINUATION_PLAN.md",
     "audit_input_root_commit": "55acd39c17d82c89b4f8e809b8f84d9623c3eb81",
-    "authorized_phases": ["SR0", "SR1", "SR2", "SR3", "SR4", "SR5", "SR6", "SR7", "SR8", "SR9", "SR10", "SR11", "SR12", "SR13"],
+    "authorized_phases": [
+      "SR0",
+      "SR1",
+      "SR2",
+      "SR3",
+      "SR4",
+      "SR5",
+      "SR6",
+      "SR7",
+      "SR8",
+      "SR9",
+      "SR10",
+      "SR11",
+      "SR12",
+      "SR13"
+    ],
     "priority_family": "support_remove",
     "old_sg_launch_attempt_count": 1,
     "old_sg_physics_identity_count": 0,
@@ -5132,7 +6504,13 @@
     "gpu3_exact_action_replays_per_success_max": 3,
     "success_disposition": "pending_gold_review_only",
     "stop_policy": {
-      "global_hard_stop": ["dirty_or_identity_hash_drift", "telemetry_unknown", "gpu_violation", "partial_or_manifest_failure", "supervisor_or_physics_state_unknown"],
+      "global_hard_stop": [
+        "dirty_or_identity_hash_drift",
+        "telemetry_unknown",
+        "gpu_violation",
+        "partial_or_manifest_failure",
+        "supervisor_or_physics_state_unknown"
+      ],
       "runtime_lane_stop": "proven_pre_env_zero_physics_deterministic_code_exception_then_one_preauthorized_code_only_remediation_no_auto_retry",
       "family_outcome": "normal_process_behavior_failure_uses_conditional_route"
     },
@@ -5192,9 +6570,15 @@
       "strict_json_sr_namespace": "27/27",
       "launch_attempt_count": 2,
       "physics_identity_count": 2,
-      "physics_steps_primary_alternative": [96, 112],
+      "physics_steps_primary_alternative": [
+        96,
+        112
+      ],
       "typed_npz_no_pickle_finite": "2/2",
-      "family_categories": ["family_failure", "family_failure"],
+      "family_categories": [
+        "family_failure",
+        "family_failure"
+      ],
       "success_count": 0,
       "teleop_recorded_candidate_count": 0,
       "replay_video_count": 0,
@@ -5221,7 +6605,18 @@
     "status": "ready_for_user_calibration",
     "plan": "docs/AXIS_PI05_TRACK3_SR_CLOSURE_AND_TASK10_USER_TELEOP_GOLD_CANARY_PLAN.md",
     "audit_input_commit": "64f278c7f59dc70f17770e1980522d0313ccda27",
-    "authorized_phases": ["UT0", "UT1", "UT2", "UT3", "UT4", "UT5", "UT6", "UT7", "UT8", "UT9"],
+    "authorized_phases": [
+      "UT0",
+      "UT1",
+      "UT2",
+      "UT3",
+      "UT4",
+      "UT5",
+      "UT6",
+      "UT7",
+      "UT8",
+      "UT9"
+    ],
     "priority_family": "support_remove",
     "new_automatic_physics_identities_max": 0,
     "human_teleop_recorded_candidates_max": 1,
@@ -5264,8 +6659,7 @@
       "submission": false
     },
     "next_phase_only": "UT4_explicit_user_takeover_then_UT5_to_UT9"
-  }
-,
+  },
   "track3_operations_o0r_remediation_20260908": {
     "status": "approved",
     "audit_class": "approved",
@@ -5347,8 +6741,24 @@
     "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
     "preferred_seed": "pending/official_t3_red_mug_1788838632",
     "reference_seed": "pending/official_t3_red_mug_1788838293",
-    "keyposes": {"approach": 145, "grasp": [146, 156], "lift": 157, "transport": 278, "place": 365, "release": 373},
-    "goal_first_target": {"goal_frame": 220, "release_frame": 230, "settle_frame": 240, "total_target_max": 260, "hard_max": 300},
+    "keyposes": {
+      "approach": 145,
+      "grasp": [
+        146,
+        156
+      ],
+      "lift": 157,
+      "transport": 278,
+      "place": 365,
+      "release": 373
+    },
+    "goal_first_target": {
+      "goal_frame": 220,
+      "release_frame": 230,
+      "settle_frame": 240,
+      "total_target_max": 260,
+      "hard_max": 300
+    },
     "historical_raw_modified": false,
     "historical_metadata_modified": false,
     "replay": "not_evaluated",
@@ -5558,60 +6968,59 @@
       "topology": "L2_action_lora_heads"
     },
     "unexecuted": "not_evaluated"
-  }
-,
-  "track3_multitask_gold_and_r6_short_continuation_mg0_execution": {
-  "status": "passed_hard_stop_ready_for_user_calibration",
-  "phase": "MG0_evidence_lock_and_recorder_budget_remediation",
-  "root_source_commit": "20fe0014c19b725feb77cf858a1d1f872aea926b",
-  "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
-  "recorder_source_sha256": "dee3cd22abae4adc3e118e7c472642f9e4730bb0ec2e1cc0aa01c62800c83d5a",
-  "plan": "docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md",
-  "report": "docs/reviews/axis_pi05/TRACK3_MG0_RECORDER_BUDGET_TIMING_20260909.md",
-  "evidence_namespace": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/",
-  "summary": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/summary.json",
-  "manifest": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/manifest.json",
-  "formal_recording_started": false,
-  "no_save_canary_attempts": [
-    "0001",
-    "0002",
-    "0003",
-    "0004"
-  ],
-  "final_ab_attempts": {
-    "2hz": {
-      "attempt": "0003",
-      "result": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/attempt_0003_2hz_no_save_result.json",
-      "interval_mean_s": 0.4987287516705692,
-      "interval_median_s": 0.49654953996650875,
-      "interval_min_s": 0.49647016904782504,
-      "interval_max_s": 0.5031665459973738,
-      "deadline_miss_count": 0,
-      "formal_episode_written": false
-    },
-    "4hz": {
-      "attempt": "0004",
-      "result": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/attempt_0004_4hz_no_save_result.json",
-      "interval_mean_s": 0.24905802118591963,
-      "interval_median_s": 0.24873874092008919,
-      "interval_min_s": 0.24415043194312602,
-      "interval_max_s": 0.25454833707772195,
-      "deadline_miss_count": 0,
-      "formal_episode_written": false
-    }
   },
-  "historical_pacing_failure_preserved": "attempt_0001_browser_only_pacing_observation.json",
-  "candidate_created": false,
-  "pending_created": false,
-  "replay": "not_evaluated",
-  "accepted_count": 0,
-  "training_started": false,
-  "historical_raw_modified": false,
-  "resource_boundary": "final_resource_scan.json",
-  "user_action": "接管 Teleop：official_t3_red_mug",
-  "next_phase_only": "MG1_red_mug_assisted_reexecution",
-  "lifecycle_validation": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/validation.json"
-},
+  "track3_multitask_gold_and_r6_short_continuation_mg0_execution": {
+    "status": "passed_hard_stop_ready_for_user_calibration",
+    "phase": "MG0_evidence_lock_and_recorder_budget_remediation",
+    "root_source_commit": "20fe0014c19b725feb77cf858a1d1f872aea926b",
+    "nested_openpi_commit": "b58aff0750f7a9ee07f3feb5df951a20ad2c76e1",
+    "recorder_source_sha256": "dee3cd22abae4adc3e118e7c472642f9e4730bb0ec2e1cc0aa01c62800c83d5a",
+    "plan": "docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md",
+    "report": "docs/reviews/axis_pi05/TRACK3_MG0_RECORDER_BUDGET_TIMING_20260909.md",
+    "evidence_namespace": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/",
+    "summary": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/summary.json",
+    "manifest": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/manifest.json",
+    "formal_recording_started": false,
+    "no_save_canary_attempts": [
+      "0001",
+      "0002",
+      "0003",
+      "0004"
+    ],
+    "final_ab_attempts": {
+      "2hz": {
+        "attempt": "0003",
+        "result": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/attempt_0003_2hz_no_save_result.json",
+        "interval_mean_s": 0.4987287516705692,
+        "interval_median_s": 0.49654953996650875,
+        "interval_min_s": 0.49647016904782504,
+        "interval_max_s": 0.5031665459973738,
+        "deadline_miss_count": 0,
+        "formal_episode_written": false
+      },
+      "4hz": {
+        "attempt": "0004",
+        "result": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/attempt_0004_4hz_no_save_result.json",
+        "interval_mean_s": 0.24905802118591963,
+        "interval_median_s": 0.24873874092008919,
+        "interval_min_s": 0.24415043194312602,
+        "interval_max_s": 0.25454833707772195,
+        "deadline_miss_count": 0,
+        "formal_episode_written": false
+      }
+    },
+    "historical_pacing_failure_preserved": "attempt_0001_browser_only_pacing_observation.json",
+    "candidate_created": false,
+    "pending_created": false,
+    "replay": "not_evaluated",
+    "accepted_count": 0,
+    "training_started": false,
+    "historical_raw_modified": false,
+    "resource_boundary": "final_resource_scan.json",
+    "user_action": "接管 Teleop：official_t3_red_mug",
+    "next_phase_only": "MG1_red_mug_assisted_reexecution",
+    "lifecycle_validation": "data/reports/axis_libero_30k/track3_operations_mg0_recorder_remediation_20260909/validation.json"
+  },
   "track3_multitask_gold_and_r6_short_continuation_mg1_execution": {
     "status": "mg1_red_mug_attempts_exhausted_family_failure",
     "phase": "MG1_red_mug_assisted_reexecution",
@@ -5650,5 +7059,446 @@
     "upload_or_submission": "not_evaluated",
     "historical_raw_modified": false,
     "next_phase_only": "MG2_alphabet_soup_requires_explicit_user_takeover"
+  },
+  "track3_mg0_mg1_fast_collection_audit": {
+    "schema_version": "track3_mg0_mg1_fast_collection_audit_v1",
+    "audit_class": "remediation_required",
+    "audit_input_commit": "36e8f269ecd30d4a2a6e555e67bd7315011e5dbf",
+    "report": "docs/reviews/axis_pi05/TRACK3_MG0_MG1_FAST_COLLECTION_AUDIT_20260909.md",
+    "summary": "data/reports/axis_libero_30k/track3_mg0_mg1_fast_collection_audit_20260909/summary.json",
+    "verified": {
+      "mg0_strict_json": "15/15",
+      "mg0_manifest_exact": "13/13",
+      "mg1_strict_json": "14/14",
+      "mg1_manifest_exact": "7/7",
+      "manual_npz_typed_no_pickle_finite": true,
+      "manual_video_frames": "300/300"
+    },
+    "closure_gaps": [
+      "missing_outer_hash",
+      "missing_cursor_and_heartbeat",
+      "missing_mg1_final_full_test_evidence",
+      "plan_index_top_stale_against_machine_handoff"
+    ],
+    "historical_raw_modified": false
+  },
+  "track3_fast_teleop_400_and_short_train_authorization": {
+    "status": "plan_ready_recorder_not_yet_implemented",
+    "plan": "docs/AXIS_PI05_TRACK3_FAST_TELEOP_400_AND_SHORT_TRAIN_PLAN.md",
+    "next_phase_only": "FT0_implement_fast_recorder",
+    "recorder": {
+      "direct_gold_max_steps": 400,
+      "process_stops_at_direct_gold_limit": false,
+      "operator_hz": 8.0,
+      "speed_scale_min": 0.5,
+      "speed_scale_default": 1.0,
+      "speed_scale_max": 2.0,
+      "reset_quota": "unlimited_until_save_or_abort",
+      "failed_save_ends_session": false,
+      "over_400_success_status": "pending_postprocess",
+      "buffer_soft_cap_steps": 1600,
+      "session_timeout_seconds": 0.0
+    },
+    "historical_314": {
+      "episode_id": "official_t3_red_mug_1788921471",
+      "historical_old_policy_gold_eligible": false,
+      "new_policy_replay_eligible": true,
+      "fresh_replay": "not_evaluated",
+      "human_review": "not_evaluated",
+      "training_eligible": false
+    },
+    "task_order": [
+      "official_t3_alphabet_soup",
+      "official_t3_yellow_book",
+      "official_t3_red_mug",
+      "official_t3_two_mugs"
+    ],
+    "training_gate": {
+      "accepted_min": 2,
+      "task_id_min": 2,
+      "first_checkpoint_steps": 100,
+      "second_checkpoint_steps": 300
+    },
+    "automatic_upload_or_submission": false,
+    "unexecuted": {
+      "fresh_replay": "not_evaluated",
+      "new_recording": "not_evaluated",
+      "accepted_promotion": "not_evaluated",
+      "training": "not_evaluated",
+      "candidate_zip": "not_evaluated",
+      "upload_or_submission": "not_evaluated"
+    }
+  },
+  "track3_fast400_h300_closeout_and_next_authorization": {
+    "status": "superseded_after_step100_behavior_gate_failed_no_zip",
+    "review": "docs/reviews/axis_pi05/TRACK3_FAST400_H300_GATE_FAILURE_AND_R6_RECIPE_REVIEW_20260915.md",
+    "review_sha256": "222143bf39dfe8d8609a7c6b73a61f82c869d795ac6b61ae2bbcc271b4a9201f",
+    "plan": "docs/AXIS_PI05_T3_POST_H300_STEP100_SALVAGE_AND_R6_STYLE_RECOVERY_PLAN_20260915.md",
+    "plan_sha256": "d034d45528e94a4a4d2a0c868782d5e73c35023e4a3fd9bb759b765a334e09c7",
+    "summary": "data/reports/axis_libero_30k/t3_fast400_h300_behavior_gate_closeout_20260915/summary.json",
+    "summary_sha256": "d7b53b9b343644ecc2d2b340a2f690fbb636b29e87357e947ed310ae3dd3a5d4",
+    "scoped_handoff": "data/reports/axis_libero_30k/t3_fast400_r6_h300_4gpu_r1_local4/NEXT_AGENT_HANDOFF_20260915.json",
+    "scoped_handoff_sha256": "ccaca5a690d37f3dd902098ba7f73020db35488c290e4adad089e206267f4487",
+    "h300_behavior_gate": {
+      "r6_reverse_dev": "0/4",
+      "step300_reverse_dev": "0/4",
+      "reverse_delta": 0,
+      "required_reverse_delta_min": 1,
+      "r6_c20": "15/20",
+      "step300_c20": "14/20",
+      "c20_delta": -1,
+      "decision": "failed_no_zip"
+    },
+    "r6_interpretation": {
+      "topology": "L2_action_lora_heads",
+      "formal_run": "fresh_500_steps_from_released_axis_with_zero_delta_lora",
+      "dual_meaning": "two_gpu_formal_run_not_dual_lora_topology",
+      "official_user_reported_scores": {
+        "track1": 0.47,
+        "track2": 0.33,
+        "track3": 0.0
+      },
+      "selection_boundary": "best_cross_track_fallback_and_release_chain_not_proven_track3_winner"
+    },
+    "current_authority": {
+      "S0_step100_comparator_and_focused_tests": false,
+      "S1_one_fresh_step100_worker_gpu0": false,
+      "S2_paired_behavior_gate": false,
+      "S3_step100_release": false,
+      "R0_long_term_trajectory_diagnosis": "read_only_only",
+      "new_training_or_data_collection": false,
+      "dense_full_finetune": false,
+      "upload_or_submission": false
+    },
+    "immutable": {
+      "closed_attempt_0002": true,
+      "step300_packaging": false,
+      "historical_failure_trees": "read_only"
+    }
+  },
+  "track3_step100_salvage_closeout_and_data_first_recovery": {
+    "status": "approved_fail_closed_execution_candidate_rejected",
+    "review": "docs/reviews/axis_pi05/TRACK3_STEP100_SALVAGE_CLOSEOUT_REVIEW_20260916.md",
+    "review_sha256": "137283831587896168b396d3df57138e40c5bb33882bb1cc12ac3b5fc4e26563",
+    "next_plan": "docs/AXIS_PI05_T3_POST_STEP100_FAILURE_DATA_FIRST_R6_SCREEN_PLAN_20260916.md",
+    "next_plan_sha256": "e4ce4fa9972337ed5cfb85185617df5032e3040572568adbcbf1df2623065bf4",
+    "machine_summary": "data/reports/axis_libero_30k/t3_fast400_h300_step100_salvage_closeout_20260916/summary.json",
+    "machine_summary_sha256": "e311a1ca2cc75a4a20763a33ba294c7c43849678b7978b232a9e807f51030d7c",
+    "scoped_handoff": "data/reports/axis_libero_30k/t3_fast400_r6_h300_4gpu_r1_local4/NEXT_AGENT_HANDOFF_20260915.json",
+    "scoped_handoff_sha256": "6ce98571f9aba56efa0c54b2b1a1f67d753b79f1a16452b1e8f6ad6235e863c8",
+    "step100": {
+      "paired_summary_sha256": "3e3ff78775d9157cd8d767150225b71ec54dd515375c8d40a24cd088167c7f9b",
+      "release_decision_sha256": "459adb758cc70b51d8155a953a5d0364504fb740f8e481e966e81d6c7f78fd71",
+      "reverse_baseline_candidate_delta": "0/4 -> 0/4, delta 0",
+      "c20_baseline_candidate_delta": "15/20 -> 14/20, delta -1",
+      "decision": "step100_behavior_gate_failed_no_zip",
+      "fold_started": false,
+      "zip_created": false
+    },
+    "independent_validation": {
+      "focused_tests": "45 passed in 59.96s",
+      "strict_json_files": 62,
+      "finite_nonzero_n_by_7_traces": "48/48",
+      "ffprobe_readable_videos": "48/48",
+      "partial_residue": 0,
+      "old_namespace_fingerprints_match": true,
+      "gpu_and_processes_released": true
+    },
+    "current_authority": {
+      "D0_read_only_failure_and_data_audit": true,
+      "D1_code_test_fixture_finalizer_remediation": true,
+      "D2_data_collection_or_promotion": false,
+      "D3_mix_norm": false,
+      "D4_to_D6_gpu_training": false,
+      "fold_fast_zip": false,
+      "upload_or_submission": false
+    }
+  },
+  "track3_d0_failure_lineage_exposure_audit": {
+    "status": "approved_conservative_d0_hard_stop_with_nonblocking_audit_tool_gaps",
+    "review": "docs/reviews/axis_pi05/TRACK3_D0_FAILURE_LINEAGE_EXPOSURE_AUDIT_20260916.md",
+    "review_sha256": "c532fc0daf20eff01ae3a954b79150cb9f6ca1d77a35f0841ddd43318af7bc87",
+    "machine_summary": "data/reports/axis_libero_30k/t3_post_salvage_d0_audit_20260916/summary.json",
+    "machine_summary_sha256": "48eeccfaa7f560a345e0b479199941d9dbfaa1b46307a8829e8bda341cf8faea",
+    "scoped_handoff": "data/reports/axis_libero_30k/t3_fast400_r6_h300_4gpu_r1_local4/NEXT_AGENT_HANDOFF_20260915.json",
+    "scoped_handoff_sha256": "d0fca540a188e14722ff63ad725e195536b9b165349b18e47d7d3d7ddeb4cd38",
+    "next_plan": "docs/AXIS_PI05_T3_D1_EVALUATION_FINALIZER_REMEDIATION_PLAN_20260916.md",
+    "next_plan_sha256": "55e0272edb06c17fd99048ac0dd57f9b3be7a4c2f5ff008e85c91cbb9fe41cae",
+    "next_phase_only": "D1A_versioned_finalizer_v2_implementation",
+    "verified": {
+      "reverse_r6_step100_step300": [
+        "0/4",
+        "0/4",
+        "0/4"
+      ],
+      "c20_r6_step100_step300": [
+        "15/20",
+        "14/20",
+        "14/20"
+      ],
+      "accepted_by_task": [
+        2,
+        2,
+        1,
+        3
+      ],
+      "provable_independent_lineages": 0,
+      "lineage_disjoint_reverse_dev_exists": false,
+      "input_namespaces_unchanged": "11/11",
+      "input_strict_json": "136/136",
+      "focused_tests": "6 passed in 0.09s",
+      "gpu_and_processes_released": true
+    },
+    "sampling_interpretation": {
+      "forward_reverse_probability_mass": [
+        0.8,
+        0.2
+      ],
+      "probability_normalization_valid": true,
+      "stored_effective_exposure_uses_reverse_row_count_8": true,
+      "nominal_epoch_row_count": 12840,
+      "diagnostic_exposure_semantics_inconsistent": true
+    },
+    "current_authority": {
+      "D0_completed": true,
+      "D1_code_test_fixture_only": true,
+      "D1_behavior_runner_integration": false,
+      "D2_data_collection_or_promotion": false,
+      "D3_mix_norm": false,
+      "D4_to_D6_gpu_training": false,
+      "dense_or_30000": false,
+      "fold_fast_zip": false,
+      "upload_or_submission": false
+    }
+  },
+  "track3_r0_r1_g0_closeout": {
+    "status": "completed_d2_unreachable_hard_stop",
+    "review": "docs/reviews/axis_pi05/TRACK3_R0_R1_G0_ONE_DAY_CLOSEOUT_20260916.md",
+    "review_sha256": "11670f9e06bd4f6c1924142ac56dfa2d6aa25d2046f434e14988e6ca10fd9e6c",
+    "r1_summary": "data/reports/axis_libero_30k/t3_d1_finalizer_r1_reject_integration_20260916_attempt_0001/summary.json",
+    "r1_summary_sha256": "4b3285029616a520b0d3432bac7eff91d74a849ebac697945bcb771f819ced99",
+    "g0_summary": "data/reports/axis_libero_30k/t3_g0_lineage_feasibility_audit_20260916_attempt_0001/summary.json",
+    "g0_summary_sha256": "df8d616d0509cb2ffdcd5719dedf209fba1c44ad4beb7787a8d9b788e48ec013",
+    "finalizer_sha256": "3e538a8f9289945f7fc11f842ceeb15a2ced98269e5b0f26a46609ada56aa7d7",
+    "focused_tests_sha256": "1fab03857aead2e7e935ec5a48501b7bf291cac231b7ca3342d46279ff642499",
+    "reverse": "0/4_to_0/4",
+    "c20": "15/20_to_14/20",
+    "task_distribution": "2/2/1/3",
+    "explicit_independent_lineages": "0/0/0/0",
+    "reverse_dev": false,
+    "r1_release": false,
+    "training_authorized": false,
+    "fold_fast_zip_authorized": false,
+    "upload_authorized": false,
+    "submit_authorized": false
+  },
+  "track3_d1_finalizer_v2_integration_audit": {
+    "status": "remediation_required_before_D1_integration",
+    "d1_execution_boundary": "approved_hard_stop_compliant",
+    "d1_execution_summary": "data/reports/axis_libero_30k/t3_d1_finalizer_v2_remediation_20260916_attempt_0001/summary.json",
+    "d1_execution_summary_sha256": "51454d044da83af2ed27776383d745e8c6d82dbe241c9ded535c268992319e2f",
+    "review": "docs/reviews/axis_pi05/TRACK3_D1_FINALIZER_V2_INTEGRATION_AUDIT_20260916.md",
+    "review_sha256": "4d507585e2dec48e872b5910e32e5515d32016b29af06310865042835984ed8c",
+    "machine_summary": "data/reports/axis_libero_30k/t3_d1_finalizer_v2_integration_audit_20260916/summary.json",
+    "machine_summary_sha256": "4891f696ce35fc142f0a552d602bc4e11d8ce9995a2c8b7d4eceefc4782808e0",
+    "scoped_handoff": "data/reports/axis_libero_30k/t3_fast400_r6_h300_4gpu_r1_local4/NEXT_AGENT_HANDOFF_20260915.json",
+    "scoped_handoff_sha256": "0a22bd08fba8dc1fd4c132f5da65d09a1d99813449b215d2166e625369746e9d",
+    "next_plan": "docs/AXIS_PI05_T3_ONE_DAY_FINALIZER_R2_DATA_GATE_AND_GPU_SCREEN_PLAN_20260916.md",
+    "next_plan_sha256": "80f036e5fe0715589ac583f999df03c68d84c9844993fb198a07d33851361862",
+    "next_phase_only": "R0_finalizer_remediation_and_G0_lineage_feasibility",
+    "adversarial_fail_open": [
+      "duplicate_manifest_payload_entry",
+      "broken_release_to_paired_sha_crosslink",
+      "paired_release_gate_disagreement",
+      "opaque_payload_and_unbound_declared_identity",
+      "caller_waived_all_zero_trace"
+    ],
+    "current_authority": {
+      "R0_finalizer_code_tests": true,
+      "R1_frozen_artifact_finalizer_only_integration": true,
+      "G0_read_only_lineage_feasibility": true,
+      "G1_collection_requires_G0_and_explicit_user_takeover": true,
+      "D2_currently_passed": false,
+      "D3_conditional_on_D2": true,
+      "D4_D5_gpu_conditional_on_R1_D2_D3_and_time_cutoff": true,
+      "fold_fast_zip_conditional_on_100_step_behavior_gate": true,
+      "auto_upload": false,
+      "auto_submit": false
+    }
+  },
+  "t2_p30_r6_h10k_r1_tomorrow_persist_fold": {
+    "status": "persist_and_fold_pushed",
+    "playbook": "docs/AXIS_PI05_T2_H10K_TOMORROW_PERSIST_FOLD_PLAYBOOK_20260914.md",
+    "summary": "data/reports/axis_libero_30k/t2_p30_r6_h10k_r1_tomorrow_persist_fold_20260914/summary.json",
+    "parent_handoff": "docs/AXIS_PI05_T2_H10K_POST_TRAIN_AGENT_HANDOFF_20260913.md",
+    "run_id": "t2_p30_r6_h10k_r1",
+    "last_complete_step": 10000,
+    "folded_safetensors_sha256": "bfc678f96190c922a84aa893af111db6ed7126047274257eee449993aa2d7cd3",
+    "norm_sha256": "39ff8a7cc2ff2a0be7d43659e708f9ec260686e876cf603c0460972b49746b41",
+    "can_stop_server": true,
+    "automatic_upload_or_submission": false,
+    "unexecuted": {
+      "read_only_check": "complete",
+      "checkpoint_persist": "complete",
+      "data_push": "complete",
+      "fold": "complete",
+      "stop_server": "not_evaluated"
+    }
+  },
+  "track3_r0_r1_g0_final_independent_audit": {
+    "status": "completed",
+    "classification": "approved_final_hard_stop_with_nonblocking_r1_provenance_corrections",
+    "review": "docs/reviews/axis_pi05/TRACK3_R0_R1_G0_FINAL_INDEPENDENT_AUDIT_20260916.md",
+    "review_sha256": "c972d6ceabe419796cff689b34f9aba31f2ab2f1471746477da1966f1cc4c77a",
+    "summary": "data/reports/axis_libero_30k/t3_r0_r1_g0_final_independent_audit_20260916/summary.json",
+    "summary_sha256": "2409ae1e02503d24dce95709e143a3a0ed0b4e64d4eef58246745b5405b1e494",
+    "next_plan": "docs/AXIS_PI05_T3_DEADLINE_FINAL_SUBMISSION_POSTURE_20260916.md",
+    "next_plan_sha256": "8a2bf67bc35cdc1c5a22bbc717147b9d056d11b5d608f9c36e5bc69819d7ec77",
+    "r1_release": false,
+    "r1_reverse": "0/4_to_0/4",
+    "r1_c20": "15/20_to_14/20",
+    "r1_corrections": [
+      "r1_comparison_used_attempt0002_pairs_not_step100_pairs",
+      "r1_actual_adapter_not_bound_in_published_identity"
+    ],
+    "r1_corrections_block_current_reject": false,
+    "r1_corrections_block_future_release_proof": true,
+    "d2": false,
+    "d2_robust_reasons": [
+      "accepted_count_below_three_for_three_tasks",
+      "no_lineage_disjoint_reverse_dev"
+    ],
+    "data_promotion_authorized": false,
+    "gpu_training_authorized": false,
+    "behavior_eval_authorized": false,
+    "fold_fast_zip_authorized": false,
+    "upload_authorized": false,
+    "submit_authorized": false
+  },
+  "r6_final_inference_horizon_sweep": {
+    "status": "screen_failed_keep_existing_r6_zip",
+    "user_authorization": "explicit_last_official_score_opportunity_inference_mechanism_test",
+    "plan": "docs/AXIS_PI05_R6_FINAL_INFERENCE_HORIZON_SWEEP_PLAN_20260916.md",
+    "plan_sha256": "10674b6b1d55fec8d8ae99b9523a4a6985370a5fab51b4d98dd0d49403dae643",
+    "adapter": "tools/axis_pi05/run_r6_final_inference_horizon_sweep.py",
+    "adapter_sha256": "a46666ff96d1f74ea3ca8c0e769b95cd21184cf7f57356a1404092676084e24e",
+    "focused_tests": "tests/test_r6_final_inference_horizon_sweep.py",
+    "focused_tests_sha256": "8b697e7f41583c480b81463428a7705a84197f3ccaca43320ec3d6a380ce09c8",
+    "focused_tests_result": "7_passed",
+    "fixed": {
+      "checkpoint": "R6_step500",
+      "control_hz": 20,
+      "chunk_size": 10,
+      "rtc": false,
+      "action_ema": 0.0,
+      "weights_unchanged": true
+    },
+    "variants": {
+      "gpu0": 4,
+      "gpu1": 6,
+      "gpu2": 8,
+      "gpu3": 10
+    },
+    "screen_gate": {
+      "c20_delta_min": 3,
+      "paired_net_wins_min": 3,
+      "collision_increase_max": 0,
+      "timeout_increase_max": 1
+    },
+    "comparison": "data/reports/axis_libero_30k/r6_final_inference_horizon_sweep_20260916_attempt_0001/comparison.json",
+    "comparison_sha256": "32cf8efb3a8100329bae53b3b4be2ed09e252350ec6db617c84333ddf04bd15b",
+    "closeout": "docs/reviews/axis_pi05/R6_FINAL_INFERENCE_HORIZON_SWEEP_CLOSEOUT_20260916.md",
+    "closeout_sha256": "a29ee8baaf284b232227ca3bc11aee798a93a98a61d9fbee074f8bea2c042323",
+    "screen_results": {
+      "execute4_c20": 17,
+      "execute4_delta": 2,
+      "execute4_paired_net_wins": 2,
+      "execute6_c20": 15,
+      "execute8_c20": 15,
+      "execute10_c20": 12,
+      "reverse_success_all_variants": 0,
+      "selected_horizon": null
+    },
+    "training_authorized": false,
+    "screen_eval_authorized": false,
+    "b80_confirmation_authorized_only_after_screen_gate": false,
+    "zip_authorized_only_after_b80_gate": false,
+    "b80_status": "not_evaluated_gate_failed",
+    "zip_status": "not_generated",
+    "gpu_and_processes_released": true,
+    "auto_upload": false,
+    "auto_submit": false
+  },
+  "r6_execute4_official_trial": {
+    "status": "ready_for_user_manual_submission",
+    "user_risk_override": true,
+    "historical_horizon_screen_gate_passed": false,
+    "plan": "docs/AXIS_PI05_R6_EXECUTE4_OFFICIAL_TRIAL_PLAN_20260916.md",
+    "plan_sha256": "c22f21a67cfe1a0538fc9ed8a2c97d495444a595082fe34fd0def001395a5eb1",
+    "builder": "tools/axis_pi05/build_r6_execute4_official_trial.py",
+    "builder_sha256": "e80522df5e246d0dc834dd52a608d9dbdb739c4cb0de6b172d33ee90527ef039",
+    "focused_tests": "tests/test_build_r6_execute4_official_trial.py",
+    "focused_tests_sha256": "3dec50e5a1e69d58a7e38730a06c37d547489b5675d5fdbcbbbcf295b43f70f3",
+    "focused_tests_result": "7_passed_builder_14_passed_with_horizon_adapter",
+    "release": "data/reports/axis_libero_30k/r6_execute4_official_trial_20260916_attempt_0001/release.json",
+    "release_sha256": "30d72dfefce6a57d11ded3c01e04e74f01bdfd172816dd1b7ee377623bd2a67e",
+    "release_report": "docs/reviews/axis_pi05/R6_EXECUTE4_OFFICIAL_TRIAL_RELEASE_20260916.md",
+    "release_report_sha256": "5f8257317bd1bc390d8c954e49ed080fab20640d58cced2e148af8b3131ba093",
+    "runtime_smoke_attempt_0001_status": "failed_missing_local_asgi_runtime_before_model_load",
+    "runtime_smoke_attempt_0002_status": "passed",
+    "runtime_smoke_attempt_0002_sha256": "bc61903a7262544a52f1669d7b1209a777dff7c9ee33b24d2eccb217edf1470e",
+    "zip_delta_audit_sha256": "1dc8de834f6abaed15d0456d870d68d57ebd692a1e7126de24bf60175d64e5c4",
+    "zip": "artifacts/submission_axis_r6_step500_fast_execute4_official_trial_20260916.zip",
+    "zip_sha256": "2f2f9c2ed627de50b1af4b9d1501e9f5d4d467e8455ed51f363247a3d7bd3fc9",
+    "zip_bytes": 9383572164,
+    "zip_entry_count": 3401,
+    "fast_model_sha256": "e55bf7dcca78b2195993dd7a12b96a4ea13e94761d711c99a82b7411c3f8ceb6",
+    "action_protocol": {
+      "chunk_size": 10,
+      "n_action_steps": 4,
+      "action_ema": 0.0,
+      "rtc": false
+    },
+    "screen_evidence": {
+      "execute4_c20": 17,
+      "execute8_c20": 15,
+      "c20_delta": 2,
+      "paired_net_wins": 2,
+      "reverse_success": 0,
+      "b80_performed": false
+    },
+    "validation": {
+      "runtime_smoke": "passed",
+      "crc_testzip": "passed",
+      "entry_delta_exact": "passed_only_server_config_manifest_changed",
+      "validate_submission_static": "passed_zero_errors_zero_warnings",
+      "no_partial_or_tmp": true
+    },
+    "manual_submission_authorized_by_user": true,
+    "recommended_tracks": [
+      "T1",
+      "T2"
+    ],
+    "t3_reverse_improvement_evidence": false,
+    "gpu_and_processes_released": true,
+    "official_result": "not_evaluated",
+    "auto_upload": false,
+    "auto_submit": false
+  },
+  "cleanup_20260921": {
+    "status": "completed_with_permission_denials",
+    "document": "docs/AXIS_PI05_CLEANUP_AND_REPRODUCIBILITY_20260921.md",
+    "result": "data/reports/axis_libero_30k/cleanup_20260921/cleanup_result.json",
+    "zips_deleted": 8,
+    "zip_bytes_deleted": 75068571608,
+    "report_binary_files_deleted": 44226,
+    "report_binary_bytes_deleted": 2751170089,
+    "artifact_sidecars_retained": true,
+    "raw_data_retained": true,
+    "root_owned_cache_files_remaining": 178,
+    "root_owned_cache_bytes_remaining": 1911309,
+    "execution_allowed": false,
+    "upload_allowed": false,
+    "submit_allowed": false
   }
 }

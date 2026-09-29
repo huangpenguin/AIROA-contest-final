@@ -1,15 +1,21 @@
 # AXIS Pi0.5 项目交接快照（2026-08-31）
 
+> 2026-09-21：比赛阶段暂时结束；已按用户授权清理可复现的中间文件、生成结果、原始评测二进制和 ZIP 本体。实验结果、参数/配置记录、文本/JSON证据、manifest/SHA256 sidecar 与原始数据保留。详见 docs/AXIS_PI05_CLEANUP_AND_REPRODUCIBILITY_20260921.md。
+> 2026-09-13 夜：明早 persist/fold/Stop 执行稿 `docs/AXIS_PI05_T2_H10K_TOMORROW_PERSIST_FOLD_PLAYBOOK_20260914.md`。先只读再 rsync staging；fold 用 trainvenv `convert_for_lerobot`；缺 torch 不要往 trainvenv 装 PyTorch；Stop 前至少 push checkpoint+norm+identity，推荐加上 safetensors SHA。
+> 2026-09-13：用户确认官方 Blackwell `t2_p30_r6_h10k_r1` 已启动。启动失败分类见 `docs/AXIS_PI05_OFFICIAL_BLACKWELL_T2_H10K_LAUNCH_ISSUES_20260913.md`。训后下一任入口 `docs/AXIS_PI05_T2_H10K_POST_TRAIN_AGENT_HANDOFF_20260913.md`。不要 Stop My Server；checkpoint 后 data-push；不自动上传/提交。
+> 2026-09-12：T1/T2/T3 canary100 诊断 ZIP 均已机械通过。用户报告比赛分 T1=0.30、T2=0.31，低于 R6 0.47/0.33，冻结这两条 canary 续训。用户同时指出官方 Axis 约 30k 步有效、本地步数门可能过严；已落盘 open design review，本轮不改门、不启 250/500/30k。Plus `assets.zip` 已校验并归位，T1 专用面板 P0/P1 为 `frozen_constructible`；P2 可评但不能解冻长训。S2 通过；S3 已删除 11 条资格路径（约 108 GiB），`/home` 约 453 GiB，低于 550 目标但按合同停止扩删。R6 fallback 与三条 canary ZIP 未删。自动上传/提交仍为 false。采集仍只走 Fast400。
+
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
 > 新session先读：根目录`AGENTS.md`、`MEMORY.md`，然后按其中顺序核对本handoff、machine JSON、活动计划、最新审核与live cursor/PID。
-> 最新审核状态：`approved`（O1.2 closeout 合规，但 314-step episode 不是 gold）
+> 最新审核状态：horizon screen 门禁失败保持不变；用户随后显式风险覆盖并获交付 execute4 ZIP
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-sg0-sg12-support-gold-20260907`
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：track3_mg1_red_mug_attempts_exhausted_ready_for_user_decision
-> 唯一活动计划：`docs/AXIS_PI05_TRACK3_MULTITASK_GOLD_AND_R6_SHORT_CONTINUATION_PLAN.md`
-> 下一停止点：MG2_alphabet_soup_requires_explicit_user_takeover
-> 最新执行闭包：docs/reviews/axis_pi05/TRACK3_MG1_RED_MUG_ATTEMPTS_20260909.md
+> 当前总状态：competition_closed_generated_artifacts_pruned_20260921
+> 唯一活动计划：docs/AXIS_PI05_CLEANUP_AND_REPRODUCIBILITY_20260921.md
+> 下一停止点：no_execution_competition_closed
+> 最新归档记录：docs/AXIS_PI05_CLEANUP_AND_REPRODUCIBILITY_20260921.md
+> 最新独立审核：docs/reviews/axis_pi05/TRACK3_R0_R1_G0_FINAL_INDEPENDENT_AUDIT_20260916.md
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > O0R remediation commit：`20662dd`
 > O0R evidence：`data/reports/axis_libero_30k/track3_operations_o0r_remediation_20260908/`
@@ -1084,3 +1090,113 @@ The deterministic assisted attempt used the frozen 314-frame seed only as a read
 The authorized manual fallback first passed a 4 Hz no-save canary, then ran the formal recorder from a reset state. The localhost control driver encountered one HTTP 400 around step 167; no reset or retry was issued. The recorder remained fail-closed and wrote a rejected 300/300 hard-stop episode with source true, goal false, success false. It is not pending, not replayed, and not gold.
 
 MG1 red-mug quotas are exhausted: assisted 1/1 and manual 1/1. Historical seed bytes were unchanged. No accepted episode, fresh replay, training, ZIP, upload, or submission exists. The active plan remains the sole authorization; the next stop is MG2 only after an explicit user takeover.
+
+## 96. MG0/MG1 独立审核与快速采集切换（2026-09-09）
+
+本轮唯一审核结论为 `remediation_required`：MG0/MG1 的 raw、family-failure 分类、typed NPZ、视频和 hashes 可信，但 MG1 没有旧计划要求的 outer/cursor/heartbeat/final full-test evidence，plan index 顶部也滞后。历史证据与旧 300-step 结论均未改写。
+
+用户授权的数据优先计划已经落盘，但录制器代码尚未执行。FT0 将实现：direct-gold 上限 400 且不在 400 退出、默认 8 Hz、0.5×–2.0× 速度滑杆、无限 Reset、失败 Save 只暂停、>400 成功 raw 进入 `pending_postprocess`，以及 1600 帧只作为不杀进程的内存 soft cap。
+
+历史 314-step red-mug episode 新增派生 replay eligibility，但在 fresh replay `3/3` 与用户 accept 前仍为非 gold、非 training eligible。唯一活动计划为 `docs/AXIS_PI05_TRACK3_FAST_TELEOP_400_AND_SHORT_TRAIN_PLAN.md`；先 replay 314，再采 alphabet-soup/yellow-book。达到 2 accepted / 2 task 即开始 R6 100-step，GPU1/2 外部占用期间继续采集；不自动上传或比赛提交。
+
+## 97. H300 step100 salvage 审核与 data-first recovery（2026-09-16）
+
+GPU0 fresh step100 worker 已完成 `24/24`；cursor=`completed`、heartbeat=`stopped`。独立复核 `45 passed in 59.96s`，62个JSON strict parse、48条 `N x 7` trace finite/nonzero、48段视频 `ffprobe` 可读、无partial；旧R6/attempt_0002 evidence/output fingerprint未变化，四卡和相关进程均已释放。
+
+行为门为 reverse `0/4 -> 0/4`、C20 `15/20 -> 14/20`，因此 step100 正确写入 `step100_behavior_gate_failed_no_zip`。step300此前也是 reverse `0/4 -> 0/4`、C20 `15/20 -> 14/20`；H300当前没有release候选，未fold、FAST、ZIP、上传或提交。
+
+审核发现三个不推翻失败结论、但 future evaluator需修复的缺口：最终artifact未分别命名worker plan/comparison plan/comparator SHA；video gate只测非空；paired summary和release decision两阶段写入不支持中断后同attempt恢复。审核报告为 `docs/reviews/axis_pi05/TRACK3_STEP100_SALVAGE_CLOSEOUT_REVIEW_20260916.md`，机器摘要为 `data/reports/axis_libero_30k/t3_fast400_h300_step100_salvage_closeout_20260916/summary.json`。
+
+唯一活动计划切换为 `docs/AXIS_PI05_T3_POST_STEP100_FAILURE_DATA_FIRST_R6_SCREEN_PLAN_20260916.md`。下一执行者只做D0只读失败/lineage/sampling审计并硬停；D1只允许code/tests/fixture加固。每个目标task未达到至少3条accepted、2个独立lineage且dev按lineage隔离前，不启动四卡25-step screen；300/500/1k/30k、dense、fold/ZIP、上传和提交均未授权。
+
+## 98. D0 失败/lineage/exposure 审核与 D1 finalizer v2 授权（2026-09-16）
+
+D0 只读执行和硬停边界获保守批准。R6、step100、step300 的 reverse 均为 `0/4`，每轮为三条 `collision+timeout` 与一条 `timeout`；C20 为 `15/20 -> 14/20 -> 14/20`，flip 位于 task13 与 task18。八条 accepted reverse 的 task 数为 `2/2/1/3`，payload 与实际 `start_state.npy` hash 均唯一，但 metadata 没有显式 recording lineage，故可证明独立 lineage 为 `0`，reverse dev 不存在，D2 gate 保持 false。
+
+12,840-row 表的采样概率归一化成立，forward/reverse source mass 为 `0.8/0.2`；不能把问题描述为 sampler 损坏。但单条 reverse 相对 forward median probability 约 `236.7x–1183.3x`，且旧 `effective_exposures` 使用 `probability*8` 而非 nominal epoch 的 `probability*12840`，属于诊断字段口径不一致。D3 前必须版本化 exposure 定义并满足单条 `<=128x`。
+
+11 个输入 namespace 前后 fingerprint 全部相同；136 个输入 JSON、6 个输出 JSON strict parse 通过，5 个 payload hash 与 manifest 一致，无 partial。focused tests 为 `6 passed in 0.09s`，py_compile、diff-check、GPU/process zero 通过。审核同时记录 analyzer 未机械 fail-close accepted 状态、stored/computed hash、实际 start-state bytes，以及 leakage/exposure 部分常量化等非阻断缺口；冻结 D0 evidence 不改写。
+
+审核见 `docs/reviews/axis_pi05/TRACK3_D0_FAILURE_LINEAGE_EXPOSURE_AUDIT_20260916.md`，机器摘要见 `data/reports/axis_libero_30k/t3_post_salvage_d0_audit_20260916/summary.json`。唯一活动计划切换为 `docs/AXIS_PI05_T3_D1_EVALUATION_FINALIZER_REMEDIATION_PLAN_20260916.md`：只新增 versioned finalizer v2 与 focused tests/真实视频 fixture，修身份字段、ffprobe 和 attempt 级原子恢复，完成后硬停。D2、D3、D4–D6、dense/30k、fold/FAST/ZIP、上传和提交均未授权。
+
+## 99. D1 finalizer v2 integration 审核与一天冲刺计划（2026-09-16）
+
+D1 code/tests/fixture 执行边界与 hard stop 合规：独立复跑 `8 passed in 10.18s`，py_compile、strict JSON、真实 ffprobe、diff-check 与五个历史 namespace fingerprint 均通过；GPU0–3 为 `5 MiB / 0%`，无相关进程。真实视频验证、基本 trace 检查、attempt staging、目录 rename、首次 payload 恢复和 completed overwrite 拒绝成立。
+
+唯一审核结论仍为 `remediation_required_before_D1_integration`。`/tmp` 对抗测试证明当前 validator 会接受：重复 manifest payload entry、错误的 release→paired SHA、paired/release gates 相互矛盾、任意 opaque worker bytes 与格式正确但未绑定真实文件的 identity SHA，以及 caller-waived 全零 trace。现有实现可保留为低层 primitive，但当前 SHA 不得接入正式 release authority。
+
+审核报告为 `docs/reviews/axis_pi05/TRACK3_D1_FINALIZER_V2_INTEGRATION_AUDIT_20260916.md`，机器摘要为 `data/reports/axis_libero_30k/t3_d1_finalizer_v2_integration_audit_20260916/summary.json`。唯一活动计划切换为 `docs/AXIS_PI05_T3_ONE_DAY_FINALIZER_R2_DATA_GATE_AND_GPU_SCREEN_PLAN_20260916.md`。
+
+一天计划最多用 90 分钟修 finalizer，并行在 T+3h 前判断既有 8 条数据能否由原始 recorder/session 证据证明 lineage；不能证明则不训练。只有已有 lineage 成立且 T+7h 前补齐 `1/1/2/0` 四条 accepted，才构建 95/5 capped mix、fresh norm 与四卡 25-step screen。最多一条候选 fresh 100-step；T+21h 后只留 fold/FAST/ZIP 缓冲。30k、dense、旧 H300 resume、自动上传/提交均禁止。
+
+## 100. R0/R1/G0 最终独立审核与截止提交姿态（2026-09-16）
+
+最终独立审核批准 `D2=false` 后的 hard stop。R0 finalizer v2 独立复跑
+`16 passed in 34.41s`，已发布 R1 attempt 在当前 validator 下仍为
+`release=false`；reverse 为 `0/4 -> 0/4`，C20 为 `15/20 -> 14/20`。
+
+R1 有两项不推翻拒绝结论、但会阻断未来发布证明的 provenance 缺陷：comparison
+误用了 attempt_0002 R6/step300 pairs 而非 step100 pairs；published identity 又没有绑定实际
+R1 adapter。task13/task18 的逐 case 差异相互抵消，故聚合 gate 不变。当前拒绝 evidence
+保持不改写；未来如复用必须在全新 attempt 修复。
+
+G0 的 accepted 分布 `2/2/1/3`、可证明独立 lineage `0/0/0/0` 且无
+lineage-disjoint reverse dev。更广仓库检索仍未找到 episode-bound recorder/session/process/event
+log；并且 accepted count 与 reverse-dev 两条独立 gate 本身已足以令 D2=false。旧一天计划
+的 D3/D4/D5/fold 条件权限全部撤销。
+
+最终提交姿态：保留 T1 R6 `0.47` 与 T2 R6 `0.33`，拒绝用户报告 `0.13` 的
+T2 H10K；T3 不发布 H300。已知零分 R6 T3 只在表单强制且用户明确选择时作为 fallback。
+当前没有 Track3 执行性下一阶段，也不授权 GPU、训练、评测、fold、FAST、ZIP、上传或提交。
+审核见 `docs/reviews/axis_pi05/TRACK3_R0_R1_G0_FINAL_INDEPENDENT_AUDIT_20260916.md`；
+当前姿态见 `docs/AXIS_PI05_T3_DEADLINE_FINAL_SUBMISSION_POSTURE_20260916.md`。
+
+## 101. 用户重新授权最终 R6 inference-only sweep（2026-09-16）
+
+用户指出今晚仍有最后一次官方测分机会，并要求评估 RTC、chunk horizon 等推理机制。只读核对
+确认：当前 Pi0.5 submission server 对 `RTC_ENABLED` 会 fail-close，RTC 只支持 SmolVLA；
+`chunk_size=10` 又是模型输出合同，今晚均不修改。唯一安全变量是 `n_action_steps`/重规划间隔。
+
+新计划只授权 R6 step500 在相同 20 Hz、chunk10、EMA0、RTC off 与冻结 4 reverse + 20 C20
+cases 上执行 execute4/6/8/10。GPU0–3 各一条 fresh worker；不训练、不改 weights/norm/processor，
+screen 前不 fold/ZIP。候选必须相对 fresh execute8 至少 C20 `+3/20`、paired net wins `>=3`，
+且 collision 不增加，才进入 B80 confirmation。`+1/+2` 一律保留现有 0.47/0.33 R6。
+
+计划：`docs/AXIS_PI05_R6_FINAL_INFERENCE_HORIZON_SWEEP_PLAN_20260916.md`；adapter：
+`tools/axis_pi05/run_r6_final_inference_horizon_sweep.py`。focused tests `7 passed`，py_compile 与
+diff-check 通过。自动上传和提交仍为 false。
+
+## 102. 最终 R6 inference-only sweep 闭包（2026-09-16）
+
+四个 fresh worker 均完成 24/24 且无 exception；96 条 case trace 均 finite/nonzero。fresh execute8
+重现 C20 `15/20`。execute4 得到 `17/20`，paired wins/losses/net=`3/1/+2`，collision
+`4→1`、timeout `1→2`；execute6 为 `15/20`，execute10 为 `12/20`。四组 reverse 均为
+`0/4`。
+
+execute4 的正向趋势不足以通过预注册的 C20 `+3/20` 与 paired net wins `>=3` 双门，
+因此 comparator 原子落盘 `screen_failed_keep_existing_r6_zip`、`selected_horizon=null`。B80、fold、
+FAST、ZIP、上传和提交均未执行。GPU0–3 已回到 5 MiB / 0%，无相关进程或 `.partial`。
+
+证据：`data/reports/axis_libero_30k/r6_final_inference_horizon_sweep_20260916_attempt_0001/comparison.json`
+（SHA256 `32cf8efb3a8100329bae53b3b4be2ed09e252350ec6db617c84333ddf04bd15b`）；closeout：
+`docs/reviews/axis_pi05/R6_FINAL_INFERENCE_HORIZON_SWEEP_CLOSEOUT_20260916.md`。提交姿态恢复为保留
+T1 R6 `0.47`、T2 R6 `0.33`，不使用 T2 H10K `0.13`，不发布 T3 H300 或新 horizon ZIP。
+
+## 103. 用户风险覆盖后的 R6 execute4 ZIP 交付（2026-09-16）
+
+用户明确选择使用会过期的最后一次官方机会，因此覆盖原双 `+3` 发布门，但历史 I2 仍记为失败。
+新计划只允许从正式 R6 FAST staging 制作 execute4 候选，不训练、不改 weights/norm/processor，
+不自动上传或提交。
+
+隔离 staging 的源 ZIP SHA 为
+`95415a3131588665d1ac742d036b07ed4900466c7b73574e600ef6b36c5c5f5a`，FAST 权重 SHA 仍为
+`e55bf7dcca78b2195993dd7a12b96a4ea13e94761d711c99a82b7411c3f8ceb6`。GPU0 packaged-server
+attempt_0002 在 332.9 秒冷启动后通过 health/reset/6 acts，日志明确 chunk10/execute4，
+受控 SIGTERM `-15`。首次缺 ASGI runtime 的 process-level failure 保留未覆盖。
+
+最终 ZIP 为
+`artifacts/submission_axis_r6_step500_fast_execute4_official_trial_20260916.zip`，SHA256
+`2f2f9c2ed627de50b1af4b9d1501e9f5d4d467e8455ed51f363247a3d7bd3fc9`，9383572164 bytes，
+3401 entries。CRC/testzip、官方 static validator 和 entry delta 均通过；相对正式 R6 ZIP 只有
+server/config/manifest 三项变化。当前状态为等待用户人工提交及回报官方分；auto upload/submit=false。
+四个 reverse 仍为 0/4，因此 execute4 只有 T1/T2 前向尝试依据，没有 T3 reverse 提分证据。

@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import argparse
 import collections
+import hashlib
 import json
 import logging
 import os
@@ -29,6 +30,34 @@ LOGGER = logging.getLogger(__name__)
 ACTION_DIM = 7
 ACTION_HORIZON = 10
 MODEL_IMAGE_SIZE = 224
+
+
+def active_norm_attestation() -> dict[str, str]:
+    """Resolve the only norm artifact a checkpoint server may activate."""
+
+    explicit = os.environ.get("AXIS_PI05_NORM_STATS")
+    config_side = os.environ.get("AXIS_PI05_TRACK3_NORM_STATS")
+    expected_sha = os.environ.get("AXIS_PI05_NORM_STATS_SHA256")
+    if not explicit or not config_side or not expected_sha:
+        raise RuntimeError(
+            "AXIS_PI05_NORM_STATS, AXIS_PI05_TRACK3_NORM_STATS, and "
+            "AXIS_PI05_NORM_STATS_SHA256 are required"
+        )
+    try:
+        explicit_path = Path(explicit).resolve(strict=True)
+        config_path = Path(config_side).resolve(strict=True)
+    except FileNotFoundError as exc:
+        raise RuntimeError("configured policy norm path does not exist") from exc
+    if explicit_path != config_path:
+        raise RuntimeError(
+            f"policy/config norm paths disagree: {explicit_path} != {config_path}"
+        )
+    actual_sha = hashlib.sha256(explicit_path.read_bytes()).hexdigest()
+    if actual_sha != expected_sha:
+        raise RuntimeError(
+            f"policy norm SHA mismatch: expected {expected_sha}, got {actual_sha}"
+        )
+    return {"path": str(explicit_path), "sha256": actual_sha}
 
 
 def deserialize_observation(payload: bytes) -> dict[str, np.ndarray]:
@@ -150,9 +179,13 @@ class CheckpointPolicy:
         import jax
 
         self._jax = jax
+        self.checkpoint = checkpoint.resolve()
+        self.config_name = config_name
+        self.active_norm = active_norm_attestation()
         config = training_config.get_config(config_name)
-        norm_path = os.environ.get("AXIS_PI05_NORM_STATS")
-        norm_stats = normalize.deserialize_json(Path(norm_path).read_text(encoding="utf-8")) if norm_path else None
+        norm_stats = normalize.deserialize_json(
+            Path(self.active_norm["path"]).read_text(encoding="utf-8")
+        )
         self._policy = policy_config.create_trained_policy(
             config,
             checkpoint,
@@ -163,7 +196,21 @@ class CheckpointPolicy:
         self._instruction = default_prompt or ""
         self._policy_seed: int | None = None
         self._lock = threading.Lock()
+        LOGGER.info(
+            "ACTIVE_POLICY_NORM path=%s sha256=%s",
+            self.active_norm["path"],
+            self.active_norm["sha256"],
+        )
         LOGGER.info("loaded checkpoint %s with config %s", checkpoint, config_name)
+
+    def health(self) -> dict[str, str]:
+        return {
+            "status": "ok",
+            "active_norm_path": self.active_norm["path"],
+            "active_norm_sha256": self.active_norm["sha256"],
+            "checkpoint_path": str(self.checkpoint),
+            "config_name": self.config_name,
+        }
 
     def reset(
         self,
@@ -235,7 +282,11 @@ def make_handler(policy: CheckpointPolicy) -> type[BaseHTTPRequestHandler]:
 
         def do_GET(self) -> None:  # noqa: N802 - stdlib HTTP hook
             if self.path == "/health":
-                self._send(200, "application/json", b'{"status":"ok"}')
+                self._send(
+                    200,
+                    "application/json",
+                    json.dumps(policy.health(), sort_keys=True, separators=(",", ":")).encode("utf-8"),
+                )
             else:
                 self._send(404, "text/plain; charset=utf-8", b"not found\n")
 
@@ -273,6 +324,10 @@ def serve(
     config_name: str = "axis_pi05_libero_mix",
     default_prompt: str | None = None,
 ) -> None:
+    if os.environ.get("AXIS_PI05_LIBERO_ASSET_BRIDGE") == "1":
+        from tools.axis_pi05.libero_asset_bridge import activate
+
+        activate(Path(__file__).resolve().parents[2])
     policy = CheckpointPolicy(
         checkpoint, config_name=config_name, default_prompt=default_prompt
     )

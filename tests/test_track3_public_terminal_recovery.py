@@ -37,9 +37,9 @@ def test_teleop_action_contract_and_cpu_self_test():
     module = _load("track3_public_teleop", "tools/axis_pi05/track3_public_teleop.py")
     machine = module.ActionStateMachine(config=module.RecorderConfig())
     assert module.RecorderConfig().hz == 20.0
-    assert module.RecorderConfig().operator_hz == 2.0
-    assert module.RecorderConfig().tick_ms() == 500
-    assert "tick=${s.tick_ms||500}ms" in module.PREVIEW_HTML
+    assert module.RecorderConfig().operator_hz == 8.0
+    assert module.RecorderConfig().tick_ms() == 125
+    assert "tick=${s.tick_ms||125}ms" in module.PREVIEW_HTML
     assert "setInterval(refresh,50)" in module.PREVIEW_HTML
     assert module.RecorderConfig().translation_step >= 0.30
     for _ in range(50):
@@ -73,8 +73,9 @@ def test_teleop_action_contract_and_cpu_self_test():
         module.validate_action(np.zeros(7, dtype=np.float32))
 
 
-def test_preview_is_loopback_only_and_acceptance_starts_at_zero():
+def test_preview_is_loopback_only_and_acceptance_starts_at_zero(tmp_path):
     module = _load("track3_public_teleop_preview", "tools/axis_pi05/track3_public_teleop.py")
+    module.OUTPUT_ROOT = tmp_path / "output"
     server = module.PreviewServer(module.ActionStateMachine(), port=0)
     try:
         assert server.httpd.server_address[0] == "127.0.0.1"

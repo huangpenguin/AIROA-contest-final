@@ -1,0 +1,307 @@
+{
+  "schema_version": "track3_reverse_collection_targets_v1",
+  "generated_date": "2026-09-09",
+  "status": "ready_for_assisted_collection",
+  "automatic_independent_audit": false,
+  "plan": "docs/AXIS_PI05_TRACK3_REVERSE_ONLY_COLLECTION_TARGETS_PLAN_20260909.md",
+  "source_pool": {
+    "libero_bddl_count": 130,
+    "libero_plus_bddl_count": 16330,
+    "libero_plus_classified_perturbation_count": 10030,
+    "current_scope": "canonical_reverse_only",
+    "excluded_perturbations": [
+      "background_texture",
+      "camera_viewpoint",
+      "lighting",
+      "sensor_noise",
+      "language_paraphrase",
+      "object_replacement",
+      "robot_initial_state",
+      "object_layout"
+    ]
+  },
+  "generation_policy": {
+    "reverse_start": "forward_goal_terminal_state",
+    "reverse_goal": "object_relevant_forward_initial_predicates",
+    "reverse_actions_by_array_reversal": false,
+    "direct_natural_language_only": true,
+    "forbidden_instruction_prefix": "Reverse the public LIBERO operation:",
+    "canonical_reset_only": true,
+    "preferred_saved_steps_max": 400,
+    "over_400_status": "pending_postprocess",
+    "unlimited_reset": true,
+    "batch_replay_first_pass": 1,
+    "replay_count_before_training": 3,
+    "minimum_short_train_accepted": 2,
+    "minimum_short_train_task_ids": 2
+  },
+  "official_status": {
+    "official_t3_red_mug": {
+      "best_episode": "official_t3_red_mug_1788921471",
+      "best_steps": 314,
+      "best_status": "pending_replay",
+      "other_pending_steps": [
+        388,
+        468
+      ],
+      "next_action": "batch_replay_then_collect_one_replacement_only_if_failed"
+    },
+    "official_t3_alphabet_soup": {
+      "best_episode": "official_t3_alphabet_soup_1788946170",
+      "best_steps": 278,
+      "best_status": "pending_replay",
+      "rejected_over_budget_count": 2,
+      "next_action": "batch_replay_then_collect_one_replacement_only_if_failed"
+    },
+    "official_t3_yellow_book": {
+      "best_episode": null,
+      "best_status": "not_available",
+      "rejected_timeout_count": 4,
+      "observed_rejected_steps": [
+        0,
+        0,
+        1200,
+        0
+      ],
+      "next_action": "collect"
+    },
+    "official_t3_two_mugs": {
+      "best_episode": null,
+      "best_status": "not_available",
+      "existing_episode_count": 0,
+      "next_action": "collect"
+    }
+  },
+  "targets": [
+    {
+      "priority": 0,
+      "task_id": "official_t3_red_mug",
+      "family": "support_removal",
+      "status": "ready_for_batch_replay",
+      "source_bddl": "compe/t3/assets/bddl_files/libero_t3/take_the_red_mug_off_the_left_plate_and_put_it_on_the_table.bddl",
+      "instruction": "take the red mug off the left plate and place it on the table behind the other two mugs",
+      "reverse_source": [
+        "On red_coffee_mug_1 plate_1"
+      ],
+      "reverse_goal": [
+        "On red_coffee_mug_1 living_room_table_red_coffee_mug_init_region"
+      ],
+      "target_saved_candidates": 1,
+      "preferred_existing_episode": "official_t3_red_mug_1788921471"
+    },
+    {
+      "priority": 0,
+      "task_id": "official_t3_alphabet_soup",
+      "family": "containment_removal",
+      "status": "ready_for_batch_replay",
+      "source_bddl": "compe/t3/assets/bddl_files/libero_t3/take_the_alphabet_soup_out_of_the_tray_and_place_it_on_the_table.bddl",
+      "instruction": "take the alphabet soup out of the tray and place it on the table in front of the ketchup",
+      "reverse_source": [
+        "In alphabet_soup_1 wooden_tray_1_contain_region"
+      ],
+      "reverse_goal": [
+        "On alphabet_soup_1 living_room_table_alphabet_soup_init_region"
+      ],
+      "target_saved_candidates": 1,
+      "preferred_existing_episode": "official_t3_alphabet_soup_1788946170"
+    },
+    {
+      "priority": 1,
+      "task_id": "official_t3_yellow_book",
+      "family": "support_removal",
+      "status": "needs_collection",
+      "source_bddl": "compe/t3/assets/bddl_files/libero_t3/take_the_yellow_book_off_the_shelf_and_put_it_on_the_table.bddl",
+      "instruction": "take the yellow book off the top of the shelf and place it on the left side of the study table",
+      "reverse_source": [
+        "On yellow_book_2 wooden_two_layer_shelf_1_top_side"
+      ],
+      "reverse_goal": [
+        "On yellow_book_2 study_table_yellow_book_left_init_region"
+      ],
+      "target_saved_candidates": 1,
+      "ideal_saved_candidates": 2
+    },
+    {
+      "priority": 1,
+      "task_id": "official_t3_two_mugs",
+      "family": "multi_object_support_removal",
+      "status": "needs_collection",
+      "source_bddl": "compe/t3/assets/bddl_files/libero_t3/take_the_two_mugs_off_the_plates_and_place_them_on_the_table.bddl",
+      "instruction": "take the white mug off the left plate and the yellow and white mug off the right plate, then place the white mug to the left of the red mug and the yellow and white mug to the right of the red mug",
+      "reverse_source": [
+        "On porcelain_mug_1 plate_1",
+        "On white_yellow_mug_1 plate_2"
+      ],
+      "reverse_goal": [
+        "On porcelain_mug_1 living_room_table_porcelain_mug_init_region",
+        "On white_yellow_mug_1 living_room_table_white_yellow_mug_init_region"
+      ],
+      "target_saved_candidates": 1
+    },
+    {
+      "priority": 2,
+      "task_id": "rev_black_bowl_plate_to_table_center",
+      "family": "support_removal",
+      "status": "needs_reverse_bddl_compile",
+      "source_bddl": "LIBERO/libero/libero/bddl_files/libero_spatial/pick_up_the_black_bowl_from_table_center_and_place_it_on_the_plate.bddl",
+      "instruction": "take the akita black bowl off the plate and place it at the center of the table",
+      "reverse_source": [
+        "On akita_black_bowl_1 plate_1"
+      ],
+      "reverse_goal": [
+        "On akita_black_bowl_1 main_table_table_center"
+      ],
+      "target_saved_candidates": 1,
+      "source_suite": "libero_spatial"
+    },
+    {
+      "priority": 2,
+      "task_id": "rev_alphabet_soup_basket_to_floor_front",
+      "family": "containment_removal",
+      "status": "needs_reverse_bddl_compile",
+      "source_bddl": "LIBERO/libero/libero/bddl_files/libero_object/pick_up_the_alphabet_soup_and_place_it_in_the_basket.bddl",
+      "instruction": "take the alphabet soup out of the basket and place it on the floor in front of the basket",
+      "reverse_source": [
+        "In alphabet_soup_1 basket_1_contain_region"
+      ],
+      "reverse_goal": [
+        "On alphabet_soup_1 floor_target_object_region"
+      ],
+      "target_saved_candidates": 1,
+      "source_suite": "libero_object"
+    },
+    {
+      "priority": 2,
+      "task_id": "rev_close_middle_drawer",
+      "family": "articulation_close",
+      "status": "needs_reverse_bddl_compile",
+      "source_bddl": "LIBERO/libero/libero/bddl_files/libero_goal/open_the_middle_drawer_of_the_cabinet.bddl",
+      "instruction": "close the middle drawer of the wooden cabinet",
+      "reverse_source": [
+        "Open wooden_cabinet_1_middle_region"
+      ],
+      "reverse_goal": [
+        "Close wooden_cabinet_1_middle_region"
+      ],
+      "target_saved_candidates": 1,
+      "source_suite": "libero_goal"
+    },
+    {
+      "priority": 2,
+      "task_id": "rev_turn_off_stove",
+      "family": "articulation_toggle",
+      "status": "needs_reverse_bddl_compile",
+      "source_bddl": "LIBERO/libero/libero/bddl_files/libero_goal/turn_on_the_stove.bddl",
+      "instruction": "turn off the stove",
+      "reverse_source": [
+        "Turnon flat_stove_1"
+      ],
+      "reverse_goal": [
+        "Turnoff flat_stove_1"
+      ],
+      "target_saved_candidates": 1,
+      "source_suite": "libero_goal"
+    },
+    {
+      "priority": 3,
+      "task_id": "rev_black_bowl_stove_to_table",
+      "family": "support_removal",
+      "status": "needs_reverse_bddl_compile",
+      "source_bddl": "LIBERO/libero/libero/bddl_files/libero_goal/put_the_bowl_on_the_stove.bddl",
+      "instruction": "take the akita black bowl off the stove and place it on the table between the wine bottle and the plate",
+      "reverse_source": [
+        "On akita_black_bowl_1 flat_stove_1_cook_region"
+      ],
+      "reverse_goal": [
+        "On akita_black_bowl_1 main_table_akita_black_bowl_region"
+      ],
+      "target_saved_candidates": 1,
+      "source_suite": "libero_goal"
+    },
+    {
+      "priority": 3,
+      "task_id": "rev_wine_bottle_rack_to_table",
+      "family": "support_removal",
+      "status": "needs_reverse_bddl_compile",
+      "source_bddl": "LIBERO/libero/libero/bddl_files/libero_90/KITCHEN_SCENE4_put_the_wine_bottle_on_the_wine_rack.bddl",
+      "instruction": "take the wine bottle off the wine rack and place it on the kitchen table to the left of the black bowl",
+      "reverse_source": [
+        "On wine_bottle_1 wine_rack_1_top_region"
+      ],
+      "reverse_goal": [
+        "On wine_bottle_1 kitchen_table_wine_bottle_init_region"
+      ],
+      "target_saved_candidates": 1,
+      "source_suite": "libero_90"
+    },
+    {
+      "priority": 3,
+      "task_id": "rev_black_book_caddy_to_table",
+      "family": "containment_removal",
+      "status": "needs_reverse_bddl_compile",
+      "source_bddl": "LIBERO/libero/libero/bddl_files/libero_90/STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_front_compartment_of_the_caddy.bddl",
+      "instruction": "take the black book out of the front compartment of the caddy and place it on the study table to the right of the caddy",
+      "reverse_source": [
+        "In black_book_1 desk_caddy_1_front_contain_region"
+      ],
+      "reverse_goal": [
+        "On black_book_1 study_table_black_book_init_region"
+      ],
+      "target_saved_candidates": 1,
+      "source_suite": "libero_90"
+    },
+    {
+      "priority": 3,
+      "task_id": "rev_black_bowl_top_drawer_to_table",
+      "family": "containment_removal",
+      "status": "needs_reverse_bddl_compile",
+      "source_bddl": "LIBERO/libero/libero/bddl_files/libero_90/KITCHEN_SCENE10_put_the_black_bowl_in_the_top_drawer_of_the_cabinet.bddl",
+      "instruction": "take the akita black bowl out of the top drawer and place it near the center of the kitchen table",
+      "reverse_source": [
+        "In akita_black_bowl_1 wooden_cabinet_1_top_region"
+      ],
+      "reverse_goal": [
+        "On akita_black_bowl_1 kitchen_table_akita_black_bowl_init_region"
+      ],
+      "target_saved_candidates": 1,
+      "source_suite": "libero_90"
+    },
+    {
+      "priority": 3,
+      "task_id": "rev_open_microwave",
+      "family": "articulation_open",
+      "status": "needs_reverse_bddl_compile",
+      "source_bddl": "LIBERO/libero/libero/bddl_files/libero_90/KITCHEN_SCENE6_close_the_microwave.bddl",
+      "instruction": "open the microwave",
+      "reverse_source": [
+        "Close microwave_1"
+      ],
+      "reverse_goal": [
+        "Open microwave_1"
+      ],
+      "target_saved_candidates": 1,
+      "source_suite": "libero_90"
+    },
+    {
+      "priority": 4,
+      "task_id": "rev_two_moka_pots_stove_to_table",
+      "family": "multi_object_support_removal",
+      "status": "needs_reverse_bddl_compile",
+      "source_bddl": "LIBERO/libero/libero/bddl_files/libero_10/KITCHEN_SCENE8_put_both_moka_pots_on_the_stove.bddl",
+      "instruction": "take both moka pots off the stove, place moka pot one on the right side of the kitchen table and moka pot two on the left side",
+      "reverse_source": [
+        "On moka_pot_1 flat_stove_1_cook_region",
+        "On moka_pot_2 flat_stove_1_cook_region",
+        "Turnon flat_stove_1"
+      ],
+      "reverse_goal": [
+        "On moka_pot_1 kitchen_table_moka_pot_right_init_region",
+        "On moka_pot_2 kitchen_table_moka_pot_left_init_region",
+        "Turnon flat_stove_1"
+      ],
+      "target_saved_candidates": 1,
+      "source_suite": "libero_10",
+      "prerequisite": "at_least_4_single_object_candidates"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+schema_version: 1
+catalog_path: /home/huang/code/PARC2026_final/data/processed/libero_axis_mix_v1/catalog.jsonl
+reverse_root: /home/huang/code/PARC2026_final/data/processed/axis_pi05_track3_reverse_gold_v1
+output_root: /home/huang/code/PARC2026_final/data/manifests_track3/four_gold_80_20_v1
+evidence_root: /home/huang/code/PARC2026_final/data/reports/axis_libero_30k/track3_four_gold_mix_v1_20260910
+split_seed: 1000
+validation_fraction: 0.10
+forward_mass: 0.8
+reverse_mass: 0.2
+forward_mix: M1

@@ -640,8 +640,28 @@ def _activate_libero_asset_bridge() -> None:
 
 
 def _validate_allowed_gpu(gpu: str) -> None:
-    if str(gpu) != "cpu" and str(gpu) not in {"1", "2"}:
-        raise ValueError(f"tonight FAST path permits only physical GPU1 or GPU2, got {gpu!r}")
+    if str(gpu) == "0":
+        raise ValueError("GPU0 is outside the FAST path")
+    if str(gpu) != "cpu" and str(gpu) not in {"1", "2", "3"}:
+        raise ValueError(f"FAST path permits only physical GPU1, GPU2, or GPU3, got {gpu!r}")
+
+
+def purge_vendor_sys_path(vendor: Path) -> None:
+    """Keep the host sentencepiece wheel ahead of a staging vendor copy."""
+
+    try:
+        resolved = vendor.resolve()
+    except OSError:
+        return
+    cleaned: list[str] = []
+    for entry in sys.path:
+        try:
+            if Path(entry).resolve() == resolved:
+                continue
+        except OSError:
+            pass
+        cleaned.append(entry)
+    sys.path[:] = cleaned
 
 
 class _OnDiskR6Pi05Policy:
@@ -655,6 +675,7 @@ class _OnDiskR6Pi05Policy:
         os.environ.setdefault("TORCH_COMPILE_DISABLE", "1")
         os.environ.setdefault("TORCHINDUCTOR_DISABLE", "1")
         vendor = staging / "vendor"
+        purge_vendor_sys_path(vendor)
         host_vendor = Path("/tmp/axis_host_vendor")
         if host_vendor.is_dir() and str(host_vendor) not in sys.path:
             sys.path.insert(0, str(host_vendor))
@@ -785,6 +806,7 @@ def _load_fast_policy(staging: Path) -> Any:
     host_vendor = Path("/tmp/axis_host_vendor")
     if host_vendor.is_dir() and str(host_vendor) not in sys.path:
         sys.path.insert(0, str(host_vendor))
+    purge_vendor_sys_path(staging / "vendor")
     # The host audit venv has the matching torchvision for its torch build.
     # Preload it before policy_server adds the package's official-image vendor
     # directory (which intentionally contains torchvision 0.26 for torch 2.11).

@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "purpose": "Track1 published example combinations held out of training",
+  "policy": "do_not_train_on_listed_identities",
+  "episodes": []
+}

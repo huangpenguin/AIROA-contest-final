@@ -1,9 +1,12 @@
 # AXIS Pi0.5 计划索引与审核生命周期
-> 更新日期：2026-09-21（Asia/Tokyo）
+> 更新日期：2026-09-29（Asia/Tokyo）
 > 跨session入口：先完整读取根目录`AGENTS.md`与`MEMORY.md`，再读取本索引、handoff、machine JSON、活动计划和最新审核；先查live PID/cursor，禁止重复启动。
+> 当前阶段：用户重新授权恢复 R6 资产并测试评分；活动计划：`docs/AXIS_PI05_R6_ASSET_RESTORE_AND_SCORE_REFRESH_PLAN_20260929.md`。
+> 恢复边界：只从锁定 HF revision 恢复 R6 推理资产；不训练、不覆盖 nested OpenPI 的未提交改动、不自动上传或提交。
+> 当前进度：pinned checkpoint 已恢复并生成 checkpoint-derived folded 模型；历史 folded SHA 门未通过。按用户要求已准备 T1/T3 execute8 与 T2 execute4 三个 ZIP 路径（T1/T3 同一内容），当前官方静态验证均通过且无警告。ZIP 不含历史 FAST 权重，不代表历史原包或分数；本地评分仍为 `not_evaluated`。LeRobot 缺 `accelerate==1.10.1`，依赖安装曾被自动审批以 `DEPENDENCY_NOT_AUTHORIZED` 拒绝；当前 `nvidia-smi` 也无法连接 NVIDIA driver。候选位于 ignored recovery 目录，未上传、提交或 push。
+> 历史清理说明：`docs/AXIS_PI05_CLEANUP_AND_REPRODUCIBILITY_20260921.md`；旧 ZIP/checkpoint 删除事实不改写。
 > T2 最后一次推理屏计划：docs/AXIS_PI05_R6_T2_LIGHT_SMOOTHING_SCREEN_PLAN_20260917.md（历史记录；生成物已按 2026-09-21 清理）
-> 当前阶段：比赛暂时结束，进入只读归档；禁止继续训练、评测、fold、FAST、ZIP、上传或提交。
-> 清理与复现说明：docs/AXIS_PI05_CLEANUP_AND_REPRODUCIBILITY_20260921.md
+> 上一活动指针：`data/reports/axis_libero_30k/post_r6_lora/PROJECT_HANDOFF_20260831.json` 已切至恢复计划。
 > 当前保留：实验结果、参数/配置、文本与 JSON 证据、artifact manifest/SHA256 sidecar；大型 outputs、原始媒体和 ZIP 本体已删除。
 > 最新 execute4 交付：`docs/reviews/axis_pi05/R6_EXECUTE4_OFFICIAL_TRIAL_RELEASE_20260916.md`
 > 最新 inference-horizon closeout：`docs/reviews/axis_pi05/R6_FINAL_INFERENCE_HORIZON_SWEEP_CLOSEOUT_20260916.md`

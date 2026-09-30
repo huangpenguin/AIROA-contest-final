@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_date": "2026-09-21",
-  "status": "competition_closed_generated_artifacts_pruned_20260921",
+  "generated_date": "2026-09-29",
+  "status": "r6_checkpoint_derived_packages_prepared_unscored_waiting_runtime_authorization_20260929",
   "closure_execution_parent_commit": "be62f678c0927ebd6a0b2d29a63450c2edc74177",
   "closure_input_commit": "78109647e95d79690511c922845141ff492a395f",
   "audited_input_commit": "327316f2ffdca0df3375748bcdd65b5ce263f8f8",
@@ -261,8 +261,32 @@
     "track3_20hz_checkpoint"
   ],
   "plan_index": "docs/AXIS_PI05_PLAN_INDEX.md",
-  "next_plan": "docs/AXIS_PI05_CLEANUP_AND_REPRODUCIBILITY_20260921.md",
-  "next_phase_only": "no_execution_competition_closed",
+  "next_plan": "docs/AXIS_PI05_R6_ASSET_RESTORE_AND_SCORE_REFRESH_PLAN_20260929.md",
+  "next_phase_only": "resolve_runtime_dependency_authorization_and_gpu_visibility_before_score_evaluation",
+  "r6_asset_restore_20260929": {
+    "status": "checkpoint_derived_packages_prepared_unscored_waiting_runtime_authorization",
+    "user_authorized_restore_and_gpu_eval": true,
+    "plan": "docs/AXIS_PI05_R6_ASSET_RESTORE_AND_SCORE_REFRESH_PLAN_20260929.md",
+    "restore_root": "outputs/axis_pi05/recovery_20260929/",
+    "source_repo": "Huangpenguin/parc2026-r6-l2-params-step500",
+    "source_revision": "e788d92131c984f4b4f7914e0b90b244ad014e4c",
+    "expected_params_tree_sha256_historical": "d9b7e0d15781060fccfd61dc1890ad98993f0224e4aebba1dd6658d7c011931f",
+    "norm_path": "data/reports/axis_libero_30k/phase1/norm_stats.json",
+    "norm_sha256_historical": "4c803bf59c52677c36b6b420c614d8a7742e0847708443863e13e67cb80b18f5",
+    "norm_byte_compare": "matches_retained_r6_candidate_copy",
+    "gpu_snapshot": "4x Tesla V100 32GiB; Xorg only, approximately 4MiB per card",
+    "gpu_evaluation_started": false,
+    "training_started": false,
+    "upload_or_submission": false,
+    "download_started": true,
+    "download_completed": true,
+    "download_process_state": "not_running",
+    "folded_model_bytes": 14467165872,
+    "historical_folded_model_sha256_expected": "5c73e1e8217dbb75a934c2b0165208e851f69e66cfe2ea0430590a29901e6d5b",
+    "historical_folded_model_sha_gate": "failed; rebuilt packages are checkpoint-derived and do not contain historical FAST weights",
+    "gpu_visibility_now": "nvidia-smi could not communicate with NVIDIA driver; no GPU job started",
+    "candidate_packages_record": "outputs/axis_pi05/recovery_20260929/packages/REBUILD_RECORD_20260929.json"
+  },
   "latest_audit": "docs/reviews/axis_pi05/R6_T2_LIGHT_SMOOTHING_SCREEN_AND_SEAM_BLEND_RELEASE_20260917.md",
   "latest_audit_sha256": "92639b12b05724dfa04a4aedbd2f7c358d22d57abb932d1d78123f30fc10a32a",
   "e1_authorization": {
@@ -7500,5 +7524,71 @@
     "execution_allowed": false,
     "upload_allowed": false,
     "submit_allowed": false
+  },
+  "asset_recovery_20260929": {
+    "source_repo": "Huangpenguin/parc2026-r6-l2-params-step500",
+    "source_revision": "e788d92131c984f4b4f7914e0b90b244ad014e4c",
+    "hub_local_inventory": "17/17 files; all byte sizes match",
+    "norm_stats_status": "byte-identical to retained R6 QUANTILES copy",
+    "raw_libero_data": "unchanged",
+    "synchronous_tensorstore_restore": {
+      "status": "completed",
+      "tensor_count": 61,
+      "tensor_bytes": 13502209088,
+      "folded_lora_modules": 5,
+      "missing_model_keys": 0,
+      "unexpected_model_keys": 0
+    },
+    "folded_model_path": "outputs/axis_pi05/recovery_20260929/folded_model/model.safetensors",
+    "folded_model_bytes": 14467165872,
+    "historical_model_sha_gate": "failed; do not label recovered file as historical folded model",
+    "old_zip_status": "not present in pinned HF runtime archive; exact historical ZIP not recovered",
+    "current_evaluator": {
+      "repo": "matsuolab/PARC2026_pre",
+      "revision": "eb8a063cf1d69615754b0cbb31b0a9162621ec9b",
+      "local_scope": "Track 1 example tasks only; no leaderboard total-score config"
+    },
+    "libero_plus_assets": "prepared; setup completed",
+    "score_evaluation": "not_evaluated",
+    "dependency_gate": {
+      "dependency": "accelerate==1.10.1",
+      "target": "/tmp/r6_runtime_20260929",
+      "auto_review": "rejected",
+      "reason": "DEPENDENCY_NOT_AUTHORIZED"
+    },
+    "gpu_evaluation_started": false,
+    "upload_or_submission": false,
+    "candidate_packages": {
+      "status": "prepared_static_validation_passed_unscored",
+      "package_type": "checkpoint_derived_standard_pi05_safetensors_no_fast_weights",
+      "record": "outputs/axis_pi05/recovery_20260929/packages/REBUILD_RECORD_20260929.json",
+      "static_validation": "outputs/axis_pi05/recovery_20260929/packages/STATIC_VALIDATION_20260929.json",
+      "validator_revision": "eb8a063cf1d69615754b0cbb31b0a9162621ec9b",
+      "tracks": {
+        "Track1": {
+          "path": "outputs/axis_pi05/recovery_20260929/packages/PARC2026_T1_R6_rebuilt_execute8_20260929.zip",
+          "bytes": 14474174295,
+          "sha256": "f18a32cb6bda6e4629bfd2c58827a6cb711736b07bf92d2f2e35365ce71b5d57",
+          "n_action_steps": 8
+        },
+        "Track2": {
+          "path": "outputs/axis_pi05/recovery_20260929/packages/PARC2026_T2_R6_rebuilt_execute4_20260929.zip",
+          "bytes": 14474174290,
+          "sha256": "f806f279fec1a6dce4f84f6038681bb9091a002477b3d8fac093c773b4da8c7b",
+          "n_action_steps": 4
+        },
+        "Track3": {
+          "path": "outputs/axis_pi05/recovery_20260929/packages/PARC2026_T3_R6_rebuilt_execute8_20260929.zip",
+          "bytes": 14474174295,
+          "sha256": "f18a32cb6bda6e4629bfd2c58827a6cb711736b07bf92d2f2e35365ce71b5d57",
+          "n_action_steps": 8
+        }
+      },
+      "track1_track3_same_artifact": true,
+      "crc_and_static_validation": "passed_for_all_three_track_paths; 0 errors; 0 warnings",
+      "score_evaluation": "not_evaluated",
+      "gpu_driver_visibility": "unavailable_in_current_shell",
+      "push_upload_submit": false
+    }
   }
 }

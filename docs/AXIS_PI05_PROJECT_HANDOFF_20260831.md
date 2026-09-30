@@ -7,14 +7,14 @@
 
 > 用途：新 Codex section 从这里接手；不要从旧聊天重新猜测状态。
 > 新session先读：根目录`AGENTS.md`、`MEMORY.md`，然后按其中顺序核对本handoff、machine JSON、活动计划、最新审核与live cursor/PID。
-> 最新审核状态：horizon screen 门禁失败保持不变；用户随后显式风险覆盖并获交付 execute4 ZIP
+> 最新恢复状态：2026-09-29 从 pinned R6 checkpoint 派生准备了 Track1/Track3 execute8 与 Track2 execute4 候选 ZIP；官方静态校验通过，但它们不是历史 FAST ZIP，也没有重新计分。
 > interstep L0/L1 execution HEAD（已冻结）：`88796b2`
 > branch：`codex/axis-pi05-sg0-sg12-support-gold-20260907`
 > nested OpenPI：`b58aff0`（interstep lifetime implementation）
-> 当前总状态：competition_closed_generated_artifacts_pruned_20260921
-> 唯一活动计划：docs/AXIS_PI05_CLEANUP_AND_REPRODUCIBILITY_20260921.md
-> 下一停止点：no_execution_competition_closed
-> 最新归档记录：docs/AXIS_PI05_CLEANUP_AND_REPRODUCIBILITY_20260921.md
+> 当前总状态：r6_checkpoint_derived_packages_prepared_unscored_20260929
+> 唯一活动计划：docs/AXIS_PI05_R6_ASSET_RESTORE_AND_SCORE_REFRESH_PLAN_20260929.md
+> 下一停止点：runtime dependency authorization / NVIDIA driver visibility before score evaluation
+> 最新恢复记录：outputs/axis_pi05/recovery_20260929/packages/REBUILD_RECORD_20260929.json（ignored local artifact）
 > 最新独立审核：docs/reviews/axis_pi05/TRACK3_R0_R1_G0_FINAL_INDEPENDENT_AUDIT_20260916.md
 > 计划索引：`docs/AXIS_PI05_PLAN_INDEX.md`
 > O0R remediation commit：`20662dd`
@@ -1200,3 +1200,44 @@ attempt_0002 在 332.9 秒冷启动后通过 health/reset/6 acts，日志明确 
 3401 entries。CRC/testzip、官方 static validator 和 entry delta 均通过；相对正式 R6 ZIP 只有
 server/config/manifest 三项变化。当前状态为等待用户人工提交及回报官方分；auto upload/submit=false。
 四个 reverse 仍为 0/4，因此 execute4 只有 T1/T2 前向尝试依据，没有 T3 reverse 提分证据。
+
+## 104. 用户重新授权恢复 R6 资产与刷新评分（2026-09-29）
+
+用户要求恢复被 2026-09-21 清理的 R6 ZIP/推理资产并使用四张 GPU。新的唯一活动计划为
+`docs/AXIS_PI05_R6_ASSET_RESTORE_AND_SCORE_REFRESH_PLAN_20260929.md`；不训练、不自动上传或提交。
+
+普通沙箱无法看到 NVIDIA 设备；在授权的 GPU 执行环境中已确认四张 Tesla V100 32 GiB 可用，
+每卡仅有约 4 MiB 的 Xorg 图形进程。启动任何评测前仍需重新核对 PID、UUID 和显存。
+
+私有 HF 源仍可访问：`Huangpenguin/parc2026-r6-l2-params-step500`，完整 revision
+`e788d92131c984f4b4f7914e0b90b244ad014e4c`。历史 params tree SHA256 为
+`d9b7e0d15781060fccfd61dc1890ad98993f0224e4aebba1dd6658d7c011931f`。本机保留的
+`data/reports/axis_libero_30k/phase1/norm_stats.json` 应为历史 QUANTILES SHA256
+`4c803bf59c52677c36b6b420c614d8a7742e0847708443863e13e67cb80b18f5`；恢复流程需重新精确核验。
+
+旧 ZIP 本体及 folded/FAST 生成物仍未恢复。T1 最佳历史分为 R6 execute8 `0.47`；T2 为
+R6 execute4 `0.3457`；T3 R6 为 `0.0`。这些是用户报告的分数，seam-blend 仍无官方分数。
+新本地官方评测受公开数据范围限制，不可把 Track 1 example 结果称为排行榜总分。
+
+本轮已从上述 pinned revision 下载 17/17 参数文件，Hub 清单与本地文件尺寸一致；同步
+TensorStore 路径恢复 61 个张量并折叠 5 个 LoRA 模块，模型权重映射 missing/unexpected 均为 0。
+恢复件位于 ignored `outputs/axis_pi05/recovery_20260929/`。生成的模型文件大小
+14,467,165,872 bytes，与历史记录相同，但仓库 R6 导出器的历史模型 SHA 锁未通过，故它是
+checkpoint 派生新恢复件，不能称为旧 folded 文件或旧 ZIP。QUANTILES norm 字节副本一致；旧
+runtime tar 仅含代码快照，不含提交 ZIP/服务器二进制。当前官方 Track 1 评测器 commit
+`eb8a063cf1d69615754b0cbb31b0a9162621ec9b` 与 LIBERO-plus 资产已准备，评分仍为 `not_evaluated`。
+
+LeRobot v0.4.4 推理导入在 CUDA venv 缺 `accelerate`。尝试把 `accelerate==1.10.1` 安装到隔离
+`/tmp` 运行时目录被 Stop That Shit 自动审批以 `DEPENDENCY_NOT_AUTHORIZED` 拒绝。后续评测等待
+用户明确授权所需隔离依赖安装；CUDA venv、LIBERO 原始数据和 7 项 nested OpenPI 本地改动均未改动。
+
+## 105. 三个 Track 的 checkpoint-derived ZIP（2026-09-29）
+
+按用户要求，用恢复后的普通 PI0.5 folded safetensors 与仓库提交服务准备 Track1 execute8、Track2 execute4、Track3 execute8。
+Track1 与 Track3 复用相同内容；Track2 仅把配置里的 `n_action_steps` 设为 4。三个路径均指向新的 checkpoint-derived 候选，不是历史 FAST ZIP。
+
+- Track1：`outputs/axis_pi05/recovery_20260929/packages/PARC2026_T1_R6_rebuilt_execute8_20260929.zip`，14,474,174,295 bytes，SHA256 `f18a32cb6bda6e4629bfd2c58827a6cb711736b07bf92d2f2e35365ce71b5d57`。
+- Track2：`outputs/axis_pi05/recovery_20260929/packages/PARC2026_T2_R6_rebuilt_execute4_20260929.zip`，14,474,174,290 bytes，SHA256 `f806f279fec1a6dce4f84f6038681bb9091a002477b3d8fac093c773b4da8c7b`。
+- Track3：`outputs/axis_pi05/recovery_20260929/packages/PARC2026_T3_R6_rebuilt_execute8_20260929.zip`，与 Track1 同 SHA、同文件内容。
+
+官方当前公开 `validate_submission.py --static` 对三条路径均返回通过、0 errors、0 warnings；动作步数、15 项 ZIP 结构及 20 GB 大小限制复核通过。历史 folded model SHA 门未通过，旧 FAST 权重不在包内；不能把历史分数归到新包。官方本地评分仍为 `not_evaluated`，未安装依赖、未启动评测或 GPU 作业，未上传、提交或 push。验证和 rebuild sidecar 均在 ignored `outputs/axis_pi05/recovery_20260929/packages/`。

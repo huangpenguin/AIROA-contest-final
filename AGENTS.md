@@ -2,9 +2,13 @@
 
 These instructions apply to the whole repository.
 
-## Start every new session here
+## 2026-09-30 stage transition
 
-Before planning, editing, training, evaluating, or answering project-status questions:
+For new competition design work, start with `docs/COMPETITION_PHASE_TRANSITION_20260930.md`. The PARC 2026 execution instructions below are historical and apply when explicitly continuing that experiment. Do not infer authorization to resume its training, evaluation, packaging, or submission from the new design stage. Preserve the local data, generated artifacts, and the separately modified `third_party/axis_openpi` checkout. Check live processes before changing any of their files.
+
+## Historical PARC 2026 session entrypoint
+
+When explicitly continuing PARC 2026 execution, before planning, editing, training, evaluating, or answering project-status questions:
 
 1. Read `MEMORY.md` completely.
 2. Read `docs/AXIS_PI05_PLAN_INDEX.md`.

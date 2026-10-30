@@ -6,6 +6,12 @@ These instructions apply to the whole repository.
 
 For new competition design work, start with `docs/COMPETITION_PHASE_TRANSITION_20260930.md`. The PARC 2026 execution instructions below are historical and apply when explicitly continuing that experiment. Do not infer authorization to resume its training, evaluation, packaging, or submission from the new design stage. Preserve the local data, generated artifacts, and the separately modified `third_party/axis_openpi` checkout. Check live processes before changing any of their files.
 
+The R2 architecture and executor/reviewer handoff are now documented in `docs/r2/README.md`. For R2 work, read that entrypoint and its linked plan, execution record, and review record after the stage-transition document. These records do not authorize execution by themselves and do not replace historical evidence. Follow their file-ownership boundaries; an executor must not write its own reviewer approval.
+
+## 2026-10-30 competition closeout and filesystem cleanup
+
+The competition has ended. Read `docs/maintenance/home_code_cleanup_20261030.md` before resuming filesystem cleanup. The user's explicit 2026-10-30 authorization supersedes the older requirement above to retain all trial model/data artifacts: those payloads have been removed after preserving experiment records. Experimental branches/worktrees may be removed only after their actual Git objects, dirty patches, and unique source contents have a verified recoverable archive; recording a SHA alone is insufficient. Keep the main code and its local changes. Do not resume historical training/evaluation or recreate deleted payloads merely because an older plan mentions them.
+
 ## Historical PARC 2026 session entrypoint
 
 When explicitly continuing PARC 2026 execution, before planning, editing, training, evaluating, or answering project-status questions:
